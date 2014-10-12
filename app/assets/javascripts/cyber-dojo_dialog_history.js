@@ -143,6 +143,7 @@ var cyberDojo = (function(cd, $) {
 
     //---------------------------------------------------
     // navigation controls        < avatar >
+    //                           ............
     //---------------------------------------------------
 
     var makeAvatarImageHtml = function() {
@@ -166,58 +167,55 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var refreshPrevAvatarHandler = function() {
-      $('#prev-avatar')
-        .attr('disabled', data.prevAvatar === '')
-        .attr('title', "Click to review " + data.prevAvatar + "'s history")
+    var refreshAvatarHandler = function(id,name) {
+      $('#' + id + '-avatar')
+        .attr('disabled', name === '')
+        .attr('title', "Click to review " + name + "'s history")
         .unbind('click')
         .bind('click', function() {
-          avatarName = data.prevAvatar;
+          avatarName = name;
           wasTag = 0;
           nowTag = 1;
           refresh();
         });
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var refreshPrevAvatarHandler = function() {
+      refreshAvatarHandler('prev', data.prevAvatar);
     };
 
     //- - - - - - - - - - - - - - -
 
     var refreshNextAvatarHandler = function() {
-      $('#next-avatar')
-        .attr('disabled', data.nextAvatar === '')
-        .attr('title', "Click to review " + data.nextAvatar + "'s history")
-        .unbind('click')
-        .bind('click', function() {
-          avatarName = data.nextAvatar;
-          wasTag = 0;
-          nowTag = 1;
-          refresh();
-        });
+      refreshAvatarHandler('next', data.nextAvatar);
     };
 
     //---------------------------------------------------
-    // navigation controls     << <   tag  > >>
+    // navigation controls           ...........
+    //                             << <   tag  > >>
     //---------------------------------------------------
 
-    var makeNavigateButton = function(name) {
-      return '' +
-        '<button' +
-           ' class="triangle button"' +
-           ' id="' + name + '-button">' +
-          '<img' +
-               ' src="/images/triangle_' + name + '.gif"' +
-               ' alt="move to ' + name + ' diff"/>' +
-        '</button>';
+    var makeNavigateButtonHtml = function(name) {
+      return '<button' +
+                ' class="triangle button"' +
+                ' id="' + name + '-button">' +
+               '<img' +
+                    ' src="/images/triangle_' + name + '.gif"' +
+                    ' alt="move to ' + name + ' diff"/>' +
+             '</button>';
     };
 
     //- - - - - - - - - - - - - - -
 
-    var makeNowTagNumber = function() {
+    var makeNowTagNumberHtml = function() {
       return '<div id="now-tag-number"/></div>';
     };
 
     //- - - - - - - - - - - - - - -
 
-    var makeNavigateButtons = function() {
+    var makeNavigateButtonsHtml = function() {
 
       var td = function(align,html) {
         return '<td align="' + align + '">' + html + '</td>';
@@ -233,11 +231,11 @@ var cyberDojo = (function(cd, $) {
             cd.td('') +
           '</tr>' +
           '<tr valign="top">' +
-            td('right', makeNavigateButton('first')) +
-            td('right', makeNavigateButton('prev')) +
-            td('center', makeNowTagNumber()) +
-            td('left',  makeNavigateButton('next')) +
-            td('left',  makeNavigateButton('last')) +
+            td('right', makeNavigateButtonHtml('first')) +
+            td('right', makeNavigateButtonHtml('prev')) +
+            td('center', makeNowTagNumberHtml()) +
+            td('left',  makeNavigateButtonHtml('next')) +
+            td('left',  makeNavigateButtonHtml('last')) +
           '</tr>' +
         '</table>';
     };
@@ -309,7 +307,7 @@ var cyberDojo = (function(cd, $) {
       div.append('<div id="diff-content"></div>');
       div.append('' +
         '<div id="diff-controls">' +
-          makeNavigateButtons() +
+          makeNavigateButtonsHtml() +
           "<div id='diff-filenames'>" +
           '</div>' +
         '</div>');
@@ -541,12 +539,19 @@ var cyberDojo = (function(cd, $) {
     // historyDialog
     //---------------------------------------------------
 
-    var makeButtons = function() {
+    var makeCloseForkRevertButtons = function() {
       var buttons = {};
-      buttons['close'] = function() { historyDialog.remove(); };
-      buttons['fork'] = function() { doFork(); };
+      buttons['close'] = function() {
+        historyDialog.remove();
+      };
+      buttons['fork'] = function() {
+        doFork();
+      };
       if (showRevert) {
-        buttons['revert'] = function() { doRevert(); historyDialog.remove(); };
+        buttons['revert'] = function() {
+          doRevert();
+          historyDialog.remove();
+        };
       }
       return buttons;
     };
@@ -558,7 +563,7 @@ var cyberDojo = (function(cd, $) {
       width: 1150,
       height: 705,
       modal: true,
-      buttons: makeButtons(),
+      buttons: makeCloseForkRevertButtons(),
       autoOpen: false,
       open: function() { refresh(); },
       closeOnEscape: true,
