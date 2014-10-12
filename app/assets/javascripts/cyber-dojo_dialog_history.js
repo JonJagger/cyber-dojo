@@ -193,11 +193,11 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-    // navigation controls           ...........
-    //                             << <   tag  > >>
+    // navigation controls          ...........
+    //                             << < tag  > >>
     //---------------------------------------------------
 
-    var makeNavigateButtonHtml = function(name) {
+    var makeTagButtonHtml = function(name) {
       return '<button' +
                 ' class="triangle button"' +
                 ' id="' + name + '-button">' +
@@ -215,7 +215,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var makeNavigateButtonsHtml = function() {
+    var makeTagButtonsHtml = function() {
 
       var td = function(align,html) {
         return '<td align="' + align + '">' + html + '</td>';
@@ -231,11 +231,11 @@ var cyberDojo = (function(cd, $) {
             cd.td('') +
           '</tr>' +
           '<tr valign="top">' +
-            td('right', makeNavigateButtonHtml('first')) +
-            td('right', makeNavigateButtonHtml('prev')) +
+            td('right', makeTagButtonHtml('first')) +
+            td('right', makeTagButtonHtml('prev')) +
             td('center', makeNowTagNumberHtml()) +
-            td('left',  makeNavigateButtonHtml('next')) +
-            td('left',  makeNavigateButtonHtml('last')) +
+            td('left',  makeTagButtonHtml('next')) +
+            td('left',  makeTagButtonHtml('last')) +
           '</tr>' +
         '</table>';
     };
@@ -260,7 +260,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var refreshNavigation = function(on, button, newTag) {
+    var refreshTag = function(on, button, newTag) {
       button
         .attr('disabled', !on)
         .css('cursor', on ? 'pointer' : 'default');
@@ -274,7 +274,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var refreshNavigationControls = function() {
+    var refreshTagControls = function() {
       var colour = data.lights[nowTag-1].colour;
       if (colour === 'amber') {
         colour = 'orange';
@@ -290,10 +290,10 @@ var cyberDojo = (function(cd, $) {
       var maxTag = data.lights.length;
       var tagsToLeft = minTag < nowTag;
       var tagsToRight = nowTag < maxTag;
-      refreshNavigation(tagsToLeft,  $('#first-button'), minTag);
-      refreshNavigation(tagsToLeft,  $('#prev-button'),  nowTag-1);
-      refreshNavigation(tagsToRight, $('#next-button'),  nowTag+1);
-      refreshNavigation(tagsToRight, $('#last-button'),  maxTag);
+      refreshTag(tagsToLeft,  $('#first-button'), minTag);
+      refreshTag(tagsToLeft,  $('#prev-button'),  nowTag-1);
+      refreshTag(tagsToRight, $('#next-button'),  nowTag+1);
+      refreshTag(tagsToRight, $('#last-button'),  maxTag);
     };
 
     //---------------------------------------------------
@@ -307,7 +307,7 @@ var cyberDojo = (function(cd, $) {
       div.append('<div id="diff-content"></div>');
       div.append('' +
         '<div id="diff-controls">' +
-          makeNavigateButtonsHtml() +
+          makeTagButtonsHtml() +
           "<div id='diff-filenames'>" +
           '</div>' +
         '</div>');
@@ -580,6 +580,12 @@ var cyberDojo = (function(cd, $) {
       }
     });
 
+    $.ajaxSetup({
+      complete: function() {
+        $('body').removeClass('busy');
+      }
+    });
+
     var refresh = function() {
       $.getJSON('/differ/diff',
         {
@@ -591,12 +597,12 @@ var cyberDojo = (function(cd, $) {
         },
         function(historyData) {
           data = historyData;
+          refreshDiff();
+          refreshTrafficLights();
           refreshPrevAvatarHandler();
           refreshAvatarImage();
           refreshNextAvatarHandler();
-          refreshTrafficLights();
-          refreshNavigationControls();
-          refreshDiff();
+          refreshTagControls();
           refreshRevertButton();
           refreshForkButton();
         }
@@ -606,12 +612,6 @@ var cyberDojo = (function(cd, $) {
         light.scrollIntoView(options);
       });
     };
-
-    $.ajaxSetup({
-      complete: function() {
-        $('body').removeClass('busy');
-      }
-    });
 
     //---------------------------------------------------
     // revertButton
