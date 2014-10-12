@@ -35,6 +35,8 @@ CyberDojo::Application.routes.draw do
   match 'forker/fork(/:id)' => 'forker#fork', via: [:get]
   match 'reverter/revert(/:id)' => 'reverter#revert', via: [:get]
 
+  match 'downloader/download(/:id)' => 'downloader#download', via: [:get]
+
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
