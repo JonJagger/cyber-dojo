@@ -5,9 +5,6 @@ require_relative root + '/app/lib/GitDiff'
 class DifferController < ApplicationController
 
   def diff
-	#avatars = dojo.katas[id].avatars
-	#active = avatars.active.map {|avatar| avatar.name}.sort
-    avatar = avatars[avatar_name]
     diffs = git_diff_view(avatar.tags[was_tag].diff(now_tag))
     current_filename = params[:current_filename]
 
@@ -32,14 +29,6 @@ private
 
   def now_tag
 	params[:now_tag].to_i
-  end
-
-  def avatar_name
-	params[:avatar]
-  end
-
-  def avatars
-	dojo.katas[id].avatars
   end
 
   def active

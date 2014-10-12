@@ -10,11 +10,11 @@ class ForkerController < ApplicationController
     error = false
 
     if !error
-      if !dojo.katas.exists?(id)
+      if !katas.exists?(id)
         error = true
         result[:reason] = 'id'
       else
-        kata = dojo.katas[id]
+        kata = katas[id]
       end
     end
 
@@ -28,7 +28,7 @@ class ForkerController < ApplicationController
 
     avatar_name = params['avatar']
     if !error
-      avatar = kata.avatars[avatar_name]
+      avatar = avatars[avatar_name]
       if !error && !avatar.exists?
         result[:reason] = 'avatar'
         error = true
