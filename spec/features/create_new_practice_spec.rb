@@ -6,14 +6,17 @@ feature "Create a practice" do
 
   scenario "Practice doesn't exist yet" do
     visit "/"
-    find('#create-button').click
-    find('[data-language="Ruby-Rspec"]').click
-    find('#ok').click
-    find('#enter-button').click
-    click_button('ok')
+    click_on 'create' #practice
+    language('Ruby-Rspec').click
+    exercise('Bowling_Game').click
+    click_on 'ok'
+
+    click_on 'enter' #practice
+    click_on 'ok' #your animal is [cheetah, ...]
+
     new_window = page.driver.browser.window_handles.last
     page.within_window new_window do
-      within '#filename_list' do
+      within '#filename-list' do
         page.should have_text 'cyber-dojo.sh'
         page.should have_text 'instructions'
         page.should have_text 'hiker.rb'
@@ -23,6 +26,11 @@ feature "Create a practice" do
   end
 end
 
-feature "Practice is full" do
-
+def language(language_to_select)
+  find("[data-language=\"#{language_to_select}\"]")
 end
+
+def exercise exercise_to_select
+  find("[data-exercise=\"#{exercise_to_select}\"]")
+end
+
