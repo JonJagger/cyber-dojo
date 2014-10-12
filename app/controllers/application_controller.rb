@@ -31,6 +31,26 @@ class ApplicationController < ActionController::Base
     Dojo.new(root_path,externals)
   end
 
+  def katas
+    dojo.katas
+  end
+
+  def kata
+    katas[id]
+  end
+
+  def avatar_name
+	params[:avatar]
+  end
+
+  def avatars
+    kata.avatars
+  end
+
+  def avatar
+    avatars[avatar_name]
+  end
+
   def bind(pathed_filename)
     filename = Rails.root.to_s + pathed_filename
     ERB.new(File.read(filename)).result(binding)

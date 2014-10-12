@@ -539,7 +539,7 @@ var cyberDojo = (function(cd, $) {
     // historyDialog
     //---------------------------------------------------
 
-    var makeCloseForkRevertButtons = function() {
+    var makeCloseHelpForkRevertButtons = function() {
       var buttons = {};
       buttons['close'] = function() {
         historyDialog.remove();
@@ -553,6 +553,10 @@ var cyberDojo = (function(cd, $) {
           historyDialog.remove();
         };
       }
+      buttons['help'] = function() {
+        var url = 'http://blog.cyber-dojo.org/2014/10/the-cyber-dojo-history-dialog.html';
+        window.open(url, '_blank');
+      };
       return buttons;
     };
 
@@ -563,9 +567,14 @@ var cyberDojo = (function(cd, $) {
       width: 1150,
       height: 705,
       modal: true,
-      buttons: makeCloseForkRevertButtons(),
+      buttons: makeCloseHelpForkRevertButtons(),
       autoOpen: false,
-      open: function() { refresh(); },
+      open: function() {
+        $('.ui-dialog-buttonpane')
+          .find('button:contains("close")')
+          .addClass('close-history');
+        refresh();
+      },
       closeOnEscape: true,
       close: function() { $(this).remove(); },
     });

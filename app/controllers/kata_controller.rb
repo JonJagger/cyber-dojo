@@ -8,8 +8,8 @@ require_relative root + '/lib/TimeNow'
 class KataController < ApplicationController
 
   def edit
-    @kata = dojo.katas[id]
-    @avatar = @kata.avatars[params[:avatar]]
+    @kata = kata
+    @avatar = avatar
     @tab = @kata.language.tab
     @visible_files = @avatar.tags[-1].visible_files
 
@@ -21,8 +21,8 @@ class KataController < ApplicationController
   end
 
   def run_tests
-    @kata   = dojo.katas[id]
-    @avatar = @kata.avatars[params[:avatar]]
+    @kata   = kata
+    @avatar = avatar
 
     was = params[:file_hashes_incoming]
     now = params[:file_hashes_outgoing]
@@ -41,7 +41,7 @@ class KataController < ApplicationController
   end
 
   def help_dialog
-    @avatar_name = params[:avatar_name]
+    @avatar_name = avatar_name
     render :layout => false
   end
 

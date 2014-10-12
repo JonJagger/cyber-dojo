@@ -49,7 +49,7 @@ private
   include TimeNow
 
   def gather
-    @kata = dojo.katas[id]
+    @kata = kata
     @minute_columns = bool('minute_columns')
     @auto_refresh = bool('auto_refresh')
     maximum_seconds_uncollapsed = seconds_per_column * 60
