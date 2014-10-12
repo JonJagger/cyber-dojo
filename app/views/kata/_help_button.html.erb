@@ -6,7 +6,7 @@ $(function() {
   $('#help-button').click(function() {
     var title = $(this).data('title');
     var close = $(this).data('close');
-    $.get('/kata/help_dialog', { avatar_name: "<%= @avatar.name %>" }, function(html) {
+    $.get('/kata/help_dialog', { avatar: "<%= @avatar.name %>" }, function(html) {
       cd.dialog(html, title, close).dialog('open');
     });
   });
