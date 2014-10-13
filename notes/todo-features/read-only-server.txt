@@ -1,4 +1,21 @@
 
+cyber-dojo hub/index
+--------------------
+o) "Proper" rails app.
+o) katas on cyber-dojo.org timeout
+   they cannot be [test]ed once timed out
+   they xfer to the hub once timed out
+   OR
+   create an id->id map?
+o) users that login via Twitter/Google/Facebook
+o) up vote for katas by id
+o) prizes for *user* who votes the most
+o) ability to fork - I think this means the cyberdojo you are
+   voting for needs to know its image_name (for docker-container)
+   and URL of server that can host the fork.
+o)
+
+
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 timed-out katas
@@ -9,12 +26,12 @@ timed-out katas
   rename awkwardness a little too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-o) add buttons on cyber-dojo to publish a dojo to cyber-kata with tags
+o) add buttons on cyber-dojo to publish a dojo to the hub with tags
    on the sending server check format of dojo
    if its old-rb format then convert it *in-place* (on sending server) using script above
-   send it in new-json format (tar.gz) to cyber-katas
+   send it in new-json format (tar.gz) to the hub
 
-o) can offer fork on cyber-katas if I know URL of originating dojo
+o) can offer fork on the hub if I know URL of originating dojo
    can make with $.getJSON('forker/fork'...) to it
 
 o) this means we could get a cycle
@@ -28,32 +45,32 @@ o) this means we could get a cycle
   Re-publish event could add new tags.
   Tags should be recorded with the publish-event not the dojo.
   Can then see a history of "tags" added.
-  Allow tags to be editable on cyber-katas?
+  Allow tags to be editable on the hub?
   Want re-publish of unchanged dojo to be low-overhead
   Should be enough to check, URL,id,animals,traffic-lights per animal.
 
 o) another problem is it opens up the possibility of
    two people trying to edit the same code at the same time
    as the same animal.
-   This implies that if you click from cyber-katas to get back to
+   This implies that if you click from the hub to get back to
    the original dojo you should not go back to the original.
    You should never see the original's ID. Instead you should
    auto-fork and thus get a new ID. Sharing the new ID it is now your decision.
    This is great but it means it will require database+code using sha1's to
    figure out which old traffic-light the new dojo was forked from.
    New dojo will not be tied to old dojo until new dojo is published back
-   onto cyber-katas
+   onto the hub
 
 o) dojos that have had their language name changed cannot be forked.
    Need to fix this.
    Or at least detect it and either
-      not publish them on cyber-katas.org
+      not publish them on the hub
       or figure out what the new name is and patch
    Do patching on the old->new conversion?
    No since there could still be post publish name changes.
 
 o) be careful not to expose the ids of the original dojos
-   when viewing diffs on cyber-katas.org
+   when viewing diffs on the hub
    Create a simple fake-id->id mapping table.
 
 o) if traffic-light's files' hashes match traffic-light 1 for
@@ -63,7 +80,8 @@ o) if traffic-light's files' hashes match traffic-light 1 for
    if traffic-light's files' hashes match other traffic-lights for
    this dojo then reverts have occured.
 
-o) open cyber-katas.org
+o) get domain name for hub
+
 
 
 ------------------------------------------------------
