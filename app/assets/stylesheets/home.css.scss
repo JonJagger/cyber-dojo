@@ -30,13 +30,13 @@ $text-color: darken($lighter-color, 10%);
     font-size: 1.35em;
     color: lighten($text-color, 5%);
     position: relative;
-    top: -33px;
+    top: -29px;
   }
 
   #learn-more-button {
     font-size: 1.30em;
     position: relative;
-    top: -31px;
+    top: -25px;
     left: 2px;
   }
 
@@ -138,16 +138,6 @@ $text-color: darken($lighter-color, 10%);
       margin-right: 10px;
       padding-bottom: 15px;
     }
-    #total-raised {
-      color: $lighter-color;
-      @include font-size-tiny();
-      padding: {
-        top: 0px;
-        bottom: 10px;
-        right: 10px;
-      }
-      text-align: right;
-    }
     #raspberry-pi-logo {
       padding: {
         bottom: 0px;
@@ -158,7 +148,12 @@ $text-color: darken($lighter-color, 10%);
   }
 
   #accu-container {
-    //width: 120px;
+    font-size: 0.75em;
+    position: absolute;
+    top: 520px;
+    left: 70px;
+    width: 247px;
+
     @include ghost-panel(10px);
     margin-bottom: 20px;
     #accu-image {
@@ -174,21 +169,6 @@ $text-color: darken($lighter-color, 10%);
       }
       color: $lighter-color;
       text-align: right;
-    }
-  }
-
-  #testimonial {
-    //width: 100px;
-    @include ghost-panel(20px);
-    margin-bottom: 20px;
-    @include font-size-tiny();
-    text-align: right;
-    color: $lighter-color;
-    #title {
-      @include font-size-small();
-      font-weight: bold;
-      color: darken($lighter-color, 10%);
-      margin-bottom: 10px;
     }
   }
 
