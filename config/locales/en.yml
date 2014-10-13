@@ -22,10 +22,6 @@ en:
       the_place_to_practice_programming: "the place to practice programming"
       get_a_new_practice_id: "get a new id"
       enter_the_practice_id: "on <em>each</em> computer enter the same id"
-      please_donate: "if you find cyber&#8209;dojo useful please donate.
-                      donations are used to cover hosting costs and buy
-                      <a href='http://www.raspberrypi.org/' target='_blank'>raspberry pi's</a>
-                      <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html' target='_blank'>for kids</a>."
       your_animal_is: "your animal is the"
       revert: "revert"
       click_to_revert: "click<br/>&larr;to<br/>revert<br/>"

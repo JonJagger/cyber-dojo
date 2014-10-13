@@ -105,6 +105,11 @@ $text-color: darken($lighter-color, 10%);
   }
 
   #donate-container {
+    font-size: 1.25em;
+    position: absolute;
+    top: 220px;
+    left: 70px;
+    width: 270px;
     @include ghost-panel(10px);
     margin-bottom: 20px;
     #please-donate {
@@ -153,6 +158,7 @@ $text-color: darken($lighter-color, 10%);
   }
 
   #accu-container {
+    //width: 120px;
     @include ghost-panel(10px);
     margin-bottom: 20px;
     #accu-image {
@@ -172,6 +178,7 @@ $text-color: darken($lighter-color, 10%);
   }
 
   #testimonial {
+    //width: 100px;
     @include ghost-panel(20px);
     margin-bottom: 20px;
     @include font-size-tiny();
