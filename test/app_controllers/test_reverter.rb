@@ -50,11 +50,6 @@ class ReverterControllerTest  < ControllerTestBase
     assert_not_nil visible_files['cyber-dojo.sh']
 
     assert_equal 'echo abc', visible_files['cyber-dojo.sh']
-
-    light = json['light']
-    assert_not_nil light
-    assert_equal "amber", light['colour']
-    assert_equal 1, light['number']
   end
 
 end

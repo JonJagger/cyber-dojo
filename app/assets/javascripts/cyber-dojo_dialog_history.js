@@ -554,7 +554,8 @@ var cyberDojo = (function(cd, $) {
         };
       }
       buttons['help'] = function() {
-        var url = 'http://blog.cyber-dojo.org/2014/10/the-cyber-dojo-history-dialog.html';
+        var url = 'http://blog.cyber-dojo.org/';
+        url += '2014/10/the-cyber-dojo-history-dialog.html';
         window.open(url, '_blank');
       };
       return buttons;
@@ -682,9 +683,16 @@ var cyberDojo = (function(cd, $) {
     //---------------------------------------------------
 
     var doRevert = function() {
-      deleteAllCurrentFiles();
-      copyRevertFilesToCurrentFiles();
-      $('#test-button').click();
+      $.getJSON('/reverter/revert', {
+        id: id,
+        avatar: avatarName,
+        tag: nowTag
+      },
+      function(data) {
+        deleteAllCurrentFiles();
+        copyRevertFilesToCurrentFiles(data.visibleFiles);
+        $('#test-button').click();
+      });
     };
 
     //- - - - - - - - - - - - - - -
@@ -699,11 +707,11 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var copyRevertFilesToCurrentFiles = function() {
+    var copyRevertFilesToCurrentFiles = function(visibleFiles) {
       var filename;
-      for (filename in data.visibleFiles) {
+      for (filename in visibleFiles) {
         if (filename !== 'output') {
-          cd.newFileContent(filename, data.visibleFiles[filename]);
+          cd.newFileContent(filename, visibleFiles[filename]);
         }
       }
     };

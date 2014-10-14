@@ -10,7 +10,6 @@ class DifferController < ApplicationController
 
 	render :json => {
 	  :lights => avatar.lights.map{|light| light.to_json },
-      :visibleFiles => avatar.tags[now_tag].visible_files,
 	  :diffs => diffs,
 	  :prevAvatar => prevAvatar,
 	  :nextAvatar => nextAvatar,
