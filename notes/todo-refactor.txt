@@ -1,5 +1,14 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Create helper function to execute a backtick command
+with stderr redirected to output, from a given folder.
+Refactor this from Git.rb
+Then use for lib classes
+  Git.tb
+  UniqueId.rb
+  Runners
+  if $?.exitstatus != 0 for any command then log it.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 on history dialog remember tag-number for each animal
 and resume on that number when you return to that
 animal in the same dialog.

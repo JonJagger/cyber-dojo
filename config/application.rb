@@ -58,6 +58,8 @@ module CyberDojo
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    config.colorize_logging = true
+
     config.exceptions_app = lambda do |env|
       ExceptionController.action(:render_error).call(env)
     end
