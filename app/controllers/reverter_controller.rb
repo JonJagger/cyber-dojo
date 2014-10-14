@@ -2,9 +2,9 @@
 class ReverterController < ApplicationController
 
   def revert
-	render :json => {
+    render :json => {
       :visibleFiles => avatar.tags[tag].visible_files
-	}
+    }
   end
 
 private
