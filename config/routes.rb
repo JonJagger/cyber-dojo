@@ -16,7 +16,7 @@ CyberDojo::Application.routes.draw do
   # This route can be invoked with purchase_url(:id => product.id)
 
   get 'dojo/index(/:id)' => 'dojo#index'
-  get 'dojo/valid_id(/:id)' => 'dojo#valid_id'
+  get 'dojo/valid_id_json(/:id)' => 'dojo#valid_id_json'
   get 'dojo/enter_json(/:id)' => 'dojo#enter_json'
   get 'dojo/re_enter_json(/:id)' => 'dojo#re_enter_json'
 

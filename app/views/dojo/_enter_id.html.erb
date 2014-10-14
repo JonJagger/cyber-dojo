@@ -27,7 +27,7 @@ $(function() {
     disable(reEnterButton);
     disable(reviewButton);
     if (id.length >= 6) {
-      $.getJSON('/dojo/valid_id', { id: id }, function(dojo) {
+      $.getJSON('/dojo/valid_id_json', { id: id }, function(dojo) {
         enableIf(enterButton, dojo.exists);
         enableIf(reEnterButton, dojo.started);
         enableIf(reviewButton, dojo.started > 0);

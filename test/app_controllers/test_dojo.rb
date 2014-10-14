@@ -13,7 +13,7 @@ class DojoControllerTest  < ControllerTestBase
 
   test 'valid_id exists=false when no kata for id' do
     id = 'abcdef'
-    get 'dojo/valid_id', :format => :json, :id => id
+    get 'dojo/valid_id_json', :format => :json, :id => id
     assert !json['exists']
   end
 
@@ -22,7 +22,7 @@ class DojoControllerTest  < ControllerTestBase
   test 'valid_id exists=true when id.length < 6 and kata exists' do
     id = checked_save_id[0..4]
     assert id.length < 6
-    get 'dojo/valid_id', :format => :json, :id => id
+    get 'dojo/valid_id_json', :format => :json, :id => id
     assert json['exists'], "json['exists']"
   end
 
@@ -31,7 +31,7 @@ class DojoControllerTest  < ControllerTestBase
   test 'valid_id exists=true when id.length == 6 and kata exists' do
     id = checked_save_id[0..5]
     assert id.length == 6
-    get 'dojo/valid_id', :format => :json, :id => id
+    get 'dojo/valid_id_json', :format => :json, :id => id
     assert json['exists'], "json['exists']"
   end
 
@@ -40,7 +40,7 @@ class DojoControllerTest  < ControllerTestBase
   test 'valid_id exists=true when id.length > 6 and kata exists' do
     id = checked_save_id[0..6]
     assert id.length > 6
-    get 'dojo/valid_id', :format => :json, :id => id
+    get 'dojo/valid_id_json', :format => :json, :id => id
     assert json['exists'], "json['exists']"
   end
 

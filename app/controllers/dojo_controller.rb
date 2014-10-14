@@ -8,7 +8,7 @@ class DojoController < ApplicationController
 
   #------------------------------------------------
 
-  def valid_id
+  def valid_id_json
     exists = katas.exists?(id)
     render :json => {
       :exists => exists,
