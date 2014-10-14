@@ -23,7 +23,7 @@ class DownloadControllerTest < ControllerTestBase
     id = checked_save_id
     get 'dojo/enter_json', :id => id
     avatar_name = json['avatar_name']
-    get '/kata/edit', :id => id, :avatar => avatar_name
+    get 'kata/edit', :id => id, :avatar => avatar_name
     assert_response :success
 
     post 'kata/run_tests',
@@ -57,7 +57,7 @@ class DownloadControllerTest < ControllerTestBase
       get 'dojo/enter_json', :id => id
       avatar_name = json['avatar_name']
 
-      get '/kata/edit', :id => id, :avatar => avatar_name
+      get 'kata/edit', :id => id, :avatar => avatar_name
       assert_response :success
 
       post 'kata/run_tests',

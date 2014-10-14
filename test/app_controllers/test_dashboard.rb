@@ -9,7 +9,7 @@ class DashboardControllerTest < ControllerTestBase
     setup_language('fake-C#','nunit')
     setup_exercise('fake-Yatzy')
     id = checked_save_id('fake-C#','fake-Yatzy')
-    get '/dashboard/show', :id => id
+    get 'dashboard/show', :id => id
     assert_response :success
   end
 
@@ -25,7 +25,7 @@ class DashboardControllerTest < ControllerTestBase
       avatar_name = json['avatar_name']
 
       setup_initial_edit(id,avatar_name)
-      get '/kata/edit', :id => id, :avatar => avatar_name
+      get 'kata/edit', :id => id, :avatar => avatar_name
       assert_response :success
     end
 
@@ -42,7 +42,7 @@ class DashboardControllerTest < ControllerTestBase
       get 'dojo/enter_json', :id => id
       avatar_name = json['avatar_name']
 
-      get '/kata/edit', :id => id, :avatar => avatar_name
+      get 'kata/edit', :id => id, :avatar => avatar_name
       assert_response :success
 
       (1..2).each do |m|
@@ -78,7 +78,7 @@ class DashboardControllerTest < ControllerTestBase
     get 'dojo/enter_json', :id => id
     avatar_name = json['avatar_name']
 
-    get '/kata/edit', :id => id, :avatar => avatar_name
+    get 'kata/edit', :id => id, :avatar => avatar_name
     assert_response :success
 
     (1..3).each do |m|
@@ -115,7 +115,7 @@ class DashboardControllerTest < ControllerTestBase
     get 'dojo/enter_json', :id => id
     avatar_name = json['avatar_name']
 
-    get '/kata/edit', :id => id, :avatar => avatar_name
+    get 'kata/edit', :id => id, :avatar => avatar_name
     assert_response :success
 
     post 'kata/run_tests',

@@ -47,7 +47,6 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'enter_json with no id => !exists' do
-    bad_id = ''
     get 'dojo/enter_json', :format => :json
     assert !json['exists']
   end
@@ -83,12 +82,12 @@ class DojoControllerTest  < ControllerTestBase
   test 'enter succeeds once for each avatar name, then dojo is full' do
     id = checked_save_id
     Avatars.names.each do |avatar_name|
-      get '/dojo/enter_json', :format => :json, :id => id
+      get 'dojo/enter_json', :format => :json, :id => id
       assert json['exists']
       assert !json['full']
       assert_not_nil json['avatar_name']
     end
-    get '/dojo/enter_json', :format => :json, :id => id
+    get 'dojo/enter_json', :format => :json, :id => id
     assert json['exists']
     assert json['full']
     assert_nil json['avatar_name']
@@ -115,7 +114,7 @@ class DojoControllerTest  < ControllerTestBase
 
   test 're_enter_json with id that exists and is not empty' do
     id = checked_save_id
-    get '/dojo/enter_json', :format => :json, :id => id
+    get 'dojo/enter_json', :format => :json, :id => id
     get 'dojo/re_enter_json', :format => :json, :id => id
     assert json['exists']
     assert !json['empty']
