@@ -1,5 +1,10 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+on history-dialog, the json data returned includes
+visibleFiles which is used only if a revert takes place (I think).
+This creates needless extra pressure on the hard disk and on the
+network. Rework this so reverter_controller is reinstated.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 on history dialog remember tag-number for each animal
 and resume on that number when you return to that
 animal in the same dialog.
