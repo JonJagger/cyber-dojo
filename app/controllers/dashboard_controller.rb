@@ -27,13 +27,12 @@ class DashboardController < ApplicationController
 
   def progress
     animals = { }
-    dojo.katas[id].avatars.active.each do |avatar|
+    avatars.active.each do |avatar|
       animals[avatar.name] = {
         :colour => avatar.lights[-1].colour,
         :progress => most_recent_progress(avatar)
       }
     end
-
 	render :json => {
       :animals => animals
     }

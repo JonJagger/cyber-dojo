@@ -6,7 +6,6 @@ class DifferController < ApplicationController
 
   def diff
     diffs = git_diff_view(avatar.tags[was_tag].diff(now_tag))
-    current_filename = params[:current_filename]
 
 	render :json => {
 	  :lights => avatar.lights.map{|light| light.to_json },
@@ -30,19 +29,23 @@ private
 	params[:now_tag].to_i
   end
 
-  def active
+  def current_filename
+    params[:current_filename]
+  end
+
+  def active_avatar_names
 	avatars.active.map {|avatar| avatar.name}.sort
   end
 
   def prevAvatar
-	names = active
+	names = active_avatar_names
 	return '' if names.length == 1
 	names.unshift(names.last)
 	return names[names.rindex(avatar_name) - 1]
   end
 
   def nextAvatar
-	names = active
+	names = active_avatar_names
 	return '' if names.length == 1
 	names << names[0]
 	return names[names.index(avatar_name) + 1]

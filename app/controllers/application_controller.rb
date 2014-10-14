@@ -16,9 +16,7 @@ class ApplicationController < ActionController::Base
 
   def id
     path = root_path
-    if ENV['CYBERDOJO_TEST_ROOT_DIR']
-      path += 'test/cyberdojo/'
-    end
+    path += 'test/cyberdojo/' if ENV['CYBERDOJO_TEST_ROOT_DIR']
     Folders::id_complete(path + 'katas/', params[:id]) || ''
   end
 
@@ -39,12 +37,12 @@ class ApplicationController < ActionController::Base
     katas[id]
   end
 
-  def avatar_name
-	params[:avatar]
-  end
-
   def avatars
     kata.avatars
+  end
+
+  def avatar_name
+	params[:avatar]
   end
 
   def avatar
@@ -72,16 +70,6 @@ private
   def git
     @git ||= Thread.current[:git]
     @git ||= Git.new
-  end
-
-  #before_filter :set_locale
-  def set_locale
-    # i18n work is not currently live
-    if params[:locale].present?
-      session[:locale] = params[:locale]
-    end
-    original_locale = I18n.locale
-    I18n.locale = params[:locale] || session[:locale] || I18n.default_locale
   end
 
 end
