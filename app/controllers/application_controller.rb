@@ -51,11 +51,6 @@ class ApplicationController < ActionController::Base
     avatars[avatar_name]
   end
 
-  def bind(pathed_filename)
-    filename = Rails.root.to_s + pathed_filename
-    ERB.new(File.read(filename)).result(binding)
-  end
-
   def root_path
     Rails.root.to_s + '/'
   end

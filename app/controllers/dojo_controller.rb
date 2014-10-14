@@ -66,4 +66,9 @@ private
     bind('/app/views/dojo/re_enter_dialog.html.erb')
   end
 
+  def bind(pathed_filename)
+    filename = Rails.root.to_s + pathed_filename
+    ERB.new(File.read(filename)).result(binding)
+  end
+
 end
