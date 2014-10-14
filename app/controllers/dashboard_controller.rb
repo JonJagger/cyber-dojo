@@ -15,7 +15,6 @@ class DashboardController < ApplicationController
       @avatar_name = params['avatar']
       @was_tag = params['was_tag']
       @now_tag = params['now_tag']
-      @max_tag = @kata.avatars[@avatar_name].lights.each.entries.length
     end
   end
 
@@ -24,10 +23,6 @@ class DashboardController < ApplicationController
     respond_to do |format|
       format.js if request.xhr?
     end
-  end
-
-  def help_dialog
-    render :layout => false
   end
 
   def progress
