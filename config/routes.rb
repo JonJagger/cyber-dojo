@@ -15,27 +15,27 @@ CyberDojo::Application.routes.draw do
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
 
-  match 'dojo/index(/:id)' => 'dojo#index', via: [:get]
-  match 'dojo/valid_id(/:id)' => 'dojo#valid_id', via: [:get]
-  match 'dojo/enter_json(/:id)' => 'dojo#enter_json', via: [:get]
-  match 'dojo/re_enter_json(/:id)' => 'dojo#re_enter_json', via: [:get]
+  get 'dojo/index(/:id)' => 'dojo#index'
+  get 'dojo/valid_id(/:id)' => 'dojo#valid_id'
+  get 'dojo/enter_json(/:id)' => 'dojo#enter_json'
+  get 'dojo/re_enter_json(/:id)' => 'dojo#re_enter_json'
 
-  match 'setup/show(/:id)' => 'setup#show', via: [:get]
-  match 'setup/save' => 'setup#save', via: [:get]
+  get 'setup/show(/:id)' => 'setup#show'
+  get 'setup/save' => 'setup#save'
 
-  match 'kata/edit(/:id)' => 'kata#edit', via: [:get]
-  match 'kata/run_tests(/:id)' => 'kata#run_tests', via: [:post]
-  match 'kata/help_dialog(/:id)' => 'kata#help_dialog', via: [:get]
+  get  'kata/edit(/:id)' => 'kata#edit'
+  post 'kata/run_tests(/:id)' => 'kata#run_tests'
+  get  'kata/help_dialog(/:id)' => 'kata#help_dialog'
 
-  match 'dashboard/show(/:id)' => 'dashboard#show', via: [:get]
-  match 'dashboard/progress(/:id)' => 'dashboard#progress', via: [:get]
-  match 'dashboard/heartbeat(/:id)' => 'dashboard#heartbeat', via: [:get]
+  get 'dashboard/show(/:id)' => 'dashboard#show'
+  get 'dashboard/progress(/:id)' => 'dashboard#progress'
+  get 'dashboard/heartbeat(/:id)' => 'dashboard#heartbeat'
 
-  match 'differ/diff(/:id)' => 'differ#diff', via: [:get]
-  match 'forker/fork(/:id)' => 'forker#fork', via: [:get]
-  match 'reverter/revert(/:id)' => 'reverter#revert', via: [:get]
+  get 'differ/diff(/:id)' => 'differ#diff'
+  get 'forker/fork(/:id)' => 'forker#fork'
+  get 'reverter/revert(/:id)' => 'reverter#revert'
 
-  match 'downloader/download(/:id)' => 'downloader#download', via: [:get]
+  get 'downloader/download(/:id)' => 'downloader#download'
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
