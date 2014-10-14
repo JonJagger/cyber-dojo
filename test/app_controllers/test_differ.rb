@@ -23,7 +23,7 @@ class DifferControllerTest < ControllerTestBase
 
   test 'no lines different in any files between successive tags' do
     id = checked_save_id
-    get 'dojo/enter_json', :id => id
+    get 'dojo/enter', :id => id
     avatar_name = json['avatar_name']
 
     get 'kata/edit', :id => id, :avatar => avatar_name
@@ -91,7 +91,7 @@ class DifferControllerTest < ControllerTestBase
 
   test 'one line different in one file between successive tags' do
     id = checked_save_id
-    get 'dojo/enter_json', :id => id
+    get 'dojo/enter', :id => id
     avatar_name = json['avatar_name']
     get 'kata/edit', :id => id, :avatar => avatar_name
 

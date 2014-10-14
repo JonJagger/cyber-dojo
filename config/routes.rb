@@ -16,26 +16,26 @@ CyberDojo::Application.routes.draw do
   # This route can be invoked with purchase_url(:id => product.id)
 
   get 'dojo/index(/:id)' => 'dojo#index'
-  get 'dojo/valid_id_json' => 'dojo#valid_id_json'
-  get 'dojo/enter_json' => 'dojo#enter_json'
-  get 'dojo/re_enter_json' => 'dojo#re_enter_json'
+  get 'dojo/check_id' => 'dojo#check_id', :constraints => { :format => 'json' }
+  get 'dojo/enter' => 'dojo#enter', :constraints => { :format => 'json' }
+  get 'dojo/re_enter' => 'dojo#re_enter', :constraints => { :format => 'json' }
 
   get 'setup/show(/:id)' => 'setup#show'
-  get 'setup/save' => 'setup#save'
+  get 'setup/save' => 'setup#save', :constraints => { :format => 'json' }
 
-  get  'kata/edit/:id' => 'kata#edit'
-  post 'kata/run_tests/:id' => 'kata#run_tests'
+  get  'kata/edit(/:id)' => 'kata#edit'
+  post 'kata/run_tests(/:id)' => 'kata#run_tests'
   get  'kata/help_dialog' => 'kata#help_dialog'
 
-  get 'dashboard/show/:id' => 'dashboard#show'
-  get 'dashboard/progress' => 'dashboard#progress'
-  get 'dashboard/heartbeat' => 'dashboard#heartbeat'
+  get 'dashboard/show(/:id)' => 'dashboard#show'
+  get 'dashboard/progress' => 'dashboard#progress', :constraints => { :format => 'json' }
+  get 'dashboard/heartbeat' => 'dashboard#heartbeat', :constraints => { :format => 'json' }
 
-  get 'differ/diff' => 'differ#diff'
-  get 'forker/fork' => 'forker#fork'
-  get 'reverter/revert' => 'reverter#revert'
+  get 'differ/diff' => 'differ#diff', :constraints => { :format => 'json' }
+  get 'forker/fork' => 'forker#fork', :constraints => { :format => 'json' }
+  get 'reverter/revert' => 'reverter#revert', :constraints => { :format => 'json' }
 
-  get 'downloader/download/:id' => 'downloader#download'
+  get 'downloader/download(/:id)' => 'downloader#download'
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products

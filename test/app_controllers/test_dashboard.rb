@@ -21,7 +21,7 @@ class DashboardControllerTest < ControllerTestBase
     setup_exercise('fake-Yatzy')
     id = checked_save_id('fake-C#','fake-Yatzy')
     (1..4).each do |n|
-      get 'dojo/enter_json', :id => id
+      get 'dojo/enter', :id => id
       avatar_name = json['avatar_name']
 
       setup_initial_edit(id,avatar_name)
@@ -39,7 +39,7 @@ class DashboardControllerTest < ControllerTestBase
     id = checked_save_id
     (1..3).each do |n|
 
-      get 'dojo/enter_json', :id => id
+      get 'dojo/enter', :id => id
       avatar_name = json['avatar_name']
 
       get 'kata/edit', :id => id, :avatar => avatar_name
@@ -75,7 +75,7 @@ class DashboardControllerTest < ControllerTestBase
   test 'show dashboard and open a diff-dialog' do
     id = checked_save_id
 
-    get 'dojo/enter_json', :id => id
+    get 'dojo/enter', :id => id
     avatar_name = json['avatar_name']
 
     get 'kata/edit', :id => id, :avatar => avatar_name
@@ -112,7 +112,7 @@ class DashboardControllerTest < ControllerTestBase
   test 'heartbeat' do
     id = checked_save_id
 
-    get 'dojo/enter_json', :id => id
+    get 'dojo/enter', :id => id
     avatar_name = json['avatar_name']
 
     get 'kata/edit', :id => id, :avatar => avatar_name

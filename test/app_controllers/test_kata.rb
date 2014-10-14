@@ -10,7 +10,7 @@ class KataControllerTest  < ControllerTestBase
     setup_exercise('fake-Yatzy')
     id = checked_save_id('fake-C#','fake-Yatzy')
 
-    get 'dojo/enter_json', :id => id
+    get 'dojo/enter', :id => id
     avatar_name = json['avatar_name']
 
     setup_initial_edit(id,avatar_name)

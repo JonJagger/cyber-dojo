@@ -21,7 +21,7 @@ class DownloadControllerTest < ControllerTestBase
   test 'downloaded zip of dojo with one animal ' +
        'unzips to same as original folder' do
     id = checked_save_id
-    get 'dojo/enter_json', :id => id
+    get 'dojo/enter', :id => id
     avatar_name = json['avatar_name']
     get 'kata/edit', :id => id, :avatar => avatar_name
     assert_response :success
@@ -54,7 +54,7 @@ class DownloadControllerTest < ControllerTestBase
     id = checked_save_id
 
     (0..9).each do
-      get 'dojo/enter_json', :id => id
+      get 'dojo/enter', :id => id
       avatar_name = json['avatar_name']
 
       get 'kata/edit', :id => id, :avatar => avatar_name

@@ -6,7 +6,7 @@ class ReverterControllerTest  < ControllerTestBase
 
   test 'revert' do
     id = checked_save_id
-    get 'dojo/enter_json', :id => id
+    get 'dojo/enter', :id => id
     avatar_name = json['avatar_name']
     get 'kata/edit', :id => id, :avatar => avatar_name
 
