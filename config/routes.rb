@@ -15,24 +15,32 @@ CyberDojo::Application.routes.draw do
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
 
-  get 'dojo/index(/:id)' => 'dojo#index'
-  get 'dojo/check_id' => 'dojo#check_id', :constraints => { :format => 'json' }
-  get 'dojo/enter' => 'dojo#enter', :constraints => { :format => 'json' }
-  get 'dojo/re_enter' => 'dojo#re_enter', :constraints => { :format => 'json' }
+  scope path: '/dojo', controller: :dojo do
+    get 'index(/:id)' => :index
+    get 'check_id' => :check_id, :constraints => { :format => :json }
+    get 'enter'    => :enter,    :constraints => { :format => :json }
+    get 're_enter' => :re_enter, :constraints => { :format => :json }
+  end
 
-  get 'setup/show(/:id)' => 'setup#show'
-  get 'setup/save' => 'setup#save', :constraints => { :format => 'json' }
+  scope path: '/setup', controller: :setup do
+    get 'show(/:id)' => :show
+    get 'save' => :save, :constraints => { :format => :json }
+  end
 
-  get  'kata/edit(/:id)' => 'kata#edit'
-  post 'kata/run_tests(/:id)' => 'kata#run_tests'
+  scope path: '/kata', controller: :kata do
+    get  'edit(/:id)'      => :edit
+    post 'run_tests(/:id)' => :run_tests
+  end
 
-  get 'dashboard/show(/:id)' => 'dashboard#show'
-  get 'dashboard/progress' => 'dashboard#progress', :constraints => { :format => 'json' }
-  get 'dashboard/heartbeat' => 'dashboard#heartbeat', :constraints => { :format => 'json' }
+  scope path: '/dashboard', controller: :dashboard do
+    get 'show(/:id)' => :show
+    get 'progress'   => :progress,  :constraints => { :format => :json }
+    get 'heartbeat'  => :heartbeat, :constraints => { :format => :json }
+  end
 
-  get 'differ/diff' => 'differ#diff', :constraints => { :format => 'json' }
+  get 'differ/diff' => 'differ#diff', :constraints => { :format => :json }
   get 'forker/fork(/:id)' => 'forker#fork'
-  get 'reverter/revert' => 'reverter#revert', :constraints => { :format => 'json' }
+  get 'reverter/revert' => 'reverter#revert', :constraints => { :format => :json }
 
   get 'downloader/download(/:id)' => 'downloader#download'
 
