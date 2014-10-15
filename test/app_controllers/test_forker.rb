@@ -7,13 +7,9 @@ class ForkerControllerTest < ControllerTestBase
   test 'when id is invalid ' +
        'then fork fails ' +
        'and the reason given is id' do
-    setup_dojo
 
-    get 'forker/fork',
-      :format => :json,
-      :id => 'bad',
-      :avatar => 'hippo',
-      :tag => 1
+    stub_dojo
+    fork(:json,'bad','hippo',1)
 
     assert !forked?
     assert_reason_is('id')
@@ -27,17 +23,15 @@ class ForkerControllerTest < ControllerTestBase
   test 'when language folder no longer exists ' +
        'the fork fails ' +
        'and the reason given is language' do
-    setup_dojo
+
+    stub_dojo
+
     language = @dojo.languages['does-not-exist']
     id = '1234512345'
     kata = @dojo.katas[id]
     kata.dir.spy_read('manifest.json', { :language => language.name })
 
-    get 'forker/fork',
-      :format => :json,
-      :id => id,
-      :avatar => 'hippo',
-      :tag => 1
+    fork(:json,id,'hippo',1)
 
     assert !forked?
     assert_reason_is('language')
@@ -52,7 +46,9 @@ class ForkerControllerTest < ControllerTestBase
   test 'when avatar not started ' +
        'the fork fails ' +
        'and the reason given is avatar' do
-    setup_dojo
+
+    stub_dojo
+
     language = @dojo.languages['Ruby-installed-and-working']
     language.dir.make
     language.dir.spy_exists?('manifest.json')
@@ -61,11 +57,7 @@ class ForkerControllerTest < ControllerTestBase
     kata = @dojo.katas[id]
     kata.dir.spy_read('manifest.json', { :language => language.name })
 
-    get 'forker/fork',
-      :format => :json,
-      :id => id,
-      :avatar => 'hippo',
-      :tag => 1
+    fork(:json,id,'hippo',1)
 
     assert !forked?
     assert_reason_is('avatar')
@@ -90,7 +82,9 @@ class ForkerControllerTest < ControllerTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def bad_tag_test(bad_tag, more_than_number_of_lights = false)
-    setup_dojo
+
+    stub_dojo
+
     language_name = 'Ruby-installed-and-working'
     language = @dojo.languages[language_name]
     language.dir.make
@@ -106,21 +100,10 @@ class ForkerControllerTest < ControllerTestBase
     avatar.dir.make
 
     if more_than_number_of_lights
-      avatar.dir.spy_read('increments.json',
-        JSON.unparse([
-          {
-            'colour' => 'red',
-            'time' => [2014, 2, 15, 8, 54, 6],
-            'number' => 1
-          }
-        ]))
+      stub_traffic_lights(avatar, red)
     end
 
-    get "forker/fork",
-      :format => :json,
-      :id => id,
-      :avatar => avatar_name,
-      :tag => bad_tag
+    fork(:json,id,avatar_name,bad_tag)
 
     assert !forked?
     assert_reason_is('tag')
@@ -136,7 +119,8 @@ class ForkerControllerTest < ControllerTestBase
        'and id,avatar,tag are all ok ' +
        'the fork works ' +
        "and the new dojo's id is returned" do
-    setup_dojo
+
+    stub_dojo
     id = '1234512345'
     kata = @dojo.katas[id]
 
@@ -153,18 +137,7 @@ class ForkerControllerTest < ControllerTestBase
 
     avatar_name = 'hippo'
     avatar = kata.avatars[avatar_name]
-    avatar.dir.spy_read('increments.json', JSON.unparse([
-      {
-        'colour' => 'red',
-        'time' => [2014, 2, 15, 8, 54, 6],
-        'number' => 1
-      },
-      {
-        'colour' => 'green',
-        'time' => [2014, 2, 15, 8, 54, 34],
-        'number' => 2
-      },
-      ]))
+    stub_traffic_lights(avatar, red_green)
 
     visible_files = {
       'Hiker.cs' => 'public class Hiker { }',
@@ -175,11 +148,7 @@ class ForkerControllerTest < ControllerTestBase
     filename = 'manifest.json'
     @git.spy(avatar.dir.path,'show',"#{tag}:#{filename}",manifest)
 
-    get 'forker/fork',
-      :format => :json,
-      :id => id,
-      :avatar => avatar_name,
-      :tag => tag
+    fork(:json,id,avatar_name,tag)
 
     assert forked?
     assert_equal 10, forked_kata_id.length
@@ -202,12 +171,8 @@ class ForkerControllerTest < ControllerTestBase
        'format=json fork works ' +
        "and the new dojo's id is returned" do
 
-    all_ok_setup
-    get 'forker/fork',
-      :format => :json,
-      :id => @id,
-      :avatar => @avatar_name,
-      :tag => @tag
+    stub_setup
+    fork(:json,@id,@avatar_name,@tag)
 
     assert forked?
     assert_equal 10, forked_kata_id.length
@@ -227,14 +192,23 @@ class ForkerControllerTest < ControllerTestBase
 
   test 'when id,language,avatar,tag are all ok ' +
        'format=html fork works ' +
-       "and the new dojo's id is returned" do
+       'and you are redirected to the home page ' +
+       "with the new dojo's id" do
 
+    stub_setup
+    fork(:html,@id,@avatar_name,@tag)
+
+    #assert_redirected_to(:controller => 'dojo', :action => 'index')
   end
 
   #- - - - - - - - - - - - - - - - - -
 
-  def all_ok_setup
+  def stub_dojo
     setup_dojo
+  end
+
+  def stub_setup
+    stub_dojo
     @id = '1234512345'
     @kata = @dojo.katas[@id]
     language_name = 'Ruby-installed-and-working'
@@ -245,18 +219,7 @@ class ForkerControllerTest < ControllerTestBase
       })
     @avatar_name = 'hippo'
     @avatar = @kata.avatars[@avatar_name]
-    @avatar.dir.spy_read('increments.json', JSON.unparse([
-      {
-        'colour' => 'red',
-        'time' => [2014, 2, 15, 8, 54, 6],
-        'number' => 1
-      },
-      {
-        'colour' => 'green',
-        'time' => [2014, 2, 15, 8, 54, 34],
-        'number' => 2
-      },
-      ]))
+    stub_traffic_lights(@avatar, red_green)
 
     @visible_files = {
       'Hiker.cs' => 'public class Hiker { }',
@@ -268,7 +231,27 @@ class ForkerControllerTest < ControllerTestBase
     @git.spy(@avatar.dir.path,'show',"#{@tag}:#{filename}",manifest)
   end
 
+  def fork(format,id,avatar,tag)
+    get 'forker/fork',
+      :format => format,
+      :id => id,
+      :avatar => avatar,
+      :tag => tag
+  end
+
   #- - - - - - - - - - - - - - - - - -
+
+  def stub_traffic_lights(avatar, lights)
+    avatar.dir.spy_read('increments.json', JSON.unparse(lights))
+  end
+
+  def red
+    [ { 'colour' => 'red' } ]
+  end
+
+  def red_green
+    [ { 'colour' => 'red' }, { 'colour' => 'green' } ]
+  end
 
   def forked?
     assert_not_nil json
