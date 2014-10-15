@@ -31,7 +31,7 @@ CyberDojo::Application.routes.draw do
   get 'dashboard/heartbeat' => 'dashboard#heartbeat', :constraints => { :format => 'json' }
 
   get 'differ/diff' => 'differ#diff', :constraints => { :format => 'json' }
-  get 'forker/fork' => 'forker#fork', :constraints => { :format => 'json' }
+  get 'forker/fork(/:id)' => 'forker#fork'
   get 'reverter/revert' => 'reverter#revert', :constraints => { :format => 'json' }
 
   get 'downloader/download(/:id)' => 'downloader#download'
