@@ -13,20 +13,11 @@ on history dialog remember tag-number for each animal
 and resume on that number when you return to that
 animal in the same dialog.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-on test page, make animal image (top right) open a history dialog
-set at 0-1 to match behaviour on dashboard.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-when launching localhost server
-$ rails s -e production
-images are not being displayed.
+on test page, make animal image (top right) *not* a dashboard page.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 clicking on the animal image on the history-dialog
 opens the re-enter popup allowing you to spy
 on other animals!
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-make (new) help button on history open blog page on history
-add fork/revert info to blog page on history
-make blog page for test page and link to it from test page help button
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 See if citigroup are interested in a corporate license.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
