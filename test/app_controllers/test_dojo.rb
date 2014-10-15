@@ -28,7 +28,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'check_id exists=true when id.length < 6 and kata exists' do
-    @id = checked_save_id[0..4]
+    @id = create_kata[0..4]
     assert @id.length < 6
     check_id
     assert exists?
@@ -39,7 +39,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'check_id exists=true when id.length == 6 and kata exists' do
-    @id = checked_save_id[0..5]
+    @id = create_kata[0..5]
     assert @id.length == 6
     check_id
     assert exists?
@@ -50,7 +50,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'check_id exists=true when id.length > 6 and kata exists' do
-    @id = checked_save_id[0..6]
+    @id = create_kata[0..6]
     assert @id.length > 6
     check_id
     assert exists?
@@ -84,7 +84,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'enter with id that does exist => exists,!full,avatar_name' do
-    @id = checked_save_id
+    @id = create_kata
     enter
     assert exists?
     assert !empty?
@@ -95,7 +95,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'enter succeeds once for each avatar name, then dojo is full' do
-    @id = checked_save_id
+    @id = create_kata
     Avatars.names.each do |avatar_name|
       enter
       assert exists?
@@ -120,7 +120,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 're_enter with id that exists but is empty' do
-    @id = checked_save_id
+    @id = create_kata
     re_enter
     assert exists?
     assert empty?
@@ -130,7 +130,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 're_enter with id that exists and is not empty' do
-    @id = checked_save_id
+    @id = create_kata
     enter
     re_enter
     assert exists?
@@ -142,14 +142,6 @@ class DojoControllerTest  < ControllerTestBase
 
   def check_id
     get 'dojo/check_id', :format => :json, :id => @id
-  end
-
-  def enter
-    if !@id.nil?
-      get 'dojo/enter', :format => :json, :id => @id
-    else
-      get 'dojo/enter', :format => :json
-    end
   end
 
   def re_enter

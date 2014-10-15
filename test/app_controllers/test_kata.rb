@@ -5,10 +5,10 @@ require_relative 'controller_test_base'
 class KataControllerTest  < ControllerTestBase
 
   test 'edit and then run-tests' do
-    setup_dojo
-    setup_language('fake-C#', 'nunit')
-    setup_exercise('fake-Yatzy')
-    id = checked_save_id('fake-C#','fake-Yatzy')
+    stub_dojo
+    stub_language('fake-C#', 'nunit')
+    stub_exercise('fake-Yatzy')
+    id = create_kata('fake-C#','fake-Yatzy')
 
     get 'dojo/enter', :id => id
     avatar_name = json['avatar_name']

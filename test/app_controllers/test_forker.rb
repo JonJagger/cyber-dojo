@@ -26,9 +26,10 @@ class ForkerControllerTest < ControllerTestBase
 
     stub_dojo
 
-    language = @dojo.languages['does-not-exist']
     id = '1234512345'
     kata = @dojo.katas[id]
+
+    language = @dojo.languages['does-not-exist']
     kata.dir.spy_read('manifest.json', { :language => language.name })
 
     fork(:json,id,'hippo',1)
@@ -137,7 +138,7 @@ class ForkerControllerTest < ControllerTestBase
 
     avatar_name = 'hippo'
     avatar = kata.avatars[avatar_name]
-    stub_traffic_lights(avatar, red_green)
+    stub_traffic_lights(avatar, [ red, green ])
 
     visible_files = {
       'Hiker.cs' => 'public class Hiker { }',
@@ -203,23 +204,22 @@ class ForkerControllerTest < ControllerTestBase
 
   #- - - - - - - - - - - - - - - - - -
 
-  def stub_dojo
-    setup_dojo
-  end
-
   def stub_setup
     stub_dojo
     @id = '1234512345'
     @kata = @dojo.katas[@id]
+
     language_name = 'Ruby-installed-and-working'
     @kata.dir.spy_read('manifest.json', { :language => language_name })
+
     language = @dojo.languages[language_name]
     language.dir.spy_read('manifest.json', {
         'unit_test_framework' => 'ruby_test_unit'
       })
+
     @avatar_name = 'hippo'
     @avatar = @kata.avatars[@avatar_name]
-    stub_traffic_lights(@avatar, red_green)
+    stub_traffic_lights(@avatar, [ red, green ])
 
     @visible_files = {
       'Hiker.cs' => 'public class Hiker { }',
@@ -246,11 +246,11 @@ class ForkerControllerTest < ControllerTestBase
   end
 
   def red
-    [ { 'colour' => 'red' } ]
+    { 'colour' => 'red' }
   end
 
-  def red_green
-    [ { 'colour' => 'red' }, { 'colour' => 'green' } ]
+  def green
+    { 'colour' => 'green' }
   end
 
   def forked?

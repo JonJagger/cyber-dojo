@@ -34,7 +34,7 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def setup_dojo
+  def stub_dojo
     externals = {
       :disk   => @disk   = thread[:disk  ] = SpyDisk.new,
       :git    => @git    = thread[:git   ] = SpyGit.new,
@@ -43,19 +43,19 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     @dojo = Dojo.new(root_path,externals)
   end
 
-  def setup_language(language_name, unit_test_framework)
+  def stub_language(language_name, unit_test_framework)
     language = @dojo.languages[language_name]
     language.dir.spy_read('manifest.json', {
         'unit_test_framework' => unit_test_framework
     })
   end
 
-  def setup_exercise(exercise_name)
+  def stub_exercise(exercise_name)
     exercise = @dojo.exercises[exercise_name]
     exercise.dir.spy_read('instructions', 'your task...')
   end
 
-  def setup_kata(id, language_name, exercise_name)
+  def stub_kata(id, language_name, exercise_name)
     kata = @dojo.katas[id]
     kata.dir.spy_read('manifest.json', {
       :language => language_name,
@@ -63,8 +63,8 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     })
   end
 
-  def checked_save_id(language_name = 'Ruby-TestUnit',
-                      exercise_name = 'Yatzy')
+  def create_kata(language_name = 'Ruby-TestUnit',
+                  exercise_name = 'Yatzy')
     get 'setup/save',
       :language => language_name,
       :exercise => exercise_name
@@ -79,6 +79,14 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     }
     path = @dojo.katas[id].avatars[avatar_name].path
     @git.spy(path,'show','0:manifest.json',JSON.unparse(manifest))
+  end
+
+  def enter
+    if !@id.nil?
+      get 'dojo/enter', :format => :json, :id => @id
+    else
+      get 'dojo/enter', :format => :json
+    end
   end
 
   #- - - - - - - - - - - - - - - - - -

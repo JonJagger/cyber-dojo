@@ -7,7 +7,7 @@ class SetupControllerTest < ControllerTestBase
   test 'setup/show chooses language and exercise of kata ' +
        'whose 10-char id is passed in URL ' +
        '(to encourage repetition)' do
-    setup_dojo
+    stub_dojo
 
     # setup_languages
     languages_names = [
@@ -20,7 +20,7 @@ class SetupControllerTest < ControllerTestBase
     languages_names.each do |language_name|
       language = @dojo.languages[language_name]
       assert_equal language.name, language.new_name, 'renamed!'
-      setup_language(language_name, 'fake-test-framework-name')
+      stub_language(language_name, 'fake-test-framework-name')
     end
 
     # setup_exercises
@@ -34,14 +34,14 @@ class SetupControllerTest < ControllerTestBase
     exercises_names.each do |exercise_name|
       exercise = @dojo.exercises[exercise_name]
       assert_equal exercise.name, exercise.new_name, 'renamed!'
-      setup_exercise(exercise_name)
+      stub_exercise(exercise_name)
     end
 
     language_name = languages_names[2]
     exercise_name = exercises_names[1]
     id = '1234512345'
 
-    setup_kata(id, language_name, exercise_name)
+    stub_kata(id, language_name, exercise_name)
 
     get 'setup/show', :id => id[0...10]
     assert_response :success
@@ -67,7 +67,7 @@ class SetupControllerTest < ControllerTestBase
   #- - - - - - - - - - - - - - - - - - -
 
   test 'save' do
-    checked_save_id
+    create_kata
   end
 
 end

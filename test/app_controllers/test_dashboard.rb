@@ -5,50 +5,45 @@ require_relative 'controller_test_base'
 class DashboardControllerTest < ControllerTestBase
 
   test 'show no avatars' do
-    setup_dojo
-    setup_language('fake-C#','nunit')
-    setup_exercise('fake-Yatzy')
-    id = checked_save_id('fake-C#','fake-Yatzy')
-    get 'dashboard/show', :id => id
+    stub_dojo
+    stub_language('fake-C#','nunit')
+    stub_exercise('fake-Yatzy')
+    @id = create_kata('fake-C#','fake-Yatzy')
+    show_dashboard
     assert_response :success
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'show avatars but no traffic-lights' do
-    setup_dojo
-    setup_language('fake-C#','nunit')
-    setup_exercise('fake-Yatzy')
-    id = checked_save_id('fake-C#','fake-Yatzy')
+    stub_dojo
+    stub_language('fake-C#','nunit')
+    stub_exercise('fake-Yatzy')
+    @id = create_kata('fake-C#','fake-Yatzy')
     (1..4).each do |n|
-      get 'dojo/enter', :id => id
+      enter
       avatar_name = json['avatar_name']
-
-      setup_initial_edit(id,avatar_name)
-      get 'kata/edit', :id => id, :avatar => avatar_name
+      setup_initial_edit(@id,avatar_name)
+      get 'kata/edit', :id => @id, :avatar => avatar_name
       assert_response :success
     end
-
-    get 'dashboard/show', :id => id
+    show_dashboard
     assert_response :success
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'show avatars with some traffic lights' do
-    id = checked_save_id
+    @id = create_kata
     (1..3).each do |n|
-
-      get 'dojo/enter', :id => id
+      enter
       avatar_name = json['avatar_name']
-
-      get 'kata/edit', :id => id, :avatar => avatar_name
+      get 'kata/edit', :id => @id, :avatar => avatar_name
       assert_response :success
-
       (1..2).each do |m|
         post 'kata/run_tests',
           :format => :js,
-          :id => id,
+          :id => @id,
           :avatar => avatar_name,
           :file_content => {
             'cyber-dojo.sh' => ""
@@ -61,30 +56,24 @@ class DashboardControllerTest < ControllerTestBase
           }
       end
     end
-
-    get 'dashboard/show', :id => id
+    show_dashboard
     assert_response :success
-
-    get 'dashboard/show',  :id => id, :minute_columns => false
+    get 'dashboard/show',  :id => @id, :minute_columns => false
     assert_response :success
-
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'show dashboard and open a diff-dialog' do
-    id = checked_save_id
-
-    get 'dojo/enter', :id => id
+    @id = create_kata
+    enter
     avatar_name = json['avatar_name']
-
-    get 'kata/edit', :id => id, :avatar => avatar_name
+    get 'kata/edit', :id => @id, :avatar => avatar_name
     assert_response :success
-
     (1..3).each do |m|
       post 'kata/run_tests',
         :format => :js,
-        :id => id,
+        :id => @id,
         :avatar => avatar_name,
         :file_content => {
           'cyber-dojo.sh' => ''
@@ -96,13 +85,11 @@ class DashboardControllerTest < ControllerTestBase
           'cyber-dojo.sh' => -4545645678
         }
     end
-
     get 'dashboard/show',
-      :id => id,
+      :id => @id,
       :avatar => avatar_name,
       :was_tag => 1,
       :now_tag => 2
-
     assert_response :success
   end
 
@@ -135,5 +122,11 @@ class DashboardControllerTest < ControllerTestBase
     get 'dashboard/heartbeat', :format => :js, :id => id
   end
 =end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def show_dashboard
+    get 'dashboard/show', :id => @id
+  end
 
 end
