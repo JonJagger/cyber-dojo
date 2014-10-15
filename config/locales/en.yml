@@ -58,17 +58,3 @@ en:
       revert: "revert"
       download: "download"
       
-    kata_help:
-      opens_a_home_page: "opens a<br/>home<br/>page"
-      opens_a_dashboard_page: "opens a<br/>dashboard<br/>page"
-      opens_a_history_dialog: "opens a<br/>history<br/>dialog"
-      runs_the_tests: "runs the tests"
-      the_tests_ran_but_one_or_more_failed: "some tests failed"
-      the_tests_could_not_be_run: "tests did not run"
-      the_tests_ran_and_all_passed: "all tests passed"
-      filename: "filename"
-      opens_the_filename: "opens filename"
-      open_the_output_file: "toggles to-from the output file"
-      open_the_next_lit_file: "cycles forwards through the lit files"
-      open_the_previous_lit_file: "cycles backwards through the lit files"
-      

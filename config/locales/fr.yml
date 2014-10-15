@@ -58,18 +58,4 @@ fr:
       fork: "bifurquer"
       revert: "revenir"
       download: "télécharger"
-            
-    kata_help:
-      opens_a_home_page: "ouvre une<br/>page<br/>d'accueil"
-      opens_a_dashboard_page: "ouvre une<br/>page<br/>dashboard"
-      opens_a_history_dialog: "ouvre un<br/>dialogue<br/>l'histoire"      
-      the_tests_ran_but_one_or_more_failed: "les tests ont couru, mais un ou plusieurs ont échoué"
-      the_tests_could_not_be_run: "les tests ne peuvent pas être exécutés"
-      the_tests_ran_and_all_passed: "les tests ont couru et ont tous passé"
-      filename: "fichier"
-      opens_the_filename: "ouvre la fichier"
-      runs_the_tests: "exécute les tests"
-      open_the_output_file: "ouvre le fichier de sortie"      
-      open_the_next_lit_file: "ouvre le fichier suivant"
-      open_the_previous_lit_file: "ouvre le fichier précédent"
       
