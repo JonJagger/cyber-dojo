@@ -30,8 +30,9 @@ class ForkerController < ApplicationController
     if !error
       avatar = avatars[avatar_name]
       if !error && !avatar.exists?
-        result[:reason] = 'avatar'
         error = true
+        result[:reason] = 'avatar'
+        result[:avatar] = avatar_name
       end
     end
 

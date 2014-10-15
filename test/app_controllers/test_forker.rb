@@ -15,10 +15,9 @@ class ForkerControllerTest < ControllerTestBase
       :avatar => 'hippo',
       :tag => 1
 
-    assert_not_nil json, 'assert_not_nil json'
-    assert_equal false, json['forked'], json.inspect
-    assert_equal 'id', json['reason'], json.inspect
-    assert_nil json['id'], "json['id']==nil"
+    assert !forked?
+    assert_reason_is('id')
+    assert_nil forked_kata_id
     assert_equal({ }, @git.log)
     @disk.teardown
   end
@@ -40,11 +39,10 @@ class ForkerControllerTest < ControllerTestBase
       :avatar => 'hippo',
       :tag => 1
 
-    assert_not_nil json, 'assert_not_nil json'
-    assert_equal false, json['forked'], json.inspect
-    assert_equal 'language', json['reason'], json.inspect
-    assert_equal language.name, json['language'], json.inspect
-    assert_nil json['id'], "json['id']==nil"
+    assert !forked?
+    assert_reason_is('language')
+    assert_equal language.name, json['language']
+    assert_nil forked_kata_id
     assert_equal({ }, @git.log)
     @disk.teardown
   end
@@ -69,10 +67,10 @@ class ForkerControllerTest < ControllerTestBase
       :avatar => 'hippo',
       :tag => 1
 
-    assert_not_nil json, 'assert_not_nil json'
-    assert_equal false, json['forked'], json.inspect
-    assert_equal 'avatar', json['reason'], json.inspect
-    assert_nil json['id'], "json['id']==nil"
+    assert !forked?
+    assert_reason_is('avatar')
+    assert_equal 'hippo', json['avatar']
+    assert_nil forked_kata_id
     assert_equal({ }, @git.log)
     @disk.teardown
   end
@@ -124,10 +122,9 @@ class ForkerControllerTest < ControllerTestBase
       :avatar => avatar_name,
       :tag => bad_tag
 
-    assert_not_nil json, "assert_not_nil json"
-    assert_equal false, json['forked'], json.inspect + ':' + bad_tag
-    assert_equal 'tag', json['reason'], json.inspect + ':' + bad_tag
-    assert_nil json['id'], "json['id']==nil : " + bad_tag
+    assert !forked?
+    assert_reason_is('tag')
+    assert_nil forked_kata_id
     assert_equal({ }, @git.log)
 
     @disk.teardown
@@ -184,11 +181,7 @@ class ForkerControllerTest < ControllerTestBase
       :avatar => avatar_name,
       :tag => tag
 
-    assert_not_nil json, 'assert_not_nil json'
-    assert_equal true, json['forked'], json.inspect
-
-    forked_kata_id = json['id']
-    assert_not_nil forked_kata_id, json.inspect
+    assert forked?
     assert_equal 10, forked_kata_id.length
     assert_not_equal id, forked_kata_id
 
@@ -206,20 +199,53 @@ class ForkerControllerTest < ControllerTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'when id,language,avatar,tag are all ok ' +
-       'the fork works ' +
+       'format=json fork works ' +
        "and the new dojo's id is returned" do
+
+    all_ok_setup
+    get 'forker/fork',
+      :format => :json,
+      :id => @id,
+      :avatar => @avatar_name,
+      :tag => @tag
+
+    assert forked?
+    assert_equal 10, forked_kata_id.length
+    assert_not_equal @id, forked_kata_id
+    forked_kata = @dojo.katas[forked_kata_id]
+    assert forked_kata.exists?
+
+    assert_equal @kata.language.name, forked_kata.language.name
+    assert_equal @kata.exercise.name, forked_kata.exercise.name
+    assert_equal @visible_files, forked_kata.visible_files
+
+    assert_equal({@avatar.path => [ ['show', '2:manifest.json']]}, @git.log)
+    @disk.teardown
+  end
+
+  #- - - - - - - - - - - - - - - - - -
+
+  test 'when id,language,avatar,tag are all ok ' +
+       'format=html fork works ' +
+       "and the new dojo's id is returned" do
+
+  end
+
+  #- - - - - - - - - - - - - - - - - -
+
+  def all_ok_setup
     setup_dojo
-    id = '1234512345'
-    kata = @dojo.katas[id]
+    @id = '1234512345'
+    @kata = @dojo.katas[@id]
     language_name = 'Ruby-installed-and-working'
-    kata.dir.spy_read('manifest.json', { :language => language_name })
+    @kata.dir.spy_read('manifest.json', { :language => language_name })
     language = @dojo.languages[language_name]
     language.dir.spy_read('manifest.json', {
         'unit_test_framework' => 'ruby_test_unit'
       })
-    avatar_name = 'hippo'
-    avatar = kata.avatars[avatar_name]
-    avatar.dir.spy_read('increments.json', JSON.unparse([
+    @avatar_name = 'hippo'
+    @avatar = @kata.avatars[@avatar_name]
+    @avatar.dir.spy_read('increments.json', JSON.unparse([
       {
         'colour' => 'red',
         'time' => [2014, 2, 15, 8, 54, 6],
@@ -232,36 +258,31 @@ class ForkerControllerTest < ControllerTestBase
       },
       ]))
 
-    visible_files = {
+    @visible_files = {
       'Hiker.cs' => 'public class Hiker { }',
       'HikerTest.cs' => 'using NUnit.Framework;'
     }
-    manifest = JSON.unparse(visible_files)
-    tag = 2
+    manifest = JSON.unparse(@visible_files)
+    @tag = 2
     filename = 'manifest.json'
-    @git.spy(avatar.dir.path,'show',"#{tag}:#{filename}",manifest)
+    @git.spy(@avatar.dir.path,'show',"#{@tag}:#{filename}",manifest)
+  end
 
-    get 'forker/fork',
-      :format => :json,
-      :id => id,
-      :avatar => avatar_name,
-      :tag => tag
+  #- - - - - - - - - - - - - - - - - -
 
-    assert_not_nil json, 'assert_not_nil json'
-    assert_equal true, json['forked'], json.inspect
-    forked_kata_id = json['id']
-    assert_not_nil forked_kata_id, json.inspect
-    assert_equal 10, forked_kata_id.length
-    assert_not_equal id, forked_kata_id
-    forked_kata = @dojo.katas[forked_kata_id]
-    assert forked_kata.exists?
+  def forked?
+    assert_not_nil json
+    json['forked']
+  end
 
-    assert_equal kata.language.name, forked_kata.language.name
-    assert_equal kata.exercise.name, forked_kata.exercise.name
-    assert_equal visible_files, forked_kata.visible_files
+  def forked_kata_id
+    assert_not_nil json
+    json['id']
+  end
 
-    assert_equal({avatar.path => [ ['show', '2:manifest.json']]}, @git.log)
-    @disk.teardown
+  def assert_reason_is(expected)
+    assert_not_nil json
+    assert_equal expected, json['reason']
   end
 
 end
