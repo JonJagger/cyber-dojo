@@ -4,7 +4,9 @@
 $(function() {
 
   $('#help-button').click(function() {
-    var url = 'http://blog.cyber-dojo.org/2014/10/the-cyber-dojo-dashboard.html';
+    var url =
+      'http://blog.cyber-dojo.org/' +
+        '2014/10/the-cyber-dojo-dashboard.html';
     window.open(url);
   });
 
@@ -14,8 +16,6 @@ $(function() {
 
 <button type="button"
         title="show help"
-        data-title="?"
-        data-close="<%= t('views.buttons.close') %>"
         id="help-button">
   ?
 </button>

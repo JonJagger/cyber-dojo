@@ -45,11 +45,4 @@ class KataControllerTest  < ControllerTestBase
       }
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'help dialog' do
-    get 'kata/help_dialog', :avatar => 'lion'
-    assert_response :success
-  end
-
 end

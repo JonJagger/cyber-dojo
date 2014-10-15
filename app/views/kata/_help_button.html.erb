@@ -4,11 +4,10 @@
 $(function() {
 
   $('#help-button').click(function() {
-    var title = $(this).data('title');
-    var close = $(this).data('close');
-    $.get('/kata/help_dialog', { avatar: "<%= @avatar.name %>" }, function(html) {
-      cd.dialog(html, title, close).dialog('open');
-    });
+    var url =
+      'http://blog.cyber-dojo.org/' +
+        '2014/10/the-cyber-dojo-test-page.html';
+    window.open(url);
   });
 
 });
@@ -16,8 +15,6 @@ $(function() {
 //--></script>
 
 <button type="button"
-        data-title="?"
-        data-close="<%= t('views.buttons.close') %>"
         id="help-button"
         title="shows help">
   ?

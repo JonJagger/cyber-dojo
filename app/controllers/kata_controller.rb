@@ -40,11 +40,6 @@ class KataController < ApplicationController
     end
   end
 
-  def help_dialog
-    @avatar_name = avatar_name
-    render :layout => false
-  end
-
 private
 
   include Cleaner

@@ -25,7 +25,6 @@ CyberDojo::Application.routes.draw do
 
   get  'kata/edit(/:id)' => 'kata#edit'
   post 'kata/run_tests(/:id)' => 'kata#run_tests'
-  get  'kata/help_dialog' => 'kata#help_dialog'
 
   get 'dashboard/show(/:id)' => 'dashboard#show'
   get 'dashboard/progress' => 'dashboard#progress', :constraints => { :format => 'json' }
