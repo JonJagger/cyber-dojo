@@ -21,7 +21,7 @@ class DashboardController < ApplicationController
   def heartbeat
     gather
     respond_to do |format|
-      format.js if request.xhr?
+      format.js
     end
   end
 

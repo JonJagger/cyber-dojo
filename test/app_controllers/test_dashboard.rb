@@ -95,9 +95,9 @@ class DashboardControllerTest < ControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-=begin # failing rails 3->4 upgrade. Only js.erb action?
+begin # failing rails 3->4 upgrade. Only js.erb action?
   test 'heartbeat' do
-    id = checked_save_id
+    id = create_kata
 
     get 'dojo/enter', :id => id
     avatar_name = json['avatar_name']
@@ -121,7 +121,7 @@ class DashboardControllerTest < ControllerTestBase
 
     get 'dashboard/heartbeat', :format => :js, :id => id
   end
-=end
+end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
