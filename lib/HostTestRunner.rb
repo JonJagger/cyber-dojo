@@ -33,7 +33,7 @@ class HostTestRunner
     if timed_out
       output += didnt_complete(max_seconds)
     end
-    output
+    limited(output,50*1024)
   end
 
 private

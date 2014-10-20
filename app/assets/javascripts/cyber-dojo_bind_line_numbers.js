@@ -52,7 +52,7 @@ var cyberDojo = (function(cd, $) {
 
   cd.lineNumbers = (function() {
     var number, lines = '1';
-    for (number = 2; number < 999; number += 1) {
+    for (number = 2; number < 9999; number += 1) {
       lines += '\r\n' + number;
     }
     return lines;
