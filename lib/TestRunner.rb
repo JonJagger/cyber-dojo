@@ -13,4 +13,15 @@ module TestRunner
     "Please try again."
   end
 
+  def limited(output,max_length)
+    # for example, a C++ source file that #includes
+    # itself can generate 7MB of output...
+    if output.length > max_length
+      output = output.slice(0, max_length)
+      output += "\n"
+      output += "output truncated by cyber-dojo server"
+    end
+    output
+  end
+
 end

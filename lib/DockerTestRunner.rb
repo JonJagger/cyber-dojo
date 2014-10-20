@@ -29,7 +29,7 @@ class DockerTestRunner
         " -w /sandbox" +
         " #{language.image_name} /bin/bash -c \"#{inner_command}\""
 
-    output = `#{outer_command}`
+    output = limited(`#{outer_command}`,50*1024)
     $?.exitstatus != fatal_error(kill) ? output : didnt_complete(max_seconds)
   end
 
