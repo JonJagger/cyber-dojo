@@ -584,17 +584,17 @@ var cyberDojo = (function(cd, $) {
     // refresh()
     //---------------------------------------------------
 
-    $.ajaxSetup({
-      beforeSend: function() {
-        $('body').addClass('busy');
-      }
-    });
+    //$.ajaxSetup({
+    //  beforeSend: function() {
+    //    $('body').addClass('busy');
+    //  }
+    //});
 
-    $.ajaxSetup({
-      complete: function() {
-        $('body').removeClass('busy');
-      }
-    });
+    //$.ajaxSetup({
+    //  complete: function() {
+    //    $('body').removeClass('busy');
+    //  }
+    //});
 
     var refresh = function() {
       $.getJSON('/differ/diff',
