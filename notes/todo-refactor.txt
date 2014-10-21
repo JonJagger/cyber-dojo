@@ -1,5 +1,12 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+history-dialog buttons to move to new animal
+do not respect the diff? checkbox setting.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+http://localhost:3000/kata/edit/0B416E9012?avatar=zebra
+could be simplified to
+http://localhost:3000/zebra/edit/0B416E9012
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Create helper function to execute a backtick command
 with stderr redirected to output, from a given folder.
 Refactor this from Git.rb
