@@ -1,10 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-history-dialog buttons to move to new animal
-do not respect the diff? checkbox setting.
-Need to refactor differ_controller so it takes
-a tag and a boolean rather than two tags.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 http://localhost:3000/kata/edit/0B416E9012?avatar=zebra
 could be simplified to
 http://localhost:3000/zebra/edit/0B416E9012
@@ -22,7 +17,7 @@ on history dialog remember tag-number for each animal
 and resume on that number when you return to that
 animal in the same dialog.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-on test page, make animal image (top right) *not* a dashboard page.
+on test page, make animal image (top right) *not* a dashboard link.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 clicking on the animal image on the history-dialog
 opens the re-enter popup allowing you to spy

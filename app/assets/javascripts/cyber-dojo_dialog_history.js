@@ -174,9 +174,7 @@ var cyberDojo = (function(cd, $) {
         .unbind('click')
         .bind('click', function() {
           avatarName = name;
-          wasTag = 0;
-          nowTag = 1;
-          refresh();
+          show(1);
         });
     };
 
