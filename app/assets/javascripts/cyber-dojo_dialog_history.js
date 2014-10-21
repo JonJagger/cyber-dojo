@@ -584,19 +584,8 @@ var cyberDojo = (function(cd, $) {
     // refresh()
     //---------------------------------------------------
 
-    //$.ajaxSetup({
-    //  beforeSend: function() {
-    //    $('body').addClass('busy');
-    //  }
-    //});
-
-    //$.ajaxSetup({
-    //  complete: function() {
-    //    $('body').removeClass('busy');
-    //  }
-    //});
-
     var refresh = function() {
+      $('.ui-dialog').addClass('busy');
       $.getJSON('/differ/diff',
         {
           id: id,
@@ -617,6 +606,7 @@ var cyberDojo = (function(cd, $) {
           refreshForkButton();
         }
       ).always(function() {
+        $('.ui-dialog').removeClass('busy');
         var options = { direction: 'horizontal', duration: 'slow' };
         var light = $('img[src$="_bar.png"]', titleBar());
         light.scrollIntoView(options);

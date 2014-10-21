@@ -5,12 +5,6 @@ do not respect the diff? checkbox setting.
 Need to refactor differ_controller so it takes
 a tag and a boolean rather than two tags.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dashboard - if you open the history dialog and
-the auto-refresh is still on then every 10 seconds
-the cursor will change to a wait-cursor in response
-to the auto-refresh of the dashboard in the background.
-For now I have removed the wait-cursor.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 http://localhost:3000/kata/edit/0B416E9012?avatar=zebra
 could be simplified to
 http://localhost:3000/zebra/edit/0B416E9012
