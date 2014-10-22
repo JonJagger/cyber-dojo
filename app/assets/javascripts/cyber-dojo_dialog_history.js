@@ -538,24 +538,31 @@ var cyberDojo = (function(cd, $) {
     //---------------------------------------------------
 
     var makeCloseHelpForkRevertButtons = function() {
-      var buttons = {};
-      buttons['close'] = function() {
+      var buttons = [ ];
+      var makeButton = function(name,handler) {
+        return {
+          text: name,
+          click: handler
+        };
+      };
+      buttons.push(makeButton('close', function() {
         historyDialog.remove();
-      };
-      buttons['fork'] = function() {
+      }));
+      buttons.push(makeButton('fork', function() {
         doFork();
-      };
+      }));
       if (showRevert) {
-        buttons['revert'] = function() {
+        buttons.push(makeButton('revert', function() {
           doRevert();
           historyDialog.remove();
-        };
+        }));
       }
-      buttons['help'] = function() {
+      buttons.push(makeButton('help', function() {
         var url = 'http://blog.cyber-dojo.org/';
         url += '2014/10/the-cyber-dojo-history-dialog.html';
         window.open(url, '_blank');
-      };
+      }));
+      buttons[0]['class'] = 'close-history';
       return buttons;
     };
 
@@ -568,12 +575,7 @@ var cyberDojo = (function(cd, $) {
       modal: true,
       buttons: makeCloseHelpForkRevertButtons(),
       autoOpen: false,
-      open: function() {
-        $('.ui-dialog-buttonpane')
-          .find('button:contains("close")')
-          .addClass('close-history');
-        refresh();
-      },
+      open: function() { refresh(); },
       closeOnEscape: true,
       close: function() { $(this).remove(); },
     });
@@ -604,10 +606,10 @@ var cyberDojo = (function(cd, $) {
           refreshForkButton();
         }
       ).always(function() {
-        $('.ui-dialog').removeClass('busy');
         var options = { direction: 'horizontal', duration: 'slow' };
         var light = $('img[src$="_bar.png"]', titleBar());
         light.scrollIntoView(options);
+        $('.ui-dialog').removeClass('busy');
       });
     };
 
