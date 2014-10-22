@@ -1,5 +1,10 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+I often find I fork from someone's traffic-light and then
+immediately enter it to demonstrate something. Could I
+provide two buttons - one to fork a dojo, and one to fork
+direct to an animal?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 http://localhost:3000/kata/edit/0B416E9012?avatar=zebra
 could be simplified to
 http://localhost:3000/zebra/edit/0B416E9012
