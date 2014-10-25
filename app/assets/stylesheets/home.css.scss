@@ -40,25 +40,14 @@ $text-color: darken($lighter-color, 10%);
     left: 2px;
   }
 
-  td#column-main {
-    padding: {
-      left: 0px;
-      right: 70px;
-      bottom: 30px;
-    }
-    margin: {
-      left: 0px;
-    }
+  .button-td {
+    width: 230px;
+    vertical-align: top;
   }
-  td#column-donate {
-    padding-left: 20px;
-    width: 200px;
-  }
-
-  .button-info {
+  .button-info-td {
     display: inline-block;
     font-size: 0.9em;
-    width: 360px;
+    width: 160px;
     &.enter {
       color: lighten($green, 30%);
     }
@@ -73,15 +62,8 @@ $text-color: darken($lighter-color, 10%);
     color: $darker-color;
     @include font-size-largest();
     width: 195px;
-    margin: {
-      bottom: 4px;
-      right: 2px;
-    }
-    padding: {
-      right: 20px;
-      bottom: 0px;
-      top: 2px;
-    }
+    margin: { top: 4px; bottom: 4px; right: 2px; }
+    padding: { right: 20px; bottom: 0px; top: 2px; }
     text-align: right;
     @include gradient-lighten($green, 40%, 30%, 20%);
     @include rounded-corner(6px);
@@ -97,21 +79,16 @@ $text-color: darken($lighter-color, 10%);
     text-align: right;
   }
   #create-button {
-    margin-bottom: 30px;
   }
   #review-button {
     margin-top: 4px;
-    margin-bottom: 40px;
   }
 
   #donate-container {
     font-size: 1.15em;
-    position: absolute;
-    top: 220px;
-    left: 70px;
     width: 280px;
     @include ghost-panel(10px);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     #please-donate {
       text-align: right;
       margin: {
@@ -136,37 +113,23 @@ $text-color: darken($lighter-color, 10%);
       @include font-size-tiny();
       text-align: right;
       margin-right: 10px;
-      padding-bottom: 15px;
-    }
-    #raspberry-pi-logo {
-      padding: {
-        bottom: 0px;
-        right: 10px;
-      }
-      text-align: right;
     }
   }
 
   #accu-container {
-    font-size: 1em;
-    position: absolute;
-    top: 500px;
-    left: 70px;
-    width: 257px;
-
+    font-size: 0.85em;
+    width: 258px;
     @include ghost-panel(10px);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     #accu-image {
-      padding-right: 10px;
-      margin-bottom: 0px;
-      text-align: right;
+      margin: { top: 10px; right: 10px; }
+      padding: 5px;
+      background:CornSilk;
+      width: 60px;
+      height: 15px;
     }
     #accu-words {
-      @include font-size-tiny();
-      margin: {
-        top: 10px;
-        right: 10px;
-      }
+      margin: { top: 10px; right: 10px; }
       color: $lighter-color;
       text-align: right;
     }

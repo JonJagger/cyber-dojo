@@ -32,8 +32,6 @@ See if citigroup are interested in a corporate license.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Remember to send license to credit-suisse.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cyber-dojo.org appearance is messy on a tablet. Fix.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Use Amazon console to switch cyber-dojo.org so it uses an
 SSD drive. Nick Todd knows how to do this and is happy to help.
 How to do this so it's down for minimal time?

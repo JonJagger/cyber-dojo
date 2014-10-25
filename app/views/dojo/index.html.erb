@@ -1,16 +1,88 @@
 
-
 <div id="home-page">
 
   <table>
-    <tr class="valign-top">
-      <td id="column-main">
-        <%= render :partial => 'column_main' %>
-      </td>
-      <td id="column-donate">
-        <%= render :partial => 'column_donate' %>
+    <tr class="align-right">
+      <td colspan="3">
+        <div id="cyber-dojo">
+          <div id="home-page-logo">
+            <%= raw home_page_logo(35) %>
+          </div>
+          cyber&#8209;dojo.org
+        </div>
       </td>
     </tr>
+
+    <tr class="align-right">
+      <td colspan="3">
+        <div id="the-place-to-practice-programming">
+          <%= raw t("views.labels.the_place_to_practice_programming") %>
+        </div>
+      </td>
+    </tr>
+
+    <tr class="align-right">
+      <td colspan="3">
+        <%= render :partial => 'learn_more_button' %>
+      </td>
+    </tr>
+
+    <tr class="align-right">
+      <td rowspan="5" align="right">
+        <%= render :partial => 'donate' %>
+        <%= render :partial => 'accu' %>
+      </td>
+      <td class="button-info-td">
+          choose a language<br/>
+          and an exercise<br/>
+          to get your id
+      </td>
+      <td class="button-td">
+        <%= render :partial => 'create_button' %>
+      </td>
+    </tr>
+
+    <tr class="align-right">
+      <td class="enter button-info-td">
+          type in your id<br/>
+          on <em>each</em> computer
+      </td>
+      <td class="button-td">
+        <%= render :partial => 'enter_id' %>
+      </td>
+    </tr>
+
+    <tr class="align-right">
+      <td class="button-info-td">
+        hit enter<br/>
+        on <em>each</em> computer
+      </td>
+      <td class="button-td">
+        <%= render :partial => 'enter_button' %>
+      </td>
+    </tr>
+
+    <tr class="align-right">
+      <td class="button-info-td">
+        click a traffic-light<br/>
+        to review its diffs
+      </td>
+      <td class="button-td">
+        <%= render :partial => 'review_button' %>
+      </td>
+    </tr>
+
+    <tr class="align-right">
+      <td class="button-info-td">
+        re-enter as a<br/>
+        specific animal<br/>
+        (occasionally useful)
+      </td>
+      <td class="button-td">
+        <%= render :partial => 'reenter_button' %>
+      </td>
+    </tr>
+
   </table>
 </div>
 
