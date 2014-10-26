@@ -21,12 +21,10 @@ $(function() {
   <table>
     <tr class="valign-top">
       <td>
-        <div>
-          <%= render :partial => 'controls' %>
-        </div>
-        <div id="progress">
-          <%= render :partial => 'progress_button' %>
-        </div>
+        <%= render :partial => 'help_button' %>
+        <%= render :partial => 'shared/tweet' %>
+        <%= render :partial => 'controls' %>
+        <%= render :partial => 'progress_button' %>
         <div id="age">
           <%= render :partial => 'age' %>
         </div>

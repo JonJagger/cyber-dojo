@@ -42,7 +42,11 @@ $(function() {
     <table>
 
       <tr class="valign-top">
-        <td class="align-right">
+        <td>
+          <%= render :partial => 'help_button' %>
+          <%= render :partial => 'shared/tweet' %>
+        </td>
+        <td>
           <%= render :partial => 'test_button' %>
         </td>
         <td>
@@ -53,7 +57,7 @@ $(function() {
       </tr>
 
       <tr class="valign-top">
-        <td>
+        <td colspan="2">
           <%= render :partial => 'file_new_rename_delete' %>
           <%= render :partial => 'filename_list' %>
         </td>

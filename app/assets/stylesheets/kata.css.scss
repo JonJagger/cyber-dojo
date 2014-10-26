@@ -16,26 +16,13 @@
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-largest();
     @include right-align(15px);
-    padding: {
-      top: 0px;
-      bottom: 2px;
-      left: 15px;
-      right: 13px;
-    }
-    position: relative;
-    top: -3px;
-    left: 16px;
+    margin-right: 0px;
+    padding: { top: 0px; bottom: 2px; left: 15px; right: 13px; }
   }
 
   #file-operations {
     @include ghost-panel(8px);
-    @include left-align(15px);
-    margin: {
-      top: 2px;
-      bottom: 4px;
-      left: 16px;
-      right: 1px;
-    }
+    margin: { top: 2px; bottom: 4px; left: 16px; right: 1px; }
     #new, #rename, #delete {
       text-align: right;
       font-size: 1em;
@@ -63,12 +50,8 @@
     overflow-x: auto;
     overflow-y: hidden;
     margin-bottom: 5px;
-    &::-webkit-scrollbar:horizontal {
-        height: 6px;
-    }
-    .diff-traffic-light {
-      padding-right: 2px;
-    }
+    &::-webkit-scrollbar:horizontal { height: 6px; }
+    .diff-traffic-light { padding-right: 2px; }
   }
 
   .file_content {
@@ -96,9 +79,6 @@
   #test-button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-large();
-    padding: {
-      left: 0.2em;
-      right: 0.2em;
-    }
+    padding: { left: 0.2em; right: 0.2em; }
   }
 }
