@@ -1,6 +1,3 @@
-root = '../..'
-
-require_relative root + '/lib/TimeNow'
 
 class DashboardController < ApplicationController
 

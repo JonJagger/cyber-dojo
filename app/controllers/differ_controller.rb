@@ -1,6 +1,3 @@
-root = '../..'
-
-require_relative root + '/app/lib/GitDiff'
 
 class DifferController < ApplicationController
 

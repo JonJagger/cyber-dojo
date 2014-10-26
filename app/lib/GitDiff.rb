@@ -1,6 +1,3 @@
-require_relative 'GitDiffBuilder'
-require_relative 'GitDiffParser'
-require_relative 'LineSplitter'
 
 module GitDiff
 

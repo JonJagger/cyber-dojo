@@ -1,10 +1,22 @@
 
 def rooted(path,filename); '../' + path + '/' + filename;  end
+def lib(filename);         rooted('lib',        filename); end
 def app_helpers(filename); rooted('app/helpers',filename); end
 def app_lib(filename);     rooted('app/lib',    filename); end
 def app_models(filename);  rooted('app/models', filename); end
-def lib(filename);         rooted('lib',        filename); end
 def test_lib(filename);    rooted('test/lib',   filename); end
+
+require_relative lib('Docker')
+require_relative lib('HostTestRunner')
+require_relative lib('DockerTestRunner')
+require_relative lib('DummyTestRunner')
+require_relative lib('Folders')
+require_relative lib('Git')
+require_relative lib('OsDir')
+require_relative lib('OsDisk')
+require_relative lib('TestRunner')
+require_relative lib('TimeNow')
+require_relative lib('UniqueId')
 
 require_relative app_helpers('avatar_image_helper')
 require_relative app_helpers('logo_image_helper')
@@ -36,18 +48,6 @@ require_relative app_models('Languages')
 require_relative app_models('Light')
 require_relative app_models('Sandbox')
 require_relative app_models('Tag')
-
-require_relative lib('Docker')
-require_relative lib('DockerTestRunner')
-require_relative lib('DummyTestRunner')
-require_relative lib('Folders')
-require_relative lib('Git')
-require_relative lib('HostTestRunner')
-require_relative lib('OsDir')
-require_relative lib('OsDisk')
-require_relative lib('TestRunner')
-require_relative lib('TimeNow')
-require_relative lib('UniqueId')
 
 require_relative test_lib('Disk')
 require_relative test_lib('DummyGit')

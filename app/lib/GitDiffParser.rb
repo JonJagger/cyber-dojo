@@ -1,4 +1,3 @@
-require_relative 'LineSplitter'
 
 module GitDiff
 
