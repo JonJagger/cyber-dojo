@@ -1,5 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+width of line-numbers on history-dialog no longer matches
+width of line-numbers on test/edit page.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I often find I fork from someone's traffic-light and then
 immediately enter it to demonstrate something. Could I
 provide two buttons - one to fork a dojo, and one to fork
