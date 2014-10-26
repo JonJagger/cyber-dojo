@@ -1,8 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#help-dialog  in kata.css.scss is dead. Delete it.
-Other dead dialog-related CSS?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 width of line-numbers on history-dialog no longer matches
 width of line-numbers on test/edit page.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

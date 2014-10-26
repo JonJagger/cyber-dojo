@@ -1,23 +1,18 @@
 
 @mixin right-align($margin-right)
 {
-    margin-left : auto;
-    margin-right: $margin-right;
+    margin: { left : auto; right: $margin-right; }
 }
 
 @mixin left-align($margin-left)
 {
-    margin-left : $margin-left;
-    margin-right: auto;
+    margin: { left : $margin-left; right: auto; }
 }
 
 @mixin center-align
 {
   text-align: center;
-  margin: {
-    left : auto;
-    right: auto;
-  }
+  margin: { left : auto; right: auto; }
 }
 
 @mixin ghost-panel($padding: 5px)
