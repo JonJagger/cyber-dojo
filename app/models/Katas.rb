@@ -1,6 +1,3 @@
-root = '../..'
-require_relative root + '/lib/UniqueId'
-require_relative root + '/lib/TimeNow'
 
 class Katas
 

@@ -6,6 +6,8 @@ def app_lib(filename);     rooted('app/lib',    filename); end
 def app_models(filename);  rooted('app/models', filename); end
 def test_lib(filename);    rooted('test/lib',   filename); end
 
+require 'json'
+
 require_relative lib('Docker')
 require_relative lib('HostTestRunner')
 require_relative lib('DockerTestRunner')

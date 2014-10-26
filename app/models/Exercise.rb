@@ -1,5 +1,3 @@
-root = '../..'
-require_relative root + '/app/lib/Cleaner'
 
 class Exercise
 

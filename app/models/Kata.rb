@@ -1,6 +1,3 @@
-root = '../..'
-require_relative root + '/app/lib/Cleaner'
-require 'json'
 
 class Kata
 

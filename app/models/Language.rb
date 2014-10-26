@@ -1,8 +1,3 @@
-root = '../..'
-require_relative root + '/app/lib/Approval'
-require_relative root + '/app/lib/Cleaner'
-require_relative root + '/app/lib/OutputParser'
-require 'json'
 
 class Language
 

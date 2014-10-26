@@ -1,6 +1,3 @@
-root = '../..'
-require_relative root + '/app/lib/Cleaner'
-require_relative root + '/lib/TimeNow'
 
 class Avatar
 

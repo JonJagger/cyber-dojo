@@ -1,7 +1,3 @@
-root = '../..'
-require_relative root + '/app/lib/Cleaner'
-require_relative root + '/app/lib/GitDiff'
-require 'json'
 
 class Tag
 
