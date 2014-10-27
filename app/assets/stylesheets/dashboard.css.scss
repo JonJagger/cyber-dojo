@@ -66,9 +66,6 @@
   .even.animal { background: lighten($darker-color, 6%); }
   .progress {
     white-space: nowrap;
-    padding: {
-      left: 5px;
-      right: 5px;
-    }
+    padding: { left: 5px; right: 5px; }
   }
 }

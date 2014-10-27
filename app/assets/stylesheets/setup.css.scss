@@ -42,8 +42,7 @@
   #ok, #cancel {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-largest();
-    margin-top: 30px;
-    margin-right: 50px;
+    margin: { top: 30px; right: 50px; }
   }
 
 }

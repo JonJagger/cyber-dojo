@@ -1,12 +1,12 @@
 
 @mixin right-align($margin-right)
 {
-    margin: { left : auto; right: $margin-right; }
+  margin: { left : auto; right: $margin-right; }
 }
 
 @mixin left-align($margin-left)
 {
-    margin: { left : $margin-left; right: auto; }
+  margin: { left : $margin-left; right: auto; }
 }
 
 @mixin center-align
@@ -17,10 +17,10 @@
 
 @mixin ghost-panel($padding: 5px)
 {
-    margin-bottom: 20px;
-    padding: $padding;
-    background: lighten($darker-color, 6%);
-    border: 1px solid lighten($darker-color, 6%);
+  margin-bottom: 20px;
+  padding: $padding;
+  background: lighten($darker-color, 6%);
+  border: 1px solid lighten($darker-color, 6%);
 }
 
 #info-container {

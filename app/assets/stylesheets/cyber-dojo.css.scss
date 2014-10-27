@@ -3,10 +3,7 @@ table { border-spacing: 0; }
 
 #cyber-dojo-page {
   font-size: 0.9em;
-  margin: {
-    top: 0.3em;
-    left: 0.3em;
-  }
+  margin: { top: 0.3em; left: 0.3em; }
   color: $lighter-color;
 }
 
@@ -27,28 +24,16 @@ body {
   color: $lighter-color;
   border: 1px solid lighten($darker-color, 8%);
   padding: 0.5em;
-  margin: {
-    left: 10px;
-    right: 10px;
-    bottom: 1px;
-  }
+  margin: { left: 10px; right: 10px; bottom: 1px; }
 }
 
 .avatar-image {
-  margin: {
-      left: 0px;
-     right: 0.2em;
-       top: 0em;
-    bottom: 0em;
-  }
+  margin: { left: 0px; right: 0.2em; top: 0em; bottom: 0em; }
   cursor: pointer;
 }
 
 .vertical-padded {
-  padding: {
-       top: 0.5em;
-    bottom: 0.5em;
-  }
+  padding: { top: 0.5em; bottom: 0.5em; }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -59,11 +44,7 @@ button {
   background: darken($lighter-color, 10%);
   color: $darker-color;
   cursor: pointer;
-  padding: {
-    left: 0.5em;
-    right: 0.5em;
-    bottom: 0.1em;
-  }
+  padding: { left: 0.5em; right: 0.5em; bottom: 0.1em; }
   text-decoration: none;
   font-weight: normal;
   border: $filename_and_button_border_size solid $darker-color;
@@ -85,10 +66,7 @@ div[class~='filename'] {
   color: $lighter-color;
   margin: none;
   margin-bottom: 2px;
-  padding: {
-    left: 0.3em;
-    right: 0.3em;
-  }
+  padding: { left: 0.3em; right: 0.3em; }
   cursor: pointer;
   white-space: nowrap;
   @include rounded-corner(4px);
@@ -141,7 +119,6 @@ div[class~="filename"], button[disabled]:hover {
   border: 1px solid lighten($darker-color, 6%);
   border-right: 0px;
   outline: none;
-
   position: relative; // lose 1px gap to file-content
   left: 2px;
 }
@@ -151,12 +128,9 @@ div[class~="filename"], button[disabled]:hover {
   color: $darker-color;
   width: 800px;
   font-weight: 500;
-
   // if padding-left gets too large it pushes the background to the
   // right and the vertical scrollbar gets a background-coloured right-border
-  padding-left: 2px;
-  padding-top: 2px;
-
+  padding: { left: 2px; top: 2px; }
   outline: none;
 }
 
@@ -166,12 +140,7 @@ div[class~="filename"], button[disabled]:hover {
   background: $lighter-color;
   color: $darker-color;
   display: table;
-  margin: {
-    top: 0;
-    bottom: auto;
-    left: 45px;
-    right: 45px;
-  }
+  margin: { top: 0; bottom: auto; left: 45px; right: 45px; }
   a:link, a:visited {
     color: $lighter-color;
   }

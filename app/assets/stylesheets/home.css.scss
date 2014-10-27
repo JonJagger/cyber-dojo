@@ -91,10 +91,7 @@ $text-color: darken($lighter-color, 10%);
     margin-bottom: 10px;
     #please-donate {
       text-align: right;
-      margin: {
-        left: 10px;
-        right: 10px;
-      }
+      margin: { left: 10px; right: 10px; }
       color: $lighter-color;
       @include font-size-tiny();
     }
@@ -103,10 +100,7 @@ $text-color: darken($lighter-color, 10%);
     }
     #donate-button {
       text-align: right;
-      padding: {
-        top: 15px;
-        right: 5px;
-      }
+      padding: { top: 15px; right: 5px; }
     }
     #please-invoice-me {
       display: block;

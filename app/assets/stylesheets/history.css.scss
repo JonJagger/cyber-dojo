@@ -7,12 +7,7 @@
 @mixin diff-line-count {
   text-align: right;
   margin: none;
-  padding: {
-    top   : 0em;
-    right : 0.2em;
-    bottom: 0em;
-    left  : 0.2em;
-  }
+  padding: { top: 0em; right: 0.2em; bottom: 0em; left: 0.2em; }
   @include font-size-tiny();
   width: 20px;
 }
@@ -55,10 +50,7 @@
       display: table-cell;
       padding-right: 5px;
       cursor: pointer;
-      img {
-        width: 12px;
-        height: 40px;
-      }
+      img { width: 12px; height: 40px; }
     }
   }
 }
@@ -70,30 +62,18 @@
   background: $darker-color;
   color     : $lighter-color;
   padding: none;
-
-  margin: {
-    left: 0px;
-    top : 0px;
-  }
-
+  margin: { left: 0px; top: 0px; }
   border: {
     left : 1px dotted lighten($darker-color, 10%);
     right: 1px dotted lighten($darker-color, 10%);
   }
-
   #diff-controls {
     position: absolute;
     top : 10px;
     left: 772px;
     #navigate-controls {
       padding-bottom: 15px;
-
-      #avatar {
-        width: 48px;
-        height: 48px;
-        padding: 0px;
-        margin: 0px;
-      }
+      #avatar { width: 48px; height: 48px; padding: 0px; margin: 0px; }
       button#prev-avatar, button#next-avatar {
         padding: 0px;
         margin: 0px;
@@ -168,10 +148,7 @@
     font-size: 12pt;
 
     ln {
-      margin: {
-        left : 4px;
-        right: 3px;
-      }
+      margin: { left : 4px; right: 3px; }
       font-weight: normal;
     }
 
