@@ -62,19 +62,19 @@
   color: $lighter-color;
 }
 
-#tweet-container {
-  text-align: right;
-  margin-bottom: 10px;
-  position: relative;
-  left: 5px;
-}
-
 #help-container {
   text-align: right;
   margin: { right: 12px; bottom: 10px; }
-  #help-button { font-size: 1em; }
+  #help-button {
+    font-size: 1em;
+    padding-bottom: 4px;
+  }
 }
 
+#tweet-container {
+  text-align: right;
+  margin: { right: 14px; bottom: 10px; }
+}
 
 //----------------------------------------------
 
