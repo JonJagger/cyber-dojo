@@ -1,5 +1,5 @@
-CXXFLAGS += -std=c++11 -Wall -Wextra -Werror -pthread
-GTEST_LIBS = -lgtest -lgtest_main
+CXXFLAGS += -std=c++11 -Wall -Wextra -Werror
+GTEST_LIBS = -lgtest -lgtest_main -pthread
 
 HPP_FILES = $(wildcard *.hpp)
 COMPILED_HPP_FILES = $(patsubst %.hpp,%.compiled_hpp,$(HPP_FILES))
@@ -16,4 +16,4 @@ test: makefile $(CPP_FILES) $(COMPILED_HPP_FILES)
 # of influence (unlike .cpp files which are not #included)
 
 %.compiled_hpp: %.hpp
-	$(CXX) -x c++ -I. $(CXXFLAGS) -c $< 
+	$(CXX) -x c++ -I. $(CXXFLAGS) -c $<
