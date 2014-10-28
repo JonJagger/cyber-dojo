@@ -1,2 +1,1 @@
-LANG=C
 make

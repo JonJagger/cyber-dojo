@@ -14,4 +14,4 @@ test: makefile $(CPP_FILES) $(COMPILED_HPP_FILES)
 # of influence (unlike .cpp files which are not #included)
 
 %.compiled_hpp: %.hpp
-	$(CXX) -x c++ -I. $(CXXFLAGS) -c $< 
+	$(CXX) -x c++  -std=c++11 -I. $(CXXFLAGS) -c $<

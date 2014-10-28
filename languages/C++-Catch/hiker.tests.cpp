@@ -4,7 +4,7 @@
 
 TEST_CASE( "Life the universe and everything", "[hhgttg]" )
 {
-    // These initial code and test files are completely
+    // The initial code and test files are completely
     // *unrelated* to the chosen exercise. They are
     // merely a simple example to start you off.
     // You should now delete this comment!
