@@ -1,12 +1,12 @@
-CXXFLAGS += -g -std=c++11 -Wall -Wextra -Werror -pthread
+CXXFLAGS += -std=c++11 -Wall -Wextra -Werror -pthread
 GTEST_LIBS = -lgtest -lgtest_main
 
 HPP_FILES = $(wildcard *.hpp)
-XPP_FILES = $(patsubst %.hpp,%.xpp,$(HPP_FILES))
+COMPILED_HPP_FILES = $(patsubst %.hpp,%.compiled_hpp,$(HPP_FILES))
 CPP_FILES = $(wildcard *.cpp)
 OBJ_FILES = $(patsubst %.cpp,%.o,$(CPP_FILES))
 
-test: makefile $(CPP_FILES) $(XPP_FILES)
+test: makefile $(CPP_FILES) $(COMPILED_HPP_FILES)
 	$(CXX) -I. $(CXXFLAGS) -O $(CPP_FILES) $(GTEST_LIBS) -o $@
 	./$@ --gtest_shuffle
 
@@ -15,5 +15,5 @@ test: makefile $(CPP_FILES) $(XPP_FILES)
 # are #included from other files and thus have a large span
 # of influence (unlike .cpp files which are not #included)
 
-%.xpp: %.hpp
-	$(CXX) -I. $(CXXFLAGS) $< -o $@
+%.compiled_hpp: %.hpp
+	$(CXX) -x c++ -I. $(CXXFLAGS) -c $< 
