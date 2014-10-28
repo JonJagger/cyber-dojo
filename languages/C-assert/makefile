@@ -14,4 +14,4 @@ test: makefile $(C_FILES) $(COMPILED_H_FILES)
 # of influence (unlike .c files which are not #included).
 
 %.compiled_h: %.h
-	gcc -x c -std=c99 -I. $(CXXFLAGS) -c $<
+	gcc -x c -I. $(CFLAGS) -c $<
