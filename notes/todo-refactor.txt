@@ -1,6 +1,4 @@
 
-Try to make tweet-tally bubble appear on lhs of
-tweet hyperlink (and not on rhs)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 width of line-numbers on history-dialog no longer matches
 width of line-numbers on test/edit page.

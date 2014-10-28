@@ -4,7 +4,6 @@ GTEST_LIBS = -lgtest -lgtest_main -pthread
 HPP_FILES = $(wildcard *.hpp)
 COMPILED_HPP_FILES = $(patsubst %.hpp,%.compiled_hpp,$(HPP_FILES))
 CPP_FILES = $(wildcard *.cpp)
-OBJ_FILES = $(patsubst %.cpp,%.o,$(CPP_FILES))
 
 test: makefile $(CPP_FILES) $(COMPILED_HPP_FILES)
 	$(CXX) -I. $(CXXFLAGS) -O $(CPP_FILES) $(GTEST_LIBS) -o $@

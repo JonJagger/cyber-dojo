@@ -1,7 +1,20 @@
-run.tests.output : makefile run.tests
-	./run.tests
+CXXFLAGS += -std=c++11 -Wall -Wextra -Werror
 
-run.tests : makefile *.cpp *.hpp
-	g++ -std=c++11 -Wall -Werror -O *.cpp -o run.tests
+HPP_FILES = $(wildcard *.hpp)
+COMPILED_HPP_FILES = $(patsubst %.hpp,%.compiled_hpp,$(HPP_FILES))
+CPP_FILES = $(wildcard *.cpp)
 
+test: makefile $(CPP_FILES) $(COMPILED_HPP_FILES)
+	$(CXX) -I. $(CXXFLAGS) -O $(CPP_FILES) -o $@
+	./$@
 
+catch.compiled_hpp: catch.hpp
+	@echo "Don't compile catch.hpp header"
+
+# This rule ensures header files build in their own right.
+# The quality of header files is important because header files
+# are #included from other files and thus have a large span
+# of influence (unlike .cpp files which are not #included)
+
+%.compiled_hpp: %.hpp
+	$(CXX) -x c++ -I. $(CXXFLAGS) -c $< 
