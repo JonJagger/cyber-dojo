@@ -6,6 +6,11 @@ $LOAD_PATH << CYBERDOJO_HOME_DIR + 'lib'
 $LOAD_PATH << CYBERDOJO_HOME_DIR + 'app/lib'
 $LOAD_PATH << CYBERDOJO_HOME_DIR + 'app/models'
 
+require 'Cleaner'
+require 'UniqueId'
+require 'TimeNow'
+require 'GitDiff'
+
 require 'OsDisk'
 require 'OsDir'
 require 'Git'
