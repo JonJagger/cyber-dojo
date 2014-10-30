@@ -3,7 +3,7 @@ $text-color: darken($lighter-color, 10%);
 
 #home-page {
 
-  font-size: 1.05em;
+  font-size: 1.15em;
 
   margin-top: 25px;
   margin-left: 0px;
@@ -61,7 +61,7 @@ $text-color: darken($lighter-color, 10%);
     background: lighten($green, 20%);
     color: $darker-color;
     @include font-size-largest();
-    width: 195px;
+    width: 215px;
     margin: { top: 4px; bottom: 4px; right: 2px; }
     padding: { right: 20px; bottom: 0px; top: 2px; }
     text-align: right;
@@ -74,7 +74,8 @@ $text-color: darken($lighter-color, 10%);
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     color: $darker-color;
     @include font-size-largest();
-    width: 220px;
+    width: 240px;
+    padding-right: 20px;
     margin-left: 10px;
     text-align: right;
   }

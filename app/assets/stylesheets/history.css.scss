@@ -70,7 +70,7 @@
   #diff-controls {
     position: absolute;
     top : 10px;
-    left: 772px;
+    left: 792px;
     #navigate-controls {
       padding-bottom: 15px;
       #avatar { width: 48px; height: 48px; padding: 0px; margin: 0px; }
@@ -141,7 +141,7 @@
   }
 
   .diff-line-numbers, .diff-sheet {
-    height: 34em;
+    height: 495px;
     margin: 0;
     padding: 0;
     @include code-font;
@@ -169,7 +169,7 @@
   }
 
   .diff-sheet {
-    width: 700px;
+    width: 720px;
     padding-top: 2px;
     overflow-x: auto;
     overflow-y: scroll;
