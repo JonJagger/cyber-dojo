@@ -20,16 +20,11 @@ class DownloadControllerTest < ControllerTestBase
 
   test 'downloaded zip of dojo with one animal ' +
        'unzips to same as original folder' do
-    id = checked_save_id
+    @id = checked_save_id
     enter
-    avatar_name = json['avatar_name']
-    get 'kata/edit', :id => id, :avatar => avatar_name
-    assert_response :success
+    kata_edit
 
-    post 'kata/run_tests',
-      :id => id,
-      :avatar => avatar_name,
-      :file_content => {
+    kata_run_tests :file_content => {
         'cyber-dojo.sh' => ""
       },
       :file_hashes_incoming => {
@@ -39,7 +34,7 @@ class DownloadControllerTest < ControllerTestBase
         'cyber-dojo.sh' => -4545645678
       }
 
-    post 'downloader/download', :id => id
+    post 'downloader/download', :id => @id
     assert_response :success
     root = Rails.root.to_s + '/test/cyberdojo'
     zipfile_name = root + "/zips/#{id}.tar.gz"
@@ -51,19 +46,13 @@ class DownloadControllerTest < ControllerTestBase
 
   test 'downloaded zip of dojo with five animals unzips ' +
        'to same as original folder' do
-    id = checked_save_id
+    @id = checked_save_id
 
-    (0..9).each do
+    9.times do
       enter
-      avatar_name = json['avatar_name']
+      kata_edit
 
-      get 'kata/edit', :id => id, :avatar => avatar_name
-      assert_response :success
-
-      post 'kata/run_tests',
-        :id => id,
-        :avatar => avatar_name,
-        :file_content => {
+      kata_run_tests :file_content => {
           'cyber-dojo.sh' => ""
         },
         :file_hashes_incoming => {
@@ -74,7 +63,7 @@ class DownloadControllerTest < ControllerTestBase
         }
     end
 
-    post 'downloader/download', :id => id
+    post 'downloader/download', :id => @id
     assert_response :success
 
     root = Rails.root.to_s + '/test/cyberdojo'

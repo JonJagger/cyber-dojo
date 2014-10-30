@@ -13,10 +13,9 @@ class DashboardControllerTest < ControllerTestBase
 
   test 'show avatars but no traffic-lights' do
     stub_setup
-    (1..4).each do |n|
+    4.times do
       enter
       kata_edit
-      assert_response :success
     end
     show_dashboard
   end
@@ -25,11 +24,10 @@ class DashboardControllerTest < ControllerTestBase
 
   test 'show avatars with some traffic lights' do
     stub_setup
-    (1..3).each do |n|
+    3.times do
       enter
       kata_edit
-      assert_response :success
-      (1..2).each do |m|
+      2.times do
         kata_run_tests :file_content => {
             'cyber-dojo.sh' => ""
           },
@@ -51,8 +49,7 @@ class DashboardControllerTest < ControllerTestBase
     @id = create_kata
     enter
     kata_edit
-    assert_response :success
-    (1..3).each do |m|
+    3.times do
       kata_run_tests :file_content => {
           'cyber-dojo.sh' => ''
         },
@@ -74,8 +71,6 @@ class DashboardControllerTest < ControllerTestBase
     stub_setup
     enter
     kata_edit
-    assert_response :success
-
     kata_run_tests :file_content => {
         'cyber-dojo.sh' => ''
       },

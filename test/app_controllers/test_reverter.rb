@@ -8,12 +8,8 @@ class ReverterControllerTest  < ControllerTestBase
     @id = create_kata
     enter
     kata_edit
-
-    post 'kata/run_tests', # 1
-      :format => :js,
-      :id => @id,
-      :avatar => @avatar_name,
-      :file_content => {
+    
+    kata_run_tests :file_content => { #1
         'cyber-dojo.sh' => "echo abc"
       },
       :file_hashes_incoming => {
@@ -23,11 +19,7 @@ class ReverterControllerTest  < ControllerTestBase
         'cyber-dojo.sh' => -4545645678
       }
 
-    post 'kata/run_tests', # 2
-      :format => :js,
-      :id => @id,
-      :avatar => @avatar_name,
-      :file_content => {
+    kata_run_tests :file_content => { #2
         'cyber-dojo.sh' => "echo def"
       },
       :file_hashes_incoming => {

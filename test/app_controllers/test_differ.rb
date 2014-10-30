@@ -27,11 +27,7 @@ class DifferControllerTest < ControllerTestBase
     kata_edit
 
     filename = 'hiker.rb'
-    post 'kata/run_tests', # 1
-      :format => :js,
-      :id => @id,
-      :avatar => @avatar_name,
-      :file_content => {
+    kata_run_tests :file_content => { #1
         filename => 'wibble'
       },
       :file_hashes_incoming => {
@@ -41,11 +37,7 @@ class DifferControllerTest < ControllerTestBase
         filename => -4545645678
       }
 
-    post 'kata/run_tests', # 2
-      :format => :js,
-      :id => @id,
-      :avatar => @avatar_name,
-      :file_content => {
+    kata_run_tests :file_content => { #2
         filename => 'wibble'
       },
       :file_hashes_incoming => {
@@ -94,11 +86,7 @@ class DifferControllerTest < ControllerTestBase
     kata_edit
 
     filename = 'hiker.rb'
-    post 'kata/run_tests', # 1
-      :format => :js,
-      :id => @id,
-      :avatar => @avatar_name,
-      :file_content => {
+    kata_run_tests :file_content => { #1
         filename => 'tweedledee'
       },
       :file_hashes_incoming => {
@@ -108,11 +96,7 @@ class DifferControllerTest < ControllerTestBase
         filename => -4545645678
       }
 
-    post 'kata/run_tests', # 2
-      :format => :js,
-      :id => @id,
-      :avatar => @avatar_name,
-      :file_content => {
+    kata_run_tests :file_content => { #2
         filename => 'tweedledum'
       },
       :file_hashes_incoming => {

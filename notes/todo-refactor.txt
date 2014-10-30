@@ -1,4 +1,6 @@
 
+Look for assert response success duplication after call to kata_edit
+Look for kata_run_tests longhand code that can be refactored
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rename tests/integration  folder to tests/externals
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

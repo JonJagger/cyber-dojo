@@ -89,6 +89,7 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
 
   def kata_edit
     get 'kata/edit', :id => @id, :avatar => @avatar_name
+    assert_response :success
   end
 
   def kata_run_tests(hash)
