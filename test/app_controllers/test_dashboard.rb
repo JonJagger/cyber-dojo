@@ -17,7 +17,6 @@ class DashboardControllerTest < ControllerTestBase
     (1..4).each do |n|
       enter
       avatar_name = json['avatar_name']
-      setup_initial_edit(@id,avatar_name)
       get 'kata/edit', :id => @id, :avatar => avatar_name
       assert_response :success
     end
@@ -91,7 +90,7 @@ class DashboardControllerTest < ControllerTestBase
 
   test 'heartbeat' do
     stub_setup
-    get 'dojo/enter', :id => @id
+    enter
     avatar_name = json['avatar_name']
 
     get 'kata/edit', :id => @id, :avatar => avatar_name

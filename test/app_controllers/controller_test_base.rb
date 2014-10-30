@@ -78,15 +78,6 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     json['id']
   end
 
-  def setup_initial_edit(id,avatar_name)
-    manifest = {
-      'cyber-dojo.sh' => 'mono...',
-      'Hiker.cs' => 'class Hiker { ... }'
-    }
-    path = @dojo.katas[id].avatars[avatar_name].path
-    @git.spy(path,'show','0:manifest.json',JSON.unparse(manifest))
-  end
-
   def enter
     if !@id.nil?
       get 'dojo/enter', :format => :json, :id => @id

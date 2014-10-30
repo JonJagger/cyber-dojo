@@ -5,20 +5,14 @@ require_relative 'controller_test_base'
 class KataControllerTest  < ControllerTestBase
 
   test 'edit and then run-tests' do
-    stub_dojo
-    stub_language('fake-C#', 'nunit')
-    stub_exercise('fake-Yatzy')
-    id = create_kata('fake-C#','fake-Yatzy')
-
-    get 'dojo/enter', :id => id
+    stub_setup
+    enter
     avatar_name = json['avatar_name']
-
-    setup_initial_edit(id,avatar_name)
-    get 'kata/edit', :id => id, :avatar => avatar_name
+    get 'kata/edit', :id => @id, :avatar => avatar_name
 
     post 'kata/run_tests', # 1
       :format => :js,
-      :id => id,
+      :id => @id,
       :avatar => avatar_name,
       :file_content => {
         'cyber-dojo.sh' => ""
@@ -32,7 +26,7 @@ class KataControllerTest  < ControllerTestBase
 
     post 'kata/run_tests', # 2
       :format => :js,
-      :id => id,
+      :id => @id,
       :avatar => avatar_name,
       :file_content => {
         'cyber-dojo.sh' => ""
