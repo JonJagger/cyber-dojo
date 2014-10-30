@@ -91,8 +91,21 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     get 'kata/edit', :id => @id, :avatar => @avatar_name
   end
 
+  def kata_run_tests(hash)
+    hash[:format] = :js
+    hash[:id] = @id
+    hash[:avatar] = @avatar_name
+    post 'kata/run_tests', hash
+  end
+
   def avatar_name
     json['avatar_name']
+  end
+
+  def show_dashboard(hash =  {})
+    hash[:id] = @id
+    get 'dashboard/show', hash
+    assert_response :success
   end
 
   #- - - - - - - - - - - - - - - - - -

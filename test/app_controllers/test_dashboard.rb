@@ -7,7 +7,6 @@ class DashboardControllerTest < ControllerTestBase
   test 'show no avatars' do
     stub_setup
     show_dashboard
-    assert_response :success
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -20,7 +19,6 @@ class DashboardControllerTest < ControllerTestBase
       assert_response :success
     end
     show_dashboard
-    assert_response :success
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -32,11 +30,7 @@ class DashboardControllerTest < ControllerTestBase
       kata_edit
       assert_response :success
       (1..2).each do |m|
-        post 'kata/run_tests',
-          :format => :js,
-          :id => @id,
-          :avatar => @avatar_name,
-          :file_content => {
+        kata_run_tests :file_content => {
             'cyber-dojo.sh' => ""
           },
           :file_hashes_incoming => {
@@ -48,9 +42,7 @@ class DashboardControllerTest < ControllerTestBase
       end
     end
     show_dashboard
-    assert_response :success
-    get 'dashboard/show',  :id => @id, :minute_columns => false
-    assert_response :success
+    show_dashboard :minute_columns => false
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -61,11 +53,7 @@ class DashboardControllerTest < ControllerTestBase
     kata_edit
     assert_response :success
     (1..3).each do |m|
-      post 'kata/run_tests',
-        :format => :js,
-        :id => @id,
-        :avatar => @avatar_name,
-        :file_content => {
+      kata_run_tests :file_content => {
           'cyber-dojo.sh' => ''
         },
         :file_hashes_incoming => {
@@ -75,12 +63,9 @@ class DashboardControllerTest < ControllerTestBase
           'cyber-dojo.sh' => -4545645678
         }
     end
-    get 'dashboard/show',
-      :id => @id,
-      :avatar => @avatar_name,
+    show_dashboard :avatar => @avatar_name,
       :was_tag => 1,
       :now_tag => 2
-    assert_response :success
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -91,11 +76,7 @@ class DashboardControllerTest < ControllerTestBase
     kata_edit
     assert_response :success
 
-    post 'kata/run_tests',
-      :format => :js,
-      :id => @id,
-      :avatar => @avatar_name,
-      :file_content => {
+    kata_run_tests :file_content => {
         'cyber-dojo.sh' => ''
       },
       :file_hashes_incoming => {
@@ -106,12 +87,6 @@ class DashboardControllerTest < ControllerTestBase
       }
 
     get 'dashboard/heartbeat', :format => :js, :id => @id
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def show_dashboard
-    get 'dashboard/show', :id => @id
   end
 
 end
