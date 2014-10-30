@@ -15,8 +15,7 @@ class DashboardControllerTest < ControllerTestBase
   test 'show avatars but no traffic-lights' do
     stub_setup
     (1..4).each do |n|
-      enter
-      avatar_name = json['avatar_name']
+      avatar_name = enter
       get 'kata/edit', :id => @id, :avatar => avatar_name
       assert_response :success
     end
@@ -29,8 +28,7 @@ class DashboardControllerTest < ControllerTestBase
   test 'show avatars with some traffic lights' do
     stub_setup
     (1..3).each do |n|
-      enter
-      avatar_name = json['avatar_name']
+      avatar_name = enter
       get 'kata/edit', :id => @id, :avatar => avatar_name
       assert_response :success
       (1..2).each do |m|
@@ -59,8 +57,7 @@ class DashboardControllerTest < ControllerTestBase
 
   test 'show dashboard and open a diff-dialog' do
     @id = create_kata
-    enter
-    avatar_name = json['avatar_name']
+    avatar_name = enter
     get 'kata/edit', :id => @id, :avatar => avatar_name
     assert_response :success
     (1..3).each do |m|
@@ -90,9 +87,7 @@ class DashboardControllerTest < ControllerTestBase
 
   test 'heartbeat' do
     stub_setup
-    enter
-    avatar_name = json['avatar_name']
-
+    avatar_name = enter
     get 'kata/edit', :id => @id, :avatar => avatar_name
     assert_response :success
 

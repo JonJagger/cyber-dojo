@@ -84,6 +84,11 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     else
       get 'dojo/enter', :format => :json
     end
+    avatar_name
+  end
+
+  def avatar_name
+    json['avatar_name']
   end
 
   #- - - - - - - - - - - - - - - - - -

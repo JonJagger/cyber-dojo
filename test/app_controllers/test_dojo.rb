@@ -160,8 +160,4 @@ class DojoControllerTest  < ControllerTestBase
     json['full']
   end
 
-  def avatar_name
-    json['avatar_name']
-  end
-
 end

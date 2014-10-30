@@ -6,8 +6,7 @@ class KataControllerTest  < ControllerTestBase
 
   test 'edit and then run-tests' do
     stub_setup
-    enter
-    avatar_name = json['avatar_name']
+    avatar_name = enter
     get 'kata/edit', :id => @id, :avatar => avatar_name
 
     post 'kata/run_tests', # 1
