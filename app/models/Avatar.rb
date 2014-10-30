@@ -96,14 +96,16 @@ class Avatar
     dir.write('manifest.json', visible_files)
   end
 
-  def visible_files
-    manifest
-  end
-
   def commit(tag)
     git.commit(path, "-a -m '#{tag}' --quiet")
     git.gc(path, '--auto --quiet')
     git.tag(path, "-m '#{tag}' #{tag} HEAD")
+  end
+
+  def visible_files
+    # equivalent to tags[-1].visible_files but much easier
+    # to test (faking files is easier than faking git)
+    JSON.parse(clean(dir.read('manifest.json')))
   end
 
 private
@@ -125,10 +127,6 @@ private
 
   def increments
     @increments ||= JSON.parse(clean(dir.read('increments.json')))
-  end
-
-  def manifest
-    @manifest ||= JSON.parse(clean(dir.read('manifest.json')))
   end
 
 end
