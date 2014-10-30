@@ -14,7 +14,6 @@ class DojoControllerTest  < ControllerTestBase
   test 'index with id' do
     get 'dojo/index', :id => '1234512345'
     assert_response :success
-    # enter is enabled
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -

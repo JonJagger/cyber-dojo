@@ -7,13 +7,12 @@ class ReverterControllerTest  < ControllerTestBase
   test 'revert' do
     @id = create_kata
     enter
-    avatar_name = json['avatar_name']
-    get 'kata/edit', :id => @id, :avatar => avatar_name
+    kata_edit
 
     post 'kata/run_tests', # 1
       :format => :js,
       :id => @id,
-      :avatar => avatar_name,
+      :avatar => @avatar_name,
       :file_content => {
         'cyber-dojo.sh' => "echo abc"
       },
@@ -27,7 +26,7 @@ class ReverterControllerTest  < ControllerTestBase
     post 'kata/run_tests', # 2
       :format => :js,
       :id => @id,
-      :avatar => avatar_name,
+      :avatar => @avatar_name,
       :file_content => {
         'cyber-dojo.sh' => "echo def"
       },
@@ -41,7 +40,7 @@ class ReverterControllerTest  < ControllerTestBase
     get 'reverter/revert',
       :format => :json,
       :id => @id,
-      :avatar => avatar_name,
+      :avatar => @avatar_name,
       :tag => 1
 
     visible_files = json['visibleFiles']

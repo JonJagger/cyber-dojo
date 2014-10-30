@@ -24,14 +24,13 @@ class DifferControllerTest < ControllerTestBase
   test 'no lines different in any files between successive tags' do
     @id = create_kata
     enter
-    avatar_name = json['avatar_name']
+    kata_edit
 
-    get 'kata/edit', :id => @id, :avatar => avatar_name
     filename = 'hiker.rb'
     post 'kata/run_tests', # 1
       :format => :js,
       :id => @id,
-      :avatar => avatar_name,
+      :avatar => @avatar_name,
       :file_content => {
         filename => 'wibble'
       },
@@ -45,7 +44,7 @@ class DifferControllerTest < ControllerTestBase
     post 'kata/run_tests', # 2
       :format => :js,
       :id => @id,
-      :avatar => avatar_name,
+      :avatar => @avatar_name,
       :file_content => {
         filename => 'wibble'
       },
@@ -61,12 +60,12 @@ class DifferControllerTest < ControllerTestBase
     get 'differ/diff',
       :format => :json,
       :id => @id,
-      :avatar => avatar_name,
+      :avatar => @avatar_name,
       :was_tag => was_tag,
       :now_tag => now_tag
 
     assert_response :success
-    info = " " + @id + ":" + avatar_name
+    info = " " + @id + ":" + @avatar_name
 
     lights = json['lights']
 
@@ -92,14 +91,13 @@ class DifferControllerTest < ControllerTestBase
   test 'one line different in one file between successive tags' do
     @id = create_kata
     enter
-    avatar_name = json['avatar_name']
-    get 'kata/edit', :id => @id, :avatar => avatar_name
+    kata_edit
 
     filename = 'hiker.rb'
     post 'kata/run_tests', # 1
       :format => :js,
       :id => @id,
-      :avatar => avatar_name,
+      :avatar => @avatar_name,
       :file_content => {
         filename => 'tweedledee'
       },
@@ -113,7 +111,7 @@ class DifferControllerTest < ControllerTestBase
     post 'kata/run_tests', # 2
       :format => :js,
       :id => @id,
-      :avatar => avatar_name,
+      :avatar => @avatar_name,
       :file_content => {
         filename => 'tweedledum'
       },
@@ -129,12 +127,12 @@ class DifferControllerTest < ControllerTestBase
     get 'differ/diff',
       :format => :json,
       :id => @id,
-      :avatar => avatar_name,
+      :avatar => @avatar_name,
       :was_tag => was_tag,
       :now_tag => now_tag
 
     assert_response :success
-    info = " " + @id + ':' + avatar_name + ':'
+    info = " " + @id + ':' + @avatar_name + ':'
 
     lights = json['lights']
 

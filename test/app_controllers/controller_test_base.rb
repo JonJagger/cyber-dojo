@@ -79,12 +79,16 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   end
 
   def enter
-    if !@id.nil?
-      get 'dojo/enter', :format => :json, :id => @id
-    else
+    if @id.nil?
       get 'dojo/enter', :format => :json
+    else
+      get 'dojo/enter', :format => :json, :id => @id
     end
-    avatar_name
+    @avatar_name = avatar_name
+  end
+
+  def kata_edit
+    get 'kata/edit', :id => @id, :avatar => @avatar_name
   end
 
   def avatar_name

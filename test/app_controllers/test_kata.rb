@@ -6,13 +6,13 @@ class KataControllerTest  < ControllerTestBase
 
   test 'edit and then run-tests' do
     stub_setup
-    avatar_name = enter
-    get 'kata/edit', :id => @id, :avatar => avatar_name
+    enter
+    kata_edit
 
     post 'kata/run_tests', # 1
       :format => :js,
       :id => @id,
-      :avatar => avatar_name,
+      :avatar => @avatar_name,
       :file_content => {
         'cyber-dojo.sh' => ""
       },
@@ -26,7 +26,7 @@ class KataControllerTest  < ControllerTestBase
     post 'kata/run_tests', # 2
       :format => :js,
       :id => @id,
-      :avatar => avatar_name,
+      :avatar => @avatar_name,
       :file_content => {
         'cyber-dojo.sh' => ""
       },

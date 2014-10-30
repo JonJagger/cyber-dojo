@@ -15,8 +15,8 @@ class DashboardControllerTest < ControllerTestBase
   test 'show avatars but no traffic-lights' do
     stub_setup
     (1..4).each do |n|
-      avatar_name = enter
-      get 'kata/edit', :id => @id, :avatar => avatar_name
+      enter
+      kata_edit
       assert_response :success
     end
     show_dashboard
@@ -28,14 +28,14 @@ class DashboardControllerTest < ControllerTestBase
   test 'show avatars with some traffic lights' do
     stub_setup
     (1..3).each do |n|
-      avatar_name = enter
-      get 'kata/edit', :id => @id, :avatar => avatar_name
+      enter
+      kata_edit
       assert_response :success
       (1..2).each do |m|
         post 'kata/run_tests',
           :format => :js,
           :id => @id,
-          :avatar => avatar_name,
+          :avatar => @avatar_name,
           :file_content => {
             'cyber-dojo.sh' => ""
           },
@@ -57,14 +57,14 @@ class DashboardControllerTest < ControllerTestBase
 
   test 'show dashboard and open a diff-dialog' do
     @id = create_kata
-    avatar_name = enter
-    get 'kata/edit', :id => @id, :avatar => avatar_name
+    enter
+    kata_edit
     assert_response :success
     (1..3).each do |m|
       post 'kata/run_tests',
         :format => :js,
         :id => @id,
-        :avatar => avatar_name,
+        :avatar => @avatar_name,
         :file_content => {
           'cyber-dojo.sh' => ''
         },
@@ -77,7 +77,7 @@ class DashboardControllerTest < ControllerTestBase
     end
     get 'dashboard/show',
       :id => @id,
-      :avatar => avatar_name,
+      :avatar => @avatar_name,
       :was_tag => 1,
       :now_tag => 2
     assert_response :success
@@ -87,14 +87,14 @@ class DashboardControllerTest < ControllerTestBase
 
   test 'heartbeat' do
     stub_setup
-    avatar_name = enter
-    get 'kata/edit', :id => @id, :avatar => avatar_name
+    enter
+    kata_edit
     assert_response :success
 
     post 'kata/run_tests',
       :format => :js,
       :id => @id,
-      :avatar => avatar_name,
+      :avatar => @avatar_name,
       :file_content => {
         'cyber-dojo.sh' => ''
       },
