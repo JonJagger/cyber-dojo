@@ -5,10 +5,7 @@ require_relative 'controller_test_base'
 class DashboardControllerTest < ControllerTestBase
 
   test 'show no avatars' do
-    stub_dojo
-    stub_language('fake-C#','nunit')
-    stub_exercise('fake-Yatzy')
-    @id = create_kata('fake-C#','fake-Yatzy')
+    stub_setup
     show_dashboard
     assert_response :success
   end
@@ -16,10 +13,7 @@ class DashboardControllerTest < ControllerTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'show avatars but no traffic-lights' do
-    stub_dojo
-    stub_language('fake-C#','nunit')
-    stub_exercise('fake-Yatzy')
-    @id = create_kata('fake-C#','fake-Yatzy')
+    stub_setup
     (1..4).each do |n|
       enter
       avatar_name = json['avatar_name']
@@ -34,7 +28,7 @@ class DashboardControllerTest < ControllerTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'show avatars with some traffic lights' do
-    @id = create_kata
+    stub_setup
     (1..3).each do |n|
       enter
       avatar_name = json['avatar_name']
@@ -96,17 +90,16 @@ class DashboardControllerTest < ControllerTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'heartbeat' do
-    id = create_kata
-
-    get 'dojo/enter', :id => id
+    stub_setup
+    get 'dojo/enter', :id => @id
     avatar_name = json['avatar_name']
 
-    get 'kata/edit', :id => id, :avatar => avatar_name
+    get 'kata/edit', :id => @id, :avatar => avatar_name
     assert_response :success
 
     post 'kata/run_tests',
       :format => :js,
-      :id => id,
+      :id => @id,
       :avatar => avatar_name,
       :file_content => {
         'cyber-dojo.sh' => ''
@@ -118,10 +111,17 @@ class DashboardControllerTest < ControllerTestBase
         'cyber-dojo.sh' => -4545645678
       }
 
-    get 'dashboard/heartbeat', :format => :js, :id => id
+    get 'dashboard/heartbeat', :format => :js, :id => @id
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def stub_setup
+    stub_dojo
+    stub_language('fake-C#','nunit')
+    stub_exercise('fake-Yatzy')
+    @id = create_kata('fake-C#','fake-Yatzy')
+  end
 
   def show_dashboard
     get 'dashboard/show', :id => @id

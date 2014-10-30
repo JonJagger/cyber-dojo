@@ -5,7 +5,7 @@ class KataController < ApplicationController
     @kata = kata
     @avatar = avatar
     @tab = @kata.language.tab
-    @visible_files = @avatar.tags[-1].visible_files
+    @visible_files = @avatar.visible_files #tags[-1].visible_files
 
     @new_files = { }
     @filenames_to_delete = [ ]

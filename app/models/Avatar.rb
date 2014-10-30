@@ -96,6 +96,10 @@ class Avatar
     dir.write('manifest.json', visible_files)
   end
 
+  def visible_files
+    manifest
+  end
+
   def commit(tag)
     git.commit(path, "-a -m '#{tag}' --quiet")
     git.gc(path, '--auto --quiet')
@@ -121,6 +125,10 @@ private
 
   def increments
     @increments ||= JSON.parse(clean(dir.read('increments.json')))
+  end
+
+  def manifest
+    @manifest ||= JSON.parse(clean(dir.read('manifest.json')))
   end
 
 end
