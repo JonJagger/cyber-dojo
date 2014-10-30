@@ -1,5 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+rename tests/integration  folder to tests/externals
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Add tests for new Avatar.visible_files method.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 width of line-numbers on history-dialog no longer matches

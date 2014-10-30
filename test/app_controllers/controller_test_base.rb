@@ -33,6 +33,13 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
+  def stub_setup
+    stub_dojo
+    stub_language('fake-C#','nunit')
+    stub_exercise('fake-Yatzy')
+    @id = create_kata('fake-C#','fake-Yatzy')
+  end
+
   def stub_dojo
     externals = {
       :disk   => @disk   = thread[:disk  ] = SpyDisk.new,

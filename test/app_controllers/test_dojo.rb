@@ -84,7 +84,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'enter with id that does exist => exists,!full,avatar_name' do
-    @id = create_kata
+    stub_setup
     enter
     assert exists?
     assert !empty?
@@ -95,7 +95,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'enter succeeds once for each avatar name, then dojo is full' do
-    @id = create_kata
+    stub_setup
     Avatars.names.each do |avatar_name|
       enter
       assert exists?
@@ -120,7 +120,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 're_enter with id that exists but is empty' do
-    @id = create_kata
+    stub_setup
     re_enter
     assert exists?
     assert empty?
@@ -130,7 +130,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 're_enter with id that exists and is not empty' do
-    @id = create_kata
+    stub_setup
     enter
     re_enter
     assert exists?

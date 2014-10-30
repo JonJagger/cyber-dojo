@@ -116,13 +116,6 @@ class DashboardControllerTest < ControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def stub_setup
-    stub_dojo
-    stub_language('fake-C#','nunit')
-    stub_exercise('fake-Yatzy')
-    @id = create_kata('fake-C#','fake-Yatzy')
-  end
-
   def show_dashboard
     get 'dashboard/show', :id => @id
   end
