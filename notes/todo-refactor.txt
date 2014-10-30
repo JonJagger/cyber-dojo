@@ -1,5 +1,13 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+I often find I fork from someone's traffic-light and then
+immediately enter it to demonstrate something. Could I
+provide two buttons on the history dialog
+- one to fork a dojo
+- one to fork a dojo and start an animal?
+Or maybe when you click the fork button it opens a new dialog
+with two buttons offering the two choices above.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cyberdojo_test_base.rb does this
   def self.test(name, &block)
     define_method("test_#{name}".to_sym, &block)
@@ -14,11 +22,6 @@ Add tests for new Avatar.visible_files method.
 width of line-numbers on history-dialog no longer matches
 width of line-numbers on test/edit page.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-I often find I fork from someone's traffic-light and then
-immediately enter it to demonstrate something. Could I
-provide two buttons - one to fork a dojo, and one to fork
-direct to an animal?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 http://localhost:3000/kata/edit/0B416E9012?avatar=zebra
 could be simplified to
 http://localhost:3000/zebra/edit/0B416E9012
@@ -32,15 +35,11 @@ Then use for lib classes
   Runners
   if $?.exitstatus != 0 for any command then log it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-on history dialog remember tag-number for each animal
+on history dialog I could remember tag-number for each animal
 and resume on that number when you return to that
 animal in the same dialog.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 on test page, make animal image (top right) *not* a dashboard link.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-clicking on the animal image on the history-dialog
-opens the re-enter popup allowing you to spy
-on other animals!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 See if citigroup are interested in a corporate license.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
