@@ -1,6 +1,11 @@
 
-Look for assert response success duplication after call to kata_edit
-Look for kata_run_tests longhand code that can be refactored
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+cyberdojo_test_base.rb does this
+  def self.test(name, &block)
+    define_method("test_#{name}".to_sym, &block)
+  end
+I could use this to do execute_around and automatically
+call @disk.teardown
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rename tests/integration  folder to tests/externals
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
