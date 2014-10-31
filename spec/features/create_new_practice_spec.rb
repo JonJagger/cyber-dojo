@@ -5,6 +5,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 feature "Create a practice" do
 
   scenario "Practice doesn't exist yet" do
+    ENV['CYBERDOJO_USE_HOST'] = 'true'
     visit "/"
     click_on 'create' #practice
     language('Ruby-Rspec').click
@@ -33,4 +34,3 @@ end
 def exercise exercise_to_select
   find("[data-exercise=\"#{exercise_to_select}\"]")
 end
-
