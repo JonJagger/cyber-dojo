@@ -610,6 +610,7 @@ var cyberDojo = (function(cd, $) {
         var light = $('img[src$="_bar.png"]', titleBar());
         light.scrollIntoView(options);
         $('.ui-dialog').removeClass('busy');
+        $('.ui-dialog').css('cursor', 'pointer');
       });
     };
 
