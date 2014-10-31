@@ -15,8 +15,7 @@ feature "Create a practice" do
     click_on 'enter' #practice
     click_on 'ok' #your animal is [cheetah, ...]
 
-    new_window = page.driver.browser.window_handles.last
-    page.within_window new_window do
+    within_window(windows.last) do
       within '#filename-list' do
         page.should have_text 'cyber-dojo.sh'
         page.should have_text 'instructions'
