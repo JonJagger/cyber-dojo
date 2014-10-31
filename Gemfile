@@ -12,8 +12,8 @@ gem 'therubyracer'
 group :test do
   gem 'rspec'
   gem 'shoulda-matchers'
-  gem 'capybara'
-  gem 'selenium-webdriver', '~> 2.38.0'
+  gem 'capybara', '= 2.4.4'
+  gem 'selenium-webdriver', '= 2.43.0'
   gem 'faker'
   gem 'autotest-standalone'
   gem 'autotest-growl'
@@ -26,4 +26,3 @@ end
 group :development, :test do
   gem 'rspec-rails'
 end
-

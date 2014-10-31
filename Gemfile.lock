@@ -32,7 +32,7 @@ GEM
     autotest-growl (0.2.16)
     autotest-standalone (4.5.11)
     builder (3.1.4)
-    capybara (2.4.3)
+    capybara (2.4.4)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
@@ -40,7 +40,7 @@ GEM
       xpath (~> 2.0)
     childprocess (0.5.5)
       ffi (~> 1.0, >= 1.0.11)
-    coffee-rails (4.0.1)
+    coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
     coffee-script (2.3.0)
@@ -58,7 +58,7 @@ GEM
     docile (1.1.5)
     erubis (2.7.0)
     eventmachine (1.0.3)
-    execjs (2.2.1)
+    execjs (2.2.2)
     faker (1.4.3)
       i18n (~> 0.5)
     ffi (1.9.6)
@@ -122,16 +122,16 @@ GEM
     rspec-support (3.1.2)
     rubyzip (1.1.6)
     sass (3.2.19)
-    sass-rails (4.0.3)
+    sass-rails (4.0.4)
       railties (>= 4.0.0, < 5.0)
-      sass (~> 3.2.0)
-      sprockets (~> 2.8, <= 2.11.0)
+      sass (~> 3.2.2)
+      sprockets (~> 2.8, < 2.12)
       sprockets-rails (~> 2.0)
-    selenium-webdriver (2.38.0)
-      childprocess (>= 0.2.5)
+    selenium-webdriver (2.43.0)
+      childprocess (~> 0.5)
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
-      websocket (~> 1.0.4)
+      websocket (~> 1.0)
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
     simplecov (0.9.1)
@@ -139,7 +139,7 @@ GEM
       multi_json (~> 1.0)
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
-    sprockets (2.11.0)
+    sprockets (2.11.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -162,11 +162,11 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.41)
+    tzinfo (0.3.42)
     uglifier (2.5.3)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    websocket (1.0.7)
+    websocket (1.2.1)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -177,7 +177,7 @@ DEPENDENCIES
   approvals (>= 0.0.7)
   autotest-growl
   autotest-standalone
-  capybara
+  capybara (= 2.4.4)
   coffee-rails
   cucumber
   faker
@@ -186,7 +186,7 @@ DEPENDENCIES
   rspec
   rspec-rails
   sass-rails (~> 4.0.3)
-  selenium-webdriver (~> 2.38.0)
+  selenium-webdriver (= 2.43.0)
   shoulda-matchers
   simplecov (>= 0.7.1)
   sqlite3 (= 1.3.7)
