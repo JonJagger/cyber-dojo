@@ -1,10 +1,9 @@
 # encoding: utf-8
 require File.dirname(__FILE__) + '/../spec_helper'
 
-# this is a huge badass feature test that verifies everything at once
-feature "Create a practice" do
+feature "Create new practice" do
 
-  scenario "Practice doesn't exist yet" do
+  scenario "And enter as an animal" do
     ENV['CYBERDOJO_USE_HOST'] = 'true'
     visit "/"
     click_on 'create' #practice
@@ -17,10 +16,10 @@ feature "Create a practice" do
 
     within_window(windows.last) do
       within '#filename-list' do
-        page.should have_text 'cyber-dojo.sh'
-        page.should have_text 'instructions'
-        page.should have_text 'hiker.rb'
-        page.should have_text 'hiker_spec.rb'
+        expect(page).to have_text 'cyber-dojo.sh'
+        expect(page).to have_text 'instructions'
+        expect(page).to have_text 'hiker.rb'
+        expect(page).to have_text 'hiker_spec.rb'
       end
     end
   end
