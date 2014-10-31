@@ -1,5 +1,15 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Suppose I just hang the externals off the thread hash and each object
+takes what it needs from the thread hash rather than it being passed
+in explicitly. One effect of this is that I might be able to find
+a way to put the externals onto the thread at the Rails startup code
+and avoid having to mess about in the controller base class. This
+will make my tests and my code more alike. I won't have code in the
+controller just for the tests.
+I think I may be able to do it in a externals.rb file placed in
+the config/initializers/ folder.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I often find I fork from someone's traffic-light and then
 immediately enter it to demonstrate something. Could I
 provide two buttons on the history dialog
