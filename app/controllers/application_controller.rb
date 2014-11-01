@@ -53,9 +53,9 @@ class ApplicationController < ActionController::Base
 
   def dojo
     externals = {
-      :runner => runner,
-      :disk   => disk,
-      :git    => git
+      :runner => external[:runner],
+      :disk   => external[:disk],
+      :git    => external[:git]
     }
     Dojo.new(root_path,externals)
   end
@@ -86,21 +86,8 @@ class ApplicationController < ActionController::Base
 
 private
 
-  def runner
-    @runner ||= Thread.current[:runner]
-    @runner ||= DockerTestRunner.new if Docker.installed?
-    @runner ||= HostTestRunner.new   if !ENV['CYBERDOJO_USE_HOST'].nil?
-    @runner ||= DummyTestRunner.new
-  end
-
-  def disk
-    @disk ||= Thread.current[:disk]
-    @disk ||= OsDisk.new
-  end
-
-  def git
-    @git ||= Thread.current[:git]
-    @git ||= Git.new
+  def external
+    Thread.current
   end
 
 end

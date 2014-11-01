@@ -46,6 +46,7 @@ class DashboardControllerTest < ControllerTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'show dashboard and open a diff-dialog' do
+    set_all_externals
     @id = create_kata
     enter
     kata_edit

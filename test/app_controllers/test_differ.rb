@@ -4,24 +4,8 @@ require_relative 'controller_test_base'
 
 class DifferControllerTest < ControllerTestBase
 
-  def runner
-    if Docker.installed?
-      DockerTestRunner.new
-    else
-      HostTestRunner.new
-    end
-  end
-
-  def setup
-    super
-    Thread.current[:runner] = runner
-  end
-
-  def teardown
-    Thread.current[:runner] = nil
-  end
-
   test 'no lines different in any files between successive tags' do
+    set_all_externals
     @id = create_kata
     enter
     kata_edit
@@ -81,6 +65,7 @@ class DifferControllerTest < ControllerTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'one line different in one file between successive tags' do
+    set_all_externals
     @id = create_kata
     enter
     kata_edit

@@ -111,6 +111,24 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
 
   #- - - - - - - - - - - - - - - - - -
 
+  def set_all_externals
+    external[:runner] = choose_test_runner
+    external[:disk] = OsDisk.new
+    external[:git] = Git.new
+  end
+
+  def choose_test_runner
+    return DockerTestRunner.new if Docker.installed?
+    return HostTestRunner.new   if !ENV['CYBERDOJO_USE_HOST'].nil?
+    return DummyTestRunner.new
+  end
+
+  def external
+    Thread.current
+  end
+
+  #- - - - - - - - - - - - - - - - - -
+
   def json
     ActiveSupport::JSON.decode @response.body
   end

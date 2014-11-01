@@ -5,6 +5,7 @@ require_relative 'controller_test_base'
 class DojoControllerTest  < ControllerTestBase
 
   test 'index without id' do
+    set_all_externals
     get 'dojo/index'
     assert_response :success
   end
@@ -12,6 +13,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'index with id' do
+    set_all_externals
     get 'dojo/index', :id => '1234512345'
     assert_response :success
   end
@@ -19,6 +21,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'check_id exists=false when no kata for id' do
+    set_all_externals
     @id = 'abcdef'
     check_id
     assert !exists?
@@ -27,6 +30,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'check_id exists=true when id.length < 6 and kata exists' do
+    set_all_externals
     @id = create_kata[0..4]
     assert @id.length < 6
     check_id
@@ -38,6 +42,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'check_id exists=true when id.length == 6 and kata exists' do
+    set_all_externals
     @id = create_kata[0..5]
     assert @id.length == 6
     check_id
@@ -49,6 +54,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'check_id exists=true when id.length > 6 and kata exists' do
+    set_all_externals
     @id = create_kata[0..6]
     assert @id.length > 6
     check_id
@@ -60,6 +66,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'enter with no id => !exists' do
+    set_all_externals
     enter
     assert !exists?
   end
@@ -67,6 +74,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'enter with empty string id => !exists' do
+    set_all_externals
     @id = ''
     enter
     assert !exists?
@@ -75,6 +83,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'enter with id that does not exist => !exists' do
+    set_all_externals
     @id = 'ab00ab11ab'
     enter
     assert !exists?
@@ -111,6 +120,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 're_enter with id that does not exist' do
+    set_all_externals
     @id = 'ab00ab11ab'
     re_enter
     assert !exists?
