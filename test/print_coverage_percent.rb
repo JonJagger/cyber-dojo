@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 
 filename = ARGV[0]
 filter = ARGV[1]

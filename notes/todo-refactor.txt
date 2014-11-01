@@ -4,13 +4,6 @@ test/app_controllers/controller_test_base.rb and
 config/initializers/externals.rb
   have duplication
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-test/run_one.sh ends with this
-ruby ../print_coverage_percent.rb index.html $1 | tee -a log.tmp
-Put this at the start of print_coverage_percent.rb
-#!/bin/bash
-And drop the explicit ruby call, so it ends
-../print_coverage_percent.rb index.html $1 | tee -a log.tmp
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Need to put error count back into coverage.txt report output.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I often find I fork from someone's traffic-light and then
