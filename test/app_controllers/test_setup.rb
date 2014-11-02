@@ -67,7 +67,6 @@ class SetupControllerTest < ControllerTestBase
   #- - - - - - - - - - - - - - - - - - -
 
   test 'save' do
-    set_all_externals
     create_kata
   end
 

@@ -5,11 +5,10 @@ require_relative 'controller_test_base'
 class ReverterControllerTest  < ControllerTestBase
 
   test 'revert' do
-    set_all_externals
     @id = create_kata
     enter
     kata_edit
-
+    
     kata_run_tests :file_content => { #1
         'cyber-dojo.sh' => "echo abc"
       },

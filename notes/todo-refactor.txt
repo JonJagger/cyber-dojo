@@ -1,11 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-test/app_controllers/controller_test_base.rb and
-config/initializers/externals.rb
-  have duplication
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Need to put error count back into coverage.txt report output.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I often find I fork from someone's traffic-light and then
 immediately enter it to demonstrate something. Could I
 provide two buttons on the history dialog
@@ -30,8 +24,6 @@ cyberdojo_test_base.rb does this
   end
 I could use this to do execute_around and automatically
 call @disk.teardown
-If I could also tell if the test passed and teardowns were all ok
-then I could do `rm` commands to clear test/katas/ folders
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 put animal images on front page?
 Put the ones that are in the dojo (with the entered id)
