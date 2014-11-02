@@ -4,7 +4,7 @@
 # get latest source from https://github.com/JonJagger/cyberdojo
 # if it asks for a password just hit return
 cd /var/www/cyberdojo
-git pull --no-edit
+git pull origin master --no-edit
 ret=$?
 if [ $ret -ne 0 ]; then
   exit
