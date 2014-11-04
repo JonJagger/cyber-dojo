@@ -167,27 +167,31 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var refreshAvatarHandler = function(id,name) {
+    var refreshAvatarHandler = function(id,name,maxTag) {
       $('#' + id + '-avatar')
         .attr('disabled', name === '')
         .attr('title', "Click to review " + name + "'s history")
         .unbind('click')
         .bind('click', function() {
           avatarName = name;
-          show(1);
+          if (diffCheckBox().is(':checked')) {
+            show(1);
+          } else {
+            show(maxTag);
+          }
         });
     };
 
     //- - - - - - - - - - - - - - -
 
     var refreshPrevAvatarHandler = function() {
-      refreshAvatarHandler('prev', data.prevAvatar);
+      refreshAvatarHandler('prev', data.prevAvatar, data.prevAvatarMaxTag);
     };
 
     //- - - - - - - - - - - - - - -
 
     var refreshNextAvatarHandler = function() {
-      refreshAvatarHandler('next', data.nextAvatar);
+      refreshAvatarHandler('next', data.nextAvatar, data.nextAvatarMaxTag);
     };
 
     //---------------------------------------------------

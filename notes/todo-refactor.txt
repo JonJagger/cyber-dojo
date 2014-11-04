@@ -1,7 +1,10 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The front page review button does not enable unless you
-manually refresh the screen. This is not so good.
+manually refresh the screen. This is not so good. Simplify.
+All buttons are enabled/disabled based on validity of id?
+This suffers from all buttons being enabled, whereas there
+is something to be said for only enter being initially enabled.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I often find I fork from someone's traffic-light and then
 immediately enter it to demonstrate something. Could I
