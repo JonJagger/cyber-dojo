@@ -1,45 +1,19 @@
+def require_dependencies file_names
+  #there is no need to give the respective dirs
+  file_names.each{|file_name| require_dependency file_name}
+end
 
-def rooted(path,filename); '../../' + path + '/' + filename;  end
-def lib(filename);         rooted('lib',        filename); end
-def app_lib(filename);     rooted('app/lib',    filename); end
-def app_models(filename);  rooted('app/models', filename); end
+# these dependencies have to be loaded in the correct order
+# some of them depend on loading previous ones
+require_dependencies %w{Docker TestRunner DockerTestRunner DummyTestRunner HostTestRunner
+                        Folders Git OsDir OsDisk TimeNow UniqueId}
 
-require_dependency lib('Docker')
-require_dependency lib('TestRunner')
-require_dependency lib('DockerTestRunner')
-require_dependency lib('DummyTestRunner')
-require_dependency lib('HostTestRunner')
-require_dependency lib('Folders')
-require_dependency lib('Git')
-require_dependency lib('OsDir')
-require_dependency lib('OsDisk')
-require_dependency lib('TimeNow')
-require_dependency lib('UniqueId')
-
-require_dependency app_lib('Approval')
-require_dependency app_lib('Chooser')
-require_dependency app_lib('Cleaner')
-require_dependency app_lib('FileDeltaMaker')
-require_dependency app_lib('GitDiff')
-require_dependency app_lib('GitDiffBuilder')
-require_dependency app_lib('GitDiffParser')
-require_dependency app_lib('LineSplitter')
-require_dependency app_lib('MakefileFilter')
-require_dependency app_lib('OutputParser')
-require_dependency app_lib('TdGapper')
-
-require_dependency app_models('Avatar')
-require_dependency app_models('Avatars')
-require_dependency app_models('Dojo')
-require_dependency app_models('Exercise')
-require_dependency app_models('Exercises')
-require_dependency app_models('Kata')
-require_dependency app_models('Katas')
-require_dependency app_models('Language')
-require_dependency app_models('Languages')
-require_dependency app_models('Light')
-require_dependency app_models('Sandbox')
-require_dependency app_models('Tag')
+require_dependencies %w{Approval Chooser Cleaner FileDeltaMaker
+                        GitDiff GitDiffBuilder GitDiffParser LineSplitter
+                        MakefileFilter OutputParser TdGapper}
+                                                 
+require_dependencies %w{Avatar Avatars Dojo Exercise Exercises Kata Katas
+                        Language Languages Light Sandbox Tag}
 
 class ApplicationController < ActionController::Base
 
@@ -89,7 +63,7 @@ private
   def runner
     @runner ||= Thread.current[:runner]
     @runner ||= DockerTestRunner.new if Docker.installed?
-    @runner ||= HostTestRunner.new   if !ENV['CYBERDOJO_USE_HOST'].nil?
+    @runner ||= HostTestRunner.new unless ENV['CYBERDOJO_USE_HOST'].nil?
     @runner ||= DummyTestRunner.new
   end
 
