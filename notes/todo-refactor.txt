@@ -1,5 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+The front page review button does not enable unless you
+manually refresh the screen. This is not so good.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I often find I fork from someone's traffic-light and then
 immediately enter it to demonstrate something. Could I
 provide two buttons on the history dialog
@@ -16,7 +19,8 @@ and avoid having to mess about in the controller base class. This
 will make my tests and my code more alike. I won't have code in the
 controller just for the tests.
 I think I may be able to do it in a externals.rb file placed in
-the config/initializers/ folder.
+the config/initializers/ folder. This worked when running the server
+directly (rails s) but not when on the main site via Passenger.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cyberdojo_test_base.rb does this
   def self.test(name, &block)
