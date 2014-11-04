@@ -10,8 +10,7 @@ class DojoController < ApplicationController
 
   def check_id
     render :json => {
-      :exists => exists,
-      :started => exists ? kata.avatars.count : 0
+      :exists => exists
     }
   end
 

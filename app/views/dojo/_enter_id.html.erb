@@ -29,8 +29,8 @@ $(function() {
     if (id.length >= 6) {
       $.getJSON('/dojo/check_id', { id: id }, function(dojo) {
         enableIf(enterButton, dojo.exists);
-        enableIf(reEnterButton, dojo.started);
-        enableIf(reviewButton, dojo.started > 0);
+        enableIf(reEnterButton, dojo.exists);
+        enableIf(reviewButton, dojo.exists);
       });
     }
   };

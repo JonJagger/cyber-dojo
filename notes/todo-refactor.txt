@@ -3,8 +3,13 @@
 The front page review button does not enable unless you
 manually refresh the screen. This is not so good. Simplify.
 All buttons are enabled/disabled based on validity of id?
-This suffers from all buttons being enabled, whereas there
-is something to be said for only enter being initially enabled.
+o) Re-enter dialog will need to change its bottom text if no animals
+   have yet started
+o) Would be handy if the dashboard showed the animals pictures
+   on the left side below the controls when they have entered
+   but not pressed [test] yet. Or maybe I should just show all
+   animals regardless of whether they have pressed [test] yet
+   or not.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I often find I fork from someone's traffic-light and then
 immediately enter it to demonstrate something. Could I
