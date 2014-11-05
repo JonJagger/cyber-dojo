@@ -22,11 +22,11 @@ module TrafficLightHelper
 
   def diff_avatar_image(avatar)
     "<div class='diff-traffic-light avatar-image'" +
-        " title='Click to diff-review #{avatar.name}#{apostrophe}s code'" +
+        " title='Click to review #{avatar.name}#{apostrophe}s current code'" +
         " data-id='#{avatar.kata.id}'" +
         " data-avatar-name='#{avatar.name}'" +
-        " data-was-tag='0'" +
-        " data-now-tag='1'>" +
+        " data-was-tag='-1'" +
+        " data-now-tag='-1'>" +
         "<img src='/images/avatars/#{avatar.name}.jpg'" +
             " alt='#{avatar.name}'" +
             " width='45'" +
