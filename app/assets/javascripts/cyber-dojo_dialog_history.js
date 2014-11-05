@@ -16,6 +16,10 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  var lastTag = function() {
+    return -1;
+  };
+
   cd.setupTrafficLightCountOpensCurrentCode = function(bulbs,showRevert) {
     $.each(bulbs, function(_,bulb) {
       var count = $(bulb);
@@ -32,8 +36,7 @@ var cyberDojo = (function(cd, $) {
         ' Click to review ' + avatarName + "'s current code.";
       count.attr('title', toolTip);
       count.click(function() {
-        var last = -1;
-        cd.dialog_history(id,avatarName,last,last,showRevert);
+        cd.dialog_history(id,avatarName,lastTag(),lastTag(),showRevert);
       });
     });
   };
@@ -42,8 +45,8 @@ var cyberDojo = (function(cd, $) {
 
   cd.dialog_history = function(id,         // eg 'D936E1EB3F'
                                avatarName, // eg 'lion'
-                               wasTag,     // eg 8   (1-based)
-                               nowTag,     // eg 9   (1-based)
+                               wasTagParam,// eg 8   (1-based)
+                               nowTagParam,// eg 9   (1-based)
                                showRevert  // eg true
                               ) {
 
@@ -56,7 +59,17 @@ var cyberDojo = (function(cd, $) {
     // from which the history-dialog opened.
 
     var currentFilename = '';
-    var data = undefined;
+    var data = {
+      wasTag: wasTagParam,
+      nowTag: nowTagParam
+    };
+
+    var wasTag = function() {
+      return data.wasTag;
+    };
+    var nowTag = function() {
+      return data.nowTag;
+    };
 
     //---------------------------------------------------
     // history [traffic-lights] ......
@@ -91,7 +104,7 @@ var cyberDojo = (function(cd, $) {
       var html = '';
       var index = 1;
       $.each(lights, function(n,light) {
-        var barGap = (nowTag === light.number) ? '_bar' : '_gap';
+        var barGap = (nowTag() === light.number) ? '_bar' : '_gap';
         html +=
           "<div class='traffic-light'>" +
             "<img    src='/images/traffic_light_" + light.colour + barGap + ".png'" +
@@ -178,8 +191,7 @@ var cyberDojo = (function(cd, $) {
           if (diffCheckBox().is(':checked')) {
             show(1);
           } else {
-            var last = -1;
-            showNoDiff(last);
+            showNoDiff();
           }
         });
     };
@@ -246,28 +258,27 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var toolTip = function(now) {
-      if (wasTag != nowTag) {
-        return 'Show diff->' + now;
+    var toolTip = function(tag) {
+      if (wasTag() != nowTag()) {
+        return 'Show diff->' + tag;
       } else {
-        return 'Show ' + now;
+        return 'Show ' + tag;
       }
     };
 
     //- - - - - - - - - - - - - - -
 
-    var show = function(now) {
-      wasTag = now - (diffCheckBox().is(':checked') ? 1 : 0);
-      nowTag = now;
+    var show = function(tag) {
+      data.wasTag = tag - (diffCheckBox().is(':checked') ? 1 : 0);
+      data.nowTag = tag;
       refresh();
     };
 
     //- - - - - - - - - - - - - - -
 
     var showNoDiff = function() {
-      var last = -1;
-      wasTag = last;
-      nowTag = last;
+      data.wasTag = lastTag();
+      data.nowTag = lastTag();
       refresh();
     };
 
@@ -288,24 +299,24 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var refreshTagControls = function() {
-      var colour = data.lights[nowTag-1].colour;
+      var colour = data.lights[nowTag()-1].colour;
       if (colour === 'amber') {
         colour = 'orange';
       }
       $('#now-tag-number')
-        .html(nowTag)
+        .html(nowTag())
         .css('border-color', colour);
       diffCheckBox()
-        .attr('checked', wasTag != nowTag)
+        .attr('checked', wasTag() != nowTag())
         .unbind('click')
-        .bind('click', function() { show(nowTag); });
+        .bind('click', function() { show(nowTag()); });
       var minTag = 1;
       var maxTag = data.lights.length;
-      var tagsToLeft = minTag < nowTag;
-      var tagsToRight = nowTag < maxTag;
+      var tagsToLeft = minTag < nowTag();
+      var tagsToRight = nowTag() < maxTag;
       refreshTag(tagsToLeft,  $('#first-button'), minTag);
-      refreshTag(tagsToLeft,  $('#prev-button'),  nowTag-1);
-      refreshTag(tagsToRight, $('#next-button'),  nowTag+1);
+      refreshTag(tagsToLeft,  $('#prev-button'),  nowTag()-1);
+      refreshTag(tagsToRight, $('#next-button'),  nowTag()+1);
       refreshTag(tagsToRight, $('#last-button'),  maxTag);
     };
 
@@ -605,14 +616,12 @@ var cyberDojo = (function(cd, $) {
         {
           id: id,
           avatar: avatarName,
-          was_tag: wasTag,
-          now_tag: nowTag,
+          was_tag: wasTag(),
+          now_tag: nowTag(),
           current_filename: currentFilename
         },
         function(historyData) {
           data = historyData;
-          nowTag = data.nowTag;
-          wasTag = data.wasTag;
           refreshDiff();
           refreshTrafficLights();
           refreshPrevAvatarHandler();
@@ -642,8 +651,8 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var makeRevertButtonHtml = function() {
-      var colour = data.lights[nowTag-1].colour;
-      return 'revert to ' + nowTag + ' ' + makeColouredBulb(colour);
+      var colour = data.lights[nowTag()-1].colour;
+      return 'revert to ' + nowTag() + ' ' + makeColouredBulb(colour);
     };
 
     //- - - - - - - - - - - - - - -
@@ -665,8 +674,8 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var makeForkButtonHtml = function() {
-      var colour = data.lights[nowTag-1].colour;
-      return 'fork from ' + nowTag + ' ' + makeColouredBulb(colour);
+      var colour = data.lights[nowTag()-1].colour;
+      return 'fork from ' + nowTag() + ' ' + makeColouredBulb(colour);
     };
 
     //- - - - - - - - - - - - - - -
@@ -694,7 +703,7 @@ var cyberDojo = (function(cd, $) {
       $.getJSON('/reverter/revert', {
         id: id,
         avatar: avatarName,
-        tag: nowTag
+        tag: nowTag()
       },
       function(data) {
         deleteAllCurrentFiles();
@@ -732,7 +741,7 @@ var cyberDojo = (function(cd, $) {
       $.getJSON('/forker/fork', {
         id: id,
         avatar: avatarName,
-        tag: nowTag
+        tag: nowTag()
       },
       function(data) {
         if (data.forked) {
@@ -790,7 +799,7 @@ var cyberDojo = (function(cd, $) {
                    " in the practice session";
       } else  if (data.reason === 'tag') {
         diagnostic = avatarName +
-                  " doesn't have traffic-light[" + tag + "]" +
+                  " doesn't have traffic-light[" + data['tag'] + "]" +
                   " in the practice session";
       }
       var html = "" +
