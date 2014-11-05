@@ -1,9 +1,14 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+It would be handy if the amber traffic-lights that result from
+a server timeout where somehow marked differently. Eg an amber
+traffic-light with a dot in the middle? Would also be good
+to show a count of the time-out ambers on the dashboard.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The front page review button does not enable unless you
 manually refresh the screen. This is not so good. Simplify.
 All buttons are now enabled/disabled based on validity of id.
-o) Re-enter dialog will need to change its bottom text if no animals
+o) Re-enter dialog needs to change its bottom text if no animals
    have yet started
 o) Would be handy if the dashboard showed the animals pictures
    on the left side below the controls when they have entered
