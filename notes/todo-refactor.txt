@@ -2,7 +2,7 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The front page review button does not enable unless you
 manually refresh the screen. This is not so good. Simplify.
-All buttons are enabled/disabled based on validity of id?
+All buttons are now enabled/disabled based on validity of id.
 o) Re-enter dialog will need to change its bottom text if no animals
    have yet started
 o) Would be handy if the dashboard showed the animals pictures

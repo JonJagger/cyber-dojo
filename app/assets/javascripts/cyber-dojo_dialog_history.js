@@ -32,7 +32,8 @@ var cyberDojo = (function(cd, $) {
         ' Click to review ' + avatarName + "'s current code.";
       count.attr('title', toolTip);
       count.click(function() {
-        cd.dialog_history(id,avatarName,wasTag,nowTag,showRevert);
+        var last = -1;
+        cd.dialog_history(id,avatarName,last,last,showRevert);
       });
     });
   };
@@ -167,7 +168,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var refreshAvatarHandler = function(id,name,maxTag) {
+    var refreshAvatarHandler = function(id,name) {
       $('#' + id + '-avatar')
         .attr('disabled', name === '')
         .attr('title', "Click to review " + name + "'s history")
@@ -177,7 +178,8 @@ var cyberDojo = (function(cd, $) {
           if (diffCheckBox().is(':checked')) {
             show(1);
           } else {
-            show(maxTag);
+            var last = -1;
+            showNoDiff(last);
           }
         });
     };
@@ -185,13 +187,13 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var refreshPrevAvatarHandler = function() {
-      refreshAvatarHandler('prev', data.prevAvatar, data.prevAvatarMaxTag);
+      refreshAvatarHandler('prev', data.prevAvatar);
     };
 
     //- - - - - - - - - - - - - - -
 
     var refreshNextAvatarHandler = function() {
-      refreshAvatarHandler('next', data.nextAvatar, data.nextAvatarMaxTag);
+      refreshAvatarHandler('next', data.nextAvatar);
     };
 
     //---------------------------------------------------
@@ -257,6 +259,15 @@ var cyberDojo = (function(cd, $) {
     var show = function(now) {
       wasTag = now - (diffCheckBox().is(':checked') ? 1 : 0);
       nowTag = now;
+      refresh();
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var showNoDiff = function() {
+      var last = -1;
+      wasTag = last;
+      nowTag = last;
       refresh();
     };
 
@@ -600,6 +611,8 @@ var cyberDojo = (function(cd, $) {
         },
         function(historyData) {
           data = historyData;
+          nowTag = data.nowTag;
+          wasTag = data.wasTag;
           refreshDiff();
           refreshTrafficLights();
           refreshPrevAvatarHandler();

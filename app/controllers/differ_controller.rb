@@ -2,17 +2,17 @@
 class DifferController < ApplicationController
 
   def diff
+    @lights = avatar.lights.map{|light| light.to_json }
     diffs = git_diff_view(avatar.tags[was_tag].diff(now_tag))
-
 	render :json => {
-	  :lights => avatar.lights.map{|light| light.to_json },
+	  :lights => @lights,
 	  :diffs => diffs,
 	  :prevAvatar => prevAvatar,
-	  :prevAvatarMaxTag => maxTag(prevAvatar),
 	  :nextAvatar => nextAvatar,
-	  :nextAvatarMaxTag => maxTag(nextAvatar),
 	  :idsAndSectionCounts => prune(diffs),
-	  :currentFilenameId => most_changed_file_id(diffs, current_filename)
+	  :currentFilenameId => most_changed_file_id(diffs, current_filename),
+	  :wasTag => was_tag,
+	  :nowTag => now_tag
 	}
   end
 
@@ -21,11 +21,16 @@ private
   include GitDiff
 
   def was_tag
-	params[:was_tag].to_i
+	tag(:was_tag)
   end
 
   def now_tag
-	params[:now_tag].to_i
+	tag(:now_tag)
+  end
+
+  def tag(name)
+	raw = params[name].to_i
+	raw != -1 ? raw : @lights.length
   end
 
   def current_filename
@@ -48,11 +53,6 @@ private
 	return '' if names.length == 1
 	names << names[0]
 	return names[names.index(avatar_name) + 1]
-  end
-
-  def maxTag(avatar_name)
-    return 0 if avatar_name === ''
-    return avatars[avatar_name].lights.length
   end
 
   def prune(array)
