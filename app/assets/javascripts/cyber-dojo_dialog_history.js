@@ -182,13 +182,21 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var refreshAvatarHandler = function(id,name) {
+      var diffIsChecked = diffCheckBox().is(':checked');
+      var title = function() {
+        if (diffIsChecked) {
+         return 'Click to diff-review ' + name + "'s history";
+        } else {
+         return 'Click to review ' + name + "'s current code";
+        }
+      };
       $('#' + id + '-avatar')
         .attr('disabled', name === '')
-        .attr('title', "Click to review " + name + "'s history")
+        .attr('title', title())
         .unbind('click')
         .bind('click', function() {
           avatarName = name;
-          if (diffCheckBox().is(':checked')) {
+          if (diffIsChecked) {
             show(1);
           } else {
             showNoDiff();
@@ -624,10 +632,10 @@ var cyberDojo = (function(cd, $) {
           data = historyData;
           refreshDiff();
           refreshTrafficLights();
+          refreshTagControls();
           refreshPrevAvatarHandler();
           refreshAvatarImage();
           refreshNextAvatarHandler();
-          refreshTagControls();
           refreshRevertButton();
           refreshForkButton();
         }
