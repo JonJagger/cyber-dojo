@@ -1,0 +1,74 @@
+Roman numerals are built from the number signs
+I (worth 1), V (5), X (10), L (50), C (100),
+D (500), and M (1000).
+
+There are multiple styles how to form numbers from
+these signs.
+
+The simplest is what we will call the ADDITIVE STYLE:
+Greedily use the higest signs possible to
+form a string that adds to the desired number.
+e.g. 1947 would be MDCCCCVII
+
+The most common style is the SUBTRACTIVE STYLE,
+in which the 4, 40, 400 and 9, 90, 900 are handled differently
+and are expressed as IV, XL, CD, and IX, XC, CM, respectively.
+
+Examples:
+1 ->    "I" | 10 ->    "X" | 100 ->    "C" | 1000 ->    "M"
+2 ->   "II" | 20 ->   "XX" | 200 ->   "CC" | 2000 ->   "MM"
+3 ->  "III" | 30 ->  "XXX" | 300 ->  "CCC" | 3000 ->  "MMM"
+4 ->   "IV" | 40 ->   "XL" | 400 ->   "CD" | 4000 -> "MMMM"
+5 ->    "V" | 50 ->    "L" | 500 ->    "D" |
+6 ->   "VI" | 60 ->   "LX" | 600 ->   "DC" |
+7 ->  "VII" | 70 ->  "LXX" | 700 ->  "DCC" |
+8 -> "VIII" | 80 -> "LXXX" | 800 -> "DCCC" |
+9 ->   "IX" | 90 ->   "XC" | 900 ->   "CM" |
+
+1990 -> "MCMXC"  (1000 -> "M"  + 900 -> "CM" + 90 -> "XC")
+2008 -> "MMVIII" (2000 -> "MM" + 8 -> "VIII")
+  99 -> "XCIX"   (90 -> "XC" + 9 -> "IX")
+  47 -> "XLVII"  (40 -> "XL" + 7 -> "VII")
+
+A third possible style is the SEMI-SUBTRACTIVE STYLE,
+in which 9, 90, 900 are handled as in subtractive style,
+but 4, 40, 400 are handled as in additive style.
+
+
+Task 1:
+Write a function decimal_to_roman(decimal) that converts
+a positve integer into a roman numeral string in additive style
+
+Task 2:
+Ditto, using semi-subtractive style.
+
+Task 3:
+Ditto, using subtractive style.
+
+Task 4:
+Write a function decimal_to_roman(decimal, style)
+that converts into any one of the three styles.
+
+Task 5:
+Write a function roman_to_decimal(roman) that converts
+an additive-style roman numeral string to an integer.
+
+Task 6:
+Ditto for semi-subtractive style.
+
+Task 7:
+Ditto for subtractive style.
+
+Task 8:
+Write a function roman_to_decimal(roman, style)
+that converts from any one of the three styles.
+
+Nice tasks for learning TDD are also:
+- First solving task 1, then (only once finished) task 2
+- First solving task 2, then (only once finished) task 6
+- First solving task 2, then (only once finished) task 4
+
+Remark:
+Task 2 is harder than task 1 (which is very simple),
+but task 3 is not harder than task 2 (only more cumbersome).
+Likeweise for tasks 5, 6, 7.

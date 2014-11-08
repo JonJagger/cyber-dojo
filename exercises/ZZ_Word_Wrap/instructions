@@ -1,0 +1,26 @@
+Write a function wordwrap(longline, width) that takes
+a string and an integer and returns a string,
+following these rules:
+
+- Assume the string contains only printable
+  characters and blanks,  but no control characters.
+- Assume that width is at least 3
+- The result must preserve all printable characters
+- The result contains additional newline characters
+  such that it describes as few lines as possible
+  but no line is longer than width
+- Break lines at a blank if possible.
+  Do so by replacing the blank with a newline
+
+Task 1:
+As described above
+
+Task 2:
+Ditto, but alternatively break at a dash if that
+leads to a better result (a longer line).
+Do not replace the dash, rather add the newline
+behind it.
+
+Task 3:
+Ditto, but additionally suppress leading blanks
+on each line except the first.
