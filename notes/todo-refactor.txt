@@ -3,7 +3,7 @@
 It would be handy if the amber traffic-lights that result from
 a server timeout where somehow marked differently. Eg an amber
 traffic-light with a dot in the middle? Would also be good
-to show a count of the time-out ambers on the dashboard.
+to show a separate count of the time-out ambers on the dashboard.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would be good if the dashboard also graphed the execution time.
 Server could record time before starting cyber-dojo.sh execution
