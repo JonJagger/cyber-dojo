@@ -97,7 +97,11 @@ var cyberDojo = (function(cd, $) {
     };
 
     var refreshDiffCheckBox = function() {
-      diffCheckBox().html(makeDiffCheckboxHtml());
+      diffCheckBox()
+        .html(makeDiffCheckboxHtml())
+        .attr('checked', wasTag() != nowTag())
+        .unbind('click')
+        .bind('click', function() { show(nowTag()); });
     }
 
     //---------------------------------------------------
@@ -190,11 +194,8 @@ var cyberDojo = (function(cd, $) {
 
     var refreshAvatarHandler = function(id,name) {
       var title = function() {
-        if (inDiffMode()) {
-         return 'Click to diff-review ' + name + "'s diff history";
-        } else {
-         return 'Click to review ' + name + "'s current code";
-        }
+        var text = 'Click to review ' + name + "'s ";
+        return text + (inDiffMode() ? 'diff history' : 'current code');
       };
       $('#' + id + '-avatar')
         .attr('disabled', name === '')
@@ -273,7 +274,7 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var toolTip = function(tag) {
-      if (wasTag() != nowTag()) {
+      if (inDiffMode()) {
         return 'Show diff->' + tag;
       } else {
         return 'Show ' + tag;
@@ -320,10 +321,6 @@ var cyberDojo = (function(cd, $) {
       $('#now-tag-number')
         .html(nowTag())
         .css('border-color', colour);
-      diffCheckBox()
-        .attr('checked', wasTag() != nowTag())
-        .unbind('click')
-        .bind('click', function() { show(nowTag()); });
       var minTag = 1;
       var maxTag = data.lights.length;
       var tagsToLeft = minTag < nowTag();
