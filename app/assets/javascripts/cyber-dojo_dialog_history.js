@@ -70,7 +70,7 @@ var cyberDojo = (function(cd, $) {
     var nowTag = function() {
       return data.nowTag;
     };
-    var diffIsChecked = function() {
+    var inDiffMode = function() {
       return wasTag() != nowTag();
     }
 
@@ -90,7 +90,7 @@ var cyberDojo = (function(cd, $) {
       return '<input type="checkbox"' +
                   ' class="regular-checkbox"' +
                      ' id="diff-checkbox"' +
-                     ' checked="' + (diffIsChecked() ? "checked" : "") + '"' +
+                     ' checked="' + (inDiffMode() ? "checked" : "") + '"' +
               '/>' +
               '<label for="diff-checkbox">' +
               '</label>';
@@ -189,9 +189,8 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var refreshAvatarHandler = function(id,name) {
-      var diffIsChecked = diffCheckBox().is(':checked');
       var title = function() {
-        if (diffIsChecked) {
+        if (inDiffMode()) {
          return 'Click to diff-review ' + name + "'s diff history";
         } else {
          return 'Click to review ' + name + "'s current code";
@@ -203,7 +202,7 @@ var cyberDojo = (function(cd, $) {
         .unbind('click')
         .bind('click', function() {
           avatarName = name;
-          if (diffIsChecked) {
+          if (inDiffMode()) {
             show(1);
           } else {
             showNoDiff();
