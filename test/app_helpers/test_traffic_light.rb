@@ -47,11 +47,11 @@ class TrafficLightTests < CyberDojoTestBase
     expected = "" +
       "<div" +
       " class='diff-traffic-light avatar-image'" +
-      " title='Click to diff-review hippo&#39;s code'" +
+      " title='Click to review hippo&#39;s current code'" +
       " data-id='ABCD1234'" +
       " data-avatar-name='hippo'" +
-      " data-was-tag='0'" +
-      " data-now-tag='1'>" +
+      " data-was-tag='-1'" +
+      " data-now-tag='-1'>" +
       "<img src='/images/avatars/hippo.jpg'" +
           " alt='hippo'" +
           " width='45'" +

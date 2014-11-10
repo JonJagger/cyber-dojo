@@ -11,7 +11,7 @@ require_dependencies %w{Docker TestRunner DockerTestRunner DummyTestRunner HostT
 require_dependencies %w{Approval Chooser Cleaner FileDeltaMaker
                         GitDiff GitDiffBuilder GitDiffParser LineSplitter
                         MakefileFilter OutputParser TdGapper}
-                                                 
+
 require_dependencies %w{Avatar Avatars Dojo Exercise Exercises Kata Katas
                         Language Languages Light Sandbox Tag}
 
