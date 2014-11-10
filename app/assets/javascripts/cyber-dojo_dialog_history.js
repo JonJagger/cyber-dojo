@@ -70,6 +70,35 @@ var cyberDojo = (function(cd, $) {
     var nowTag = function() {
       return data.nowTag;
     };
+    var inDiffMode = function() {
+      return wasTag() != nowTag();
+    }
+
+    //---------------------------------------------------
+    // history diff[x] ...............
+    //---------------------------------------------------
+
+    var diffCheckBox = function() {
+      return $('#diff-checkbox', titleBar());
+    };
+
+    var makeDiffLabelHtml = function() {
+      return '<div id="diff-checkbox-label">diff</div>';
+    };
+
+    var makeDiffCheckboxHtml = function() {
+      return '<input type="checkbox"' +
+                  ' class="regular-checkbox"' +
+                     ' id="diff-checkbox"' +
+                     ' checked="' + (inDiffMode() ? "checked" : "") + '"' +
+              '/>' +
+              '<label for="diff-checkbox">' +
+              '</label>';
+    };
+
+    var refreshDiffCheckBox = function() {
+      diffCheckBox().html(makeDiffCheckboxHtml());
+    }
 
     //---------------------------------------------------
     // history .... [traffic-lights] ......
@@ -133,37 +162,6 @@ var cyberDojo = (function(cd, $) {
       setupTrafficLightHandlers();
     };
 
-
-    //---------------------------------------------------
-    // history diff[x] ...............
-    //---------------------------------------------------
-
-    var diffIsChecked = function() {
-      return wasTag() != nowTag();
-    }
-
-    var diffCheckBox = function() {
-      return $('#diff-checkbox', titleBar());
-    };
-
-    var makeDiffLabelHtml = function() {
-      return '<div id="diff-checkbox-label">diff</div>';
-    };
-
-    var makeDiffCheckboxHtml = function() {
-      return '<input type="checkbox"' +
-                  ' class="regular-checkbox"' +
-                     ' id="diff-checkbox"' +
-                     ' checked="' + (diffIsChecked() ? "checked" : "") + '"' +
-              '/>' +
-              '<label for="diff-checkbox">' +
-              '</label>';
-    };
-
-    var refreshDiffCheckBox = function() {
-      diffCheckBox().html(makeDiffCheckboxHtml());
-    }
-
     //---------------------------------------------------
     // navigation controls        < avatar >
     //                           ............
@@ -191,10 +189,9 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var refreshAvatarHandler = function(id,name) {
-      var diffIsChecked = diffCheckBox().is(':checked');
       var title = function() {
-        if (diffIsChecked) {
-         return 'Click to diff-review ' + name + "'s history";
+        if (inDiffMode()) {
+         return 'Click to diff-review ' + name + "'s diff history";
         } else {
          return 'Click to review ' + name + "'s current code";
         }
@@ -205,7 +202,7 @@ var cyberDojo = (function(cd, $) {
         .unbind('click')
         .bind('click', function() {
           avatarName = name;
-          if (diffIsChecked) {
+          if (inDiffMode()) {
             show(1);
           } else {
             showNoDiff();
