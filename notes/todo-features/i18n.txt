@@ -1,13 +1,2 @@
 
-I18N
-  Need to be i18n'd on the setup page.
-  ...
-  On dialog buttons
-    cancel: new-file,rename-file,delete-file
-    close: diff
-  ...
-  Lots more.
-  Have promises for Russian and Ukranian.
-
-
-Can i18n yml files be split?
+Drop?
