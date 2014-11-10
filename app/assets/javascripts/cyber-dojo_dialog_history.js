@@ -72,7 +72,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-    // history [traffic-lights] ......
+    // history .... [traffic-lights] ......
     //---------------------------------------------------
 
     var titleBar = function() {
@@ -135,8 +135,12 @@ var cyberDojo = (function(cd, $) {
 
 
     //---------------------------------------------------
-    // history ............... diff[x]
+    // history diff[x] ...............
     //---------------------------------------------------
+
+    var diffIsChecked = function() {
+      return wasTag() != nowTag();
+    }
 
     var diffCheckBox = function() {
       return $('#diff-checkbox', titleBar());
@@ -150,10 +154,15 @@ var cyberDojo = (function(cd, $) {
       return '<input type="checkbox"' +
                   ' class="regular-checkbox"' +
                      ' id="diff-checkbox"' +
+                     ' checked="' + (diffIsChecked() ? "checked" : "") + '"' +
               '/>' +
               '<label for="diff-checkbox">' +
               '</label>';
     };
+
+    var refreshDiffCheckBox = function() {
+      diffCheckBox().html(makeDiffCheckboxHtml());
+    }
 
     //---------------------------------------------------
     // navigation controls        < avatar >
@@ -533,8 +542,10 @@ var cyberDojo = (function(cd, $) {
         }
 
         td.append(filenameDiv);
-        tr.append(deletedLineCountTd);
-        tr.append(addedLineCountTd)
+        if (diffCheckBox().is(':checked')) {
+          tr.append(deletedLineCountTd);
+          tr.append(addedLineCountTd)
+        }
         tr.append(td);
         table.append(tr);
       });
@@ -630,8 +641,9 @@ var cyberDojo = (function(cd, $) {
         },
         function(historyData) {
           data = historyData;
-          refreshDiff();
+          refreshDiffCheckBox();
           refreshTrafficLights();
+          refreshDiff();
           refreshTagControls();
           refreshPrevAvatarHandler();
           refreshAvatarImage();
