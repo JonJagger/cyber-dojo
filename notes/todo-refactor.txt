@@ -53,9 +53,6 @@ rename tests/integration  folder to tests/externals
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Add tests for new Avatar.visible_files method.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-width of line-numbers on history-dialog no longer matches
-width of line-numbers on test/edit page.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 http://localhost:3000/kata/edit/0B416E9012?avatar=zebra
 could be simplified to
 http://localhost:3000/zebra/edit/0B416E9012
@@ -73,7 +70,7 @@ on history dialog I could remember tag-number for each animal
 and resume on that number when you return to that
 animal in the same dialog.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-on test page, make animal image (top right) *not* a dashboard link.
+on test page, make animal image (top right) *not* a dashboard link?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 See if citigroup are interested in a corporate license.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
