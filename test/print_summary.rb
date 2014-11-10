@@ -6,22 +6,23 @@ def f2(s)
   result
 end
 
-def left_align(width,number)
-  number.to_s + " " * (width - number.to_s.length)
+def print_left(width,it)
+  print it.to_s + " " * (width - it.to_s.length)
 end
 
-def right_align(width,number)
-  " " * (width - number.to_s.length) + number.to_s
+def print_right(width,it)
+  print " " * (width - it.to_s.length) + it.to_s
 end
 
 def print_heading
-  print  left_align(15,'')
-  print right_align( 5,'#t')        # number of tests
-  print right_align( 7,'#ass')      # number of assertions
-  print right_align( 9,'took(s)')   # time in seconds
-  print right_align( 9,'t/s')       # tests per second
-  print right_align( 9,'ass/s')     # assertions per second
-  print right_align( 9,'cov(%)')    # coverage
+  print_left(15,'')
+  print_right( 5,'#t')        # number of tests
+  print_right( 7,'#ass')      # number of assertions
+  print_right( 8,'#errors')   # number of errors
+  print_right( 9,'took(s)')   # time in seconds
+  print_right( 9,'t/s')       # tests per second
+  print_right( 9,'ass/s')     # assertions per second
+  print_right( 9,'cov(%)')    # coverage
   puts
 end
 
@@ -48,6 +49,7 @@ modules.each do |mod|
   m = log.match(Regexp.new(pattern))
   h[:test_count] = m[1].to_i
   h[:assertion_count] = m[2].to_i
+  h[:error_count] = m[4].to_i
   # Coverage = 100.0%
   pattern = 'Coverage = ' + tally + '%'
   m = log.match(Regexp.new(pattern))
@@ -59,26 +61,28 @@ end
 
 puts
 print_heading
-puts '-' * 63
+puts '-' * 71
 
 modules.each do |mod|
   h = stats[mod]
-  print  left_align(15,mod)
-  print right_align( 5,h[:test_count])
-  print right_align( 7,h[:assertion_count])
-  print right_align( 9,h[:took])
-  print right_align( 9,h[:tests_per_sec])
-  print right_align( 9,h[:assertions_per_sec])
-  print right_align( 9,h[:coverage])
+  print_left(15,mod)
+  print_right( 5,h[:test_count])
+  print_right( 7,h[:assertion_count])
+  print_right( 8,h[:error_count])
+  print_right( 9,h[:took])
+  print_right( 9,h[:tests_per_sec])
+  print_right( 9,h[:assertions_per_sec])
+  print_right( 9,h[:coverage])
   puts
 end
 
-puts '- ' * 32
-print  left_align(15,'total')
-print right_align( 5,    c=stats.map{|_,h| h[:test_count].to_i}.reduce(:+))
-print right_align( 7,    a=stats.map{|_,h| h[:assertion_count].to_i}.reduce(:+))
-print right_align( 9, t=f2(stats.map{|_,h| h[:took].to_f}.reduce(:+)))
-print right_align( 9, f2(c / t.to_f))
-print right_align( 9, f2(a / t.to_f))
+puts '- ' * 36
+print_left(15,'total')
+print_right( 5,    c=stats.map{|_,h| h[:test_count].to_i}.reduce(:+))
+print_right( 7,    a=stats.map{|_,h| h[:assertion_count].to_i}.reduce(:+))
+print_right( 8,      stats.map{|_,h| h[:error_count]}.reduce(:+))
+print_right( 9, t=f2(stats.map{|_,h| h[:took].to_f}.reduce(:+)))
+print_right( 9, f2(c / t.to_f))
+print_right( 9, f2(a / t.to_f))
 puts
-puts '-' * 63
+puts '-' * 71
