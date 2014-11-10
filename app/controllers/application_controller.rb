@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   def id
     path = root_path
     path += 'test/cyberdojo/' if ENV['CYBERDOJO_TEST_ROOT_DIR']
-    Folders::id_complete(path + 'katas/', params[:id]) || ''
+    @id ||= Folders::id_complete(path + 'katas/', params[:id]) || ''
   end
 
   def dojo
@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
       :disk   => disk,
       :git    => git
     }
-    Dojo.new(root_path,externals)
+    @dojo ||= Dojo.new(root_path,externals)
   end
 
   def katas

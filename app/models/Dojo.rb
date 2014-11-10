@@ -11,12 +11,12 @@ class Dojo
 
   def languages
     languages_path = @path + 'languages/'
-    Languages.new(languages_path, @externals[:disk], @externals[:runner])
+    @languages ||= Languages.new(languages_path, @externals[:disk], @externals[:runner])
   end
 
   def exercises
     exercises_path = @path + 'exercises/'
-    Exercises.new(exercises_path, @externals[:disk])
+    @exercises ||= Exercises.new(exercises_path, @externals[:disk])
   end
 
   def katas
