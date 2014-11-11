@@ -10,30 +10,30 @@ class Languages
   attr_reader :path
 
   def each
-    # dojo.languages.each {|language| ...}
-    cache.each do |language|
+    # dojo.languages.each { |language| ... }
+    languages.each do |language|
       yield language if block_given?
     end
   end
 
   def [](name)
-    # dojo.languages['name']
+    # dojo.languages[name]
     make_language(name)
   end
 
 private
 
-  def cache
-    @cache ||= make_cache
+  def languages
+    @languages ||= make_cache
   end
 
   def make_cache
-    made = [ ]
+    cache = [ ]
     dir.each do |sub_dir|
       language = make_language(sub_dir)
-      made << language if language.exists?
+      cache << language if language.exists?
     end
-    made
+    cache
   end
 
   def make_language(name)
