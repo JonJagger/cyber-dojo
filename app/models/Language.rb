@@ -7,14 +7,6 @@ class Language
 
   attr_reader :name
 
-  def path
-    @path + name + '/'
-  end
-
-  def dir
-    @disk[path]
-  end
-
   def exists?
      dir.exists?(manifest_filename)
   end
@@ -59,7 +51,7 @@ class Language
     #    with explicitly set highlight_filenames entry in manifest
     # 2. default set of files direct from languages/
     #    viz, no highlight_filenames entry in manifest
-    if highlight_filenames.length > 0
+    if !highlight_filenames.empty?
       return visible_filenames - highlight_filenames
     else
       return ['cyber-dojo.sh', 'makefile', 'Makefile']
@@ -134,6 +126,14 @@ class Language
     end
   end
 
+  def dir
+    @disk[path]
+  end
+
+  def path
+    @path + name + '/'
+  end
+
 private
 
   include Cleaner
@@ -141,7 +141,7 @@ private
   def manifest
     begin
       @manifest ||= JSON.parse(read(manifest_filename))
-    rescue Exception => e
+    rescue
       raise "JSON.parse(#{manifest_filename}) exception from language:" + path
     end
   end

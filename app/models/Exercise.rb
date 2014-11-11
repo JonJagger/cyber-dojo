@@ -9,8 +9,6 @@ class Exercise
 
   def new_name
     # Some exercises/ sub-folders have been renamed.
-    # This creates a problem for the script
-    # admin_scripts/convert_katas_format.rb
     # See app/models/Kata.rb ::exercise()
     # See app/models/Kata.rb ::original_exercise()
     renames = {
@@ -20,21 +18,20 @@ class Exercise
     renames[name] || name
   end
 
-  def path
-    @path + name + '/'
+  def exists?
+    dir.exists?(instructions_filename)
+  end
+
+  def instructions
+    clean(dir.read(instructions_filename))
   end
 
   def dir
     @disk[path]
   end
 
-  def exists?
-    dir.exists?(instructions_filename)
-  end
-
-  def instructions
-    raw = dir.read(instructions_filename)
-    clean(raw)
+  def path
+    @path + name + '/'
   end
 
 private
