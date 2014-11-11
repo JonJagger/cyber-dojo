@@ -5,33 +5,40 @@ class Exercises
 
   def initialize(path,disk)
     @path,@disk = path,disk
-    #@cached = { }
-    #dir.each do |name|
-    #  exercise = Exercise.new(path,name,@disk)
-    #  @cached[name] = exercise if exercise.exists?
-    #end
   end
 
   attr_reader :path
 
   def each
     # dojo.exercises.each{|exercise| ...}
-    dir.each do |name|
-      exercise = self[name]
-      yield exercise if exercise.exists? && block_given?
+    cache.each do |exercise|
+      yield exercise if block_given?
     end
-    #@cached.each_value do |exercise|
-    #  yield exercise if block_given?
-    #end
   end
 
   def [](name)
     # dojo.exercises['name']
-    Exercise.new(path,name,@disk)
-    #@cached[name]
+    make_exercise(name)
   end
 
 private
+
+  def cache
+    @cache ||= make_cache
+  end
+
+  def make_cache
+    made = [ ]
+    dir.each do |sub_dir|
+      exercise = make_exercise(sub_dir)
+      made << exercise if exercise.exists?
+    end
+    made
+  end
+
+  def make_exercise(name)
+    Exercise.new(path,name,@disk)
+  end
 
   def dir
     @disk[path]

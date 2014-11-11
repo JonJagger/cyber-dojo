@@ -6,7 +6,7 @@ def f2(s)
   result
 end
 
-def padded(width, it)
+def padded(width,it)
   " " * (width - it.to_s.length)
 end
 
