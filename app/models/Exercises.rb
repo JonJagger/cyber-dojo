@@ -7,8 +7,6 @@ class Exercises
     @path,@disk = path,disk
   end
 
-  attr_reader :path
-
   def each
     # dojo.exercises.each { |exercise| ... }
     exercises.each do |exercise|
@@ -43,5 +41,7 @@ private
   def dir
     @disk[path]
   end
+
+  attr_reader :path
 
 end

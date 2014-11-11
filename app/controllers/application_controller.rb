@@ -1,19 +1,25 @@
+
 def require_dependencies file_names
-  #there is no need to give the respective dirs
-  file_names.each{|file_name| require_dependency file_name}
+  file_names.each{ |file_name| require_dependency file_name}
 end
 
 # these dependencies have to be loaded in the correct order
 # some of them depend on loading previous ones
-require_dependencies %w{Docker TestRunner DockerTestRunner DummyTestRunner HostTestRunner
-                        Folders Git OsDir OsDisk TimeNow UniqueId}
+require_dependencies %w{
+  Docker TestRunner DockerTestRunner DummyTestRunner HostTestRunner
+  Folders Git OsDir OsDisk TimeNow UniqueId
+}
 
-require_dependencies %w{Approval Chooser Cleaner FileDeltaMaker
-                        GitDiff GitDiffBuilder GitDiffParser LineSplitter
-                        MakefileFilter OutputParser TdGapper}
+require_dependencies %w{
+  Approval Chooser Cleaner FileDeltaMaker
+  GitDiff GitDiffBuilder GitDiffParser LineSplitter
+  MakefileFilter OutputParser TdGapper
+}
 
-require_dependencies %w{Avatar Avatars Dojo Exercise Exercises Kata Katas
-                        Language Languages Light Sandbox Tag}
+require_dependencies %w{
+  Avatar Avatars Dojo Exercise Exercises Kata Katas
+  Language Languages Light Sandbox Tag
+}
 
 class ApplicationController < ActionController::Base
 
