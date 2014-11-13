@@ -211,7 +211,7 @@ module OutputParser
   def self.parse_jasmine(output)
     jasmine_pattern = /(\d+) tests?, (\d+) assertions?, (\d+) failures?/
     if jasmine_pattern.match(output)
-      return $3 == "0" ? :green : :red
+      $3 == "0" ? :green : :red
     else
       :amber
     end
@@ -220,7 +220,7 @@ module OutputParser
   def self.parse_scala_test(output)
     scala_pattern = /Tests: succeeded (\d+), failed (\d+), ignored (\d+), pending (\d+)/
     if scala_pattern.match(output)
-      return $2 == "0" ? :green : :red
+      $2 == "0" ? :green : :red
     else
       :amber
     end
@@ -229,11 +229,7 @@ module OutputParser
   def self.parse_cppigloo(output)
     igloo_pattern =  /Test run complete. (\d+) tests run, (\d+) succeeded, (\d+) failed./
     if igloo_pattern.match(output)
-      if $3 == "0"
-        :green
-      else
-        :red
-      end
+      $3 == "0" ? :green : :red
     else
       :amber
     end
