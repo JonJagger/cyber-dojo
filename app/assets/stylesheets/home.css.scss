@@ -33,6 +33,10 @@ $text-color: darken($lighter-color, 10%);
     top: -29px;
   }
 
+  #second-server, #third-server {
+    font-size: 1.10em;
+  }
+
   #learn-more-button {
     font-size: 1.30em;
     position: relative;
