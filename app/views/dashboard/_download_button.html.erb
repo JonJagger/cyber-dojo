@@ -3,17 +3,19 @@
 
 $(function() {
 
-  $('#download_button').click(function() {
-    var id = "<%= @kata.id %>";
-    window.location = '/downloader/download/' + id;
+  $('#download-button').click(function() {
+    var url = '/downloader/download/' + "<%=@id%>";
+    window.location = url;
   });
 
 });
 
 //--></script>
 
-<button type="button"
-        title="download a zip of all animals git repos"
-        id="download_button">
-  <%= t("views.buttons.download") %>
-</button>
+<div id="download-button-container">
+  <button type="button"
+          title="download as .tar.gz file"
+          id="download-button">
+    download
+  </button>
+</div>

@@ -19,10 +19,10 @@
     }
   }
 
-  #progress-button-container {
+  #progress-button-container, #download-button-container {
     @include right-align(12px);
     text-align: right;
-    #progress-button {
+    #progress-button, #download-button {
       font-size: 1em;
       padding-bottom: 4px;
       margin-bottom: 17px;
