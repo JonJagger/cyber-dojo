@@ -3,7 +3,7 @@
 
 $(function() {
 
-  cd.dialog_progress = function(id,title,close) {
+  cd.dialog_progress = function(id,title) {
 
 	  $.getJSON('/dashboard/progress', { id: id }, function(data) {
 
@@ -57,8 +57,7 @@ $(function() {
 
   $('#progress-button').click(function() {
     var title = $(this).data('title');
-    //var close = $(this).data('close');
-    cd.dialog_progress('<%= @kata.id %>',title,close);
+    cd.dialog_progress('<%= @kata.id %>',title);
   });
 
 });
@@ -70,7 +69,6 @@ $(function() {
   <button type="button"
           title="show progress"
           data-title="progress"
-          data-close="<%= t('views.buttons.close') %>"
           id="progress-button">
     progress
   </button>
