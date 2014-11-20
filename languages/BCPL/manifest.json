@@ -1,0 +1,10 @@
+
+{
+  "visible_filenames": [
+     "cyber-dojo.sh"
+  ],
+  "filename_extension" : ".b",
+  "display_name": "C, assert",
+  "unit_test_framework": "cassert",
+  "image_name": "cyberdojo/bcpl"
+}
