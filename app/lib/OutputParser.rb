@@ -115,6 +115,12 @@ module OutputParser
     return :amber
   end
 
+  def self.parse_bcpl_all_tests_passed(output)
+    return :green if /All tests passed/.match(output)
+    return :amber if /bcpl failed returncode/.match(output)
+    return :red
+  end
+
   #-------------------------------------------------
 
   def self.parse_go_testing(output)
