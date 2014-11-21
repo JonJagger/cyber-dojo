@@ -1,6 +1,6 @@
 
-cyberdojo/exercises/ folder could be beefed up to match
-the cyberdojo/languages folder and has a manifest.json
+cyberdojo/exercises/X folder could be beefed up to match
+the cyberdojo/languages/X folder and has a manifest.json
 file and can have visible_filenames.
 It's entirely possible someone in education might want to
 setup several specific start-point exercises for the same

@@ -1,0 +1,57 @@
+
+I want cyber-dojo-hub to show live updates of dojos
+happening on servers all across the world. However,
+while the dojo is taking place (eg on cyber-dojo.org)
+then I do not want to expose its true ID, since a
+malcontent could gain access to the in-progress dojo
+and cause mischief.
+But when the dojo has finished, I would like its ID
+on the original server to be the same as its ID
+on the hub.
+
+So...
+When a dojo on cyber-dojo.org is created there are
+two buttons - one to create a private dojo and one
+to create a public dojo. And add plenty of info
+about not making your dojo public if there is
+code is any way sensitive. But that if it is not
+publishing it will 1) mean it is saved, 2) mean
+it will be open to review from anyone, 3) allow
+anyone to fork from any traffic-light if they want
+to suggest improvements.
+
+If you create a public dojo, then it will be mirrored
+on the hub, in real-time, as the dojo progresses
+(eg on cyber-dojo.org)
+
+However, the hub will not reveal the dojos original ID,
+instead marking the dojo as 'in-progress'.
+Clicking on 'in-progress' will bring up a read-only
+dashboard of the live dojo, and access to the history
+dialog as per usual.
+How will the hub do this?
+When the public dojo is created its info is stored in the hub's
+database with an ID pair, a newly generated partner-ID
+and the original ID. The links on hub will use the
+partner ID, which the server will map to the true ID,
+and thus gain access to the git repo in the folder==ID.
+
+When the original dojo has finished (or timed-out) then it
+will become read-only. The hub will see it has finished
+(or timed-out) and will show the dojos true ID.
+
+Thoughts
+o) allow some descriptive text to be entered when the dojo
+   is created?
+o) date stamp of dojo's creation-time will need to be held in
+   hub. Hub will have access to the traffic-light submissions
+   which also also time-stamped, so this allows dojos to be made
+   ahead of time. Clock starts when first traffic-light appears.
+   If there are no traffic-lights then don't show dojo on hub.
+o) dojos on non hub servers will need a finished? method, and
+   [test] on finished dojo will not create a new traffic-light.
+o) have explicit [finished] button on the dashboard?
+   this will send finished event to the hub, causing it to
+   appear with its true ID.
+
+
