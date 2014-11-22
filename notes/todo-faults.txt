@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TIMED-OUT-COUNT
+  on dashboard. Refresh it and it is off by one.
+  Let the 10 second refresh occur and its correct again.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HISTORY-DIALOG
   loses the cursor sometimes. Appears on the projector but
   not on the laptop?!

@@ -28,6 +28,9 @@ var cyberDojo = (function(cd, $) {
       var wasTag = count.data('bulb-count');
       var nowTag = count.data('bulb-count');
       var colour  = count.data('current-colour');
+      if (colour === 'timed_out') {
+        colour = 'amber';
+      }
       var plural = function(count,name) {
         return count + ' ' + name + (count > 1 ? 's' : '');
       };

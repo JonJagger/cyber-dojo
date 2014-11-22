@@ -44,7 +44,9 @@ var cyberDojo = (function(cd, $) {
       options['animation'] = animation;
       new Chart(ctx).Pie(data,options);
       $.data(document.body, key, totalCount);
-      $('#timed-out-total').html(plural(timedOutCount, 'time out'));
+      if (timedOutCount > 0) {
+        $('#timed-out-total').html(plural(timedOutCount, 'time out'));
+      }
     });
   };
 
