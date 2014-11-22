@@ -1,5 +1,0 @@
-
-Have slightly different amber traffic-light for tests that
-timeout. Useful to visually see this on the dashboard.
-Also, split the dashboard summary counts so it counts
-timeout ambers separately.

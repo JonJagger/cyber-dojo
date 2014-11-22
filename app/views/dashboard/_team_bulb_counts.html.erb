@@ -12,8 +12,8 @@ $(function() {
 <% active_avatars = @kata.avatars.active %>
 <% if active_avatars.count > 1 %>
 
-<%   lasts  = { :red => 0, :amber => 0, :green => 0 } %>
-<%   counts = { :red => 0, :amber => 0, :green => 0 } %>
+<%   lasts  = { :red => 0, :amber => 0, :timed_out => 0, :green => 0 } %>
+<%   counts = { :red => 0, :amber => 0, :timed_out => 0, :green => 0 } %>
 <%   active_avatars.each do |avatar| %>
 <%     lights = avatar.lights %>
 <%     lasts[lights[-1].colour] += 1 %>
@@ -35,6 +35,11 @@ $(function() {
             </div>
           <% end %>
         <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div id='timed-out-total'></div>
       </td>
     </tr>
   </table>

@@ -315,7 +315,7 @@ var cyberDojo = (function(cd, $) {
 
     var refreshTagControls = function() {
       var colour = data.lights[nowTag()-1].colour;
-      if (colour === 'amber') {
+      if (colour === 'amber' || colour === 'timed_out') {
         colour = 'orange';
       }
       $('#now-tag-number')

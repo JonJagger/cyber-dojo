@@ -4,9 +4,9 @@ require_relative '../cyberdojo_test_base'
 
 class OutputParserTests < CyberDojoTestBase
 
-  test 'terminated by the server after n seconds is amber' do
+  test 'terminated by the server after n seconds' do
     [1,5,10].each do |n|
-      assert_equal 'amber', OutputParser::colour('ignored', terminated(n))
+      assert_equal 'timed_out', OutputParser::colour('ignored', terminated(n))
     end
   end
 
@@ -24,7 +24,7 @@ class OutputParserTests < CyberDojoTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
   def terminated(n)
-    "Terminated by the cyber-dojo server after #{n} seconds"
+    "Unable to complete the test in #{n} seconds"
   end
 
 end

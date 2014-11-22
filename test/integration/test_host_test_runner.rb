@@ -15,8 +15,7 @@ class HostTestRunnerTests < CyberDojoTestBase
   test "HostTestRunner says it can run any language" do
     languages = @dojo.languages.entries
     languages_names = languages.map{|language| language.name}.sort
-    [ "Asm-assert",
-      "C#-NUnit",
+    [ "C#-NUnit",
       "C#-SpecFlow",
       "C++-Catch",
       "C++-CppUTest",

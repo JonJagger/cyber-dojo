@@ -8,7 +8,8 @@ module PieChartHelper
      pie_chart_from_counts({
         :red   => count(traffic_lights, :red),
         :amber => count(traffic_lights, :amber),
-        :green => count(traffic_lights, :green)
+        :green => count(traffic_lights, :green),
+        :timed_out => count(traffic_lights, :timed_out)
      }, size, key)
   end
 
@@ -18,6 +19,7 @@ module PieChartHelper
         " data-red-count='#{counts[:red]}'" +
         " data-amber-count='#{counts[:amber]}'" +
         " data-green-count='#{counts[:green]}'" +
+        " data-timed-out-count='#{counts[:timed_out]}'" +
         " data-key='#{key}'" +
         " width='#{size}'" +
         " height='#{size}'>" +

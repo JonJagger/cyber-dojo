@@ -6,8 +6,8 @@ module OutputParser
   #  'green' - this means the tests ran and all passed
 
   def self.colour(unit_test_framework, output)
-    if Regexp.new('Terminated by the cyber-dojo server after').match(output)
-      'amber'
+    if Regexp.new('Unable to complete the test').match(output)
+      'timed_out'
     else
       self.send("parse_#{unit_test_framework}", output).to_s
     end
