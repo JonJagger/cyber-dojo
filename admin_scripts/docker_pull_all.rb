@@ -20,4 +20,4 @@ end
 
 puts "-----------------------"
 puts "Now refresh languages/cache.json"
-puts "$cyberDojoHome/languages/cache.rb"
+puts "./$cyberDojoHome/languages/cache.rb"

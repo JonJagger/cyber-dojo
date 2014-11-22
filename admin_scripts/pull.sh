@@ -1,8 +1,5 @@
 #!/bin/bash
-# Use to install the latest cyberdojo git repo onto a cyber-dojo server
-
-# get latest source from https://github.com/JonJagger/cyber-dojo
-# if it asks for a password just hit return
+# Use to install the latest cyber-dojo git repo onto a cyber-dojo server
 
 if [ -d "/var/www/cyber-dojo" ]; then
   export cyberDojoName=cyber-dojo
@@ -14,6 +11,8 @@ export cyberDojoHome=/var/www/$cyberDojoName
 
 cd $cyberDojoHome
 
+# get latest source from https://github.com/JonJagger/cyber-dojo
+# if it asks for a password just hit return
 git pull --no-edit origin master
 ret=$?
 if [ $ret -ne 0 ]; then
