@@ -5,6 +5,10 @@ class Exercises
 
   def initialize(path,disk)
     @path,@disk = path,disk
+    #fake = FakeDisk.new
+    #fake[path+'100_doors'].write('instructions','...100doors')
+    #fake[path+'Anagrams'].write('instructions','...Anagrams')
+    #@disk = fake
   end
 
   def each
