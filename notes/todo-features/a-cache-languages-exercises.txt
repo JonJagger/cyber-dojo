@@ -58,3 +58,12 @@ Read this into a js object.
 Then populate a FakeDisk object from this.
 Replace passed in real @disk with fake disk.
 
+What about languages?
+Not so simple. Have to fake each languages own manifest.json file.
+
+Perhaps a simpler approach is to use the manifest.json caches
+at the languages/ and exercises/ level only inside the
+setup_controller
+This would make the languages/ and exercises/ mechanisms the same
+and would avoid extra complexity of languages/ fake-disk needing
+to fake each languages manifest.json

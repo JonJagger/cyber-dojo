@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require_relative '../admin_scripts/lib_domain'
+
+cache = { }
+create_dojo.languages.each do |language|
+  cache[language.name] = language.display_name
+end
+
+this_dir = File.expand_path('.', File.dirname(__FILE__))
+manifest_filename = this_dir + '/' + 'manifest.json'
+File.open(manifest_filename, 'w') { |file|
+  file.write(JSON.unparse(cache))
+}

@@ -2,9 +2,9 @@
 I structure the docker-containers so that each language
 has its own folder with its own base container, and each
 language-testFramework has its own folder and its own derived
-docker-container. Often a language-testFramework's Dockerfile will
-contain nothing except a FROM command. Viz, I could use the
-language's base docker-container. But I do it anyway for
+docker-container. Often a language-testFramework's Dockerfile
+will contain nothing except a FROM command. Viz, I could use
+the language's base docker-container. But I do it anyway for
 regularity.
 
 The base language folders are not seen as languages
