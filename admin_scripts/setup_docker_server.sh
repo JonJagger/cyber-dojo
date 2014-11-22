@@ -16,9 +16,9 @@ cd /etc/apache2/sites-enabled
 ln -s ../sites-available/cyberdojo cyberdojo
 rm railsapp
 cd /etc/apache2/conf
-sed s/railsapp/cyberdojo/ <railsapp.conf >cyberdojo.conf
+sed s/railsapp/cyber-dojo/ <railsapp.conf >cyberdojo.conf
 rm railsapp.conf
-cd /var/www/cyberdojo/admin_scripts
+cd /var/www/cyber-dojo/admin_scripts
 ./pull.sh
 echo "deb http://get.docker.io/ubuntu docker main" > /etc/apt/sources.list.d/docker.list
 wget -qO- https://get.docker.io/gpg | apt-key add -
