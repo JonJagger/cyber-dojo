@@ -26,12 +26,13 @@ def gather_stats(dojo)
     print "\rworking" + dots(dot_count)
   end
   puts
+  puts
   [renamed,rest,totals,exceptions]
 end
 
 #- - - - - - - - - - - - - - - - - - - - - - - -
 
-def show_renamed(renamed)
+def show_renamed(renamed,dojo)
   puts 'Renamed'
   puts '-------'
   count = 0
@@ -96,7 +97,7 @@ end
 
 dojo = create_dojo
 renamed,rest,totals,exceptions = gather_stats(dojo)
-show_renamed(renamed)
+show_renamed(renamed,dojo)
 show_rest(rest,dojo)
 show_totals(totals)
 mention(exceptions)
