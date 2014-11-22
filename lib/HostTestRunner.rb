@@ -9,7 +9,6 @@
 require_relative 'TestRunner'
 
 class HostTestRunner
-
   include TestRunner
 
   def runnable?(language)

@@ -1,5 +1,5 @@
 
-def require_dependencies file_names
+def require_dependencies(file_names)
   file_names.each{ |file_name| require_dependency file_name}
 end
 
@@ -14,8 +14,8 @@ require_dependencies %w{
     HostTestRunner
   Folders Git
   Disk
-  OsDir OsDisk
-  FakeDisk FakeDir
+    OsDisk OsDir
+    FakeDisk FakeDir
   TimeNow UniqueId
 }
 
@@ -26,8 +26,12 @@ require_dependencies %w{
 }
 
 require_dependencies %w{
-  Avatar Avatars Dojo Exercise Exercises Kata Katas
-  Language Languages Light Sandbox Tag
+  Dojo
+  Language Languages
+  Exercise Exercises
+  Avatar Avatars
+  Kata Katas
+  Light Sandbox Tag
 }
 
 class ApplicationController < ActionController::Base

@@ -4,8 +4,7 @@
 require_relative 'TestRunner'
 
 class DummyTestRunner
-
-  include TestRunner
+   include TestRunner
 
   def runnable?(language)
     false

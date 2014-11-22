@@ -23,7 +23,8 @@ class ChooseTests < CyberDojoTestBase
        'then choose random known language' do
     kata = @dojo.katas['123456789A']
     assert !kata.exists?
-    assert_is_randomly_chosen_language(test_languages_names, id=nil, @katas)
+    id=nil
+    assert_is_randomly_chosen_language(test_languages_names, id, @katas)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -33,7 +34,8 @@ class ChooseTests < CyberDojoTestBase
        'then choose random known language' do
     kata = @dojo.katas['123456789A']
     assert !kata.exists?
-    assert_is_randomly_chosen_language(test_languages_names, id='012345', @katas)
+    id='012345'
+    assert_is_randomly_chosen_language(test_languages_names, id, @katas)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -47,7 +49,8 @@ class ChooseTests < CyberDojoTestBase
       assert !languages.include?(language)
       kata = make_kata(@dojo, language, 'Fizz_Buzz')
       assert kata.exists?
-      assert_is_randomly_chosen_language(languages, id=kata.id, @katas)
+      id=kata.id
+      assert_is_randomly_chosen_language(languages, id, @katas)
     end
   end
 
@@ -72,7 +75,8 @@ class ChooseTests < CyberDojoTestBase
        'then choose random known exercise' do
     kata = @dojo.katas['123456789A']
     assert !kata.exists?
-    assert_is_randomly_chosen_exercise(test_exercises_names, id=nil, @katas)
+    id=nil
+    assert_is_randomly_chosen_exercise(test_exercises_names, id, @katas)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -82,7 +86,8 @@ class ChooseTests < CyberDojoTestBase
        'then choose random known exercise' do
     kata = @dojo.katas['123456789A']
     assert !kata.exists?
-    assert_is_randomly_chosen_exercise(test_exercises_names, id='123456', @katas)
+    id='123456'
+    assert_is_randomly_chosen_exercise(test_exercises_names, id, @katas)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -96,7 +101,7 @@ class ChooseTests < CyberDojoTestBase
       assert !exercises.include?(exercise)
       kata = make_kata(@dojo, 'Ruby-TestUnit', exercise)
       assert kata.exists?
-      assert_is_randomly_chosen_exercise(exercises, id=kata.id, @katas)
+      assert_is_randomly_chosen_exercise(exercises, kata.id, @katas)
     end
   end
 

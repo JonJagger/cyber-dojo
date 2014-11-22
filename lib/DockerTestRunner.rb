@@ -5,8 +5,7 @@
 require_relative 'TestRunner'
 
 class DockerTestRunner
-
-  include TestRunner
+    include TestRunner
 
   def initialize
     command = stderr2stdout('docker images')

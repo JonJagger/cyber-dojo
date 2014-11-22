@@ -1,8 +1,7 @@
 
-# mixin module
 # including class must provide make_dir()
 
-module Disk
+module Disk # mixin module
 
   def dirs
     @dirs ||= { }
