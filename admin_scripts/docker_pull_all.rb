@@ -18,6 +18,6 @@ image_names.each do |image_name|
   `#{cmd}`
 end
 
-echo "-----------------------"
-echo "Now refresh languages/cache.json"
-echo "$cyberDojoHome/languages/cache.rb"
+puts "-----------------------"
+puts "Now refresh languages/cache.json"
+puts "$cyberDojoHome/languages/cache.rb"
