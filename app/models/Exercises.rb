@@ -5,10 +5,7 @@ class Exercises
 
   def initialize(path,disk)
     @path,@disk = path,disk
-    #fake = FakeDisk.new
-    #fake[path+'100_doors'].write('instructions','...100doors')
-    #fake[path+'Anagrams'].write('instructions','...Anagrams')
-    #@disk = fake
+    cache_from_manifest
   end
 
   def each
@@ -44,6 +41,22 @@ private
 
   def dir
     @disk[path]
+  end
+
+  def cache_from_manifest
+    if dir.exists?(manifest_filename)
+       fake = FakeDisk.new
+       manifest = JSON.parse(dir.read(manifest_filename))
+       manifest.each do |name,instructions|
+        fake[path + name].write('instructions',instructions)
+      end
+      @disk = fake
+    end
+  end
+
+  def manifest_filename
+    # created with cyber-dojo/exercises/cache.rb
+    'manifest.json'
   end
 
   attr_reader :path

@@ -35,6 +35,10 @@ mkdir -p tmp/cache
 chown www-data /var/www/cyber-dojo/tmp/cache
 chgrp www-data /var/www/cyber-dojo/tmp/cache
 
+echo "refresh exercises/ cache"
+./var/www/cyber-dojo/exercises/cache.rb
+
+
 # poke rails
 bundle install
 

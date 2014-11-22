@@ -26,3 +26,5 @@ test/cyberdojo/tmp
 test/cyberdojo/katas
 
 admin_scripts/exceptions.log
+
+exercises/manifest.json
