@@ -32,11 +32,11 @@ class FakeDir
 
   def write(filename, content)
     if filename.end_with?('.rb')
-      assert content.class != String, "write('#{filename}',content.class != String)"
+      assert_not_string(content,filename)
       content = content.inspect
     end
     if filename.end_with?(".json")
-      assert content.class != String, "write('#{filename}',content.class != String)"
+      assert_not_string(content,filename)
       content = JSON.unparse(content)
     end
     make
@@ -60,6 +60,11 @@ class FakeDir
 
 private
 
+  def assert_not_string(content,filename)
+    assert content.class != String,
+      "write('#{filename}',content.class != String)"
+  end
+  
   def assert(truth, message)
     raise "FakeDir['#{@dir}'].#{message}" if !truth
   end

@@ -54,7 +54,7 @@ class OutputBCPLAllTestsPassedTests < CyberDojoTestBase
         "!! ABORT 2: BRK instruction",
         "*"
       ].join("\n")
-    assert_equal :green, colour_of(output)
+    assert_equal :red, colour_of(output)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - -
