@@ -4,10 +4,19 @@ def require_dependencies file_names
 end
 
 # these dependencies have to be loaded in the correct order
-# some of them depend on loading previous ones
+# as some of them depend on loading previous ones
+
 require_dependencies %w{
-  Docker TestRunner DockerTestRunner DummyTestRunner HostTestRunner
-  Folders Git OsDir OsDisk TimeNow UniqueId
+  Docker
+  TestRunner
+    DockerTestRunner
+    DummyTestRunner
+    HostTestRunner
+  Folders Git
+  Disk
+  OsDir OsDisk
+  FakeDisk FakeDir
+  TimeNow UniqueId
 }
 
 require_dependencies %w{

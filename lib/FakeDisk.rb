@@ -1,5 +1,3 @@
-require_relative 'Disk'
-require_relative 'FakeDir'
 
 class FakeDisk
   include Disk

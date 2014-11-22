@@ -42,3 +42,19 @@ buttons the instructions screen is momentarily used to
 display some info about what they do?
 That's a simple hack that I think would work for now...
 
+--------------------------------
+
+Possible design
+
+eg Exercises
+in ctor use real @disk object to see if
+there is an exercises/manifest.json file
+if there is it will be of the form
+  {
+    '100_doors' => 'contents of instructions for 100_doors',
+    ...
+  }
+Read this into a js object.
+Then populate a FakeDisk object from this.
+Replace passed in real @disk with fake disk.
+
