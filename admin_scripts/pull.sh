@@ -38,8 +38,8 @@ chgrp www-data /var/www/cyber-dojo/tmp/cache
 echo "refresh exercises/ cache"
 ./var/www/cyber-dojo/exercises/cache.rb
 
-#echo "refresh languages/ cache"
-#./var/www/cyber-dojo/languages/cache.rb
+echo "refresh languages/ cache"
+./var/www/cyber-dojo/languages/cache.rb
 
 # poke rails
 bundle install

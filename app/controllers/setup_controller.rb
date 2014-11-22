@@ -2,8 +2,8 @@
 class SetupController < ApplicationController
 
   def show
-    read_all_languages
-    read_from_exercises_manifest || read_all_exercises
+    languages_cache || languages_read
+    exercises_cache || exercises_read
     @selected_language_index = choose_language(@languages_names, id, dojo.katas)
     @selected_exercise_index = choose_exercise(@exercises_names, id, dojo.katas)
     @id = id
@@ -23,21 +23,32 @@ private
 
   include Chooser
 
-  def read_all_languages
+  def languages_cache
+    dir = disk[dojo.languages.path]
+    # cache.json is created with cyber-dojo/languages/cache.rb
+    if dir.exists?(cache_filename)
+      @languages = JSON.parse(dir.read(cache_filename)).sort
+      @languages_names = @languages.map{|array| array[0]}
+      return true
+    end
+    return false
+  end
+
+  def languages_read
     @languages = dojo.languages.select{|language| language.runnable?}.map{|language|
       [language.name,language.display_name]
     }.sort
     @languages_names = @languages.map{|array| array[0]}
   end
 
-  def read_from_exercises_manifest
-    dir = @disk[dojo.exercises.path]
-    # manifest is created with cyber-dojo/exercises/cache.rb
-    if dir.exists?(manifest_filename)
-      manifest = JSON.parse(dir.read(manifest_filename)).sort
-      @exercises_names = manifest.map{|one| one[0]}
+  def exercises_cache
+    dir = disk[dojo.exercises.path]
+    # cache.json is created with cyber-dojo/exercises/cache.rb
+    if dir.exists?(cache_filename)
+      cache = JSON.parse(dir.read(cache_filename)).sort
+      @exercises_names = cache.map{|one| one[0]}
       @instructions = { }
-      manifest.each do |one|
+      cache.each do |one|
         @instructions[one[0]] = one[1]
       end
       return true
@@ -45,7 +56,7 @@ private
     return false
   end
 
-  def read_all_exercises
+  def exercises_read
     @exercises_names = dojo.exercises.map{|exercise| exercise.name}.sort
     @instructions = { }
     @exercises_names.each do |name|
@@ -53,8 +64,8 @@ private
     end
   end
 
-  def manifest_filename
-    'manifest.json'
+  def cache_filename
+    'cache.json'
   end
 
 end

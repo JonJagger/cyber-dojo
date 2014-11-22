@@ -8,7 +8,7 @@ create_dojo.languages.each do |language|
 end
 
 this_dir = File.expand_path('.', File.dirname(__FILE__))
-manifest_filename = this_dir + '/' + 'manifest.json'
+manifest_filename = this_dir + '/' + 'cache.json'
 File.open(manifest_filename, 'w') { |file|
   file.write(JSON.unparse(cache))
 }

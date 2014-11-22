@@ -8,7 +8,7 @@ class Language
   attr_reader :name
 
   def exists?
-     dir.exists?(manifest_filename)
+    dir.exists?(manifest_filename)
   end
 
   def runnable?

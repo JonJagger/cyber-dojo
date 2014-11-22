@@ -8,7 +8,7 @@ create_dojo.exercises.each do |exercise|
 end
 
 this_dir = File.expand_path('.', File.dirname(__FILE__))
-manifest_filename = this_dir + '/' + 'manifest.json'
+manifest_filename = this_dir + '/' + 'cache.json'
 File.open(manifest_filename, 'w') { |file|
   file.write(JSON.unparse(cache))
 }

@@ -77,7 +77,7 @@ class ApplicationController < ActionController::Base
     Rails.root.to_s + '/'
   end
 
-private
+protected
 
   def runner
     @runner ||= Thread.current[:runner]
