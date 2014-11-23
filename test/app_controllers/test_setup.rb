@@ -4,6 +4,33 @@ require_relative 'controller_test_base'
 
 class SetupControllerTest < ControllerTestBase
 
+  test 'setup uses cached languages and exercises if present' do
+    stub_dojo
+
+    languages_dir = @disk[@dojo.languages.path]
+    languages_dir.write('cache.json', {
+      'fake-C++'  => 'fake-C++-catch',
+      'fake-Java' => 'fake-Java-NUnit'
+    })
+
+    exercise_dir = @disk[@dojo.exercises.path]
+    exercise_dir.write('cache.json', {
+      'fake-Print-Diamond'  => 'fake-Print-Diamond instructions',
+      'fake-Roman-Numerals' => 'fake-Roman-Numerals instructions'
+    })
+
+    get 'setup/show'
+    assert_response :success
+
+    assert /data-language\=\"fake-C++/.match(html), "fake-C++"
+    assert /data-language\=\"fake-Java/.match(html), "fake-Java"
+
+    assert /data-exercise\=\"fake-Print-Diamond/.match(html), "fake-Print-Diamond"
+    assert /data-exercise\=\"fake-Roman-Numerals/.match(html), "fake-Roman-Numerals"
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
   test 'setup/show chooses language and exercise of kata ' +
        'whose 10-char id is passed in URL ' +
        '(to encourage repetition)' do
