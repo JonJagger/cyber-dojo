@@ -54,8 +54,8 @@ private
 
   def bool(attribute)
     tf = params[attribute]
-    return tf if tf == 'true' || tf == 'false'
-    return "true"
+    return tf if ['true','false'].include?(tf)
+    return 'true'
   end
 
   def seconds_per_column
