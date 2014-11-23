@@ -30,7 +30,7 @@ class DashboardController < ApplicationController
         :progress => most_recent_progress(avatar)
       }
     end
-	render :json => {
+    render :json => {
       :animals => animals
     }
   end
@@ -66,8 +66,8 @@ private
 
   def most_recent_progress(avatar)
     regexs = avatar.kata.language.progress_regexs
-    light = avatar.lights.reverse.find{|light| [:red,:green].include?(light.colour)}
-    output = light.tag.output
+    non_amber = avatar.lights.reverse.find{|light| [:red,:green].include?(light.colour)}
+    output = non_amber.tag.output
     matches = regexs.map{|regex| Regexp.new(regex).match(output)}
     return {
       :text => matches.join,
