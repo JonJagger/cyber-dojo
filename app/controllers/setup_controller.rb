@@ -42,16 +42,12 @@ private
       # cache.json is created with cyber-dojo/exercises/cache.rb
       cache = JSON.parse(dir.read(cache_filename)).sort
       @exercises_names = cache.map{|one| one[0]}
-      @instructions = { }
-      cache.each do |one|
-        @instructions[one[0]] = one[1]
-      end
+      @instructions = Hash[cache]
     else
       @exercises_names = dojo.exercises.map{|exercise| exercise.name}.sort
-      @instructions = { }
-      @exercises_names.each do |name|
-        @instructions[name] = dojo.exercises[name].instructions
-      end
+      @instructions = Hash[@exercises_names.collect{|name|
+        [name, dojo.exercises[name].instructions]
+      }]
     end
   end
 
