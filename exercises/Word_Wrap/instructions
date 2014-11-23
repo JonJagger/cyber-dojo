@@ -1,7 +1,7 @@
 
-Your task is to write a class called Wrapper, that has a
-single static function named wrap that takes two arguments,
-a string, and a column number.
+Your task is to write a function that takes two arguments,
+a string and an integer width.
+
 The function returns the string, but with line breaks
 inserted at just the right places to make sure that no line
 is longer than the column number.
