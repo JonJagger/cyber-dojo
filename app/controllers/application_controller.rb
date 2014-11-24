@@ -73,6 +73,14 @@ class ApplicationController < ActionController::Base
     avatars[avatar_name]
   end
 
+  def was_tag
+    params['was_tag']
+  end
+
+  def now_tag
+    params['now_tag']
+  end
+
   def root_path
     Rails.root.to_s + '/'
   end

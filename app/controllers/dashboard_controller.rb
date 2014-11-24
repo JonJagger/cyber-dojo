@@ -4,14 +4,14 @@ class DashboardController < ApplicationController
   def show
     gather
     @title = 'dashboard'
-    # provide these if you want to open the diff-dialog for a
+    # provide these if you want to open the diff-history for a
     # specific [avatar,was_tag,now_tag] as the dashboard opens.
-    # See also app/controllers/diff_controller.rb
-    if params['avatar'] && params['was_tag'] && params['now_tag']
+    # See also app/controllers/differ_controller.rb
+    if avatar_name && was_tag && now_tag
       @id = id
-      @avatar_name = params['avatar']
-      @was_tag = params['was_tag']
-      @now_tag = params['now_tag']
+      @avatar_name = avatar_name
+      @was_tag = was_tag
+      @now_tag = now_tag
     end
   end
 
@@ -66,7 +66,9 @@ private
 
   def most_recent_progress(avatar)
     regexs = avatar.kata.language.progress_regexs
-    non_amber = avatar.lights.reverse.find{|light| [:red,:green].include?(light.colour)}
+    non_amber = avatar.lights.reverse.find{ |light|
+      [:red,:green].include?(light.colour)
+    }
     output = non_amber.tag.output
     matches = regexs.map{|regex| Regexp.new(regex).match(output)}
     return {

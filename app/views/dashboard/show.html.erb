@@ -8,9 +8,8 @@ $(function() {
     var avatarName = "<%=@avatar_name%>";
     var wasTag = parseInt("<%=@was_tag%>");
     var nowTag = parseInt("<%=@now_tag%>");
-    var maxTag = parseInt("<%=@max_tag%>");
     var showRevert = false;
-    cd.dialog_diff(id, avatarName, wasTag, nowTag, maxTag, showRevert);
+    cd.dialog_history(id, avatarName, wasTag, nowTag, showRevert);
   }
 
 });
