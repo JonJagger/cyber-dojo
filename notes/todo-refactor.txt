@@ -7,16 +7,14 @@ Would be good if the dashboard graphed the execution time.
 Server could record time before starting cyber-dojo.sh execution
 and time it finished and hence duration.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-The front page review button does not enable unless you
-manually refresh the screen. This is not so good. Simplify.
-All buttons are now enabled/disabled based on validity of id.
-o) Re-enter dialog needs to change its bottom text if no animals
-   have yet started
-o) Would be handy if the dashboard showed the animals pictures
-   on the left side below the controls when they have entered
-   but not pressed [test] yet. Or maybe I should just show all
-   animals regardless of whether they have pressed [test] yet
-   or not.
+Re-enter dialog needs to change its bottom text if no animals
+have yet started
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Would be handy if the dashboard showed the animals pictures
+on the left side below the controls when they have entered
+but not pressed [test] yet. Or maybe I should just show all
+animals regardless of whether they have pressed [test] yet
+or not.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I often find I fork from someone's traffic-light and then
 immediately enter it to demonstrate something. Could I

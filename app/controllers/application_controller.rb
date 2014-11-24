@@ -12,10 +12,9 @@ require_dependencies %w{
     DockerTestRunner
     DummyTestRunner
     HostTestRunner
-  Folders Git
   Disk
     OsDisk OsDir
-    FakeDisk FakeDir
+  Folders Git
   TimeNow UniqueId
 }
 
