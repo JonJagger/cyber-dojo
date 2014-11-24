@@ -6,28 +6,23 @@ $LOAD_PATH << CYBERDOJO_HOME_DIR + 'lib'
 $LOAD_PATH << CYBERDOJO_HOME_DIR + 'app/lib'
 $LOAD_PATH << CYBERDOJO_HOME_DIR + 'app/models'
 
-require 'Cleaner'
-require 'UniqueId'
-require 'TimeNow'
-require 'GitDiff'
+def require_filenames(filenames)
+  filenames.each {|filename| require filename}
+end
 
-require 'OsDisk'
-require 'OsDir'
-require 'Git'
-require 'DockerTestRunner'
-require 'DummyTestRunner'
-require 'Dojo'
-require 'Languages'
-require 'Language'
-require 'Exercises'
-require 'Exercise'
-require 'Katas'
-require 'Kata'
-require 'Avatars'
-require 'Avatar'
-require 'Sandbox'
-require 'Light'
-require 'Tag'
+require_filenames %w{
+  Cleaner UniqueId TimeNow
+  OsDisk OsDir
+  Git GitDiff
+  DockerTestRunner DummyTestRunner
+  Dojo
+  Languages Language
+  Exercises Exercise
+  Katas Kata
+  Avatars Avatar
+  Sandbox Light Tag
+}
+
 require 'json'
 
 def create_dojo
@@ -46,7 +41,7 @@ end
 
 def dots(dot_count)
   dots = '.' * (dot_count % 32)
-  spaces = ' ' * (32 - dot_count%32)
+  spaces = ' ' * (32 - dot_count % 32)
   dots + spaces + number(dot_count,5)
 end
 

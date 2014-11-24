@@ -34,15 +34,15 @@ end
 
 def index(kata_root)
   Dir.entries(kata_root).each do |outer_dir|
-    if is_dir?(kata_root, outer_dir) 
+    if is_dir?(kata_root, outer_dir)
       outer_path = File.join(kata_root, outer_dir)
       Dir.entries(outer_path).each do |inner_dir|
-        if is_dir?(outer_path,inner_dir) 
+        if is_dir?(outer_path,inner_dir)
           inner_path = File.join(outer_path, inner_dir)
           id = outer_dir + inner_dir
           yield inner_path, id
         end
-      end      
+      end
     end
   end
 end
@@ -53,13 +53,13 @@ def prune_stats
     manifest_filename = "#{kata_dir}/manifest.rb"
     if File.exists? manifest_filename
       tally,count = traffic_light_count(kata_dir)
-      
+
       begin
         content = "# encoding: utf-8\n\n" + readfile(manifest_filename)
         manifest = eval content
         created = Time.mktime(*manifest[:created])
         days_old = ((Time.now - created) / 60 / 60 / 24).to_i
-        stats[count] ||= [ ]    
+        stats[count] ||= [ ]
         stats[count] << [manifest[:id],days_old]
       rescue Exception => e
         puts "Exception from #{kata_dir}"
@@ -79,7 +79,7 @@ def prune(do_delete)
     entries.each do |id,days_old|
       if yield traffic_light_count, days_old
         tally_yes += 1
-        inner_dir = id[0..1]   
+        inner_dir = id[0..1]
         outer_dir = id[2..9]
         kata_dir = "katas/#{inner_dir}/#{outer_dir}"
         rm = "rm -rf " + kata_dir
@@ -89,19 +89,19 @@ def prune(do_delete)
         else
           print "will rm " + id + " " + traffic_light_count.to_s + "\t" + days_old.to_s + "\n"
         end
-        $stdout.flush        
+        $stdout.flush
       else
         tally_no += 1
       end
     end
   end
-  
+
   print "\n" + tally_yes.to_s + " katas "
   if do_delete == "false"
     print "will be "
   end
   print "deleted" + "\n"
-  
+
   print tally_no.to_s + " katas "
   if do_delete == "false"
     print "will not be "
