@@ -54,4 +54,44 @@ o) have explicit [finished] button on the dashboard?
    this will send finished event to the hub, causing it to
    appear with its true ID.
 
+--------------------------------
+
+Have two pages/tabs
+
+One for finished dojos. This will require a selection
+of language and exercise and will then show all dojos
+matching that selection. This will not refresh automatically.
+These dojos will be up-votablable. Thus only a limited
+amount of dojos will appear at one time (in summary).
+Clicking on a dojo will bring up its dashboard.
+
+Another for dojos in progress. This will not reveal the dojos
+IDs. But the dojos will be viewable. These will simply be
+listed in some order. What order. Problem with hiding the
+partner-id and simply showing in-progress is that viewer
+will lose their place when a new dojo appears. No need to
+show 'in-progress'. Everything on this page/tab will be in
+progress. What is listed? Summary only. And clicking on a
+dojos 'line' will bring up its dashboard.
+So dojos should be listed by partner-id so they appear in
+the same relative order.
+Manual refresh too?
+
+--------------------------------
+
+Clone cyber-dojo.org (good for backup anyway).
+Then start to build hub from clone.
+This avoids having to xfer all the dojos in .tar.gz
+format.
+Initially do not prune. Just show everything.
+Don't need to prune for MVP.
+Later prune for no of traffic-lights <= 3
+and minimal number of diff-lines.
+Database could usefully (maybe) also store
+o) no of traffic-lights
+o) time dojo was created
+o) time of first traffic-light
+o) time of last traffic-light
+o) total no of animals
+o) total no of diff-lines
 

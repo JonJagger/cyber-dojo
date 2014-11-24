@@ -6,11 +6,6 @@ add it to tests for refactoring-dojos
 add its URL to tips dialog
 add its URL to blog page
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-split docker-server.md into several md files
-one for just building your own docker sever,
-one for adding a new language,
-one for adding a new exercise.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 at bottom of dashboard page add tiny image of each animal
 with a checkbox. If the box is checked that animal does
 not appear on the main dashboard display. This solves two
@@ -101,9 +96,6 @@ OUTPUT-PARSER
   light colours. It would be easier than stubbing the
   output returned from test().
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DOWNLOAD
-  reinstate download button on dashboard page.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DASHBOARD-TIME-GAP
   if there is a session that is split over several hours, eg
   if you resume a session one morning after starting it the
@@ -115,11 +107,6 @@ DASHBOARD-TIME-GAP
 
 
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-DIALOG
-  o) click on the animal to open a re-enter like 'dialog'
-     which you can click on to move to diff 0-1 of next animal.
-  o) have [next animal] button
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   have the diff-dialog as a dialog? If it was a regular page it would
@@ -169,10 +156,6 @@ META-DASHBOARD
   and these then look like filenames on the lhs. Clicking on
   one of them opens the dashboard for that id. This allows you
   to create a summary dashboard for codeRetreat style days.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-HELP
-  need to add some text somewhere about to use fork to setup
-  a specific starting position.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 INITIALLY-RED-TESTS
   do this by using fail("") calls rather than deliberately wrong values?
@@ -226,15 +209,6 @@ UNTAR
   o) run admin_scripts/find_old_language_names.rb
   o) use info it generates to patch more language names.
   o) see if any katas are corrupt and are not worth saving.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-C/C++ MAKEFILES
-  improve them.
-  use summer-school as pattern
-  requirements
-    - makes lib from non test src files
-    - makes test exe from test src and lib
-    - runs test exe
-    - knows if makefile is changed
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 C++ START FILES
   use a class?
