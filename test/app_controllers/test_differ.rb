@@ -205,19 +205,4 @@ class DifferControllerTest < ControllerTestBase
     assert_equal secondAvatar, json['nextAvatar']
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def any_test
-    filename = 'hiker.rb'
-    kata_run_tests :file_content => {
-        filename => 'tweedledee'
-      },
-      :file_hashes_incoming => {
-        filename => 234234
-      },
-      :file_hashes_outgoing => {
-        filename => -4545645678
-      }
-  end
-
 end

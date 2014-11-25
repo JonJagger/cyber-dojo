@@ -92,6 +92,18 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  def any_test
+    kata_run_tests :file_content => {
+        'cyber-dojo.sh' => ''
+      },
+      :file_hashes_incoming => {
+        'cyber-dojo.sh' => 234234
+      },
+      :file_hashes_outgoing => {
+        'cyber-dojo.sh' => -4545645678
+      }
+  end
+
   def kata_run_tests(hash)
     hash[:format] = :js
     hash[:id] = @id

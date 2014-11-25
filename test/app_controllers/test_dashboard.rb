@@ -55,18 +55,4 @@ class DashboardControllerTest < ControllerTestBase
     get 'dashboard/heartbeat', :format => :js, :id => @id
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def any_test
-    kata_run_tests :file_content => {
-        'cyber-dojo.sh' => ''
-      },
-      :file_hashes_incoming => {
-        'cyber-dojo.sh' => 234234
-      },
-      :file_hashes_outgoing => {
-        'cyber-dojo.sh' => -4545645678
-      }
-  end
-
 end
