@@ -8,6 +8,7 @@ class DashboardControllerTest < ControllerTestBase
     stub_setup
     show_dashboard
     show_dashboard :minute_columns => false, :auto_refresh => false
+    # How do I test @attributes in the controller object?
     show_dashboard :minute_columns => false, :auto_refresh => true
     show_dashboard :minute_columns => true,  :auto_refresh => false
     show_dashboard :minute_columns => true,  :auto_refresh => false
@@ -40,7 +41,7 @@ class DashboardControllerTest < ControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'show dashboard and open a diff-dialog' do
+  test 'show dashboard and open a history-dialog' do
     @id = create_kata
     enter
     kata_edit
@@ -48,6 +49,7 @@ class DashboardControllerTest < ControllerTestBase
     show_dashboard :avatar => @avatar_name,
       :was_tag => 1,
       :now_tag => 2
+    # Can I test the history-dialog has opened?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
