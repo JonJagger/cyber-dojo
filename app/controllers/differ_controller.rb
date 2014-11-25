@@ -21,16 +21,16 @@ private
   include GitDiff
 
   def was_tag
-	tag(:was_tag)
+    tag(:was_tag)
   end
 
   def now_tag
-	tag(:now_tag)
+    tag(:now_tag)
   end
 
   def tag(name)
-	raw = params[name].to_i
-	raw != -1 ? raw : @lights.length
+    raw = params[name].to_i
+    raw != -1 ? raw : @lights.length
   end
 
   def current_filename
@@ -38,21 +38,21 @@ private
   end
 
   def active_avatar_names
-	avatars.active.map {|avatar| avatar.name}.sort
+    avatars.active.map {|avatar| avatar.name}.sort
   end
 
   def prevAvatar
-	names = active_avatar_names
-	return '' if names.length == 1
-	names.unshift(names.last)
-	return names[names.rindex(avatar_name) - 1]
+    names = active_avatar_names
+    return '' if names.length == 1
+    names.unshift(names.last)
+    return names[names.rindex(avatar_name) - 1]
   end
 
   def nextAvatar
-	names = active_avatar_names
-	return '' if names.length == 1
-	names << names[0]
-	return names[names.index(avatar_name) + 1]
+    names = active_avatar_names
+    return '' if names.length == 1
+    names << names[0]
+    return names[names.index(avatar_name) + 1]
   end
 
   def prune(array)
