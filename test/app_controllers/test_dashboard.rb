@@ -27,17 +27,7 @@ class DashboardControllerTest < ControllerTestBase
     3.times do
       enter
       kata_edit
-      2.times do
-        kata_run_tests :file_content => {
-            'cyber-dojo.sh' => ""
-          },
-          :file_hashes_incoming => {
-            'cyber-dojo.sh' => 234234
-          },
-          :file_hashes_outgoing => {
-            'cyber-dojo.sh' => -4545645678
-          }
-      end
+      2.times { any_test }
     end
     show_dashboard
     show_dashboard :minute_columns => false
@@ -49,17 +39,7 @@ class DashboardControllerTest < ControllerTestBase
     @id = create_kata
     enter
     kata_edit
-    3.times do
-      kata_run_tests :file_content => {
-          'cyber-dojo.sh' => ''
-        },
-        :file_hashes_incoming => {
-          'cyber-dojo.sh' => 234234
-        },
-        :file_hashes_outgoing => {
-          'cyber-dojo.sh' => -4545645678
-        }
-    end
+    3.times { any_test }
     show_dashboard :avatar => @avatar_name,
       :was_tag => 1,
       :now_tag => 2
@@ -70,7 +50,14 @@ class DashboardControllerTest < ControllerTestBase
   test 'heartbeat' do
     stub_setup
     enter
-    kata_edit
+    kata_edit # 0
+    any_test  # 1
+    get 'dashboard/heartbeat', :format => :js, :id => @id
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def any_test
     kata_run_tests :file_content => {
         'cyber-dojo.sh' => ''
       },
@@ -80,8 +67,6 @@ class DashboardControllerTest < ControllerTestBase
       :file_hashes_outgoing => {
         'cyber-dojo.sh' => -4545645678
       }
-
-    get 'dashboard/heartbeat', :format => :js, :id => @id
   end
 
 end
