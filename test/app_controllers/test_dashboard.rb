@@ -7,6 +7,12 @@ class DashboardControllerTest < ControllerTestBase
   test 'show no avatars' do
     stub_setup
     show_dashboard
+    show_dashboard :minute_columns => false, :auto_refresh => false
+    show_dashboard :minute_columns => false, :auto_refresh => true
+    show_dashboard :minute_columns => true,  :auto_refresh => false
+    show_dashboard :minute_columns => true,  :auto_refresh => false
+    show_dashboard :minute_columns => 'xxx', :auto_refresh => false
+    show_dashboard :minute_columns => true,  :auto_refresh => 'xxx'
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -30,7 +36,6 @@ class DashboardControllerTest < ControllerTestBase
       2.times { any_test }
     end
     show_dashboard
-    show_dashboard :minute_columns => false
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
