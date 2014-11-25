@@ -21,6 +21,8 @@ class DifferControllerTest < ControllerTestBase
     Thread.current[:runner] = nil
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'no lines different in any files between successive tags' do
     @id = create_kata
     enter
@@ -83,7 +85,7 @@ class DifferControllerTest < ControllerTestBase
   test 'one line different in one file between successive tags' do
     @id = create_kata
     enter
-    kata_edit
+    kata_edit # 0
 
     filename = 'hiker.rb'
     kata_run_tests :file_content => { #1
@@ -136,6 +138,119 @@ class DifferControllerTest < ControllerTestBase
     assert diffs[0]['content'].include?('<deleted>tweedledee</deleted>')
     assert diffs[0]['content'].include?('<added>tweedledum</added>')
     assert_equal '<deleted><ln>1</ln></deleted><added><ln>1</ln></added>', diffs[0]['line_numbers'], info + "diffs[0]['line_numbers']"
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'tag -1 gives last traffic-light' do
+    @id = create_kata
+    enter
+    kata_edit # 0
+
+    filename = 'hiker.rb'
+    kata_run_tests :file_content => { #1
+        filename => 'tweedledee'
+      },
+      :file_hashes_incoming => {
+        filename => 234234
+      },
+      :file_hashes_outgoing => {
+        filename => -4545645678
+      }
+
+    kata_run_tests :file_content => { #2
+        filename => 'tweedledum'
+      },
+      :file_hashes_incoming => {
+        filename => -4545645678
+      },
+      :file_hashes_outgoing => {
+        filename => 654356
+      }
+
+    was_tag = -1
+    now_tag = -1
+    get 'differ/diff',
+      :format => :json,
+      :id => @id,
+      :avatar => @avatar_name,
+      :was_tag => was_tag,
+      :now_tag => now_tag
+
+    assert_equal 2, json['wasTag']
+    assert_equal 2, json['nowTag']
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'nextAvatar and prevAvatar are empty string for dojo with one avatar' do
+    @id = create_kata
+    enter
+    kata_edit # 0
+
+    filename = 'hiker.rb'
+    kata_run_tests :file_content => { #1
+        filename => 'tweedledee'
+      },
+      :file_hashes_incoming => {
+        filename => 234234
+      },
+      :file_hashes_outgoing => {
+        filename => -4545645678
+      }
+
+    get 'differ/diff',
+      :format => :json,
+      :id => @id,
+      :avatar => @avatar_name,
+      :was_tag => 0,
+      :now_tag => 1
+
+    assert_equal "", json['prevAvatar']
+    assert_equal "", json['nextAvatar']
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'nextAvatar and prevAvatar for dojo with two avatars' do
+    @id = create_kata
+    firstAvatar = enter
+    kata_edit # 0
+
+    filename = 'hiker.rb'
+    kata_run_tests :file_content => { #1
+        filename => 'tweedledee'
+      },
+      :file_hashes_incoming => {
+        filename => 234234
+      },
+      :file_hashes_outgoing => {
+        filename => -4545645678
+      }
+
+    secondAvatar = enter
+    kata_edit # 0
+
+    filename = 'hiker.rb'
+    kata_run_tests :file_content => { #1
+        filename => 'tweedledee'
+      },
+      :file_hashes_incoming => {
+        filename => 234234
+      },
+      :file_hashes_outgoing => {
+        filename => -4545645678
+      }
+
+    get 'differ/diff',
+      :format => :json,
+      :id => @id,
+      :avatar => firstAvatar,
+      :was_tag => 0,
+      :now_tag => 1
+
+    assert_equal secondAvatar, json['prevAvatar']
+    assert_equal secondAvatar, json['nextAvatar']
   end
 
 end
