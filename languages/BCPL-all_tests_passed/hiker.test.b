@@ -2,7 +2,7 @@
 GET "hiker.b"
 GET "libhdr"
 
-LET lifetheuniverseandeverything() = VALOF
+LET life.the.universe.and.everything() = VALOF
 { LET expected = 42
   LET actual = answer()
   IF expected NE actual DO
@@ -12,6 +12,6 @@ LET lifetheuniverseandeverything() = VALOF
 }
 
 LET start() = VALOF
-{ lifetheuniverseandeverything()
+{ life.the.universe.and.everything()
   writef("All tests passed*n")
 }
