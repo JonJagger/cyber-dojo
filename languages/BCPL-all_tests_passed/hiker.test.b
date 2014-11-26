@@ -11,7 +11,7 @@ LET life.the.universe.and.everything() BE
   }
 }
 
-LET start() = BE
+LET start() BE
 { life.the.universe.and.everything()
   writes("All tests passed*n")
 }
