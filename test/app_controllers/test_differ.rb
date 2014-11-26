@@ -25,8 +25,7 @@ class DifferControllerTest < ControllerTestBase
 
   test 'no lines different in any files between successive tags' do
     @id = create_kata
-    enter
-    kata_edit # 0
+    enter # 0
 
     filename = 'hiker.rb'
     kata_run_tests :file_content => { #1
@@ -84,8 +83,7 @@ class DifferControllerTest < ControllerTestBase
 
   test 'one line different in one file between successive tags' do
     @id = create_kata
-    enter
-    kata_edit # 0
+    enter # 0
 
     filename = 'hiker.rb'
     kata_run_tests :file_content => { #1
@@ -144,8 +142,7 @@ class DifferControllerTest < ControllerTestBase
 
   test 'tag -1 gives last traffic-light' do
     @id = create_kata
-    enter
-    kata_edit # 0
+    enter     # 0
     any_test  # 1
     any_test  # 2
 
@@ -166,8 +163,7 @@ class DifferControllerTest < ControllerTestBase
 
   test 'nextAvatar and prevAvatar are empty string for dojo with one avatar' do
     @id = create_kata
-    enter
-    kata_edit # 0
+    enter     # 0
     any_test  # 1
 
     get 'differ/diff',
@@ -186,12 +182,10 @@ class DifferControllerTest < ControllerTestBase
   test 'nextAvatar and prevAvatar for dojo with two avatars' do
     @id = create_kata
 
-    firstAvatar = enter
-    kata_edit # 0
+    firstAvatar = enter # 0
     any_test  # 1
 
-    secondAvatar = enter
-    kata_edit # 0
+    secondAvatar = enter # 0
     any_test  # 1
 
     get 'differ/diff',

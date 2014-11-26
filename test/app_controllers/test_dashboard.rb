@@ -20,10 +20,7 @@ class DashboardControllerTest < ControllerTestBase
 
   test 'show avatars but no traffic-lights' do
     stub_setup
-    4.times do
-      enter
-      kata_edit
-    end
+    4.times { enter }
     show_dashboard
   end
 
@@ -31,11 +28,7 @@ class DashboardControllerTest < ControllerTestBase
 
   test 'show avatars with some traffic lights' do
     stub_setup
-    3.times do
-      enter
-      kata_edit
-      2.times { any_test }
-    end
+    3.times { enter; 2.times { any_test } }
     show_dashboard
   end
 
@@ -43,9 +36,7 @@ class DashboardControllerTest < ControllerTestBase
 
   test 'show dashboard and open a history-dialog' do
     @id = create_kata
-    enter
-    kata_edit
-    3.times { any_test }
+    enter; 3.times { any_test }
     show_dashboard :avatar => @avatar_name,
       :was_tag => 1,
       :now_tag => 2
@@ -56,8 +47,7 @@ class DashboardControllerTest < ControllerTestBase
 
   test 'heartbeat' do
     stub_setup
-    enter
-    kata_edit # 0
+    enter     # 0
     any_test  # 1
     get 'dashboard/heartbeat', :format => :js, :id => @id
   end
