@@ -36,6 +36,24 @@ class OutputBCPLAllTestsPassedTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
+  test 'All tests passed as part of diagnostic is amber' do
+    output =
+      [
+        "Error near hiker.test.b[27]:  '}' or '$)' expected",
+        "",
+        "...se.and.everything()",
+        "",
+        "  writes(\"All tests passed\")",
+        "",
+        "}",
+        "",
+        "bcpl failed returncode 20 reason -1"
+      ].join("\n")
+    assert_equal :amber, colour_of(output)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test 'otherwise red' do
     output =
       [
