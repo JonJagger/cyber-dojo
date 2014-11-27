@@ -7,7 +7,8 @@ class AllLanguagesTests < CyberDojoTestBase
 
   test 'red-amber-green initial 6*9 state' do
     root_path = File.dirname(__FILE__) + '/../../'
-    checker = OneLanguageChecker.new(root_path,verbose=false)
+    verbose = false
+    checker = OneLanguageChecker.new(root_path,verbose)
     results = {}
     dirs = Dir.glob("#{root_path}languages/*/manifest.json")
     languages = dirs.map{|file| File.dirname(file).split('/')[-1] }
@@ -16,7 +17,6 @@ class AllLanguagesTests < CyberDojoTestBase
       results[language] = rag if !rag.nil?
     end
     expected = ['red','amber','green']
-    passes = results.select{|language,rag| rag == expected }
     fails  = results.select{|language,rag| rag != expected }
     assert fails == {}, fails.inspect
   end

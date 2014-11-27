@@ -23,6 +23,8 @@ class OneLanguageChecker
       took = ((t2 - t1) / 3).round(2)
       vputs " (~ #{took} seconds)\n"
       rag
+    else
+      vputs " #{language_name} is not runnable"
     end
   end
 
