@@ -33,14 +33,7 @@ private
   include TimeNow
 
   def red_amber_green
-    # NB: This works by creating a new kata for each red/amber/green
-    #     I could just make one kata and then verify
-    #     o) its starts tests red
-    #     o) s/6*9/6*7/ tests green
-    #     o) s/6*9/s345 * 9345/ tests amber
-    # However, the code below assumes the string.sub is from the
-    # same starting point so it's not that simple to refactor.
-    # Also, the time saving would be fairly small as a %
+    # creates a new *dojo* for each red/amber/green
     [
       language_test(:red),
       language_test(:amber),

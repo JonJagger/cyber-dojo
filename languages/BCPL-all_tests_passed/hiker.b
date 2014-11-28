@@ -1,4 +1,4 @@
 
 LET answer() = VALOF
-{ RESULTIS 6*9
+{ RESULTIS 6 * 9
 }

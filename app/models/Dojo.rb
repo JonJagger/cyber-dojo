@@ -22,6 +22,7 @@ class Dojo
   def katas
     katas_path = @path
     if ENV['CYBERDOJO_TEST_ROOT_DIR']
+      # see test/languages/one_language_checker.rb
       katas_path += 'test/cyberdojo/'
     end
     katas_path += 'katas/'
