@@ -21,7 +21,7 @@ class DockerTestRunner
     language = sandbox.avatar.kata.language
     outer_command =
       "docker run" +
-        " -u root" +
+        " -u www-data" +
         " --rm" +
         " -v #{sandbox.path}:/sandbox:#{read_write}" +
         " -v #{language.path}:#{language.path}:#{read_only}" +
