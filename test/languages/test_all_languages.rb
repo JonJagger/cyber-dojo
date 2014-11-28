@@ -33,6 +33,7 @@ end
 # for www-data is /bin/bash
 # Then
 # $ su - www-data
+# $ cd /var/www/cyber-dojo/test/languages
 # $ ./check_one_language.rb C-assert verbose
 # Then exit
 # Then edit www-data in etc/passwd back to no shell
