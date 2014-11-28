@@ -57,15 +57,15 @@ private
 end
 
 # docker run
-#    " -u root" +
+#    " -u www-data" +
 #    " --rm" +
 #    " -v #{sandbox.path}:/sandbox:#{read_write}" +
 #    " -v #{language.path}:#{language.path}:#{read_only}" +
 #    " -w /sandbox" +
 #    " #{language.image_name} /bin/bash -c \"#{inner_command}\""
 #
-# -u root
-#   run as user=root
+# -u www-data
+#   run as user=www-data
 #
 # --rm
 #   automatically remove the container created by running inner_command
