@@ -69,5 +69,4 @@ a2ensite cyber-dojo
 a2dissite 000-default
 service apache2 restart
 
-
 /var/www/cyber-dojo/admin_scripts/docker_pull_all.rb

@@ -15,7 +15,7 @@ class OneLanguageChecker
     # else
     #    return nil
     @language = dojo.languages[language_name]
-    if @language.runnable?
+    if true #@language.runnable?
       vputs "  #{language_name} " + ('.' * (35-language_name.to_s.length))
       t1 = Time.now
       rag = red_amber_green
@@ -34,11 +34,20 @@ private
 
   def red_amber_green
     # creates a new *dojo* for each red/amber/green
+=begin
     [
       language_test(:red),
       language_test(:amber),
       language_test(:green),
     ]
+=end
+    [:red,:amber,:green].map{ |colour|
+      begin
+        language_test(colour)
+      rescue Exception => e
+        e.message
+      end
+    }
   end
 
   def language_test(colour)
@@ -123,14 +132,14 @@ private
       IO.read(@language.path + visible_filename).include? pattern
     }
     if filenames == [ ]
-      message = alert + " no '#{pattern}' file found"
-      vputs message
-      return ""
+      message = " no '#{pattern}' file found"
+      vputs alert + message
+      raise message
     end
     if filenames.length > 1
-      message = alert + " multiple '#{pattern}' files " + filenames.inspect
-      vputs message
-      return ""
+      message = " multiple '#{pattern}' files " + filenames.inspect
+      vputs alert + message
+      raise message
     end
     vputs "."
     filenames[0]

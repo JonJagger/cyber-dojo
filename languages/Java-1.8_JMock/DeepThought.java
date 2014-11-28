@@ -6,7 +6,7 @@ public class DeepThought {
     }
 
     public void computeForSevenMillionYears() {
-        answerSeeker.receiveAnswer(6*9);
+        answerSeeker.receiveAnswer(6 * 9);
     }
 
     private AnswerSeeker answerSeeker;
