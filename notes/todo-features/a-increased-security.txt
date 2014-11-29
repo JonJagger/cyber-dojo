@@ -1,0 +1,105 @@
+
+
+PORTS
+------
+Turn off all ports. Already happens.
+
+
+USER
+----
+First step is to run cyber-dojo.sh from
+DockerTestRunner as www-data rather than root. Done.
+However this is less than idea. For example, www-data
+does not have a shell (in /etc/passwd). This means I
+cannot run tests as www-data. For example
+test/languages/test_all_languages.rb
+
+Currently there are commands to make folders and files using
+the OsDisk class. However, there is no abstraction of and user
+who owns these files. www-data needs to be able to assign
+the rights to a cyber-dojo user. This should be relatively
+painless since OsDir is what create dirs and files.
+And they orginate from the OsDisk, so I should only need to
+add the user-name to OsDisk since all OsDir objects have a
+back reference to OsDisk.
+.......
+There is a similar situation for Git. Again, the Git
+commands are implicitly performed as www-data, the
+current user. There needs to be an abstraction so
+the commands that git performs are done as the
+cyber-dojo user. Thought. Since a git command is always
+rooted at a particular folder, I could get the Git object
+from the OsDir object. This would avoid duplication and
+allow the Git object access to the username.
+........
+There is still some disk access that does not use the
+OsDisk abstraction. Viz the after_test() calls for
+Approval style testing.
+........
+I wonder if this is all too detailed. Surely there is a
+way for The rails invocation to be done as a specific
+user, cyber-dojo. Then it would all just happen. Can
+this be set from Apache? From Passenger?
+
+
+
+TIMING
+------
+Currently I run the timeout command inside the docker
+container. This exposes a possible timing attack.
+It would be better to run the timeout command on
+the server, and run the docker container as a different
+user. Maybe cyber-dojo. Maybe one user for each animal.
+I have a vague recollection of trying to swap the inner/outer
+commands in DockerTestRunner and there being a problem...
+
+
+CPU
+---
+Limit cpu option - want to do this so server's core
+processes have priority in the face of an attack.
+
+
+DISK
+----
+You can use tempFS as a proxy to an existing real
+file system and this allows you to limit the amount
+of disk space available.
+https://goldmann.pl/blog/2014/09/11/resource-management-in-docker/
+By default you get 10GB of space for each container
+To change it
+docker -d --storage-opt dm.basesize=5G
+docker -d --storage-opt dm.basesize=5M
+Then you need to restart the docker daemon
+Tried this on DockerTestRunner - did not work.
+Ok.
+$ service docker stop
+$ docker -d --storage-opt dm.basesize=5M &
+This creates a lot of output.
+But it works and stays running after you exit the server you
+ssh'd into.
+
+
+RAM
+---
+Limit RAM option (and swap)
+https://goldmann.pl/blog/2014/09/11/resource-management-in-docker/
+-m 128M
+Says
+digital-ocean server says
+WARNING: Your kernel does not support swap limit capabilities. Limitation discarded.
+AWS server gives same warning.
+
+
+//-------------------------------------
+
+There is no valuable data on the file system.
+But someone could escalate and then control the
+server from which to launch attacks. I could then
+be liable in some way.
+
+Make a docker container for the whole server!
+Only really makes sense if the outer container
+can run containers inside itself. Rob mentioned
+that it can.
+
