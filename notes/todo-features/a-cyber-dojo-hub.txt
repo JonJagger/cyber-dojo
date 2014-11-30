@@ -1,4 +1,28 @@
 
+I need to consider scalability of a hub.
+One DIY design I can think of is to have a
+proxy front end that looks at the ID and shards
+off that. Eg initially just a .json file detailing
+the splitting
+{
+  '01234567' => '178.2.56.67',
+  '89ABCDEF' => '178.2.56.68'
+}
+This means I dont need to replicate folders across
+different file systems. Alternative is to do that
+as well.
+Also, this gives scalability when a browser is
+looking at a specific dojo. But not when it is
+looking at the index. Perhaps I should not offer
+a global index. Suppose you first have to select
+a language and an exercise. Or perhaps just a
+language, or just an exercise?
+Could the languages caches be 'required' into the
+Ruby source code? That would mean they do not not
+to be read from the hard disk? Same idea for
+exercises cache.
+
+
 I want cyber-dojo-hub to show live updates of dojos
 happening on servers all across the world. However,
 while the dojo is taking place (eg on cyber-dojo.org)
@@ -94,4 +118,3 @@ o) time of first traffic-light
 o) time of last traffic-light
 o) total no of animals
 o) total no of diff-lines
-

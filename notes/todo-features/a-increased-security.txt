@@ -40,6 +40,8 @@ I wonder if this is all too detailed. Surely there is a
 way for The rails invocation to be done as a specific
 user, cyber-dojo. Then it would all just happen. Can
 this be set from Apache? From Passenger?
+http://serverfault.com/questions/513641/best-practice-for-setting-up-rvm-passenger-apache-with-multiple-rubies-and-runn
+Suggests passenger has this option.
 
 
 
@@ -102,4 +104,3 @@ Make a docker container for the whole server!
 Only really makes sense if the outer container
 can run containers inside itself. Rob mentioned
 that it can.
-

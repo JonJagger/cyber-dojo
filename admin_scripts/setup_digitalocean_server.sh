@@ -19,7 +19,7 @@ make install
 ln -s /usr/local/bin/ruby /usr/bin/ruby
 gem update --system
 gem install rails --version 4.0.3
-gem install passenger --pre
+gem install passenger --version 4.0.53 --pre
 passenger-install-apache2-module --auto
 
 
@@ -45,6 +45,11 @@ echo PassengerDefaultRuby /usr/local/bin/ruby >> /etc/apache2/mods-available/pas
 echo PassengerMaxPoolSize 6 >> /etc/apache2/mods-available/passenger.conf
 echo PassengerPoolIdleTime 0 >> /etc/apache2/mods-available/passenger.conf
 echo PassengerMaxRequests 1000 >> /etc/apache2/mods-available/passenger.conf
+echo PassengerUserSwitching on >> /etc/apache2/mods-available/passenger.conf
+echo PassengerDefaultUser www-data >> /etc/apache2/mods-available/passenger.conf
+echo PassengerDefaultGroup www-data >> /etc/apache2/mods-available/passenger.conf
+
+
 cd /etc/apache2/sites-available
 cp 000-default.conf cyber-dojo.conf
 sed 's/www.html/www\/cyber-dojo\/public/' < 000-default.conf > cyber-dojo.conf
