@@ -73,10 +73,10 @@ end
 #   Unhandled Exception: System.Security.SecurityException: No access to the given key
 #   Relevant... https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=638337
 #   Thus, currently, C#-NUnit, C#-SpecFlow, and F#-NUnit
-#   are not available. If 77BC9528B3 is a C# dojo then this will
-#   interactively get you into the correct container to help debug.
+#   are not available. If 77BC9528B3 is a C#-NUnit dojo then this will
+#   *interactively* get you into the correct container to help debug.
 #
-#   $ docker run -u root -it
+#   $ docker run -u USERNAME -it
 #      -v /var/www/cyber-dojo/katas/77/BC9528B3/hippo/sandbox:/sandbox:rw
 #      -v /var/www/cyber-dojo/languages/C#-NUnit:/var/www/cyber-dojo/languages/C#-NUnit:ro
 #      -w /sandbox
