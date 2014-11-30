@@ -31,7 +31,7 @@ private
     cache = [ ]
     dir.each do |sub_dir|
       language = make_language(sub_dir)
-      cache << language if language.exists?
+      cache << language if language.exists? && language.runnable?
     end
     cache
   end
