@@ -9,7 +9,7 @@ USER
 ----
 First step is to run cyber-dojo.sh from
 DockerTestRunner as www-data rather than root. Done.
-However this is less than idea. For example, www-data
+However this is less than ideal. For example, www-data
 does not have a shell (in /etc/passwd). This means I
 cannot run tests as www-data. For example
 test/languages/test_all_languages.rb
@@ -41,7 +41,13 @@ way for The rails invocation to be done as a specific
 user, cyber-dojo. Then it would all just happen. Can
 this be set from Apache? From Passenger?
 http://serverfault.com/questions/513641/best-practice-for-setting-up-rvm-passenger-apache-with-multiple-rubies-and-runn
-Suggests passenger has this option.
+Suggests passenger has this option. Yes passenger.conf has these options
+  PassengerUserSwitching on
+  PassengerDefaultUser www-data
+  PassengerDefaultGroup www-data
+So if I create a user called cyber-dojo and switch to that
+will the rails server still work? First step is to create
+a cyber-dojo user with a shell and run all the tests as that user.
 
 
 

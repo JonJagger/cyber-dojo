@@ -1,5 +1,23 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Suppose I just hang the externals off the thread hash and each object
+takes what it needs from the thread hash rather than it being passed
+in explicitly. One effect of this is that I might be able to find
+a way to put the externals onto the thread at the Rails startup code
+and avoid having to mess about in the controller base class. This
+will make my tests and my code more alike. I won't have code in the
+controller just for the tests.
+I think I may be able to do it in a externals.rb file placed in
+the config/initializers/ folder. This worked when running the server
+directly (rails s) but not when on the main site via Passenger.
+Can I do it in /config.ru before the line
+  run CyberDojo::Application
+https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerAppGroupName
+Suggests that the startup file for Rails >= 3.0 on Passenger
+is indeed config.ru
+If I do this I can remove config/initializers/externals.rb
+(unless that it what I call from config.ru)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FakeDisk is better renamed as OsDiskFake
 FakeDir  is better renamed as OsDirFake
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -23,17 +41,6 @@ provide two buttons on the history dialog
 - one to fork a dojo and start an animal?
 Or maybe when you click the fork button it opens a new dialog
 with two buttons offering the two choices above.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Suppose I just hang the externals off the thread hash and each object
-takes what it needs from the thread hash rather than it being passed
-in explicitly. One effect of this is that I might be able to find
-a way to put the externals onto the thread at the Rails startup code
-and avoid having to mess about in the controller base class. This
-will make my tests and my code more alike. I won't have code in the
-controller just for the tests.
-I think I may be able to do it in a externals.rb file placed in
-the config/initializers/ folder. This worked when running the server
-directly (rails s) but not when on the main site via Passenger.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cyberdojo_test_base.rb does this
   def self.test(name, &block)
