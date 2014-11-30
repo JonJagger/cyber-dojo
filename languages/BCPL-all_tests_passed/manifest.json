@@ -6,6 +6,7 @@
      "cyber-dojo.sh"
   ],
   "filename_extension" : ".b",
+  "tab_size": 4,
   "display_name": "BCPL, all_tests_passed",
   "unit_test_framework": "bcpl_all_tests_passed",
   "image_name": "cyberdojo/bcpl-all_tests_passed"
