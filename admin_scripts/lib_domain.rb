@@ -29,7 +29,7 @@ def create_dojo
   externals = {
     :disk   => OsDisk.new,
     :git    => Git.new,
-    :runner => DummyTestRunner.new
+    :runner => DockerTestRunner.new
   }
   Dojo.new(CYBERDOJO_HOME_DIR,externals)
 end
