@@ -85,7 +85,7 @@ end
 #
 # --rm
 #   automatically remove the container created by running inner_command
-#   on the base container (language.image_name). We are only interested
+#   in the docker container (language.image_name). We are only interested
 #   in the output produced. All files are saved and gitted off the
 #   /katas sub-folder on the main server and not into the container.
 #
@@ -106,8 +106,11 @@ end
 #   working directory when the command is run is /sandbox
 #   (as volume mounted in the first -v option)
 #
-# #{language.image_name} /bin/bash -c \"#{inner_command}\"
-#   the container to run the command inside is the one specified in
-#   the language's manifest as its image_name. The command is always
+# #{language.image_name}
+#   the name of the docker container to run the inner-command inside.
+#   specified in the language's manifest as its image_name.
+#
+# /bin/bash -c \"#{inner_command}\"
+#   The command that is run inside the docker contaier is always
 #   './cyber-dojo.sh' which is run via bash inside a timeout.
 #
