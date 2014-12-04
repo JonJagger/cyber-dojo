@@ -65,6 +65,7 @@ end
 #    " #{language.image_name} /bin/bash -c \"#{inner_command}\""
 #
 # -u www-data
+#   Note this refers to the user *inside* the docker container.
 #   Run as user=root and every container works.
 #   But that's not good security.
 #   So run as user=www-data
