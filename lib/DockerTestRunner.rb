@@ -65,24 +65,7 @@ end
 #    " #{language.image_name} /bin/bash -c \"#{inner_command}\""
 #
 # -u www-data
-#   Note this refers to the user *inside* the docker container.
-#   Run as user=root and every container works.
-#   But that's not good security.
-#   So run as user=www-data
-#   This causes only the containers built from mono to fail.
-#   It is a rights issue...
-#   Unhandled Exception: System.Security.SecurityException: No access to the given key
-#   Relevant... https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=638337
-#   Thus, currently, C#-NUnit, C#-SpecFlow, and F#-NUnit
-#   are not available. If 77BC9528B3 is a C#-NUnit dojo then this will
-#   *interactively* get you into the correct container to help debug.
-#
-#   $ docker run -u USERNAME -it
-#      -v /var/www/cyber-dojo/katas/77/BC9528B3/hippo/sandbox:/sandbox:rw
-#      -v /var/www/cyber-dojo/languages/C#-NUnit:/var/www/cyber-dojo/languages/C#-NUnit:ro
-#      -w /sandbox
-#      cyberdojo/csharp-2.10.8.1_nunit
-#      /bin/bash
+#   The user which runs the inner_command *inside* the docker container.
 #
 # --rm
 #   automatically remove the container created by running inner_command

@@ -8,28 +8,6 @@ How about doing the switch in two steps. First step is to get minimal
 hub up (on digital ocean). Then xfer katas from AWS to DO. Then
 switch non-hub to DO? Also backups? How do you do a backup on DO?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-If I make a cyber-dojo user and switch to that not in Passenger
-but in DockerTestRunner would anything break? If the sticky
-bit is set on katas/ and exercises/ and languages/ then
-are dirs/files creates underneath that owned by www-data
-or by cyber-dojo?
-$ useradd cyber-dojo
-$ passwd cyber-dojo
-$ groupadd katas
-$ usermod -a -G katas www-data
-$ usermod -a -G katas cyber-dojo
-$ cd /var/www/cyber-dojo
-$ chgrp katas languages exercises katas
-$ chmod g+rwx languages exercises katas
-After doing this you can create a new kata under katas
-But running the tests does not work.
-Ok. Searching suggests that -u user-name from lib/DockerTestRunner.rb
-means that the named user is the user *inside* the docker container.
-https://github.com/docker/docker/issues/6744
-And entering the container interactively as www-data confirms that inside
-the /etc/passwd *inside* the container contains an entry for
-www-data. 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Suppose I just hang the externals off the thread hash and each object
 takes what it needs from the thread hash rather than it being passed
 in explicitly. One effect of this is that I might be able to find
