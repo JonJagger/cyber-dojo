@@ -1,8 +1,5 @@
-FROM       cyberdojo/csharp-2.10.8.1
+FROM       cyberdojo/csharp-2.10.8.1_nunit
 MAINTAINER Seb Rose <seb@claysnow.co.uk>
-
-RUN apt-get install -y monodevelop-nunit
-RUN apt-get install -y nunit-console
 
 RUN apt-get -y install wget
 RUN apt-get -y install unzip
