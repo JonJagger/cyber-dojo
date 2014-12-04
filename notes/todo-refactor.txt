@@ -1,5 +1,19 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Need to think about switching from AWS to Digital Ocean (DO). Much cheaper.
+Issues... cant stop start a server. Would I need a second test-bed
+server and would it have to be up all the time? How would I transfer
+all the dojos from AWS to DO? Should I transfer?
+How about doing the switch in two steps. First step is to get minimal
+hub up (on digital ocean). Then xfer katas from AWS to DO. Then
+switch non-hub to DO? Also backups? How do you do a backup on DO?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If I make a cyber-dojo user and switch to that not in Passenger
+but in DockerTestRunner would anything break? If the sticky
+bit is set on katas/ and exercises/ and languages/ then
+are dirs/files creates underneath that owned by www-data
+or by cyber-dojo?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Suppose I just hang the externals off the thread hash and each object
 takes what it needs from the thread hash rather than it being passed
 in explicitly. One effect of this is that I might be able to find
