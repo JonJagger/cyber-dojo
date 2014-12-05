@@ -17,17 +17,17 @@ class DockerTestRunner
   end
 
   def run(sandbox, command, max_seconds)
+    inner_command = "timeout --signal=#{kill} #{max_seconds}s #{stderr2stdout(command)}"
     language = sandbox.avatar.kata.language
-    docker_run =
+    outer_command =
       "docker run" +
         " -u www-data" +
         " --rm" +
         " -v #{sandbox.path}:/sandbox:#{read_write}" +
         " -v #{language.path}:#{language.path}:#{read_only}" +
         " -w /sandbox" +
-        " #{language.image_name} /bin/bash -c \"#{stderr2stdout(command)}\""
+        " #{language.image_name} /bin/bash -c \"#{inner_command}\""
 
-    outer_command = "timeout --signal=#{kill} #{max_seconds}s #{docker_run}"    
     output = limited(`#{outer_command}`,50*1024)
     $?.exitstatus != fatal_error(kill) ? output : didnt_complete(max_seconds)
   end

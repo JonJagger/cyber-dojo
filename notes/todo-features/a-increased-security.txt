@@ -12,12 +12,13 @@ DockerTestRunner.rb now does -u www-data rather than -u root.
 
 TIMING
 ------
-The timeout command used to be run *inside* the docker
-container. This presented a potential security flaw
+The timeout command runs *inside* the docker
+container. This presents a potential security flaw
 since from inside the container the timeout could
-perhaps have been disabled. So now the timeout
-is run on the server on the *outside* of the docker
-contnainer
+perhaps be disabled. However, if the timeout
+happens on the outside then the docker-run command
+is not terminated cleanly (when there is an infinite loop)
+and still-running docker containers remain.
 
 
 CPU
