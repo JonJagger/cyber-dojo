@@ -7,59 +7,17 @@ Turn off all ports. Already happens.
 
 USER
 ----
-First step is to run cyber-dojo.sh from
-DockerTestRunner as www-data rather than root. Done.
-However this is less than ideal. For example, www-data
-does not have a shell (in /etc/passwd). This means I
-cannot run tests as www-data. For example
-test/languages/test_all_languages.rb
-
-Currently there are commands to make folders and files using
-the OsDisk class. However, there is no abstraction of and user
-who owns these files. www-data needs to be able to assign
-the rights to a cyber-dojo user. This should be relatively
-painless since OsDir is what create dirs and files.
-And they orginate from the OsDisk, so I should only need to
-add the user-name to OsDisk since all OsDir objects have a
-back reference to OsDisk.
-.......
-There is a similar situation for Git. Again, the Git
-commands are implicitly performed as www-data, the
-current user. There needs to be an abstraction so
-the commands that git performs are done as the
-cyber-dojo user. Thought. Since a git command is always
-rooted at a particular folder, I could get the Git object
-from the OsDir object. This would avoid duplication and
-allow the Git object access to the username.
-........
-There is still some disk access that does not use the
-OsDisk abstraction. Viz the after_test() calls for
-Approval style testing.
-........
-I wonder if this is all too detailed. Surely there is a
-way for The rails invocation to be done as a specific
-user, cyber-dojo. Then it would all just happen. Can
-this be set from Apache? From Passenger?
-http://serverfault.com/questions/513641/best-practice-for-setting-up-rvm-passenger-apache-with-multiple-rubies-and-runn
-Suggests passenger has this option. Yes passenger.conf has these options
-  PassengerUserSwitching on
-  PassengerDefaultUser www-data
-  PassengerDefaultGroup www-data
-So if I create a user called cyber-dojo and switch to that
-will the rails server still work? First step is to create
-a cyber-dojo user with a shell and run all the tests as that user.
-
+DockerTestRunner.rb now does -u www-data rather than -u root.
 
 
 TIMING
 ------
-Currently I run the timeout command inside the docker
-container. This exposes a possible timing attack.
-It would be better to run the timeout command on
-the server, and run the docker container as a different
-user. Maybe cyber-dojo. Maybe one user for each animal.
-I have a vague recollection of trying to swap the inner/outer
-commands in DockerTestRunner and there being a problem...
+The timeout command used to be run *inside* the docker
+container. This presented a potential security flaw
+since from inside the container the timeout could
+perhaps have been disabled. So now the timeout
+is run on the server on the *outside* of the docker
+contnainer
 
 
 CPU
