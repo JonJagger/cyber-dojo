@@ -66,19 +66,26 @@ end
 #
 # -u www-data
 #   The user which runs the inner_command *inside* the docker container.
+#   A few docker containers are sensitive about the specific user which
+#   *must* be www-data. These are the mono based ones:
+#   C#-NUNit, C#-Specflow, F#-NUnit
+#   This is because NUnit requires write access to the users
+#   $HOME directory. If you run with a user that does not have
+#   $HOME setup it will probably default to / and you won't have rights.
+#   See https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=638337
 #
 # --rm
-#   automatically remove the container created by running inner_command
+#   Automatically remove the container created by running inner_command
 #   in the docker container (language.image_name). We are only interested
 #   in the output produced. All files are saved and gitted off the
 #   /katas sub-folder on the main server and not into the container.
 #
 # -v #{sandbox.path}:/sandbox:#{read_write}
-#   volume mount the animal's sandbox to /sandbox inside the container
+#   Volume mount the animal's sandbox to /sandbox inside the container
 #   as a read-write folder. This provides isolation.
 #
 # -v #{language.path}:#{language.path}:#{read_only}
-#   volume mount the language's folder to the same folder path+name
+#   Volume mount the language's folder to the same folder path+name
 #   inside the container. Intermediate folders are created as necessary
 #   (like mkdir -p). This provides access to supporting files which
 #   were sym-linked from the animal's sandbox when the animal started.
@@ -87,11 +94,11 @@ end
 #   by all animals in all katas that choose that language.
 #
 # -w /sandbox
-#   working directory when the command is run is /sandbox
+#   Working directory when the command is run is /sandbox
 #   (as volume mounted in the first -v option)
 #
 # #{language.image_name}
-#   the name of the docker container to run the inner-command inside.
+#   The name of the docker container to run the inner-command inside.
 #   specified in the language's manifest as its image_name.
 #
 # /bin/bash -c \"#{inner_command}\"
