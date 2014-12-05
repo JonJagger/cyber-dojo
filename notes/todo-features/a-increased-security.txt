@@ -25,6 +25,11 @@ and specify the file containing the container's ID
 and then 'docker rm' the container explicitly.
 I can do this with the --cidfile="" option
 which will need use the dojo's ID and avatar name.
+I might even be able to use both options, --cidfile
+and --rm and only if the timeout kills the docker-run
+process will I need to look at the cidfile to get
+the container's ID and docker stop it and then
+docker rm it.
 
 
 CPU
