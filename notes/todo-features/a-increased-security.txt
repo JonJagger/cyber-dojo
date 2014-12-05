@@ -18,7 +18,13 @@ since from inside the container the timeout could
 perhaps be disabled. However, if the timeout
 happens on the outside then the docker-run command
 is not terminated cleanly (when there is an infinite loop)
-and still-running docker containers remain.
+and still-running docker containers remain. This
+is presumably because the --rm option is not being
+obeyed. I think I need to remove the --rm option
+and specify the file containing the container's ID
+and then 'docker rm' the container explicitly.
+I can do this with the --cidfile="" option
+which will need use the dojo's ID and avatar name.
 
 
 CPU
