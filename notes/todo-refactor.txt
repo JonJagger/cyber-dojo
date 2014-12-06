@@ -1,5 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Do I need to keep the nunit.dll in the sandbox for C#?
+I recall deleting it and everything still worked.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 If there is an update such as DockerTestRunner.rb switching to
 a non-root user which requires refreshing some of the docker
 containers admin_scripts/pull.rb does not know this...
