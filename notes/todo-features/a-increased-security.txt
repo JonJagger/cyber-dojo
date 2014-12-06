@@ -59,6 +59,9 @@ o) the cidfile contains the ID of the properly closed down docker container
     end
 
     def run(sandbox, command, max_seconds)
+
+        # cidfile must be removed before docker run executes
+
         language = sandbox.avatar.kata.language
         docker_command =
           "docker run" +
