@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Would be useful to have a script to
+figure out the command to run a docker container
+interactively given the dojo ID and animal name.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Do I need to keep the nunit.dll in the sandbox for C#?
 I recall deleting it and everything still worked.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

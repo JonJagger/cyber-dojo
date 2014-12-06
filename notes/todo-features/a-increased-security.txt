@@ -3,6 +3,7 @@
 PORTS
 ------
 Turn off all ports. Already happens.
+Check if I can ping from inside a container.
 
 
 USER
@@ -15,21 +16,80 @@ TIMING
 The timeout command runs *inside* the docker
 container. This presents a potential security flaw
 since from inside the container the timeout could
-perhaps be disabled. However, if the timeout
-happens on the outside then the docker-run command
-is not terminated cleanly (when there is an infinite loop)
-and still-running docker containers remain. This
-is presumably because the --rm option is not being
-obeyed. I think I need to remove the --rm option
-and specify the file containing the container's ID
-and then 'docker rm' the container explicitly.
-I can do this with the --cidfile="" option
-which will need use the dojo's ID and avatar name.
-I might even be able to use both options, --cidfile
-and --rm and only if the timeout kills the docker-run
-process will I need to look at the cidfile to get
-the container's ID and docker stop it and then
-docker rm it.
+perhaps be disabled. If the timeout happens on the outside
+then the docker-run command is not terminated cleanly
+(when there is an infinite loop) and still-running docker
+containers remain. This is presumably because the --rm
+option is not being obeyed.
+The answer is to have a timeout on both the inside
+*and* the outside and to use the --cidfile option.
+
+Inside: If the inner timeout is not broken out of
+  then if inner timeout happens (infinite loop)
+  the --rm option works and shuts the docker
+  container down.
+Outside: If the inner timeout is broken out of
+  then outer timeout will occur. However the
+  --rm will not take effect and the docker container
+  will not have been shut down. Thus the outer
+  command requires the --cidfile option so the
+  docker container can be shutdown.
+
+How to test this?
+How to simulate breaking out of the inner timeout?
+Simply set the inner timeout to 10 seconds (say)
+and the outer timeout to 5 seconds (say) and arrange
+for an infinite loop inside the container.
+This forces the outer timeout to signal its kill signal.
+When you do this
+o) the server returns 137 (128+9)
+o) docker ps -a -q reports a docker container still running
+o) the cidfile contains the running container's ID
+
+What about when the inner timeout is not broken
+out of and timeouts out normally (eg infinite loop)
+When this happens
+o) the server returns 124
+o) docker ps -a -q reports no contains still running
+o) the cidfile contains the ID of the properly closed down docker container
+
+
+    def timeout(command,after)
+        "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
+    end
+
+    def run(sandbox, command, max_seconds)
+        language = sandbox.avatar.kata.language
+        docker_command =
+          "docker run" +
+            " -u www-data" +
+            " --cidfile="..." +
+            " --rm" +
+            " -v #{sandbox.path}:/sandbox:#{read_write}" +
+            " -v #{language.path}:#{language.path}:#{read_only}" +
+            " -w /sandbox" +
+            " #{language.image_name}" +
+            " /bin/bash -c " +
+            "\"#{timeout(command,max_seconds)}\""
+        outer_command = timeout(docker_command,max_seconds+5)
+        output = limited(`#{outer_command}`,50*1024)
+
+        # use ruby switch statement for this...?
+        outcome = $?.exitstatus
+        if outcome == inner_timeout      # 128+9
+            return didnt_complete(max_seconds)
+        else if outcome == outer_timeout # 124
+          # get PID from cidfile
+          # docker stop PID
+          # docker kill PID
+          return didnt_complete(max_seconds)
+        else if outcome == 0
+          output
+        #else
+        # ??
+        end
+    end
+
 
 
 CPU
