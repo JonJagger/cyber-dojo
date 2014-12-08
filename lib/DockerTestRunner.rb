@@ -26,7 +26,8 @@ class DockerTestRunner
         " -v #{sandbox.path}:/sandbox:#{read_write}" +
         " -v #{language.path}:#{language.path}:#{read_only}" +
         " -w /sandbox" +
-        " #{language.image_name} /bin/bash -c \"#{inner_command}\""
+        " #{language.image_name}" +
+        " /bin/bash -c \"#{inner_command}\""
 
     output = limited(`#{outer_command}`,50*1024)
     $?.exitstatus != fatal_error(kill) ? output : didnt_complete(max_seconds)
@@ -102,6 +103,6 @@ end
 #   specified in the language's manifest as its image_name.
 #
 # /bin/bash -c \"#{inner_command}\"
-#   The command that is run inside the docker contaier is always
+#   The command that is run inside the docker container is always
 #   './cyber-dojo.sh' which is run via bash inside a timeout.
 #
