@@ -1,8 +1,35 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Refactor cyber-dojo.org server so it uses
+/var/www/cyber-dojo  rather than
+/var/www/cyberdojo
+See for example admin_scripts/xfer.rb
+This should server as a good exercise for how I will
+be able to move all the katas/ to the hub.
+Initially I should just be able to create a new server
+from one of the cyber-dojo.org clones.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Can setup_docker_server.sh use cyber-dojo instead of
+cyberdojo for the name of the enabled-site off apache?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+admin_scripts/xfer.rb still uses
+/var/www/cyberdojo
+instead of
+/var/www/cyber-dojo
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would be useful to have a script to
 figure out the command to run a docker container
 interactively given the dojo ID and animal name.
+Need to get the language-name and the dojo's manifest
+and the docker-container-name from languages' manifest.
+  docker run \
+  -it \
+  -u www-data \
+  -v /var/www/cyber-dojo/katas/86/9505DA9F/lion/sandbox:/sandbox:rw \
+  -v /var/www/cyber-dojo/languages/C-assert:/var/www/cyber-dojo/languages/C-assert:ro \
+  -w /sandbox \
+  cyberdojo/gcc-4.8.1_assert \
+  /bin/bash
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Do I need to keep the nunit.dll in the sandbox for C#?
 I recall deleting it and everything still worked.
@@ -13,7 +40,7 @@ containers admin_scripts/pull.rb does not know this...
 Is there an api to tell if any of your containers have been
 updated on the index? If so I could use to issue a warning.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Need to think about switching from AWS to Digital Ocean (DO). Much cheaper.
+Think about switching from AWS to Digital Ocean (DO). Much cheaper.
 Issues... cant stop start a server. Would I need a second test-bed
 server and would it have to be up all the time? How would I transfer
 all the dojos from AWS to DO? Answer is via a recent clone.
