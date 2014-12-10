@@ -10,13 +10,13 @@ cd /var/www
 rm index.html
 rm -rf railsapp
 cd /etc/apache2/sites-available
-sed s/railsapp/cyberdojo/ <railsapp >cyberdojo
+sed s/railsapp/cyber-dojo/ <railsapp >cyber-dojo
 rm railsapp
 cd /etc/apache2/sites-enabled
-ln -s ../sites-available/cyberdojo cyberdojo
+ln -s ../sites-available/cyber-dojo cyber-dojo
 rm railsapp
 cd /etc/apache2/conf
-sed s/railsapp/cyber-dojo/ <railsapp.conf >cyberdojo.conf
+sed s/railsapp/cyber-dojo/ <railsapp.conf >cyber-dojo.conf
 rm railsapp.conf
 cd /var/www/cyber-dojo/admin_scripts
 ./pull.sh
