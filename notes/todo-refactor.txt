@@ -28,9 +28,6 @@ But slowing down from a read-only response must
 be a better option. This 'universal' proxy server would
 also be useful for backups and sharding. Investigate.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Can setup_docker_server.sh use cyber-dojo instead of
-cyberdojo for the name of the enabled-site off apache?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 admin_scripts/xfer.rb still uses
 /var/www/cyberdojo
 instead of
