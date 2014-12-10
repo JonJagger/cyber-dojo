@@ -23,6 +23,7 @@ class DockerTestRunner
       "docker run" +
         " -u www-data" +
         " --rm" +
+        " --net=\"none\"" +
         " -v #{sandbox.path}:/sandbox:#{read_write}" +
         " -v #{language.path}:#{language.path}:#{read_only}" +
         " -w /sandbox" +

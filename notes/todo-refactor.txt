@@ -4,10 +4,29 @@ Refactor cyber-dojo.org server so it uses
 /var/www/cyber-dojo  rather than
 /var/www/cyberdojo
 See for example admin_scripts/xfer.rb
-This should server as a good exercise for how I will
-be able to move all the katas/ to the hub.
-Initially I should just be able to create a new server
-from one of the cyber-dojo.org clones.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Suppose I clone the server and switch over to it.
+Since the clone is not instant, I cannot avoid the
+possibility of a browser not switching cleanly to the
+new server after it made updates on the old server, which
+were not copied to the clone. This suggests a model where
+existing katas/ continue to use the server they start
+on but new katas/ are forwarded to a new server. Yes.
+This sounds right. And feels right. Ok. How to proceed?
+Can I divert creation of new katas to a
+second server? Then, as long as katas have a timeout, I will
+know that after a certain time, all katas on the old server
+can be copied to the new server. At that point I can divert
+all incoming requests to the new server.
+There needs to be a proxy server sitting at the front.
+It can ask both servers whether they contain a kata
+with a given ID. Or maybe it could simply try the new
+server first, and if that fails it could drop back
+to the old server. This means old katas are slowed
+down rather than new katas are slowed down.
+But slowing down from a read-only response must
+be a better option. This 'universal' proxy server would
+also be useful for backups and sharding. Investigate.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Can setup_docker_server.sh use cyber-dojo instead of
 cyberdojo for the name of the enabled-site off apache?

@@ -4,6 +4,8 @@ PORTS
 ------
 Turn off all ports. Already happens.
 Check if I can ping from inside a container.
+I can. Docker documentation says
+--net="none"
 
 
 USER
@@ -119,6 +121,8 @@ $ docker -d --storage-opt dm.basesize=5M &
 This creates a lot of output.
 But it works and stays running after you exit the server you
 ssh'd into.
+Can you create a docker config file which is looked at
+to get options for the docker daemon?
 
 
 RAM
