@@ -61,6 +61,7 @@ end
 # docker run
 #    " -u www-data" +
 #    " --rm" +
+#    " --net=\"none\"" +
 #    " -v #{sandbox.path}:/sandbox:#{read_write}" +
 #    " -v #{language.path}:#{language.path}:#{read_only}" +
 #    " -w /sandbox" +
@@ -81,6 +82,9 @@ end
 #   in the docker container (language.image_name). We are only interested
 #   in the output produced. All files are saved and gitted off the
 #   /katas sub-folder on the main server and not into the container.
+#
+# --net=\"none\"
+#   Turn off all networking inside the container.
 #
 # -v #{sandbox.path}:/sandbox:#{read_write}
 #   Volume mount the animal's sandbox to /sandbox inside the container
