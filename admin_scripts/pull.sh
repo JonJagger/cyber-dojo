@@ -19,16 +19,13 @@ if [ $ret -ne 0 ]; then
   exit
 fi
 
-# cyber-dojo creates folders under katas
 apt-get install -y acl
+
+# cyber-dojo creates folders under katas
+echo "chown/chgrp www-data katas"
 chmod g+rwsx katas
 setfacl -d -m group:www-data:rwx $cyberDojoHome/katas
 setfacl -m group:www-data:rwx $cyberDojoHome/katas
-
-# tests create folders under tests/cyberdojo/katas
-chmod g+rwsx $cyberDojoHome/test/cyberdojo/katas
-setfacl -d -m group:www-data:rwx $cyberDojoHome/test/cyberdojo/katas
-setfacl -m group:www-data:rwx $cyberDojoHome/test/cyberdojo/katas
 
 # ensure pulled files have correct rights
 for folder in app config exercises languages lib log notes public script spec test
@@ -37,6 +34,12 @@ do
   chown -R www-data $cyberDojoHome/$folder
   chgrp -R www-data $cyberDojoHome/$folder
 done
+
+# tests create folders under tests/cyberdojo/katas
+echo "chown/chgrp www-data $cyberDojoHome/test/cyberdojo/katas"
+chmod g+rwsx $cyberDojoHome/test/cyberdojo/katas
+setfacl -d -m group:www-data:rwx $cyberDojoHome/test/cyberdojo/katas
+setfacl -m group:www-data:rwx $cyberDojoHome/test/cyberdojo/katas
 
 echo "chown/chgrp www-data *"
 chown www-data $cyberDojoHome/*
@@ -51,14 +54,14 @@ mkdir -p tmp/cache
 chown www-data $cyberDojoHome/tmp/cache
 chgrp www-data $cyberDojoHome/tmp/cache
 
-echo "refresh exercises/ cache"
+echo "refreshing exercises/ cache"
 $cyberDojoHome/exercises/cache.rb
 
-echo "refresh languages/ cache"
+echo "refreshing languages/ cache"
 $cyberDojoHome/languages/cache.rb
 
-# poke rails
+echo "poking rails"
 bundle install
 
-# restart apache
+echo "restarting apache"
 service apache2 restart
