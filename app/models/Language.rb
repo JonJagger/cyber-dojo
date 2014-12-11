@@ -54,7 +54,7 @@ class Language
     if !highlight_filenames.empty?
       return visible_filenames - highlight_filenames
     else
-      return ['cyber-dojo.sh', 'makefile', 'Makefile']
+      return ['cyber-dojo.sh', 'makefile', 'Makefile', 'unity.license.txt']
     end
   end
 
