@@ -1,4 +1,11 @@
 find . -type f -name \*.rb -print0 | xargs -0 cat  | \
+sed 's/test/ /g' | \
+sed 's/assert_equal/ /g' | \
+sed 's/if/ /g' | \
+sed 's/end/ /g' | \
+sed 's/def/ /g' | \
+tr '0' ' ' | \
+tr '1' ' ' | \
 tr '.' ' ' | \
 tr '(' ' ' | \
 tr ')' ' ' | \
