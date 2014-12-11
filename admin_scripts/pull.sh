@@ -20,15 +20,22 @@ if [ $ret -ne 0 ]; then
 fi
 
 # cyber-dojo creates folders under katas
-chmod g+s katas
+apt-get install -y acl
+chmod g+rwsx katas
+setfacl -d -m group:www-data:rwx $cyberDojoHome/katas
+setfacl -m group:www-data:rwx $cyberDojoHome/katas
+
+# tests create folders under tests/cyberdojo/katas
+chmod g+rwsx $cyberDojoHome/tests/cyberdojo/katas
+setfacl -d -m group:www-data:rwx $cyberDojoHome/tests/cyberdojo/katas
+setfacl -m group:www-data:rwx $cyberDojoHome/tests/cyberdojo/katas
 
 # ensure pulled files have correct rights
-# don't chmod or chgrp the katas folder (no need and very large)
 for folder in app config exercises languages lib log notes public script spec test
 do
   echo "chown/chgrp www-data ${folder}"
-  eval "chown -R www-data $cyberDojoHome/$folder"
-  eval "chgrp -R www-data $cyberDojoHome/$folder"
+  chown -R www-data $cyberDojoHome/$folder
+  chgrp -R www-data $cyberDojoHome/$folder
 done
 
 echo "chown/chgrp www-data *"

@@ -34,13 +34,6 @@ private
 
   def red_amber_green
     # creates a new *dojo* for each red/amber/green
-=begin
-    [
-      language_test(:red),
-      language_test(:amber),
-      language_test(:green),
-    ]
-=end
     [:red,:amber,:green].map{ |colour|
       begin
         language_test(colour)
