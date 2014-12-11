@@ -10,6 +10,8 @@ install Java-EasyMock
 install Java-AssertJ
 install Objective-C?
 install COBOL?
+install Prolog?
+  http://www.swi-prolog.org/pldoc/doc_for?object=section(%27packages/plunit.html%27)
 
 mutation testing frameworks?
 ----------------------------
