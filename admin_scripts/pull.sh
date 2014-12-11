@@ -26,9 +26,9 @@ setfacl -d -m group:www-data:rwx $cyberDojoHome/katas
 setfacl -m group:www-data:rwx $cyberDojoHome/katas
 
 # tests create folders under tests/cyberdojo/katas
-chmod g+rwsx $cyberDojoHome/tests/cyberdojo/katas
-setfacl -d -m group:www-data:rwx $cyberDojoHome/tests/cyberdojo/katas
-setfacl -m group:www-data:rwx $cyberDojoHome/tests/cyberdojo/katas
+chmod g+rwsx $cyberDojoHome/test/cyberdojo/katas
+setfacl -d -m group:www-data:rwx $cyberDojoHome/test/cyberdojo/katas
+setfacl -m group:www-data:rwx $cyberDojoHome/test/cyberdojo/katas
 
 # ensure pulled files have correct rights
 for folder in app config exercises languages lib log notes public script spec test
