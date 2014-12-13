@@ -56,13 +56,10 @@ o) docker ps -a -q reports no contains still running
 o) the cidfile contains the ID of the properly closed down docker container
 
 
-    def timeout(command,after)
-        "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
-    end
+    require 'tempfile'
 
     def run(sandbox, command, max_seconds)
 
-        # require 'tempfile'
         cidfile = 'tmp/' + Dir::Tmpname.make_tmpname(['cidfile', '.txt'], {})
 
         language = sandbox.avatar.kata.language
@@ -86,19 +83,36 @@ o) the cidfile contains the ID of the properly closed down docker container
         `rm #{cidfile}`
 
         case exit_status
-        when 0 # success
+        when success
           limited(output,50*1024)
-        when 124 # inner command timed out
+        when inner_time_out
           didnt_complete(max_seconds)
-        when 137 # outer timeout killed (128+9)
+        when outer_time_out
           `docker stop #{pid}`
-          `docker kill #{pid}`
+          `docker rm #{pid}`
           didnt_complete(max_seconds)
         end
     end
 
+    def timeout(command,after)
+        "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
+    end
 
+    def success
+        0
+    end
 
+    def inner_time_out
+        124
+    end
+
+    def outer_time_out
+        128 + kill
+    end
+
+    def kill
+        9
+    end
 
 CPU
 ---
