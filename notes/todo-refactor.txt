@@ -5,6 +5,11 @@ Refactor cyber-dojo.org server so it uses
 /var/www/cyberdojo
 See for example admin_scripts/xfer.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+admin_scripts/xfer.rb still uses
+/var/www/cyberdojo
+instead of
+/var/www/cyber-dojo
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Suppose I clone the server and switch over to it.
 Since the clone is not instant, I cannot avoid the
 possibility of a browser not switching cleanly to the
@@ -27,11 +32,6 @@ down rather than new katas are slowed down.
 But slowing down from a read-only response must
 be a better option. This 'universal' proxy server would
 also be useful for backups and sharding. Investigate.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-admin_scripts/xfer.rb still uses
-/var/www/cyberdojo
-instead of
-/var/www/cyber-dojo
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would be useful to have a script to
 figure out the command to run a docker container

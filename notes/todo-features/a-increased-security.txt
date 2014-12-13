@@ -2,15 +2,14 @@
 
 PORTS
 ------
-Turn off all ports. Already happens.
-Check if I can ping from inside a container.
-I can. Docker documentation says
+See lib/DockerTestRunner.rb option
 --net="none"
 
 
 USER
 ----
-DockerTestRunner.rb now does -u www-data rather than -u root.
+See lib/DockerTestRunner.rb option
+-u www-data
 
 
 TIMING
