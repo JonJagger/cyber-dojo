@@ -22,7 +22,7 @@ then the docker-run command is not terminated cleanly
 (when there is an infinite loop) and still-running docker
 containers remain. This is presumably because the --rm
 option is not being obeyed.
-The answer is to have a timeout on both the inside
+An answer is to have a timeout on both the inside
 *and* the outside and to use the --cidfile option.
 
 Inside: If the inner timeout is not broken out of
@@ -37,9 +37,9 @@ Outside: If the inner timeout is broken out of
   docker container can be shutdown.
 
 How to test this?
-How to simulate breaking out of the inner timeout?
-Simply set the inner timeout to 10 seconds (say)
-and the outer timeout to 5 seconds (say) and arrange
+How to simulate breaking out of the outer timeout?
+Simply set the outer timeout to 5 seconds (say)
+and the inner timeout to 10 seconds (say) and arrange
 for an infinite loop inside the container.
 This forces the outer timeout to signal its kill signal.
 When you do this
@@ -48,7 +48,8 @@ o) docker ps -a -q reports a docker container still running
 o) the cidfile contains the running container's ID
 
 What about when the inner timeout is not broken
-out of and timeouts out normally (eg infinite loop)
+out of and timeouts out normally (eg infinite loop).
+Set outer timeout to 10s and inner timeout to 5s.
 When this happens
 o) the server returns 124
 o) docker ps -a -q reports no contains still running
@@ -61,13 +62,14 @@ o) the cidfile contains the ID of the properly closed down docker container
 
     def run(sandbox, command, max_seconds)
 
-        # TODO: cidfile must be removed before docker run executes
+        # require 'tempfile'
+        cidfile = 'tmp/' + Dir::Tmpname.make_tmpname(['cidfile', '.txt'], {})
 
         language = sandbox.avatar.kata.language
         docker_command =
           "docker run" +
             " -u www-data" +
-            " --cidfile="..." +
+            " --cidfile="#{cidfile}" +
             " --rm" +
             " -v #{sandbox.path}:/sandbox:#{read_write}" +
             " -v #{language.path}:#{language.path}:#{read_only}" +
@@ -76,29 +78,25 @@ o) the cidfile contains the ID of the properly closed down docker container
             " /bin/bash -c " +
             "\"#{timeout(command,max_seconds)}\""
         outer_command = timeout(docker_command,max_seconds+5)
-        output = limited(`#{outer_command}`,50*1024)
 
-        # use ruby switch statement for this...?
-        outcome = $?.exitstatus
-        if outcome == inner_timeout      # 128+9
-            return didnt_complete(max_seconds)
-        else if outcome == outer_timeout # 124
-          # get PID from cidfile
-          # docker stop PID
-          # docker kill PID
-          return didnt_complete(max_seconds)
-        else if outcome == 0
-          output
-        #else
-        # ??
+        output = `#{outer_command}`
+        exit_status = $?.exitstatus
+
+        pid = `cat #{cidfile}`
+        `rm #{cidfile}`
+
+        case exit_status
+        when 0 # success
+          limited(output,50*1024)
+        when 124 # inner command timed out
+          didnt_complete(max_seconds)
+        when 137 # outer timeout killed (128+9)
+          `docker stop #{pid}`
+          `docker kill #{pid}`
+          didnt_complete(max_seconds)
         end
     end
 
-Looking at the documentation for "docker run" I see there is
---sig-proxy=true: Proxify all received signal to the process (even in non-tty mode)
-Perhaps I can use this to put a timeout on the outer timeout which then
-forwards the kill signal to inside the container. This might simplify
-things such as not needing a --cidfile.
 
 
 
