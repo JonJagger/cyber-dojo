@@ -50,6 +50,7 @@ chown www-data $cyberDojoHome/.*
 chgrp www-data $cyberDojoHome/.*
 
 echo "chown/chgrp www-data tmp/cache"
+rm -rf tmp/cache
 mkdir -p tmp/cache
 chown www-data $cyberDojoHome/tmp/cache
 chgrp www-data $cyberDojoHome/tmp/cache
