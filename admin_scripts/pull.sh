@@ -30,30 +30,26 @@ setfacl -m group:www-data:rwx $cyberDojoHome/katas
 # ensure pulled files have correct rights
 for folder in app config exercises languages lib log notes public script spec test
 do
-  echo "chown/chgrp www-data ${folder}"
-  chown -R www-data $cyberDojoHome/$folder
-  chgrp -R www-data $cyberDojoHome/$folder
+  echo "chown www-data:www-data ${folder}"
+  chown -R www-data:www-data $cyberDojoHome/$folder
 done
 
 # tests create folders under tests/cyberdojo/katas
-echo "chown/chgrp www-data test/cyberdojo"
+echo "chown www-data test/cyberdojo"
 chmod g+rwsx $cyberDojoHome/test/cyberdojo
 setfacl -d -m group:www-data:rwx $cyberDojoHome/test/cyberdojo
 setfacl -m group:www-data:rwx $cyberDojoHome/test/cyberdojo
 
-echo "chown/chgrp www-data *"
-chown www-data $cyberDojoHome/*
-chgrp www-data $cyberDojoHome/*
+echo "chown www-data:www-data *"
+chown www-data:www-data $cyberDojoHome/*
 
-echo "chown/chgrp www-data .*"
-chown www-data $cyberDojoHome/.*
-chgrp www-data $cyberDojoHome/.*
+echo "chown www-data:www-data .*"
+chown www-data:www-data $cyberDojoHome/.*
 
-echo "chown/chgrp www-data tmp/cache"
+echo "chown www-data:www-data tmp/cache"
 rm -rf tmp/cache
 mkdir -p tmp/cache
-chown www-data $cyberDojoHome/tmp/cache
-chgrp www-data $cyberDojoHome/tmp/cache
+chown www-data:www-data $cyberDojoHome/tmp/cache
 
 echo "refreshing exercises/ cache"
 $cyberDojoHome/exercises/cache.rb
