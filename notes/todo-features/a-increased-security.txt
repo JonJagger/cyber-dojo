@@ -59,7 +59,10 @@ o) the cidfile contains the ID of the properly closed down docker container
     require 'tempfile'
 
     def run(sandbox, command, max_seconds)
+      inner_run(sandbox, timeout(command,max_seconds), max_seconds)
+    end
 
+    def inner_run(sandbox, command, max_seconds)
         cidfile = 'tmp/' + Dir::Tmpname.make_tmpname(['cidfile', '.txt'], {})
 
         language = sandbox.avatar.kata.language
@@ -67,13 +70,12 @@ o) the cidfile contains the ID of the properly closed down docker container
           "docker run" +
             " -u www-data" +
             " --cidfile="#{cidfile}" +
-            " --rm" +
             " -v #{sandbox.path}:/sandbox:#{read_write}" +
             " -v #{language.path}:#{language.path}:#{read_only}" +
             " -w /sandbox" +
             " #{language.image_name}" +
             " /bin/bash -c " +
-            "\"#{timeout(command,max_seconds)}\""
+            "\"#{command}\""
         outer_command = timeout(docker_command,max_seconds+5)
 
         output = `#{outer_command}`
@@ -81,38 +83,20 @@ o) the cidfile contains the ID of the properly closed down docker container
 
         pid = `cat #{cidfile}`
         `rm #{cidfile}`
+        `docker stop #{pid}`
+        `docker rm #{pid}`
 
-        case exit_status
-        when success
-          limited(output,50*1024)
-        when inner_time_out
-          didnt_complete(max_seconds)
-        when outer_time_out
-          `docker stop #{pid}`
-          `docker rm #{pid}`
-          didnt_complete(max_seconds)
-        end
+        exit_status != fatal_error(kill) ?
+            limited(output,50*1024) :
+            didnt_complete(max_seconds)
     end
 
     def timeout(command,after)
-        "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
+      "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
     end
 
-    def success
-        0
-    end
 
-    def inner_time_out
-        124
-    end
 
-    def outer_time_out
-        128 + kill
-    end
-
-    def kill
-        9
-    end
 
 CPU
 ---
