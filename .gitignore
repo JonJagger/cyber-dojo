@@ -18,6 +18,7 @@ zipped_dojos.zip
 cyberDojo.db
 *.tmp
 
+test/coverage.txt
 test/*/assets/
 test/*/index.html
 
