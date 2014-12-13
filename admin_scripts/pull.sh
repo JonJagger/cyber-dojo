@@ -36,10 +36,10 @@ do
 done
 
 # tests create folders under tests/cyberdojo/katas
-echo "chown/chgrp www-data test/cyberdojo/katas"
-chmod g+rwsx $cyberDojoHome/test/cyberdojo/katas
-setfacl -d -m group:www-data:rwx $cyberDojoHome/test/cyberdojo/katas
-setfacl -m group:www-data:rwx $cyberDojoHome/test/cyberdojo/katas
+echo "chown/chgrp www-data test/cyberdojo"
+chmod g+rwsx $cyberDojoHome/test/cyberdojo
+setfacl -d -m group:www-data:rwx $cyberDojoHome/test/cyberdojo
+setfacl -m group:www-data:rwx $cyberDojoHome/test/cyberdojo
 
 echo "chown/chgrp www-data *"
 chown www-data $cyberDojoHome/*
