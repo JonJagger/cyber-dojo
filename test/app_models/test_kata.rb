@@ -62,8 +62,8 @@ class KataTests < ModelTestBase
        'then it is not active ' +
        'and its age is zero' do
     kata = make_kata
-    hippo = kata.start_avatar(['hippo'])
-    lion = kata.start_avatar(['lion'])
+    kata.start_avatar(['hippo'])
+    kata.start_avatar(['lion'])
 
     assert !kata.active?
     assert_equal 0, kata.age
@@ -193,8 +193,8 @@ class KataTests < ModelTestBase
   test 'start_avatar with specific avatar-name ' +
        '(useful for testing)' do
     kata = make_kata
-    avatar = kata.start_avatar(['hippo'])
-    assert_equal 'hippo', avatar.name
+    hippo = kata.start_avatar(['hippo'])
+    assert_equal 'hippo', hippo.name
     assert_equal ['hippo'], kata.avatars.map {|avatar| avatar.name}
   end
 
