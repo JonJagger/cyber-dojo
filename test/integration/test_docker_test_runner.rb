@@ -6,10 +6,10 @@ class DockerTestRunnerAdapter
   def initialize(adaptee)
     @runner = adaptee
   end
-  def adapter.runnable?(language)
+  def runnable?(language)
     @runner.runnable?(language)
   end
-  def adapter.run(sandbox,command,max_seconds)
+  def run(sandbox,command,max_seconds)
     @runner.inner_run(sandbox,command,max_seconds)
   end
 end
