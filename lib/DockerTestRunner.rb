@@ -22,7 +22,7 @@ class DockerTestRunner
   end
 
   def inner_run(sandbox, command, max_seconds)
-    cidfile = 'tmp/' + Dir::Tmpname.make_tmpname(['cidfile', '.txt'], {})
+    cidfile = Dir::Tmpname.create(['cidfile', '.txt']) {}
 
     language = sandbox.avatar.kata.language
     docker_command =
