@@ -65,9 +65,41 @@ class DockerTestRunnerTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  #I can wrap runner so runner.run (as called
-  #in avatar.test) can be adapted and call
-  #adapted runner.inner_run when I need to bypass
-  #the inner timeout
+  test "DockerTestRunner when outer command times out " +
+       "(simulates breaking out of the docker container)" do
+
+    adaptee = runner
+    adapter = Object.new
+    def adapter.runnable?(language)
+      adaptee.runnable?(language)
+    end
+    def adapter.run(sandbox,command,max_seconds)
+      adaptee.inner_run(sandbox,command,max_seconds)
+    end
+
+    dojo = Dojo.new(root_path,externals(adapter))
+    kata = make_kata(dojo, 'C-assert')
+    lion = kata.start_avatar(['lion'])
+    visible_files = lion.tags[0].visible_files
+    source = visible_files['hiker.c']
+    visible_files['hiker.c'] = source.sub('{', '{for(;;);')
+    delta = {
+      :changed => [ 'hiker.c' ],
+      :unchanged => visible_files.keys - [ 'hiker.c' ],
+      :deleted => [ ],
+      :new => [ ]
+    }
+    rags,_,_ = lion.test(delta, visible_files, time_now, 2)
+    output = lion.tags[1].visible_files['output']
+    assert output.start_with?('Unable to complete the tests in 2 seconds')
+    assert_equal 'timed_out', rags[-1]['colour']
+    assert_equal '', `docker ps -a -q`
+
+    #I can wrap runner so runner.run (as called
+    #in avatar.test) can be adapted and call
+    #adapted runner.inner_run when I need to bypass
+    #the inner timeout
+
+  end
 
 end
