@@ -3,6 +3,7 @@
 # via Docker containers https://www.docker.io/
 
 require_relative 'TestRunner'
+require 'tempfile'
 
 class DockerTestRunner
     include TestRunner
@@ -17,21 +18,40 @@ class DockerTestRunner
   end
 
   def run(sandbox, command, max_seconds)
-    inner_command = "timeout --signal=#{kill} #{max_seconds}s #{stderr2stdout(command)}"
+    inner_run(sandbox, timeout(command,max_seconds), max_seconds)
+  end
+
+  def inner_run(sandbox, command, max_seconds)
+    cidfile = 'tmp/' + Dir::Tmpname.make_tmpname(['cidfile', '.txt'], {})
+
     language = sandbox.avatar.kata.language
-    outer_command =
+    docker_command =
       "docker run" +
         " -u www-data" +
-        " --rm" +
-        " --net=\"none\"" +
+        " --cidfile=#{quoted(cidfile)}" +
         " -v #{sandbox.path}:/sandbox:#{read_write}" +
         " -v #{language.path}:#{language.path}:#{read_only}" +
         " -w /sandbox" +
         " #{language.image_name}" +
-        " /bin/bash -c \"#{inner_command}\""
+        " /bin/bash -c" +
+        " #{quoted(command)}"
+    outer_command = timeout(docker_command,max_seconds+5)
 
-    output = limited(`#{outer_command}`,50*1024)
-    $?.exitstatus != fatal_error(kill) ? output : didnt_complete(max_seconds)
+    output = `#{outer_command}`
+    exit_status = $?.exitstatus
+
+    pid = `cat #{cidfile}`
+    `rm #{cidfile}`
+    `docker stop #{pid}`
+    `docker rm #{pid}`
+
+    exit_status != fatal_error(kill) ?
+        limited(output,50*1024) :
+        didnt_complete(max_seconds)
+  end
+
+  def timeout(command,after)
+    "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
   end
 
   def image_names(output)
@@ -39,6 +59,10 @@ class DockerTestRunner
   end
 
 private
+
+  def quoted(arg)
+    '"' + arg + '"'
+  end
 
   def fatal_error(signal)
     128 + signal

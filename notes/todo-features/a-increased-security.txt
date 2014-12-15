@@ -69,13 +69,13 @@ o) the cidfile contains the ID of the properly closed down docker container
         docker_command =
           "docker run" +
             " -u www-data" +
-            " --cidfile="#{cidfile}" +
+            " --cidfile=\"#{cidfile}\" +
             " -v #{sandbox.path}:/sandbox:#{read_write}" +
             " -v #{language.path}:#{language.path}:#{read_only}" +
             " -w /sandbox" +
             " #{language.image_name}" +
-            " /bin/bash -c " +
-            "\"#{command}\""
+            " /bin/bash -c" +
+            " \"#{command}\""
         outer_command = timeout(docker_command,max_seconds+5)
 
         output = `#{outer_command}`
