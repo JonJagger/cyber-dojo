@@ -3,7 +3,7 @@
 # via Docker containers https://www.docker.io/
 
 require_relative 'TestRunner'
-require 'tempfile'
+require 'tempfile' # Dir::Tmpname
 
 class DockerTestRunner
     include TestRunner
@@ -28,6 +28,7 @@ class DockerTestRunner
     docker_command =
       "docker run" +
         " -u www-data" +
+        " --net=#{quoted('none')}" +
         " --cidfile=#{quoted(cidfile)}" +
         " -v #{sandbox.path}:/sandbox:#{read_write}" +
         " -v #{language.path}:#{language.path}:#{read_only}" +
@@ -82,14 +83,17 @@ private
 
 end
 
+
 # docker run
 #    " -u www-data" +
-#    " --rm" +
-#    " --net=\"none\"" +
+#    " --net=#{quoted('none')}" +
+#    " --cidfile=#{quoted(cidfile)}" +
 #    " -v #{sandbox.path}:/sandbox:#{read_write}" +
 #    " -v #{language.path}:#{language.path}:#{read_only}" +
 #    " -w /sandbox" +
-#    " #{language.image_name} /bin/bash -c \"#{inner_command}\""
+#    " #{language.image_name}" +
+#    " /bin/bash -c" +
+#    " #{quoted(command)}"
 #
 # -u www-data
 #   The user which runs the inner_command *inside* the docker container.
@@ -101,14 +105,16 @@ end
 #   $HOME setup it will probably default to / and you won't have rights.
 #   See https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=638337
 #
-# --rm
-#   Automatically remove the container created by running inner_command
-#   in the docker container (language.image_name). We are only interested
-#   in the output produced. All files are saved and gitted off the
-#   /katas sub-folder on the main server and not into the container.
-#
-# --net=\"none\"
+# --net="none"
 #   Turn off all networking inside the container.
+#
+# --cidfile=#{quoted(cidfile)}
+#   I do not use the --rm command. Instead I specify the name
+#   of a unique cidfile (which must not exist before the docker
+#   command is run) from which I retrieve the docker container's
+#   pid and then stop and kill the container. This ensures
+#   that the docker container is always killed, even if the
+#   outer timeout occurs.
 #
 # -v #{sandbox.path}:/sandbox:#{read_write}
 #   Volume mount the animal's sandbox to /sandbox inside the container
@@ -131,7 +137,7 @@ end
 #   The name of the docker container to run the inner-command inside.
 #   specified in the language's manifest as its image_name.
 #
-# /bin/bash -c \"#{inner_command}\"
+# /bin/bash -c #{quoted(command)}
 #   The command that is run inside the docker container is always
 #   './cyber-dojo.sh' which is run via bash inside a timeout.
 #
