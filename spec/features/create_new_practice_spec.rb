@@ -6,12 +6,12 @@ feature "Create new practice" do
   scenario "And enter as an animal" do
     ENV['CYBERDOJO_USE_HOST'] = 'true'
     visit "/"
-    click_on 'create' #practice
+    click_on 'create'
     language('Ruby-Rspec').click
     exercise('Bowling_Game').click
     click_on 'ok'
 
-    click_on 'enter' #practice
+    click_on 'enter'
     click_on 'ok' #your animal is [cheetah, ...]
 
     within_window(windows.last) do

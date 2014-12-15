@@ -78,6 +78,7 @@ Suggests that the startup file for Rails >= 3.0 on Passenger
 is indeed config.ru
 If I do this I can remove config/initializers/externals.rb
 (unless that it what I call from config.ru)
+Or config/application.rb ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FakeDisk is better renamed as OsDiskFake
 FakeDir  is better renamed as OsDirFake
