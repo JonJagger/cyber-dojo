@@ -51,15 +51,15 @@ class DockerTestRunner
         didnt_complete(max_seconds)
   end
 
-  def timeout(command,after)
-    "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
-  end
-
   def image_names(output)
     output.split("\n")[1..-1].collect{|line| line.split[0]}.sort.uniq
   end
 
 private
+
+  def timeout(command,after)
+    "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
+  end
 
   def quoted(arg)
     '"' + arg + '"'
