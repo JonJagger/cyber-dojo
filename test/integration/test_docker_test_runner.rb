@@ -6,6 +6,7 @@ require_relative 'externals'
 class DockerTestRunnerTests < CyberDojoTestBase
 
   include Externals
+  include TimeNow
 
   def setup
     super
@@ -52,10 +53,10 @@ class DockerTestRunnerTests < CyberDojoTestBase
       :deleted => [ ],
       :new => [ ]
     }
-    rags,_,_ = lion.test(delta, visible_files)
+    rags,_,_ = lion.test(delta, visible_files, time_now, 2)
     output = lion.tags[1].visible_files['output']
-    assert output.start_with?('Unable to complete the tests in 15 seconds')
-    assert_equal 'amber', rags[-1]['colour']
+    assert output.start_with?('Unable to complete the tests in 2 seconds')
+    assert_equal 'timed_out', rags[-1]['colour']
     assert_equal '', `docker ps -a -q`
   end
 
