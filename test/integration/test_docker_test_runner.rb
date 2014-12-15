@@ -2,6 +2,18 @@
 
 require_relative '../cyberdojo_test_base'
 
+class DockerTestRunnerAdapter
+  def initialize(adaptee)
+    @runner = adaptee
+  end
+  def adapter.runnable?(language)
+    @runner.runnable?(language)
+  end
+  def adapter.run(sandbox,command,max_seconds)
+    @runner.inner_run(sandbox,command,max_seconds)
+  end
+end
+
 class DockerTestRunnerTests < CyberDojoTestBase
 
   include TimeNow
@@ -68,17 +80,7 @@ class DockerTestRunnerTests < CyberDojoTestBase
   test "DockerTestRunner when outer command times out " +
        "(simulates breaking out of the docker container)" do
 
-    adapter = Object.new
-    def adapter.adaptee
-      @runner ||= runner
-    end
-    def adapter.runnable?(language)
-      adaptee.runnable?(language)
-    end
-    def adapter.run(sandbox,command,max_seconds)
-      adaptee.inner_run(sandbox,command,max_seconds)
-    end
-
+    adapter = DockerTestRunnerAdapter.new(runner)
     dojo = Dojo.new(root_path,externals(adapter))
     kata = make_kata(dojo, 'C-assert')
     lion = kata.start_avatar(['lion'])
@@ -96,12 +98,6 @@ class DockerTestRunnerTests < CyberDojoTestBase
     assert output.start_with?('Unable to complete the tests in 2 seconds')
     assert_equal 'timed_out', rags[-1]['colour']
     assert_equal '', `docker ps -a -q`
-
-    #I can wrap runner so runner.run (as called
-    #in avatar.test) can be adapted and call
-    #adapted runner.inner_run when I need to bypass
-    #the inner timeout
-
   end
 
 end
