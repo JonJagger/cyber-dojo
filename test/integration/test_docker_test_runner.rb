@@ -68,13 +68,15 @@ class DockerTestRunnerTests < CyberDojoTestBase
   test "DockerTestRunner when outer command times out " +
        "(simulates breaking out of the docker container)" do
 
-    adaptee = runner
     adapter = Object.new
+    def adapter.runner
+      @runner ||= runner
+    end
     def adapter.runnable?(language)
-      adaptee.runnable?(language)
+      runner.runnable?(language)
     end
     def adapter.run(sandbox,command,max_seconds)
-      adaptee.inner_run(sandbox,command,max_seconds)
+      runner.inner_run(sandbox,command,max_seconds)
     end
 
     dojo = Dojo.new(root_path,externals(adapter))
