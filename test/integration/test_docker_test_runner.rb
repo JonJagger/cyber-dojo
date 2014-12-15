@@ -69,14 +69,14 @@ class DockerTestRunnerTests < CyberDojoTestBase
        "(simulates breaking out of the docker container)" do
 
     adapter = Object.new
-    def adapter.runner
+    def adapter.adaptee
       @runner ||= runner
     end
     def adapter.runnable?(language)
-      runner.runnable?(language)
+      adaptee.runnable?(language)
     end
     def adapter.run(sandbox,command,max_seconds)
-      runner.inner_run(sandbox,command,max_seconds)
+      adaptee.inner_run(sandbox,command,max_seconds)
     end
 
     dojo = Dojo.new(root_path,externals(adapter))
