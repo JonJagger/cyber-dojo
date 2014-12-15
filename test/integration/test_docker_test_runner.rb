@@ -32,7 +32,7 @@ class DockerTestRunnerTests < CyberDojoTestBase
       :new => [ ]
     }
     rags,_,_ = lion.test(delta, visible_files)
-    assert_equal :red, rags[-1]['colour']
+    assert_equal 'red', rags[-1]['colour']
     assert_equal '', `docker ps -a -q`
   end
 
