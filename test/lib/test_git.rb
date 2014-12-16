@@ -102,4 +102,28 @@ class GitTests < CyberDojoTestBase
     assert diff.include?("+bbbbb")
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'git config' do
+    cfg = @git.config(@dir, 'user.name Fred Flintsone')
+    assert_equal 0, $?.exitstatus
+    assert_equal '', cfg
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'git gc' do
+    gc = @git.gc(@dir, '--auto --quiet')
+    assert_equal 0, $?.exitstatus
+    assert_equal '', gc
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'git bad-command logging' do
+    gc = @git.gc(@dir, '--automatic')
+    assert_not_equal 0, $?.exitstatus
+    assert gc.start_with?('error: unknown option')
+  end
+
 end
