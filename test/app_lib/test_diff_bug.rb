@@ -207,41 +207,4 @@ class DiffBugTests < CyberDojoTestBase
 
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'empty file is deleted' do
-    diff_lines =
-    [
-      'diff --git a/sandbox/xx.rb b/sandbox/xx.rb',
-      'deleted file mode 100644',
-      'index e69de29..0000000'
-    ].join("\n")
-
-    visible_files = {
-      'xx.rb' => ''
-    }
-
-    actual_diffs = GitDiff::GitDiffParser.new(diff_lines).parse_all
-    expected_diffs =
-    {
-      'a/sandbox/xx.rb' =>
-      {
-        :prefix_lines =>
-        [
-          'diff --git a/sandbox/xx.rb b/sandbox/xx.rb',
-          'deleted file mode 100644',
-          'index e69de29..0000000'
-        ],
-        :was_filename => 'a/sandbox/xx.rb',
-        :now_filename => '/dev/null',
-        :chunks => [ ]
-      }
-    }
-    assert_equal expected_diffs, actual_diffs
-
-    expected_view = { 'xx.rb' => [ ] }
-    actual_view = git_diff(diff_lines, visible_files)
-    assert_equal expected_view, actual_view
-  end
-
 end
