@@ -50,4 +50,12 @@ class SpyDiskTests < CyberDojoTestBase
     assert !disk.is_dir?(incomplete_path), incomplete_path
   end
 
+  #- - - - - - - - - - - - - - - - - - - -
+
+  test "symlinks appear in symlink log" do
+    disk = SpyDisk.new
+    disk.symlink('from','to')
+    assert_equal [['symlink','from','to']], disk.symlink_log
+  end
+
 end
