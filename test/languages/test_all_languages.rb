@@ -6,6 +6,7 @@ require_relative 'one_language_checker'
 class AllLanguagesTests < CyberDojoTestBase
 
   test 'red-amber-green initial 6*9 state' do
+    return if !Docker.installed?
     root_path = File.dirname(__FILE__) + '/../../'
     verbose = false
     checker = OneLanguageChecker.new(root_path,verbose)
@@ -22,4 +23,3 @@ class AllLanguagesTests < CyberDojoTestBase
   end
 
 end
-

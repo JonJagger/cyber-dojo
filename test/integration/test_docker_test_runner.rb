@@ -38,6 +38,7 @@ class DockerTestRunnerTests < CyberDojoTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "DockerTestRunner when outer and inner commands do not timeout" do
+    return if !Docker.installed?
     dojo = Dojo.new(root_path,externals(runner))
     kata = make_kata(dojo, 'C-assert')
     lion = kata.start_avatar(['lion'])
@@ -56,6 +57,7 @@ class DockerTestRunnerTests < CyberDojoTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "DockerTestRunner when inner command times out" do
+    return if !Docker.installed?
     dojo = Dojo.new(root_path,externals(runner))
     kata = make_kata(dojo, 'C-assert')
     lion = kata.start_avatar(['lion'])
@@ -79,7 +81,7 @@ class DockerTestRunnerTests < CyberDojoTestBase
 
   test "DockerTestRunner when outer command times out " +
        "(simulates breaking out of the docker container)" do
-
+    return if !Docker.installed?
     adapter = DockerTestRunnerAdapter.new(runner)
     dojo = Dojo.new(root_path,externals(adapter))
     kata = make_kata(dojo, 'C-assert')

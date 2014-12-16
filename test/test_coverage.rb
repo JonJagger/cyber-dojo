@@ -8,6 +8,7 @@ end
 
 SimpleCov.start do
   add_filter '/ruby-1.9.3-p125/'
+  add_filter '/ruby-2.1.3p242'
   add_filter '/cyberdojo/config/'
 
   add_group 'admin_scripts',   'admin_scripts'
