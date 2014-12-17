@@ -13,7 +13,7 @@ ids = ARGV[1..-1]
 ids.each do |id|
   puts id
   tar_filename = "#{id}.tar.gz"
-  folder = "/var/www/cyberdojo/katas"
+  folder = "/var/www/cyber-dojo/katas"
   xfer_cmd = "wget -q -O #{folder}/#{tar_filename} http://#{ip_address}/downloader/download/#{id}"
   untar_cmd = "cd #{folder}; tar -xvf #{id}.tar.gz"
   rm_cmd = "rm #{folder}/#{tar_filename}"

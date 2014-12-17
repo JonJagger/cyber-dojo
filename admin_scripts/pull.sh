@@ -1,14 +1,7 @@
 #!/bin/bash
 # Use to install the latest cyber-dojo git repo onto a cyber-dojo server
 
-if [ -d "/var/www/cyber-dojo" ]; then
-  export cyberDojoName=cyber-dojo
-else
-  export cyberDojoName=cyberdojo
-fi
-
-export cyberDojoHome=/var/www/$cyberDojoName
-
+cyberDojoHome=/var/www/cyber-dojo
 cd $cyberDojoHome
 
 # get latest source from https://github.com/JonJagger/cyber-dojo
