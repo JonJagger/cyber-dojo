@@ -4,6 +4,15 @@ require_relative 'model_test_base'
 
 class KatasTests < ModelTestBase
 
+  test 'in test-mode dojo.katas path is not real katas dir' do
+    ENV['CYBERDOJO_TEST_ROOT_DIR'] = 'true'
+    katas = @dojo.katas
+    ENV.delete('CYBERDOJO_TEST_ROOT_DIR')
+    assert katas.path.end_with?('cyber-dojo/test/cyberdojo/katas/')
+  end
+
+  #- - - - - - - - - - - - - - - -
+
   test 'katas[id] returns previously created kata with given id' do
     kata = make_kata
     k = @dojo.katas[kata.id.to_s]
