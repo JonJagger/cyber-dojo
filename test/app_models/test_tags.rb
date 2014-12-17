@@ -4,8 +4,8 @@ require_relative 'model_test_base'
 
 class TagsTest < ModelTestBase
 
-  test 'there is 1 tag after avatar is started ' +
-       'and before first [test] is auto-run' do
+  test 'tag zero exists after avatar is started ' +
+       'and before first [test] is run' do
     kata = make_kata
     avatar = kata.start_avatar
     tags = avatar.tags
@@ -39,28 +39,10 @@ class TagsTest < ModelTestBase
 
   test 'each [test]-event creates a new tag' do
     kata = make_kata
-    avatar = kata.start_avatar
-    incs =
-    [
-      red={
-        'colour' => 'red',
-        'time' => [2014, 2, 15, 8, 54, 6],
-        'number' => 1
-      },
-      amber={
-        'colour' => 'green',
-        'time' => [2014, 2, 15, 8, 54, 34],
-        'number' => 2
-      },
-      green={
-        'colour' => 'green',
-        'time' => [2014, 2, 15, 8, 55, 7],
-        'number' => 3
-      }
-    ]
-    avatar.dir.spy_read('increments.json', JSON.unparse(incs))
+    lion = kata.start_avatar(['lion'])
+    fake_three_tests(lion)
 
-    tags = avatar.tags
+    tags = lion.tags
     assert_equal 4, tags.count
     assert tags.all?{|tag| tag.class.name === 'Tag'}
 
@@ -68,17 +50,93 @@ class TagsTest < ModelTestBase
     manifest = JSON.unparse({
       f1='Hiker.cs' => f1_content='public class Hiker { }',
       f2='HikerTest.cs' => f2_content='using NUnit.Framework;',
-      f3='output' => f3_content='Tests run: 1, Failures: 0'
+      f3='output' => 'Tests run: 1, Failures: 0'
     })
     n = 2
     filename = 'manifest.json'
-    @git.spy(avatar.dir.path,'show',"#{n}:#{filename}",manifest)
+    @git.spy(lion.dir.path,'show',"#{n}:#{filename}",manifest)
 
     visible_files = tags[n].visible_files
     assert_equal [f1,f2,f3], visible_files.keys.sort
     assert_equal f1_content, visible_files[f1]
     assert_equal f2_content, visible_files[f2]
+  end
 
+  #- - - - - - - - - - - - - - - - - - -
+
+  test 'tag.diff' do
+    kata = make_kata
+    lion = kata.start_avatar(['lion'])
+    fake_three_tests(lion)
+    manifest = JSON.unparse({
+      'hiker.c' => '#include "hiker.h"',
+      'hiker.h' => '#ifndef HIKER_INCLUDED_H\n#endif',
+      'output' => 'unterminated conditional directive'
+    })
+    filename = 'manifest.json'
+    @git.spy(lion.dir.path,'show',"#{3}:#{filename}",manifest)
+    stub_diff = [
+      "diff --git a/sandbox/hiker.h b/sandbox/hiker.h",
+      "index e69de29..f28d463 100644",
+      "--- a/sandbox/hiker.h",
+      "+++ b/sandbox/hiker.h",
+      "@@ -1 +1,2 @@",
+      "-#ifndef HIKER_INCLUDED",
+      "\\ No newline at end of file",
+      "+#ifndef HIKER_INCLUDED_H",
+      "+#endif",
+      "\\ No newline at end of file"
+    ].join("\n")
+    @git.spy(lion.dir.path,
+      'diff',
+      '--ignore-space-at-eol --find-copies-harder 2 3 sandbox',
+      stub_diff)
+
+    tags = lion.tags
+    actual = tags[2].diff(3)
+    expected =
+    {
+      "hiker.h" =>
+      [
+        { :type => :section, :index => 0 },
+        { :type => :deleted, :line => "#ifndef HIKER_INCLUDED", :number => 1 },
+        { :type => :added,   :line => "#ifndef HIKER_INCLUDED_H", :number => 1 },
+        { :type => :added,   :line => "#endif", :number => 2 }
+      ],
+      "hiker.c" =>
+      [
+        { :line => "#include \"hiker.h\"", :type => :same, :number => 1 }
+      ],
+      "output" =>
+      [
+        { :line => "unterminated conditional directive", :type => :same, :number => 1 }
+      ]
+    }
+    assert_equal expected, actual
+  end
+
+  #- - - - - - - - - - - - - - - - - - -
+
+  def fake_three_tests(avatar)
+    incs =
+    [
+      {
+        'colour' => 'red',
+        'time' => [2014, 2, 15, 8, 54, 6],
+        'number' => 1
+      },
+      {
+        'colour' => 'green',
+        'time' => [2014, 2, 15, 8, 54, 34],
+        'number' => 2
+      },
+      {
+        'colour' => 'green',
+        'time' => [2014, 2, 15, 8, 55, 7],
+        'number' => 3
+      }
+    ]
+    avatar.dir.spy_read('increments.json', JSON.unparse(incs))
   end
 
 end

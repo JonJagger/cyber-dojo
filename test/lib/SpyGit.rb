@@ -45,6 +45,7 @@ class SpyGit
 
   def diff(dir, options)
     record(dir, 'diff', options)
+    stub(dir,'diff',options)
   end
 
   def spy(dir, command, options, stub)
