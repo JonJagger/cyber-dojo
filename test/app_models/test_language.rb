@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require_relative 'model_test_base'
+require 'tempfile'
 
 class LanguageTests < ModelTestBase
 
@@ -328,6 +329,38 @@ class LanguageTests < ModelTestBase
       named = ex.to_s.include?(name)
     end
     assert named
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  class StubSandbox
+    def initialize
+      @temp_dir = Dir::Tmpname.create(['approval', '']) {}
+      `mkdir #{path}`
+    end
+    def tear_down
+      `rm -rf #{path}`
+    end
+    def path
+      @temp_dir
+    end
+    def write(filename,content)
+      File.open(path + '/' + filename, 'w') do |file|
+        file.write(content)
+      end
+    end
+  end
+
+  test 'after test Approval txt file handling' do
+    name = 'Ruby-Approval'
+    @language = @dojo.languages[name]
+    sandbox = StubSandbox.new
+    sandbox.write('created.txt', 'content')
+    visible_files = { 'deleted.txt' => 'once upon a time' }
+    @language.after_test(sandbox, visible_files)
+    sandbox.tear_down
+    expected = { 'created.txt' => 'content' }
+    assert_equal expected, visible_files
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
