@@ -13,13 +13,13 @@ module GitDiff
   # lines: an array containing the current content of the
   #        diffed file.
 
-  # The <em>single</em> column of line-numbers on the diff-page is
-  # correct when the was_tag minus now_tag difference is 1, which
-  # is what it is the vast majority of the time.
-  # However when the was_tag minus now_tag is greater than 1
-  # this single column approach falls down and you really
-  # need two columns of line-numbers. For example, look at the
-  # github.com view of a diff.
+  # The single column of line-numbers on the diff-page is
+  # correct when the was_tag minus now_tag difference is 1,
+  # which it always is.
+  # If the was_tag minus now_tag is greater than 1 this
+  # single column approach falls down and you really
+  # need two columns of line-numbers. For example, look at
+  # the github.com view of a diff.
 
   class GitDiffBuilder
 
