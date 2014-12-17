@@ -216,7 +216,6 @@ class AvatarTests < ModelTestBase
     avatar.test(delta, visible_files, time_limit, time_now)
 
     log = sandbox.dir.log
-    saved_filenames = filenames_written_to(log)
 
     assert log.include?(['write','untitled.cs', 'content for code file' ]), log.inspect
     assert log.include?(['write','untitled.test.cs', 'content for test file' ]), log.inspect
@@ -339,6 +338,20 @@ class AvatarTests < ModelTestBase
 
     git_log = @git.log[sandbox.path]
     assert git_log.include?([ 'rm', 'wibble.cs' ]), git_log.inspect
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'visible_files' do
+    kata = make_kata
+    lion = kata.start_avatar(['lion'])
+    expected = {
+      'wibble.hpp' => '#include <iostream>',
+      'wibble.cpp' => '#include "wibble.hpp"',
+      'output' => '',
+      'instructions' => 'your task...'
+    }
+    assert_equal expected, lion.visible_files
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
