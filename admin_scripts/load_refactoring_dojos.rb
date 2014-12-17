@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-# run from cyberdojo dir
+# run from cyber-dojo dir
 
-`tar xf refactoring_dojos.tgz -C .`
+`tar -xvpf refactoring_dojos.tar.gz`
