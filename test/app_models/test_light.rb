@@ -59,6 +59,50 @@ class LightTests < ModelTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'tag' do
+    kata = make_kata
+    lion = kata.start_avatar(['lion'])
+    fake_three_tests(lion)
+    manifest = JSON.unparse({
+      'hiker.c' => '#include "hiker.h"',
+      'hiker.h' => '#ifndef HIKER_INCLUDED_H\n#endif',
+      'output' => output='unterminated conditional directive'
+    })
+    filename = 'manifest.json'
+    @git.spy(lion.dir.path,'show',"#{3}:#{filename}",manifest)
+
+    lights = lion.lights
+    assert_equal 3, lights.length
+    light = lights[2]
+    assert_equal :green, light.colour
+    tag = light.tag
+    assert_equal output, tag.output
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - -
+
+  def fake_three_tests(avatar)
+    incs =
+    [
+      {
+        'colour' => 'red',
+        'time' => [2014, 2, 15, 8, 54, 6],
+        'number' => 1
+      },
+      {
+        'colour' => 'green',
+        'time' => [2014, 2, 15, 8, 54, 34],
+        'number' => 2
+      },
+      {
+        'colour' => 'green',
+        'time' => [2014, 2, 15, 8, 55, 7],
+        'number' => 3
+      }
+    ]
+    avatar.dir.spy_read('increments.json', JSON.unparse(incs))
+  end
+
   def dummy_avatar
     Object.new
   end
