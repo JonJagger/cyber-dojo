@@ -1,4 +1,6 @@
 
+# See comment at bottom of Avatar.rb
+
 class Tag
 
   def initialize(avatar,n,git)

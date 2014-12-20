@@ -160,7 +160,8 @@ end
 #
 # If this happens the difference between a Tag.new
 # and a Light.new will be more pronounced and I will
-# need something like this...
+# need something like this (where non test events
+# will have a new non ed/amber/green colour) ...
 #
 # def lights
 #   increments.select{ |inc|
@@ -184,9 +185,4 @@ end
 # The inclusive lower bound for n in avatar.tags[n] is
 # zero. When an animal does a diff of [1] what is run is
 #   avatar.tags[was_tag=0].diff(now_tag=1)
-# which will often have no actual diffs since tag[0] is
-# created when kata.start_avatar() is run and tag[1] is
-# created when the animal enters their dojo and the tests
-# are automatically run. (In the past this auto run of
-# the tests did not happen).
 #

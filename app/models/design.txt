@@ -1,12 +1,20 @@
 
+A single 'kata' is created by selected a single language
+and a single exercise and has a 10 character hex id.
+The animals (avatars) inside a kata thus share the same
+language and exercise. It is a deliberate part of the
+design of cyber-dojo that different animals in the
+same kata cannot choose a different language or a different
+exercise.
+
 A key cyber-dojo feature is the ability to review the [test]
 events, diff by diff. Each [test] event causes a 'git commit'
-plus a 'git tag' to execute in the animals git repo.
+plus a 'git tag' to execute in the animals git repo. 
 The [test] <-> [test] diffs are obtained via a 'git diff' command.
 Thus cyber-dojo implements persistence using plain disk files and
 does not use a database.
 
-From a paas object you create a dojo object like this...
+You create a dojo object like this...
 
 <code>
 externals = {
@@ -14,13 +22,13 @@ externals = {
   :git => Git.new,
   :runner => DockerTestRunner.new
 }
-Dojo.new(root_path,externals)
+dojo = Dojo.new(root_path,externals)
 </code>
 
 The live root_path is
-  /var/www/cyberdojo
-and a test is is
-  /var/www/cyberdojo/test/cyberdojo
+  /var/www/cyber-dojo
+and the test root_path is
+  /var/www/cyber-dojo/test/cyberdojo
 
 You can
 o) list all its languages or use [ ] to select a specific language.
@@ -34,7 +42,7 @@ For example
 <code>
 ...
 dojo.languages.each {|language| ... }
-java = dojo.language['Java-JUnit']
+java = dojo.languages['Java-JUnit']
 ...
 dojo.exercises.each {|exercise| ... }
 diamond = dojo.exercises['Print-Diamond']

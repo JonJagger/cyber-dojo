@@ -1,4 +1,6 @@
 
+# See comment at bottom of Avatar.rb
+
 class Light
 
   def initialize(avatar,hash)

@@ -1,4 +1,6 @@
 
+# See cyber-dojo-model.pdf
+
 class Dojo
 
   def initialize(path,externals)
