@@ -7,11 +7,10 @@ class TrafficLightTests < CyberDojoTestBase
   include TrafficLightHelper
 
   def new_avatar(kata,name)
-    Avatar.new(kata,name,externals)
-  end
-
-  def externals
-    nil
+    thread[:disk] = Object.new
+    thread[:git] = Object.new
+    thread[:runner] = Object.new
+    Avatar.new(kata,name)
   end
 
   #- - - - - - - - - - - - - - - -

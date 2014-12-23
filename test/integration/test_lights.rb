@@ -10,7 +10,8 @@ class LightsTests < CyberDojoTestBase
 
   def setup
     super
-    @dojo = Dojo.new(root_path,externals)
+    set_externals
+    @dojo = Dojo.new(root_path)
     @language = @dojo.languages['Ruby-TestUnit']
     @exercise = @dojo.exercises['Yatzy']
     `rm -rf #{@dojo.katas.path}`

@@ -26,7 +26,7 @@ class TagsTest < ModelTestBase
     })
     n = 0
     filename = 'manifest.json'
-    @git.spy(avatar.dir.path,'show',"#{n}:#{filename}",manifest)
+    git.spy(avatar.dir.path,'show',"#{n}:#{filename}",manifest)
 
     visible_files = tags[0].visible_files
     assert_equal [f1,f2], visible_files.keys.sort
@@ -54,7 +54,7 @@ class TagsTest < ModelTestBase
     })
     n = 2
     filename = 'manifest.json'
-    @git.spy(lion.dir.path,'show',"#{n}:#{filename}",manifest)
+    git.spy(lion.dir.path,'show',"#{n}:#{filename}",manifest)
 
     visible_files = tags[n].visible_files
     assert_equal [f1,f2,f3], visible_files.keys.sort
@@ -74,7 +74,7 @@ class TagsTest < ModelTestBase
       'output' => 'unterminated conditional directive'
     })
     filename = 'manifest.json'
-    @git.spy(lion.dir.path,'show',"#{3}:#{filename}",manifest)
+    git.spy(lion.dir.path,'show',"#{3}:#{filename}",manifest)
     stub_diff = [
       "diff --git a/sandbox/hiker.h b/sandbox/hiker.h",
       "index e69de29..f28d463 100644",
@@ -87,7 +87,7 @@ class TagsTest < ModelTestBase
       "+#endif",
       "\\ No newline at end of file"
     ].join("\n")
-    @git.spy(lion.dir.path,
+    git.spy(lion.dir.path,
       'diff',
       '--ignore-space-at-eol --find-copies-harder 2 3 sandbox',
       stub_diff)

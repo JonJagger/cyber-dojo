@@ -9,7 +9,9 @@ class KataTests < CyberDojoTestBase
 
   def setup
     super
-    @dojo = Dojo.new(root_path,externals(DummyTestRunner.new))
+    set_externals
+    thread[:runner] = DummyTestRunner.new
+    @dojo = Dojo.new(root_path)
   end
 
   test 'exists? is false' do

@@ -18,8 +18,8 @@ class Avatars
 
   include Enumerable
 
-  def initialize(kata,externals)
-    @kata,@externals = kata,externals
+  def initialize(kata)
+    @kata = kata
   end
 
   def each
@@ -37,7 +37,7 @@ class Avatars
 
   def [](name)
     # kata.avatars['lion']
-    Avatar.new(@kata,name,@externals)
+    Avatar.new(@kata,name)
   end
 
   def count

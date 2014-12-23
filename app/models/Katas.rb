@@ -3,8 +3,9 @@ class Katas
 
   include Enumerable
 
-  def initialize(dojo,path,externals)
-    @dojo,@path,@externals = dojo,path,externals
+  def initialize(dojo,path)
+    raise_if_no([:disk])
+    @dojo,@path = dojo,path
   end
 
   attr_reader :dojo, :path
@@ -50,7 +51,7 @@ class Katas
 
   def [](id)
     # dojo.katas[id]
-    Kata.new(self,id,@externals)
+    Kata.new(self,id)
   end
 
   def valid?(id)
@@ -65,12 +66,9 @@ class Katas
 
 private
 
+  include Externals
   include UniqueId
   include TimeNow
-
-  def disk
-    @externals[:disk]
-  end
 
   def is_hex?(char)
     '0123456789ABCDEF'.include?(char)

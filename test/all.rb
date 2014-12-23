@@ -9,6 +9,7 @@ def require_relative_in(dir,filenames)
 end
 
 require_relative_in('lib', %w{
+  Externals
   Docker
   TestRunner
     HostTestRunner

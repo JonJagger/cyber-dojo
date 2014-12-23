@@ -5,12 +5,10 @@ require_relative '../cyberdojo_test_base'
 class FoldersTests < CyberDojoTestBase
 
   def setup
-    externals = {
-      :disk => OsDisk.new,
-      :git => Git.new,
-      :runner => HostTestRunner.new
-    }
-    @dojo = Dojo.new(root_path,externals)
+    thread[:disk] = OsDisk.new
+    thread[:git] = Git.new
+    thread[:runner] = HostTestRunner.new
+    @dojo = Dojo.new(root_path)
     @path = @dojo.katas.path
     `rm -rf #{@path}`
   end

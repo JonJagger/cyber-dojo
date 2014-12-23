@@ -105,7 +105,7 @@ class KataTests < ModelTestBase
   test 'exists? is false before dir is made' do
     kata = @dojo.katas[id]
     assert !kata.exists?
-    @disk[kata.path].make
+    disk[kata.path].make
     assert kata.exists?
   end
 

@@ -10,7 +10,8 @@ class SandboxTests < CyberDojoTestBase
 
   def setup
     super
-    @dojo = Dojo.new(root_path,externals)
+    set_externals
+    @dojo = Dojo.new(root_path)
   end
 
   test 'defect-driven: filename containing space ' +

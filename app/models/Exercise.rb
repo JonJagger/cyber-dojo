@@ -1,8 +1,9 @@
 
 class Exercise
 
-  def initialize(path,name,disk)
-    @path,@name,@disk = path,name,disk
+  def initialize(path,name)
+    raise_if_no([:disk])
+    @path,@name = path,name
   end
 
   attr_reader :name
@@ -27,7 +28,7 @@ class Exercise
   end
 
   def dir
-    @disk[path]
+    disk[path]
   end
 
   def path
@@ -36,10 +37,11 @@ class Exercise
 
 private
 
+  include Externals
+  include Cleaner
+
   def instructions_filename
     'instructions'
   end
-
-  include Cleaner
 
 end

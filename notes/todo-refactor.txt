@@ -1,27 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Suppose I create Externals.rb as a mixin.
-Then I could refactor, for example, this from Avatar.rb
-  def disk
-    @externals[:disk]
-  end
-  def git
-    @externals[:git]
-  end
-  def runner
-    @externals[:runner]
-  end
-into this...
-  include Externals.rb
-and Externals.rb could be something like this...
-  def disk
-    thread[:disk] || raise RuntimeError.new("no :disk on Thread.current")
-  end
-  def thread
-    Thread.current
-  end
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Suppose I clone the server and switch over to it.
 Since the clone is not instant, I cannot avoid the
 possibility of a browser not switching cleanly to the

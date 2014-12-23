@@ -69,7 +69,7 @@ class LightTests < ModelTestBase
       'output' => output='unterminated conditional directive'
     })
     filename = 'manifest.json'
-    @git.spy(lion.dir.path,'show',"#{3}:#{filename}",manifest)
+    git.spy(lion.dir.path,'show',"#{3}:#{filename}",manifest)
 
     lights = lion.lights
     assert_equal 3, lights.length

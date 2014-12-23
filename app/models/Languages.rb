@@ -3,8 +3,9 @@ class Languages
 
   include Enumerable
 
-  def initialize(path,disk,runner)
-    @path,@disk,@runner = path,disk,runner
+  def initialize(path)
+    raise_if_no([:disk])
+    @path = path
   end
 
   attr_reader :path
@@ -23,6 +24,8 @@ class Languages
 
 private
 
+  include Externals
+
   def languages
     @languages ||= make_cache
   end
@@ -37,11 +40,11 @@ private
   end
 
   def make_language(name)
-    Language.new(path,name,@disk,@runner)
+    Language.new(path,name)
   end
 
   def dir
-    @disk[path]
+    disk[path]
   end
 
 end

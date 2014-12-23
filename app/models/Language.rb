@@ -1,8 +1,9 @@
 
 class Language
 
-  def initialize(path,name,disk,runner)
-    @path,@name,@disk,@runner = path,name,disk,runner
+  def initialize(path,name)
+    raise_if_no([:disk,:runner])
+    @path,@name = path,name
   end
 
   attr_reader :name
@@ -12,7 +13,7 @@ class Language
   end
 
   def runnable?
-    @runner.runnable?(self)
+    runner.runnable?(self)
   end
 
   def display_name
@@ -127,7 +128,7 @@ class Language
   end
 
   def dir
-    @disk[path]
+    disk[path]
   end
 
   def path
@@ -136,6 +137,7 @@ class Language
 
 private
 
+  include Externals
   include Cleaner
 
   def manifest

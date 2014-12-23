@@ -1,14 +1,10 @@
 
 module Externals
 
-  def externals(runner = runner,
-                git    = Git.new,
-                disk   = OsDisk.new)
-    {
-      :disk   => disk,
-      :git    => git,
-      :runner => runner
-    }
+  def set_externals
+    thread[:disk] = OsDisk.new
+    thread[:git] = Git.new
+    thread[:runner] = runner
   end
 
   def runner

@@ -3,22 +3,21 @@
 
 class Dojo
 
-  def initialize(path,externals)
-    @path,@externals = path,externals
+  def initialize(path)
     raise RuntimeError.new("path must end in /") if !path.end_with?('/')
-    raise RuntimeError.new('disk not set')   if externals[:disk].nil?
-    raise RuntimeError.new('git not set')    if externals[:git].nil?
-    raise RuntimeError.new('runner not set') if externals[:runner].nil?
+    @path = path
   end
 
+  attr_reader :path
+  
   def languages
     languages_path = @path + 'languages/'
-    @languages ||= Languages.new(languages_path, @externals[:disk], @externals[:runner])
+    @languages ||= Languages.new(languages_path)
   end
 
   def exercises
     exercises_path = @path + 'exercises/'
-    @exercises ||= Exercises.new(exercises_path, @externals[:disk])
+    @exercises ||= Exercises.new(exercises_path)
   end
 
   def katas
@@ -28,7 +27,7 @@ class Dojo
       katas_path += 'test/cyberdojo/'
     end
     katas_path += 'katas/'
-    Katas.new(self, katas_path, @externals)
+    Katas.new(self, katas_path)
   end
 
 end

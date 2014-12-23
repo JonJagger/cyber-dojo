@@ -41,12 +41,10 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   end
 
   def stub_dojo
-    externals = {
-      :disk   => @disk   = thread[:disk  ] = SpyDisk.new,
-      :git    => @git    = thread[:git   ] = SpyGit.new,
-      :runner => @runner = thread[:runner] = StubTestRunner.new
-    }
-    @dojo = Dojo.new(root_path,externals)
+    @disk   = thread[:disk  ] = SpyDisk.new
+    @git    = thread[:git   ] = SpyGit.new
+    @runner = thread[:runner] = StubTestRunner.new
+    @dojo = Dojo.new(root_path)
   end
 
   def stub_language(language_name, unit_test_framework)

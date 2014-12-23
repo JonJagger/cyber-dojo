@@ -139,7 +139,7 @@ class AvatarTests < ModelTestBase
       language.path + support_filename,
       sandbox.path + support_filename
     ]
-    assert @disk.symlink_log.include?(expected_symlink), @disk.symlink_log.inspect
+    assert disk.symlink_log.include?(expected_symlink), disk.symlink_log.inspect
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
@@ -297,7 +297,7 @@ class AvatarTests < ModelTestBase
       assert saved_filenames.include?(filename)
     end
 
-    git_log = @git.log[sandbox.path]
+    git_log = git.log[sandbox.path]
     assert git_log.include?([ 'add', 'wibble.cs' ]), git_log.inspect
   end
 
@@ -336,7 +336,7 @@ class AvatarTests < ModelTestBase
     saved_filenames = filenames_written_to(sandbox.dir.log)
     assert !saved_filenames.include?('wibble.cs'), saved_filenames.inspect
 
-    git_log = @git.log[sandbox.path]
+    git_log = git.log[sandbox.path]
     assert git_log.include?([ 'rm', 'wibble.cs' ]), git_log.inspect
   end
 

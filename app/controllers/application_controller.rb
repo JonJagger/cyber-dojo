@@ -7,6 +7,7 @@ end
 # as some of them depend on loading previous ones
 
 require_dependencies %w{
+  Externals
   Docker
   TestRunner
     DockerTestRunner
@@ -37,6 +38,13 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
+  def initialize
+    super
+    thread[:disk] ||= disk
+    thread[:git] ||= git
+    thread[:runner] ||= runner
+  end
+
   def id
     path = root_path
     path += 'test/cyberdojo/' if ENV['CYBERDOJO_TEST_ROOT_DIR']
@@ -44,12 +52,7 @@ class ApplicationController < ActionController::Base
   end
 
   def dojo
-    externals = {
-      :runner => runner,
-      :disk   => disk,
-      :git    => git
-    }
-    @dojo ||= Dojo.new(root_path,externals)
+    @dojo ||= Dojo.new(root_path)
   end
 
   def katas
@@ -86,21 +89,6 @@ class ApplicationController < ActionController::Base
 
 protected
 
-  def runner
-    @runner ||= Thread.current[:runner]
-    @runner ||= DockerTestRunner.new if Docker.installed?
-    @runner ||= HostTestRunner.new unless ENV['CYBERDOJO_USE_HOST'].nil?
-    @runner ||= DummyTestRunner.new
-  end
-
-  def disk
-    @disk ||= Thread.current[:disk]
-    @disk ||= OsDisk.new
-  end
-
-  def git
-    @git ||= Thread.current[:git]
-    @git ||= Git.new
-  end
+  include Externals
 
 end

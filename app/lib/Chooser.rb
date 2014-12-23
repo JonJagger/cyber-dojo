@@ -2,7 +2,7 @@
 # When the [create] button is clicked (on home page) then if
 # there is an id present make the initial selection of the
 # language and the exercise on the create page the same as the
-# kata with that id - if they still exist.
+# kata with that id - if it still exists.
 # This helps to re-inforce the idea of repetition.
 
 module Chooser

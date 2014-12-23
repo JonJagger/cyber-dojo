@@ -1,9 +1,10 @@
 
 class Avatar
 
-  def initialize(kata,name,externals)
+  def initialize(kata,name)
+    raise_if_no([:disk,:git,:runner])
     raise 'Invalid Avatar(name)' if !Avatars.valid?(name)
-    @kata,@name,@externals = kata,name,externals
+    @kata,@name = kata,name
   end
 
   attr_reader :kata, :name
@@ -110,20 +111,9 @@ class Avatar
 
 private
 
+  include Externals
   include Cleaner
   include TimeNow
-
-  def disk
-    @externals[:disk]
-  end
-
-  def git
-    @externals[:git]
-  end
-
-  def runner
-    @externals[:runner]
-  end
 
   def increments
     @increments ||= JSON.parse(clean(dir.read('increments.json')))

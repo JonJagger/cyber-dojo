@@ -10,17 +10,15 @@ class ModelTestBase < Test::Unit::TestCase
   end
 
   def setup
-    external_doubles = {
-      :disk   => @disk = SpyDisk.new,
-      :git    => @git  = SpyGit.new,
-      :runner => StubTestRunner.new
-    }
-    @dojo = Dojo.new(root_path,external_doubles)
+    thread[:disk] = SpyDisk.new
+    thread[:git] = SpyGit.new
+    thread[:runner] = StubTestRunner.new
+    @dojo = Dojo.new(root_path)
     @max_duration = 15
   end
 
   def teardown
-    @disk.teardown
+    disk.teardown
   end
 
   def make_kata
@@ -37,11 +35,11 @@ class ModelTestBase < Test::Unit::TestCase
   end
 
   def path_ends_in_slash?(object)
-    object.path.end_with?(@disk.dir_separator)
+    object.path.end_with?(disk.dir_separator)
   end
 
   def path_has_adjacent_separators?(object)
-    doubled_separator = @disk.dir_separator * 2
+    doubled_separator = disk.dir_separator * 2
     object.path.scan(doubled_separator).length > 0
   end
 
@@ -55,4 +53,19 @@ class ModelTestBase < Test::Unit::TestCase
     define_method("test_#{name}".to_sym, &block)
   end
 
+  def disk
+    thread[:disk]
+  end
+
+  def git
+    thread[:git]
+  end
+
+  def runner
+    thread[:runner]
+  end
+
+  def thread
+    Thread.current
+  end
 end

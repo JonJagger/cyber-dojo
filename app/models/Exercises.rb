@@ -3,8 +3,8 @@ class Exercises
 
   include Enumerable
 
-  def initialize(path,disk)
-    @path,@disk = path,disk
+  def initialize(path)
+    @path = path
   end
 
   attr_reader :path
@@ -23,6 +23,8 @@ class Exercises
 
 private
 
+  include Externals
+
   def exercises
     @exercises ||= make_cache
   end
@@ -37,11 +39,11 @@ private
   end
 
   def make_exercise(name)
-    Exercise.new(path,name,@disk)
+    Exercise.new(path,name)
   end
 
   def dir
-    @disk[path]
+    disk[path]
   end
 
 end

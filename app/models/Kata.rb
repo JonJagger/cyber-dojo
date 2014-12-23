@@ -1,20 +1,21 @@
 
 class Kata
 
-  def initialize(katas,id,externals)
+  def initialize(katas,id)
     raise "Invalid Kata(id)" if !katas.valid?(id)
-    @katas,@id,@externals = katas,id,externals
+    raise_if_no([:disk, :git])
+    @katas,@id = katas,id
   end
 
   attr_reader :katas, :id
 
   def start_avatar(avatar_names = Avatars.names.shuffle)
-    avatar = nil
     started_avatar_names = avatars.collect { |avatar| avatar.name }
     unstarted_avatar_names = avatar_names - started_avatar_names
+    avatar = nil
     if unstarted_avatar_names != [ ]
       avatar_name = unstarted_avatar_names[0]
-      avatar = Avatar.new(self,avatar_name,@externals)
+      avatar = Avatar.new(self,avatar_name)
 
       avatar.dir.make
       git.init(avatar.path, '--quiet')
@@ -38,7 +39,8 @@ class Kata
         disk.symlink(from, to)
       end
 
-      avatar.commit(tag=0)
+      tag = 0
+      avatar.commit(tag)
     end
     avatar
   end
@@ -79,7 +81,7 @@ class Kata
   end
 
   def avatars
-    Avatars.new(self, @externals)
+    Avatars.new(self)
   end
 
   def created
@@ -97,17 +99,20 @@ class Kata
 
 private
 
+  include Externals
+  include Cleaner
+
   def manifest
     @manifest ||= JSON.parse(clean(dir.read('manifest.json')))
   end
 
-  def disk
-    @externals[:disk]
-  end
+  #def disk
+  #  @externals[:disk]
+  #end
 
-  def git
-    @externals[:git]
-  end
+  #def git
+  #  @externals[:git]
+  #end
 
   def earliest_light
     # time of first test
@@ -129,7 +134,5 @@ private
   def quoted(s)
     '"' + s + '"'
   end
-
-  include Cleaner
 
 end

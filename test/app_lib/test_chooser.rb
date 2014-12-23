@@ -8,12 +8,10 @@ class ChooseTests < CyberDojoTestBase
 
   def setup
     super
-    externals = {
-      :disk => OsDisk.new,
-      :git => Git.new,
-      :runner => DummyTestRunner.new
-    }
-    @dojo = Dojo.new(root_path,externals)
+    thread[:disk] = OsDisk.new
+    thread[:git] = Git.new
+    thread[:runner] = DummyTestRunner.new
+    @dojo = Dojo.new(root_path)
     @katas = @dojo.katas
   end
 

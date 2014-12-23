@@ -375,12 +375,8 @@ class LanguageTests < ModelTestBase
   end
 
   test 'custom runner that filters the language.runnable?' do
-    externals = {
-      :disk => SpyDisk.new,
-      :git => SpyGit.new,
-      :runner => CustomRunner.new(['yes'])
-    }
-    @dojo = Dojo.new(root_path,externals)
+    thread[:runner] = CustomRunner.new(['yes'])
+    @dojo = Dojo.new(root_path)
     assert @dojo.languages['yes'].runnable?
     assert !@dojo.languages['no'].runnable?
   end
@@ -389,12 +385,8 @@ class LanguageTests < ModelTestBase
 
   test 'DockerTestRunner.runnable?(language) is false ' +
        'when language does not have image_name set in manifest' do
-    externals = {
-      :disk => SpyDisk.new,
-      :git => SpyGit.new,
-      :runner => DockerTestRunner.new
-    }
-    @dojo = Dojo.new(root_path,externals)
+    thread[:runner] = DockerTestRunner.new
+    @dojo = Dojo.new(root_path)
     ruby = @dojo.languages['Ruby']
     ruby.dir.write(manifest_filename, { })
     assert !ruby.runnable?

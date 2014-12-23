@@ -7,13 +7,10 @@ class PieChartTests < CyberDojoTestBase
   include PieChartHelper
 
   test 'pie-chart from avatar.lights' do
-
-    externals = {
-      :disk => @disk = SpyDisk.new,
-      :git => @git = SpyGit.new,
-      :runner => StubTestRunner.new
-    }
-    @dojo = Dojo.new(root_path,externals)
+    thread[:disk] = SpyDisk.new
+    thread[:git] = SpyGit.new
+    thread[:runner] = StubTestRunner.new
+    @dojo = Dojo.new(root_path)
     kata = @dojo.katas['123456789A']
     lion = kata.avatars['lion']
     lion.dir.spy_read('increments.json', JSON.unparse([
