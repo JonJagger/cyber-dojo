@@ -106,14 +106,6 @@ private
     @manifest ||= JSON.parse(clean(dir.read('manifest.json')))
   end
 
-  #def disk
-  #  @externals[:disk]
-  #end
-
-  #def git
-  #  @externals[:git]
-  #end
-
   def earliest_light
     # time of first test
     Time.mktime(*avatars.active.map{|avatar| avatar.lights[0].time}.sort[0])

@@ -40,9 +40,8 @@ class ApplicationController < ActionController::Base
 
   def initialize
     super
-    thread[:disk] ||= disk
-    thread[:git] ||= git
-    thread[:runner] ||= runner
+    # put externals onto Thread.current
+    disk; git; runner
   end
 
   def id
