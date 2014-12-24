@@ -145,11 +145,12 @@ end
 # If this happens the difference between a Tag.new
 # and a Light.new will be more pronounced and I will
 # need something like this (where non test events
-# will have a new non ed/amber/green colour) ...
+# will have a new non red/amber/green colour) ...
 #
 # def lights
+#   rag = ['red','amber','green']
 #   increments.select{ |inc|
-#     ['red','amber','green'].include?(inc.colour)
+#     rag.include?(inc.colour)
 #   }.map { |inc|
 #     Light.new(self,inc)
 #   }
@@ -159,8 +160,6 @@ end
 # Invariants
 #
 # If the latest tag is N then increments.length == N
-#
-# increments.length is always one less than N
 #
 # The inclusive upper bound for n in avatar.tags[n] is
 # always the current length of increments.json (even if
