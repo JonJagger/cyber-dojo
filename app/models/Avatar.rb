@@ -30,12 +30,6 @@ class Avatar
     exists? && lights.count > 0
   end
 
-  def sandbox
-    Sandbox.new(self,disk)
-  end
-
-  #- - - - - - - - - - - - - - -
-
   def tags
     # See comment below.
     (0..increments.length).map{ |n| Tag.new(self,n,git) }
@@ -44,6 +38,12 @@ class Avatar
   def lights
     # See comment below.
     increments.map { |inc| Light.new(self,inc) }
+  end
+
+  def visible_files
+    # equivalent to tags[-1].visible_files but much easier
+    # to test (faking files is easier than faking git)
+    JSON.parse(clean(dir.read('manifest.json')))
   end
 
   #- - - - - - - - - - - - - - -
@@ -103,10 +103,8 @@ class Avatar
     git.tag(path, "-m '#{tag}' #{tag} HEAD")
   end
 
-  def visible_files
-    # equivalent to tags[-1].visible_files but much easier
-    # to test (faking files is easier than faking git)
-    JSON.parse(clean(dir.read('manifest.json')))
+  def sandbox
+    Sandbox.new(self)
   end
 
 private
