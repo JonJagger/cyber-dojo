@@ -12,10 +12,4 @@ class DojoTests < ModelTestBase
     assert_equal 'fake/', Dojo.new('fake').path
   end
 
-  #test 'ctor raises if path does not end in /' do
-  #  assert_raise RuntimeError do
-  #    Dojo.new('fake')
-  #  end
-  #end
-
 end

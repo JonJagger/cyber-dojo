@@ -52,10 +52,10 @@ kata = dojo.katas['34D6E7823E']
 kata.avatars.each {|avatar| ... }
 lion = kata.avatars['lion']
 ...
-lion.tags.each {|tag| ...}
+lion.tags.each {|tag| ... }
 tag = lion.tags[3]
 ...
-lion.lights.each{|light| ...}
+lion.lights.each{|light| ... }
 light = lion.lights[5]
 </code>
 
