@@ -24,13 +24,16 @@ module Externals # mixin
   end
 
   def raise_if_no(keys)
+    externals = [:disk,:git,:runner]
     keys.each { |key|
-      raise RuntimeError.new("unknown " + key.to_s) unless
-        [:disk,:git, :runner].include?(key)
+      raise error("unknown " + key.to_s) unless externals.include?(key)
     }
     keys.each { |key|
-      raise RuntimeError.new("no external " + key.to_s) if
-        thread[key].nil? }
+      raise error("no external " + key.to_s) if thread[key].nil?
+    }
   end
 
+  def error(message)
+    RuntimeError.new(message)
+  end
 end
