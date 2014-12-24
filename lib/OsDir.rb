@@ -6,7 +6,7 @@ class OsDir
   def initialize(disk,path)
     @disk,@path = disk,path
     dir_separator = @disk.dir_separator
-    @path += dir_separator if @path[-1] != dir_separator
+    @path += dir_separator unless @path.end_with?(dir_separator)
   end
 
   attr_reader :path

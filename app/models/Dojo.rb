@@ -4,7 +4,7 @@
 class Dojo
 
   def initialize(path)
-    raise RuntimeError.new("path must end in /") if !path.end_with?('/')
+    path += '/' unless path.end_with?('/')
     @path = path
   end
 
@@ -20,10 +20,8 @@ class Dojo
 
   def katas
     katas_path = @path
-    if ENV['CYBERDOJO_TEST_ROOT_DIR']
-      # see test/languages/one_language_checker.rb
-      katas_path += 'test/cyberdojo/'
-    end
+    # see test/languages/one_language_checker.rb
+    katas_path += 'test/cyberdojo/' if ENV['CYBERDOJO_TEST_ROOT_DIR']
     katas_path += 'katas/'
     Katas.new(self, katas_path)
   end
