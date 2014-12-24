@@ -6,7 +6,11 @@ class OsDisk
   end
 
   def is_dir?(name)
-    File.directory?(name) && !name.end_with?('.') && !name.end_with?('..')
+    File.directory?(name) && !dotted?(name)
+  end
+
+  def dotted?(name)
+    name.end_with?('.')
   end
 
   def [](name)

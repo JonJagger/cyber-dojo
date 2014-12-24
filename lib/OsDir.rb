@@ -18,7 +18,7 @@ class OsDir
   end
 
   def exists?(filename = nil)
-    return File.directory?(path) if filename == nil
+    return File.directory?(path) if filename.nil?
     return File.exists?(path + filename)
   end
 
