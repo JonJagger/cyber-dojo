@@ -43,8 +43,4 @@ private
     Language.new(path,name)
   end
 
-  def dir
-    disk[path]
-  end
-
 end

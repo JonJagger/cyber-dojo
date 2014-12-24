@@ -3,12 +3,13 @@
 
 class Tag
 
-  def initialize(avatar,n,git)
-    @avatar,@n,@git = avatar,n,git
+  def initialize(avatar,n)
+    raise_if_no([:git])
+    @avatar,@n = avatar,n
   end
 
   def visible_files
-    @manifest ||= JSON.parse(clean(@git.show(@avatar.path, "#{@n}:manifest.json")))
+    @manifest ||= JSON.parse(clean(git.show(@avatar.path, "#{@n}:manifest.json")))
   end
 
   def output
@@ -19,13 +20,14 @@ class Tag
 
   def diff(m)
     command = "--ignore-space-at-eol --find-copies-harder #{@n} #{m} sandbox"
-    diff_lines = clean(@git.diff(@avatar.path, command))
+    diff_lines = clean(git.diff(@avatar.path, command))
     visible_files = @avatar.tags[m].visible_files
     git_diff(diff_lines, visible_files)
   end
 
 private
 
+  include Externals
   include Cleaner
   include GitDiff
 

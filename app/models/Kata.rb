@@ -49,10 +49,6 @@ class Kata
     @katas.path + outer(id) + '/' + inner(id) + '/'
   end
 
-  def dir
-    disk[path]
-  end
-
   def exists?
     dir.exists?
   end

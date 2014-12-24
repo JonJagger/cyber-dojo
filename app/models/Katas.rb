@@ -1,6 +1,6 @@
 
 class Katas
-
+  
   include Enumerable
 
   def initialize(dojo,path)

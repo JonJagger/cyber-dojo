@@ -27,10 +27,6 @@ class Exercise
     clean(dir.read(instructions_filename))
   end
 
-  def dir
-    disk[path]
-  end
-
   def path
     @path + name + '/'
   end

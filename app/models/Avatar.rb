@@ -13,10 +13,6 @@ class Avatar
     kata.path + name + '/'
   end
 
-  def dir
-    disk[path]
-  end
-
   def exists?
     dir.exists?
   end
@@ -32,7 +28,7 @@ class Avatar
 
   def tags
     # See comment below.
-    (0..increments.length).map{ |n| Tag.new(self,n,git) }
+    (0..increments.length).map{ |n| Tag.new(self,n) }
   end
 
   def lights

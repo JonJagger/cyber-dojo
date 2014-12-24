@@ -127,10 +127,6 @@ class Language
     end
   end
 
-  def dir
-    disk[path]
-  end
-
   def path
     @path + name + '/'
   end

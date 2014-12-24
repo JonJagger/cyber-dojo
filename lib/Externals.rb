@@ -1,5 +1,9 @@
 
-module Externals
+module Externals # mixin
+
+  def dir
+    disk[path]
+  end
 
   def disk
     thread[:disk] ||= OsDisk.new

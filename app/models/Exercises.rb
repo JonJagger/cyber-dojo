@@ -42,8 +42,4 @@ private
     Exercise.new(path,name)
   end
 
-  def dir
-    disk[path]
-  end
-
 end

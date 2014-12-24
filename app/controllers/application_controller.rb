@@ -40,8 +40,7 @@ class ApplicationController < ActionController::Base
 
   def initialize
     super
-    # put externals onto Thread.current
-    disk; git; runner
+    disk; git; runner # put externals onto Thread.current
   end
 
   def id
