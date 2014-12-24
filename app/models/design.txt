@@ -9,7 +9,7 @@ exercise.
 
 A key cyber-dojo feature is the ability to review the [test]
 events, diff by diff. Each [test] event causes a 'git commit'
-plus a 'git tag' to execute in the animals git repo. 
+plus a 'git tag' to execute in the animals git repo.
 The [test] <-> [test] diffs are obtained via a 'git diff' command.
 Thus cyber-dojo implements persistence using plain disk files and
 does not use a database.
@@ -17,12 +17,11 @@ does not use a database.
 You create a dojo object like this...
 
 <code>
-externals = {
-  :disk => OsDisk.new,
-  :git => Git.new,
-  :runner => DockerTestRunner.new
-}
-dojo = Dojo.new(root_path,externals)
+thread = Thread.current
+thread[:disk] = OsDisk.new
+thread[:git] = Git.new
+thread[:runner] = DockerTestRunner.new
+dojo = Dojo.new(root_path)
 </code>
 
 The live root_path is
@@ -63,5 +62,5 @@ light = lion.lights[5]
 
 <code>
 src = dojo.katas['34D6E7823E'].avatars['lion'].tags[6].visible_files['wibble.h']
-src = dojo.katas['34D6E7823E'].avatars['lion'].light[3].colour
+colour = dojo.katas['34D6E7823E'].avatars['lion'].lights[3].colour
 </code>
