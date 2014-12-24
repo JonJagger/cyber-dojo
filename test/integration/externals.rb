@@ -8,11 +8,8 @@ module Externals
   end
 
   def runner
-    if Docker.installed?
-      DockerTestRunner.new
-    else
-      HostTestRunner.new
-    end
+    return DockerTestRunner.new if Docker.installed?
+    return HostTestRunner.new
   end
 
 end

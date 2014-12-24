@@ -6,7 +6,6 @@ require_relative 'externals'
 class SandboxTests < CyberDojoTestBase
 
   include Externals
-  include TimeNow
 
   def setup
     super
@@ -19,8 +18,6 @@ class SandboxTests < CyberDojoTestBase
 
     kata = make_kata(@dojo, 'Ruby-TestUnit')
     avatar = kata.start_avatar
-    sandbox = avatar.sandbox
-
     visible_files = avatar.tags[0].visible_files
 
     delta = {
