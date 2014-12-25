@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
   end
 
   def id
-    @id ||= Folders::id_complete(katas.path, params[:id]) || ''
+    @id ||= katas.complete(params[:id])
   end
 
   def kata
@@ -81,10 +81,10 @@ class ApplicationController < ActionController::Base
 
 private
 
+  include Externals
+
   def root_path
     Rails.root.to_s
   end
-
-  include Externals
 
 end

@@ -1,6 +1,6 @@
 
 class Katas
-  
+
   include Enumerable
 
   def initialize(dojo,path)
@@ -52,6 +52,10 @@ class Katas
   def [](id)
     # dojo.katas[id]
     Kata.new(self,id)
+  end
+
+  def complete(id)
+    Folders::id_complete(path, id) || ''
   end
 
   def valid?(id)
