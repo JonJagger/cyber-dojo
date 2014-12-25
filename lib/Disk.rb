@@ -45,7 +45,7 @@ module Disk # mixin module
 private
 
   def slashed(path)
-    path[-1] === dir_separator ? path : path + dir_separator
+    path.end_with?(dir_separator) ? path : path + dir_separator
   end
 
 end

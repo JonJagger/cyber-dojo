@@ -2,7 +2,7 @@
 class FakeDir
   include Enumerable
 
-  def initialize(disk, dir)
+  def initialize(disk,dir)
     @disk,@dir = disk,dir
   end
 
@@ -23,9 +23,9 @@ class FakeDir
   # - - - - - - - - - - - - - - -
 
   def exists?(filename = '')
-    return false if @repo === nil   # no mk_dir -> dir().make yet
+    return false if @repo.nil?      # no mk_dir -> dir().make yet
     return true  if filename === '' # the repo exists for the dir
-    return @repo[filename] != nil
+    return !@repo[filename].nil?
   end
 
   # - - - - - - - - - - - - - - -
@@ -46,8 +46,8 @@ class FakeDir
   # - - - - - - - - - - - - - - -
 
   def read(filename)
-    assert @repo != nil, "read('#{filename}') no file"
-    assert @repo[filename] != nil, "read('#{filename}') no file"
+    assert !@repo.nil?, "read('#{filename}') no file"
+    assert !@repo[filename].nil?, "read('#{filename}') no file"
     content = @repo[filename]
     content
   end
@@ -64,7 +64,7 @@ private
     assert content.class != String,
       "write('#{filename}',content.class != String)"
   end
-  
+
   def assert(truth, message)
     raise "FakeDir['#{@dir}'].#{message}" if !truth
   end

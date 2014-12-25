@@ -1,4 +1,20 @@
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+application_controller.rb has id completion.
+This should go into dojo.katas
+And it can use sub-dir enumeration (.each) to
+gather candidates. This should mean FakeDisk to
+be used in tests.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+I could hang root_path off the current thread.
+This would remove special case handling (for testing)
+in application_controller.rb and Dojo.rb
+I think I will need two paths. One for the root
+of languages and exercises. And one for the root
+of katas. Maybe have three paths?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Dojo.rb
+  convert path to absolute path if its not
+  ensure path exists on disk
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Suppose I clone the server and switch over to it.
 Since the clone is not instant, I cannot avoid the
@@ -44,7 +60,7 @@ Is there an api to tell if any of your containers have been
 updated on the index? If so I could use to issue a warning.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Think about switching from AWS to Digital Ocean (DO). Much cheaper.
-Issues... cant stop start a server. Would I need a second test-bed
+Issues... cant stop-start a server. Would I need a second test-bed
 server and would it have to be up all the time? How would I transfer
 all the dojos from AWS to DO? Answer is via a recent clone.
 Also backups? How do you do a backup on DO? It seems you have
@@ -105,8 +121,6 @@ put animal images on front page?
 Put the ones that are in the dojo (with the entered id)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rename tests/integration  folder to tests/externals
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Add tests for new Avatar.visible_files method.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 http://localhost:3000/kata/edit/0B416E9012?avatar=zebra
 could be simplified to
@@ -208,13 +222,6 @@ file which is eval'd. Then I could have a map where the keys
 were the unit_test_framework string and the values were the
 functions. Each language/ folder would have its own colour.rb
 file which would somehow insert itself into the map.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Dojo.rb
-  convert path to absolute path if its not
-  convert path to ensure it ends in /
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-lib/Docker.rb uses 'docker info' and not 'docker --version'
-is this the cause of the [create] page slowdown?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 s/parse_NAME/colour_of_NAME/
 in app/lib/OutputParser.rb (rename to OutputColour.rb)
