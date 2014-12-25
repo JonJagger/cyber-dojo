@@ -1,3 +1,4 @@
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 application_controller.rb has id completion.
 This should go into dojo.katas

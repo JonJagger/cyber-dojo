@@ -44,9 +44,7 @@ class ApplicationController < ActionController::Base
   end
 
   def id
-    path = root_path
-    path += 'test/cyberdojo/' if ENV['CYBERDOJO_TEST_ROOT_DIR']
-    @id ||= Folders::id_complete(path + 'katas/', params[:id]) || ''
+    @id ||= Folders::id_complete(katas.path, params[:id]) || ''
   end
 
   def dojo

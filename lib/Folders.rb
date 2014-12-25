@@ -19,7 +19,7 @@ module Folders
     id
   end
 
-  # TODO: refactor this to katas.complete(id)
+  # TODO: refactor this to dojo.katas.complete(id)
   # this will mean I need a Disk.match(path)
   # feature - currently the Disk design has enforced
   # end-slash on Disk.subdirs()
