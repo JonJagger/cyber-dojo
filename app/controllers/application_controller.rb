@@ -43,16 +43,16 @@ class ApplicationController < ActionController::Base
     disk; git; runner # put externals onto Thread.current
   end
 
-  def id
-    @id ||= Folders::id_complete(katas.path, params[:id]) || ''
-  end
-
   def dojo
     @dojo ||= Dojo.new(root_path)
   end
 
   def katas
     dojo.katas
+  end
+
+  def id
+    @id ||= Folders::id_complete(katas.path, params[:id]) || ''
   end
 
   def kata
@@ -79,11 +79,11 @@ class ApplicationController < ActionController::Base
     params['now_tag']
   end
 
-  def root_path
-    Rails.root.to_s + '/'
-  end
+private
 
-protected
+  def root_path
+    Rails.root.to_s
+  end
 
   include Externals
 
