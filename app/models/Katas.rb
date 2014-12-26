@@ -36,27 +36,19 @@ class Katas
 
   def each
     # dojo.katas.each {|kata| ...}
-    disk[path].each do |outer_dir|
-      outer_path = File.join(path, outer_dir)
+    disk[path].each do |outer_dir,outer_path|
       if disk.is_dir?(outer_path)
-        disk[outer_path].each do |inner_dir|
-          inner_path = File.join(outer_path, inner_dir)
+        disk[outer_path].each do |inner_dir,inner_path|
           if disk.is_dir?(inner_path)
             yield self[outer_dir + inner_dir]
           end
         end
       end
     end
-    # disk[path].each(:dir) do |outer_dir,outer_path|
-    #   disk[outer_path].each(:dir) do |inner_dir,_|
-    #     yield self[outer_dir + inner_dir]
-    #   end
-    # end
   end
 
   def complete(id)
     Folders::id_complete(path, id) || ''
-    # Put a glob() method into lib/OsDir.rb and lib/FakeDir.rb
   end
 
   def [](id)

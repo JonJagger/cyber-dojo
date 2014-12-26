@@ -10,8 +10,8 @@ class SpyDiskTests < CyberDojoTestBase
     disk[path + 'a']
     disk[path + 'b']
     disk[path + 'b/c']
-    assert_equal ['a','b'], disk['spied'].entries.sort
-    assert_equal ['a','b'], disk['spied/'].entries.sort
+    assert_equal [['a','spied/a'],['b','spied/b']], disk['spied'].entries.sort
+    assert_equal [['a','spied/a'],['b','spied/b']], disk['spied/'].entries.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - -

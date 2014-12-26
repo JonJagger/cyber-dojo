@@ -13,7 +13,7 @@ class OsDir
 
   def each
     Dir.entries(path).each do |name|
-      yield name if block_given?
+      yield name,File.join(path,name) if block_given?
     end
   end
 

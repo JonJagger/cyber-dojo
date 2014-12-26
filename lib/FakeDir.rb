@@ -12,7 +12,7 @@ class FakeDir
 
   def each
     @disk.subdirs_each(self) do |subdir|
-      yield subdir
+      yield subdir,File.join(path,subdir)
     end
   end
 

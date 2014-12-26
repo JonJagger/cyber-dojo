@@ -23,7 +23,7 @@ class SpyDir
 
   def each
     @disk.subdirs_each(self) do |subdir|
-      yield subdir if block_given?
+      yield subdir,File.join(path,subdir) if block_given?
     end
   end
 
