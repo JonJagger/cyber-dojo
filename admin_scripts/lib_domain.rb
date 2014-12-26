@@ -14,7 +14,9 @@ require_filenames %w{
   Cleaner UniqueId TimeNow
   OsDisk OsDir
   Git GitDiff
+  Docker
   DockerTestRunner DummyTestRunner
+  Externals
   Dojo
   Languages Language
   Exercises Exercise
@@ -26,12 +28,11 @@ require_filenames %w{
 require 'json'
 
 def create_dojo
-  externals = {
-    :disk   => OsDisk.new,
-    :git    => Git.new,
-    :runner => DockerTestRunner.new
-  }
-  Dojo.new(CYBERDOJO_HOME_DIR,externals)
+  thread = Thread.current
+  thread[:disk] = OsDisk.new
+  thread[:git] = Git.new
+  thread[:runner] = DockerTestRunner.new
+  Dojo.new(CYBERDOJO_HOME_DIR)
 end
 
 def number(value,width)

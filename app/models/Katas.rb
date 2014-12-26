@@ -47,6 +47,16 @@ class Katas
         end
       end
     end
+    # disk[path].each(:dir) do |outer_dir,outer_path|
+    #   disk[outer_path].each(:dir) do |inner_dir,_|
+    #     yield self[outer_dir + inner_dir]
+    #   end
+    # end
+  end
+
+  def complete(id)
+    Folders::id_complete(path, id) || ''
+    # Put a glob() method into lib/OsDir.rb and lib/FakeDir.rb
   end
 
   def [](id)
@@ -54,14 +64,10 @@ class Katas
     Kata.new(self,id)
   end
 
-  def complete(id)
-    Folders::id_complete(path, id) || ''
-  end
-
   def valid?(id)
     id.class.name === 'String' &&
     id.length === 10 &&
-    id.chars.all?{|char| is_hex?(char)}
+    id.chars.all?{ |char| is_hex?(char) }
   end
 
   def exists?(id)

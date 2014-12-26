@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
   end
 
   def dojo
-    @dojo ||= Dojo.new(root_path)
+    @dojo ||= Dojo.new(Rails.root.to_s)
   end
 
   def katas
@@ -82,9 +82,5 @@ class ApplicationController < ActionController::Base
 private
 
   include Externals
-
-  def root_path
-    Rails.root.to_s
-  end
 
 end
