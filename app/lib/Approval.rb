@@ -4,7 +4,7 @@ module Approval
 
   def self.add_created_txt_files(test_run_dir, visible_files)
     txt_files = self.in(test_run_dir).select do |entry|
-      entry != '.' && entry != '..' && entry.end_with?('.txt')
+      entry.end_with?('.txt')
     end
     txt_files.each do |filename|
       pathed_filename = Pathname.new(test_run_dir).join(filename)
@@ -26,7 +26,10 @@ module Approval
   end
 
   def self.in(path)
-    Dir.entries(path).select { |name| name != '.' and name != '..' }
+    Dir.entries(path).select { |name| !dotted?(name) }
   end
 
+  def self.dotted?(name)
+    name === '.' || name === '..'
+  end
 end
