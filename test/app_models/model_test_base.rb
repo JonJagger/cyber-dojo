@@ -10,15 +10,11 @@ class ModelTestBase < Test::Unit::TestCase
   end
 
   def setup
-    thread[:disk] = SpyDisk.new
+    thread[:disk] = FakeDisk.new
     thread[:git] = SpyGit.new
     thread[:runner] = StubTestRunner.new
     @dojo = Dojo.new(root_path)
     @max_duration = 15
-  end
-
-  def teardown
-    disk.teardown
   end
 
   def make_kata
@@ -27,10 +23,10 @@ class ModelTestBase < Test::Unit::TestCase
         'wibble.cpp' => '#include "wibble.hpp"'
     }
     language = @dojo.languages['test-C++-Catch']
-    language.dir.spy_read('manifest.json', { :visible_filenames => visible_files.keys })
-    visible_files.each {|filename,content| language.dir.spy_read(filename, content) }
+    language.dir.write('manifest.json', { :visible_filenames => visible_files.keys })
+    visible_files.each { |filename,content| language.dir.write(filename, content) }
     exercise = @dojo.exercises['test_Yahtzee']
-    exercise.dir.spy_read('instructions', 'your task...')
+    exercise.dir.write('instructions', 'your task...')
     @dojo.katas.create_kata(language, exercise)
   end
 

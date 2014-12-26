@@ -26,7 +26,7 @@ class AvatarTests < ModelTestBase
   test 'avatar is not active? when it has zero traffic-lights' do
     kata = @dojo.katas[id]
     lion = kata.avatars['lion']
-    lion.dir.spy_read('increments.json', JSON.unparse([]))
+    lion.dir.write('increments.json', [])
     assert !lion.active?
   end
 
@@ -35,13 +35,13 @@ class AvatarTests < ModelTestBase
   test 'avatar is active? when it has one traffic-light' do
     kata = @dojo.katas[id]
     lion = kata.avatars['lion']
-    lion.dir.spy_read('increments.json', JSON.unparse([
+    lion.dir.write('increments.json', [
       {
         'colour' => 'red',
         'time' => [2014, 2, 15, 8, 54, 6],
         'number' => 1
       }
-    ]))
+    ])
     assert lion.active?
   end
 
@@ -50,7 +50,7 @@ class AvatarTests < ModelTestBase
   test 'avatar is active? when it has 2 or more traffic-lights' do
     kata = @dojo.katas[id]
     lion = kata.avatars['lion']
-    lion.dir.spy_read('increments.json', JSON.unparse([
+    lion.dir.write('increments.json', [
       {
         'colour' => 'red',
         'time' => [2014, 2, 15, 8, 54, 6],
@@ -61,7 +61,7 @@ class AvatarTests < ModelTestBase
         'time' => [2014, 2, 15, 8, 54, 34],
         'number' => 2
       }
-      ]))
+      ])
     assert lion.active?
   end
 
@@ -100,25 +100,24 @@ class AvatarTests < ModelTestBase
       'wibble.c' => '#include "wibble.h"'
     }
     visible_files.each do |filename,content|
-      language.dir.spy_read(filename, content)
+      language.dir.write(filename, content)
     end
 
     support_filename = 'lib.a'
-    language.dir.spy_read('manifest.json', {
+    language.dir.write('manifest.json', {
       :unit_test_framework => 'assert',
       :visible_filenames => visible_files.keys,
       :support_filenames => [ support_filename ]
     })
     exercise = @dojo.exercises['test_Yahtzee']
-    exercise.dir.spy_read('instructions', 'your task...')
+    exercise.dir.write('instructions', 'your task...')
 
     kata = @dojo.katas.create_kata(language, exercise)
     avatar = kata.start_avatar
     sandbox = avatar.sandbox
 
     visible_files.each do |filename,content|
-      assert sandbox.dir.log.include?(['write',filename,content]),
-        sandbox.dir.log.inspect
+      assert_equal content, sandbox.dir.read(filename)
     end
 
     avatar = kata.start_avatar
@@ -129,17 +128,16 @@ class AvatarTests < ModelTestBase
     expected_manifest['output'] = ''
     expected_manifest['instructions'] = 'your task...'
 
-    assert avatar.dir.log.include?(['write','manifest.json', JSON.unparse(expected_manifest)]),
-        avatar.dir.log.inspect
-    assert avatar.dir.log.include?(['write','increments.json', JSON.unparse([ ])]),
-        avatar.dir.log.inspect
+    assert_equal expected_manifest, JSON.parse(avatar.dir.read('manifest.json'))
+    assert_equal [ ], JSON.parse(avatar.dir.read('increments.json'))
 
-    expected_symlink = [
-      'symlink',
-      language.path + support_filename,
-      sandbox.path + support_filename
-    ]
-    assert disk.symlink_log.include?(expected_symlink), disk.symlink_log.inspect
+    #???
+    #expected_symlink = [
+    #  'symlink',
+    #  language.path + support_filename,
+    #  sandbox.path + support_filename
+    #]
+    #assert disk.symlink_log.include?(expected_symlink), disk.symlink_log.inspect
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
@@ -169,9 +167,9 @@ class AvatarTests < ModelTestBase
       :language => language.name,
       :unit_test_framework => 'cassert'
     }
-    language.dir.spy_read('manifest.json', manifest)
-    kata.dir.spy_read('manifest.json', manifest)
-    avatar.dir.spy_read('increments.json', JSON.unparse([]))
+    language.dir.write('manifest.json', manifest)
+    kata.dir.write('manifest.json', manifest)
+    avatar.dir.write('increments.json', [])
 
     time_limit = 15
     avatar.test(delta, visible_files, time_limit, time_now)
@@ -179,8 +177,7 @@ class AvatarTests < ModelTestBase
 
     assert_equal 'stubbed-output', output
     assert visible_files.keys.include?('output')
-    saved_filenames = filenames_written_to(sandbox.dir.log)
-    assert saved_filenames.include?('output')
+    assert_equal output, sandbox.dir.read('output')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -208,17 +205,16 @@ class AvatarTests < ModelTestBase
       :language => language.name,
       :unit_test_framework => 'cassert'
     }
-    language.dir.spy_read('manifest.json', manifest)
-    kata.dir.spy_read('manifest.json', manifest)
-    avatar.dir.spy_read('increments.json', JSON.unparse([]))
+    language.dir.write('manifest.json', manifest)
+    kata.dir.write('manifest.json', manifest)
+    avatar.dir.write('increments.json', [])
 
     time_limit = 15
     avatar.test(delta, visible_files, time_limit, time_now)
 
-    log = sandbox.dir.log
-
-    assert log.include?(['write','untitled.cs', 'content for code file' ]), log.inspect
-    assert log.include?(['write','untitled.test.cs', 'content for test file' ]), log.inspect
+    delta[:new].each do |filename|
+      assert_equal visible_files[filename], sandbox.dir.read(filename)
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -246,18 +242,16 @@ class AvatarTests < ModelTestBase
       :language => language.name,
       :unit_test_framework => 'cassert'
     }
-    language.dir.spy_read('manifest.json', manifest)
-    kata.dir.spy_read('manifest.json', manifest)
-    avatar.dir.spy_read('increments.json', JSON.unparse([]))
+    language.dir.write('manifest.json', manifest)
+    kata.dir.write('manifest.json', manifest)
+    avatar.dir.write('increments.json', [])
 
     time_limit = 15
     avatar.test(delta, visible_files, time_limit, time_now)
 
-    saved_filenames = filenames_written_to(sandbox.dir.log)
-    delta[:changed].each do |filename|
-      assert saved_filenames.include?(filename)
+    delta[:unchanged].each do |filename|
+      assert !sandbox.dir.exists?(filename)
     end
-
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -285,16 +279,15 @@ class AvatarTests < ModelTestBase
       :language => language.name,
       :unit_test_framework => 'cassert'
     }
-    language.dir.spy_read('manifest.json', manifest)
-    kata.dir.spy_read('manifest.json', manifest)
-    avatar.dir.spy_read('increments.json', JSON.unparse([]))
+    language.dir.write('manifest.json', manifest)
+    kata.dir.write('manifest.json', manifest)
+    avatar.dir.write('increments.json', [])
 
     time_limit = 15
     avatar.test(delta, visible_files, time_limit, time_now)
 
-    saved_filenames = filenames_written_to(sandbox.dir.log)
     delta[:new].each do |filename|
-      assert saved_filenames.include?(filename)
+      assert_equal visible_files[filename], sandbox.dir.read(filename)
     end
 
     git_log = git.log[sandbox.path]
@@ -326,15 +319,12 @@ class AvatarTests < ModelTestBase
       :language => language.name,
       :unit_test_framework => 'cassert'
     }
-    language.dir.spy_read('manifest.json', manifest)
-    kata.dir.spy_read('manifest.json', manifest)
-    avatar.dir.spy_read('increments.json', JSON.unparse([]))
+    language.dir.write('manifest.json', manifest)
+    kata.dir.write('manifest.json', manifest)
+    avatar.dir.write('increments.json', [])
 
     time_limit = 15
     avatar.test(delta, visible_files, time_limit, time_now)
-
-    saved_filenames = filenames_written_to(sandbox.dir.log)
-    assert !saved_filenames.include?('wibble.cs'), saved_filenames.inspect
 
     git_log = git.log[sandbox.path]
     assert git_log.include?([ 'rm', 'wibble.cs' ]), git_log.inspect

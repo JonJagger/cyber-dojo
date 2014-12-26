@@ -33,7 +33,7 @@ class LanguagesTests < ModelTestBase
   def stub_exists(languages_names)
     languages_names.each do |name|
       language = languages[name]
-      language.dir.spy_exists?('manifest.json')
+      language.dir.write('manifest.json', [])
     end
   end
 

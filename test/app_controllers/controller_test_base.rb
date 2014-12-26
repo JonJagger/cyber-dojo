@@ -25,7 +25,6 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   end
 
   def teardown
-    @disk.teardown if !@disk.nil?
     thread[:disk] = nil
     thread[:git] = nil
     thread[:runner] = nil
@@ -41,7 +40,7 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   end
 
   def stub_dojo
-    @disk   = thread[:disk  ] = SpyDisk.new
+    @disk   = thread[:disk  ] = FakeDisk.new
     @git    = thread[:git   ] = SpyGit.new
     @runner = thread[:runner] = StubTestRunner.new
     @dojo = Dojo.new(root_path)
@@ -49,19 +48,19 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
 
   def stub_language(language_name, unit_test_framework)
     language = @dojo.languages[language_name]
-    language.dir.spy_read('manifest.json', {
+    language.dir.write('manifest.json', {
         'unit_test_framework' => unit_test_framework
     })
   end
 
   def stub_exercise(exercise_name)
     exercise = @dojo.exercises[exercise_name]
-    exercise.dir.spy_read('instructions', 'your task...')
+    exercise.dir.write('instructions', 'your task...')
   end
 
   def stub_kata(id, language_name, exercise_name)
     kata = @dojo.katas[id]
-    kata.dir.spy_read('manifest.json', {
+    kata.dir.write('manifest.json', {
       :language => language_name,
       :exercise => exercise_name
     })

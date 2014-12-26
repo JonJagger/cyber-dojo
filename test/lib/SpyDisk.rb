@@ -1,5 +1,5 @@
 
-class SpyDisk
+class WasSpyDisk
   include Disk
 
   def teardown

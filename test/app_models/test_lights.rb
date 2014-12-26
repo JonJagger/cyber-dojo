@@ -38,7 +38,7 @@ class LightsTests < ModelTestBase
         'number' => 3
       }
     ]
-    avatar.dir.spy_read('increments.json', JSON.unparse(incs))
+    avatar.dir.write('increments.json', incs)
     lights = avatar.lights
     assert_equal 3, lights.count
 

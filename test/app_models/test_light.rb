@@ -100,7 +100,7 @@ class LightTests < ModelTestBase
         'number' => 3
       }
     ]
-    avatar.dir.spy_read('increments.json', JSON.unparse(incs))
+    avatar.dir.write('increments.json', incs)
   end
 
   def dummy_avatar

@@ -15,7 +15,6 @@ class ForkerControllerTest < ControllerTestBase
     assert_reason_is('id')
     assert_nil forked_kata_id
     assert_equal({ }, @git.log)
-    @disk.teardown
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -30,7 +29,7 @@ class ForkerControllerTest < ControllerTestBase
     kata = @dojo.katas[id]
 
     language = @dojo.languages['does-not-exist']
-    kata.dir.spy_read('manifest.json', { :language => language.name })
+    kata.dir.write('manifest.json', { :language => language.name })
 
     fork(:json,id,'hippo',1)
 
@@ -39,7 +38,6 @@ class ForkerControllerTest < ControllerTestBase
     assert_equal language.name, json['language']
     assert_nil forked_kata_id
     assert_equal({ }, @git.log)
-    @disk.teardown
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -52,11 +50,11 @@ class ForkerControllerTest < ControllerTestBase
 
     language = @dojo.languages['Ruby-installed-and-working']
     language.dir.make
-    language.dir.spy_exists?('manifest.json')
+    language.dir.write('manifest.json', {})
 
     id = '1234512345'
     kata = @dojo.katas[id]
-    kata.dir.spy_read('manifest.json', { :language => language.name })
+    kata.dir.write('manifest.json', { :language => language.name })
 
     fork(:json,id,'hippo',1)
 
@@ -65,7 +63,6 @@ class ForkerControllerTest < ControllerTestBase
     assert_equal 'hippo', json['avatar']
     assert_nil forked_kata_id
     assert_equal({ }, @git.log)
-    @disk.teardown
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -89,12 +86,12 @@ class ForkerControllerTest < ControllerTestBase
     language_name = 'Ruby-installed-and-working'
     language = @dojo.languages[language_name]
     language.dir.make
-    language.dir.spy_exists?('manifest.json')
+    language.dir.write('manifest.json', {})
 
     id = '1234512345'
     kata = @dojo.katas[id]
     kata.dir.make
-    kata.dir.spy_read('manifest.json', { :language => language_name })
+    kata.dir.write('manifest.json', { :language => language_name })
 
     avatar_name = 'hippo'
     avatar = kata.avatars[avatar_name]
@@ -110,8 +107,6 @@ class ForkerControllerTest < ControllerTestBase
     assert_reason_is('tag')
     assert_nil forked_kata_id
     assert_equal({ }, @git.log)
-
-    @disk.teardown
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -128,11 +123,11 @@ class ForkerControllerTest < ControllerTestBase
     old_language_name = 'C#'
     new_language_name = 'C#-NUnit'
 
-    kata.dir.spy_read('manifest.json', {
+    kata.dir.write('manifest.json', {
       :language => old_language_name
     })
     language = @dojo.languages[new_language_name]
-    language.dir.spy_read('manifest.json', {
+    language.dir.write('manifest.json', {
       'unit_test_framework' => 'fake'
     })
 
@@ -163,7 +158,6 @@ class ForkerControllerTest < ControllerTestBase
     assert_equal visible_files, forked_kata.visible_files
 
     assert_equal({avatar.path => [ ['show', '2:manifest.json']]}, @git.log)
-    @disk.teardown
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -186,7 +180,6 @@ class ForkerControllerTest < ControllerTestBase
     assert_equal @visible_files, forked_kata.visible_files
 
     assert_equal({@avatar.path => [ ['show', '2:manifest.json']]}, @git.log)
-    @disk.teardown
   end
 
   #- - - - - - - - - - - - - - - - - -
@@ -210,10 +203,10 @@ class ForkerControllerTest < ControllerTestBase
     @kata = @dojo.katas[@id]
 
     language_name = 'Ruby-installed-and-working'
-    @kata.dir.spy_read('manifest.json', { :language => language_name })
+    @kata.dir.write('manifest.json', { :language => language_name })
 
     language = @dojo.languages[language_name]
-    language.dir.spy_read('manifest.json', {
+    language.dir.write('manifest.json', {
         'unit_test_framework' => 'ruby_test_unit'
       })
 
@@ -242,7 +235,7 @@ class ForkerControllerTest < ControllerTestBase
   #- - - - - - - - - - - - - - - - - -
 
   def stub_traffic_lights(avatar, lights)
-    avatar.dir.spy_read('increments.json', JSON.unparse(lights))
+    avatar.dir.write('increments.json', lights)
   end
 
   def red

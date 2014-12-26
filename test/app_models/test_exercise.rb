@@ -18,7 +18,7 @@ class ExerciseTests < ModelTestBase
     assert !exercise.exists?
     exercise.dir.make
     assert !exercise.exists?
-    exercise.dir.spy_exists?('instructions')
+    exercise.dir.write('instructions', '')
     assert exercise.exists?
   end
 
@@ -33,11 +33,9 @@ class ExerciseTests < ModelTestBase
 
   test 'instructions are loaded from file of same name' do
     exercise = @dojo.exercises['test_Yahtzee']
-    filename = 'instructions'
     content = 'The game of Yahtzee...'
-    exercise.dir.spy_read(filename, content)
+    exercise.dir.write('instructions', content)
     assert_equal content, exercise.instructions
-    assert exercise.dir.log.include?(['read',filename,content])
   end
 
 end

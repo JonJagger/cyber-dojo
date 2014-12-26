@@ -26,7 +26,7 @@ class ExercisesTests < ModelTestBase
     name = 'Yahtzee'
     exercise = @dojo.exercises[name]
     content = 'your task...'
-    exercise.dir.spy_read('instructions', content)
+    exercise.dir.write('instructions', content)
     assert_equal content, exercise.instructions
   end
 
@@ -35,7 +35,7 @@ class ExercisesTests < ModelTestBase
   def stub_exists(exercises_names)
     exercises_names.each do |name|
       exercise = @dojo.exercises[name]
-      exercise.dir.spy_exists?('instructions')
+      exercise.dir.write('instructions', '')
     end
   end
 

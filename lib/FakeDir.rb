@@ -30,6 +30,11 @@ class FakeDir
 
   # - - - - - - - - - - - - - - -
 
+  def write_raw(filename,content)
+    make
+    @repo[filename] = content
+  end
+
   def write(filename, content)
     if filename.end_with?('.rb')
       assert_not_string(content,filename)

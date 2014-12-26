@@ -91,8 +91,8 @@ class KataTests < ModelTestBase
         'number' => 2
       }
 
-    hippo.dir.spy_read('increments.json', JSON.unparse([second]))
-    lion.dir.spy_read('increments.json', JSON.unparse([first]))
+    hippo.dir.write('increments.json', [second])
+    lion.dir.write('increments.json', [first])
 
     assert kata.active?
     now = first["time"]
@@ -114,11 +114,11 @@ class KataTests < ModelTestBase
   test 'make_kata with default-id and default-now ' +
        'creates unique-id and uses-time-now' do
     language = @dojo.languages['Java-JUnit']
-    language.dir.spy_read('manifest.json', {
+    language.dir.write('manifest.json', {
       :unit_test_framework => 'JUnit'
     })
     exercise = @dojo.exercises['test_Yahtzee']
-    exercise.dir.spy_read('instructions', 'your task...')
+    exercise.dir.write('instructions', 'your task...')
     now = Time.now
     past = Time.mktime(now.year, now.month, now.day, now.hour, now.min, now.sec)
     kata = @dojo.katas.create_kata(language, exercise)
@@ -132,28 +132,15 @@ class KataTests < ModelTestBase
 
   test 'make_kata saves manifest in kata dir' do
     language = @dojo.languages['Java-JUnit']
-    language.dir.spy_read('manifest.json', {
+    language.dir.write('manifest.json', {
       :unit_test_framework => 'waffle'
     })
     exercise = @dojo.exercises['test_Yahtzee']
-    exercise.dir.spy_read('instructions', 'your task...')
+    exercise.dir.write('instructions', 'your task...')
     now = [2014,7,17,21,15,45]
     kata = @dojo.katas.create_kata(language, exercise, id, now)
 
-    expected_manifest = {
-      :created => now,
-      :id => id,
-      :language => language.name,
-      :exercise => exercise.name,
-      :unit_test_framework => 'waffle',
-      :tab_size => 4,
-      :visible_files => {
-        'output' => '',
-        'instructions' => 'your task...'
-      }
-    }
-    assert kata.dir.log.include?([ 'write', 'manifest.json', JSON.unparse(expected_manifest) ]),
-      kata.dir.log.inspect
+    assert kata.dir.exists?('manifest.json')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -166,13 +153,13 @@ class KataTests < ModelTestBase
         'wibble.hpp' => '#include <iostream>',
         'wibble.cpp' => '#include "wibble.hpp"'
     }
-    language.dir.spy_read('manifest.json', {
+    language.dir.write('manifest.json', {
       :visible_filenames => visible_files.keys
     })
-    language.dir.spy_read('wibble.hpp', visible_files['wibble.hpp'])
-    language.dir.spy_read('wibble.cpp', visible_files['wibble.cpp'])
+    language.dir.write('wibble.hpp', visible_files['wibble.hpp'])
+    language.dir.write('wibble.cpp', visible_files['wibble.cpp'])
     exercise = @dojo.exercises['test_Yahtzee']
-    exercise.dir.spy_read('instructions', 'your task...')
+    exercise.dir.write('instructions', 'your task...')
     now = [2014,7,17,21,15,45]
     kata = @dojo.katas.create_kata(language, exercise, id, now)
     assert_equal id, kata.id.to_s

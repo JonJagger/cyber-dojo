@@ -75,7 +75,7 @@ class LanguageTests < ModelTestBase
     assert !@language.exists?, '1'
     @language.dir.make
     assert !@language.exists?, '2'
-    spy_exists?(manifest_filename)
+    spy_manifest({})
     assert @language.exists?, '3'
   end
 
@@ -105,11 +105,11 @@ class LanguageTests < ModelTestBase
 
   test 'when :visible_filenames is non-empty array in manifest ' +
        'then visible_files are loaded but not output and not instructions' do
-    @language = @dojo.languages['Ruby']
-    spy_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
-    @language.dir.spy_read('test_untitled.rb', 'content')
+    @language = @dojo.languages['C']
+    spy_manifest({ 'visible_filenames' => [ 'test_untitled.c' ] })
+    @language.dir.write('test_untitled.c', 'content')
     visible_files = @language.visible_files
-    assert_equal( { 'test_untitled.rb' => 'content' }, visible_files)
+    assert_equal( { 'test_untitled.c' => 'content' }, visible_files)
     assert_nil visible_files['output']
     assert_nil visible_files['instructions']
   end
@@ -321,7 +321,7 @@ class LanguageTests < ModelTestBase
     name = 'Ruby'
     @language = @dojo.languages[name]
     any_bad_json = '42'
-    @language.dir.spy_read_raw('manifest.json', any_bad_json)
+    @language.dir.write_raw('manifest.json', any_bad_json)
     named = false
     begin
       @language.tab_size
@@ -395,11 +395,11 @@ class LanguageTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def spy_manifest(manifest)
-    @language.dir.spy_read(manifest_filename, manifest)
+    @language.dir.write(manifest_filename, manifest)
   end
 
   def spy_exists?(filename)
-    @language.dir.spy_exists?(filename)
+    @language.dir.write(filename, '')
   end
 
   def manifest_filename
