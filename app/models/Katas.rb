@@ -10,17 +10,6 @@ class Katas
 
   attr_reader :dojo, :path
 
-  def create_kata_manifest(language, exercise, id, now)
-    {
-      :created => now,
-      :id => id,
-      :language => language.name,
-      :exercise => exercise.name,
-      :unit_test_framework => language.unit_test_framework,
-      :tab_size => language.tab_size
-    }
-  end
-
   def create_kata(language, exercise, id = unique_id, now = time_now)
     # a kata's id has 10 hex chars. This gives 16^10 possibilities
     # which is 1,099,511,627,776 which is big enough to not
@@ -32,6 +21,17 @@ class Katas
     kata = self[id]
     kata.dir.write('manifest.json', manifest)
     kata
+  end
+
+  def create_kata_manifest(language, exercise, id, now)
+    {
+      :created => now,
+      :id => id,
+      :language => language.name,
+      :exercise => exercise.name,
+      :unit_test_framework => language.unit_test_framework,
+      :tab_size => language.tab_size
+    }
   end
 
   def each
