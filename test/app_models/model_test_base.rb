@@ -17,7 +17,9 @@ class ModelTestBase < Test::Unit::TestCase
     @max_duration = 15
   end
 
-  def make_kata
+  include UniqueId
+
+  def make_kata(id = unique_id)
     visible_files = {
         'wibble.hpp' => '#include <iostream>',
         'wibble.cpp' => '#include "wibble.hpp"'
@@ -27,7 +29,7 @@ class ModelTestBase < Test::Unit::TestCase
     visible_files.each { |filename,content| language.dir.write(filename, content) }
     exercise = @dojo.exercises['test_Yahtzee']
     exercise.dir.write('instructions', 'your task...')
-    @dojo.katas.create_kata(language, exercise)
+    @dojo.katas.create_kata(language, exercise, id)
   end
 
   def path_ends_in_slash?(object)

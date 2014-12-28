@@ -32,6 +32,34 @@ class KatasTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - -
 
+  test 'katas.complete fails when no candidates' do
+    assert_equal '23', @dojo.katas.complete('23')
+  end
+
+  test 'katas.complete fails when id is less than 4 chars in length' do
+    id = make_kata.id[0..2]
+    assert_equal 3, id.length
+    assert_equal id, @dojo.katas.complete(id)
+  end
+
+  test 'katas.completes when id is 4 chars long' do
+    id = make_kata.id
+    assert_equal id, @dojo.katas.complete(id[0..3])
+  end
+
+  test 'katas.complete fails when 2+ matches' do
+    prefix = '12345678A'
+    id1 = prefix + 'B'
+    kata1 = make_kata(id1)
+    assert_equal id1, kata1.id
+    id2 = prefix + 'C'
+    kata2 = make_kata(id2)
+    assert_equal id2, kata2.id
+    assert_equal prefix, @dojo.katas.complete(prefix)
+  end
+
+  #- - - - - - - - - - - - - - - -
+
   test 'valid?(id) and exists?(id) is false ' +
        'when id not a string' do
     not_string = Object.new
