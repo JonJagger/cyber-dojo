@@ -147,15 +147,11 @@ private
   end
 
   def dojo
-    Dojo.new(@root_path,externals)
-  end
-
-  def externals
-    {
-      :disk => OsDisk.new,
-      :git => Git.new,
-      :runner => runner
-    }
+    thread = Thread.current
+    thread[:disk] = OsDisk.new
+    thread[:git] = Git.new
+    thread[:runner] = runner
+    Dojo.new(@root_path)
   end
 
   def runner
