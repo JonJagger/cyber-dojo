@@ -1,18 +1,12 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Delete SpyDir and SpyDisk
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dir.each can take a parameter to filter dirs
 Would mean Katas.each could become
- disk[path].each(:dir) do |outer_dir,outer_path|
-   disk[outer_path].each(:dir) do |inner_dir,_|
+ disk[path].each_dir do |outer_dir,outer_path|
+   disk[outer_path].each_dir do |inner_dir,_|
      yield self[outer_dir + inner_dir]
    end
  end
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Also, Katas.complete(id) needs a seam in Folders::id_complete
-I think best option is to put a glob() method into
-lib/OsDir.rb and lib/FakeDir.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 use FakeDir for all of app_controller tests.
 Move app_controller tests after
