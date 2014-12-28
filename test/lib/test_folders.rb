@@ -4,7 +4,10 @@ require_relative '../cyberdojo_test_base'
 
 class FoldersTests < CyberDojoTestBase
 
+=begin
+  # TODO: these need to be refactored into katas tests
   def setup
+    super
     thread[:disk] = OsDisk.new
     thread[:git] = Git.new
     thread[:runner] = HostTestRunner.new
@@ -12,14 +15,6 @@ class FoldersTests < CyberDojoTestBase
     @path = @dojo.katas.path
     `rm -rf #{@path}`
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - -
-
-  #test 'test folder does not contain . or ..' do
-  #  folders = Folders::in(root_path + 'languages/')
-  #  assert_equal 0, folders.count('.')
-  #  assert_equal 0, folders.count('..')
-  #end
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
@@ -35,14 +30,16 @@ class FoldersTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test 'id_complete when id is less than 4 chars in length is unchanged id' do
+  test 'id_complete when id is less than ' +
+       '4 chars in length is unchanged id' do
     id = "123"
     assert_equal id, Folders::id_complete(@path, id)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test 'id_complete when id is greater than or equal to 10 chars in length is unchanged id' do
+  test 'id_complete when id is greater than or equal to ' +
+       '10 chars in length is unchanged id' do
     id = "123456789A"
     assert_equal id, Folders::id_complete(@path, id)
   end
@@ -73,5 +70,6 @@ class FoldersTests < CyberDojoTestBase
   def make_dir(path)
     `mkdir -p #{path}`
   end
+=end
 
 end

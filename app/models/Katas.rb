@@ -48,7 +48,20 @@ class Katas
   end
 
   def complete(id)
-    Folders::id_complete(path, id) || ''
+    if !id.nil?
+      id = id[0...10].upcase
+      # if at least 4 characters of the id are
+      # provided attempt to do id-completion
+      # Doing completion with fewer characters would likely result
+      # in a lot of disk activity and no unique outcome
+      if id.length >= 4 && id.length < 10
+        dirs = disk[path + id[0...2]].glob(id[2..-1] + '*')
+        if dirs.length == 1
+          id = id[0..1] + dirs[0]
+        end
+      end
+    end
+    id || ''
   end
 
   def [](id)

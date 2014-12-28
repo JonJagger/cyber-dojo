@@ -12,6 +12,12 @@ Also, Katas.complete(id) needs a seam in Folders::id_complete
 I think best option is to put a glob() method into
 lib/OsDir.rb and lib/FakeDir.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+use FakeDir for all of app_controller tests.
+Move app_controller tests after
+app_helpers
+app_lib
+app_models
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I could hang root_path off the current thread.
 This would remove special case handling (for testing)
 in application_controller.rb and Dojo.rb

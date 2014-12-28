@@ -17,6 +17,10 @@ class OsDir
     end
   end
 
+  def glob(pattern)
+    Dir[path + pattern].map{ |filename| File.basename(filename) }
+  end
+
   def exists?(filename = nil)
     return File.directory?(path) if filename.nil?
     return File.exists?(path + filename)

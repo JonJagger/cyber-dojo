@@ -15,7 +15,7 @@ require_relative_in('lib', %w{
     HostTestRunner
     DockerTestRunner
     DummyTestRunner
-  Folders Git
+  Git
   Disk
     OsDisk OsDir
     FakeDisk FakeDir

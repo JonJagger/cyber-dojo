@@ -15,7 +15,7 @@ require_dependencies %w{
     HostTestRunner
   Disk
     OsDisk OsDir
-  Folders Git
+  Git
   TimeNow UniqueId
 }
 

@@ -51,7 +51,7 @@ class OsDiskTests < CyberDojoTestBase
        'block is not_executed, ' +
        'and result is nil' do
     block_run = false
-    exception_throw = false
+    exception_thrown = false
     begin
       result = @disk.lock('dir_does_not_exist') do
         block_run = true
@@ -93,8 +93,7 @@ class OsDiskTests < CyberDojoTestBase
         end
       }
       max_seconds = 2
-      result = inner_thread.join(max_seconds);
-      timed_out = (result == nil)
+      inner_thread.join(max_seconds);
       if inner_thread != nil
         Thread.kill(inner_thread)
       end
@@ -130,7 +129,7 @@ class OsDiskTests < CyberDojoTestBase
     @disk[@dir].write('filename', expected)
     oldname = @dir + 'filename'
     newname = @dir + 'linked'
-    output = @disk.symlink(oldname, newname)
+    @disk.symlink(oldname, newname)
     assert !File.symlink?(oldname)
     assert File.symlink?(newname)
   end
@@ -173,7 +172,8 @@ class OsDiskTests < CyberDojoTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'save file for executable file' do
-    check_save_file('file.sh', 'ls', 'ls', executable=true)
+    executable = true
+    check_save_file('file.sh', 'ls', 'ls', executable)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -214,6 +214,26 @@ class OsDiskTests < CyberDojoTestBase
     cwd = `pwd`.strip + '/../'
     dirs = @disk[cwd].each.entries
     %w( app_helpers app_lib ).each{|dir_name| assert dirs.include?(dir_name)}
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'OsDir.glob files' do
+    @disk[@dir].write('alpha.txt', 'alpha')
+    @disk[@dir].write('beta.txt', 'beta')
+    matches = @disk[@dir].glob('*.txt')
+    assert_equal ['alpha.txt','beta.txt'], matches.sort
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'OsDir.glob dirs' do
+    @disk[@dir + 'alpha'].make
+    @disk[@dir + 'alpha'].write('a.txt', 'a')
+    @disk[@dir + 'beta'].make
+    @disk[@dir + 'beta'].write('b.txt', 'b')
+    matches = @disk[@dir].glob('*')
+    assert_equal ['alpha','beta'], matches.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
