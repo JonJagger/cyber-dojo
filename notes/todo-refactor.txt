@@ -1,5 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Delete SpyDir and SpyDisk
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dir.each can take a parameter to filter dirs
 Would mean Katas.each could become
  disk[path].each(:dir) do |outer_dir,outer_path|

@@ -55,7 +55,7 @@ class Katas
       # Doing completion with fewer characters would likely result
       # in a lot of disk activity and no unique outcome
       if id.length >= 4 && id.length < 10
-        dirs = disk[path + id[0...2]].glob(id[2..-1] + '*')
+        dirs = disk[path + id[0...2]].collect_start_with(id[2..-1])
         if dirs.length == 1
           id = id[0..1] + dirs[0]
         end

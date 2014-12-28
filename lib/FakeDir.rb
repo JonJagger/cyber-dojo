@@ -16,6 +16,14 @@ class FakeDir
     end
   end
 
+  def collect_start_with(s)
+    matches = [ ]
+    @disk.subdirs_each(self) do |subdir|
+      matches << subdir if subdir.start_with?(s)
+    end
+    matches
+  end
+
   def make
     @repo ||= { }
   end

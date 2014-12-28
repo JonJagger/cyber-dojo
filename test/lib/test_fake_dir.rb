@@ -107,6 +107,17 @@ class FakeDirTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'OsDir.glob dirs' do
+    @disk[@path + 'alpha'].make
+    @disk[@path + 'alpha'].write('a.txt', 'a')
+    @disk[@path + 'beta'].make
+    @disk[@path + 'beta'].write('b.txt', 'b')
+    matches = @disk[@path].collect_start_with('a')
+    assert_equal ['alpha'], matches.sort
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'lock(block) is executed' do
     called = false
     @dir.lock do

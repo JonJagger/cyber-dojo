@@ -218,22 +218,13 @@ class OsDiskTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'OsDir.glob files' do
-    @disk[@dir].write('alpha.txt', 'alpha')
-    @disk[@dir].write('beta.txt', 'beta')
-    matches = @disk[@dir].glob('*.txt')
-    assert_equal ['alpha.txt','beta.txt'], matches.sort
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'OsDir.glob dirs' do
+  test 'OsDir.glob_dirs' do
     @disk[@dir + 'alpha'].make
     @disk[@dir + 'alpha'].write('a.txt', 'a')
     @disk[@dir + 'beta'].make
     @disk[@dir + 'beta'].write('b.txt', 'b')
-    matches = @disk[@dir].glob('*')
-    assert_equal ['alpha','beta'], matches.sort
+    matches = @disk[@dir].collect_start_with('a')
+    assert_equal ['alpha'], matches.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

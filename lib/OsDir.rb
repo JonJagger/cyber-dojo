@@ -17,8 +17,8 @@ class OsDir
     end
   end
 
-  def glob(pattern)
-    Dir[path + pattern].map{ |filename| File.basename(filename) }
+  def collect_start_with(s)
+    Dir[path + s + '*'].map{ |name| File.basename(name) }
   end
 
   def exists?(filename = nil)
