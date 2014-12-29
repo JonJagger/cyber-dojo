@@ -4,8 +4,7 @@ class OsDir
 
   def initialize(disk,path)
     @disk,@path = disk,path
-    dir_separator = @disk.dir_separator
-    @path += dir_separator unless @path.end_with?(dir_separator)
+    @path += separator unless @path.end_with?(separator)
   end
 
   attr_reader :path
@@ -65,6 +64,12 @@ class OsDir
       end
     end
     result
+  end
+
+private
+
+  def separator
+    @disk.dir_separator
   end
 
 end
