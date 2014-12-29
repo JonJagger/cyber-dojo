@@ -18,28 +18,22 @@ class DockerTestRunnerTests < CyberDojoTestBase
 
   include TimeNow
 
-  def externals(runner)
-    {
-      :disk   => OsDisk.new,
-      :git    => Git.new,
-      :runner => runner
-    }
-  end
-
-  def runner
-    assert Docker.installed?
-    DockerTestRunner.new
-  end
-
   def setup
     super
+    thread[:disk] = OsDisk.new
+    thread[:git] = Git.new
+    thread[:runner] = DockerTestRunner.new
+  end
+
+  def thread
+    Thread.current
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "DockerTestRunner when outer and inner commands do not timeout" do
     return if !Docker.installed?
-    dojo = Dojo.new(root_path,externals(runner))
+    dojo = Dojo.new(root_path)
     kata = make_kata(dojo, 'C-assert')
     lion = kata.start_avatar(['lion'])
     visible_files = lion.tags[0].visible_files
@@ -58,7 +52,7 @@ class DockerTestRunnerTests < CyberDojoTestBase
 
   test "DockerTestRunner when inner command times out" do
     return if !Docker.installed?
-    dojo = Dojo.new(root_path,externals(runner))
+    dojo = Dojo.new(root_path)
     kata = make_kata(dojo, 'C-assert')
     lion = kata.start_avatar(['lion'])
     visible_files = lion.tags[0].visible_files
@@ -82,8 +76,8 @@ class DockerTestRunnerTests < CyberDojoTestBase
   test "DockerTestRunner when outer command times out " +
        "(simulates breaking out of the docker container)" do
     return if !Docker.installed?
-    adapter = DockerTestRunnerAdapter.new(runner)
-    dojo = Dojo.new(root_path,externals(adapter))
+    thread[:runner] = DockerTestRunnerAdapter.new(runner)
+    dojo = Dojo.new(root_path)
     kata = make_kata(dojo, 'C-assert')
     lion = kata.start_avatar(['lion'])
     visible_files = lion.tags[0].visible_files
