@@ -17,10 +17,6 @@ class OsDir
     end
   end
 
-  def collect_start_with(s)
-    Dir[path + s + '*'].map{ |name| File.basename(name) }
-  end
-
   def exists?(filename = nil)
     return File.directory?(path) if filename.nil?
     return File.exists?(path + filename)

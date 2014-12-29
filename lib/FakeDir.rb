@@ -16,21 +16,16 @@ class FakeDir
     end
   end
 
-  def collect_start_with(s)
-    matches = [ ]
-    @disk.subdirs_each(self) do |subdir|
-      matches << subdir if subdir.start_with?(s)
-    end
-    matches
-  end
-
   def make
     @repo ||= { }
   end
 
   def exists?(filename = '')
-    return false if @repo.nil?      # no mk_dir -> dir().make yet
-    return true  if filename === '' # the repo exists for the dir
+    matches = @disk.dirs.keys.select {|d| d != path && d.start_with?(path) }
+    return true  if filename === '' && !@repo.nil?
+    return true  if filename === '' && !matches.empty?
+    return false if filename === ''
+    return false if @repo.nil?
     return !@repo[filename].nil?
   end
 

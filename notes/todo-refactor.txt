@@ -5,8 +5,6 @@ $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dir.each_file{|name| ...}
 Approval can use Dir.each_file
-Katas.complete uses Disk[path].collect_start_with
-can be refactored to use Disk[path].each_file.select{...}
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Look for each methods that can do
 http://blog.arkency.com/2014/01/ruby-to-enum-for-enumerator/

@@ -98,7 +98,7 @@ class KatasTests < ModelTestBase
   test 'valid?(id) and exists?(id)' do
     id = make_kata.id
     assert @dojo.katas.valid?(id)
-    assert @dojo.katas.exists?(id)
+    assert @dojo.katas.exists?(id), "X"
   end
 
 end

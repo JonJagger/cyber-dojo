@@ -220,12 +220,14 @@ class OsDiskTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'OsDir.glob_dirs' do
+  test 'OsDir.each_dir select' do
     @disk[@dir + 'alpha'].make
     @disk[@dir + 'alpha'].write('a.txt', 'a')
     @disk[@dir + 'beta'].make
     @disk[@dir + 'beta'].write('b.txt', 'b')
-    matches = @disk[@dir].collect_start_with('a')
+    matches = @disk[@dir].each_dir.select { |dir|
+      dir.start_with?('a')
+    }
     assert_equal ['alpha'], matches.sort
   end
 

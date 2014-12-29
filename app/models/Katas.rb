@@ -43,15 +43,20 @@ class Katas
 
   def complete(id)
     if !id.nil?
-      id = id[0...10].upcase
+      id = id[0..9].upcase
       # if at least 4 characters of the id are
       # provided attempt to do id-completion
       # Doing completion with fewer characters would likely result
       # in a lot of disk activity and no unique outcome
       if id.length >= 4 && id.length < 10
-        dirs = disk[path + id[0...2]].collect_start_with(id[2..-1])
-        if dirs.length == 1
-          id = id[0..1] + dirs[0]
+        inner_dir = disk[path + id[0..1]]
+        if inner_dir.exists?
+          dirs = inner_dir.each_dir.select { |outer_dir|
+            outer_dir.start_with?(id[2..-1])
+          }
+          if dirs.length == 1
+            id = id[0..1] + dirs[0]
+          end
         end
       end
     end
