@@ -131,13 +131,12 @@ class AvatarTests < ModelTestBase
     assert_equal expected_manifest, JSON.parse(avatar.dir.read('manifest.json'))
     assert_equal [ ], JSON.parse(avatar.dir.read('increments.json'))
 
-    #???
-    #expected_symlink = [
-    #  'symlink',
-    #  language.path + support_filename,
-    #  sandbox.path + support_filename
-    #]
-    #assert disk.symlink_log.include?(expected_symlink), disk.symlink_log.inspect
+    expected_symlink = [
+      'symlink',
+      language.path + support_filename,
+      sandbox.path + support_filename
+    ]
+    assert disk.symlink_log.include?(expected_symlink), disk.symlink_log.inspect
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -

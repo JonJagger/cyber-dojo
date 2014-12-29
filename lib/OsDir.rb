@@ -27,8 +27,7 @@ class OsDir
   end
 
   def make
-    # mkdir_p does [mkdir -p] which
-    # creates intermediate dirs as required
+    # mkdir -p creates intermediate dirs as required
     FileUtils.mkdir_p(path)
   end
 

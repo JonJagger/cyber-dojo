@@ -1,12 +1,12 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-application_controller.rb and test/all.rb have duplication.
+If test run is successful do
+$rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-FakeDir has symlink_log. Use this for commented out tests
-in test/app_modelss/test_avatar.rb line 135
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Dir.each is really Dir.each_dir
 Dir.each_dir {|name,path| ...}
 Dir.each_file{|name,path| ...}
+Drop include Enumerable from OsDir and FakeDir
 Katas.each can use Dir.each_dir twice.
 Approval can use Dir.each_file
 http://blog.arkency.com/2014/01/ruby-to-enum-for-enumerator/
@@ -14,13 +14,17 @@ http://blog.arkency.com/2014/01/ruby-to-enum-for-enumerator/
     return enum_for(:each_even) unless block_given?
     (1..4).each {|n| yield n if n%2 == 0}
   end
+Katas.complete uses Disk[path].collect_start_with
+can be refactored to use Disk[path].each_file.select{...}
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rename s/OsDisk/Disk/
 rename s/OsDir/Dir/
 rename s/FakeDisk/DiskFake/
 rename s/FakeDir/DirFake/
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+application_controller.rb and test/all.rb have duplication.
 use FakeDir for all of app_controller tests.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Move app_controller tests after
 app_helpers
 app_lib

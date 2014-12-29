@@ -42,8 +42,6 @@ class Avatar
     JSON.parse(clean(dir.read('manifest.json')))
   end
 
-  #- - - - - - - - - - - - - - -
-
   def test(delta, visible_files, now = time_now, time_limit = 15)
     delta[:changed].each do |filename|
       sandbox.dir.write(filename, visible_files[filename])
