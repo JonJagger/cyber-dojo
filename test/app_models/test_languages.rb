@@ -6,14 +6,14 @@ class LanguagesTests < ModelTestBase
 
   test 'dojo.languages.each() empty' do
     stub_exists(expected = [ ])
-    assert_equal expected, languages.map {|language| language.name}
+    assert_equal expected, languages.each.map {|language| language.name}
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
   test 'dojo.languages.each() not empty' do
     stub_exists(expected = ['C#-NUnit','Ruby-TestUnit'])
-    assert_equal expected, languages.map {|language| language.name}.sort
+    assert_equal expected, languages.each.map {|language| language.name}.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - -

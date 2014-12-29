@@ -29,7 +29,9 @@ private
       # cache.json is created with cyber-dojo/languages/cache.rb
       @languages = JSON.parse(dir.read(cache_filename)).sort
     else
-      @languages = dojo.languages.select{|language| language.runnable?}.map{|language|
+      @languages = dojo.languages.each.select{ |language|
+        language.runnable?
+      }.map{ |language|
         [language.name,language.display_name]
       }.sort
     end
@@ -44,8 +46,10 @@ private
       @exercises_names = cache.map{|one| one[0]}
       @instructions = Hash[cache]
     else
-      @exercises_names = dojo.exercises.map{|exercise| exercise.name}.sort
-      @instructions = Hash[@exercises_names.collect{|name|
+      @exercises_names = dojo.exercises.each.map{ |exercise|
+        exercise.name
+      }.sort
+      @instructions = Hash[@exercises_names.collect{ |name|
         [name, dojo.exercises[name].instructions]
       }]
     end

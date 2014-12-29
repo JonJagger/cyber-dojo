@@ -7,7 +7,7 @@ class ExercisesTests < ModelTestBase
   test 'dojo.exercises.each() gives all exercises which exist' do
     names = ['Unsplice','Verbal','Salmo']
     stub_exists(names)
-    exercises_names = @dojo.exercises.map {|exercise| exercise.name}
+    exercises_names = @dojo.exercises.each.map {|exercise| exercise.name}
     assert_equal names.sort, exercises_names.sort
   end
 

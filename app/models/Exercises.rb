@@ -1,8 +1,6 @@
 
 class Exercises
 
-  include Enumerable
-
   def initialize(path)
     @path = path
   end
@@ -10,14 +8,13 @@ class Exercises
   attr_reader :path
 
   def each
-    # dojo.exercises.each { |exercise| ... }
+    return enum_for(:each) unless block_given?
     exercises.each do |exercise|
-      yield exercise if block_given?
+      yield exercise
     end
   end
 
   def [](name)
-    # dojo.exercises[name]
     make_exercise(name)
   end
 
@@ -31,7 +28,7 @@ private
 
   def make_cache
     cache = [ ]
-    dir.each do |sub_dir|
+    dir.each_dir do |sub_dir|
       exercise = make_exercise(sub_dir)
       cache << exercise if exercise.exists?
     end

@@ -33,10 +33,9 @@ class Katas
   end
 
   def each
-    # dojo.katas.each {|kata| ...}
     return enum_for(:each) unless block_given?
-    disk[path].each do |outer_dir|
-      disk[path + outer_dir].each do |inner_dir|
+    disk[path].each_dir do |outer_dir|
+      disk[path + outer_dir].each_dir do |inner_dir|
         yield self[outer_dir + inner_dir]
       end
     end
@@ -60,7 +59,6 @@ class Katas
   end
 
   def [](id)
-    # dojo.katas[id]
     Kata.new(self,id)
   end
 

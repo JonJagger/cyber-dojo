@@ -3,11 +3,7 @@
 If test run is successful do
 $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Dir.each is really Dir.each_dir
-Dir.each_dir {|name,path| ...}
-Dir.each_file{|name,path| ...}
-Drop include Enumerable from OsDir and FakeDir
-Katas.each can use Dir.each_dir twice.
+Dir.each_file{|name| ...}
 Approval can use Dir.each_file
 Katas.complete uses Disk[path].collect_start_with
 can be refactored to use Disk[path].each_file.select{...}

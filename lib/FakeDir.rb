@@ -9,8 +9,8 @@ class FakeDir
     @dir
   end
 
-  def each
-    return enum_for(:each) unless block_given?
+  def each_dir
+    return enum_for(:each_dir) unless block_given?
     @disk.subdirs_each(self) do |subdir|
       yield subdir
     end

@@ -60,12 +60,12 @@ class FakeDirTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'each filters nested-sub-folders to immediate sub-folder only' do
+  test 'each_dir filters nested-sub-folders to immediate sub-folder only' do
     @disk[@path + 'a']
     @disk[@path + 'b']
     @disk[@path + 'b/c']
-    assert_equal ['a','b'], @disk['fake'].each.entries.sort
-    assert_equal ['a','b'], @disk['fake/'].each.entries.sort
+    assert_equal ['a','b'], @disk['fake'].each_dir.entries.sort
+    assert_equal ['a','b'], @disk['fake/'].each_dir.entries.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -

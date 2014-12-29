@@ -10,8 +10,8 @@ class OsDir
 
   attr_reader :path
 
-  def each
-    return enum_for(:each) unless block_given?
+  def each_dir
+    return enum_for(:each_dir) unless block_given?
     Dir.entries(path).each do |name|
       yield name
     end

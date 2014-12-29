@@ -1,8 +1,6 @@
 
 class Languages
 
-  include Enumerable
-
   def initialize(path)
     raise_if_no([:disk])
     @path = path
@@ -11,14 +9,13 @@ class Languages
   attr_reader :path
 
   def each
-    # dojo.languages.each { |language| ... }
+    return enum_for(:each) unless block_given?
     languages.each do |language|
-      yield language if block_given?
+      yield language
     end
   end
 
   def [](name)
-    # dojo.languages[name]
     make_language(name)
   end
 
@@ -32,7 +29,7 @@ private
 
   def make_cache
     cache = [ ]
-    dir.each do |sub_dir|
+    dir.each_dir do |sub_dir|
       language = make_language(sub_dir)
       cache << language if language.exists? && language.runnable?
     end
