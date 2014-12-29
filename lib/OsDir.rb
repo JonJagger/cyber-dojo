@@ -13,7 +13,7 @@ class OsDir
   def each
     return enum_for(:each) unless block_given?
     Dir.entries(path).each do |name|
-      yield name,File.join(path,name)
+      yield name
     end
   end
 

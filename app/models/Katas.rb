@@ -1,8 +1,6 @@
 
 class Katas
 
-  include Enumerable
-
   def initialize(dojo,path)
     raise_if_no([:disk])
     @dojo,@path = dojo,path
@@ -36,13 +34,10 @@ class Katas
 
   def each
     # dojo.katas.each {|kata| ...}
-    disk[path].each do |outer_dir,outer_path|
-      if disk.is_dir?(outer_path)
-        disk[outer_path].each do |inner_dir,inner_path|
-          if disk.is_dir?(inner_path)
-            yield self[outer_dir + inner_dir]
-          end
-        end
+    return enum_for(:each) unless block_given?
+    disk[path].each do |outer_dir|
+      disk[path + outer_dir].each do |inner_dir|
+        yield self[outer_dir + inner_dir]
       end
     end
   end

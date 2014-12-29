@@ -12,7 +12,7 @@ class FakeDir
   def each
     return enum_for(:each) unless block_given?
     @disk.subdirs_each(self) do |subdir|
-      yield subdir,File.join(path,subdir)
+      yield subdir
     end
   end
 

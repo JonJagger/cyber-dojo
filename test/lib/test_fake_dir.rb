@@ -64,8 +64,8 @@ class FakeDirTests < CyberDojoTestBase
     @disk[@path + 'a']
     @disk[@path + 'b']
     @disk[@path + 'b/c']
-    assert_equal [['a','fake/a'],['b','fake/b']], @disk['fake'].each.entries.sort
-    assert_equal [['a','fake/a'],['b','fake/b']], @disk['fake/'].each.entries.sort
+    assert_equal ['a','b'], @disk['fake'].each.entries.sort
+    assert_equal ['a','b'], @disk['fake/'].each.entries.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
