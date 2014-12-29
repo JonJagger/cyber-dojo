@@ -1,6 +1,5 @@
 
 class FakeDir
-  include Enumerable
 
   def initialize(disk,dir)
     @disk,@dir = disk,dir
@@ -11,6 +10,7 @@ class FakeDir
   end
 
   def each
+    return enum_for(:each) unless block_given?
     @disk.subdirs_each(self) do |subdir|
       yield subdir,File.join(path,subdir)
     end

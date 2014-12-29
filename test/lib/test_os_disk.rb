@@ -212,8 +212,10 @@ class OsDiskTests < CyberDojoTestBase
 
   test 'OsDir.each' do
     cwd = `pwd`.strip + '/../'
-    dirs = @disk[cwd].each.entries
-    %w( app_helpers app_lib ).each{|dir_name| assert dirs.include?(dir_name)}
+    dirs = @disk[cwd].each.map { |dir,_| dir }
+    %w( app_helpers app_lib ).each{ |dir_name|
+      assert dirs.include?(dir_name)
+    }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

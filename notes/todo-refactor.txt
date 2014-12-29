@@ -9,13 +9,15 @@ Dir.each_file{|name,path| ...}
 Drop include Enumerable from OsDir and FakeDir
 Katas.each can use Dir.each_dir twice.
 Approval can use Dir.each_file
+Katas.complete uses Disk[path].collect_start_with
+can be refactored to use Disk[path].each_file.select{...}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Look for each methods that can do
 http://blog.arkency.com/2014/01/ruby-to-enum-for-enumerator/
   def each_even
     return enum_for(:each_even) unless block_given?
     (1..4).each {|n| yield n if n%2 == 0}
   end
-Katas.complete uses Disk[path].collect_start_with
-can be refactored to use Disk[path].each_file.select{...}
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rename s/OsDisk/Disk/
 rename s/OsDir/Dir/

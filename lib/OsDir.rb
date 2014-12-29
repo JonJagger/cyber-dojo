@@ -1,7 +1,6 @@
 require 'fileutils'
 
 class OsDir
-  include Enumerable
 
   def initialize(disk,path)
     @disk,@path = disk,path
@@ -12,8 +11,9 @@ class OsDir
   attr_reader :path
 
   def each
+    return enum_for(:each) unless block_given?
     Dir.entries(path).each do |name|
-      yield name,File.join(path,name) if block_given?
+      yield name,File.join(path,name)
     end
   end
 
