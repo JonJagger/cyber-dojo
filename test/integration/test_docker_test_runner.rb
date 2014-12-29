@@ -22,11 +22,15 @@ class DockerTestRunnerTests < CyberDojoTestBase
     super
     thread[:disk] = OsDisk.new
     thread[:git] = Git.new
-    thread[:runner] = DockerTestRunner.new
+    thread[:runner] = runner
   end
 
   def thread
     Thread.current
+  end
+
+  def runner
+    DockerTestRunner.new
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - -
