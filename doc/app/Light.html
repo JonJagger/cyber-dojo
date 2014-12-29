@@ -2,238 +2,105 @@
 
 <html>
 <head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta charset="utf-8">
 
 <title>class Light - Rails Application Documentation</title>
 
-<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+<link href="./fonts.css" rel="stylesheet">
+<link href="./rdoc.css" rel="stylesheet">
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
 </script>
 
-<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+<script src="./js/jquery.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/search_index.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/searcher.js"></script>
+<script src="./js/darkfish.js"></script>
 
 
-<body id="top" class="class">
-<nav id="metadata">
-  <nav id="home-section" class="section">
-  <h3 class="section-header">
-    <a href="./index.html">Home</a>
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
     <a href="./table_of_contents.html#classes">Classes</a>
     <a href="./table_of_contents.html#methods">Methods</a>
-  </h3>
-</nav>
-
-
-  <nav id="search-section" class="section project-section" class="initially-hidden">
-  <form action="#" method="get" accept-charset="utf-8">
-    <h3 class="section-header">
-      <input type="text" name="search" placeholder="Search" id="search-field"
-             title="Type to search, Up and Down to navigate, Enter to load">
-    </h3>
-  </form>
-
-  <ul id="search-results" class="initially-hidden"></ul>
-</nav>
-
-
-  <div id="file-metadata">
-    <nav id="file-list-section" class="section">
-  <h3 class="section-header">Defined In</h3>
-  <ul>
-    <li>app/models/Light.rb
-  </ul>
-</nav>
-
-    
   </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
 
   <div id="class-metadata">
     
-    <nav id="parent-class-section" class="section">
-  <h3 class="section-header">Parent</h3>
-  
-  <p class="link">Object
-  
-</nav>
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
 
+  
+  <p class="link"><a href="Object.html">Object</a>
+  
+</div>
+
+    
     
     <!-- Method Quickref -->
-<nav id="method-list-section" class="section">
-  <h3 class="section-header">Methods</h3>
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
 
-  <ul class="link-list">
+  <ul class="link-list" role="directory">
     
-    <li><a href="#method-c-new">::new</a>
+    <li ><a href="#method-c-new">::new</a>
     
-    <li><a href="#method-i-colour">#colour</a>
+    <li ><a href="#method-i-colour">#colour</a>
     
-    <li><a href="#method-i-number">#number</a>
+    <li ><a href="#method-i-number">#number</a>
     
-    <li><a href="#method-i-tag">#tag</a>
+    <li ><a href="#method-i-tag">#tag</a>
     
-    <li><a href="#method-i-time">#time</a>
+    <li ><a href="#method-i-time">#time</a>
     
-    <li><a href="#method-i-to_json">#to_json</a>
+    <li ><a href="#method-i-to_json">#to_json</a>
     
   </ul>
-</nav>
-
-  </div>
-
-  <div id="project-metadata">
-    <nav id="fileindex-section" class="section project-section">
-  <h3 class="section-header">Pages</h3>
-
-  <ul>
-  
-    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
-  
-  </ul>
-</nav>
-
-    <nav id="classindex-section" class="section project-section">
-  <h3 class="section-header">Class and Module Index</h3>
-
-  <ul class="link-list">
-  
-    <li><a href="./GitDiff.html">GitDiff</a>
-  
-    <li><a href="./GitDiff/GitDiffBuilder.html">GitDiff::GitDiffBuilder</a>
-  
-    <li><a href="./GitDiff/GitDiffParser.html">GitDiff::GitDiffParser</a>
-  
-    <li><a href="./ApplicationController.html">ApplicationController</a>
-  
-    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
-  
-    <li><a href="./Approval.html">Approval</a>
-  
-    <li><a href="./Avatar.html">Avatar</a>
-  
-    <li><a href="./AvatarImageHelper.html">AvatarImageHelper</a>
-  
-    <li><a href="./Avatars.html">Avatars</a>
-  
-    <li><a href="./Chooser.html">Chooser</a>
-  
-    <li><a href="./Cleaner.html">Cleaner</a>
-  
-    <li><a href="./DashboardController.html">DashboardController</a>
-  
-    <li><a href="./DiffController.html">DiffController</a>
-  
-    <li><a href="./DifferController.html">DifferController</a>
-  
-    <li><a href="./Docker.html">Docker</a>
-  
-    <li><a href="./DockerTestRunner.html">DockerTestRunner</a>
-  
-    <li><a href="./Dojo.html">Dojo</a>
-  
-    <li><a href="./DojoController.html">DojoController</a>
-  
-    <li><a href="./DownloaderController.html">DownloaderController</a>
-  
-    <li><a href="./DummyTestRunner.html">DummyTestRunner</a>
-  
-    <li><a href="./ExceptionController.html">ExceptionController</a>
-  
-    <li><a href="./Exercise.html">Exercise</a>
-  
-    <li><a href="./Exercises.html">Exercises</a>
-  
-    <li><a href="./FileDeltaMaker.html">FileDeltaMaker</a>
-  
-    <li><a href="./FlagImageHelper.html">FlagImageHelper</a>
-  
-    <li><a href="./Folders.html">Folders</a>
-  
-    <li><a href="./ForkerController.html">ForkerController</a>
-  
-    <li><a href="./Git.html">Git</a>
-  
-    <li><a href="./HostTestRunner.html">HostTestRunner</a>
-  
-    <li><a href="./Kata.html">Kata</a>
-  
-    <li><a href="./KataController.html">KataController</a>
-  
-    <li><a href="./Katas.html">Katas</a>
-  
-    <li><a href="./Language.html">Language</a>
-  
-    <li><a href="./Languages.html">Languages</a>
-  
-    <li><a href="./Light.html">Light</a>
-  
-    <li><a href="./LineSplitter.html">LineSplitter</a>
-  
-    <li><a href="./LocalesController.html">LocalesController</a>
-  
-    <li><a href="./LogoImageHelper.html">LogoImageHelper</a>
-  
-    <li><a href="./MakefileFilter.html">MakefileFilter</a>
-  
-    <li><a href="./MyTranslationHelper.html">MyTranslationHelper</a>
-  
-    <li><a href="./OsDir.html">OsDir</a>
-  
-    <li><a href="./OsDisk.html">OsDisk</a>
-  
-    <li><a href="./OutputParser.html">OutputParser</a>
-  
-    <li><a href="./ParityHelper.html">ParityHelper</a>
-  
-    <li><a href="./PieChartHelper.html">PieChartHelper</a>
-  
-    <li><a href="./ReverterController.html">ReverterController</a>
-  
-    <li><a href="./Sandbox.html">Sandbox</a>
-  
-    <li><a href="./SetupController.html">SetupController</a>
-  
-    <li><a href="./Tag.html">Tag</a>
-  
-    <li><a href="./TdGapper.html">TdGapper</a>
-  
-    <li><a href="./TestRunner.html">TestRunner</a>
-  
-    <li><a href="./TimeNow.html">TimeNow</a>
-  
-    <li><a href="./TrafficLightHelper.html">TrafficLightHelper</a>
-  
-    <li><a href="./UniqueId.html">UniqueId</a>
-  
-  </ul>
-</nav>
+</div>
 
   </div>
 </nav>
 
-<div id="documentation">
-  <h1 class="class">class Light</h1>
+<main role="main" aria-labelledby="class-Light">
+  <h1 id="class-Light" class="class">
+    class Light
+  </h1>
 
-  <div id="description" class="description">
+  <section class="description">
     
-<p>What is the difference between a <a href="Tag.html">Tag</a> and a <a
-href="Light.html">Light</a>? A <a href="Tag.html">Tag</a> is an entry in
-increments.json which indicates a single git commit+tag. A <a
-href="Light.html">Light</a> corresponds to a [test] event which moves from
-one tag to another tag, creating a red/amber/green traffic-light as it does
-so. So tag0 does not have a traffic-light (it is white) and (tagN -&gt;
-tagN+1) has a red/amber/green traffic-light. I plan to create finer grained
-tags than just [test] events for example, renaming a file. If this happens
-the difference between a <a href="Tag.html">Tag</a> and a <a
-href="Light.html">Light</a> will be much more pronounced.</p>
+<p>See comment at bottom of Avatar.rb</p>
 
-  </div><!-- description -->
+  </section>
 
   
   
@@ -246,9 +113,10 @@ href="Light.html">Light</a> will be much more pronounced.</p>
     
 
     
-    <!-- Attributes -->
-    <section id="attribute-method-details" class="method-section section">
-      <h3 class="section-header">Attributes</h3>
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
 
       
       <div id="attribute-i-avatar" class="method-detail">
@@ -264,13 +132,14 @@ href="Light.html">Light</a> will be much more pronounced.</p>
         </div>
       </div>
       
-    </section><!-- attribute-method-details -->
+    </section>
     
 
-    <!-- Methods -->
     
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
-      <h3 class="section-header">Public Class Methods</h3>
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
 
     
       <div id="method-c-new" class="method-detail ">
@@ -278,7 +147,9 @@ href="Light.html">Light</a> will be much more pronounced.</p>
         <div class="method-heading">
           <span class="method-name">new</span><span
             class="method-args">(avatar,hash)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -286,27 +157,30 @@ href="Light.html">Light</a> will be much more pronounced.</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/models/Light.rb, line 17</span>
+            <pre><span class="ruby-comment"># File app/models/Light.rb, line 6</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">avatar</span>,<span class="ruby-identifier">hash</span>)
   <span class="ruby-ivar">@avatar</span>,<span class="ruby-ivar">@hash</span> = <span class="ruby-identifier">avatar</span>,<span class="ruby-identifier">hash</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- new-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- new-method -->
+      </div>
 
     
-    </section><!-- public-class-method-details -->
+    </section>
   
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
-      <h3 class="section-header">Public Instance Methods</h3>
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
 
     
       <div id="method-i-colour" class="method-detail ">
@@ -314,7 +188,9 @@ href="Light.html">Light</a> will be much more pronounced.</p>
         <div class="method-heading">
           <span class="method-name">colour</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -322,22 +198,23 @@ href="Light.html">Light</a> will be much more pronounced.</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="colour-source">
-            <pre><span class="ruby-comment"># File app/models/Light.rb, line 23</span>
+            <pre><span class="ruby-comment"># File app/models/Light.rb, line 12</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">colour</span>
-  <span class="ruby-comment"># old katas used 'outcome'</span>
-  (<span class="ruby-ivar">@hash</span>[<span class="ruby-string">'colour'</span>] <span class="ruby-operator">||</span> <span class="ruby-ivar">@hash</span>[<span class="ruby-string">'outcome'</span>]).<span class="ruby-identifier">to_sym</span>
+  <span class="ruby-comment"># old katas used &#39;outcome&#39;</span>
+  (<span class="ruby-ivar">@hash</span>[<span class="ruby-string">&#39;colour&#39;</span>] <span class="ruby-operator">||</span> <span class="ruby-ivar">@hash</span>[<span class="ruby-string">&#39;outcome&#39;</span>]).<span class="ruby-identifier">to_sym</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- colour-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- colour-method -->
+      </div>
 
     
       <div id="method-i-number" class="method-detail ">
@@ -345,7 +222,9 @@ href="Light.html">Light</a> will be much more pronounced.</p>
         <div class="method-heading">
           <span class="method-name">number</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -353,21 +232,22 @@ href="Light.html">Light</a> will be much more pronounced.</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="number-source">
-            <pre><span class="ruby-comment"># File app/models/Light.rb, line 32</span>
+            <pre><span class="ruby-comment"># File app/models/Light.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">number</span>
-  <span class="ruby-ivar">@hash</span>[<span class="ruby-string">'number'</span>].<span class="ruby-identifier">to_i</span>
+  <span class="ruby-ivar">@hash</span>[<span class="ruby-string">&#39;number&#39;</span>].<span class="ruby-identifier">to_i</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- number-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- number-method -->
+      </div>
 
     
       <div id="method-i-tag" class="method-detail ">
@@ -375,7 +255,9 @@ href="Light.html">Light</a> will be much more pronounced.</p>
         <div class="method-heading">
           <span class="method-name">tag</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -383,21 +265,22 @@ href="Light.html">Light</a> will be much more pronounced.</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="tag-source">
-            <pre><span class="ruby-comment"># File app/models/Light.rb, line 44</span>
+            <pre><span class="ruby-comment"># File app/models/Light.rb, line 33</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">tag</span>
   <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">tags</span>[<span class="ruby-identifier">number</span>]
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- tag-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- tag-method -->
+      </div>
 
     
       <div id="method-i-time" class="method-detail ">
@@ -405,7 +288,9 @@ href="Light.html">Light</a> will be much more pronounced.</p>
         <div class="method-heading">
           <span class="method-name">time</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -413,21 +298,22 @@ href="Light.html">Light</a> will be much more pronounced.</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="time-source">
-            <pre><span class="ruby-comment"># File app/models/Light.rb, line 28</span>
+            <pre><span class="ruby-comment"># File app/models/Light.rb, line 17</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">time</span>
-  <span class="ruby-constant">Time</span>.<span class="ruby-identifier">mktime</span>(*<span class="ruby-ivar">@hash</span>[<span class="ruby-string">'time'</span>])
+  <span class="ruby-constant">Time</span>.<span class="ruby-identifier">mktime</span>(<span class="ruby-operator">*</span><span class="ruby-ivar">@hash</span>[<span class="ruby-string">&#39;time&#39;</span>])
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- time-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- time-method -->
+      </div>
 
     
       <div id="method-i-to_json" class="method-detail ">
@@ -435,7 +321,9 @@ href="Light.html">Light</a> will be much more pronounced.</p>
         <div class="method-heading">
           <span class="method-name">to_json</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -443,37 +331,37 @@ href="Light.html">Light</a> will be much more pronounced.</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="to_json-source">
-            <pre><span class="ruby-comment"># File app/models/Light.rb, line 36</span>
+            <pre><span class="ruby-comment"># File app/models/Light.rb, line 25</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_json</span>
   {
-    <span class="ruby-string">'colour'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">colour</span>,
-    <span class="ruby-string">'time'</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">time</span>,
-    <span class="ruby-string">'number'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">number</span>
+    <span class="ruby-string">&#39;colour&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">colour</span>,
+    <span class="ruby-string">&#39;time&#39;</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">time</span>,
+    <span class="ruby-string">&#39;number&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">number</span>
   }
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- to_json-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- to_json-method -->
+      </div>
 
     
-    </section><!-- public-instance-method-details -->
+    </section>
   
-  </section><!-- 5Buntitled-5D -->
+  </section>
+</main>
 
-</div><!-- documentation -->
 
-
-<footer id="validator-badges">
-  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
-  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.2.
-  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

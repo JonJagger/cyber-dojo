@@ -2,223 +2,122 @@
 
 <html>
 <head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta charset="utf-8">
 
 <title>class ApplicationController - Rails Application Documentation</title>
 
-<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+<link href="./fonts.css" rel="stylesheet">
+<link href="./rdoc.css" rel="stylesheet">
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
 </script>
 
-<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+<script src="./js/jquery.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/search_index.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/searcher.js"></script>
+<script src="./js/darkfish.js"></script>
 
 
-<body id="top" class="class">
-<nav id="metadata">
-  <nav id="home-section" class="section">
-  <h3 class="section-header">
-    <a href="./index.html">Home</a>
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
     <a href="./table_of_contents.html#classes">Classes</a>
     <a href="./table_of_contents.html#methods">Methods</a>
-  </h3>
-</nav>
-
-
-  <nav id="search-section" class="section project-section" class="initially-hidden">
-  <form action="#" method="get" accept-charset="utf-8">
-    <h3 class="section-header">
-      <input type="text" name="search" placeholder="Search" id="search-field"
-             title="Type to search, Up and Down to navigate, Enter to load">
-    </h3>
-  </form>
-
-  <ul id="search-results" class="initially-hidden"></ul>
-</nav>
-
-
-  <div id="file-metadata">
-    <nav id="file-list-section" class="section">
-  <h3 class="section-header">Defined In</h3>
-  <ul>
-    <li>app/controllers/application_controller.rb
-  </ul>
-</nav>
-
-    
   </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
 
   <div id="class-metadata">
     
-    <nav id="parent-class-section" class="section">
-  <h3 class="section-header">Parent</h3>
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
   
   <p class="link">ActionController::Base
   
-</nav>
+</div>
+
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="Externals.html">Externals</a>
+  
+  
+  </ul>
+</div>
 
     
     <!-- Method Quickref -->
-<nav id="method-list-section" class="section">
-  <h3 class="section-header">Methods</h3>
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
 
-  <ul class="link-list">
+  <ul class="link-list" role="directory">
     
-    <li><a href="#method-i-bind">#bind</a>
+    <li class="calls-super" ><a href="#method-c-new">::new</a>
     
-    <li><a href="#method-i-dojo">#dojo</a>
+    <li ><a href="#method-i-avatar">#avatar</a>
     
-    <li><a href="#method-i-id">#id</a>
+    <li ><a href="#method-i-avatar_name">#avatar_name</a>
     
-    <li><a href="#method-i-root_path">#root_path</a>
+    <li ><a href="#method-i-avatars">#avatars</a>
+    
+    <li ><a href="#method-i-dojo">#dojo</a>
+    
+    <li ><a href="#method-i-id">#id</a>
+    
+    <li ><a href="#method-i-kata">#kata</a>
+    
+    <li ><a href="#method-i-katas">#katas</a>
+    
+    <li ><a href="#method-i-now_tag">#now_tag</a>
+    
+    <li ><a href="#method-i-was_tag">#was_tag</a>
     
   </ul>
-</nav>
-
-  </div>
-
-  <div id="project-metadata">
-    <nav id="fileindex-section" class="section project-section">
-  <h3 class="section-header">Pages</h3>
-
-  <ul>
-  
-    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
-  
-  </ul>
-</nav>
-
-    <nav id="classindex-section" class="section project-section">
-  <h3 class="section-header">Class and Module Index</h3>
-
-  <ul class="link-list">
-  
-    <li><a href="./GitDiff.html">GitDiff</a>
-  
-    <li><a href="./GitDiff/GitDiffBuilder.html">GitDiff::GitDiffBuilder</a>
-  
-    <li><a href="./GitDiff/GitDiffParser.html">GitDiff::GitDiffParser</a>
-  
-    <li><a href="./ApplicationController.html">ApplicationController</a>
-  
-    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
-  
-    <li><a href="./Approval.html">Approval</a>
-  
-    <li><a href="./Avatar.html">Avatar</a>
-  
-    <li><a href="./AvatarImageHelper.html">AvatarImageHelper</a>
-  
-    <li><a href="./Avatars.html">Avatars</a>
-  
-    <li><a href="./Chooser.html">Chooser</a>
-  
-    <li><a href="./Cleaner.html">Cleaner</a>
-  
-    <li><a href="./DashboardController.html">DashboardController</a>
-  
-    <li><a href="./DiffController.html">DiffController</a>
-  
-    <li><a href="./DifferController.html">DifferController</a>
-  
-    <li><a href="./Docker.html">Docker</a>
-  
-    <li><a href="./DockerTestRunner.html">DockerTestRunner</a>
-  
-    <li><a href="./Dojo.html">Dojo</a>
-  
-    <li><a href="./DojoController.html">DojoController</a>
-  
-    <li><a href="./DownloaderController.html">DownloaderController</a>
-  
-    <li><a href="./DummyTestRunner.html">DummyTestRunner</a>
-  
-    <li><a href="./ExceptionController.html">ExceptionController</a>
-  
-    <li><a href="./Exercise.html">Exercise</a>
-  
-    <li><a href="./Exercises.html">Exercises</a>
-  
-    <li><a href="./FileDeltaMaker.html">FileDeltaMaker</a>
-  
-    <li><a href="./FlagImageHelper.html">FlagImageHelper</a>
-  
-    <li><a href="./Folders.html">Folders</a>
-  
-    <li><a href="./ForkerController.html">ForkerController</a>
-  
-    <li><a href="./Git.html">Git</a>
-  
-    <li><a href="./HostTestRunner.html">HostTestRunner</a>
-  
-    <li><a href="./Kata.html">Kata</a>
-  
-    <li><a href="./KataController.html">KataController</a>
-  
-    <li><a href="./Katas.html">Katas</a>
-  
-    <li><a href="./Language.html">Language</a>
-  
-    <li><a href="./Languages.html">Languages</a>
-  
-    <li><a href="./Light.html">Light</a>
-  
-    <li><a href="./LineSplitter.html">LineSplitter</a>
-  
-    <li><a href="./LocalesController.html">LocalesController</a>
-  
-    <li><a href="./LogoImageHelper.html">LogoImageHelper</a>
-  
-    <li><a href="./MakefileFilter.html">MakefileFilter</a>
-  
-    <li><a href="./MyTranslationHelper.html">MyTranslationHelper</a>
-  
-    <li><a href="./OsDir.html">OsDir</a>
-  
-    <li><a href="./OsDisk.html">OsDisk</a>
-  
-    <li><a href="./OutputParser.html">OutputParser</a>
-  
-    <li><a href="./ParityHelper.html">ParityHelper</a>
-  
-    <li><a href="./PieChartHelper.html">PieChartHelper</a>
-  
-    <li><a href="./ReverterController.html">ReverterController</a>
-  
-    <li><a href="./Sandbox.html">Sandbox</a>
-  
-    <li><a href="./SetupController.html">SetupController</a>
-  
-    <li><a href="./Tag.html">Tag</a>
-  
-    <li><a href="./TdGapper.html">TdGapper</a>
-  
-    <li><a href="./TestRunner.html">TestRunner</a>
-  
-    <li><a href="./TimeNow.html">TimeNow</a>
-  
-    <li><a href="./TrafficLightHelper.html">TrafficLightHelper</a>
-  
-    <li><a href="./UniqueId.html">UniqueId</a>
-  
-  </ul>
-</nav>
+</div>
 
   </div>
 </nav>
 
-<div id="documentation">
-  <h1 class="class">class ApplicationController</h1>
+<main role="main" aria-labelledby="class-ApplicationController">
+  <h1 id="class-ApplicationController" class="class">
+    class ApplicationController
+  </h1>
 
-  <div id="description" class="description">
+  <section class="description">
     
-  </div><!-- description -->
+  </section>
 
   
   
@@ -232,18 +131,21 @@
 
     
 
-    <!-- Methods -->
     
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
-      <h3 class="section-header">Public Instance Methods</h3>
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
 
     
-      <div id="method-i-bind" class="method-detail ">
+      <div id="method-c-new" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">bind</span><span
-            class="method-args">(pathed_filename)</span>
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -251,22 +153,135 @@
           
           
           
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+          
 
           
-          <div class="method-source-code" id="bind-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 34</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">bind</span>(<span class="ruby-identifier">pathed_filename</span>)
-  <span class="ruby-identifier">filename</span> = <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">pathed_filename</span>
-  <span class="ruby-constant">ERB</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">filename</span>)).<span class="ruby-identifier">result</span>(<span class="ruby-identifier">binding</span>)
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
+  <span class="ruby-keyword">super</span>
+  <span class="ruby-identifier">disk</span>; <span class="ruby-identifier">git</span>; <span class="ruby-identifier">runner</span> <span class="ruby-comment"># put externals onto Thread.current</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- bind-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- bind-method -->
+      </div>
+
+    
+    </section>
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-avatar" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">avatar</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="avatar-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 69</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">avatar</span>
+  <span class="ruby-identifier">avatars</span>[<span class="ruby-identifier">avatar_name</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-avatar_name" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">avatar_name</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="avatar_name-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 65</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">avatar_name</span>
+      <span class="ruby-identifier">params</span>[<span class="ruby-value">:avatar</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-avatars" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">avatars</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="avatars-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 61</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">avatars</span>
+  <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">avatars</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-dojo" class="method-detail ">
@@ -274,7 +289,9 @@
         <div class="method-heading">
           <span class="method-name">dojo</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -282,27 +299,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="dojo-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 24</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 45</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dojo</span>
-  <span class="ruby-identifier">thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>
-  <span class="ruby-identifier">externals</span> = {
-    <span class="ruby-value">:disk</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@disk</span>   = <span class="ruby-identifier">thread</span>[<span class="ruby-value">:disk</span>  ] <span class="ruby-operator">||</span> <span class="ruby-constant">OsDisk</span>.<span class="ruby-identifier">new</span>,
-    <span class="ruby-value">:git</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@git</span>    = <span class="ruby-identifier">thread</span>[<span class="ruby-value">:git</span>   ] <span class="ruby-operator">||</span> <span class="ruby-constant">Git</span>.<span class="ruby-identifier">new</span>,
-    <span class="ruby-value">:runner</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@runner</span> = <span class="ruby-identifier">thread</span>[<span class="ruby-value">:runner</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">runner</span>
-  }
-  <span class="ruby-constant">Dojo</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root_path</span>,<span class="ruby-identifier">externals</span>)
+  <span class="ruby-ivar">@dojo</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Dojo</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">to_s</span>)
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- dojo-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- dojo-method -->
+      </div>
 
     
       <div id="method-i-id" class="method-detail ">
@@ -310,41 +322,42 @@
         <div class="method-heading">
           <span class="method-name">id</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
+          
           
           
           
 
           
           <div class="method-source-code" id="id-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 16</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 53</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">id</span>
-  <span class="ruby-identifier">path</span> = <span class="ruby-identifier">root_path</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">'CYBERDOJO_TEST_ROOT_DIR'</span>]
-    <span class="ruby-identifier">path</span> <span class="ruby-operator">+=</span> <span class="ruby-string">'test/cyberdojo/'</span>
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-constant">Folders</span><span class="ruby-operator">::</span><span class="ruby-identifier">id_complete</span>(<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-string">'katas/'</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>]) <span class="ruby-operator">||</span> <span class="ruby-string">''</span>
+  <span class="ruby-ivar">@id</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">katas</span>.<span class="ruby-identifier">complete</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- id-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- id-method -->
+      </div>
 
     
-      <div id="method-i-root_path" class="method-detail ">
+      <div id="method-i-kata" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">root_path</span><span
+          <span class="method-name">kata</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -352,33 +365,132 @@
           
           
           
+          
 
           
-          <div class="method-source-code" id="root_path-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 39</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">root_path</span>
-  <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'/'</span>
+          <div class="method-source-code" id="kata-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">kata</span>
+  <span class="ruby-identifier">katas</span>[<span class="ruby-identifier">id</span>]
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- root_path-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- root_path-method -->
+      </div>
 
     
-    </section><!-- public-instance-method-details -->
+      <div id="method-i-katas" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">katas</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="katas-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">katas</span>
+  <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">katas</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-now_tag" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">now_tag</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="now_tag-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">now_tag</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&#39;now_tag&#39;</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-was_tag" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">was_tag</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="was_tag-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 73</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">was_tag</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&#39;was_tag&#39;</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
   
-  </section><!-- 5Buntitled-5D -->
+  </section>
+</main>
 
-</div><!-- documentation -->
 
-
-<footer id="validator-badges">
-  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
-  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.2.
-  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

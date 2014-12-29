@@ -2,258 +2,134 @@
 
 <html>
 <head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta charset="utf-8">
 
 <title>class GitDiff::GitDiffParser - Rails Application Documentation</title>
 
-<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+<link href="../fonts.css" rel="stylesheet">
+<link href="../rdoc.css" rel="stylesheet">
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../";
 </script>
 
-<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
-<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
-<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
-<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
-<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
-<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+<script src="../js/jquery.js"></script>
+<script src="../js/navigation.js"></script>
+<script src="../js/search_index.js"></script>
+<script src="../js/search.js"></script>
+<script src="../js/searcher.js"></script>
+<script src="../js/darkfish.js"></script>
 
 
-<body id="top" class="class">
-<nav id="metadata">
-  <nav id="home-section" class="section">
-  <h3 class="section-header">
-    <a href="../index.html">Home</a>
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
     <a href="../table_of_contents.html#classes">Classes</a>
     <a href="../table_of_contents.html#methods">Methods</a>
-  </h3>
-</nav>
-
-
-  <nav id="search-section" class="section project-section" class="initially-hidden">
-  <form action="#" method="get" accept-charset="utf-8">
-    <h3 class="section-header">
-      <input type="text" name="search" placeholder="Search" id="search-field"
-             title="Type to search, Up and Down to navigate, Enter to load">
-    </h3>
-  </form>
-
-  <ul id="search-results" class="initially-hidden"></ul>
-</nav>
-
-
-  <div id="file-metadata">
-    <nav id="file-list-section" class="section">
-  <h3 class="section-header">Defined In</h3>
-  <ul>
-    <li>app/lib/GitDiffParser.rb
-  </ul>
-</nav>
-
-    
   </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
 
   <div id="class-metadata">
     
-    <nav id="parent-class-section" class="section">
-  <h3 class="section-header">Parent</h3>
-  
-  <p class="link">Object
-  
-</nav>
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
 
+  
+  <p class="link"><a href="../Object.html">Object</a>
+  
+</div>
+
+    
     
     <!-- Method Quickref -->
-<nav id="method-list-section" class="section">
-  <h3 class="section-header">Methods</h3>
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
 
-  <ul class="link-list">
+  <ul class="link-list" role="directory">
     
-    <li><a href="#method-c-new">::new</a>
+    <li ><a href="#method-c-new">::new</a>
     
-    <li><a href="#method-i-check_for_deleted_file">#check_for_deleted_file</a>
+    <li ><a href="#method-i-check_for_deleted_file">#check_for_deleted_file</a>
     
-    <li><a href="#method-i-check_for_unchanged_rename_or_copy">#check_for_unchanged_rename_or_copy</a>
+    <li ><a href="#method-i-check_for_unchanged_rename_or_copy">#check_for_unchanged_rename_or_copy</a>
     
-    <li><a href="#method-i-parse_added_lines">#parse_added_lines</a>
+    <li ><a href="#method-i-parse_added_lines">#parse_added_lines</a>
     
-    <li><a href="#method-i-parse_all">#parse_all</a>
+    <li ><a href="#method-i-parse_all">#parse_all</a>
     
-    <li><a href="#method-i-parse_chunk_all">#parse_chunk_all</a>
+    <li ><a href="#method-i-parse_chunk_all">#parse_chunk_all</a>
     
-    <li><a href="#method-i-parse_chunk_one">#parse_chunk_one</a>
+    <li ><a href="#method-i-parse_chunk_one">#parse_chunk_one</a>
     
-    <li><a href="#method-i-parse_common_lines">#parse_common_lines</a>
+    <li ><a href="#method-i-parse_common_lines">#parse_common_lines</a>
     
-    <li><a href="#method-i-parse_deleted_lines">#parse_deleted_lines</a>
+    <li ><a href="#method-i-parse_deleted_lines">#parse_deleted_lines</a>
     
-    <li><a href="#method-i-parse_filename">#parse_filename</a>
+    <li ><a href="#method-i-parse_filename">#parse_filename</a>
     
-    <li><a href="#method-i-parse_lines">#parse_lines</a>
+    <li ><a href="#method-i-parse_lines">#parse_lines</a>
     
-    <li><a href="#method-i-parse_newline_at_eof">#parse_newline_at_eof</a>
+    <li ><a href="#method-i-parse_newline_at_eof">#parse_newline_at_eof</a>
     
-    <li><a href="#method-i-parse_now_filename">#parse_now_filename</a>
+    <li ><a href="#method-i-parse_now_filename">#parse_now_filename</a>
     
-    <li><a href="#method-i-parse_one">#parse_one</a>
+    <li ><a href="#method-i-parse_one">#parse_one</a>
     
-    <li><a href="#method-i-parse_prefix_lines">#parse_prefix_lines</a>
+    <li ><a href="#method-i-parse_prefix_lines">#parse_prefix_lines</a>
     
-    <li><a href="#method-i-parse_range">#parse_range</a>
+    <li ><a href="#method-i-parse_range">#parse_range</a>
     
-    <li><a href="#method-i-parse_sections">#parse_sections</a>
+    <li ><a href="#method-i-parse_sections">#parse_sections</a>
     
-    <li><a href="#method-i-parse_was_filename">#parse_was_filename</a>
+    <li ><a href="#method-i-parse_was_filename">#parse_was_filename</a>
     
-    <li><a href="#method-i-size_or_default">#size_or_default</a>
+    <li ><a href="#method-i-size_or_default">#size_or_default</a>
     
-    <li><a href="#method-i-unescaped">#unescaped</a>
+    <li ><a href="#method-i-unescaped">#unescaped</a>
     
   </ul>
-</nav>
-
-  </div>
-
-  <div id="project-metadata">
-    <nav id="fileindex-section" class="section project-section">
-  <h3 class="section-header">Pages</h3>
-
-  <ul>
-  
-    <li class="file"><a href="../doc/README_FOR_APP.html">README_FOR_APP</a>
-  
-  </ul>
-</nav>
-
-    <nav id="classindex-section" class="section project-section">
-  <h3 class="section-header">Class and Module Index</h3>
-
-  <ul class="link-list">
-  
-    <li><a href="../GitDiff.html">GitDiff</a>
-  
-    <li><a href="../GitDiff/GitDiffBuilder.html">GitDiff::GitDiffBuilder</a>
-  
-    <li><a href="../GitDiff/GitDiffParser.html">GitDiff::GitDiffParser</a>
-  
-    <li><a href="../ApplicationController.html">ApplicationController</a>
-  
-    <li><a href="../ApplicationHelper.html">ApplicationHelper</a>
-  
-    <li><a href="../Approval.html">Approval</a>
-  
-    <li><a href="../Avatar.html">Avatar</a>
-  
-    <li><a href="../AvatarImageHelper.html">AvatarImageHelper</a>
-  
-    <li><a href="../Avatars.html">Avatars</a>
-  
-    <li><a href="../Chooser.html">Chooser</a>
-  
-    <li><a href="../Cleaner.html">Cleaner</a>
-  
-    <li><a href="../DashboardController.html">DashboardController</a>
-  
-    <li><a href="../DiffController.html">DiffController</a>
-  
-    <li><a href="../DifferController.html">DifferController</a>
-  
-    <li><a href="../Docker.html">Docker</a>
-  
-    <li><a href="../DockerTestRunner.html">DockerTestRunner</a>
-  
-    <li><a href="../Dojo.html">Dojo</a>
-  
-    <li><a href="../DojoController.html">DojoController</a>
-  
-    <li><a href="../DownloaderController.html">DownloaderController</a>
-  
-    <li><a href="../DummyTestRunner.html">DummyTestRunner</a>
-  
-    <li><a href="../ExceptionController.html">ExceptionController</a>
-  
-    <li><a href="../Exercise.html">Exercise</a>
-  
-    <li><a href="../Exercises.html">Exercises</a>
-  
-    <li><a href="../FileDeltaMaker.html">FileDeltaMaker</a>
-  
-    <li><a href="../FlagImageHelper.html">FlagImageHelper</a>
-  
-    <li><a href="../Folders.html">Folders</a>
-  
-    <li><a href="../ForkerController.html">ForkerController</a>
-  
-    <li><a href="../Git.html">Git</a>
-  
-    <li><a href="../HostTestRunner.html">HostTestRunner</a>
-  
-    <li><a href="../Kata.html">Kata</a>
-  
-    <li><a href="../KataController.html">KataController</a>
-  
-    <li><a href="../Katas.html">Katas</a>
-  
-    <li><a href="../Language.html">Language</a>
-  
-    <li><a href="../Languages.html">Languages</a>
-  
-    <li><a href="../Light.html">Light</a>
-  
-    <li><a href="../LineSplitter.html">LineSplitter</a>
-  
-    <li><a href="../LocalesController.html">LocalesController</a>
-  
-    <li><a href="../LogoImageHelper.html">LogoImageHelper</a>
-  
-    <li><a href="../MakefileFilter.html">MakefileFilter</a>
-  
-    <li><a href="../MyTranslationHelper.html">MyTranslationHelper</a>
-  
-    <li><a href="../OsDir.html">OsDir</a>
-  
-    <li><a href="../OsDisk.html">OsDisk</a>
-  
-    <li><a href="../OutputParser.html">OutputParser</a>
-  
-    <li><a href="../ParityHelper.html">ParityHelper</a>
-  
-    <li><a href="../PieChartHelper.html">PieChartHelper</a>
-  
-    <li><a href="../ReverterController.html">ReverterController</a>
-  
-    <li><a href="../Sandbox.html">Sandbox</a>
-  
-    <li><a href="../SetupController.html">SetupController</a>
-  
-    <li><a href="../Tag.html">Tag</a>
-  
-    <li><a href="../TdGapper.html">TdGapper</a>
-  
-    <li><a href="../TestRunner.html">TestRunner</a>
-  
-    <li><a href="../TimeNow.html">TimeNow</a>
-  
-    <li><a href="../TrafficLightHelper.html">TrafficLightHelper</a>
-  
-    <li><a href="../UniqueId.html">UniqueId</a>
-  
-  </ul>
-</nav>
+</div>
 
   </div>
 </nav>
 
-<div id="documentation">
-  <h1 class="class">class GitDiff::GitDiffParser</h1>
+<main role="main" aria-labelledby="class-GitDiff::GitDiffParser">
+  <h1 id="class-GitDiff::GitDiffParser" class="class">
+    class GitDiff::GitDiffParser
+  </h1>
 
-  <div id="description" class="description">
+  <section class="description">
     
-<p>Parses the output of ‘git diff’ command. Specfically, the one in
+<p>Parses the output of &#39;git diff&#39; command. Specfically, the one in
 GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
 
-  </div><!-- description -->
+  </section>
 
   
   
@@ -264,69 +140,70 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
     
 
     
-    <!-- Constants -->
-    <section id="constants-list" class="section">
-      <h3 class="section-header">Constants</h3>
+    <section class="constants-list">
+      <header>
+        <h3>Constants</h3>
+      </header>
       <dl>
       
         <dt id="ADDED_LINE_RE">ADDED_LINE_RE
         
-        <dd class="description">
+        <dd>
         
       
         <dt id="COMMON_LINE_RE">COMMON_LINE_RE
         
-        <dd class="description">
+        <dd>
         
       
         <dt id="DELETED_LINE_OR_ADDED_LINE_OR_COMMON_LINE_RE">DELETED_LINE_OR_ADDED_LINE_OR_COMMON_LINE_RE
         
-        <dd class="description">
+        <dd>
         
       
         <dt id="DELETED_LINE_RE">DELETED_LINE_RE
         
-        <dd class="description">
+        <dd>
         
       
         <dt id="DIFF_GIT_RE">DIFF_GIT_RE
         
-        <dd class="description">
+        <dd>
         
       
         <dt id="NEWLINE_AT_EOF_RE">NEWLINE_AT_EOF_RE
         
-        <dd class="description">
+        <dd>
         
       
         <dt id="NOW_FILENAME_RE">NOW_FILENAME_RE
         
-        <dd class="description">
+        <dd>
         
       
         <dt id="PREFIX_RE">PREFIX_RE
         
-        <dd class="description">
+        <dd>
         
       
         <dt id="RANGE_RE">RANGE_RE
         
-        <dd class="description">
+        <dd>
         
       
         <dt id="RENAME_OR_COPY_FROM_RE">RENAME_OR_COPY_FROM_RE
         
-        <dd class="description">
+        <dd>
         
       
         <dt id="RENAME_OR_COPY_TO_RE">RENAME_OR_COPY_TO_RE
         
-        <dd class="description">
+        <dd>
         
       
         <dt id="WAS_FILENAME_RE">WAS_FILENAME_RE
         
-        <dd class="description">
+        <dd>
         
       
       </dl>
@@ -334,9 +211,10 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
     
 
     
-    <!-- Attributes -->
-    <section id="attribute-method-details" class="method-section section">
-      <h3 class="section-header">Attributes</h3>
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
 
       
       <div id="attribute-i-lines" class="method-detail">
@@ -365,13 +243,14 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         </div>
       </div>
       
-    </section><!-- attribute-method-details -->
+    </section>
     
 
-    <!-- Methods -->
     
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
-      <h3 class="section-header">Public Class Methods</h3>
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
 
     
       <div id="method-c-new" class="method-detail ">
@@ -379,7 +258,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">new</span><span
             class="method-args">(diff_text)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -387,28 +268,31 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 11</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 10</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">diff_text</span>)
   <span class="ruby-ivar">@lines</span> = <span class="ruby-constant">LineSplitter</span>.<span class="ruby-identifier">line_split</span>(<span class="ruby-identifier">diff_text</span>)
   <span class="ruby-ivar">@n</span> = <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- new-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- new-method -->
+      </div>
 
     
-    </section><!-- public-class-method-details -->
+    </section>
   
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
-      <h3 class="section-header">Public Instance Methods</h3>
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
 
     
       <div id="method-i-check_for_deleted_file" class="method-detail ">
@@ -416,7 +300,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">check_for_deleted_file</span><span
             class="method-args">(one)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -424,13 +310,14 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="check_for_deleted_file-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 58</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 57</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">check_for_deleted_file</span>(<span class="ruby-identifier">one</span>)
   <span class="ruby-identifier">prefix</span> = <span class="ruby-identifier">one</span>[<span class="ruby-value">:prefix_lines</span>]
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">3</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">prefix</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">'deleted file mode 100644'</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">3</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">prefix</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;deleted file mode 100644&#39;</span>
     <span class="ruby-identifier">re</span> = <span class="ruby-constant">DIFF_GIT_RE</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">prefix</span>[<span class="ruby-value">0</span>])
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">re</span>
       <span class="ruby-identifier">both</span> = <span class="ruby-identifier">re</span>[<span class="ruby-value">1</span>]
@@ -439,19 +326,19 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
       <span class="ruby-comment"># -1 (space in middle) / 2 (to get one filename)</span>
       <span class="ruby-identifier">was</span> = <span class="ruby-identifier">both</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">both</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">/</span><span class="ruby-value">2</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>]
       <span class="ruby-identifier">one</span>[<span class="ruby-value">:was_filename</span>] = <span class="ruby-identifier">unescaped</span>(<span class="ruby-identifier">was</span>)
-      <span class="ruby-identifier">one</span>[<span class="ruby-value">:now_filename</span>] = <span class="ruby-string">'/dev/null'</span>
+      <span class="ruby-identifier">one</span>[<span class="ruby-value">:now_filename</span>] = <span class="ruby-string">&#39;/dev/null&#39;</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">one</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- check_for_deleted_file-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- check_for_deleted_file-method -->
+      </div>
 
     
       <div id="method-i-check_for_unchanged_rename_or_copy" class="method-detail ">
@@ -459,7 +346,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">check_for_unchanged_rename_or_copy</span><span
             class="method-args">(one)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -467,25 +356,26 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="check_for_unchanged_rename_or_copy-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 48</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 47</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">check_for_unchanged_rename_or_copy</span>(<span class="ruby-identifier">one</span>)
   <span class="ruby-identifier">prefix</span> = <span class="ruby-identifier">one</span>[<span class="ruby-value">:prefix_lines</span>]
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">4</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">prefix</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">'similarity index 100%'</span>
-    <span class="ruby-identifier">one</span>[<span class="ruby-value">:was_filename</span>] = <span class="ruby-string">'a/'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">unescaped</span>(<span class="ruby-constant">RENAME_OR_COPY_FROM_RE</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">prefix</span>[<span class="ruby-value">2</span>])[<span class="ruby-value">2</span>])
-    <span class="ruby-identifier">one</span>[<span class="ruby-value">:now_filename</span>] = <span class="ruby-string">'b/'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">unescaped</span>(<span class="ruby-constant">RENAME_OR_COPY_TO_RE</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">prefix</span>[<span class="ruby-value">3</span>])[<span class="ruby-value">2</span>])
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">4</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">prefix</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;similarity index 100%&#39;</span>
+    <span class="ruby-identifier">one</span>[<span class="ruby-value">:was_filename</span>] = <span class="ruby-string">&#39;a/&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">unescaped</span>(<span class="ruby-constant">RENAME_OR_COPY_FROM_RE</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">prefix</span>[<span class="ruby-value">2</span>])[<span class="ruby-value">2</span>])
+    <span class="ruby-identifier">one</span>[<span class="ruby-value">:now_filename</span>] = <span class="ruby-string">&#39;b/&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">unescaped</span>(<span class="ruby-constant">RENAME_OR_COPY_TO_RE</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">prefix</span>[<span class="ruby-value">3</span>])[<span class="ruby-value">2</span>])
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- check_for_unchanged_rename_or_copy-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- check_for_unchanged_rename_or_copy-method -->
+      </div>
 
     
       <div id="method-i-parse_added_lines" class="method-detail ">
@@ -493,7 +383,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">parse_added_lines</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -501,21 +393,22 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="parse_added_lines-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 150</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 149</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_added_lines</span>
   <span class="ruby-identifier">parse_lines</span>(<span class="ruby-constant">ADDED_LINE_RE</span>)
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- parse_added_lines-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- parse_added_lines-method -->
+      </div>
 
     
       <div id="method-i-parse_all" class="method-detail ">
@@ -523,7 +416,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">parse_all</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -531,15 +426,16 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="parse_all-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 18</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 17</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_all</span>
   <span class="ruby-identifier">all</span> = { }
   <span class="ruby-keyword">while</span> <span class="ruby-regexp">/^diff/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@lines</span>[<span class="ruby-ivar">@n</span>]) <span class="ruby-keyword">do</span>
     <span class="ruby-identifier">one</span> = <span class="ruby-identifier">parse_one</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">one</span>[<span class="ruby-value">:now_filename</span>] <span class="ruby-operator">!=</span> <span class="ruby-string">'/dev/null'</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">one</span>[<span class="ruby-value">:now_filename</span>] <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;/dev/null&#39;</span>
       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">one</span>[<span class="ruby-value">:now_filename</span>]
     <span class="ruby-keyword">else</span>
       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">one</span>[<span class="ruby-value">:was_filename</span>]
@@ -548,14 +444,14 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">all</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- parse_all-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- parse_all-method -->
+      </div>
 
     
       <div id="method-i-parse_chunk_all" class="method-detail ">
@@ -563,7 +459,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">parse_chunk_all</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -571,10 +469,11 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="parse_chunk_all-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 75</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 74</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_chunk_all</span>
   <span class="ruby-identifier">chunks</span> = [ ]
   <span class="ruby-keyword">while</span> <span class="ruby-identifier">chunk</span> = <span class="ruby-identifier">parse_chunk_one</span>
@@ -582,14 +481,14 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">chunks</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- parse_chunk_all-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- parse_chunk_all-method -->
+      </div>
 
     
       <div id="method-i-parse_chunk_one" class="method-detail ">
@@ -597,7 +496,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">parse_chunk_one</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -605,10 +506,11 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="parse_chunk_one-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 83</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 82</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_chunk_one</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">range</span> = <span class="ruby-identifier">parse_range</span>
     {
@@ -618,14 +520,14 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
     }
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- parse_chunk_one-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- parse_chunk_one-method -->
+      </div>
 
     
       <div id="method-i-parse_common_lines" class="method-detail ">
@@ -633,7 +535,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">parse_common_lines</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -641,21 +545,22 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="parse_common_lines-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 156</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 155</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_common_lines</span>
   <span class="ruby-identifier">parse_lines</span>(<span class="ruby-constant">COMMON_LINE_RE</span>)
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- parse_common_lines-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- parse_common_lines-method -->
+      </div>
 
     
       <div id="method-i-parse_deleted_lines" class="method-detail ">
@@ -663,7 +568,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">parse_deleted_lines</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -671,21 +578,22 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="parse_deleted_lines-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 144</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 143</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_deleted_lines</span>
   <span class="ruby-identifier">parse_lines</span>(<span class="ruby-constant">DELETED_LINE_RE</span>)
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- parse_deleted_lines-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- parse_deleted_lines-method -->
+      </div>
 
     
       <div id="method-i-parse_filename" class="method-detail ">
@@ -693,7 +601,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">parse_filename</span><span
             class="method-args">(re)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -701,15 +611,16 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="parse_filename-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 178</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 177</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_filename</span>(<span class="ruby-identifier">re</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">md</span> = <span class="ruby-identifier">re</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@lines</span>[<span class="ruby-ivar">@n</span>])
     <span class="ruby-ivar">@n</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
     <span class="ruby-identifier">filename</span> = <span class="ruby-identifier">md</span>[<span class="ruby-value">1</span>]
-    <span class="ruby-comment"># If you have filenames with spaces in them then the 'git diff'</span>
+    <span class="ruby-comment"># If you have filenames with spaces in them then the &#39;git diff&#39;</span>
     <span class="ruby-comment"># command used in git_diff_view() sometimes generates</span>
     <span class="ruby-comment"># --- and +++ lines with a tab appended to the filename!!!</span>
     <span class="ruby-identifier">filename</span>.<span class="ruby-identifier">rstrip!</span>
@@ -717,14 +628,14 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">filename</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- parse_filename-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- parse_filename-method -->
+      </div>
 
     
       <div id="method-i-parse_lines" class="method-detail ">
@@ -732,7 +643,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">parse_lines</span><span
             class="method-args">(re)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -740,10 +653,11 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="parse_lines-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 200</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 199</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_lines</span>(<span class="ruby-identifier">re</span>)
   <span class="ruby-identifier">lines</span> = [ ]
   <span class="ruby-keyword">while</span> <span class="ruby-identifier">md</span> = <span class="ruby-identifier">re</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@lines</span>[<span class="ruby-ivar">@n</span>]) <span class="ruby-keyword">do</span>
@@ -752,14 +666,14 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">lines</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- parse_lines-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- parse_lines-method -->
+      </div>
 
     
       <div id="method-i-parse_newline_at_eof" class="method-detail ">
@@ -767,7 +681,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">parse_newline_at_eof</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -775,23 +691,24 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="parse_newline_at_eof-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 211</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 210</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_newline_at_eof</span>
   <span class="ruby-keyword">if</span> <span class="ruby-constant">NEWLINE_AT_EOF_RE</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@lines</span>[<span class="ruby-ivar">@n</span>])
     <span class="ruby-ivar">@n</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- parse_newline_at_eof-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- parse_newline_at_eof-method -->
+      </div>
 
     
       <div id="method-i-parse_now_filename" class="method-detail ">
@@ -799,7 +716,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">parse_now_filename</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -807,21 +726,22 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="parse_now_filename-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 174</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 173</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_now_filename</span>
   <span class="ruby-identifier">parse_filename</span>(<span class="ruby-constant">NOW_FILENAME_RE</span>)
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- parse_now_filename-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- parse_now_filename-method -->
+      </div>
 
     
       <div id="method-i-parse_one" class="method-detail ">
@@ -829,7 +749,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">parse_one</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -837,10 +759,11 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="parse_one-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 32</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 31</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_one</span>
   <span class="ruby-identifier">one</span> =
   {
@@ -853,14 +776,14 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
   <span class="ruby-identifier">check_for_deleted_file</span>(<span class="ruby-identifier">one</span>)
   <span class="ruby-identifier">one</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- parse_one-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- parse_one-method -->
+      </div>
 
     
       <div id="method-i-parse_prefix_lines" class="method-detail ">
@@ -868,7 +791,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">parse_prefix_lines</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -876,21 +801,22 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="parse_prefix_lines-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 162</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 161</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_prefix_lines</span>
   <span class="ruby-identifier">parse_lines</span>(<span class="ruby-constant">PREFIX_RE</span>)
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- parse_prefix_lines-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- parse_prefix_lines-method -->
+      </div>
 
     
       <div id="method-i-parse_range" class="method-detail ">
@@ -898,7 +824,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">parse_range</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -906,10 +834,11 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="parse_range-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 95</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 94</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_range</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">range</span> = <span class="ruby-constant">RANGE_RE</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@lines</span>[<span class="ruby-ivar">@n</span>])
     <span class="ruby-ivar">@n</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
@@ -924,14 +853,14 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
     <span class="ruby-keyword">nil</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- parse_range-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- parse_range-method -->
+      </div>
 
     
       <div id="method-i-parse_sections" class="method-detail ">
@@ -939,7 +868,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">parse_sections</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -947,10 +878,11 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="parse_sections-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 120</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 119</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_sections</span>
   <span class="ruby-identifier">parse_newline_at_eof</span>
   <span class="ruby-identifier">sections</span> = [ ]
@@ -972,14 +904,14 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">sections</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- parse_sections-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- parse_sections-method -->
+      </div>
 
     
       <div id="method-i-parse_was_filename" class="method-detail ">
@@ -987,7 +919,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">parse_was_filename</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -995,21 +929,22 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="parse_was_filename-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 168</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 167</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_was_filename</span>
   <span class="ruby-identifier">parse_filename</span>(<span class="ruby-constant">WAS_FILENAME_RE</span>)
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- parse_was_filename-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- parse_was_filename-method -->
+      </div>
 
     
       <div id="method-i-size_or_default" class="method-detail ">
@@ -1017,7 +952,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">size_or_default</span><span
             class="method-args">(size)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -1025,10 +962,11 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="size_or_default-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 110</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 109</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">size_or_default</span>(<span class="ruby-identifier">size</span>)
   <span class="ruby-comment"># http://www.artima.com/weblogs/viewpost.jsp?thread=164293</span>
   <span class="ruby-comment"># Is a blog entry by Guido van Rossum.</span>
@@ -1036,14 +974,14 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
   <span class="ruby-comment"># S is 1. So -3 is the same as -3,1</span>
   <span class="ruby-identifier">size</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">size</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">:</span> <span class="ruby-value">1</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- size_or_default-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- size_or_default-method -->
+      </div>
 
     
       <div id="method-i-unescaped" class="method-detail ">
@@ -1051,7 +989,9 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
         <div class="method-heading">
           <span class="method-name">unescaped</span><span
             class="method-args">(filename)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -1059,38 +999,38 @@ GitDiffParser.rb git_diff_view() See test/lib/git_diff_parser_tests.rb</p>
           
           
           
+          
 
           
           <div class="method-source-code" id="unescaped-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 191</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiffParser.rb, line 190</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">unescaped</span>(<span class="ruby-identifier">filename</span>)
-  <span class="ruby-comment"># If the filename contains a backslash, then the 'git diff'</span>
+  <span class="ruby-comment"># If the filename contains a backslash, then the &#39;git diff&#39;</span>
   <span class="ruby-comment"># command will escape the filename</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">filename</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">chr</span> <span class="ruby-operator">==</span> <span class="ruby-string">'&quot;'</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">filename</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">chr</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;&quot;&#39;</span>
     <span class="ruby-identifier">filename</span> = <span class="ruby-identifier">eval</span>(<span class="ruby-identifier">filename</span>)
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">filename</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- unescaped-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- unescaped-method -->
+      </div>
 
     
-    </section><!-- public-instance-method-details -->
+    </section>
   
-  </section><!-- 5Buntitled-5D -->
+  </section>
+</main>
 
-</div><!-- documentation -->
 
-
-<footer id="validator-badges">
-  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
-  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.2.
-  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

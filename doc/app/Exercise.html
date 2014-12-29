@@ -2,239 +2,116 @@
 
 <html>
 <head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta charset="utf-8">
 
 <title>class Exercise - Rails Application Documentation</title>
 
-<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+<link href="./fonts.css" rel="stylesheet">
+<link href="./rdoc.css" rel="stylesheet">
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
 </script>
 
-<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+<script src="./js/jquery.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/search_index.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/searcher.js"></script>
+<script src="./js/darkfish.js"></script>
 
 
-<body id="top" class="class">
-<nav id="metadata">
-  <nav id="home-section" class="section">
-  <h3 class="section-header">
-    <a href="./index.html">Home</a>
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
     <a href="./table_of_contents.html#classes">Classes</a>
     <a href="./table_of_contents.html#methods">Methods</a>
-  </h3>
-</nav>
-
-
-  <nav id="search-section" class="section project-section" class="initially-hidden">
-  <form action="#" method="get" accept-charset="utf-8">
-    <h3 class="section-header">
-      <input type="text" name="search" placeholder="Search" id="search-field"
-             title="Type to search, Up and Down to navigate, Enter to load">
-    </h3>
-  </form>
-
-  <ul id="search-results" class="initially-hidden"></ul>
-</nav>
-
-
-  <div id="file-metadata">
-    <nav id="file-list-section" class="section">
-  <h3 class="section-header">Defined In</h3>
-  <ul>
-    <li>app/models/Exercise.rb
-  </ul>
-</nav>
-
-    
   </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
 
   <div id="class-metadata">
     
-    <nav id="parent-class-section" class="section">
-  <h3 class="section-header">Parent</h3>
-  
-  <p class="link">Object
-  
-</nav>
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
 
-    <!-- Included Modules -->
-<nav id="includes-section" class="section">
-  <h3 class="section-header">Included Modules</h3>
+  
+  <p class="link"><a href="Object.html">Object</a>
+  
+</div>
+
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
 
   <ul class="link-list">
+  
+  
+    <li><a class="include" href="Externals.html">Externals</a>
+  
   
   
     <li><a class="include" href="Cleaner.html">Cleaner</a>
   
   
   </ul>
-</nav>
+</div>
 
+    
     <!-- Method Quickref -->
-<nav id="method-list-section" class="section">
-  <h3 class="section-header">Methods</h3>
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
 
-  <ul class="link-list">
+  <ul class="link-list" role="directory">
     
-    <li><a href="#method-c-new">::new</a>
+    <li ><a href="#method-c-new">::new</a>
     
-    <li><a href="#method-i-dir">#dir</a>
+    <li ><a href="#method-i-exists-3F">#exists?</a>
     
-    <li><a href="#method-i-exists-3F">#exists?</a>
+    <li ><a href="#method-i-instructions">#instructions</a>
     
-    <li><a href="#method-i-instructions">#instructions</a>
+    <li ><a href="#method-i-new_name">#new_name</a>
     
-    <li><a href="#method-i-new_name">#new_name</a>
-    
-    <li><a href="#method-i-path">#path</a>
+    <li ><a href="#method-i-path">#path</a>
     
   </ul>
-</nav>
-
-  </div>
-
-  <div id="project-metadata">
-    <nav id="fileindex-section" class="section project-section">
-  <h3 class="section-header">Pages</h3>
-
-  <ul>
-  
-    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
-  
-  </ul>
-</nav>
-
-    <nav id="classindex-section" class="section project-section">
-  <h3 class="section-header">Class and Module Index</h3>
-
-  <ul class="link-list">
-  
-    <li><a href="./GitDiff.html">GitDiff</a>
-  
-    <li><a href="./GitDiff/GitDiffBuilder.html">GitDiff::GitDiffBuilder</a>
-  
-    <li><a href="./GitDiff/GitDiffParser.html">GitDiff::GitDiffParser</a>
-  
-    <li><a href="./ApplicationController.html">ApplicationController</a>
-  
-    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
-  
-    <li><a href="./Approval.html">Approval</a>
-  
-    <li><a href="./Avatar.html">Avatar</a>
-  
-    <li><a href="./AvatarImageHelper.html">AvatarImageHelper</a>
-  
-    <li><a href="./Avatars.html">Avatars</a>
-  
-    <li><a href="./Chooser.html">Chooser</a>
-  
-    <li><a href="./Cleaner.html">Cleaner</a>
-  
-    <li><a href="./DashboardController.html">DashboardController</a>
-  
-    <li><a href="./DiffController.html">DiffController</a>
-  
-    <li><a href="./DifferController.html">DifferController</a>
-  
-    <li><a href="./Docker.html">Docker</a>
-  
-    <li><a href="./DockerTestRunner.html">DockerTestRunner</a>
-  
-    <li><a href="./Dojo.html">Dojo</a>
-  
-    <li><a href="./DojoController.html">DojoController</a>
-  
-    <li><a href="./DownloaderController.html">DownloaderController</a>
-  
-    <li><a href="./DummyTestRunner.html">DummyTestRunner</a>
-  
-    <li><a href="./ExceptionController.html">ExceptionController</a>
-  
-    <li><a href="./Exercise.html">Exercise</a>
-  
-    <li><a href="./Exercises.html">Exercises</a>
-  
-    <li><a href="./FileDeltaMaker.html">FileDeltaMaker</a>
-  
-    <li><a href="./FlagImageHelper.html">FlagImageHelper</a>
-  
-    <li><a href="./Folders.html">Folders</a>
-  
-    <li><a href="./ForkerController.html">ForkerController</a>
-  
-    <li><a href="./Git.html">Git</a>
-  
-    <li><a href="./HostTestRunner.html">HostTestRunner</a>
-  
-    <li><a href="./Kata.html">Kata</a>
-  
-    <li><a href="./KataController.html">KataController</a>
-  
-    <li><a href="./Katas.html">Katas</a>
-  
-    <li><a href="./Language.html">Language</a>
-  
-    <li><a href="./Languages.html">Languages</a>
-  
-    <li><a href="./Light.html">Light</a>
-  
-    <li><a href="./LineSplitter.html">LineSplitter</a>
-  
-    <li><a href="./LocalesController.html">LocalesController</a>
-  
-    <li><a href="./LogoImageHelper.html">LogoImageHelper</a>
-  
-    <li><a href="./MakefileFilter.html">MakefileFilter</a>
-  
-    <li><a href="./MyTranslationHelper.html">MyTranslationHelper</a>
-  
-    <li><a href="./OsDir.html">OsDir</a>
-  
-    <li><a href="./OsDisk.html">OsDisk</a>
-  
-    <li><a href="./OutputParser.html">OutputParser</a>
-  
-    <li><a href="./ParityHelper.html">ParityHelper</a>
-  
-    <li><a href="./PieChartHelper.html">PieChartHelper</a>
-  
-    <li><a href="./ReverterController.html">ReverterController</a>
-  
-    <li><a href="./Sandbox.html">Sandbox</a>
-  
-    <li><a href="./SetupController.html">SetupController</a>
-  
-    <li><a href="./Tag.html">Tag</a>
-  
-    <li><a href="./TdGapper.html">TdGapper</a>
-  
-    <li><a href="./TestRunner.html">TestRunner</a>
-  
-    <li><a href="./TimeNow.html">TimeNow</a>
-  
-    <li><a href="./TrafficLightHelper.html">TrafficLightHelper</a>
-  
-    <li><a href="./UniqueId.html">UniqueId</a>
-  
-  </ul>
-</nav>
+</div>
 
   </div>
 </nav>
 
-<div id="documentation">
-  <h1 class="class">class Exercise</h1>
+<main role="main" aria-labelledby="class-Exercise">
+  <h1 id="class-Exercise" class="class">
+    class Exercise
+  </h1>
 
-  <div id="description" class="description">
+  <section class="description">
     
-  </div><!-- description -->
+  </section>
 
   
   
@@ -247,9 +124,10 @@
     
 
     
-    <!-- Attributes -->
-    <section id="attribute-method-details" class="method-section section">
-      <h3 class="section-header">Attributes</h3>
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
 
       
       <div id="attribute-i-name" class="method-detail">
@@ -265,79 +143,56 @@
         </div>
       </div>
       
-    </section><!-- attribute-method-details -->
+    </section>
     
 
-    <!-- Methods -->
     
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
-      <h3 class="section-header">Public Class Methods</h3>
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
 
     
       <div id="method-c-new" class="method-detail ">
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(path,name,disk)</span>
+            class="method-args">(path,name)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
+          
           
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 6</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">path</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">disk</span>)
-  <span class="ruby-ivar">@path</span>,<span class="ruby-ivar">@name</span>,<span class="ruby-ivar">@disk</span> = <span class="ruby-identifier">path</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">disk</span>
+            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 4</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">path</span>,<span class="ruby-identifier">name</span>)
+  <span class="ruby-identifier">raise_if_no</span>([<span class="ruby-value">:disk</span>])
+  <span class="ruby-ivar">@path</span>,<span class="ruby-ivar">@name</span> = <span class="ruby-identifier">path</span>,<span class="ruby-identifier">name</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- new-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- new-method -->
+      </div>
 
     
-    </section><!-- public-class-method-details -->
+    </section>
   
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
-      <h3 class="section-header">Public Instance Methods</h3>
-
-    
-      <div id="method-i-dir" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">dir</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-
-          
-          <div class="method-source-code" id="dir-source">
-            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 29</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">dir</span>
-  <span class="ruby-ivar">@disk</span>[<span class="ruby-identifier">path</span>]
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- dir-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- dir-method -->
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
 
     
       <div id="method-i-exists-3F" class="method-detail ">
@@ -345,7 +200,9 @@
         <div class="method-heading">
           <span class="method-name">exists?</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -353,21 +210,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="exists-3F-source">
-            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 33</span>
+            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 22</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">exists?</span>
   <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">instructions_filename</span>)
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- exists-3F-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- exists-3F-method -->
+      </div>
 
     
       <div id="method-i-instructions" class="method-detail ">
@@ -375,7 +233,9 @@
         <div class="method-heading">
           <span class="method-name">instructions</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -383,22 +243,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="instructions-source">
-            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 37</span>
+            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 26</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">instructions</span>
-  <span class="ruby-identifier">raw</span> = <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">instructions_filename</span>)
-  <span class="ruby-identifier">clean</span>(<span class="ruby-identifier">raw</span>)
+  <span class="ruby-identifier">clean</span>(<span class="ruby-identifier">dir</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">instructions_filename</span>))
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- instructions-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- instructions-method -->
+      </div>
 
     
       <div id="method-i-new_name" class="method-detail ">
@@ -406,7 +266,9 @@
         <div class="method-heading">
           <span class="method-name">new_name</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -414,30 +276,29 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="new_name-source">
-            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 12</span>
+            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 11</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">new_name</span>
   <span class="ruby-comment"># Some exercises/ sub-folders have been renamed.</span>
-  <span class="ruby-comment"># This creates a problem for the script</span>
-  <span class="ruby-comment"># admin_scripts/convert_katas_format.rb</span>
   <span class="ruby-comment"># See app/models/Kata.rb ::exercise()</span>
   <span class="ruby-comment"># See app/models/Kata.rb ::original_exercise()</span>
   <span class="ruby-identifier">renames</span> = {
-    <span class="ruby-string">'Yahtzee'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Yatzy'</span>,
-    <span class="ruby-string">'Yahtzee_Cutdown'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Yatzy_Cutdown'</span>
+    <span class="ruby-string">&#39;Yahtzee&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Yatzy&#39;</span>,
+    <span class="ruby-string">&#39;Yahtzee_Cutdown&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Yatzy_Cutdown&#39;</span>
   }
   <span class="ruby-identifier">renames</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">name</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- new_name-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- new_name-method -->
+      </div>
 
     
       <div id="method-i-path" class="method-detail ">
@@ -445,7 +306,9 @@
         <div class="method-heading">
           <span class="method-name">path</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -453,33 +316,33 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="path-source">
-            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 25</span>
+            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 30</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">path</span>
-  <span class="ruby-ivar">@path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">'/'</span>
+  <span class="ruby-ivar">@path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- path-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- path-method -->
+      </div>
 
     
-    </section><!-- public-instance-method-details -->
+    </section>
   
-  </section><!-- 5Buntitled-5D -->
+  </section>
+</main>
 
-</div><!-- documentation -->
 
-
-<footer id="validator-badges">
-  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
-  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.2.
-  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

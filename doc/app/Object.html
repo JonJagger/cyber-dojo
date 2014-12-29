@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 
-<title>class ExceptionController - Rails Application Documentation</title>
+<title>class Object - Rails Application Documentation</title>
 
 <link href="./fonts.css" rel="stylesheet">
 <link href="./rdoc.css" rel="stylesheet">
@@ -61,7 +61,7 @@
   <h3>Parent</h3>
 
   
-  <p class="link">ActionController::Base
+  <p class="link">BasicObject
   
 </div>
 
@@ -73,7 +73,7 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-i-render_error">#render_error</a>
+    <li ><a href="#method-i-require_dependencies">#require_dependencies</a>
     
   </ul>
 </div>
@@ -81,9 +81,9 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-ExceptionController">
-  <h1 id="class-ExceptionController" class="class">
-    class ExceptionController
+<main role="main" aria-labelledby="class-Object">
+  <h1 id="class-Object" class="class">
+    class Object
   </h1>
 
   <section class="description">
@@ -109,11 +109,11 @@
        </header>
 
     
-      <div id="method-i-render_error" class="method-detail ">
+      <div id="method-i-require_dependencies" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">render_error</span><span
-            class="method-args">()</span>
+          <span class="method-name">require_dependencies</span><span
+            class="method-args">(file_names)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -127,10 +127,10 @@
           
 
           
-          <div class="method-source-code" id="render_error-source">
-            <pre><span class="ruby-comment"># File app/controllers/exception_controller.rb, line 4</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">render_error</span>
-  <span class="ruby-identifier">render</span> <span class="ruby-string">&#39;error/sorry&#39;</span>
+          <div class="method-source-code" id="require_dependencies-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 2</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">require_dependencies</span>(<span class="ruby-identifier">file_names</span>)
+  <span class="ruby-identifier">file_names</span>.<span class="ruby-identifier">each</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">file_name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">require_dependency</span> <span class="ruby-identifier">file_name</span>}
 <span class="ruby-keyword">end</span></pre>
           </div>
           

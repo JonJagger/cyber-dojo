@@ -2,269 +2,146 @@
 
 <html>
 <head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta charset="utf-8">
 
 <title>class Language - Rails Application Documentation</title>
 
-<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+<link href="./fonts.css" rel="stylesheet">
+<link href="./rdoc.css" rel="stylesheet">
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
 </script>
 
-<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+<script src="./js/jquery.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/search_index.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/searcher.js"></script>
+<script src="./js/darkfish.js"></script>
 
 
-<body id="top" class="class">
-<nav id="metadata">
-  <nav id="home-section" class="section">
-  <h3 class="section-header">
-    <a href="./index.html">Home</a>
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
     <a href="./table_of_contents.html#classes">Classes</a>
     <a href="./table_of_contents.html#methods">Methods</a>
-  </h3>
-</nav>
-
-
-  <nav id="search-section" class="section project-section" class="initially-hidden">
-  <form action="#" method="get" accept-charset="utf-8">
-    <h3 class="section-header">
-      <input type="text" name="search" placeholder="Search" id="search-field"
-             title="Type to search, Up and Down to navigate, Enter to load">
-    </h3>
-  </form>
-
-  <ul id="search-results" class="initially-hidden"></ul>
-</nav>
-
-
-  <div id="file-metadata">
-    <nav id="file-list-section" class="section">
-  <h3 class="section-header">Defined In</h3>
-  <ul>
-    <li>app/models/Language.rb
-  </ul>
-</nav>
-
-    
   </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
 
   <div id="class-metadata">
     
-    <nav id="parent-class-section" class="section">
-  <h3 class="section-header">Parent</h3>
-  
-  <p class="link">Object
-  
-</nav>
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
 
-    <!-- Included Modules -->
-<nav id="includes-section" class="section">
-  <h3 class="section-header">Included Modules</h3>
+  
+  <p class="link"><a href="Object.html">Object</a>
+  
+</div>
+
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
 
   <ul class="link-list">
+  
+  
+    <li><a class="include" href="Externals.html">Externals</a>
+  
   
   
     <li><a class="include" href="Cleaner.html">Cleaner</a>
   
   
   </ul>
-</nav>
+</div>
 
+    
     <!-- Method Quickref -->
-<nav id="method-list-section" class="section">
-  <h3 class="section-header">Methods</h3>
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
 
-  <ul class="link-list">
+  <ul class="link-list" role="directory">
     
-    <li><a href="#method-c-new">::new</a>
+    <li ><a href="#method-c-new">::new</a>
     
-    <li><a href="#method-i-after_test">#after_test</a>
+    <li ><a href="#method-i-after_test">#after_test</a>
     
-    <li><a href="#method-i-colour">#colour</a>
+    <li ><a href="#method-i-colour">#colour</a>
     
-    <li><a href="#method-i-dir">#dir</a>
+    <li ><a href="#method-i-display_name">#display_name</a>
     
-    <li><a href="#method-i-display_name">#display_name</a>
+    <li ><a href="#method-i-display_test_name">#display_test_name</a>
     
-    <li><a href="#method-i-display_test_name">#display_test_name</a>
+    <li ><a href="#method-i-exists-3F">#exists?</a>
     
-    <li><a href="#method-i-exists-3F">#exists?</a>
+    <li ><a href="#method-i-filename_extension">#filename_extension</a>
     
-    <li><a href="#method-i-filename_extension">#filename_extension</a>
+    <li ><a href="#method-i-highlight_filenames">#highlight_filenames</a>
     
-    <li><a href="#method-i-highlight_filenames">#highlight_filenames</a>
+    <li ><a href="#method-i-image_name">#image_name</a>
     
-    <li><a href="#method-i-image_name">#image_name</a>
+    <li ><a href="#method-i-lowlight_filenames">#lowlight_filenames</a>
     
-    <li><a href="#method-i-lowlight_filenames">#lowlight_filenames</a>
+    <li ><a href="#method-i-new_name">#new_name</a>
     
-    <li><a href="#method-i-new_name">#new_name</a>
+    <li ><a href="#method-i-path">#path</a>
     
-    <li><a href="#method-i-path">#path</a>
+    <li ><a href="#method-i-progress_regexs">#progress_regexs</a>
     
-    <li><a href="#method-i-progress_regexs">#progress_regexs</a>
+    <li ><a href="#method-i-runnable-3F">#runnable?</a>
     
-    <li><a href="#method-i-runnable-3F">#runnable?</a>
+    <li ><a href="#method-i-support_filenames">#support_filenames</a>
     
-    <li><a href="#method-i-support_filenames">#support_filenames</a>
+    <li ><a href="#method-i-tab">#tab</a>
     
-    <li><a href="#method-i-tab">#tab</a>
+    <li ><a href="#method-i-tab_size">#tab_size</a>
     
-    <li><a href="#method-i-tab_size">#tab_size</a>
+    <li ><a href="#method-i-unit_test_framework">#unit_test_framework</a>
     
-    <li><a href="#method-i-unit_test_framework">#unit_test_framework</a>
+    <li ><a href="#method-i-visible_filenames">#visible_filenames</a>
     
-    <li><a href="#method-i-visible_filenames">#visible_filenames</a>
-    
-    <li><a href="#method-i-visible_files">#visible_files</a>
+    <li ><a href="#method-i-visible_files">#visible_files</a>
     
   </ul>
-</nav>
-
-  </div>
-
-  <div id="project-metadata">
-    <nav id="fileindex-section" class="section project-section">
-  <h3 class="section-header">Pages</h3>
-
-  <ul>
-  
-    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
-  
-  </ul>
-</nav>
-
-    <nav id="classindex-section" class="section project-section">
-  <h3 class="section-header">Class and Module Index</h3>
-
-  <ul class="link-list">
-  
-    <li><a href="./GitDiff.html">GitDiff</a>
-  
-    <li><a href="./GitDiff/GitDiffBuilder.html">GitDiff::GitDiffBuilder</a>
-  
-    <li><a href="./GitDiff/GitDiffParser.html">GitDiff::GitDiffParser</a>
-  
-    <li><a href="./ApplicationController.html">ApplicationController</a>
-  
-    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
-  
-    <li><a href="./Approval.html">Approval</a>
-  
-    <li><a href="./Avatar.html">Avatar</a>
-  
-    <li><a href="./AvatarImageHelper.html">AvatarImageHelper</a>
-  
-    <li><a href="./Avatars.html">Avatars</a>
-  
-    <li><a href="./Chooser.html">Chooser</a>
-  
-    <li><a href="./Cleaner.html">Cleaner</a>
-  
-    <li><a href="./DashboardController.html">DashboardController</a>
-  
-    <li><a href="./DiffController.html">DiffController</a>
-  
-    <li><a href="./DifferController.html">DifferController</a>
-  
-    <li><a href="./Docker.html">Docker</a>
-  
-    <li><a href="./DockerTestRunner.html">DockerTestRunner</a>
-  
-    <li><a href="./Dojo.html">Dojo</a>
-  
-    <li><a href="./DojoController.html">DojoController</a>
-  
-    <li><a href="./DownloaderController.html">DownloaderController</a>
-  
-    <li><a href="./DummyTestRunner.html">DummyTestRunner</a>
-  
-    <li><a href="./ExceptionController.html">ExceptionController</a>
-  
-    <li><a href="./Exercise.html">Exercise</a>
-  
-    <li><a href="./Exercises.html">Exercises</a>
-  
-    <li><a href="./FileDeltaMaker.html">FileDeltaMaker</a>
-  
-    <li><a href="./FlagImageHelper.html">FlagImageHelper</a>
-  
-    <li><a href="./Folders.html">Folders</a>
-  
-    <li><a href="./ForkerController.html">ForkerController</a>
-  
-    <li><a href="./Git.html">Git</a>
-  
-    <li><a href="./HostTestRunner.html">HostTestRunner</a>
-  
-    <li><a href="./Kata.html">Kata</a>
-  
-    <li><a href="./KataController.html">KataController</a>
-  
-    <li><a href="./Katas.html">Katas</a>
-  
-    <li><a href="./Language.html">Language</a>
-  
-    <li><a href="./Languages.html">Languages</a>
-  
-    <li><a href="./Light.html">Light</a>
-  
-    <li><a href="./LineSplitter.html">LineSplitter</a>
-  
-    <li><a href="./LocalesController.html">LocalesController</a>
-  
-    <li><a href="./LogoImageHelper.html">LogoImageHelper</a>
-  
-    <li><a href="./MakefileFilter.html">MakefileFilter</a>
-  
-    <li><a href="./MyTranslationHelper.html">MyTranslationHelper</a>
-  
-    <li><a href="./OsDir.html">OsDir</a>
-  
-    <li><a href="./OsDisk.html">OsDisk</a>
-  
-    <li><a href="./OutputParser.html">OutputParser</a>
-  
-    <li><a href="./ParityHelper.html">ParityHelper</a>
-  
-    <li><a href="./PieChartHelper.html">PieChartHelper</a>
-  
-    <li><a href="./ReverterController.html">ReverterController</a>
-  
-    <li><a href="./Sandbox.html">Sandbox</a>
-  
-    <li><a href="./SetupController.html">SetupController</a>
-  
-    <li><a href="./Tag.html">Tag</a>
-  
-    <li><a href="./TdGapper.html">TdGapper</a>
-  
-    <li><a href="./TestRunner.html">TestRunner</a>
-  
-    <li><a href="./TimeNow.html">TimeNow</a>
-  
-    <li><a href="./TrafficLightHelper.html">TrafficLightHelper</a>
-  
-    <li><a href="./UniqueId.html">UniqueId</a>
-  
-  </ul>
-</nav>
+</div>
 
   </div>
 </nav>
 
-<div id="documentation">
-  <h1 class="class">class Language</h1>
+<main role="main" aria-labelledby="class-Language">
+  <h1 id="class-Language" class="class">
+    class Language
+  </h1>
 
-  <div id="description" class="description">
+  <section class="description">
     
-  </div><!-- description -->
+  </section>
 
   
   
@@ -277,9 +154,10 @@
     
 
     
-    <!-- Attributes -->
-    <section id="attribute-method-details" class="method-section section">
-      <h3 class="section-header">Attributes</h3>
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
 
       
       <div id="attribute-i-name" class="method-detail">
@@ -295,21 +173,24 @@
         </div>
       </div>
       
-    </section><!-- attribute-method-details -->
+    </section>
     
 
-    <!-- Methods -->
     
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
-      <h3 class="section-header">Public Class Methods</h3>
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
 
     
       <div id="method-c-new" class="method-detail ">
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(path,name,disk,runner)</span>
+            class="method-args">(path,name)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -317,27 +198,31 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 9</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">path</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">disk</span>,<span class="ruby-identifier">runner</span>)
-  <span class="ruby-ivar">@path</span>,<span class="ruby-ivar">@name</span>,<span class="ruby-ivar">@disk</span>,<span class="ruby-ivar">@runner</span> = <span class="ruby-identifier">path</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">disk</span>,<span class="ruby-identifier">runner</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 4</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">path</span>,<span class="ruby-identifier">name</span>)
+  <span class="ruby-identifier">raise_if_no</span>([<span class="ruby-value">:disk</span>,<span class="ruby-value">:runner</span>])
+  <span class="ruby-ivar">@path</span>,<span class="ruby-ivar">@name</span> = <span class="ruby-identifier">path</span>,<span class="ruby-identifier">name</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- new-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- new-method -->
+      </div>
 
     
-    </section><!-- public-class-method-details -->
+    </section>
   
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
-      <h3 class="section-header">Public Instance Methods</h3>
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
 
     
       <div id="method-i-after_test" class="method-detail ">
@@ -345,7 +230,9 @@
         <div class="method-heading">
           <span class="method-name">after_test</span><span
             class="method-args">(sandbox, visible_files)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -353,24 +240,25 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="after_test-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 135</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 123</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">after_test</span>(<span class="ruby-identifier">sandbox</span>, <span class="ruby-identifier">visible_files</span>)
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">'Approval'</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">&#39;Approval&#39;</span>)
     <span class="ruby-constant">Approval</span>.<span class="ruby-identifier">add_created_txt_files</span>(<span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">visible_files</span>)
     <span class="ruby-constant">Approval</span>.<span class="ruby-identifier">remove_deleted_txt_files</span>(<span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">visible_files</span>)
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- after_test-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- after_test-method -->
+      </div>
 
     
       <div id="method-i-colour" class="method-detail ">
@@ -378,59 +266,32 @@
         <div class="method-heading">
           <span class="method-name">colour</span><span
             class="method-args">(output)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
+          
           
           
           
 
           
           <div class="method-source-code" id="colour-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 131</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 119</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">colour</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-constant">OutputParser</span>.<span class="ruby-identifier">colour</span>(<span class="ruby-identifier">unit_test_framework</span>, <span class="ruby-identifier">output</span>)
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- colour-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- colour-method -->
-
-    
-      <div id="method-i-dir" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">dir</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-
-          
-          <div class="method-source-code" id="dir-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 19</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">dir</span>
-  <span class="ruby-ivar">@disk</span>[<span class="ruby-identifier">path</span>]
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- dir-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- dir-method -->
+      </div>
 
     
       <div id="method-i-display_name" class="method-detail ">
@@ -438,7 +299,9 @@
         <div class="method-heading">
           <span class="method-name">display_name</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -446,21 +309,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="display_name-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 31</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">display_name</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">'display_name'</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">name</span>
+  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;display_name&#39;</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">name</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- display_name-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- display_name-method -->
+      </div>
 
     
       <div id="method-i-display_test_name" class="method-detail ">
@@ -468,7 +332,9 @@
         <div class="method-heading">
           <span class="method-name">display_test_name</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -476,21 +342,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="display_test_name-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 35</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 23</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">display_test_name</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">'display_test_name'</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">unit_test_framework</span>
+  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;display_test_name&#39;</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">unit_test_framework</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- display_test_name-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- display_test_name-method -->
+      </div>
 
     
       <div id="method-i-exists-3F" class="method-detail ">
@@ -498,7 +365,9 @@
         <div class="method-heading">
           <span class="method-name">exists?</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -506,21 +375,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="exists-3F-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 23</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 11</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">exists?</span>
-   <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">manifest_filename</span>)
+  <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">manifest_filename</span>)
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- exists-3F-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- exists-3F-method -->
+      </div>
 
     
       <div id="method-i-filename_extension" class="method-detail ">
@@ -528,7 +398,9 @@
         <div class="method-heading">
           <span class="method-name">filename_extension</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -536,21 +408,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="filename_extension-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 43</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 31</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">filename_extension</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">'filename_extension'</span>] <span class="ruby-operator">||</span> <span class="ruby-string">''</span>
+  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;filename_extension&#39;</span>] <span class="ruby-operator">||</span> <span class="ruby-string">&#39;&#39;</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- filename_extension-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- filename_extension-method -->
+      </div>
 
     
       <div id="method-i-highlight_filenames" class="method-detail ">
@@ -558,7 +431,9 @@
         <div class="method-heading">
           <span class="method-name">highlight_filenames</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -566,21 +441,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="highlight_filenames-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 57</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 45</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">highlight_filenames</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">'highlight_filenames'</span>] <span class="ruby-operator">||</span> [ ]
+  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;highlight_filenames&#39;</span>] <span class="ruby-operator">||</span> [ ]
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- highlight_filenames-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- highlight_filenames-method -->
+      </div>
 
     
       <div id="method-i-image_name" class="method-detail ">
@@ -588,7 +464,9 @@
         <div class="method-heading">
           <span class="method-name">image_name</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -596,21 +474,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="image_name-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 39</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 27</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">image_name</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">'image_name'</span>] <span class="ruby-operator">||</span> <span class="ruby-string">''</span>
+  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;image_name&#39;</span>] <span class="ruby-operator">||</span> <span class="ruby-string">&#39;&#39;</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- image_name-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- image_name-method -->
+      </div>
 
     
       <div id="method-i-lowlight_filenames" class="method-detail ">
@@ -618,7 +497,9 @@
         <div class="method-heading">
           <span class="method-name">lowlight_filenames</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -626,30 +507,31 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="lowlight_filenames-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 61</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">lowlight_filenames</span>
   <span class="ruby-comment"># Catering for two uses</span>
   <span class="ruby-comment"># 1. carefully constructed set of start files (like James Grenning uses)</span>
   <span class="ruby-comment">#    with explicitly set highlight_filenames entry in manifest</span>
   <span class="ruby-comment"># 2. default set of files direct from languages/</span>
   <span class="ruby-comment">#    viz, no highlight_filenames entry in manifest</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">highlight_filenames</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">highlight_filenames</span>.<span class="ruby-identifier">empty?</span>
     <span class="ruby-keyword">return</span> <span class="ruby-identifier">visible_filenames</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">highlight_filenames</span>
   <span class="ruby-keyword">else</span>
-    <span class="ruby-keyword">return</span> [<span class="ruby-string">'cyber-dojo.sh'</span>, <span class="ruby-string">'makefile'</span>, <span class="ruby-string">'Makefile'</span>]
+    <span class="ruby-keyword">return</span> [<span class="ruby-string">&#39;cyber-dojo.sh&#39;</span>, <span class="ruby-string">&#39;makefile&#39;</span>, <span class="ruby-string">&#39;Makefile&#39;</span>, <span class="ruby-string">&#39;unity.license.txt&#39;</span>]
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- lowlight_filenames-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- lowlight_filenames-method -->
+      </div>
 
     
       <div id="method-i-new_name" class="method-detail ">
@@ -657,7 +539,9 @@
         <div class="method-heading">
           <span class="method-name">new_name</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -665,54 +549,55 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="new_name-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 90</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 78</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">new_name</span>
   <span class="ruby-comment"># Some languages/ sub-folders have been renamed.</span>
   <span class="ruby-comment"># This creates a problem for practice-sessions done</span>
   <span class="ruby-comment"># before the rename that you now wish to review or</span>
   <span class="ruby-comment"># fork from. Particularly for sessions with</span>
-  <span class="ruby-comment"># well known id's such as the refactoring dojos.</span>
+  <span class="ruby-comment"># well known id&#39;s such as the refactoring dojos.</span>
   <span class="ruby-comment"># See app/models/Kata.rb language()</span>
   <span class="ruby-comment"># See app/models/Kata.rb original_language()</span>
   <span class="ruby-identifier">renames</span> = {
-    <span class="ruby-string">'C'</span>            =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'C-assert'</span>,
-    <span class="ruby-string">'C++'</span>          =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'C++-assert'</span>,
-    <span class="ruby-string">'C#'</span>           =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'C#-NUnit'</span>,
-    <span class="ruby-string">'Clojure'</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Clojure-.test'</span>,
-    <span class="ruby-string">'CoffeeScript'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'CoffeeScript-jasmine'</span>,
-    <span class="ruby-string">'Erlang'</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Erlang-eunit'</span>,
-    <span class="ruby-string">'Go'</span>           =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Go-testing'</span>,
-    <span class="ruby-string">'Haskell'</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Haskell-hunit'</span>,
+    <span class="ruby-string">&#39;C&#39;</span>            =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;C-assert&#39;</span>,
+    <span class="ruby-string">&#39;C++&#39;</span>          =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;C++-assert&#39;</span>,
+    <span class="ruby-string">&#39;C#&#39;</span>           =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;C#-NUnit&#39;</span>,
+    <span class="ruby-string">&#39;Clojure&#39;</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Clojure-.test&#39;</span>,
+    <span class="ruby-string">&#39;CoffeeScript&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;CoffeeScript-jasmine&#39;</span>,
+    <span class="ruby-string">&#39;Erlang&#39;</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Erlang-eunit&#39;</span>,
+    <span class="ruby-string">&#39;Go&#39;</span>           =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Go-testing&#39;</span>,
+    <span class="ruby-string">&#39;Haskell&#39;</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Haskell-hunit&#39;</span>,
 
-    <span class="ruby-string">'Java'</span>               =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Java-1.8_JUnit'</span>,
-    <span class="ruby-string">'Java-JUnit'</span>         =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Java-1.8_JUnit'</span>,
-    <span class="ruby-string">'Java-Approval'</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Java-1.8_Approval'</span>,
-    <span class="ruby-string">'Java-ApprovalTests'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Java-1.8_Approval'</span>,
-    <span class="ruby-string">'Java-Cucumber'</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Java-1.8_Cucumber'</span>,
-    <span class="ruby-string">'Java-Mockito'</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Java-1.8_Mockito'</span>,
-    <span class="ruby-string">'Java-JUnit-Mockito'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Java-1.8_Mockito'</span>,
-    <span class="ruby-string">'Java-PowerMockito'</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Java-1.8_Powermockito'</span>,
+    <span class="ruby-string">&#39;Java&#39;</span>               =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Java-1.8_JUnit&#39;</span>,
+    <span class="ruby-string">&#39;Java-JUnit&#39;</span>         =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Java-1.8_JUnit&#39;</span>,
+    <span class="ruby-string">&#39;Java-Approval&#39;</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Java-1.8_Approval&#39;</span>,
+    <span class="ruby-string">&#39;Java-ApprovalTests&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Java-1.8_Approval&#39;</span>,
+    <span class="ruby-string">&#39;Java-Cucumber&#39;</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Java-1.8_Cucumber&#39;</span>,
+    <span class="ruby-string">&#39;Java-Mockito&#39;</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Java-1.8_Mockito&#39;</span>,
+    <span class="ruby-string">&#39;Java-JUnit-Mockito&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Java-1.8_Mockito&#39;</span>,
+    <span class="ruby-string">&#39;Java-PowerMockito&#39;</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Java-1.8_Powermockito&#39;</span>,
 
-    <span class="ruby-string">'Javascript'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Javascript-assert'</span>,
-    <span class="ruby-string">'Perl'</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Perl-TestSimple'</span>,
-    <span class="ruby-string">'PHP'</span>        =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'PHP-PHPUnit'</span>,
-    <span class="ruby-string">'Python'</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Python-unittest'</span>,
-    <span class="ruby-string">'Ruby'</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Ruby-TestUnit'</span>,
-    <span class="ruby-string">'Scala'</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Scala-scalatest'</span>
+    <span class="ruby-string">&#39;Javascript&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Javascript-assert&#39;</span>,
+    <span class="ruby-string">&#39;Perl&#39;</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Perl-TestSimple&#39;</span>,
+    <span class="ruby-string">&#39;PHP&#39;</span>        =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;PHP-PHPUnit&#39;</span>,
+    <span class="ruby-string">&#39;Python&#39;</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Python-unittest&#39;</span>,
+    <span class="ruby-string">&#39;Ruby&#39;</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Ruby-TestUnit&#39;</span>,
+    <span class="ruby-string">&#39;Scala&#39;</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Scala-scalatest&#39;</span>
   }
   <span class="ruby-identifier">renames</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">name</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- new_name-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- new_name-method -->
+      </div>
 
     
       <div id="method-i-path" class="method-detail ">
@@ -720,7 +605,9 @@
         <div class="method-heading">
           <span class="method-name">path</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -728,21 +615,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="path-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 15</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 130</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">path</span>
-  <span class="ruby-ivar">@path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">'/'</span>
+  <span class="ruby-ivar">@path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- path-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- path-method -->
+      </div>
 
     
       <div id="method-i-progress_regexs" class="method-detail ">
@@ -750,7 +638,9 @@
         <div class="method-heading">
           <span class="method-name">progress_regexs</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -758,21 +648,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="progress_regexs-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 127</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 115</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">progress_regexs</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">'progress_regexs'</span>] <span class="ruby-operator">||</span> [ ]
+  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;progress_regexs&#39;</span>] <span class="ruby-operator">||</span> [ ]
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- progress_regexs-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- progress_regexs-method -->
+      </div>
 
     
       <div id="method-i-runnable-3F" class="method-detail ">
@@ -780,7 +671,9 @@
         <div class="method-heading">
           <span class="method-name">runnable?</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -788,21 +681,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="runnable-3F-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 27</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">runnable?</span>
-  <span class="ruby-ivar">@runner</span>.<span class="ruby-identifier">runnable?</span>(<span class="ruby-keyword">self</span>)
+  <span class="ruby-identifier">runner</span>.<span class="ruby-identifier">runnable?</span>(<span class="ruby-keyword">self</span>)
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- runnable-3F-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- runnable-3F-method -->
+      </div>
 
     
       <div id="method-i-support_filenames" class="method-detail ">
@@ -810,7 +704,9 @@
         <div class="method-heading">
           <span class="method-name">support_filenames</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -818,21 +714,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="support_filenames-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 53</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 41</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">support_filenames</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">'support_filenames'</span>] <span class="ruby-operator">||</span> [ ]
+  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;support_filenames&#39;</span>] <span class="ruby-operator">||</span> [ ]
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- support_filenames-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- support_filenames-method -->
+      </div>
 
     
       <div id="method-i-tab" class="method-detail ">
@@ -840,7 +737,9 @@
         <div class="method-heading">
           <span class="method-name">tab</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -848,21 +747,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="tab-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 78</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 66</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">tab</span>
-  <span class="ruby-string">&quot; &quot;</span> * <span class="ruby-identifier">tab_size</span>
+  <span class="ruby-string">&quot; &quot;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">tab_size</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- tab-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- tab-method -->
+      </div>
 
     
       <div id="method-i-tab_size" class="method-detail ">
@@ -870,7 +770,9 @@
         <div class="method-heading">
           <span class="method-name">tab_size</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -878,21 +780,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="tab_size-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 82</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 70</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">tab_size</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">'tab_size'</span>] <span class="ruby-operator">||</span> <span class="ruby-value">4</span>
+  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;tab_size&#39;</span>] <span class="ruby-operator">||</span> <span class="ruby-value">4</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- tab_size-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- tab_size-method -->
+      </div>
 
     
       <div id="method-i-unit_test_framework" class="method-detail ">
@@ -900,7 +803,9 @@
         <div class="method-heading">
           <span class="method-name">unit_test_framework</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -908,21 +813,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="unit_test_framework-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 74</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 62</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">unit_test_framework</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">'unit_test_framework'</span>]
+  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;unit_test_framework&#39;</span>]
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- unit_test_framework-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- unit_test_framework-method -->
+      </div>
 
     
       <div id="method-i-visible_filenames" class="method-detail ">
@@ -930,7 +836,9 @@
         <div class="method-heading">
           <span class="method-name">visible_filenames</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -938,21 +846,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="visible_filenames-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 86</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 74</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visible_filenames</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">'visible_filenames'</span>] <span class="ruby-operator">||</span> [ ]
+  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;visible_filenames&#39;</span>] <span class="ruby-operator">||</span> [ ]
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- visible_filenames-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- visible_filenames-method -->
+      </div>
 
     
       <div id="method-i-visible_files" class="method-detail ">
@@ -960,7 +869,9 @@
         <div class="method-heading">
           <span class="method-name">visible_files</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -968,35 +879,35 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="visible_files-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 47</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 35</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visible_files</span>
   <span class="ruby-constant">Hash</span>[<span class="ruby-identifier">visible_filenames</span>.<span class="ruby-identifier">collect</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span>
     [ <span class="ruby-identifier">filename</span>, <span class="ruby-identifier">read</span>(<span class="ruby-identifier">filename</span>) ]
   }]
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- visible_files-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- visible_files-method -->
+      </div>
 
     
-    </section><!-- public-instance-method-details -->
+    </section>
   
-  </section><!-- 5Buntitled-5D -->
+  </section>
+</main>
 
-</div><!-- documentation -->
 
-
-<footer id="validator-badges">
-  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
-  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.2.
-  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

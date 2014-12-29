@@ -2,68 +2,73 @@
 
 <html>
 <head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta charset="utf-8">
 
 <title>Rails Application Documentation</title>
 
-<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+<link href="./fonts.css" rel="stylesheet">
+<link href="./rdoc.css" rel="stylesheet">
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
 </script>
 
-<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+<script src="./js/jquery.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/search_index.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/searcher.js"></script>
+<script src="./js/darkfish.js"></script>
 
 
-<body>
-<nav id="metadata">
-  <nav id="home-section" class="section">
-  <h3 class="section-header">
-    <a href="./index.html">Home</a>
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
     <a href="./table_of_contents.html#classes">Classes</a>
     <a href="./table_of_contents.html#methods">Methods</a>
-  </h3>
-</nav>
+  </div>
+</div>
 
 
-  <nav id="search-section" class="section project-section" class="initially-hidden">
+    <div id="search-section" role="search" class="project-section initially-hidden">
   <form action="#" method="get" accept-charset="utf-8">
-    <h3 class="section-header">
-      <input type="text" name="search" placeholder="Search" id="search-field"
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
              title="Type to search, Up and Down to navigate, Enter to load">
-    </h3>
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
   </form>
+</div>
 
-  <ul id="search-results" class="initially-hidden"></ul>
-</nav>
-
+  </div>
 
   <div id="project-metadata">
-    <nav id="fileindex-section" class="section project-section">
-  <h3 class="section-header">Pages</h3>
-
-  <ul>
-  
-    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
-  
-  </ul>
-</nav>
-
-    <nav id="classindex-section" class="section project-section">
-  <h3 class="section-header">Class and Module Index</h3>
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
 
   <ul class="link-list">
   
-    <li><a href="./GitDiff.html">GitDiff</a>
+    <li><a href="./README_rdoc.html">README</a>
   
-    <li><a href="./GitDiff/GitDiffBuilder.html">GitDiff::GitDiffBuilder</a>
-  
-    <li><a href="./GitDiff/GitDiffParser.html">GitDiff::GitDiffParser</a>
+  </ul>
+</div>
+
+    <div id="classindex-section" class="nav-section">
+  <h3>Class and Module Index</h3>
+
+  <ul class="link-list">
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
   
@@ -82,8 +87,6 @@
     <li><a href="./Cleaner.html">Cleaner</a>
   
     <li><a href="./DashboardController.html">DashboardController</a>
-  
-    <li><a href="./DiffController.html">DiffController</a>
   
     <li><a href="./DifferController.html">DifferController</a>
   
@@ -105,15 +108,25 @@
   
     <li><a href="./Exercises.html">Exercises</a>
   
+    <li><a href="./Externals.html">Externals</a>
+  
+    <li><a href="./FakeDir.html">FakeDir</a>
+  
+    <li><a href="./FakeDisk.html">FakeDisk</a>
+  
     <li><a href="./FileDeltaMaker.html">FileDeltaMaker</a>
   
     <li><a href="./FlagImageHelper.html">FlagImageHelper</a>
   
-    <li><a href="./Folders.html">Folders</a>
-  
     <li><a href="./ForkerController.html">ForkerController</a>
   
     <li><a href="./Git.html">Git</a>
+  
+    <li><a href="./GitDiff.html">GitDiff</a>
+  
+    <li><a href="./GitDiff/GitDiffBuilder.html">GitDiff::GitDiffBuilder</a>
+  
+    <li><a href="./GitDiff/GitDiffParser.html">GitDiff::GitDiffParser</a>
   
     <li><a href="./HostTestRunner.html">HostTestRunner</a>
   
@@ -131,13 +144,13 @@
   
     <li><a href="./LineSplitter.html">LineSplitter</a>
   
-    <li><a href="./LocalesController.html">LocalesController</a>
-  
     <li><a href="./LogoImageHelper.html">LogoImageHelper</a>
   
     <li><a href="./MakefileFilter.html">MakefileFilter</a>
   
     <li><a href="./MyTranslationHelper.html">MyTranslationHelper</a>
+  
+    <li><a href="./Object.html">Object</a>
   
     <li><a href="./OsDir.html">OsDir</a>
   
@@ -168,17 +181,20 @@
     <li><a href="./UniqueId.html">UniqueId</a>
   
   </ul>
-</nav>
+</div>
 
   </div>
 </nav>
 
+<main role="main">
 <p>This is the API documentation for Rails Application Documentation.
+</main>
 
 
-<footer id="validator-badges">
-  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
-  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.2.
-  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

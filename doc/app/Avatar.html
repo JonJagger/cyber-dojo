@@ -2,72 +2,77 @@
 
 <html>
 <head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta charset="utf-8">
 
 <title>class Avatar - Rails Application Documentation</title>
 
-<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+<link href="./fonts.css" rel="stylesheet">
+<link href="./rdoc.css" rel="stylesheet">
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
 </script>
 
-<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+<script src="./js/jquery.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/search_index.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/searcher.js"></script>
+<script src="./js/darkfish.js"></script>
 
 
-<body id="top" class="class">
-<nav id="metadata">
-  <nav id="home-section" class="section">
-  <h3 class="section-header">
-    <a href="./index.html">Home</a>
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
     <a href="./table_of_contents.html#classes">Classes</a>
     <a href="./table_of_contents.html#methods">Methods</a>
-  </h3>
-</nav>
-
-
-  <nav id="search-section" class="section project-section" class="initially-hidden">
-  <form action="#" method="get" accept-charset="utf-8">
-    <h3 class="section-header">
-      <input type="text" name="search" placeholder="Search" id="search-field"
-             title="Type to search, Up and Down to navigate, Enter to load">
-    </h3>
-  </form>
-
-  <ul id="search-results" class="initially-hidden"></ul>
-</nav>
-
-
-  <div id="file-metadata">
-    <nav id="file-list-section" class="section">
-  <h3 class="section-header">Defined In</h3>
-  <ul>
-    <li>app/models/Avatar.rb
-  </ul>
-</nav>
-
-    
   </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
 
   <div id="class-metadata">
     
-    <nav id="parent-class-section" class="section">
-  <h3 class="section-header">Parent</h3>
-  
-  <p class="link">Object
-  
-</nav>
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
 
-    <!-- Included Modules -->
-<nav id="includes-section" class="section">
-  <h3 class="section-header">Included Modules</h3>
+  
+  <p class="link"><a href="Object.html">Object</a>
+  
+</div>
+
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
 
   <ul class="link-list">
+  
+  
+    <li><a class="include" href="Externals.html">Externals</a>
+  
   
   
     <li><a class="include" href="Cleaner.html">Cleaner</a>
@@ -78,177 +83,51 @@
   
   
   </ul>
-</nav>
+</div>
 
+    
     <!-- Method Quickref -->
-<nav id="method-list-section" class="section">
-  <h3 class="section-header">Methods</h3>
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
 
-  <ul class="link-list">
+  <ul class="link-list" role="directory">
     
-    <li><a href="#method-c-new">::new</a>
+    <li ><a href="#method-c-new">::new</a>
     
-    <li><a href="#method-i-active-3F">#active?</a>
+    <li ><a href="#method-i-active-3F">#active?</a>
     
-    <li><a href="#method-i-commit">#commit</a>
+    <li ><a href="#method-i-commit">#commit</a>
     
-    <li><a href="#method-i-dir">#dir</a>
+    <li ><a href="#method-i-exists-3F">#exists?</a>
     
-    <li><a href="#method-i-exists-3F">#exists?</a>
+    <li ><a href="#method-i-lights">#lights</a>
     
-    <li><a href="#method-i-lights">#lights</a>
+    <li ><a href="#method-i-path">#path</a>
     
-    <li><a href="#method-i-path">#path</a>
+    <li ><a href="#method-i-sandbox">#sandbox</a>
     
-    <li><a href="#method-i-sandbox">#sandbox</a>
+    <li ><a href="#method-i-save_manifest">#save_manifest</a>
     
-    <li><a href="#method-i-save_manifest">#save_manifest</a>
+    <li ><a href="#method-i-tags">#tags</a>
     
-    <li><a href="#method-i-tags">#tags</a>
+    <li ><a href="#method-i-test">#test</a>
     
-    <li><a href="#method-i-test">#test</a>
+    <li ><a href="#method-i-visible_files">#visible_files</a>
     
   </ul>
-</nav>
-
-  </div>
-
-  <div id="project-metadata">
-    <nav id="fileindex-section" class="section project-section">
-  <h3 class="section-header">Pages</h3>
-
-  <ul>
-  
-    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
-  
-  </ul>
-</nav>
-
-    <nav id="classindex-section" class="section project-section">
-  <h3 class="section-header">Class and Module Index</h3>
-
-  <ul class="link-list">
-  
-    <li><a href="./GitDiff.html">GitDiff</a>
-  
-    <li><a href="./GitDiff/GitDiffBuilder.html">GitDiff::GitDiffBuilder</a>
-  
-    <li><a href="./GitDiff/GitDiffParser.html">GitDiff::GitDiffParser</a>
-  
-    <li><a href="./ApplicationController.html">ApplicationController</a>
-  
-    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
-  
-    <li><a href="./Approval.html">Approval</a>
-  
-    <li><a href="./Avatar.html">Avatar</a>
-  
-    <li><a href="./AvatarImageHelper.html">AvatarImageHelper</a>
-  
-    <li><a href="./Avatars.html">Avatars</a>
-  
-    <li><a href="./Chooser.html">Chooser</a>
-  
-    <li><a href="./Cleaner.html">Cleaner</a>
-  
-    <li><a href="./DashboardController.html">DashboardController</a>
-  
-    <li><a href="./DiffController.html">DiffController</a>
-  
-    <li><a href="./DifferController.html">DifferController</a>
-  
-    <li><a href="./Docker.html">Docker</a>
-  
-    <li><a href="./DockerTestRunner.html">DockerTestRunner</a>
-  
-    <li><a href="./Dojo.html">Dojo</a>
-  
-    <li><a href="./DojoController.html">DojoController</a>
-  
-    <li><a href="./DownloaderController.html">DownloaderController</a>
-  
-    <li><a href="./DummyTestRunner.html">DummyTestRunner</a>
-  
-    <li><a href="./ExceptionController.html">ExceptionController</a>
-  
-    <li><a href="./Exercise.html">Exercise</a>
-  
-    <li><a href="./Exercises.html">Exercises</a>
-  
-    <li><a href="./FileDeltaMaker.html">FileDeltaMaker</a>
-  
-    <li><a href="./FlagImageHelper.html">FlagImageHelper</a>
-  
-    <li><a href="./Folders.html">Folders</a>
-  
-    <li><a href="./ForkerController.html">ForkerController</a>
-  
-    <li><a href="./Git.html">Git</a>
-  
-    <li><a href="./HostTestRunner.html">HostTestRunner</a>
-  
-    <li><a href="./Kata.html">Kata</a>
-  
-    <li><a href="./KataController.html">KataController</a>
-  
-    <li><a href="./Katas.html">Katas</a>
-  
-    <li><a href="./Language.html">Language</a>
-  
-    <li><a href="./Languages.html">Languages</a>
-  
-    <li><a href="./Light.html">Light</a>
-  
-    <li><a href="./LineSplitter.html">LineSplitter</a>
-  
-    <li><a href="./LocalesController.html">LocalesController</a>
-  
-    <li><a href="./LogoImageHelper.html">LogoImageHelper</a>
-  
-    <li><a href="./MakefileFilter.html">MakefileFilter</a>
-  
-    <li><a href="./MyTranslationHelper.html">MyTranslationHelper</a>
-  
-    <li><a href="./OsDir.html">OsDir</a>
-  
-    <li><a href="./OsDisk.html">OsDisk</a>
-  
-    <li><a href="./OutputParser.html">OutputParser</a>
-  
-    <li><a href="./ParityHelper.html">ParityHelper</a>
-  
-    <li><a href="./PieChartHelper.html">PieChartHelper</a>
-  
-    <li><a href="./ReverterController.html">ReverterController</a>
-  
-    <li><a href="./Sandbox.html">Sandbox</a>
-  
-    <li><a href="./SetupController.html">SetupController</a>
-  
-    <li><a href="./Tag.html">Tag</a>
-  
-    <li><a href="./TdGapper.html">TdGapper</a>
-  
-    <li><a href="./TestRunner.html">TestRunner</a>
-  
-    <li><a href="./TimeNow.html">TimeNow</a>
-  
-    <li><a href="./TrafficLightHelper.html">TrafficLightHelper</a>
-  
-    <li><a href="./UniqueId.html">UniqueId</a>
-  
-  </ul>
-</nav>
+</div>
 
   </div>
 </nav>
 
-<div id="documentation">
-  <h1 class="class">class Avatar</h1>
+<main role="main" aria-labelledby="class-Avatar">
+  <h1 id="class-Avatar" class="class">
+    class Avatar
+  </h1>
 
-  <div id="description" class="description">
+  <section class="description">
     
-  </div><!-- description -->
+  </section>
 
   
   
@@ -261,9 +140,10 @@
     
 
     
-    <!-- Attributes -->
-    <section id="attribute-method-details" class="method-section section">
-      <h3 class="section-header">Attributes</h3>
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
 
       
       <div id="attribute-i-kata" class="method-detail">
@@ -292,21 +172,24 @@
         </div>
       </div>
       
-    </section><!-- attribute-method-details -->
+    </section>
     
 
-    <!-- Methods -->
     
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
-      <h3 class="section-header">Public Class Methods</h3>
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
 
     
       <div id="method-c-new" class="method-detail ">
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(kata,name,externals)</span>
+            class="method-args">(kata,name)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -314,28 +197,32 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 7</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">kata</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">externals</span>)
-  <span class="ruby-identifier">raise</span> <span class="ruby-string">'Invalid Avatar(name)'</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">Avatars</span>.<span class="ruby-identifier">valid?</span>(<span class="ruby-identifier">name</span>)
-  <span class="ruby-ivar">@kata</span>,<span class="ruby-ivar">@name</span>,<span class="ruby-ivar">@externals</span> = <span class="ruby-identifier">kata</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">externals</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 4</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">kata</span>,<span class="ruby-identifier">name</span>)
+  <span class="ruby-identifier">raise_if_no</span>([<span class="ruby-value">:disk</span>,<span class="ruby-value">:git</span>,<span class="ruby-value">:runner</span>])
+  <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Invalid Avatar(name)&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">Avatars</span>.<span class="ruby-identifier">valid?</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-ivar">@kata</span>,<span class="ruby-ivar">@name</span> = <span class="ruby-identifier">kata</span>,<span class="ruby-identifier">name</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- new-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- new-method -->
+      </div>
 
     
-    </section><!-- public-class-method-details -->
+    </section>
   
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
-      <h3 class="section-header">Public Instance Methods</h3>
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
 
     
       <div id="method-i-active-3F" class="method-detail ">
@@ -343,7 +230,9 @@
         <div class="method-heading">
           <span class="method-name">active?</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -351,28 +240,27 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="active-3F-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 26</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 20</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">active?</span>
-  <span class="ruby-comment"># o) Players commonly start two avatars on the same computer and use</span>
-  <span class="ruby-comment">#    one solely to read the instructions. I don't want these avatars</span>
-  <span class="ruby-comment">#    appearing on the dashboard.</span>
-  <span class="ruby-comment"># o) When an avatar enters a cyber-dojo the tests are automatically</span>
-  <span class="ruby-comment">#    run. This means an avatar gets one traffic-light for free.</span>
-  <span class="ruby-comment"># o) When forking a new kata it is common to enter as one animal</span>
+  <span class="ruby-comment"># o) Players sometimes start an extra avatar solely to read the</span>
+  <span class="ruby-comment">#    instructions. I don&#39;t want these avatars appearing on the</span>
+  <span class="ruby-comment">#    dashboard.</span>
+  <span class="ruby-comment"># o) When forking a new kata you can enter as one animal</span>
   <span class="ruby-comment">#    to sanity check it is ok (but not press [test])</span>
-  <span class="ruby-identifier">exists?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">lights</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+  <span class="ruby-identifier">exists?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">lights</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- active-3F-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- active-3F-method -->
+      </div>
 
     
       <div id="method-i-commit" class="method-detail ">
@@ -380,60 +268,34 @@
         <div class="method-heading">
           <span class="method-name">commit</span><span
             class="method-args">(tag)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
+          
           
           
           
 
           
           <div class="method-source-code" id="commit-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 104</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 94</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">commit</span>(<span class="ruby-identifier">tag</span>)
-  <span class="ruby-identifier">git</span>.<span class="ruby-identifier">commit</span>(<span class="ruby-identifier">path</span>, <span class="ruby-node">&quot;-a -m '#{tag}' --quiet&quot;</span>)
-  <span class="ruby-identifier">git</span>.<span class="ruby-identifier">tag</span>(<span class="ruby-identifier">path</span>, <span class="ruby-node">&quot;-m '#{tag}' #{tag} HEAD&quot;</span>)
+  <span class="ruby-identifier">git</span>.<span class="ruby-identifier">commit</span>(<span class="ruby-identifier">path</span>, <span class="ruby-node">&quot;-a -m &#39;#{tag}&#39; --quiet&quot;</span>)
+  <span class="ruby-identifier">git</span>.<span class="ruby-identifier">gc</span>(<span class="ruby-identifier">path</span>, <span class="ruby-string">&#39;--auto --quiet&#39;</span>)
+  <span class="ruby-identifier">git</span>.<span class="ruby-identifier">tag</span>(<span class="ruby-identifier">path</span>, <span class="ruby-node">&quot;-m &#39;#{tag}&#39; #{tag} HEAD&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- commit-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- commit-method -->
-
-    
-      <div id="method-i-dir" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">dir</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-
-          
-          <div class="method-source-code" id="dir-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 18</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">dir</span>
-  <span class="ruby-identifier">disk</span>[<span class="ruby-identifier">path</span>]
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- dir-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- dir-method -->
+      </div>
 
     
       <div id="method-i-exists-3F" class="method-detail ">
@@ -441,7 +303,9 @@
         <div class="method-heading">
           <span class="method-name">exists?</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -449,21 +313,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="exists-3F-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 22</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">exists?</span>
   <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">exists?</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- exists-3F-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- exists-3F-method -->
+      </div>
 
     
       <div id="method-i-lights" class="method-detail ">
@@ -471,7 +336,9 @@
         <div class="method-heading">
           <span class="method-name">lights</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -479,21 +346,23 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="lights-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 49</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 34</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">lights</span>
+  <span class="ruby-comment"># See comment below.</span>
   <span class="ruby-identifier">increments</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">inc</span><span class="ruby-operator">|</span> <span class="ruby-constant">Light</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>,<span class="ruby-identifier">inc</span>) }
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- lights-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- lights-method -->
+      </div>
 
     
       <div id="method-i-path" class="method-detail ">
@@ -501,7 +370,9 @@
         <div class="method-heading">
           <span class="method-name">path</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -509,21 +380,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="path-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 14</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 12</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">path</span>
-  <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">'/'</span>
+  <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- path-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- path-method -->
+      </div>
 
     
       <div id="method-i-sandbox" class="method-detail ">
@@ -531,7 +403,9 @@
         <div class="method-heading">
           <span class="method-name">sandbox</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -539,21 +413,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="sandbox-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 37</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 100</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">sandbox</span>
-  <span class="ruby-constant">Sandbox</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>,<span class="ruby-identifier">disk</span>)
+  <span class="ruby-constant">Sandbox</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>)
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- sandbox-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- sandbox-method -->
+      </div>
 
     
       <div id="method-i-save_manifest" class="method-detail ">
@@ -561,7 +436,9 @@
         <div class="method-heading">
           <span class="method-name">save_manifest</span><span
             class="method-args">(visible_files)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -569,21 +446,22 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="save_manifest-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 100</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 90</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">save_manifest</span>(<span class="ruby-identifier">visible_files</span>)
-  <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">'manifest.json'</span>, <span class="ruby-identifier">visible_files</span>)
+  <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;manifest.json&#39;</span>, <span class="ruby-identifier">visible_files</span>)
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- save_manifest-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- save_manifest-method -->
+      </div>
 
     
       <div id="method-i-tags" class="method-detail ">
@@ -591,46 +469,33 @@
         <div class="method-heading">
           <span class="method-name">tags</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
           
-          <ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li>
-<p>-</p>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
+          
+          
           
 
           
           <div class="method-source-code" id="tags-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 43</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 29</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">tags</span>
-  <span class="ruby-comment"># one tag for initial start_avatar</span>
-  <span class="ruby-comment"># + one tag for each light. See comment below.</span>
-  (<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">increments</span>.<span class="ruby-identifier">length</span>).<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span> <span class="ruby-constant">Tag</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>,<span class="ruby-identifier">n</span>,<span class="ruby-identifier">git</span>) }
+  <span class="ruby-comment"># See comment below.</span>
+  (<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">increments</span>.<span class="ruby-identifier">length</span>).<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span> <span class="ruby-constant">Tag</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>,<span class="ruby-identifier">n</span>) }
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- tags-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- tags-method -->
+      </div>
 
     
       <div id="method-i-test" class="method-detail ">
@@ -638,33 +503,21 @@
         <div class="method-heading">
           <span class="method-name">test</span><span
             class="method-args">(delta, visible_files, now = time_now, time_limit = 15)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
           
-          <ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li>
-<p>-</p>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
+          
+          
           
 
           
           <div class="method-source-code" id="test-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 55</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 45</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">test</span>(<span class="ruby-identifier">delta</span>, <span class="ruby-identifier">visible_files</span>, <span class="ruby-identifier">now</span> = <span class="ruby-identifier">time_now</span>, <span class="ruby-identifier">time_limit</span> = <span class="ruby-value">15</span>)
   <span class="ruby-identifier">delta</span>[<span class="ruby-value">:changed</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">dir</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">visible_files</span>[<span class="ruby-identifier">filename</span>])
@@ -679,9 +532,9 @@
 
   <span class="ruby-identifier">pre_test_filenames</span> = <span class="ruby-identifier">visible_files</span>.<span class="ruby-identifier">keys</span>
 
-  <span class="ruby-identifier">output</span> = <span class="ruby-identifier">clean</span>(<span class="ruby-identifier">runner</span>.<span class="ruby-identifier">run</span>(<span class="ruby-identifier">sandbox</span>, <span class="ruby-string">'./cyber-dojo.sh'</span>, <span class="ruby-identifier">time_limit</span>))
-  <span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">'output'</span>, <span class="ruby-identifier">output</span>) <span class="ruby-comment"># so output appears in diff-view</span>
-  <span class="ruby-identifier">visible_files</span>[<span class="ruby-string">'output'</span>] = <span class="ruby-identifier">output</span>
+  <span class="ruby-identifier">output</span> = <span class="ruby-identifier">clean</span>(<span class="ruby-identifier">runner</span>.<span class="ruby-identifier">run</span>(<span class="ruby-identifier">sandbox</span>, <span class="ruby-string">&#39;./cyber-dojo.sh&#39;</span>, <span class="ruby-identifier">time_limit</span>))
+  <span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;output&#39;</span>, <span class="ruby-identifier">output</span>) <span class="ruby-comment"># so output appears in diff-view</span>
+  <span class="ruby-identifier">visible_files</span>[<span class="ruby-string">&#39;output&#39;</span>] = <span class="ruby-identifier">output</span>
   <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">language</span>.<span class="ruby-identifier">after_test</span>(<span class="ruby-identifier">sandbox</span>, <span class="ruby-identifier">visible_files</span>)
 
   <span class="ruby-identifier">new_files</span> = <span class="ruby-identifier">visible_files</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span>
@@ -699,36 +552,70 @@
 
   <span class="ruby-identifier">rags</span> = <span class="ruby-identifier">increments</span>
   <span class="ruby-identifier">rag</span> = {
-    <span class="ruby-string">'colour'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">language</span>.<span class="ruby-identifier">colour</span>(<span class="ruby-identifier">output</span>),
-    <span class="ruby-string">'time'</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">now</span>,
-    <span class="ruby-string">'number'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">rags</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+    <span class="ruby-string">&#39;colour&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">language</span>.<span class="ruby-identifier">colour</span>(<span class="ruby-identifier">output</span>),
+    <span class="ruby-string">&#39;time&#39;</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">now</span>,
+    <span class="ruby-string">&#39;number&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">rags</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
   }
   <span class="ruby-identifier">rags</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">rag</span>
-  <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">'increments.json'</span>, <span class="ruby-identifier">rags</span>)
+  <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;increments.json&#39;</span>, <span class="ruby-identifier">rags</span>)
   <span class="ruby-identifier">commit</span>(<span class="ruby-identifier">rags</span>.<span class="ruby-identifier">length</span>)
 
   [<span class="ruby-identifier">rags</span>,<span class="ruby-identifier">new_files</span>,<span class="ruby-identifier">filenames_to_delete</span>]
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- test-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- test-method -->
+      </div>
 
     
-    </section><!-- public-instance-method-details -->
+      <div id="method-i-visible_files" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">visible_files</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="visible_files-source">
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 39</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">visible_files</span>
+  <span class="ruby-comment"># equivalent to tags[-1].visible_files but much easier</span>
+  <span class="ruby-comment"># to test (faking files is easier than faking git)</span>
+  <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">clean</span>(<span class="ruby-identifier">dir</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&#39;manifest.json&#39;</span>)))
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
   
-  </section><!-- 5Buntitled-5D -->
+  </section>
+</main>
 
-</div><!-- documentation -->
 
-
-<footer id="validator-badges">
-  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
-  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.2.
-  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
