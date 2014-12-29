@@ -182,7 +182,7 @@ class KataTests < ModelTestBase
     kata = make_kata
     hippo = kata.start_avatar(['hippo'])
     assert_equal 'hippo', hippo.name
-    assert_equal ['hippo'], kata.avatars.map {|avatar| avatar.name}
+    assert_equal ['hippo'], kata.avatars.each.map {|avatar| avatar.name}
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -198,7 +198,7 @@ class KataTests < ModelTestBase
     cheetah = kata.start_avatar(names)
     assert_equal 'cheetah', cheetah.name
     assert_equal nil, kata.start_avatar(names)
-    avatars_names = kata.avatars.map {|avatar| avatar.name}
+    avatars_names = kata.avatars.each.map {|avatar| avatar.name}
     assert_equal names.sort, avatars_names.sort
   end
 

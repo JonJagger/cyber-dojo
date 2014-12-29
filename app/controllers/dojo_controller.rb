@@ -34,12 +34,14 @@ class DojoController < ApplicationController
   #------------------------------------------------
 
   def re_enter
-    started_avatar_names = exists ? avatars.collect{|avatar| avatar.name} : [ ]
+    started_avatar_names =
+      exists ? avatars.each.collect{ |avatar| avatar.name} : [ ]
     empty = (started_avatar_names == [ ])
     render :json => {
       :exists => exists,
       :empty => empty,
-      :re_enter_dialog_html => (exists ? re_enter_dialog_html(kata, started_avatar_names) : '')
+      :re_enter_dialog_html =>
+        (exists ? re_enter_dialog_html(kata, started_avatar_names) : '')
     }
   end
 

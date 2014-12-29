@@ -14,35 +14,28 @@ class Avatars
     names.include?(name)
   end
 
-  # - - - - - - - - - - - - - - - - - - -
-
-  include Enumerable
-
   def initialize(kata)
     @kata = kata
   end
 
   def each
-    # kata.avatars.each {|avatar| ...}
+    return enum_for(:each) unless block_given?
     Avatars.names.each do |name|
       avatar = self[name]
-      yield avatar if avatar.exists? && block_given?
+      yield avatar if avatar.exists?
     end
   end
 
   def active
-    # kata.avatars.active
-    self.select{ |avatar| avatar.active? }
+    each.select{ |avatar| avatar.active? }
   end
 
   def [](name)
-    # kata.avatars['lion']
     Avatar.new(@kata,name)
   end
 
   def count
-    # kata.avatars.count
-    entries.length
+    each.entries.length
   end
 
 end

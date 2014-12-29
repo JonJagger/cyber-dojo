@@ -46,7 +46,7 @@ private
     maximum_seconds_uncollapsed = seconds_per_column * 60
     gapper = TdGapper.new(@kata.created, seconds_per_column, maximum_seconds_uncollapsed)
     all_lights = Hash[
-      @kata.avatars.collect{|avatar| [avatar.name, avatar.lights]}
+      @kata.avatars.each.collect{|avatar| [avatar.name, avatar.lights]}
     ]
     @gapped = gapper.fully_gapped(all_lights, time_now)
     @progress = @kata.language.progress_regexs != [ ]
