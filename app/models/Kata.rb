@@ -19,8 +19,10 @@ class Kata
 
       avatar.dir.make
       git.init(avatar.path, '--quiet')
-      git.config(avatar.path, "user.name #{quoted(avatar_name+'_'+id)}")
-      git.config(avatar.path, "user.email #{quoted(avatar.name)}@cyber-dojo.org")
+      user_name = "user.name #{quoted(avatar_name+'_'+id)}"
+      git.config(avatar.path, user_name)
+      user_email = "user.email #{quoted(avatar.name)}@cyber-dojo.org"
+      git.config(avatar.path, user_email)
 
       avatar.dir.write('manifest.json', visible_files)
       git.add(avatar.path, 'manifest.json')
@@ -104,7 +106,9 @@ private
 
   def earliest_light
     # time of first test
-    Time.mktime(*avatars.active.map{|avatar| avatar.lights[0].time}.sort[0])
+    Time.mktime(*avatars.active.map{ |avatar|
+      avatar.lights[0].time
+    }.sort[0])
   end
 
   def dojo

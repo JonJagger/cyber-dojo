@@ -1,8 +1,14 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+application_controller.rb and test/all.rb have duplication.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+FakeDir has symlink_log. Use this for commented out tests
+in test/app_modelss/test_avatar.rb line 135
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dir.each_dir {|name,path| ...}
 Dir.each_file{|name,path| ...}
 Katas.each can use Dir.each_dir twice.
+Approval can use Dir.each_file
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dir.each can take a parameter to filter dirs
 Would mean Katas.each could become
