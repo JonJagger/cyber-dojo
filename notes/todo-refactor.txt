@@ -2,6 +2,7 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dir.each_dir {|name,path| ...}
 Dir.each_file{|name,path| ...}
+Katas.each can use Dir.each_dir twice.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dir.each can take a parameter to filter dirs
 Would mean Katas.each could become

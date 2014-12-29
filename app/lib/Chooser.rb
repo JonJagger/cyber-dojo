@@ -23,7 +23,7 @@ module Chooser
     choice = [*0...choices.length].shuffle[0]
     if katas.exists?(id)
       index = choices.index(yield(katas[id]))
-      choice = index if index != nil
+      choice = index if !index.nil?
     end
     choice
   end
