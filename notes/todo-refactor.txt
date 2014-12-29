@@ -1,5 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Dir.each_dir {|name,path| ...}
+Dir.each_file{|name,path| ...}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dir.each can take a parameter to filter dirs
 Would mean Katas.each could become
  disk[path].each_dir do |outer_dir,outer_path|

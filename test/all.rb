@@ -16,9 +16,8 @@ require_relative_in('lib', %w{
     DockerTestRunner
     DummyTestRunner
   Git
-  Disk
-    OsDisk OsDir
-    FakeDisk FakeDir
+  OsDisk OsDir
+  FakeDisk FakeDir
   TimeNow UniqueId
 })
 
@@ -47,5 +46,5 @@ require_relative_in('app/models', %w{
 })
 
 require_relative_in('test/lib', %w{
-  DummyGit SpyDisk SpyDir SpyGit StubTestRunner
+  DummyGit SpyGit StubTestRunner
 })

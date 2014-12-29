@@ -13,8 +13,7 @@ require_dependencies %w{
     DockerTestRunner
     DummyTestRunner
     HostTestRunner
-  Disk
-    OsDisk OsDir
+  OsDisk OsDir
   Git
   TimeNow UniqueId
 }
