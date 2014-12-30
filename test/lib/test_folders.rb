@@ -8,7 +8,7 @@ class FoldersTests < CyberDojoTestBase
   # TODO: these need to be refactored into katas tests
   def setup
     super
-    thread[:disk] = OsDisk.new
+    thread[:disk] = Disk.new
     thread[:git] = Git.new
     thread[:runner] = HostTestRunner.new
     @dojo = Dojo.new(root_path)

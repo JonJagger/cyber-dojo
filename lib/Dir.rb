@@ -11,8 +11,17 @@ class Dir
 
   def each_dir
     return enum_for(:each_dir) unless block_given?
-    Dir.entries(path).each do |name|
-      yield name
+    Dir.entries(path).each do |entry|
+      pathed = path + entry
+      yield entry if @disk.dir?(pathed) && !dot?(pathed)
+    end
+  end
+
+  def each_file
+    return enum_for(:each_file) unless block_given?
+    Dir.entries(path).each do |entry|
+      pathed = path + entry
+      yield entry if !@disk.dir?(pathed)
     end
   end
 
@@ -67,6 +76,10 @@ class Dir
   end
 
 private
+
+  def dot?(name)
+    name.end_with?('/.') || name.end_with?('/..')
+  end
 
   def separator
     @disk.dir_separator

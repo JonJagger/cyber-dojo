@@ -70,6 +70,27 @@ class FakeDirTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'each_file' do
+    @disk[@path + 'a'].write('c.txt', 'content')
+    @disk[@path + 'a'].write('d.txt', 'content')
+    assert_equal ['c.txt','d.txt'], @disk[@path+'a'].each_file.entries.sort
+    assert_equal ['c.txt','d.txt'], @disk[@path+'a/'].each_file.entries.sort
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'each_file.select' do
+    @disk[@path + 'a'].write('b.cpp', 'content')
+    @disk[@path + 'a'].write('c.txt', 'content')
+    @disk[@path + 'a'].write('d.txt', 'content')
+    matches = @disk[@path + 'a'].each_file.select { |filename|
+      filename.end_with?('.txt')
+    }
+    assert_equal ['c.txt','d.txt'], matches.sort
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'write() raises if filename ends in .rb and content is string' do
     assert_raise RuntimeError do
       @dir.write('filename.rb', 'theory')
@@ -107,7 +128,7 @@ class FakeDirTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'OsDir.each_dir.select' do
+  test 'Dir.each_dir.select' do
     @disk[@path + 'alpha'].make
     @disk[@path + 'alpha'].write('a.txt', 'a')
     @disk[@path + 'beta'].make

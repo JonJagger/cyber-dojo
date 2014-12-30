@@ -23,6 +23,7 @@ like I do in test/app_models/model_test_base.rb
 Would be nice to get extra metric in coverage.txt which was
 the number of hits per line. Would also be nice to be able
 to plot that as a histogram.
+Another nice metric would be number of lines missed.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Move app_controller tests after
 app_helpers

@@ -5,8 +5,8 @@ class Disk
     File::SEPARATOR
   end
 
-  def is_dir?(name)
-    File.directory?(name) && !dot?(name)
+  def dir?(name)
+    File.directory?(name)
   end
 
   def [](name)
@@ -15,12 +15,6 @@ class Disk
 
   def symlink(old_name, new_name)
    File.symlink(old_name, new_name)
-  end
-
-private
-
-  def dot?(name)
-    name === '.' || name === '..'
   end
 
 end

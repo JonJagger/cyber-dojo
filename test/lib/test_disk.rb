@@ -186,31 +186,31 @@ class DiskTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'is_dir?(.) is false' do
-    assert !@disk.is_dir?('.')
+  test 'dir?(.) is true' do
+    assert @disk.dir?(@dir + '.')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'is_dir?(..) is false' do
-    assert !@disk.is_dir?('..')
+  test 'dir?(..) is true' do
+    assert @disk.dir?(@dir + '..')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'is_dir?(not-a-dir) is false' do
-    assert !@disk.is_dir?('blah-blah')
+  test 'dir?(not-a-dir) is false' do
+    assert !@disk.dir?('blah-blah')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'is_dir?(a-dir) is true' do
-    assert @disk.is_dir?(@dir)
+  test 'dir?(a-dir) is true' do
+    assert @disk.dir?(@dir)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'OsDir.each_dir' do
+  test 'Dir.each_dir' do
     cwd = `pwd`.strip + '/../'
     dirs = @disk[cwd].each_dir.entries
     %w( app_helpers app_lib ).each { |dir_name|
@@ -220,15 +220,55 @@ class DiskTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'OsDir.each_dir select' do
+  test 'Dir.each_dir does not give filenames' do
+    @disk[@dir].make
+    @disk[@dir].write('beta.txt', 'content')
     @disk[@dir + 'alpha'].make
     @disk[@dir + 'alpha'].write('a.txt', 'a')
+    assert_equal ['alpha'], @disk[@dir].each_dir.entries
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'Dir.each_dir.select' do
+    @disk[@dir + 'alpha'].make
     @disk[@dir + 'beta'].make
+    @disk[@dir + 'alpha'].write('a.txt', 'a')
     @disk[@dir + 'beta'].write('b.txt', 'b')
     matches = @disk[@dir].each_dir.select { |dir|
       dir.start_with?('a')
     }
     assert_equal ['alpha'], matches.sort
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'Dir.each_file' do
+    @disk[@dir + 'a'].write('c.txt', 'content')
+    @disk[@dir + 'a'].write('d.txt', 'content')
+    assert_equal ['c.txt','d.txt'], @disk[@dir+'a'].each_file.entries.sort
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'Dir.each_file does not give dirs' do
+    @disk[@dir].make
+    @disk[@dir].write('beta.txt', 'content')
+    @disk[@dir + 'alpha'].make
+    @disk[@dir + 'alpha'].write('a.txt', 'a')
+    assert_equal ['beta.txt'], @disk[@dir].each_file.entries
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'Dir.each_file.select' do
+    @disk[@dir + 'a'].write('b.cpp', 'content')
+    @disk[@dir + 'a'].write('c.txt', 'content')
+    @disk[@dir + 'a'].write('d.txt', 'content')
+    matches = @disk[@dir+'a'].each_file.select {|filename|
+      filename.end_with?('.txt')
+    }
+    assert_equal ['c.txt','d.txt'], matches.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

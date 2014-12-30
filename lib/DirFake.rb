@@ -16,6 +16,13 @@ class DirFake
     end
   end
 
+  def each_file
+    return enum_for(:each_file) unless block_given?
+    (@repo || {}).keys.each do |filename|
+      yield filename
+    end
+  end
+
   def make
     @repo ||= { }
   end
