@@ -1,5 +1,5 @@
 
-class FakeDir
+class DirFake
 
   def initialize(disk,dir)
     @disk,@dir = disk,dir

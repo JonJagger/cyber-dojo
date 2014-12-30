@@ -5,9 +5,9 @@ require_relative '../cyberdojo_test_base'
 class FakeDirTests < CyberDojoTestBase
 
   def setup
-    @disk = FakeDisk.new
+    @disk = DiskFake.new
     @path = 'fake/'
-    @dir = FakeDir.new(@disk,@path)
+    @dir = DirFake.new(@disk,@path)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,5 +1,5 @@
 
-class FakeDisk
+class DiskFake
 
   def dirs
     @dirs ||= { }
@@ -41,7 +41,7 @@ class FakeDisk
   end
 
   def make_dir(disk,path)
-    FakeDir.new(disk,path)
+    DirFake.new(disk,path)
   end
 
 private

@@ -13,11 +13,6 @@ http://blog.arkency.com/2014/01/ruby-to-enum-for-enumerator/
     (1..4).each {|n| yield n if n%2 == 0}
   end
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-rename s/OsDisk/Disk/
-rename s/OsDir/Dir/
-rename s/FakeDisk/DiskFake/
-rename s/FakeDir/DirFake/
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 application_controller.rb and test/all.rb have duplication.
 use FakeDir for all of app_controller tests.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -10,7 +10,7 @@ class ModelTestBase < Test::Unit::TestCase
   end
 
   def setup
-    thread[:disk] = FakeDisk.new
+    thread[:disk] = DiskFake.new
     thread[:git] = SpyGit.new
     thread[:runner] = StubTestRunner.new
     @dojo = Dojo.new(root_path)

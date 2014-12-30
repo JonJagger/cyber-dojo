@@ -7,7 +7,7 @@ class PieChartTests < CyberDojoTestBase
   include PieChartHelper
 
   test 'pie-chart from avatar.lights' do
-    thread[:disk] = FakeDisk.new
+    thread[:disk] = DiskFake.new
     thread[:git] = Object.new
     thread[:runner] = Object.new
     @dojo = Dojo.new(root_path)
