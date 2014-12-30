@@ -3,8 +3,10 @@
 If test run is successful do
 $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-add Dir.each_file{|name| ...}
 Approval can use Dir.each_file
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+test/lib/test_folders.rb has commented out tests that
+need to go into test/lib/app_model/test_katas.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Look for each methods that can do
 http://blog.arkency.com/2014/01/ruby-to-enum-for-enumerator/
