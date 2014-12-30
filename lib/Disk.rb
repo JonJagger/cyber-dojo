@@ -1,5 +1,5 @@
 
-class OsDisk
+class Disk
 
   def dir_separator
     File::SEPARATOR
@@ -14,7 +14,7 @@ class OsDisk
   end
 
   def [](name)
-    OsDir.new(self, name)
+    Dir.new(self, name)
   end
 
   def symlink(old_name, new_name)

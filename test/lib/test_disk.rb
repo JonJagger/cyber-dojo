@@ -2,10 +2,10 @@
 
 require_relative '../cyberdojo_test_base'
 
-class OsDiskTests < CyberDojoTestBase
+class DiskTests < CyberDojoTestBase
 
   def setup
-    @disk = OsDisk.new
+    @disk = Disk.new
     @dir = root_path + 'tmp/'
     `rm -rf #{@dir}`
     `mkdir -p #{@dir}`

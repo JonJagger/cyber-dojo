@@ -16,7 +16,7 @@ require_relative_in('lib', %w{
     DockerTestRunner
     DummyTestRunner
   Git
-  OsDisk OsDir
+  Disk Dir
   FakeDisk FakeDir
   TimeNow UniqueId
 })

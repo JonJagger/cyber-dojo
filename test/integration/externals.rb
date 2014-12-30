@@ -2,7 +2,7 @@
 module Externals
 
   def set_externals
-    thread[:disk] = OsDisk.new
+    thread[:disk] = Disk.new
     thread[:git] = Git.new
     thread[:runner] = runner
   end

@@ -6,7 +6,7 @@ module Externals # mixin
   end
 
   def disk
-    thread[:disk] ||= OsDisk.new
+    thread[:disk] ||= Disk.new
   end
 
   def git

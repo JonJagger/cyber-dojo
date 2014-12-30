@@ -8,7 +8,7 @@ class ChooseTests < CyberDojoTestBase
 
   def setup
     super
-    thread[:disk] = OsDisk.new
+    thread[:disk] = Disk.new
     thread[:git] = Git.new
     thread[:runner] = DummyTestRunner.new
     @dojo = Dojo.new(root_path)
