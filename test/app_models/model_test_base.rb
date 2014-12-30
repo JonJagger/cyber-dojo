@@ -17,8 +17,6 @@ class ModelTestBase < Test::Unit::TestCase
     @max_duration = 15
   end
 
-  include UniqueId
-
   def make_kata(id = unique_id)
     visible_files = {
         'wibble.hpp' => '#include <iostream>',
@@ -41,29 +39,11 @@ class ModelTestBase < Test::Unit::TestCase
     object.path.scan(doubled_separator).length > 0
   end
 
-  def filenames_written_to(log)
-    # each log entry is of the form
-    #  [ 'read'/'write',  filename, content ]
-    log.select { |entry| entry[0] == 'write' }.collect{ |entry| entry[1] }
-  end
-
   def self.test(name, &block)
     define_method("test_#{name}".to_sym, &block)
   end
 
-  def disk
-    thread[:disk]
-  end
+  include Externals
+  include UniqueId
 
-  def git
-    thread[:git]
-  end
-
-  def runner
-    thread[:runner]
-  end
-
-  def thread
-    Thread.current
-  end
 end

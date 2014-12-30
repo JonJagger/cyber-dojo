@@ -36,4 +36,5 @@ module Externals # mixin
   def error(message)
     RuntimeError.new(message)
   end
+
 end

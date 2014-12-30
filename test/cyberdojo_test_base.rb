@@ -27,5 +27,5 @@ class CyberDojoTestBase < Test::Unit::TestCase
   def thread
     Thread.current
   end
-  
+
 end

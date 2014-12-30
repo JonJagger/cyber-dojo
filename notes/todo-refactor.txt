@@ -3,7 +3,7 @@
 If test run is successful do
 $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Dir.each_file{|name| ...}
+add Dir.each_file{|name| ...}
 Approval can use Dir.each_file
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Look for each methods that can do
@@ -14,12 +14,22 @@ http://blog.arkency.com/2014/01/ruby-to-enum-for-enumerator/
   end
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 application_controller.rb and test/all.rb have duplication.
-use FakeDir for all of app_controller tests.
+use DirFake for all of app_controller tests.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Only app_lib test to not use DiskFake is Chooser.rb
+I need to be able to fake the language and exercise
+like I do in test/app_models/model_test_base.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Would be nice to get extra metric in coverage.txt which was
+the number of hits per line. Would also be nice to be able
+to plot that as a histogram.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Move app_controller tests after
 app_helpers
 app_lib
 app_models
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Can you mark methods as private in a mixin. Eg lib/Externals.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Search for x == nil constructs and replace with x.nil?
 and also   x != nil with !x.nil?

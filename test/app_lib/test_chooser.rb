@@ -45,6 +45,7 @@ class ChooseTests < CyberDojoTestBase
     test_languages_names.each do |language|
       languages = test_languages_names - [language]
       assert !languages.include?(language)
+
       kata = make_kata(@dojo, language, 'Fizz_Buzz')
       assert kata.exists?
       id=kata.id
