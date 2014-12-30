@@ -6,11 +6,7 @@ class Disk
   end
 
   def is_dir?(name)
-    File.directory?(name) && !dotted?(name)
-  end
-
-  def dotted?(name)
-    name.end_with?('.')
+    File.directory?(name) && !dot?(name)
   end
 
   def [](name)
@@ -19,6 +15,12 @@ class Disk
 
   def symlink(old_name, new_name)
    File.symlink(old_name, new_name)
+  end
+
+private
+
+  def dot?(name)
+    name === '.' || name === '..'
   end
 
 end
