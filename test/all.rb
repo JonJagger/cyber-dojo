@@ -30,7 +30,7 @@ require_relative_in('app/helpers', %w{
 })
 
 require_relative_in('app/lib', %w{
-  Approval Chooser Cleaner FileDeltaMaker
+  Chooser Cleaner FileDeltaMaker
   GitDiff GitDiffBuilder GitDiffParser LineSplitter
   MakefileFilter OutputParser TdGapper
 

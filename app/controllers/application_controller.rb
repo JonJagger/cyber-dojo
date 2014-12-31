@@ -19,7 +19,7 @@ require_dependencies %w{
 }
 
 require_dependencies %w{
-  Approval Chooser Cleaner FileDeltaMaker
+  Chooser Cleaner FileDeltaMaker
   GitDiff GitDiffBuilder GitDiffParser LineSplitter
   MakefileFilter OutputParser TdGapper
 }

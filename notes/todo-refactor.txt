@@ -3,10 +3,12 @@
 If test run is successful do
 $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Approval can use Dir.each_file
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/lib/test_folders.rb has commented out tests that
 need to go into test/lib/app_model/test_katas.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Only app_lib test to not use DiskFake is Chooser.rb
+I need to be able to fake the language and exercise
+like I do in test/app_models/model_test_base.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Look for each methods that can do
 http://blog.arkency.com/2014/01/ruby-to-enum-for-enumerator/
@@ -17,10 +19,6 @@ http://blog.arkency.com/2014/01/ruby-to-enum-for-enumerator/
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 application_controller.rb and test/all.rb have duplication.
 use DirFake for all of app_controller tests.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Only app_lib test to not use DiskFake is Chooser.rb
-I need to be able to fake the language and exercise
-like I do in test/app_models/model_test_base.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would be nice to get extra metric in coverage.txt which was
 the number of hits per line. Would also be nice to be able

@@ -349,9 +349,16 @@ class LanguageTests < ModelTestBase
     @language = @dojo.languages[name]
     sandbox = StubSandbox.new
     sandbox.dir.write('created.txt', 'content')
-    visible_files = { 'deleted.txt' => 'once upon a time' }
+    sandbox.dir.write('wibble.hpp', 'non txt file')
+    visible_files = {
+      'deleted.txt' => 'once upon a time',
+      'wibble.cpp'  => '#include <wibble.hpp>'
+    }
     @language.after_test(sandbox, visible_files)
-    expected = { 'created.txt' => 'content' }
+    expected = {
+      'created.txt' => 'content',
+      'wibble.cpp'  => '#include <wibble.hpp>'
+    }
     assert_equal expected, visible_files
   end
 
