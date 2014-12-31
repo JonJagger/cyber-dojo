@@ -59,7 +59,7 @@ class Avatar
     output = clean(runner.run(sandbox, './cyber-dojo.sh', time_limit))
     sandbox.write('output', output) # so output appears in diff-view
     visible_files['output'] = output
-    kata.language.after_test(sandbox, visible_files)
+    kata.language.after_test(sandbox.dir, visible_files)
 
     new_files = visible_files.select { |filename|
       !pre_test_filenames.include?(filename)

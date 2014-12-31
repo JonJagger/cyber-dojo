@@ -120,10 +120,10 @@ class Language
     OutputParser.colour(unit_test_framework, output)
   end
 
-  def after_test(sandbox, visible_files)
+  def after_test(dir, visible_files)
     if name.include?('Approval')
-      add_created_txt_files(sandbox.dir, visible_files)
-      remove_deleted_txt_files(sandbox.dir, visible_files)
+      add_created_txt_files(dir, visible_files)
+      remove_deleted_txt_files(dir, visible_files)
     end
   end
 

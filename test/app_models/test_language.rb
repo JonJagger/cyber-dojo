@@ -354,7 +354,7 @@ class LanguageTests < ModelTestBase
       'deleted.txt' => 'once upon a time',
       'wibble.cpp'  => '#include <wibble.hpp>'
     }
-    @language.after_test(sandbox, visible_files)
+    @language.after_test(sandbox.dir, visible_files)
     expected = {
       'created.txt' => 'content',
       'wibble.cpp'  => '#include <wibble.hpp>'
