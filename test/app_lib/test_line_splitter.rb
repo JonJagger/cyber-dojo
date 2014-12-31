@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative './app_lib_test_base'
 
-class LineSplitterTests < CyberDojoTestBase
+class LineSplitterTests < AppLibTestBase
 
   def line_split(lines)
     LineSplitter.line_split(lines)

@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative './app_lib_test_base'
 
-class OutputGroovySpockTests < CyberDojoTestBase
+class OutputGroovySpockTests < AppLibTestBase
 
   test 'groovyc not installed is amber' do
     output = [ "groovyc: command not found" ].join("\n")

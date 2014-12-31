@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative './app_lib_test_base'
 
-class MakefileFilterTests < CyberDojoTestBase
+class MakefileFilterTests < AppLibTestBase
 
   test "not makefile leaves leading whitespace untouched" do
     check('notMakefile', "            abc", "            abc")

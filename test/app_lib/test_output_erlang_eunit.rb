@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative './app_lib_test_base'
 
-class OutputErlangEUnitTests < CyberDojoTestBase
+class OutputErlangEUnitTests < AppLibTestBase
 
   test 'one fail is red' do
     output =

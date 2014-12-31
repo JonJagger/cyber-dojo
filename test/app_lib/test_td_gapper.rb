@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative './app_lib_test_base'
 
-class TdGapperTests < CyberDojoTestBase
+class TdGapperTests < AppLibTestBase
 
   def year; 2011; end
   def month;   5; end

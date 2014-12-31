@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative './app_lib_test_base'
 
-class OutputJasmineTests < CyberDojoTestBase
+class OutputJasmineTests < AppLibTestBase
 
   test "one fail is red" do
     output = <<-EOF.gsub(/^ {6}/,'')

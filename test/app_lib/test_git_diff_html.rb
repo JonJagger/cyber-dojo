@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative './app_lib_test_base'
 
-class GitDiffHtmlTests <  CyberDojoTestBase
+class GitDiffHtmlTests <  AppLibTestBase
 
   include GitDiff
 

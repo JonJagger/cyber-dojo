@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative './app_lib_test_base'
 
-class OutputGoTests < CyberDojoTestBase
+class OutputGoTests < AppLibTestBase
 
   test 'build failed is amber' do
     assert_equal :amber, colour_of("[build failed]")

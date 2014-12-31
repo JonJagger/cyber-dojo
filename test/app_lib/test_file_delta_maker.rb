@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative './app_lib_test_base'
 
-class FileDeltaMakerTests < CyberDojoTestBase
+class FileDeltaMakerTests < AppLibTestBase
 
   test 'unchanged files seen as :unchanged' do
     was = { 'wibble.h' => 3424234 }

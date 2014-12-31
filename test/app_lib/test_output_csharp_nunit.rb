@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative './app_lib_test_base'
 
-class OutputNUnitTests < CyberDojoTestBase
+class OutputNUnitTests < AppLibTestBase
 
   test "nunit RED" do
     output = 'Errors and Failures:'

@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative './app_lib_test_base'
 
-class OutputParserTests < CyberDojoTestBase
+class OutputParserTests < AppLibTestBase
 
   test 'terminated by the server after n seconds' do
     [1,5,10].each do |n|

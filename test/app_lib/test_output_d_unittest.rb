@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative './app_lib_test_base'
 
-class OutputDUnitTestTests < CyberDojoTestBase
+class OutputDUnitTestTests < AppLibTestBase
 
   test 'ran but failed is red' do
     assert_equal :red, colour_of("core.exception.AssertError")

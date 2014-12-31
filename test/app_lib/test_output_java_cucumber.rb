@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative './app_lib_test_base'
 
-class OutputJavaCucumberTests < CyberDojoTestBase
+class OutputJavaCucumberTests < AppLibTestBase
 
   test 'initial test is red' do
     output =

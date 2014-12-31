@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative './app_lib_test_base'
 
-class OutputPythonPyTestTests < CyberDojoTestBase
+class OutputPythonPyTestTests < AppLibTestBase
 
   test "failing test is red" do
     output =

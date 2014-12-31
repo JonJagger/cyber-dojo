@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative './app_lib_test_base'
 
-class DockerParseTests < CyberDojoTestBase
+class DockerParseTests < AppLibTestBase
 
   test 'parse `docker images` output in prep for languages_each()' do
     output = [

@@ -1,18 +1,20 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative './app_lib_test_base'
 
-class ChooseTests < CyberDojoTestBase
+class ChooseTests < AppLibTestBase
 
   include Chooser
 
   def setup
-    super
-    thread[:disk] = Disk.new
+    thread[:disk] = DiskFake.new
     thread[:git] = Git.new
     thread[:runner] = DummyTestRunner.new
+    root_path = 'unused'
     @dojo = Dojo.new(root_path)
     @katas = @dojo.katas
+    fake_languages
+    fake_exercises
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -157,6 +159,12 @@ class ChooseTests < CyberDojoTestBase
     ].sort
   end
 
+  def fake_languages
+    test_languages_names.each do |name|
+      @dojo.languages[name].dir.write('manifest.json', {})
+    end
+  end
+
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   def test_exercises_names
@@ -166,6 +174,24 @@ class ChooseTests < CyberDojoTestBase
      'Fizz_Buzz',
      'Zeckendorf_Number'
     ].sort
+  end
+
+  def fake_exercises
+    test_exercises_names.each do |name|
+      @dojo.exercises[name].dir.write('instructions', 'content')
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - -
+
+  def make_kata(dojo, language_name, exercise_name = 'Fizz_Buzz')
+    language = dojo.languages[language_name]
+    exercise = dojo.exercises[exercise_name]
+    dojo.katas.create_kata(language, exercise)
+  end
+
+  def thread
+    Thread.current
   end
 
 end
