@@ -29,7 +29,7 @@ require 'json'
 
 def create_dojo
   thread = Thread.current
-  thread[:disk] = OsDisk.new
+  thread[:disk] = Disk.new
   thread[:git] = Git.new
   thread[:runner] = DockerTestRunner.new
   Dojo.new(CYBERDOJO_HOME_DIR)
