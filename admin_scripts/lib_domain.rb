@@ -12,7 +12,7 @@ end
 
 require_filenames %w{
   Cleaner UniqueId TimeNow
-  OsDisk OsDir
+  Disk Dir
   Git GitDiff
   Docker
   DockerTestRunner DummyTestRunner
