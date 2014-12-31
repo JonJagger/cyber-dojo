@@ -5,6 +5,7 @@ require 'tempfile'
 
 class ApprovalTests < CyberDojoTestBase
 
+=begin
   test 'readfile with no newline mapping' do
     temp_filename = Dir::Tmpname.create(['approval', '.txt']) {}
     File.open(temp_filename, 'w') do |file|
@@ -103,4 +104,6 @@ class ApprovalTests < CyberDojoTestBase
       file.write('content')
     end
   end
+=end
+
 end

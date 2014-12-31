@@ -6,6 +6,7 @@ require 'pathname'
 
 class ApprovalTests < CyberDojoTestBase
 
+=begin
   def setup
     @temp_dir = Dir.mktmpdir
   end
@@ -85,5 +86,6 @@ class ApprovalTests < CyberDojoTestBase
     Approval.add_created_txt_files(@temp_dir, visible_files)
     assert_match visible_files['bar.txt'], "a multiline\nstring\n", visible_files.to_s
   end
+=end
 
 end

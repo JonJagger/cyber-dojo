@@ -122,8 +122,8 @@ class Language
 
   def after_test(sandbox, visible_files)
     if name.include?('Approval')
-      Approval.add_created_txt_files(sandbox.path, visible_files)
-      Approval.remove_deleted_txt_files(sandbox.path, visible_files)
+      add_created_txt_files(sandbox.dir, visible_files)
+      remove_deleted_txt_files(sandbox.dir, visible_files)
     end
   end
 
@@ -150,6 +150,22 @@ private
 
   def read(filename)
     clean(dir.read(filename))
+  end
+
+  def add_created_txt_files(dir, visible_files)
+    txt_files = dir.each_file.select do |entry|
+      entry.end_with?('.txt')
+    end
+    txt_files.each do |filename|
+      visible_files[filename] = dir.read(filename)
+    end
+  end
+
+  def remove_deleted_txt_files(dir, visible_files)
+    all_files = dir.each_file.entries
+    visible_files.delete_if do |filename, value|
+      filename.end_with?('.txt') && !all_files.include?(filename)
+    end
   end
 
 end
