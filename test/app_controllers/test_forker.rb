@@ -224,6 +224,8 @@ class ForkerControllerTest < ControllerTestBase
     @git.spy(@avatar.dir.path,'show',"#{@tag}:#{filename}",manifest)
   end
 
+  #- - - - - - - - - - - - - - - - - -
+
   def fork(format,id,avatar,tag)
     get 'forker/fork',
       :format => format,

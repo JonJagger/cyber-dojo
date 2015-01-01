@@ -3,6 +3,16 @@
 If test run is successful do
 $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+app_controller tests can all use DiskFake
+ Done test_dashboard
+ TODO test_differ
+ TODO test_dojo
+ NA   test_download
+ ??   test_exception_controller
+ DONE test_forker
+ TODO test_reverter
+ DONE test_setup
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Look for each methods that can do
 http://blog.arkency.com/2014/01/ruby-to-enum-for-enumerator/
   def each_even
@@ -23,7 +33,9 @@ app_helpers
 app_lib
 app_models
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Can you mark methods as private in a mixin. Eg lib/Externals.rb
+rename tests/integration  folder to tests/externals
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Can you mark methods as private in a mixin? Eg lib/Externals.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Search for x == nil constructs and replace with x.nil?
 and also   x != nil with !x.nil?
@@ -139,8 +151,6 @@ call @disk.teardown
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 put animal images on front page?
 Put the ones that are in the dojo (with the entered id)
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-rename tests/integration  folder to tests/externals
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 http://localhost:3000/kata/edit/0B416E9012?avatar=zebra
 could be simplified to

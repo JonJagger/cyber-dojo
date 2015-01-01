@@ -35,7 +35,7 @@ class DashboardControllerTest < ControllerTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'show dashboard and open a history-dialog' do
-    @id = create_kata
+    stub_setup
     enter; 3.times { any_test }
     show_dashboard :avatar => @avatar_name,
       :was_tag => 1,

@@ -2,7 +2,7 @@
 
 require_relative 'controller_test_base'
 
-class DojoControllerTest  < ControllerTestBase
+class DojoControllerTest < ControllerTestBase
 
   test 'index without id' do
     get 'dojo/index'
@@ -27,7 +27,10 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'check_id exists=true when id.length < 6 and kata exists' do
-    @id = create_kata[0..4]
+    stub_dojo
+    stub_language('fake-C#','nunit')
+    stub_exercise('fake-Yatzy')
+    @id = create_kata('fake-C#','fake-Yatzy')[0..4]
     assert @id.length < 6
     check_id
     assert exists?
@@ -38,7 +41,10 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'check_id exists=true when id.length == 6 and kata exists' do
-    @id = create_kata[0..5]
+    stub_dojo
+    stub_language('fake-C#','nunit')
+    stub_exercise('fake-Yatzy')
+    @id = create_kata('fake-C#','fake-Yatzy')[0..5]
     assert @id.length == 6
     check_id
     assert exists?
@@ -49,7 +55,10 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'check_id exists=true when id.length > 6 and kata exists' do
-    @id = create_kata[0..6]
+    stub_dojo
+    stub_language('fake-C#','nunit')
+    stub_exercise('fake-Yatzy')
+    @id = create_kata('fake-C#','fake-Yatzy')[0..6]
     assert @id.length > 6
     check_id
     assert exists?

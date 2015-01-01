@@ -87,14 +87,14 @@ class SetupControllerTest < ControllerTestBase
 
   # another test to verify language/exercise default
   # to that of kata's id when id is only 6 chars long.
-  # This will need disk abstraction in lib/Folders.
-  # Or would this be better as a separate test dedicated
-  # to just the id completion...
 
   #- - - - - - - - - - - - - - - - - - -
 
   test 'save' do
-    create_kata
+    stub_dojo
+    stub_language('fake-C#','nunit')
+    stub_exercise('fake-Yatzy')
+    create_kata('fake-C#','fake-Yatzy')
   end
 
 end
