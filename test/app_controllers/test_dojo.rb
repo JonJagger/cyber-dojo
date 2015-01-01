@@ -5,6 +5,7 @@ require_relative 'controller_test_base'
 class DojoControllerTest < ControllerTestBase
 
   test 'index without id' do
+    stub_setup
     get 'dojo/index'
     assert_response :success
   end
@@ -12,6 +13,7 @@ class DojoControllerTest < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'index with id' do
+    stub_setup
     get 'dojo/index', :id => '1234512345'
     assert_response :success
   end
@@ -19,6 +21,7 @@ class DojoControllerTest < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'check_id exists=false when no kata for id' do
+    stub_setup
     @id = 'abcdef'
     check_id
     assert !exists?
@@ -69,6 +72,9 @@ class DojoControllerTest < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'enter with no id => !exists' do
+    stub_dojo
+    stub_language('fake-C#','nunit')
+    stub_exercise('fake-Yatzy')
     enter
     assert !exists?
   end
@@ -76,6 +82,7 @@ class DojoControllerTest < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'enter with empty string id => !exists' do
+    stub_setup
     @id = ''
     enter
     assert !exists?
@@ -84,6 +91,7 @@ class DojoControllerTest < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'enter with id that does not exist => !exists' do
+    stub_setup
     @id = 'ab00ab11ab'
     enter
     assert !exists?
@@ -120,6 +128,7 @@ class DojoControllerTest < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 're_enter with id that does not exist' do
+    stub_setup
     @id = 'ab00ab11ab'
     re_enter
     assert !exists?

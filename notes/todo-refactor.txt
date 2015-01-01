@@ -4,13 +4,13 @@ If test run is successful do
 $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 app_controller tests can all use DiskFake
- Done test_dashboard
- TODO test_differ
  TODO test_dojo
+ TODO test_differ
+ TODO test_reverter
  NA   test_download
  ??   test_exception_controller
  DONE test_forker
- TODO test_reverter
+ DONE test_dashboard
  DONE test_setup
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Look for each methods that can do
