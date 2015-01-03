@@ -5,10 +5,6 @@ require 'test/unit'
 
 class ModelTestBase < Test::Unit::TestCase
 
-  def Xroot_path
-    File.expand_path('../..', File.dirname(__FILE__)) + '/'
-  end
-
   def setup
     thread[:disk] = DiskFake.new
     thread[:git] = SpyGit.new
