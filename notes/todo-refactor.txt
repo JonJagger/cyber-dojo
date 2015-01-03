@@ -3,15 +3,10 @@
 If test run is successful do
 $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-I could hang root_path off the current thread.
-This would remove special case handling (for testing)
-in application_controller.rb and Dojo.rb
-I think I will need three paths.
-One for languages
-One for exercises
-One for katas
-And only katas will be tweaked for tests
-(since I will want to do a 'rm -rf katas/*')
+application_controller.rb and test/all.rb have duplication.
+use DirFake for all of app_controller tests.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+rename tests/integration  folder to tests/externals
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Suppose I just hang the externals off the thread hash and each object
 takes what it needs from the thread hash rather than it being passed
@@ -63,11 +58,6 @@ Move app_controller tests after
 app_helpers
 app_lib
 app_models
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-application_controller.rb and test/all.rb have duplication.
-use DirFake for all of app_controller tests.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-rename tests/integration  folder to tests/externals
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Look for each methods that can do
 http://blog.arkency.com/2014/01/ruby-to-enum-for-enumerator/
