@@ -3,7 +3,6 @@ class Kata
 
   def initialize(katas,id)
     raise "Invalid Kata(id)" if !katas.valid?(id)
-    raise_if_no([:disk, :git])
     @katas,@id = katas,id
   end
 

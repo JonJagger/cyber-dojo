@@ -31,6 +31,23 @@ is indeed config.ru
 If I do this I can remove config/initializers/externals.rb
 (unless that is what I call from config.ru)
 Or config/application.rb ?
+...
+Tried putting this into config/initializers/externals.rb
+  CyberDojo::Application.config.runner = Object.new
+And this into lib/Externals.rb
+  def runner
+    thread[:runner] = CyberDojo::Application.config.runner
+  end
+which would become
+  def runner
+    CyberDojo::Application.config.runner
+  end
+
+Confirmed works on a Passenger startup
+Confirmed works on local server too
+
+For this to work I think my test code would need to simulate
+CyberDojo::Application.config
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 app_controller tests can all use DiskFake
  TODO test_dojo

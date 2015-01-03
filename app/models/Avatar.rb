@@ -2,7 +2,6 @@
 class Avatar
 
   def initialize(kata,name)
-    raise_if_no([:disk,:git,:runner])
     raise 'Invalid Avatar(name)' if !Avatars.valid?(name)
     @kata,@name = kata,name
   end

@@ -2,7 +2,6 @@
 class Exercise
 
   def initialize(path,name)
-    raise_if_no([:disk])
     @path,@name = path,name
   end
 

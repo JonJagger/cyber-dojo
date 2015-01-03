@@ -2,7 +2,6 @@
 class Language
 
   def initialize(path,name)
-    raise_if_no([:disk,:runner])
     @path,@name = path,name
   end
 

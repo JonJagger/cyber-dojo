@@ -4,7 +4,6 @@
 class Tag
 
   def initialize(avatar,n)
-    raise_if_no([:git])
     @avatar,@n = avatar,n
   end
 

@@ -2,7 +2,6 @@
 class Sandbox
 
   def initialize(avatar)
-    raise_if_no([:disk])
     @avatar = avatar
   end
 

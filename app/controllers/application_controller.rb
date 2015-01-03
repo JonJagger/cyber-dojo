@@ -39,7 +39,11 @@ class ApplicationController < ActionController::Base
 
   def initialize
     super
-    disk; git; runner # put externals onto Thread.current
+    thread[:disk  ] ||= Disk.new
+    thread[:git   ] ||= Git.new
+    thread[:runner] ||= DockerTestRunner.new if Docker.installed?
+    thread[:runner] ||= HostTestRunner.new unless ENV['CYBERDOJO_USE_HOST'].nil?
+    thread[:runner] ||= DummyTestRunner.new
   end
 
   def dojo
@@ -63,7 +67,7 @@ class ApplicationController < ActionController::Base
   end
 
   def avatar_name
-	params[:avatar]
+    params[:avatar]
   end
 
   def avatar

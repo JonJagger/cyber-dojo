@@ -2,7 +2,6 @@
 class Katas
 
   def initialize(dojo,path)
-    raise_if_no([:disk])
     @dojo,@path = dojo,path
   end
 

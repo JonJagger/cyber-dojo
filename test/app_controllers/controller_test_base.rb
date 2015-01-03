@@ -5,8 +5,8 @@ root = '../..'
 
 require_relative root + '/test/test_coverage'
 require_relative root + '/test/all'
-require 'test/unit'
 require_relative root + '/config/environment'
+require 'test/unit'
 require 'rails/test_help'
 
 class ControllerTestBase < ActionDispatch::IntegrationTest
