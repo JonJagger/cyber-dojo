@@ -368,13 +368,13 @@ class AvatarTests < ModelTestBase
     git_log = @git.log[avatar.path]
     assert_equal [ 'init', '--quiet'], git_log[0]
     add1_index = git_log.index([ 'add', 'increments.json' ])
-    assert add1_index != nil
+    assert_not_nil add1_index
     add2_index = git_log.index([ 'add', 'manifest.json'])
-    assert add2_index != nil
+    assert_not_nil add2_index
     commit1_index = git_log.index([ 'commit', "-a -m '0' --quiet" ])
-    assert commit1_index != nil
+    assert_not_nil commit1_index
     commit2_index = git_log.index([ 'commit', "-m '0' 0 HEAD" ])
-    assert commit2_index != nil
+    assert_not_nil commit2_index
 
     assert add1_index < commit1_index
     assert add1_index < commit2_index

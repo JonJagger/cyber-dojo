@@ -64,6 +64,8 @@ Can you mark methods as private in a mixin? Eg lib/Externals.rb
 Search for x == nil constructs and replace with x.nil?
 and also   x != nil with !x.nil?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+test/app_model/test_avatar.rb has commented out tests.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dojo.rb
   o) convert path to absolute path if its not?
   o) ensure path exists on disk?
