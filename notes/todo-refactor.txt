@@ -6,7 +6,12 @@ $rake doc:app
 I could hang root_path off the current thread.
 This would remove special case handling (for testing)
 in application_controller.rb and Dojo.rb
-I can do this before setting up externals in
+I think I will need three paths.
+One for languages
+One for exercises
+One for katas
+And only katas will be tweaked for tests
+(since I will want to do a 'rm -rf katas/*')
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Suppose I just hang the externals off the thread hash and each object
 takes what it needs from the thread hash rather than it being passed
