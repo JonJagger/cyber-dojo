@@ -1,17 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
-require_relative 'externals'
+require_relative 'integration_test_base'
 
-class HostTestRunnerTests < CyberDojoTestBase
-
-  include Externals
-
-  def setup
-    super
-    set_externals
-    @dojo = Dojo.new(root_path)
-  end
+class HostTestRunnerTests < IntegrationTestBase
 
   test "HostTestRunner says it can run any language" do
     languages = @dojo.languages.each.entries

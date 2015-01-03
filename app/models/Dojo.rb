@@ -15,7 +15,7 @@ class Dojo
   end
 
   def exercises
-    @exercises ||= Exercises.new(path + 'exercises/')
+    @exercises ||= Exercises.new #(path + 'exercises/')
   end
 
   def katas

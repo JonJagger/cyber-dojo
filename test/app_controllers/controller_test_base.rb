@@ -20,14 +20,19 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   end
 
   def setup
-    `rm -rf #{root_path}/test/cyberdojo/katas/*`
     ENV['CYBERDOJO_TEST_ROOT_DIR'] = 'true'
+    thread[:disk] = Disk.new
+    thread[:git] = Git.new
+    thread[:runner] = HostTestRunner.new
+    thread[:exercises_path] ||= root_path + 'exercises/'
+    `rm -rf #{root_path}/test/cyberdojo/katas/*`
   end
 
   def teardown
     thread[:disk] = nil
     thread[:git] = nil
     thread[:runner] = nil
+    thread[:exercises_path] = nil
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -

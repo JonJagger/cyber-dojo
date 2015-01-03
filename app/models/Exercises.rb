@@ -1,11 +1,9 @@
 
 class Exercises
 
-  def initialize(path)
-    @path = path
+  def path
+    exercises_path
   end
-
-  attr_reader :path
 
   def each
     return enum_for(:each) unless block_given?

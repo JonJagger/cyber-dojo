@@ -1,16 +1,11 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
-require_relative 'externals'
+require_relative 'integration_test_base'
 
-class SandboxTests < CyberDojoTestBase
-
-  include Externals
+class SandboxTests < IntegrationTestBase
 
   def setup
     super
-    set_externals
-    @dojo = Dojo.new(root_path)
   end
 
   test 'defect-driven: filename containing space ' +

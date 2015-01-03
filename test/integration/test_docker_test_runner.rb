@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative 'integration_test_base'
 
 class DockerTestRunnerAdapter
   def initialize(adaptee)
@@ -14,20 +14,9 @@ class DockerTestRunnerAdapter
   end
 end
 
-class DockerTestRunnerTests < CyberDojoTestBase
+class DockerTestRunnerTests < IntegrationTestBase
 
   include TimeNow
-
-  def setup
-    super
-    thread[:disk] = Disk.new
-    thread[:git] = Git.new
-    thread[:runner] = runner
-  end
-
-  def thread
-    Thread.current
-  end
 
   def runner
     DockerTestRunner.new

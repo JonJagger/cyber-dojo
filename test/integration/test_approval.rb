@@ -1,16 +1,14 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative 'integration_test_base'
 require 'tmpdir'
 
-class ApprovalTests < CyberDojoTestBase
+class ApprovalTests < IntegrationTestBase
 
   def setup
-    thread = Thread.current
-    thread[:disk] = Disk.new
+    super
     thread[:runner] = StubTestRunner.new
     root_path = 'unused'
-    @dojo = Dojo.new(root_path)
     @dir = StubSandbox.new(Dir.mktmpdir).dir
   end
 

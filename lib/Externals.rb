@@ -6,22 +6,30 @@ module Externals # mixin
   end
 
   def disk
-    raise RuntimeError.new("thread[:disk].nil?") if thread[:disk].nil?
-    thread[:disk]
+    threaded(:disk)
   end
 
   def git
-    raise RuntimeError.new("thread[:git].nil?") if thread[:git].nil?
-    thread[:git]
+    threaded(:git)
   end
 
   def runner
-    raise RuntimeError.new("thread[:runner].nil?") if thread[:runner].nil?
-    thread[:runner]
+    threaded(:runner)
+  end
+
+  def exercises_path
+    threaded(:exercises_path)
   end
 
   def thread
     Thread.current
+  end
+
+private
+
+  def threaded(symbol)
+    raise RuntimeError.new("thread[:" + symbol.to_s + "].nil?") if thread[symbol].nil?
+    thread[symbol]
   end
 
 end

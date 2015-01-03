@@ -13,6 +13,7 @@ class ModelTestBase < Test::Unit::TestCase
     thread[:disk] = DiskFake.new
     thread[:git] = SpyGit.new
     thread[:runner] = StubTestRunner.new
+    thread[:exercises_path] = 'exercises/'
     @dojo = Dojo.new(root_path)
     @max_duration = 15
   end

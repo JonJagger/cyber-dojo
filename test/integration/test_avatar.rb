@@ -1,19 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
-require_relative 'externals'
+require_relative 'integration_test_base'
 
-class AvatarTests < CyberDojoTestBase
-
-  include Externals
-
-  def setup
-    super
-    set_externals
-    @dojo = Dojo.new(root_path)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+class AvatarTests < IntegrationTestBase
 
   test 'deleted file is deleted from that repo tag' do
     kata = make_kata(@dojo, 'Ruby-TestUnit')

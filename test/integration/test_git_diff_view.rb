@@ -1,20 +1,10 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
-require_relative 'externals'
+require_relative 'integration_test_base'
 
-class GitDiffViewTests < CyberDojoTestBase
+class GitDiffViewTests < IntegrationTestBase
 
-  include Externals
   include GitDiff
-
-  def setup
-    super
-    set_externals
-    @dojo = Dojo.new(root_path)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'building diff view from git repo with modified file' do
 

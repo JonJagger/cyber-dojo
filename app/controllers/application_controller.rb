@@ -44,6 +44,7 @@ class ApplicationController < ActionController::Base
     thread[:runner] ||= DockerTestRunner.new if Docker.installed?
     thread[:runner] ||= HostTestRunner.new unless ENV['CYBERDOJO_USE_HOST'].nil?
     thread[:runner] ||= DummyTestRunner.new
+    thread[:exercises_path] ||= root_path + 'exercises/'
   end
 
   def dojo
@@ -85,5 +86,9 @@ class ApplicationController < ActionController::Base
 private
 
   include Externals
+
+  def root_path
+    Rails.root.to_s
+  end
 
 end
