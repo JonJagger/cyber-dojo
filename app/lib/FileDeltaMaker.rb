@@ -21,7 +21,7 @@ module FileDeltaMaker
     was.each do |filename,hash|
       if now[filename] == hash
         result[:unchanged] << filename
-      elsif now[filename] != nil
+      elsif !now[filename].nil?
         result[:changed] << filename
       else
         result[:deleted] << filename
