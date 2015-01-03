@@ -26,7 +26,7 @@ class DockerTestRunnerTests < IntegrationTestBase
 
   test "DockerTestRunner when outer and inner commands do not timeout" do
     return if !Docker.installed?
-    dojo = Dojo.new(root_path)
+    dojo = Dojo.new
     kata = make_kata(dojo, 'C-assert')
     lion = kata.start_avatar(['lion'])
     visible_files = lion.tags[0].visible_files
@@ -45,7 +45,7 @@ class DockerTestRunnerTests < IntegrationTestBase
 
   test "DockerTestRunner when inner command times out" do
     return if !Docker.installed?
-    dojo = Dojo.new(root_path)
+    dojo = Dojo.new
     kata = make_kata(dojo, 'C-assert')
     lion = kata.start_avatar(['lion'])
     visible_files = lion.tags[0].visible_files
@@ -70,7 +70,7 @@ class DockerTestRunnerTests < IntegrationTestBase
        "(simulates breaking out of the docker container)" do
     return if !Docker.installed?
     thread[:runner] = DockerTestRunnerAdapter.new(runner)
-    dojo = Dojo.new(root_path)
+    dojo = Dojo.new
     kata = make_kata(dojo, 'C-assert')
     lion = kata.start_avatar(['lion'])
     visible_files = lion.tags[0].visible_files

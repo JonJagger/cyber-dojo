@@ -6,7 +6,7 @@ def gather_stats(dojo)
   puts
   renamed,rest,totals = { },{ },{ }
   exceptions = [ ]
-  languages_names = dojo.languages.collect {|language| language.name}
+  languages_names = dojo.languages.each.collect {|language| language.name}
   dot_count = 0
   dojo.katas.each do |kata|
     begin

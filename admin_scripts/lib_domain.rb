@@ -32,7 +32,10 @@ def create_dojo
   thread[:disk] = Disk.new
   thread[:git] = Git.new
   thread[:runner] = DockerTestRunner.new
-  Dojo.new(CYBERDOJO_HOME_DIR)
+  thread[:exercises_path] = CYBERDOJO_HOME_DIR + 'exercises/'
+  thread[:languages_path] = CYBERDOJO_HOME_DIR + 'languages/'
+  thread[:katas_path    ] = CYBERDOJO_HOME_DIR + 'katas/'
+  Dojo.new
 end
 
 def number(value,width)

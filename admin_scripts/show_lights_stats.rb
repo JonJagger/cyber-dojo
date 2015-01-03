@@ -26,9 +26,9 @@ end
 $stats = { }
 
 def collect_light_stats(kata)
-  count = kata.avatars.inject(0){|sum,avatar| sum + avatar.lights.length }
+  count = kata.avatars.each.inject(0){|sum,avatar| sum + avatar.lights.length }
   $stats[count] ||= [ ]
-  $stats[count] << kata.avatars.entries.length
+  $stats[count] << kata.avatars.each.entries.length
 end
 
 def show_light_stats

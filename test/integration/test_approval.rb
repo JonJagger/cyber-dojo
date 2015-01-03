@@ -8,7 +8,6 @@ class ApprovalTests < IntegrationTestBase
   def setup
     super
     thread[:runner] = StubTestRunner.new
-    root_path = 'unused'
     @dir = StubSandbox.new(Dir.mktmpdir).dir
   end
 

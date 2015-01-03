@@ -5,10 +5,6 @@ require 'test/unit'
 
 class IntegrationTestBase < Test::Unit::TestCase
 
-  def root_path
-    File.expand_path('../..', File.dirname(__FILE__)) + '/'
-  end
-
   def setup
     thread[:disk] = Disk.new
     thread[:git] = Git.new
@@ -17,8 +13,7 @@ class IntegrationTestBase < Test::Unit::TestCase
     thread[:languages_path] ||= root_path + 'languages/'
     thread[:katas_path]     ||= root_path + 'test/cyberdojo/katas/'
     @dojo = Dojo.new
-    #`rm -rf #{root_path}test/cyberdojo/katas/*`
-    puts "rm -rf #{root_path}test/cyberdojo/katas/*"
+    `rm -rf #{@dojo.katas.path}*`
   end
 
   def make_kata(dojo, language_name, exercise_name = 'Fizz_Buzz')
@@ -33,6 +28,12 @@ class IntegrationTestBase < Test::Unit::TestCase
 
   def thread
     Thread.current
+  end
+
+private
+
+  def root_path
+    File.expand_path('../..', File.dirname(__FILE__)) + '/'
   end
 
 end

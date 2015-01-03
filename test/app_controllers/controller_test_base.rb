@@ -11,32 +11,14 @@ require 'rails/test_help'
 
 class ControllerTestBase < ActionDispatch::IntegrationTest
 
-  def root_path
-    File.absolute_path(File.dirname(__FILE__) + '/../../')
-  end
-
-  def thread
-    Thread.current
-  end
-
   def setup
-    thread[:disk] = Disk.new
-    thread[:git] = Git.new
+    thread[:disk  ] = Disk.new
+    thread[:git   ] = Git.new
     thread[:runner] = HostTestRunner.new
-    thread[:exercises_path] ||= root_path + '/exercises/'
-    thread[:languages_path] ||= root_path + '/languages/'
-    thread[:katas_path]     ||= root_path + '/test/cyberdojo/katas/'
-    #`rm -rf #{root_path}/test/cyberdojo/katas/*`
-    puts "rm -rf #{root_path}/test/cyberdojo/katas/*"
-  end
-
-  def teardown
-    thread[:disk] = nil
-    thread[:git] = nil
-    thread[:runner] = nil
-    thread[:exercises_path] = nil
-    thread[:languages_path] = nil
-    thread[:katas_path] = nil
+    thread[:exercises_path] = root_path + '/exercises/'
+    thread[:languages_path] = root_path + '/languages/'
+    thread[:katas_path    ] = root_path + '/test/cyberdojo/katas/'
+    `rm -rf #{Dojo.new.katas.path}*`
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -127,14 +109,22 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  #- - - - - - - - - - - - - - - - - -
-
   def json
     ActiveSupport::JSON.decode @response.body
   end
 
   def html
     @response.body
+  end
+
+private
+
+  def root_path
+    File.absolute_path(File.dirname(__FILE__) + '/../../')
+  end
+
+  def thread
+    Thread.current
   end
 
 end

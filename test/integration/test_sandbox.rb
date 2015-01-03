@@ -4,10 +4,6 @@ require_relative 'integration_test_base'
 
 class SandboxTests < IntegrationTestBase
 
-  def setup
-    super
-  end
-
   test 'defect-driven: filename containing space ' +
        'is not accidentally retained in the sandbox' do
 
