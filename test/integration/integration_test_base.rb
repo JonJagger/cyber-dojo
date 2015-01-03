@@ -6,12 +6,12 @@ require 'test/unit'
 class IntegrationTestBase < Test::Unit::TestCase
 
   def setup
-    thread[:disk] = Disk.new
-    thread[:git] = Git.new
+    thread[:disk  ] = Disk.new
+    thread[:git   ] = Git.new
     thread[:runner] = HostTestRunner.new
-    thread[:exercises_path] ||= root_path + 'exercises/'
-    thread[:languages_path] ||= root_path + 'languages/'
-    thread[:katas_path]     ||= root_path + 'test/cyberdojo/katas/'
+    thread[:exercises_path] = root_path + 'exercises/'
+    thread[:languages_path] = root_path + 'languages/'
+    thread[:katas_path]     = root_path + 'test/cyberdojo/katas/'
     @dojo = Dojo.new
     `rm -rf #{@dojo.katas.path}*`
   end
