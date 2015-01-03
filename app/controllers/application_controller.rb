@@ -45,6 +45,7 @@ class ApplicationController < ActionController::Base
     thread[:runner] ||= HostTestRunner.new unless ENV['CYBERDOJO_USE_HOST'].nil?
     thread[:runner] ||= DummyTestRunner.new
     thread[:exercises_path] ||= root_path + 'exercises/'
+    thread[:languages_path] ||= root_path + 'languages/'
   end
 
   def dojo

@@ -21,6 +21,10 @@ module Externals # mixin
     threaded(:exercises_path)
   end
 
+  def languages_path
+    threaded(:languages_path)
+  end
+
   def thread
     Thread.current
   end

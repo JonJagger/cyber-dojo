@@ -14,6 +14,7 @@ class ModelTestBase < Test::Unit::TestCase
     thread[:git] = SpyGit.new
     thread[:runner] = StubTestRunner.new
     thread[:exercises_path] = 'exercises/'
+    thread[:languages_path] = 'languages/'
     @dojo = Dojo.new(root_path)
     @max_duration = 15
   end

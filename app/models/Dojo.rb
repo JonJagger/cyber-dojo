@@ -11,11 +11,11 @@ class Dojo
   attr_reader :path
 
   def languages
-    @languages ||= Languages.new(path + 'languages/')
+    @languages ||= Languages.new
   end
 
   def exercises
-    @exercises ||= Exercises.new #(path + 'exercises/')
+    @exercises ||= Exercises.new
   end
 
   def katas

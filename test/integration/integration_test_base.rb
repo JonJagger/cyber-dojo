@@ -15,6 +15,7 @@ class IntegrationTestBase < Test::Unit::TestCase
     thread[:git] = Git.new
     thread[:runner] = HostTestRunner.new
     thread[:exercises_path] ||= root_path + 'exercises/'
+    thread[:languages_path] ||= root_path + 'languages/'
     @dojo = Dojo.new(root_path)
     `rm -rf #{root_path}test/cyberdojo/katas/*`
   end
