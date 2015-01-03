@@ -1,8 +1,13 @@
 
 class Languages
 
+  def initialize
+    @languages_path = languages_path
+    @languages_path += '/' if !languages_path.end_with?('/')
+  end
+
   def path
-    languages_path
+    @languages_path
   end
 
   def each

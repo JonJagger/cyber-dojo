@@ -5,7 +5,7 @@ require 'test/unit'
 
 class ModelTestBase < Test::Unit::TestCase
 
-  def root_path
+  def Xroot_path
     File.expand_path('../..', File.dirname(__FILE__)) + '/'
   end
 
@@ -15,7 +15,8 @@ class ModelTestBase < Test::Unit::TestCase
     thread[:runner] = StubTestRunner.new
     thread[:exercises_path] = 'exercises/'
     thread[:languages_path] = 'languages/'
-    @dojo = Dojo.new(root_path)
+    thread[:katas_path]     = 'katas/'
+    @dojo = Dojo.new
     @max_duration = 15
   end
 

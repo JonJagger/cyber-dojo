@@ -46,5 +46,5 @@ require_relative_in('app/models', %w{
 })
 
 require_relative_in('test/lib', %w{
-  DummyGit SpyGit StubTestRunner
+  SpyGit StubTestRunner
 })

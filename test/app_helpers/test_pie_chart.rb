@@ -10,7 +10,8 @@ class PieChartTests < CyberDojoTestBase
     thread[:disk] = DiskFake.new
     thread[:git] = Object.new
     thread[:runner] = Object.new
-    @dojo = Dojo.new(root_path)
+    thread[:katas_path] = 'katas/'
+    @dojo = Dojo.new
     kata = @dojo.katas['123456789A']
     lion = kata.avatars['lion']
     lion.dir.write('increments.json', [

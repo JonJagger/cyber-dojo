@@ -4,11 +4,18 @@ require_relative 'model_test_base'
 
 class KatasTests < ModelTestBase
 
-  test 'in test-mode dojo.katas path is not real katas dir' do
-    ENV['CYBERDOJO_TEST_ROOT_DIR'] = 'true'
-    katas = @dojo.katas
-    ENV.delete('CYBERDOJO_TEST_ROOT_DIR')
-    assert katas.path.end_with?('cyber-dojo/test/cyberdojo/katas/')
+  test 'path is set from thread[:katas_path]' do
+    thread[:katas_path] = 'end_with_slash/'
+    dojo = Object.new
+    assert_equal 'end_with_slash/', Katas.new(dojo).path
+  end
+
+  #- - - - - - - - - - - - - - - -
+
+  test 'path appends slash if necessary' do
+    thread[:katas_path] = 'katas'
+    dojo = Object.new
+    assert_equal 'katas/', Katas.new(dojo).path
   end
 
   #- - - - - - - - - - - - - - - -

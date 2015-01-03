@@ -9,7 +9,7 @@ def show_use(message = "")
   puts
 end
 
-root_path = File.dirname(__FILE__) + '/../../'
+root_path = File.absolute_path(File.dirname(__FILE__) + '/../../')
 language = ARGV[0]
 verbose = ARGV[1] === 'verbose'
 

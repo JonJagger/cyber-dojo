@@ -4,8 +4,8 @@ require_relative '../all'
 class OneLanguageChecker
 
   def initialize(root_path, verbose)
-    ENV['CYBERDOJO_TEST_ROOT_DIR'] = 'true'
-    @root_path = File.absolute_path(root_path) + '/'
+    @root_path = root_path
+    @root_path += '/' if !root_path.end_with?('/')
     @verbose = verbose
   end
 
@@ -148,9 +148,12 @@ private
 
   def dojo
     thread = Thread.current
-    thread[:disk] = OsDisk.new
+    thread[:disk] = Disk.new
     thread[:git] = Git.new
     thread[:runner] = runner
+    thread[:exercises_path] = root_path + 'exercises/'
+    thread[:languages_path] = root_path + 'languages/'
+    thread[:katas_path]     = root_path + 'test/cyberdojo/katas/'
     Dojo.new(@root_path)
   end
 

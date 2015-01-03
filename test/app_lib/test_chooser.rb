@@ -12,8 +12,8 @@ class ChooseTests < AppLibTestBase
     thread[:runner] = DummyTestRunner.new
     thread[:exercises_path] = 'exercises/'
     thread[:languages_path] = 'languages/'
-    root_path = 'unused'
-    @dojo = Dojo.new(root_path)
+    thread[:katas_path]     = 'katas/'
+    @dojo = Dojo.new
     @katas = @dojo.katas
     fake_languages
     fake_exercises

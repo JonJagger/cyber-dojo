@@ -3,12 +3,8 @@
 
 class Dojo
 
-  def initialize(path)
-    path += '/' unless path.end_with?('/')
-    @path = path
+  def initialize
   end
-
-  attr_reader :path
 
   def languages
     @languages ||= Languages.new
@@ -19,11 +15,7 @@ class Dojo
   end
 
   def katas
-    katas_path = path
-    # see test/languages/one_language_checker.rb
-    katas_path += 'test/cyberdojo/' if ENV['CYBERDOJO_TEST_ROOT_DIR']
-    katas_path += 'katas/'
-    Katas.new(self, katas_path)
+    @katas ||= Katas.new(self)
   end
 
 end

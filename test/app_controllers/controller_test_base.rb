@@ -12,7 +12,7 @@ require 'rails/test_help'
 class ControllerTestBase < ActionDispatch::IntegrationTest
 
   def root_path
-    File.expand_path('../..', File.dirname(__FILE__)) + '/'
+    File.absolute_path(File.dirname(__FILE__) + '/../../')
   end
 
   def thread
@@ -20,13 +20,14 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   end
 
   def setup
-    ENV['CYBERDOJO_TEST_ROOT_DIR'] = 'true'
     thread[:disk] = Disk.new
     thread[:git] = Git.new
     thread[:runner] = HostTestRunner.new
-    thread[:exercises_path] ||= root_path + 'exercises/'
-    thread[:languages_path] ||= root_path + 'languages/'
-    `rm -rf #{root_path}/test/cyberdojo/katas/*`
+    thread[:exercises_path] ||= root_path + '/exercises/'
+    thread[:languages_path] ||= root_path + '/languages/'
+    thread[:katas_path]     ||= root_path + '/test/cyberdojo/katas/'
+    #`rm -rf #{root_path}/test/cyberdojo/katas/*`
+    puts "rm -rf #{root_path}/test/cyberdojo/katas/*"
   end
 
   def teardown
@@ -34,6 +35,8 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     thread[:git] = nil
     thread[:runner] = nil
     thread[:exercises_path] = nil
+    thread[:languages_path] = nil
+    thread[:katas_path] = nil
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -49,7 +52,7 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     @disk   = thread[:disk  ] = DiskFake.new
     @git    = thread[:git   ] = SpyGit.new
     @runner = thread[:runner] = StubTestRunner.new
-    @dojo = Dojo.new(root_path)
+    @dojo = Dojo.new
   end
 
   def stub_language(language_name, unit_test_framework)

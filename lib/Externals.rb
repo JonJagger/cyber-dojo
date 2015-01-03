@@ -25,6 +25,10 @@ module Externals # mixin
     threaded(:languages_path)
   end
 
+  def katas_path
+    threaded(:katas_path)
+  end
+
   def thread
     Thread.current
   end

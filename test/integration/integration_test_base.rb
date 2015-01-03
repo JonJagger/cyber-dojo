@@ -10,14 +10,15 @@ class IntegrationTestBase < Test::Unit::TestCase
   end
 
   def setup
-    ENV['CYBERDOJO_TEST_ROOT_DIR'] = 'true'
     thread[:disk] = Disk.new
     thread[:git] = Git.new
     thread[:runner] = HostTestRunner.new
     thread[:exercises_path] ||= root_path + 'exercises/'
     thread[:languages_path] ||= root_path + 'languages/'
-    @dojo = Dojo.new(root_path)
-    `rm -rf #{root_path}test/cyberdojo/katas/*`
+    thread[:katas_path]     ||= root_path + 'test/cyberdojo/katas/'
+    @dojo = Dojo.new
+    #`rm -rf #{root_path}test/cyberdojo/katas/*`
+    puts "rm -rf #{root_path}test/cyberdojo/katas/*"
   end
 
   def make_kata(dojo, language_name, exercise_name = 'Fizz_Buzz')

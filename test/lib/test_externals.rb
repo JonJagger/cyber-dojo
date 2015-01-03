@@ -12,6 +12,7 @@ class ExternalsTests < CyberDojoTestBase
     thread[:runner] = nil
     thread[:exercises_path] = nil
     thread[:languages_path] = nil
+    thread[:katas_path] = nil
   end
 
   test 'raises RuntimeError if disk not set' do
@@ -41,6 +42,12 @@ class ExternalsTests < CyberDojoTestBase
   test 'raises RuntimeError if languages_path not set' do
     assert_raises RuntimeError do
       languages_path
+    end
+  end
+
+  test 'raises RuntimeError if katas_path not set' do
+    assert_raises RuntimeError do
+      katas_path
     end
   end
 

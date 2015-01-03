@@ -1,11 +1,17 @@
 
 class Katas
 
-  def initialize(dojo,path)
-    @dojo,@path = dojo,path
+  def initialize(dojo)
+    @dojo = dojo
+    @katas_path = katas_path
+    @katas_path += '/' if !katas_path.end_with?('/')
   end
 
-  attr_reader :dojo, :path
+  attr_reader :dojo
+
+  def path
+    @katas_path
+  end
 
   def create_kata(language, exercise, id = unique_id, now = time_now)
     # a kata's id has 10 hex chars. This gives 16^10 possibilities
