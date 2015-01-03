@@ -11,29 +11,36 @@ class ExternalsTests < CyberDojoTestBase
     thread[:git] = nil
     thread[:runner] = nil
     thread[:exercises_path] = nil
+    thread[:languages_path] = nil
   end
 
-  test 'raises RuntimeError is disk not set' do
+  test 'raises RuntimeError if disk not set' do
     assert_raises RuntimeError do
       disk
     end
   end
 
-  test 'raises RuntimeError is git not set' do
+  test 'raises RuntimeError if git not set' do
     assert_raises RuntimeError do
       git
     end
   end
 
-  test 'raises RuntimeError is runner not set' do
+  test 'raises RuntimeError if runner not set' do
     assert_raises RuntimeError do
       runner
     end
   end
 
-  test 'raises RuntimeError is exercises_path not set' do
+  test 'raises RuntimeError if exercises_path not set' do
     assert_raises RuntimeError do
       exercises_path
+    end
+  end
+
+  test 'raises RuntimeError if languages_path not set' do
+    assert_raises RuntimeError do
+      languages_path
     end
   end
 
