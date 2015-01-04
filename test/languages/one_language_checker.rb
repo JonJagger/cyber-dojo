@@ -9,6 +9,27 @@ class OneLanguageChecker
     @verbose = verbose
   end
 
+  def dojo
+    thread = Thread.current
+    thread[:disk] = Disk.new
+    thread[:git] = Git.new
+    thread[:runner] = runner
+    thread[:exercises_path] = @root_path + 'exercises/'
+    thread[:languages_path] = @root_path + 'languages/'
+    thread[:katas_path]     = @root_path + 'test/cyberdojo/katas/'
+    Dojo.new
+  end
+
+  def runner
+    if Docker.installed?
+      DockerTestRunner.new
+    else
+      # @language.runnable? in check() above always returns false
+      # viz, turn off all tests when not on Docker server
+      DummyTestRunner.new
+    end
+  end
+
   def check(language_name)
     # if running on a Docker server
     #    return [red,amber,green] state
@@ -144,27 +165,6 @@ private
 
   def vputs(message)
     puts message if @verbose
-  end
-
-  def dojo
-    thread = Thread.current
-    thread[:disk] = Disk.new
-    thread[:git] = Git.new
-    thread[:runner] = runner
-    thread[:exercises_path] = @root_path + 'exercises/'
-    thread[:languages_path] = @root_path + 'languages/'
-    thread[:katas_path]     = @root_path + 'test/cyberdojo/katas/'
-    Dojo.new
-  end
-
-  def runner
-    if Docker.installed?
-      DockerTestRunner.new
-    else
-      # @language.runnable? in check() above always returns false
-      # viz, turn off all tests when not on Docker server
-      DummyTestRunner.new
-    end
   end
 
 end

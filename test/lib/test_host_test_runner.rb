@@ -5,7 +5,7 @@ require 'tempfile'
 
 class HostTestRunnerTests < CyberDojoTestBase
 
-  class StubSandbox
+  class SandboxStub
     def path
       '.'
     end
@@ -20,7 +20,7 @@ class HostTestRunnerTests < CyberDojoTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'command executes within timeout and returns command output' do
-    sandbox = StubSandbox.new
+    sandbox = SandboxStub.new
     command = 'echo "Hello"'
     max_duration = 2 # seconds
     assert_equal "Hello\n", HostTestRunner.new.run(sandbox, command, max_duration)
@@ -29,7 +29,7 @@ class HostTestRunnerTests < CyberDojoTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'when command times-out output includes unable-to-complete message' do
-    sandbox = StubSandbox.new
+    sandbox = SandboxStub.new
     command = 'sleep 10000'
     max_duration = 1 # second
     output = nil
