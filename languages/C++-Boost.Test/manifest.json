@@ -9,6 +9,6 @@
   ],
   "filename_extension" : ".cpp",
   "display_name": "C++, Boost.Test",
-  "unit_test_framework": "Boost.Test",
+  "unit_test_framework": "boost_test",
   "image_name": "cyberdojo/gpp-4.8.1_boosttest"
 }

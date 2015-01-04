@@ -97,6 +97,12 @@ module OutputParser
     return :amber
   end
 
+  def self.parse_boost_test(output)
+    return :red   if /\*\*\* (\d+) failure detected/.match(output)
+    return :green if /\*\*\* No errors detected/.match(output)
+    return :amber
+  end
+
   def self.parse_ruby_rspec(output)
     return :red   if /\A(\.)*F/.match(output)
     return :green if /\A(\.)+$/.match(output)
