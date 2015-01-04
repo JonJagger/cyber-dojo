@@ -98,7 +98,7 @@ module OutputParser
   end
 
   def self.parse_boost_test(output)
-    return :red   if /\*\*\* (\d+) failure detected/.match(output)
+    return :red   if /\*\*\* (\d+) failures? detected/.match(output)
     return :green if /\*\*\* No errors detected/.match(output)
     return :amber
   end
