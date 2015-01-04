@@ -1,5 +1,5 @@
 
-class SpyGit
+class GitSpy
 
   def initialize
     @log = { }
@@ -50,7 +50,6 @@ class SpyGit
 
   def spy(dir, command, options, stub)
     tuple = [dir,command,options]
-    #puts "SETTING: @stub[#{tuple}] = #{stub}"
     @stub[tuple] = stub
   end
 
@@ -64,7 +63,6 @@ private
 
   def stub(dir, command, options)
     tuple = [dir,command,options]
-    #puts "GETTING: @stub[#{tuple}]"
     @stub[tuple]
   end
 

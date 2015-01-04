@@ -7,15 +7,15 @@ class ApprovalTests < IntegrationTestBase
 
   def setup
     super
-    thread[:runner] = StubTestRunner.new
-    @dir = StubSandbox.new(Dir.mktmpdir).dir
+    thread[:runner] = TestRunnerStub.new
+    @dir = SandboxStub.new(Dir.mktmpdir).dir
   end
 
   def teardown
     `rm -rf #{@dir.path}`
   end
 
-  class StubSandbox
+  class SandboxStub
     def initialize(dir)
       @dir = dir
     end

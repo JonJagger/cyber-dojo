@@ -32,8 +32,8 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
 
   def stub_dojo
     @disk   = thread[:disk  ] = DiskFake.new
-    @git    = thread[:git   ] = SpyGit.new
-    @runner = thread[:runner] = StubTestRunner.new
+    @git    = thread[:git   ] = GitSpy.new
+    @runner = thread[:runner] = TestRunnerStub.new
     @dojo = Dojo.new
   end
 

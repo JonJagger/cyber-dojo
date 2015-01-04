@@ -7,8 +7,8 @@ class ModelTestBase < Test::Unit::TestCase
 
   def setup
     thread[:disk] = DiskFake.new
-    thread[:git] = SpyGit.new
-    thread[:runner] = StubTestRunner.new
+    thread[:git] = GitSpy.new
+    thread[:runner] = TestRunnerStub.new
     thread[:exercises_path] = 'exercises/'
     thread[:languages_path] = 'languages/'
     thread[:katas_path]     = 'katas/'
