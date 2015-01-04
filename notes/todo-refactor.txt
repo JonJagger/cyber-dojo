@@ -153,13 +153,6 @@ provide two buttons on the history dialog
 Or maybe when you click the fork button it opens a new dialog
 with two buttons offering the two choices above.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cyberdojo_test_base.rb does this
-  def self.test(name, &block)
-    define_method("test_#{name}".to_sym, &block)
-  end
-I could use this to do execute_around and automatically
-call @disk.teardown
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 put animal images on front page?
 Put the ones that are in the dojo (with the entered id)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -282,13 +275,6 @@ output window open and it names the filename and line number
 of a syntax error and you do alt-E and it opens the file
 named in the syntax error and auto scrolls to the line-number.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Various places have code like this...
-   if ENV['CYBERDOJO_TEST_ROOT_DIR']
-      path += 'test/cyberdojo/'
-    end
-Refactor... first of all rename to specify its only katas/ root
-that is being tweaked.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Generalize
    Approval.add_created_txt_files(sandbox.path, visible_files)
    Approval.remove_deleted_txt_files(sandbox.path, visible_files)
@@ -321,9 +307,6 @@ just the lights on the dashboard page open a new diff page.
 Kata.start_avatar
   needs to do dir.lock do...end
   to ensure you don't get two avatars with the same name.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Approval is hard-wired to hard-disk.
-Move it to use OsDisk from externals.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Add manifest parameter to app/model/Language.rb globbing
 the file pattern to add/remove in post-test event?
@@ -396,14 +379,6 @@ Eg kata.exists? ==> katas.exists?(id)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rename Dojo.rb to CyberDojo.rb ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  application_controller does this...
-    def root_path
-      Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo/' : '/')
-    end
-  make it so root_path is always set via ENV far from shell?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  Folders.id_complete can move to Katas.complete(id)
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   kata.start_avatar
      copy visible_filenames
         # this could also be replaced by
@@ -436,9 +411,6 @@ rename Dojo.rb to CyberDojo.rb ?
   in a language manifest for example?
   What about tests? Is it simpler to substitute a different
   max-duration as a parameter? I think so.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  test/app_models/test_avatar_test.rb
-  has some tests that need reviving.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   kata.avatars['lion'].tag[4]
     handy shortcut for this could be

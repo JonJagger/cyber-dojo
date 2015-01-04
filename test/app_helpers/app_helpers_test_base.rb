@@ -9,8 +9,4 @@ class AppHelpersTestBase < Test::Unit::TestCase
     define_method("test_#{name}".to_sym, &block)
   end
 
-  def thread
-    Thread.current
-  end
-
 end

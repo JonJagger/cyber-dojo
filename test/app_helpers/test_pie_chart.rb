@@ -7,6 +7,7 @@ class PieChartTests < AppHelpersTestBase
   include PieChartHelper
 
   test 'pie-chart from avatar.lights' do
+    thread = Thread.current
     thread[:disk] = DiskFake.new
     thread[:git] = Object.new
     thread[:runner] = Object.new
