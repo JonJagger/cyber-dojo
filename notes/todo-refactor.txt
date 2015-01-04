@@ -3,7 +3,6 @@
 If test run is successful do
 $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-application_controller.rb and test/all.rb have duplication.
 use DirFake for all of app_controller tests.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rename tests/integration  folder to tests/externals

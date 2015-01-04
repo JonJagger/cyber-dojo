@@ -1,37 +1,5 @@
 
-def require_dependencies(file_names)
-  file_names.each{ |file_name| require_dependency file_name}
-end
-
-# these dependencies have to be loaded in the correct order
-# as some of them depend on loading previous ones
-
-require_dependencies %w{
-  Externals
-  Docker
-  TestRunner
-    DockerTestRunner
-    DummyTestRunner
-    HostTestRunner
-  Disk Dir
-  Git
-  TimeNow UniqueId
-}
-
-require_dependencies %w{
-  Chooser Cleaner FileDeltaMaker
-  GitDiff GitDiffBuilder GitDiffParser LineSplitter
-  MakefileFilter OutputParser TdGapper
-}
-
-require_dependencies %w{
-  Dojo
-  Language Languages
-  Exercise Exercises
-  Avatar Avatars
-  Kata Katas
-  Light Sandbox Tag
-}
+require_relative '../../all'
 
 class ApplicationController < ActionController::Base
 

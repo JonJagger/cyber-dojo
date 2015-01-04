@@ -1,23 +1,14 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative 'app_helpers_test_base'
 
-class TrafficLightTests < CyberDojoTestBase
+class TrafficLightTests < AppHelpersTestBase
 
   include TrafficLightHelper
 
-  def new_avatar(kata,name)
-    thread[:disk] = Object.new
-    thread[:git] = Object.new
-    thread[:runner] = Object.new
-    Avatar.new(kata,name)
-  end
-
-  #- - - - - - - - - - - - - - - -
-
   test 'tool tip' do
     kata = nil
-    avatar = new_avatar(kata,'hippo')
+    avatar = Avatar.new(kata,'hippo')
     light = Light.new(avatar, {
       'number' => 2,
       'time' => [2012,5,1,23,20,45],
@@ -45,7 +36,7 @@ class TrafficLightTests < CyberDojoTestBase
   test 'diff_avatar_image' do
     kata = Object.new
     def kata.id; 'ABCD1234'; end
-    avatar = new_avatar(kata,'hippo')
+    avatar = Avatar.new(kata,'hippo')
     def avatar.lights; [1]*27; end
     expected = "" +
       "<div" +
@@ -77,7 +68,7 @@ class TrafficLightTests < CyberDojoTestBase
   def diff_traffic_light_func(light)
     kata = Object.new
     def kata.id; 'ABCD1234'; end
-    avatar = new_avatar(kata,'hippo')
+    avatar = Avatar.new(kata,'hippo')
     def avatar.lights; [1]*7; end
     light = Light.new(avatar, {
       'number' => 3,

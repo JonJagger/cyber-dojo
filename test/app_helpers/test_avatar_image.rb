@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative 'app_helpers_test_base'
 
-class AvatarImageTests < CyberDojoTestBase
+class AvatarImageTests < AppHelpersTestBase
 
   include AvatarImageHelper
 
