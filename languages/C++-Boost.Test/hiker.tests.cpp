@@ -1,13 +1,12 @@
 #include "hiker.hpp"
-#include <gtest/gtest.h>
+#define BOOST_TEST_MODULE HikerTest
+#include <boost/test/unit_test.hpp>
 
-using namespace ::testing;
-
-TEST(Hiker, Life_the_universe_and_everything)
+BOOST_AUTO_TEST_CASE(Life_the_universe_and_everything)
 {
     // The initial code and test files are completely
     // *unrelated* to the chosen exercise. They are
     // merely a simple example to start you off.
     // You should now delete this comment!
-    ASSERT_EQ(42, answer());
+    BOOST_REQUIRE(42, answer());
 }

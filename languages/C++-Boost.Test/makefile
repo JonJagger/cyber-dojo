@@ -1,13 +1,12 @@
-CXXFLAGS += -std=c++11 -Wall -Wextra -Werror
-GTEST_LIBS = -lgtest -lgtest_main -pthread
+CXXFLAGS += -std=c++11 -Wall -Wextra -Werror -lboost_unit_test_framework
 
 HPP_FILES = $(wildcard *.hpp)
 COMPILED_HPP_FILES = $(patsubst %.hpp,%.compiled_hpp,$(HPP_FILES))
 CPP_FILES = $(wildcard *.cpp)
 
 test: makefile $(CPP_FILES) $(COMPILED_HPP_FILES)
-	$(CXX) -I. $(CXXFLAGS) -O $(CPP_FILES) $(GTEST_LIBS) -o $@
-	./$@ --gtest_shuffle
+	$(CXX) -I. $(CXXFLAGS) -O $(CPP_FILES) -o $@
+	./$@
 
 # This rule ensures header files build in their own right.
 # The quality of header files is important because header files
