@@ -1,14 +1,18 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative 'lib_test_base'
 
-class GitTests < CyberDojoTestBase
+class GitTests < LibTestBase
 
   def setup
     @dir = root_path + 'tmp/'
     `rm -rf #{@dir}`
     `mkdir #{@dir}`
     @git = Git.new
+  end
+
+  def root_path
+    File.expand_path('../..', File.dirname(__FILE__)) + '/'
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

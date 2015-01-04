@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative 'lib_test_base'
 
-class FakeDirTests < CyberDojoTestBase
+class FakeDirTests < LibTestBase
 
   def setup
     @disk = DiskFake.new

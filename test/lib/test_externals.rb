@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative 'lib_test_base'
 
-class ExternalsTests < CyberDojoTestBase
+class ExternalsTests < LibTestBase
 
   include Externals
 

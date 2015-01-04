@@ -1,13 +1,20 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative 'languages_test_base'
 require_relative 'one_language_checker'
 
-class AllLanguagesTests < CyberDojoTestBase
+class AllLanguagesTests < LanguagesTestBase
+
+  def setup
+    `rm -rf #{root_path}test/cyberdojo/katas/*`
+  end
+
+  def root_path
+    File.dirname(__FILE__) + '/../../'
+  end
 
   test 'red-amber-green initial 6*9 state' do
     return if !Docker.installed?
-    root_path = File.dirname(__FILE__) + '/../../'
     verbose = false
     checker = OneLanguageChecker.new(root_path,verbose)
     results = {}

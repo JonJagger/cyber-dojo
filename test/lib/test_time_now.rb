@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative 'lib_test_base'
 
-class TimeNowTests < CyberDojoTestBase
+class TimeNowTests < LibTestBase
 
   class FakeTime
     def year; 1966; end

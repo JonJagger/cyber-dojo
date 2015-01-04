@@ -1,14 +1,18 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative 'lib_test_base'
 
-class DiskTests < CyberDojoTestBase
+class DiskTests < LibTestBase
 
   def setup
     @disk = Disk.new
     @dir = root_path + 'tmp/'
     `rm -rf #{@dir}`
     `mkdir -p #{@dir}`
+  end
+
+  def root_path
+    File.expand_path('../..', File.dirname(__FILE__)) + '/'
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

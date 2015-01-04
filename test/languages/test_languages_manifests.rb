@@ -1,12 +1,15 @@
 #!/usr/bin/env ruby
 
-require_relative '../cyberdojo_test_base'
+require_relative 'languages_test_base'
 
-class LanguagesManifestsTests < CyberDojoTestBase
+class LanguagesManifestsTests < LanguagesTestBase
 
   def setup
-    super
     @root_path = root_path
+  end
+
+  def root_path
+    File.expand_path('../..', File.dirname(__FILE__)) + '/'
   end
 
   test 'manifests of all languages' do
