@@ -8,5 +8,5 @@ BOOST_AUTO_TEST_CASE(Life_the_universe_and_everything)
     // *unrelated* to the chosen exercise. They are
     // merely a simple example to start you off.
     // You should now delete this comment!
-    BOOST_REQUIRE(42, answer());
+    BOOST_REQUIRE_EQUAL(42, answer());
 }
