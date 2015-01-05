@@ -34,6 +34,24 @@ END_OF_OUTPUT
 
   # - - - - - - - - - - - - - - -
 
+  test 'compile time error is amber' do
+    output = <<END_OF_OUTPUT
+g++ -I. -std=c++11 -Wall -Wextra -Werror -DBOOST_TEST_DYN_LINK -O hiker.cpp hiker.tests.cpp -lboost_unit_test_framework -o test
+hiker.cpp: In function 'int answer()':
+hiker.cpp:5:16: error: unable to find numeric literal operator 'operator"" sdsd'
+     return 6 * 7sdsd;
+                ^
+hiker.cpp:6:1: error: control reaches end of non-void function [-Werror=return-type]
+ }
+ ^
+cc1plus: all warnings being treated as errors
+make: *** [test] Error 1
+END_OF_OUTPUT
+    assert_equal :amber, colour_of(output)
+  end
+
+  # - - - - - - - - - - - - - - -
+
   test 'one passing test is green' do
     output = <<END_OF_OUTPUT
 g++ -I. -std=c++11 -Wall -Wextra -Werror -DBOOST_TEST_DYN_LINK -O hiker.cpp hiker.tests.cpp -lboost_unit_test_framework -o test
