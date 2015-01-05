@@ -186,7 +186,7 @@ class DiffBugTests < AppLibTestBase
     split_up = source_lines.split("\n")
     builder = GitDiff::GitDiffBuilder.new()
     view = builder.build(diff, split_up)
-    nils = view.select { |one| one[:line] == nil }
+    nils = view.select { |one| one[:line].nil? }
     assert_not_equal [ ], nils
 
     # OK. And after all that the problem is the split.

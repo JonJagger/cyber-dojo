@@ -569,8 +569,8 @@ class AvatarTests < ModelTestBase
     traffic_light = OutputParser::parse(@kata.language.unit_test_framework, output)
     traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
     assert_equal 1, traffic_lights.length
-    assert_equal nil, traffic_lights.last[:run_tests_output]
-    assert_equal nil, traffic_lights.last[:output]
+    assert_nil traffic_lights.last[:run_tests_output]
+    assert_nil traffic_lights.last[:output]
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

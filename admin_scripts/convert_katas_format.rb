@@ -57,7 +57,7 @@ def calc_delta(was,now)
   was.each do |filename,content|
     if now[filename] == content
       result[:unchanged] << filename
-    elsif now[filename] != nil
+    elsif !now[filename].nil?
       result[:changed] << filename
     else
       result[:deleted] << filename

@@ -5,27 +5,11 @@ $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 use DirFake for all of app_controller tests.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+run admin_script tests as part of run_all
+put iteration limit in to make them faster?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rename tests/integration  folder to tests/externals
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Suppose I just hang the externals off the thread hash and each object
-takes what it needs from the thread hash rather than it being passed
-in explicitly. One effect of this is that I might be able to find
-a way to put the externals onto the thread at the Rails startup code
-and avoid having to mess about in the controller base class. This
-will make my tests and my code more alike. I won't have code in the
-controller just for the tests.
-I think I may be able to do it in a externals.rb file placed in
-the config/initializers/ folder. This worked when running the server
-directly (rails s) but not when on the main site via Passenger.
-Can I do it in /config.ru before the line
-  run CyberDojo::Application
-https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerAppGroupName
-Suggests that the startup file for Rails >= 3.0 on Passenger
-is indeed config.ru
-If I do this I can remove config/initializers/externals.rb
-(unless that is what I call from config.ru)
-Or config/application.rb ?
-...
 Tried putting this into config/initializers/externals.rb
   CyberDojo::Application.config.runner = Object.new
 And this into lib/Externals.rb
@@ -58,22 +42,12 @@ app_helpers
 app_lib
 app_models
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Look for each methods that can do
-http://blog.arkency.com/2014/01/ruby-to-enum-for-enumerator/
-  def each_even
-    return enum_for(:each_even) unless block_given?
-    (1..4).each {|n| yield n if n%2 == 0}
-  end
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would be nice to get extra metric in coverage.txt which was
 the number of hits per line. Would also be nice to be able
 to plot that as a histogram.
 Another nice metric would be number of lines missed.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Can you mark methods as private in a mixin? Eg lib/Externals.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Search for x == nil constructs and replace with x.nil?
-and also   x != nil with !x.nil?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/app_model/test_avatar.rb has commented out tests.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

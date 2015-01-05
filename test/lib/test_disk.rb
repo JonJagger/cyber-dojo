@@ -98,7 +98,7 @@ class DiskTests < LibTestBase
       }
       max_seconds = 2
       inner_thread.join(max_seconds);
-      if inner_thread != nil
+      if !inner_thread.nil?
         Thread.kill(inner_thread)
       end
     end

@@ -13,7 +13,7 @@ root_path = File.absolute_path(File.dirname(__FILE__) + '/../../')
 language = ARGV[0]
 verbose = ARGV[1] === 'verbose'
 
-if language === nil
+if language.nil?
   show_use('no [language] specified')
   exit
 end

@@ -197,7 +197,7 @@ class KataTests < ModelTestBase
     assert_equal 'lion', lion.name
     cheetah = kata.start_avatar(names)
     assert_equal 'cheetah', cheetah.name
-    assert_equal nil, kata.start_avatar(names)
+    assert_nil kata.start_avatar(names)
     avatars_names = kata.avatars.each.map {|avatar| avatar.name}
     assert_equal names.sort, avatars_names.sort
   end
