@@ -4,7 +4,7 @@ require_relative '../admin_scripts/lib_domain'
 
 cache = { }
 create_dojo.languages.each do |language|
-  cache[language.name] = language.display_name
+  cache[language.display_name] = language.name
 end
 
 this_dir = File.expand_path('.', File.dirname(__FILE__))
