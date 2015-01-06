@@ -10,7 +10,7 @@ class AllLanguagesTests < LanguagesTestBase
   end
 
   def root_path
-    File.dirname(__FILE__) + '/../../'
+    File.absolute_path(File.dirname(__FILE__) + '/../../') + '/'
   end
 
   test 'red-amber-green initial 6*9 state' do
