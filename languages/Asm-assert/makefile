@@ -17,4 +17,3 @@ test: makefile $(COMPILED_H_FILES) $(C_FILES) $(COMPILED_ASM_FILES)
 
 %.asm_o: %.asm
     @nasm -f elf64 -o $@ $<
-
