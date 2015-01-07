@@ -17,7 +17,7 @@ class AvatarsTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'kata.avatars() returns all avatars started in the kata' do
+  test 'kata.avatars returns all avatars started in the kata' do
     kata = make_kata
     kata.start_avatar(['cheetah'])
     kata.start_avatar(['lion'])
@@ -26,7 +26,7 @@ class AvatarsTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'dojo.katas[id].avatars() returns all avatars started in kata with given id' do
+  test 'dojo.katas[id].avatars returns all avatars started in kata with given id' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     hippo = kata.start_avatar(['hippo'])
