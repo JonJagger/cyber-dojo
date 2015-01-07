@@ -42,7 +42,7 @@ require_relative_in('app/models', %w{
   Language Languages
   Exercise Exercises
   Avatar Avatars
+  FinishedKatas
   Kata Katas
   Light Sandbox Tag
 })
-
