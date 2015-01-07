@@ -1,11 +1,11 @@
 
 {
   "visible_filenames": [
-     "hiker.tests.c",
-     "hiker.h",
-     "hiker.asm",
-     "makefile",
-     "cyber-dojo.sh"
+   "hiker.tests.c",
+   "hiker.h",
+   "hiker.asm",
+   "makefile",
+   "cyber-dojo.sh"
   ],
   "filename_extension" : ".asm",
   "display_name": "Asm, assert",
