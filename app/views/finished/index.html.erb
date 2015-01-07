@@ -1,0 +1,17 @@
+
+<div id="home-page">
+
+<table>
+  <% @katas.each do |kata| %>
+    <tr>
+        <td><a href="/dashboard/show/<%= kata.id %>"><%= kata.id %></a></td>
+        <td><%= kata.language.name %></td>
+        <td><%= kata.exercise.name %></td>
+        <td><%= kata.avatars.active.count %></td>
+    </tr>
+  <% end %>
+</table>
+
+</div>
+
+<%= render :partial => 'shared/footer' %>
