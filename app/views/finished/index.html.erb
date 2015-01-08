@@ -7,7 +7,12 @@
         <td><a href="/dashboard/show/<%= kata.id %>"><%= kata.id %></a></td>
         <td><%= kata.language.name %></td>
         <td><%= kata.exercise.name %></td>
-        <td><%= kata.avatars.active.count %></td>
+        <td>#animals<%= kata.avatars.active.count %></td>
+        <td>#traffic-light
+            <%= kata.avatars.active.each.map {|avatar|
+                avatar.lights.count
+            }.reduce(:+) %>
+        </td>
     </tr>
   <% end %>
 </table>
