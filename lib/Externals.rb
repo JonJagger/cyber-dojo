@@ -29,10 +29,6 @@ module Externals # mixin
     threaded(:katas_path)
   end
 
-  def finished_path
-    threaded(:finished_path)
-  end
-
   def thread
     Thread.current
   end

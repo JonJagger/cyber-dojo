@@ -18,8 +18,4 @@ class Dojo
     @katas ||= Katas.new(self)
   end
 
-  def finished_katas
-    @finished_katas ||= FinishedKatas.new(self)
-  end
-
 end

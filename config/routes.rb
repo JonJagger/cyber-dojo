@@ -17,10 +17,6 @@ CyberDojo::Application.routes.draw do
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
 
-  scope path: '/finished', controller: :finished do
-    get 'index' => :index
-  end
-
   scope path: '/dojo', controller: :dojo do
     get 'index(/:id)' => :index
     get 'check_id' => :check_id, :constraints => { :format => :json }
