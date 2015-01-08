@@ -1,0 +1,33 @@
+<%= form_for(@avatar_session) do |f| %>
+  <% if @avatar_session.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@avatar_session.errors.count, "error") %> prohibited this avatar_session from being saved:</h2>
+
+      <ul>
+      <% @avatar_session.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :avatar %><br>
+    <%= f.text_field :avatar %>
+  </div>
+  <div class="field">
+    <%= f.label :vote_count %><br>
+    <%= f.number_field :vote_count %>
+  </div>
+  <div class="field">
+    <%= f.label :fork_count %><br>
+    <%= f.number_field :fork_count %>
+  </div>
+  <div class="field">
+    <%= f.label :dojo_start_point_id %><br>
+    <%= f.text_field :dojo_start_point_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,5 +1,7 @@
 
 CyberDojo::Application.routes.draw do
+  resources :avatar_sessions
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

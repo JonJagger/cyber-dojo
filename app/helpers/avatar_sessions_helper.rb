@@ -1,0 +1,2 @@
+module AvatarSessionsHelper
+end

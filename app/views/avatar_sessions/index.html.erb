@@ -1,0 +1,33 @@
+<h1>Listing avatar_sessions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Avatar</th>
+      <th>Vote count</th>
+      <th>Fork count</th>
+      <th>Dojo start point</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @avatar_sessions.each do |avatar_session| %>
+      <tr>
+        <td><%= avatar_session.avatar %></td>
+        <td><%= avatar_session.vote_count %></td>
+        <td><%= avatar_session.fork_count %></td>
+        <td><%= avatar_session.dojo_start_point %></td>
+        <td><%= link_to 'Show', avatar_session %></td>
+        <td><%= link_to 'Edit', edit_avatar_session_path(avatar_session) %></td>
+        <td><%= link_to 'Destroy', avatar_session, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Avatar session', new_avatar_session_path %>

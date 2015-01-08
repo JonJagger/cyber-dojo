@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Avatar:</strong>
+  <%= @avatar_session.avatar %>
+</p>
+
+<p>
+  <strong>Vote count:</strong>
+  <%= @avatar_session.vote_count %>
+</p>
+
+<p>
+  <strong>Fork count:</strong>
+  <%= @avatar_session.fork_count %>
+</p>
+
+<p>
+  <strong>Dojo start point:</strong>
+  <%= @avatar_session.dojo_start_point %>
+</p>
+
+<%= link_to 'Edit', edit_avatar_session_path(@avatar_session) %> |
+<%= link_to 'Back', avatar_sessions_path %>
