@@ -1,5 +1,9 @@
 
 CyberDojo::Application.routes.draw do
+  resources :dojo_start_points
+
+  resources :traffic_lights
+
   resources :avatar_sessions
 
   # The priority is based upon order of creation:

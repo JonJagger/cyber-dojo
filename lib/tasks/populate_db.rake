@@ -7,7 +7,7 @@ def excluded?(filename)
   %w{ output instructions makefile cyber-dojo.sh }.include?(filename)
 end
 
-def tag0_hash(visible_files)
+def content_hash(visible_files)
   hash = 0
   visible_files.each do |filename,content|
     if !excluded?(filename)
@@ -27,16 +27,34 @@ namespace :db do
       dsp = DojoStartPoint.create!(
         :dojo_id => kata.id,
         :language => kata.language.name,
-        :exercise => kata.exercise.name,
-        :tag0_content_hash => tag0_hash(kata.visible_files)
+        :exercise => kata.exercise.name
       )
 
       kata.avatars.active.each do |avatar|
-        AvatarSession.create!(
+        as = AvatarSession.create!(
           :dojo_start_point => dsp,
-          :vote_count => 0,
+          :avatar => avatar.name,
+          :vote_count => 0
+        )
+
+        t0 = avatar.tags[0]
+        TrafficLight.create!(
+          :avatar_session => as,
+          :tag => 0,
+          :colour => 'white',
+          :content_hash => content_hash(t0.visible_files),
           :fork_count => 0
         )
+
+        avatar.lights.each do |light|
+          TrafficLight.create!(
+            :avatar_session => as,
+            :tag => light.tag.number,
+            :colour => light.colour,
+            :content_hash => content_hash(light.tag.visible_files),
+            :fork_count => 0
+          )
+        end
       end
     end
   end

@@ -7,6 +7,10 @@ class Tag
     @avatar,@n = avatar,n
   end
 
+  def number
+    @n
+  end
+
   def visible_files
     @manifest ||= JSON.parse(clean(git.show(@avatar.path, "#{@n}:manifest.json")))
   end

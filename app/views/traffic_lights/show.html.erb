@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Tag:</strong>
+  <%= @traffic_light.tag %>
+</p>
+
+<p>
+  <strong>Content hash:</strong>
+  <%= @traffic_light.content_hash %>
+</p>
+
+<p>
+  <strong>Fork count:</strong>
+  <%= @traffic_light.fork_count %>
+</p>
+
+<p>
+  <strong>Avatarsession:</strong>
+  <%= @traffic_light.AvatarSession %>
+</p>
+
+<%= link_to 'Edit', edit_traffic_light_path(@traffic_light) %> |
+<%= link_to 'Back', traffic_lights_path %>

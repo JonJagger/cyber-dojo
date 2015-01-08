@@ -1,0 +1,2 @@
+module DojoStartPointHelper
+end

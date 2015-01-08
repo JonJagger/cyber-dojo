@@ -1,0 +1,31 @@
+<h1>Listing dojo_start_points</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Dojo</th>
+      <th>Language</th>
+      <th>Exercise</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @dojo_start_points.each do |dojo_start_point| %>
+      <tr>
+        <td><%= dojo_start_point.dojo_id %></td>
+        <td><%= dojo_start_point.language %></td>
+        <td><%= dojo_start_point.exercise %></td>
+        <td><%= link_to 'Show', dojo_start_point %></td>
+        <td><%= link_to 'Edit', edit_dojo_start_point_path(dojo_start_point) %></td>
+        <td><%= link_to 'Destroy', dojo_start_point, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Dojo start point', new_dojo_start_point_path %>

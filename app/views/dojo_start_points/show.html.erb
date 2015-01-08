@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Dojo:</strong>
+  <%= @dojo_start_point.dojo_id %>
+</p>
+
+<p>
+  <strong>Language:</strong>
+  <%= @dojo_start_point.language %>
+</p>
+
+<p>
+  <strong>Exercise:</strong>
+  <%= @dojo_start_point.exercise %>
+</p>
+
+<%= link_to 'Edit', edit_dojo_start_point_path(@dojo_start_point) %> |
+<%= link_to 'Back', dojo_start_points_path %>

@@ -11,12 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108094817) do
+ActiveRecord::Schema.define(version: 20150108134622) do
 
   create_table "avatar_sessions", force: true do |t|
     t.string   "avatar"
     t.integer  "vote_count"
-    t.integer  "fork_count"
     t.integer  "dojo_start_point_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -28,9 +27,20 @@ ActiveRecord::Schema.define(version: 20150108094817) do
     t.string   "dojo_id"
     t.string   "language"
     t.string   "exercise"
-    t.string   "tag0_content_hash"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "traffic_lights", force: true do |t|
+    t.integer  "tag"
+    t.string   "content_hash"
+    t.integer  "fork_count"
+    t.integer  "avatar_session_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "colour"
+  end
+
+  add_index "traffic_lights", ["avatar_session_id"], name: "index_traffic_lights_on_avatar_session_id"
 
 end

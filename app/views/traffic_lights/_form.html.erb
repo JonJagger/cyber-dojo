@@ -1,0 +1,33 @@
+<%= form_for(@traffic_light) do |f| %>
+  <% if @traffic_light.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@traffic_light.errors.count, "error") %> prohibited this traffic_light from being saved:</h2>
+
+      <ul>
+      <% @traffic_light.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :tag %><br>
+    <%= f.number_field :tag %>
+  </div>
+  <div class="field">
+    <%= f.label :content_hash %><br>
+    <%= f.text_field :content_hash %>
+  </div>
+  <div class="field">
+    <%= f.label :fork_count %><br>
+    <%= f.number_field :fork_count %>
+  </div>
+  <div class="field">
+    <%= f.label :AvatarSession_id %><br>
+    <%= f.text_field :AvatarSession_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -4,7 +4,6 @@ class CreateDojoStartPoints < ActiveRecord::Migration
       t.string :dojo_id
       t.string :language
       t.string :exercise
-      t.string :tag0_content_hash
 
       t.timestamps
     end
