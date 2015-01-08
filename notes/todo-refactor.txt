@@ -8,6 +8,21 @@ use DirFake for all of app_controller tests.
 run admin_script tests as part of run_all
 put iteration limit in to make them faster?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+if you hit [test] and the makefile does nothing (no files have changed)
+then you get an amber traffic-light.... Fixed in C-assert
+Needs to be fixed in other languages' makefiles.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Split Externals into GetExternals.rb and SetExternals.rb
+SetExternals will provide abstraction of setting the externals
+so I could switch from Thread-Local-Storage to eg Monkey-Patching.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If I decided to make dojo ids more than 10 chars long
+I could end up with 2nd level katas dirs some of which were
+8 chars long and some of which were 9+ chars long.
+Would the current design cope with that?
+I think the katas.complete(id) method means it would.
+Have a quick look and add a comment to katas.complete(id)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rename tests/integration  folder to tests/externals
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Could clean() be embedded inside dir.read?
