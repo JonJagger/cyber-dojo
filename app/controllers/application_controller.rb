@@ -1,5 +1,10 @@
 
-require_relative '../../all'
+def rooted(filename)
+  root = File.absolute_path(File.dirname(__FILE__) + '/../../')
+  root + '/' + filename
+end
+
+load rooted('all.rb')
 
 class ApplicationController < ActionController::Base
 
