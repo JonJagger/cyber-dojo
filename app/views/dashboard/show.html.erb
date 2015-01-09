@@ -20,8 +20,6 @@ $(function() {
   <table>
     <tr class="valign-top">
       <td>
-        <%= render :partial => 'help_button' %>
-        <%= render :partial => 'shared/tweet' %>
         <%= render :partial => 'download_button' %>
         <%= render :partial => 'controls' %>
         <%= render :partial => 'progress_button' %>
@@ -41,4 +39,5 @@ $(function() {
   </table>
 </div>
 
-<%= render :partial => 'shared/footer_plus' %>
+<%= render partial: 'shared/footer_plus',
+    locals: { help_url:"http://blog.cyber-dojo.org/2014/10/the-cyber-dojo-dashboard.html" } %>

@@ -15,7 +15,13 @@
                 <%= render :partial => 'shared/bullet' %>
             </td>
             <td>
-            <%= render :partial => 'shared/tweet' %>
+                <%= render partial: 'shared/help_link', locals: { help_url: help_url } %>
+            </td>
+            <td>
+                <%= render :partial => 'shared/bullet' %>
+            </td>
+            <td>
+                <%= render :partial => 'shared/tweet' %>
             </td>
         </tr>
     </table>

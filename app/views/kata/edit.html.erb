@@ -43,9 +43,6 @@ $(function() {
 
       <tr class="valign-top">
         <td>
-          <%= render :partial => 'help_button' %>
-        </td>
-        <td>
           <%= render :partial => 'test_button' %>
         </td>
         <td>
@@ -56,7 +53,7 @@ $(function() {
       </tr>
 
       <tr class="valign-top">
-        <td colspan="2">
+        <td>
           <%= render :partial => 'file_new_rename_delete' %>
           <%= render :partial => 'filename_list' %>
         </td>
@@ -68,6 +65,7 @@ $(function() {
     </table>
   </div>
 
-  <%= render :partial => 'shared/footer_plus' %>
+  <%= render partial: 'shared/footer_plus',
+      locals: { help_url:"http://blog.cyber-dojo.org/2014/10/the-cyber-dojo-test-page.html" } %>
 
 <% end %>
