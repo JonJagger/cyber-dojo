@@ -13,7 +13,7 @@ You must write a program that will review a haiku and
 check that each line contains the correct number of
 syllables.
 
-Input 
+Input
 
 The input contains one or more lines, each of which
 contains a single haiku. A haiku will contain at least
@@ -26,7 +26,7 @@ be contained within one physical line of the file.)
 A haiku will contain only lowercase letters ('a'-'z'),
 forward slashes ('/'), and spaces, and will be no more
 than 200 characters long (not counting the end-of-line
-characters). 
+characters).
 
 Each haiku is guaranteed to contain three lines, and
 each line will contain at least one word. Your job is
@@ -44,15 +44,15 @@ example below, your program must consider the word
 'e' are not consecutive. However, in English the 'e'
 is silent and so 'code' actually has only one syllable.)
 
-Output 
+Output
 
-For each haiku, output a comma seaprated single line
+For each haiku, output a comma-separated single line
 that contains the number of syllables in each haiku,
 together with the letter Y if it is a haiku, or N if
 it is not a haiku (see below).
 
 
-Sample Input 
+Sample Input
 ------------
 happy purple frog/eating bugs in the marshes/get indigestion
 computer programs/the bugs try to eat my code/i will not let them
@@ -60,7 +60,7 @@ computer programs/the bugs try to eat my code/i will not let them
 Sample Output
 -------------
 5,7,5,Yes
-5,6,5,No
+5,8,5,No
 
 
 [Source: http://uva.onlinejudge.org/]
