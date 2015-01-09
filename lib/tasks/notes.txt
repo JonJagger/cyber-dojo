@@ -9,27 +9,32 @@ However, there are two further considerations...
    light it reverted to. Thus both the new-reverted-to
    light and the older-reverted-from light will both
    get a fork-count increment.
-   So I need to ignore a light if its content-hash
-   already occurs in an earlier traffic-light.
 2) Suppose I have several timeout amber traffic lights...
    It's possible (though unikely), to fork from (and
    revert to) an amber traffic-light. Again in this case
    there will be several amber traffic-lights (in a row)
-   with the same content-hash. So again ignore a light
-   if its content-hash already occurs in an earlier
-   traffic light.
+   with the same content-hash.
+3) Suppose someone simply presses [test] again and there
+   are no changes. This happens quite a lot in practice.
+   Eg 'just to be sure', or 'after a break'.
+   This suggests the idea that when a diff-reviewer presses < >
+   to move to the prev/next diff I could skip past traffic-lights
+   which have no diff to the current traffic-light.
+So I need to ignore a light if its content-hash
+already occurs in an earlier traffic-light.
+
 
 Mark reverted traffic-lights
 ----------------------------
-Thus suggests it would be quite easy (and useful)
-to display a revert traffic-light in a special way.
+It would be quite easy (and useful) to display a
+revert traffic-light in a special way.
 
 
 Database only storage on the hub?
 --------------------------------
-Suppose the database stores the manifest.json for each
-traffic-light. This means I can completely get rid of
-the katas/ folder on the hub.
+Suppose the database stores the manifest.json (or equivalent)
+for each traffic-light. This means I can completely get rid of
+the katas/ folder on the hub...
 I can recreate the history-dialog git-diff on the fly.
 At worst I can create a temporary dir, store the
 visible files from the first TL, commit and tag, store
@@ -42,8 +47,11 @@ I could also store the result of this git-diff in a
 new table (or maybe a new field in the Tag table).
 This would auto-cache diff views of popular avatar-sessions,
 and not taking up extra space for ones that a never viewed.
+It could also count how many times diff-view was viewed.
 
-NB: Many times the content of a file in a new traffic
+Removing duplication
+--------------------
+Many times the content of a file in a new traffic
 light does not change (eg instructions).
 Storing these as-is is less efficient than storing
 them once only (in a new table of file-contents).
@@ -63,19 +71,18 @@ on the main server for two reasons
 
 
 
-tag-zero
+Tag Zero
 --------
 The idea of having no katas/ folder on the hub reinforces
 the design that tag-0 needs to be stored
-not in DojoStartPoint (as just a hash) but in TrafficLight
+*not* in Dojo (as just a hash) but in Avatar
 with its colour and visible-files.
 
 
 Tag vs TrafficLight
 -------------------
-I think it is worth making the distinction. I would like
-a model that works if/when I introduce micro-commits between
-test events.
+I would like a model that works if/when I introduce
+micro-commits between test events.
 
 
 Suggested Schema
@@ -86,28 +93,19 @@ Suggested Schema
     dojo_id string
     language string
     exercise string
-    vote_count integer // == sum Avatars.vote_count
 
 :Avatar
   belongs_to Dojo
-  has_many Tags
+  has_many TagEvents
     avatar string
     vote_count integer
 
 :TagEvent
   belongs_to Avatar
-  has_many VisibleFiles
   has_one? TrafficLight
-    content_hash string  // == xor of all VisibleFiles.content_hash
-
-:VisibleFile
-  belongs_to TagEvent
-  has_one VisibleFileContent
-    filename string
-    content_hash string  // == md5(VisibleFileContent.zipped.unzip)
-
-:VisibleFileContent
-    zipped string  // lossless compression
+    label string
+    content_hash string
+    view_count
 
 :TrafficLight
   belongs_to TagEvent
