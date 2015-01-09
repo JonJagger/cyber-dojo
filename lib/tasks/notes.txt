@@ -81,39 +81,36 @@ test events.
 Suggested Schema
 ----------------
 
-:DojoStartPoint
-  has_many AvatarSessions
+:Dojo
+  has_many Avatars
     dojo_id string
     language string
     exercise string
+    vote_count integer // == sum Avatars.vote_count
 
-:AvatarSession
-  belongs_to DojoStartPoint
+:Avatar
+  belongs_to Dojo
   has_many Tags
     avatar string
     vote_count integer
 
-:Tag
-  belongs_to AvatarSession
+:TagEvent
+  belongs_to Avatar
   has_many VisibleFiles
-  has_zero_or_one TrafficLight
-    label string
-    content_hash string  // xor of each VisibleFile.content_hash
+  has_one? TrafficLight
+    content_hash string  // == xor of all VisibleFiles.content_hash
 
 :VisibleFile
-  belongs_to Tag
+  belongs_to TagEvent
+  has_one VisibleFileContent
     filename string
-    content_hash string  // acts as foreign key into VisibleFileContent
+    content_hash string  // == md5(VisibleFileContent.zipped.unzip)
 
 :VisibleFileContent
-  belongs_to VisibleFile
-    zip string  // lossless compression
+    zipped string  // lossless compression
 
 :TrafficLight
-  belongs_to AvatarSession
+  belongs_to TagEvent
     colour string
     fork_count integer
 
-
-NB: Logically, the output file belongs with the TrafficLight
-not with the Tag.
