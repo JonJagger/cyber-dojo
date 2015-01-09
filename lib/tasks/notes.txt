@@ -1,0 +1,64 @@
+
+How many dojos forked from this light?
+--------------------------------------
+get its visible-files content-hash
+find dojos whose tag-zero content-hash matches
+However, there are two further considerations...
+1) Suppose I have reverted. A reverted traffic-light
+   always has exactly the same content-hash as the
+   light it reverted to. Thus both the new-reverted-to
+   light and the older-reverted-from light will both
+   get a fork-count increment.
+   So I need to ignore a light if its content-hash
+   already occurs in an earlier traffic-light.
+2) Suppose I have several timeout amber traffic lights...
+   It's possible (though unikely), to fork from (and
+   revert to) an amber traffic-light. Again in this case
+   there will be several amber traffic-lights (in a row)
+   with the same content-hash. So again ignore a light
+   if its content-hash already occurs in an earlier
+   traffic light.
+
+Mark reverted traffic-lights
+----------------------------
+Thus suggests it would be quite easy (and useful)
+to display a revert traffic-light in a special way.
+
+Move to database only storage on the hub?
+-----------------------------------------
+Suppose the database stores the manifest.json for each
+traffic-light. This means I can completely get rid of
+the katas/ folder on the hub. The reason is that I
+can recreate the history-dialog git-diff on the fly.
+At worst I can creating a temporary dir, store the
+visible files from the first TL, commit and tag, store
+the visible files from the second TL, commit and tag,
+and then do a git-diff. There's almost certainly
+a way to do it in memory too. I could use a ramdisk
+TempDir if nothing else.
+
+I could also, store the result of this git-diff in a
+new table (or maybe a new field in the TrafficLight table).
+This would auto-cache diff views of popular avatar-sessions,
+and not taking up extra space for ones that a never viewed.
+
+NB Many times the content of a file in a new traffic
+light does not change (eg instructions).
+Storing these as-is inside the manifest is less
+efficient than storing them once only (in a new
+table of file-contents). This fits well since such
+a table would be indexed on its content-hash which
+needs to be calculated anyway.
+
+Note this approach suggests that I also don't need a
+katas/ folder on the main-server either. I only
+really need the disk for [test] run where I have
+to volume mount a dir to do a docker run.
+
+tag-zero
+--------
+Considering the idea of having no katas/ folder on the
+hub reinforces the design that tag-0 needs to be stored
+not in DojoStartPoint (as just a hash) but in TrafficLight
+with its colour and visible-files.
+

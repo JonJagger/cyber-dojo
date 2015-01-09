@@ -57,7 +57,21 @@ namespace :db do
         end
       end
     end
+
+    # now populate the fork_count of each traffic_light
+    DojoStartPoint.all.each do |start_point|
+      p start_point.dojo_id
+      start_point.avatar_sessions.each do |session|
+        session.traffic_lights.each do |light|
+          #p "#{start_point.dojo_id} #{session.avatar} #{light.tag} #{light.colour}"
+          p light.content_hash
+        end
+      end
+    end
+
   end
 end
+
+
 
 #p tag0_hash(dojo.katas['898E24E7ED'].avatars['elephant'].lights[21].tag.visible_files)
