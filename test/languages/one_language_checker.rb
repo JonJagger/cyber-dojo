@@ -3,6 +3,8 @@ require_relative '../all'
 
 class OneLanguageChecker
 
+  include ExternalsSetter
+
   def initialize(root_path, verbose)
     @root_path = root_path
     @root_path += '/' if !root_path.end_with?('/')
@@ -10,13 +12,12 @@ class OneLanguageChecker
   end
 
   def dojo
-    thread = Thread.current
-    thread[:disk] = Disk.new
-    thread[:git] = Git.new
-    thread[:runner] = runner
-    thread[:exercises_path] = @root_path + 'exercises/'
-    thread[:languages_path] = @root_path + 'languages/'
-    thread[:katas_path]     = @root_path + 'test/cyberdojo/katas/'
+    reset_externals(:disk, Disk.new)
+    reset_externals(:git, Git.new)
+    reset_externals(:runner, runner)
+    reset_externals(:exercises_path, @root_path + 'exercises/')
+    reset_externals(:languages_path, @root_path + 'languages/')
+    reset_externals(:katas_path, @root_path + 'test/cyberdojo/katas/')
     Dojo.new
   end
 

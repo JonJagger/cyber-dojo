@@ -11,13 +11,15 @@ require 'rails/test_help'
 
 class ControllerTestBase < ActionDispatch::IntegrationTest
 
+  include ExternalsSetter
+
   def setup
-    thread[:disk  ] = Disk.new
-    thread[:git   ] = Git.new
-    thread[:runner] = HostTestRunner.new
-    thread[:exercises_path] = root_path + '/exercises/'
-    thread[:languages_path] = root_path + '/languages/'
-    thread[:katas_path    ] = root_path + '/test/cyberdojo/katas/'
+    set_external(:disk, Disk.new)
+    set_external(:git, Git.new)
+    set_external(:runner, HostTestRunner.new)
+    set_external(:exercises_path, root_path + '/exercises/')
+    set_external(:languages_path, root_path + '/languages/')
+    set_external(:katas_path, root_path + '/test/cyberdojo/katas/')
     `rm -rf #{Dojo.new.katas.path}*`
   end
 
@@ -31,9 +33,9 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   end
 
   def stub_dojo
-    @disk   = thread[:disk  ] = DiskFake.new
-    @git    = thread[:git   ] = GitSpy.new
-    @runner = thread[:runner] = TestRunnerStub.new
+    reset_external(:disk, Disk.new)
+    reset_external(:git, Git.new)
+    reset_external(:runner, HostTestRunner.new)
     @dojo = Dojo.new
   end
 

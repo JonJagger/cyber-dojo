@@ -5,13 +5,17 @@ require 'test/unit'
 
 class ModelTestBase < Test::Unit::TestCase
 
+  include ExternalsSetter
+  include ExternalsGetter
+  include UniqueId
+
   def setup
-    thread[:disk] = DiskFake.new
-    thread[:git] = GitSpy.new
-    thread[:runner] = TestRunnerStub.new
-    thread[:exercises_path] = 'exercises/'
-    thread[:languages_path] = 'languages/'
-    thread[:katas_path]     = 'katas/'
+    reset_external(:disk, DiskFake.new)
+    reset_external(:git, GitSpy.new)
+    reset_external(:runner, TestRunnerStub.new)
+    reset_external(:exercises_path, 'exercises/')
+    reset_external(:languages_path, 'languages/')
+    reset_external(:katas_path, 'katas/')
     @dojo = Dojo.new
     @max_duration = 15
   end
@@ -41,8 +45,5 @@ class ModelTestBase < Test::Unit::TestCase
   def self.test(name, &block)
     define_method("test_#{name}".to_sym, &block)
   end
-
-  include Externals
-  include UniqueId
 
 end

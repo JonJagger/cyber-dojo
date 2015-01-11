@@ -4,15 +4,16 @@ require_relative 'lib_test_base'
 
 class ExternalsTests < LibTestBase
 
-  include Externals
+  include ExternalsSetter
+  include ExternalsGetter
 
   def setup
-    thread[:disk] = nil
-    thread[:git] = nil
-    thread[:runner] = nil
-    thread[:exercises_path] = nil
-    thread[:languages_path] = nil
-    thread[:katas_path] = nil
+    reset_external(:disk, nil)
+    reset_external(:git, nil)
+    reset_external(:runner, nil)
+    reset_external(:exercises_path, nil)
+    reset_external(:languages_path, nil)
+    reset_external(:katas_path, nil)
   end
 
   test 'raises RuntimeError if disk not set' do
@@ -52,22 +53,22 @@ class ExternalsTests < LibTestBase
   end
 
   test 'when disk is set it is not overridden' do
-    thread[:disk] = Object.new
+    reset_external(:disk, Object.new)
     assert_equal 'Object', disk.class.name
   end
 
   test 'when git is set it is not overridden' do
-    thread[:git] = Object.new
+    reset_external(:git, Object.new)
     assert_equal 'Object', git.class.name
   end
 
   test 'when runner is set it is not overridden' do
-    thread[:runner] = Object.new
+    reset_external(:runner, Object.new)
     assert_equal 'Object', runner.class.name
   end
 
   test 'dir is disk[path]' do
-    thread[:disk] = DiskFake.new
+    reset_external(:disk, DiskFake.new)
     assert_equal path, dir.path
   end
 

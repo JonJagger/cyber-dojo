@@ -12,14 +12,12 @@ class ApplicationController < ActionController::Base
 
   def initialize
     super
-    thread[:disk  ] ||= Disk.new
-    thread[:git   ] ||= Git.new
-    thread[:runner] ||= DockerTestRunner.new if Docker.installed?
-    thread[:runner] ||= HostTestRunner.new unless ENV['CYBERDOJO_USE_HOST'].nil?
-    thread[:runner] ||= DummyTestRunner.new
-    thread[:exercises_path] ||= root_path + '/exercises/'
-    thread[:languages_path] ||= root_path + '/languages/'
-    thread[:katas_path]     ||= root_path + '/katas/'
+    set_external(:disk, Disk.new)
+    set_external(:git, Git.new)
+    set_external(:runner, test_runner)
+    set_external(:exercises_path, root_path + '/exercises/')
+    set_external(:languages_path, root_path + '/languages/')
+    set_external(:katas_path, root_path + '/katas/')
   end
 
   def dojo
@@ -60,10 +58,17 @@ class ApplicationController < ActionController::Base
 
 private
 
-  include Externals
+  include ExternalsGetter
+  include ExternalsSetter
 
   def root_path
     Rails.root.to_s
+  end
+
+  def test_runner
+    return DockerTestRunner.new if Docker.installed?
+    return HostTestRunner.new unless ENV['CYBERDOJO_USE_HOST'].nil?
+    return DummyTestRunner.new
   end
 
 end

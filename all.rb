@@ -11,7 +11,8 @@ end
 # as some of them depend on loading previous ones
 
 require_relative_in('lib', %w{
-  Externals
+  ExternalsGetter
+  ExternalsSetter
   Docker
   TestRunner
     HostTestRunner
@@ -45,4 +46,3 @@ require_relative_in('app/models', %w{
   Kata Katas
   Light Sandbox Tag
 })
-

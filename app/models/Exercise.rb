@@ -32,7 +32,7 @@ class Exercise
 
 private
 
-  include Externals
+  include ExternalsGetter
   include Cleaner
 
   def instructions_filename

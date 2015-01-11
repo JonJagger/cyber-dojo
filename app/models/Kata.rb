@@ -96,7 +96,7 @@ class Kata
 
 private
 
-  include Externals
+  include ExternalsGetter
   include Cleaner
 
   def manifest

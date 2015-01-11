@@ -1,5 +1,5 @@
 
-module Externals # mixin
+module ExternalsGetter # mixin
 
   def dir
     disk[path]

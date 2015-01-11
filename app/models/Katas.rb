@@ -80,7 +80,7 @@ class Katas
 
 private
 
-  include Externals
+  include ExternalsGetter
   include UniqueId
   include TimeNow
 

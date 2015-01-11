@@ -17,6 +17,6 @@ class Sandbox
 
 private
 
-  include Externals
+  include ExternalsGetter
 
 end

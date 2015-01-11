@@ -102,7 +102,7 @@ class Avatar
 
 private
 
-  include Externals
+  include ExternalsGetter
   include Cleaner
   include TimeNow
 
