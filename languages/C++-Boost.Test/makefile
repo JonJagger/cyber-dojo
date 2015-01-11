@@ -5,9 +5,11 @@ HPP_FILES = $(wildcard *.hpp)
 COMPILED_HPP_FILES = $(patsubst %.hpp,%.compiled_hpp,$(HPP_FILES))
 CPP_FILES = $(wildcard *.cpp)
 
+test.output: test makefile
+	./$<
+
 test: makefile $(CPP_FILES) $(COMPILED_HPP_FILES)
 	$(CXX) -I. $(CXXFLAGS) -O $(CPP_FILES) $(BOOST_LIB) -o $@
-	./$@
 
 # This rule ensures header files build in their own right.
 # The quality of header files is important because header files
