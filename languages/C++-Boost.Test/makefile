@@ -5,6 +5,7 @@ HPP_FILES = $(wildcard *.hpp)
 COMPILED_HPP_FILES = $(patsubst %.hpp,%.compiled_hpp,$(HPP_FILES))
 CPP_FILES = $(wildcard *.cpp)
 
+.PHONY: test.output
 test.output: test makefile
 	./$<
 
