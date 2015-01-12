@@ -5,9 +5,12 @@ HPP_FILES = $(wildcard *.hpp)
 COMPILED_HPP_FILES = $(patsubst %.hpp,%.compiled_hpp,$(HPP_FILES))
 CPP_FILES = $(wildcard *.cpp)
 
+.PHONY: test.output
+test.output: test makefile
+	./$< --gtest_shuffle
+
 test: makefile $(CPP_FILES) $(COMPILED_HPP_FILES)
 	$(CXX) -I. $(CXXFLAGS) -O $(CPP_FILES) $(GTEST_LIBS) -o $@
-	./$@ --gtest_shuffle
 
 # This rule ensures header files build in their own right.
 # The quality of header files is important because header files
