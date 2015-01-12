@@ -22,10 +22,6 @@ which has id.length == 10
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rename tests/integration  folder to tests/externals
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Looking at app/models/Tag.rb is seems clean() could
-also be embedded in the git.X calls too.
-Search for "clean(git."
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 app/models/Sandbox.rb has write() method
 Look for sandbox.dir.write(...) calls and refactor to
 sandbox.write(...)

@@ -42,6 +42,8 @@ class Git
 
 private
 
+  include Cleaner
+
   def quoted(args)
     "'" + args + "'"
   end
@@ -54,14 +56,13 @@ private
     IO.popen(cmd).each do |line|
       log << line
     end.close
-    #log = log.join('')
     status = $?.exitstatus
     if status != success
       log << "cmd=#{cmd}"
       log << "$?.exitstatus=#{status}"
       log << "output=#{log}"
     end
-    log.join('')
+    clean(log.join(''))
   end
 
   def stderr2stdout(cmd)
