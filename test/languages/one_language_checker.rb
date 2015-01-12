@@ -130,6 +130,8 @@ private
       when 'Java-1.8_Mockito',
            'Java-1.8_Powermockito'
         then make_pattern('thenReturn(9)')
+      when 'Asm-assert'
+        then make_pattern('mov ebx, 9')
       else
         make_pattern('6 * 9')
     end
