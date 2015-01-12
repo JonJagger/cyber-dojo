@@ -16,7 +16,8 @@ require_filenames %w{
   Git GitDiff
   Docker
   DockerTestRunner DummyTestRunner
-  Externals
+  ExternalGetter
+  ExternalSetter
   Dojo
   Languages Language
   Exercises Exercise
