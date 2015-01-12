@@ -30,7 +30,7 @@ class Kata
       git.add(avatar.path, 'increments.json')
 
       visible_files.each do |filename,content|
-        avatar.sandbox.dir.write(filename, content)
+        avatar.sandbox.write(filename, content)
         git.add(avatar.sandbox.path, filename)
       end
 

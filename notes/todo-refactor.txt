@@ -1,9 +1,15 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-If test run is successful do
+If test run is successful do this?
 $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 use DirFake for all of app_controller tests.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+order the avatars in the dashboard by the number of
+traffic lights they have.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Choose how many avatars you would like in a dojo
+when you start?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 run admin_script tests as part of run_all
 put iteration limit in to make them faster?
@@ -20,11 +26,7 @@ I think katas.complete(id) would be ok
 but katas.create_kata() calls katas.valid?(id)
 which has id.length == 10
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-rename tests/integration  folder to tests/externals
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-app/models/Sandbox.rb has write() method
-Look for sandbox.dir.write(...) calls and refactor to
-sandbox.write(...)
+rename tests/integration/ folder to tests/externals/
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Tried putting this into config/initializers/externals.rb
   CyberDojo::Application.config.runner = Object.new
