@@ -1,4 +1,4 @@
-CXXFLAGS += -std=c++11 -Wall -Wextra -Werror
+CXXFLAGS += -I. -std=c++11 -Wall -Wextra -Werror
 
 HPP_FILES = $(wildcard *.hpp)
 COMPILED_HPP_FILES = $(patsubst %.hpp,%.compiled_hpp,$(HPP_FILES))
@@ -9,7 +9,7 @@ test.output: test makefile
 	./$<
 
 test: makefile $(CPP_FILES) $(COMPILED_HPP_FILES)
-	@$(CXX) -I. $(CXXFLAGS) -O $(CPP_FILES) -o $@
+	@$(CXX) $(CXXFLAGS) -O $(CPP_FILES) -o $@
 
 # don't compile catch.hpp header
 catch.compiled_hpp: catch.hpp
@@ -21,4 +21,4 @@ catch.compiled_hpp: catch.hpp
 # of influence (unlike .cpp files which are not #included)
 
 %.compiled_hpp: %.hpp
-	@$(CXX) -x c++ -I. $(CXXFLAGS) -c -o $@ $<
+	@$(CXX) -x c++ $(CXXFLAGS) -c -o $@ $<

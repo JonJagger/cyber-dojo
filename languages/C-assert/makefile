@@ -6,10 +6,12 @@ H_FILES = $(wildcard *.h)
 COMPILED_H_FILES = $(patsubst %.h,%.compiled_h,$(H_FILES))
 C_FILES = $(wildcard *.c)
 
-run.test.output: run.test
-	@./run.test
 
-run.test: makefile $(C_FILES) $(COMPILED_H_FILES)
+.PHONY: test.output
+test.output: test makefile
+	./$<
+
+test: makefile $(C_FILES) $(COMPILED_H_FILES)
 	@gcc $(CFLAGS) $(C_FILES) -o $@
 
 # This rule ensures header files build in their own right.
