@@ -39,10 +39,10 @@ chown www-data:www-data $cyberDojoHome/*
 echo "chown www-data:www-data .*"
 chown www-data:www-data $cyberDojoHome/.*
 
-echo "chown www-data:www-data tmp/cache"
+echo "chown -R www-data:www-data tmp"
 rm -rf tmp/cache
 mkdir -p tmp/cache
-chown www-data:www-data $cyberDojoHome/tmp/cache
+chown -R www-data:www-data $cyberDojoHome/tmp
 
 echo "refreshing exercises/ cache"
 $cyberDojoHome/exercises/cache.rb
