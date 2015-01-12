@@ -26,7 +26,7 @@ class Tag
 
 private
 
-  include ExternalsGetter
+  include ExternalGetter
   include Cleaner
   include GitDiff
 

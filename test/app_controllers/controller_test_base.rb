@@ -11,8 +11,8 @@ require 'rails/test_help'
 
 class ControllerTestBase < ActionDispatch::IntegrationTest
 
-  include ExternalsSetter
-  include ExternalsGetter
+  include ExternalSetter
+  include ExternalGetter
 
   def setup
     reset_external(:disk, Disk.new)

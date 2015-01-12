@@ -132,7 +132,7 @@ class Language
 
 private
 
-  include ExternalsGetter
+  include ExternalGetter
   include Cleaner
 
   def manifest

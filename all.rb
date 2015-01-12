@@ -11,8 +11,8 @@ end
 # as some of them depend on loading previous ones
 
 require_relative_in('lib', %w{
-  ExternalsGetter
-  ExternalsSetter
+  ExternalGetter
+  ExternalSetter
   Docker
   TestRunner
     HostTestRunner

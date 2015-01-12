@@ -5,8 +5,8 @@ require 'test/unit'
 
 class ModelTestBase < Test::Unit::TestCase
 
-  include ExternalsSetter
-  include ExternalsGetter
+  include ExternalSetter
+  include ExternalGetter
   include UniqueId
 
   def setup

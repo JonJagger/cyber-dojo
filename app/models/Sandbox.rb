@@ -17,6 +17,6 @@ class Sandbox
 
 private
 
-  include ExternalsGetter
+  include ExternalGetter
 
 end

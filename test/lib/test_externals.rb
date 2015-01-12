@@ -4,8 +4,8 @@ require_relative 'lib_test_base'
 
 class ExternalsTests < LibTestBase
 
-  include ExternalsSetter
-  include ExternalsGetter
+  include ExternalSetter
+  include ExternalGetter
 
   def setup
     reset_external(:disk, nil)

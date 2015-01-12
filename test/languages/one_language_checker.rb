@@ -3,7 +3,7 @@ require_relative '../all'
 
 class OneLanguageChecker
 
-  include ExternalsSetter
+  include ExternalSetter
 
   def initialize(root_path, verbose)
     @root_path = root_path

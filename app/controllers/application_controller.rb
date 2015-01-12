@@ -58,8 +58,8 @@ class ApplicationController < ActionController::Base
 
 private
 
-  include ExternalsGetter
-  include ExternalsSetter
+  include ExternalGetter
+  include ExternalSetter
 
   def root_path
     Rails.root.to_s

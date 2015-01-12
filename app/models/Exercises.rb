@@ -23,7 +23,7 @@ class Exercises
 
 private
 
-  include ExternalsGetter
+  include ExternalGetter
 
   def exercises
     @exercises ||= make_cache

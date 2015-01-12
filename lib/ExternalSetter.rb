@@ -1,5 +1,5 @@
 
-module ExternalsSetter # mixin
+module ExternalSetter # mixin
 
   def set_external(symbol, object)
     Thread.current[symbol] ||= object

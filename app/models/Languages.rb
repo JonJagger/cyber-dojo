@@ -23,7 +23,7 @@ class Languages
 
 private
 
-  include ExternalsGetter
+  include ExternalGetter
 
   def languages
     @languages ||= make_cache
