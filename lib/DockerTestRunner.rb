@@ -60,6 +60,12 @@ private
   include Cleaner
 
   def timeout(command,after)
+    # I put a timeout on the outer docker-run command and not
+    # on the inner bash -c command. The reason for this is
+    # security. If it was on the inner bash -c command it seems
+    # possible that a determined attacker could kill the
+    # timeout but not the task that was being timed and thus
+    # acquire unlimited time to run any command.
     "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
   end
 
@@ -99,13 +105,7 @@ end
 #
 # -u www-data
 #   The user which runs the inner_command *inside* the docker container.
-#   A few docker containers are sensitive about the specific user which
-#   *must* be www-data. These are the mono based ones:
-#   C#-NUNit, C#-Specflow, F#-NUnit
-#   This is because NUnit requires write access to the users
-#   $HOME directory. If you run with a user that does not have
-#   $HOME setup it will probably default to / and you won't have rights.
-#   See https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=638337
+#   See comments in languages/C#-NUnit/Dockerfile
 #
 # --net="none"
 #   Turn off all networking inside the container.
@@ -116,7 +116,7 @@ end
 #   command is run) from which I retrieve the docker container's
 #   pid and then stop and kill the container. This ensures
 #   that the docker container is always killed, even if the
-#   outer timeout occurs.
+#   timeout occurs.
 #
 # -v #{sandbox.path}:/sandbox:#{read_write}
 #   Volume mount the animal's sandbox to /sandbox inside the container

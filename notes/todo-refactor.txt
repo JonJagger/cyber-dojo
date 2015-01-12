@@ -22,8 +22,6 @@ which has id.length == 10
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rename tests/integration  folder to tests/externals
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Could clean() be embedded inside dir.read?
-Search for "clean(dir.read"
 Looking at app/models/Tag.rb is seems clean() could
 also be embedded in the git.X calls too.
 Search for "clean(git."
@@ -34,11 +32,7 @@ sandbox.write(...)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Tried putting this into config/initializers/externals.rb
   CyberDojo::Application.config.runner = Object.new
-And this into lib/Externals.rb
-  def runner
-    thread[:runner] = CyberDojo::Application.config.runner
-  end
-which would become
+And this into lib/ExternalGetter.rb
   def runner
     CyberDojo::Application.config.runner
   end
