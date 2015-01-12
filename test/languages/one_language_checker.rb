@@ -12,12 +12,12 @@ class OneLanguageChecker
   end
 
   def dojo
-    reset_externals(:disk, Disk.new)
-    reset_externals(:git, Git.new)
-    reset_externals(:runner, runner)
-    reset_externals(:exercises_path, @root_path + 'exercises/')
-    reset_externals(:languages_path, @root_path + 'languages/')
-    reset_externals(:katas_path, @root_path + 'test/cyberdojo/katas/')
+    reset_external(:disk, Disk.new)
+    reset_external(:git, Git.new)
+    reset_external(:runner, runner)
+    reset_external(:exercises_path, @root_path + 'exercises/')
+    reset_external(:languages_path, @root_path + 'languages/')
+    reset_external(:katas_path, @root_path + 'test/cyberdojo/katas/')
     Dojo.new
   end
 
