@@ -38,7 +38,7 @@ class Avatar
   def visible_files
     # equivalent to tags[-1].visible_files but much easier
     # to test (faking files is easier than faking git)
-    JSON.parse(clean(dir.read('manifest.json')))
+    JSON.parse(dir.read('manifest.json'))
   end
 
   def test(delta, visible_files, now = time_now, time_limit = 15)
@@ -103,11 +103,11 @@ class Avatar
 private
 
   include ExternalGetter
-  include Cleaner
+  include Cleaner  #runner.run
   include TimeNow
 
   def increments
-    @increments ||= JSON.parse(clean(dir.read('increments.json')))
+    @increments ||= JSON.parse(dir.read('increments.json'))
   end
 
 end

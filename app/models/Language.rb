@@ -133,7 +133,6 @@ class Language
 private
 
   include ExternalGetter
-  include Cleaner
 
   def manifest
     begin
@@ -148,7 +147,7 @@ private
   end
 
   def read(filename)
-    clean(dir.read(filename))
+    dir.read(filename)
   end
 
   def add_created_txt_files(dir, visible_files)

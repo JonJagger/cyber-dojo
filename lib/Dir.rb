@@ -54,7 +54,7 @@ class Dir
   end
 
   def read(filename)
-    IO.read(path + filename)
+    clean(IO.read(path + filename))
   end
 
   def lock(&block)
@@ -76,6 +76,8 @@ class Dir
   end
 
 private
+
+  include Cleaner
 
   def dot?(name)
     name.end_with?('/.') || name.end_with?('/..')

@@ -23,7 +23,7 @@ class Exercise
   end
 
   def instructions
-    clean(dir.read(instructions_filename))
+    dir.read(instructions_filename)
   end
 
   def path
@@ -33,7 +33,6 @@ class Exercise
 private
 
   include ExternalGetter
-  include Cleaner
 
   def instructions_filename
     'instructions'

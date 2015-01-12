@@ -97,10 +97,9 @@ class Kata
 private
 
   include ExternalGetter
-  include Cleaner
 
   def manifest
-    @manifest ||= JSON.parse(clean(dir.read('manifest.json')))
+    @manifest ||= JSON.parse(dir.read('manifest.json'))
   end
 
   def earliest_light

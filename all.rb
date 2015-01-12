@@ -13,6 +13,7 @@ end
 require_relative_in('lib', %w{
   ExternalGetter
   ExternalSetter
+  Cleaner
   Docker
   TestRunner
     HostTestRunner
@@ -32,7 +33,7 @@ require_relative_in('app/helpers', %w{
 })
 
 require_relative_in('app/lib', %w{
-  Chooser Cleaner FileDeltaMaker
+  Chooser FileDeltaMaker
   GitDiff GitDiffBuilder GitDiffParser LineSplitter
   MakefileFilter OutputParser TdGapper
 
