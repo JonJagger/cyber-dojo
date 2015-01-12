@@ -55,7 +55,7 @@ class Avatar
 
     pre_test_filenames = visible_files.keys
 
-    output = clean(runner.run(sandbox, './cyber-dojo.sh', time_limit))
+    output = runner.run(sandbox, './cyber-dojo.sh', time_limit)
     sandbox.write('output', output) # so output appears in diff-view
     visible_files['output'] = output
     kata.language.after_test(sandbox.dir, visible_files)
@@ -103,7 +103,6 @@ class Avatar
 private
 
   include ExternalGetter
-  include Cleaner  #runner.run
   include TimeNow
 
   def increments

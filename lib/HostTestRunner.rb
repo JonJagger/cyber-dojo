@@ -32,10 +32,12 @@ class HostTestRunner
     if timed_out
       output += didnt_complete(max_seconds)
     end
-    limited(output,50*1024)
+    limited(clean(output),50*1024)
   end
 
 private
+
+  include Cleaner
 
   def kill(pids)
     return if pids == [ ]

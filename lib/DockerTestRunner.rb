@@ -47,7 +47,7 @@ class DockerTestRunner
     `docker rm #{pid}`
 
     exit_status != fatal_error(kill) ?
-        limited(output,50*1024) :
+        limited(clean(output),50*1024) :
         didnt_complete(max_seconds)
   end
 
@@ -56,6 +56,8 @@ class DockerTestRunner
   end
 
 private
+
+  include Cleaner
 
   def timeout(command,after)
     "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
