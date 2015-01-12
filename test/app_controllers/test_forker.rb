@@ -14,7 +14,7 @@ class ForkerControllerTest < ControllerTestBase
     assert !forked?
     assert_reason_is('id')
     assert_nil forked_kata_id
-    assert_equal({ }, @git.log)
+    assert_equal({ }, git.log)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -37,7 +37,7 @@ class ForkerControllerTest < ControllerTestBase
     assert_reason_is('language')
     assert_equal language.name, json['language']
     assert_nil forked_kata_id
-    assert_equal({ }, @git.log)
+    assert_equal({ }, git.log)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -62,7 +62,7 @@ class ForkerControllerTest < ControllerTestBase
     assert_reason_is('avatar')
     assert_equal 'hippo', json['avatar']
     assert_nil forked_kata_id
-    assert_equal({ }, @git.log)
+    assert_equal({ }, git.log)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -106,7 +106,7 @@ class ForkerControllerTest < ControllerTestBase
     assert !forked?
     assert_reason_is('tag')
     assert_nil forked_kata_id
-    assert_equal({ }, @git.log)
+    assert_equal({ }, git.log)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -142,7 +142,7 @@ class ForkerControllerTest < ControllerTestBase
     manifest = JSON.unparse(visible_files)
     tag = 2
     filename = 'manifest.json'
-    @git.spy(avatar.dir.path,'show',"#{tag}:#{filename}",manifest)
+    git.spy(avatar.dir.path,'show',"#{tag}:#{filename}",manifest)
 
     fork(:json,id,avatar_name,tag)
 
@@ -157,7 +157,7 @@ class ForkerControllerTest < ControllerTestBase
     assert_equal kata.exercise.name, forked_kata.exercise.name
     assert_equal visible_files, forked_kata.visible_files
 
-    assert_equal({avatar.path => [ ['show', '2:manifest.json']]}, @git.log)
+    assert_equal({avatar.path => [ ['show', '2:manifest.json']]}, git.log)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -179,7 +179,7 @@ class ForkerControllerTest < ControllerTestBase
     assert_equal @kata.exercise.name, forked_kata.exercise.name
     assert_equal @visible_files, forked_kata.visible_files
 
-    assert_equal({@avatar.path => [ ['show', '2:manifest.json']]}, @git.log)
+    assert_equal({@avatar.path => [ ['show', '2:manifest.json']]}, git.log)
   end
 
   #- - - - - - - - - - - - - - - - - -
@@ -221,7 +221,7 @@ class ForkerControllerTest < ControllerTestBase
     manifest = JSON.unparse(@visible_files)
     @tag = 2
     filename = 'manifest.json'
-    @git.spy(@avatar.dir.path,'show',"#{@tag}:#{filename}",manifest)
+    git.spy(@avatar.dir.path,'show',"#{@tag}:#{filename}",manifest)
   end
 
   #- - - - - - - - - - - - - - - - - -

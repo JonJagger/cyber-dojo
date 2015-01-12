@@ -4,8 +4,8 @@ require_relative 'model_test_base'
 
 class KatasTests < ModelTestBase
 
-  test 'path is set from thread[:katas_path]' do
-    thread[:katas_path] = 'end_with_slash/'
+  test 'path is as set from :katas_path' do
+    reset_external(:katas_path, 'end_with_slash/')
     dojo = Object.new
     assert_equal 'end_with_slash/', Katas.new(dojo).path
   end
@@ -13,7 +13,7 @@ class KatasTests < ModelTestBase
   #- - - - - - - - - - - - - - - -
 
   test 'path appends slash if necessary' do
-    thread[:katas_path] = 'katas'
+    reset_external(:katas_path, 'katas')
     dojo = Object.new
     assert_equal 'katas/', Katas.new(dojo).path
   end

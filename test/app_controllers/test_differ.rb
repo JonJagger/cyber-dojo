@@ -14,11 +14,11 @@ class DifferControllerTest < ControllerTestBase
 
   def setup
     super
-    Thread.current[:runner] = runner
+    reset_external(:runner, runner)
   end
 
   def teardown
-    Thread.current[:runner] = nil
+    reset_external(:runner, nil)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

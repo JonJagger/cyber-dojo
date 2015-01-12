@@ -4,15 +4,15 @@ require_relative 'model_test_base'
 
 class LanguagesTests < ModelTestBase
 
-  test 'path is set from thread[:languages_path]' do
-    thread[:languages_path] = 'end_with_slash/'
+  test 'path is set from :languages_path' do
+    reset_external(:languages_path, 'end_with_slash/')
     assert_equal 'end_with_slash/', Languages.new.path
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'path appends slash if necessary' do
-    thread[:languages_path] = 'languages'
+    reset_external(:languages_path, 'languages')
     assert_equal 'languages/', Languages.new.path
   end
 

@@ -103,7 +103,8 @@ class LanguagesManifestsTests < LanguagesTestBase
       if visible_filenames.count(filename) > 1
         message =
           alert +
-          "  #{manifest_filename}'s 'visible_filenames' contains #{filename} more than once"
+          " #{manifest_filename}'s 'visible_filenames' contains" +
+          " #{filename} more than once"
         puts message
         return true
       end
@@ -117,7 +118,8 @@ class LanguagesManifestsTests < LanguagesTestBase
       if support_filenames.count(filename) > 1
         message =
           alert +
-          "  #{manifest_filename}'s 'support_filenames' contains #{filename} more than once"
+          " #{manifest_filename}'s 'support_filenames' contains" +
+          " #{filename} more than once"
         puts message
         return true
       end

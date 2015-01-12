@@ -4,15 +4,15 @@ require_relative 'model_test_base'
 
 class ExercisesTests < ModelTestBase
 
-  test 'path is set from thread[:exercises_path]' do
-    thread[:exercises_path] = 'end_with_slash/'
+  test 'external path is as set' do
+    reset_external(:exercises_path, 'end_with_slash/')
     assert_equal 'end_with_slash/', Exercises.new.path
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'path appends slash if necessary' do
-    thread[:exercises_path] = 'exercises'
+    reset_external(:exercises_path, 'exercises')
     assert_equal 'exercises/', Exercises.new.path
   end
 

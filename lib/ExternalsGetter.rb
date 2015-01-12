@@ -6,37 +6,34 @@ module ExternalsGetter # mixin
   end
 
   def disk
-    threaded(:disk)
+    external(:disk)
   end
 
   def git
-    threaded(:git)
+    external(:git)
   end
 
   def runner
-    threaded(:runner)
+    external(:runner)
   end
 
   def exercises_path
-    threaded(:exercises_path)
+    external(:exercises_path)
   end
 
   def languages_path
-    threaded(:languages_path)
+    external(:languages_path)
   end
 
   def katas_path
-    threaded(:katas_path)
-  end
-
-  def thread
-    Thread.current
+    external(:katas_path)
   end
 
 private
 
-  def threaded(symbol)
-    raise RuntimeError.new("thread[:" + symbol.to_s + "].nil?") if thread[symbol].nil?
+  def external(symbol)
+    thread = Thread.current
+    raise RuntimeError.new('no external(:' + symbol.to_s + ')') if thread[symbol].nil?
     thread[symbol]
   end
 

@@ -7,13 +7,13 @@ class SetupControllerTest < ControllerTestBase
   test 'setup uses cached languages and exercises if present' do
     stub_dojo
 
-    languages_dir = @disk[@dojo.languages.path]
+    languages_dir = disk[@dojo.languages.path]
     languages_dir.write('cache.json', {
       'fake-C++'  => 'fake-C++-catch',
       'fake-Java' => 'fake-Java-NUnit'
     })
 
-    exercise_dir = @disk[@dojo.exercises.path]
+    exercise_dir = disk[@dojo.exercises.path]
     exercise_dir.write('cache.json', {
       'fake-Print-Diamond'  => 'fake-Print-Diamond instructions',
       'fake-Roman-Numerals' => 'fake-Roman-Numerals instructions'
