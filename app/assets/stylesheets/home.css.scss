@@ -133,14 +133,6 @@ $text-color: darken($lighter-color, 10%);
       text-align: right;
     }
   }
-
-  #tweet-container {
-    @include ghost-panel(20px);
-    #twitter-widget-0 {
-      position: relative;
-      right: -47px;
-    }
-  }
 }
 
 a:link, a:visited

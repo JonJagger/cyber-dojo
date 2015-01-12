@@ -72,8 +72,12 @@
 }
 
 #tweet-container {
-  text-align: right;
-  margin: { right: 14px; }
+  position: relative;
+  top: -2px;
+  #twitter-widget-0 {
+    position: relative;
+    top: 5px;
+  }
 }
 
 //----------------------------------------------

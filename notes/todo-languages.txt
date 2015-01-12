@@ -2,6 +2,7 @@
 install C++14 + boost
 install Rust?
 install Dart?
+install APL?
 install Swift?
 install Visual.BASIC? Chris Oldwood?
 install J?

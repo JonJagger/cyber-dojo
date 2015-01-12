@@ -11,6 +11,12 @@ traffic lights they have.
 Choose how many avatars you would like in a dojo
 when you start?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+cyber-dojo stats: add *consecutive* traffic-light histogram.
+eg 1/2/3/4/5/6/... consecutive green lights, same for red, and amber
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+cyber-dojo stats:  count time between traffic-lights per language
+to *get* to each colour (where there actually is a diff)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 run admin_script tests as part of run_all
 put iteration limit in to make them faster?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
