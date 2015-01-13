@@ -21,9 +21,9 @@ $(function() {
 //--></script>
 
 <table>
-  <% @kata.avatars.active.sort_by(&:name).each_with_index do |avatar,index| %>
+  <% @avatar_names.each_with_index do |name,index| %>
 	<tr class="<%= parity(index) %> row">
-	  <% td_map = @gapped[avatar.name] %>
+	  <% td_map = @gapped[name] %>
 	  <% td_map.keys.sort.each do |td_no| %>
 		<% td = td_map[td_no] %>
 		<td align="right">
@@ -47,6 +47,8 @@ $(function() {
 		<% end %>
 		</td>
 	  <% end %>
+
+      <% avatar = @kata.avatars[name] %>
 
 	  <td class="align-right">
 		<%= render :partial => 'shared/traffic_light_count',

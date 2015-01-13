@@ -5,9 +5,6 @@ $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 use DirFake for all of app_controller tests.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-order the avatars in the dashboard by the number of
-traffic lights they have.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Increase number of avatars to 100. Olve is investigating.
 This would mean I would have to alter the re-enter page
 so I only show the started avatars in colour and not

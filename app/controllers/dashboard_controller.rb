@@ -50,6 +50,9 @@ private
     ]
     @gapped = gapper.fully_gapped(all_lights, time_now)
     @progress = @kata.language.progress_regexs != [ ]
+    @avatar_names = all_lights.map {|name,lights|
+      [lights.count, name]
+    }.sort.reverse.map {|a| a[1]}
   end
 
   def bool(attribute)
