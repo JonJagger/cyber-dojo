@@ -14,9 +14,12 @@ See lib/DockerTestRunner.rb option
 
 TIMING
 ------
-The timeout command runs on the inner "cyber-dojo.sh"
-command *inside* the docker and *also* on the outer
-"docker run" command. 
+The timeout command runs on the *outer* "docker run"
+command and not the inner "cyber-dojo.sh" command.
+It seems possible that a determined attacker could
+kill the inner cyber-dojo.sh timeout but not the task
+that was being timed and thus acquire unlimited time
+to run any command.
 
 
 CPU
@@ -54,7 +57,8 @@ https://goldmann.pl/blog/2014/09/11/resource-management-in-docker/
 -m 128M
 Says
 digital-ocean server says
-WARNING: Your kernel does not support swap limit capabilities. Limitation discarded.
+WARNING: Your kernel does not support swap limit capabilities.
+Limitation discarded.
 AWS server gives same warning.
 
 

@@ -8,8 +8,25 @@ use DirFake for all of app_controller tests.
 order the avatars in the dashboard by the number of
 traffic lights they have.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Choose how many avatars you would like in a dojo
-when you start?
+Increase number of avatars to 100. Olve is investigating.
+This would mean I would have to alter the re-enter page
+so I only show the started avatars in colour and not
+the unstarted ones in black and white.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Would be handy if the dashboard showed the animals pictures
+on the left side below the controls when they have entered
+but not pressed [test] yet. Or maybe I should just show all
+animals regardless of whether they have pressed [test] yet
+or not. This is perhaps more attractive if the animals
+are shown in traffic-light count order.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+I often find I fork from someone's traffic-light and then
+immediately enter it to demonstrate something. Could I
+provide two buttons on the history dialog
+- one to fork a dojo
+- one to fork a dojo and start an animal?
+Or maybe when you click the fork button it opens a new dialog
+with two buttons offering the two choices above.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cyber-dojo stats: add *consecutive* traffic-light histogram.
 eg 1/2/3/4/5/6/... consecutive green lights, same for red, and amber
@@ -132,20 +149,6 @@ and time it finished and hence duration.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Re-enter dialog needs to change its bottom text if no animals
 have yet started
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Would be handy if the dashboard showed the animals pictures
-on the left side below the controls when they have entered
-but not pressed [test] yet. Or maybe I should just show all
-animals regardless of whether they have pressed [test] yet
-or not.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-I often find I fork from someone's traffic-light and then
-immediately enter it to demonstrate something. Could I
-provide two buttons on the history dialog
-- one to fork a dojo
-- one to fork a dojo and start an animal?
-Or maybe when you click the fork button it opens a new dialog
-with two buttons offering the two choices above.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 put animal images on front page?
 Put the ones that are in the dojo (with the entered id)
