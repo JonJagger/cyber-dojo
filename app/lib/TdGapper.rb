@@ -71,7 +71,6 @@ class TdGapper
     ((Time.mktime(*now) - @start) / @seconds_per_td).to_i
   end
 
-
 end
 
 # I want the horizontal spacing between dashboard traffic lights
