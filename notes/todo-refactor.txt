@@ -3,9 +3,12 @@
 If test run is successful do this?
 $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-use DirFake for all of app_controller tests.
+Increase number of avatars to 100. Olve is investigating.
+This would mean I would have to alter the re-enter page
+so I only show the started avatars in colour and not
+the unstarted ones in black and white.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Drop the re-enter button. Instead add help text somewhere
+Drop the re-enter button? Instead add help text somewhere
 describing using the URL http://cyber-dojo.org/lion/25649A
 and implement that shortcut URL for all animals.
 Add this to routes.rb
@@ -13,18 +16,10 @@ Add this to routes.rb
     get "#{name}(/:id)", to: redirect("kata/edit/%{id}?avatar=#{name}")
   end
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Drop the dashboard time-gaps check-box
-Instead have a up/down integer field allow time-period setting.
-At end of each td time-period introduce a new td with a vertical
-marker. Perhaps showing current time into the period on
-table heading fields.
-Time periods can be used for anything, simple display,
-pair rotation markers, baby-steps markers, etc.
+Drop the dashboard time-gaps check-box?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Increase number of avatars to 100. Olve is investigating.
-This would mean I would have to alter the re-enter page
-so I only show the started avatars in colour and not
-the unstarted ones in black and white.
+Have dashboard up/down integer field (mins) to set time-period.
+Perhaps showing current time into the period on table headings.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would be handy if the dashboard showed the animals pictures
 on the left side below the controls when they have entered
@@ -76,6 +71,8 @@ Confirmed works on local server too
 
 For this to work I think my test code would need to simulate
 CyberDojo::Application.config
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+use DirFake for all of app_controller tests.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 app_controller tests can all use DiskFake
  TODO test_dojo
