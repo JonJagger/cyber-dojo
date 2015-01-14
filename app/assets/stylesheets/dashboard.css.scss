@@ -38,14 +38,18 @@
     .row      td { padding: 0em; }
     .row.odd  td { background: lighten($darker-color, 3%); }
     .row.even td { background: lighten($darker-color, 6%); }
-    .omission {
-      font-size: 2.9em;
-      background-color: darken(white, 50%);
-      &:after { content: $thin-space; }
-      margin: 5px;
+    td.time-period-marker {
+      border-right: dotted lighten(black,30%) 1px;
+    }
+    .collapsed-multi-gap {
+      font-size: 0.1em;
+      color: lighten(black, 30%);
+      &:after { content: '...'; }
+      margin: 2px;
     }
     .gap {
       font-size: 0.5em;
+      &:after { content: $thin-space; }
       color: lighten(black,40%);
       text-align: center;
     }

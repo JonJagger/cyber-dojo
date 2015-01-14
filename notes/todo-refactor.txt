@@ -13,6 +13,14 @@ Add this to routes.rb
     get "#{name}(/:id)", to: redirect("kata/edit/%{id}?avatar=#{name}")
   end
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Drop the dashboard time-gaps check-box
+Instead have a up/down integer field allow time-period setting.
+At end of each td time-period introduce a new td with a vertical
+marker. Perhaps showing current time into the period on
+table heading fields.
+Time periods can be used for anything, simple display,
+pair rotation markers, baby-steps markers, etc.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Increase number of avatars to 100. Olve is investigating.
 This would mean I would have to alter the re-enter page
 so I only show the started avatars in colour and not

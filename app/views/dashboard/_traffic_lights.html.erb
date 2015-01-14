@@ -26,13 +26,15 @@ $(function() {
 	  <% td_map = @gapped[name] %>
 	  <% td_map.keys.sort.each do |td_no| %>
 		<% td = td_map[td_no] %>
-		<td align="right">
+        <td class="time-period-marker">
+        </td>
+		<td>
 		<% if td.class == Hash %>
-		  <span class="omission"></span>
+		  <span class="collapsed-multi-gap"></span>
 		<% end %>
 		<% if td.class == Array %>
 		  <% if td.length == 0 %>
-			<div class="gap">.</div>
+			<div class="gap"></div>
 		  <% else %>
 			<table>
 			  <tr>

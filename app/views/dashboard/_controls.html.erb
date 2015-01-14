@@ -34,6 +34,7 @@ $(function() {
 
   var milliSecond = 1;
   var seconds = 1000 * milliSecond;
+  
   setInterval(dashboardHeartbeat, 10*seconds);
 
   minuteColumns
@@ -64,7 +65,7 @@ $(function() {
   </tr>
   <tr>
     <td class="align-right">
-      <div title="toggles 60-second columns on/off">
+      <div title="toggle 5-minute columns on/off">
         <%= raw t("views.labels.time_gaps") %>
       </div>
     </td>
