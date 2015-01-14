@@ -140,10 +140,11 @@ a:link, a:visited
   color: $text-color;
 }
 
-#custom_message
+#custom
 {
-  color: $text-color;
-  @include font-size-small();
+  position: absolute;
+  top: 50px;
+  left: 900px;
 }
 
 #get_a_new_practice_id
