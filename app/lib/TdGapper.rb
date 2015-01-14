@@ -64,11 +64,15 @@ class TdGapper
   end
 
   def number(light)
-    ((light.time - @start) / @seconds_per_td).to_i
+    ordinal(light.time)
   end
 
   def n(now)
-    ((Time.mktime(*now) - @start) / @seconds_per_td).to_i
+    ordinal(Time.mktime(*now))
+  end
+
+  def ordinal(o)
+    ((o - @start) / @seconds_per_td).to_i
   end
 
 end
