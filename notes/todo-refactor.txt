@@ -10,16 +10,6 @@ the unstarted ones in black and white.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Have dashboard up/down integer field (mins) to set time-period.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-blog pages for setting up your own server have incorrect
-content for the result of command
-$ docker search cyberdojo | sort
-What is shown is the result of
-$ docker images
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Result of doing
-$ docker search cyberdojo
-Is now only showing the repos with an automated Dockerfile.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would be handy if the dashboard showed the animals pictures
 on the left side below the controls when they have entered
 but not pressed [test] yet. Or maybe I should just show all
