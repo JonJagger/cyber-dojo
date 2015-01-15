@@ -12,11 +12,11 @@ SRC_FILES = untitled.c
 TEST_SRC_FILES = untitledTest.cpp AllTests.cpp
 
 INCLUDE_DIRS =\
-  .\
-  $(CPPUTEST_HOME)/include/ \
-  $(CPPUTEST_HOME)/include/Platforms/Gcc\
+	.\
+	$(CPPUTEST_HOME)/include/ \
+	$(CPPUTEST_HOME)/include/Platforms/Gcc\
 
-CPPUTEST_WARNINGFLAGS += -Wall 
+CPPUTEST_WARNINGFLAGS += -Wall
 CPPUTEST_WARNINGFLAGS += -Werror
 CPPUTEST_WARNINGFLAGS += -Wswitch-default
 CPPUTEST_WARNINGFLAGS += -Wfatal-errors
