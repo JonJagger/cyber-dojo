@@ -39,7 +39,9 @@
     .row.odd  td { background: lighten($darker-color, 3%); }
     .row.even td { background: lighten($darker-color, 6%); }
     td.time-period-marker {
-      border-right: dotted lighten(black,30%) 1px;
+      border-left: dotted lighten(black,30%) 1px;
+      //margin: 20px;
+      //width: 20px;
     }
     .collapsed-multi-gap {
       font-size: 0.1em;

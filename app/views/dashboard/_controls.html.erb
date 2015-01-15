@@ -34,7 +34,7 @@ $(function() {
 
   var milliSecond = 1;
   var seconds = 1000 * milliSecond;
-  
+
   setInterval(dashboardHeartbeat, 10*seconds);
 
   minuteColumns
@@ -53,7 +53,7 @@ $(function() {
   <tr>
     <td class="align-right">
       <div title="toggle the 10 second auto-refresh on/off">
-        <%= raw t('views.labels.auto_refresh') %>
+        auto refresh&nbsp;
       </div>
     </td>
     <td>
@@ -66,7 +66,7 @@ $(function() {
   <tr>
     <td class="align-right">
       <div title="toggle 5-minute columns on/off">
-        <%= raw t("views.labels.time_gaps") %>
+        5 min cols&nbsp;
       </div>
     </td>
     <td>
