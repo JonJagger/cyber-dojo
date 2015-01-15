@@ -2,6 +2,5 @@
 
 int the_answer_is(void)
 {
-    return 42;
+    return 6 * 9;
 }
-

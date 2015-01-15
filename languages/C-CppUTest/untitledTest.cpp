@@ -18,7 +18,7 @@ TEST_GROUP(TheGroupName)
 
 TEST(TheGroupName, a_meaningful_test_name)
 {
-    LONGS_EQUAL(6*7, the_answer_is());
+    LONGS_EQUAL(42, the_answer_is());
     CHECK(1);
     CHECK_TRUE(1);
     CHECK_FALSE(0);
