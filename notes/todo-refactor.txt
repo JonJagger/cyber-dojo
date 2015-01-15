@@ -13,6 +13,17 @@ What happens if "filename_extension" is not present.
 What if support_filenames mentions file that does not exist.
 What is visible_filenames mentions makefile but only makefile.txt exists.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+While building support for C-CppUTest
+the cyber-dojo.sh file had non linux line-endings that caused problems.
+hexdump showed working C++-CppUTest/cyber-dojo.sh ended 0a
+whereas C-CppUTest/cyber-dojo.sh ended 0d 0a
+Reinstate the line filtering in test_controller.rb ?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+When you run the test/languages/check_one_language.rb C-CppUTest
+on a server with Docker installed then
+/var/www/cyber-dojo/tmp/cache
+seems to lose its rights and the rails server no longer works.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Have dashboard up/down integer field (mins) to set time-period.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would be handy if the dashboard showed the animals pictures
