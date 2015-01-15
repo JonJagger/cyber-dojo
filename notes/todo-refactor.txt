@@ -8,6 +8,11 @@ This would mean I would have to alter the re-enter page
 so I only show the started avatars in colour and not
 the unstarted ones in black and white.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+languages/test_languages_manifests.rb
+What happens if "filename_extension" is not present.
+What if support_filenames mentions file that does not exist.
+What is visible_filenames mentions makefile but only makefile.txt exists.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Have dashboard up/down integer field (mins) to set time-period.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would be handy if the dashboard showed the animals pictures
