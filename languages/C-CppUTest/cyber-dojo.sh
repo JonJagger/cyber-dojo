@@ -1,2 +1,2 @@
-export CPPUTEST_HOME=$CYBERDOJO_HOME/cpputest
+export CPPUTEST_HOME=/cpputest
 make
