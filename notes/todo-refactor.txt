@@ -16,10 +16,7 @@ Add this to routes.rb
     get "#{name}(/:id)", to: redirect("kata/edit/%{id}?avatar=#{name}")
   end
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Drop the dashboard time-gaps check-box?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Have dashboard up/down integer field (mins) to set time-period.
-Perhaps showing current time into the period on table headings.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would be handy if the dashboard showed the animals pictures
 on the left side below the controls when they have entered

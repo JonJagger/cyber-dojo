@@ -44,7 +44,7 @@ private
     @minute_columns = bool('minute_columns')
     @auto_refresh = bool('auto_refresh')
     all_lights = Hash[
-      @kata.avatars.each.collect{|avatar| [avatar.name, avatar.lights]}
+      @kata.avatars.active.each.collect{|avatar| [avatar.name, avatar.lights]}
     ]
     max_seconds_uncollapsed = seconds_per_column * 2
     gapper = TdGapper.new(@kata.created, seconds_per_column, max_seconds_uncollapsed)
