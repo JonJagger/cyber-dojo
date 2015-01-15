@@ -2,7 +2,7 @@
 
 # Script to build a cyber-dojo server
 # from http://cloud.digitalocean.com
-# base of Application: Docker 1.3.1 on 14.04
+# base of Application: Docker 1.4.1 on 14.04
 # Typically takes about 30 mins to run
 
 cd ~
@@ -10,7 +10,7 @@ echo gem: --no-rdoc --no-ri > ~/.gemrc
 apt-get update
 apt-get install -y apache2 curl git build-essential zlibc zlib1g-dev zlib1g libcurl4-openssl-dev libssl-dev apache2-prefork-dev libapr1-dev libaprutil1-dev libreadline6 libreadline6-dev
 apt-get install -y build-essential libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion
-wget ftp://ftp.ruby-lang.org/pub/ruby/2.1/ruby-2.1.3.tar.gz
+wget --no-check-certificate https://ftp.ruby-lang.org/pub/ruby/2.1/ruby-2.1.3.tar.gz
 tar xzvf ruby-2.1.3.tar.gz
 cd ruby-2.1.3
 ./configure --disable-install-doc
