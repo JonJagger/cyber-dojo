@@ -3,7 +3,7 @@
 # Script to build a cyber-dojo server
 # from http://cloud.digitalocean.com
 # base of Application: Docker 1.4.1 on 14.04
-# Typically takes about 30 mins to run
+# Typically takes about 15+ mins to run
 
 cd ~
 echo gem: --no-rdoc --no-ri > ~/.gemrc
