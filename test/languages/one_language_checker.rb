@@ -22,13 +22,9 @@ class OneLanguageChecker
   end
 
   def runner
-    if Docker.installed?
-      DockerTestRunner.new
-    else
-      # @language.runnable? in check() above always returns false
-      # viz, turn off all tests when not on Docker server
-      DummyTestRunner.new
-    end
+    return DockerTestRunner.new if Docker.installed?
+    return HostTestRunner.new unless ENV['CYBERDOJO_USE_HOST'].nil?
+    return DummyTestRunner.new
   end
 
   def check(language_name)
