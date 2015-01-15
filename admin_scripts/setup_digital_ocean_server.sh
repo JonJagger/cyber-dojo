@@ -57,9 +57,7 @@ cp default-ssl.conf cyber-dojo-ssl.conf
 sed 's/www.html/www\/cyber-dojo\/public/' < default-ssl.conf > cyber-dojo-ssl.conf
 
 
-cd /var/www
-git clone https://github.com/JonJagger/cyber-dojo.git
-cd cyber-dojo
+cd /var/www/cyber-dojo
 chmod g+s katas
 rm Gemfile.lock
 bundle install
@@ -73,5 +71,3 @@ a2enmod passenger
 a2ensite cyber-dojo
 a2dissite 000-default
 service apache2 restart
-
-/var/www/cyber-dojo/admin_scripts/docker_pull_all.rb
