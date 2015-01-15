@@ -40,12 +40,11 @@ en:
       
     buttons:
       ok: "ok"
-      create: "create"
       close: "close"
       cancel: "cancel"
       
+      create: "create"      
       enter: "enter"
-      reenter: "re&#8209;enter"
       review: "review"
             
       test: "test"

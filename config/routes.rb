@@ -44,6 +44,11 @@ CyberDojo::Application.routes.draw do
 
   get 'downloader/download(/:id)' => 'downloader#download'
 
+  # re-enter as specific animal
+  Avatars.names.each do |name|
+    get "#{name}(/:id)", to: redirect("kata/edit/%{id}?avatar=#{name}")
+  end
+
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 

@@ -15,7 +15,11 @@
     </tr>
 
     <tr class="align-right">
-      <td colspan="3">
+      <td rowspan="6" align="right">
+        <%= render :partial => 'donate' %>
+        <%= render :partial => 'accu' %>
+      </td>
+      <td colspan="2">
         <div id="the-place-to-practice-programming">
           <%= raw t("views.labels.the_place_to_practice_programming") %>
         </div>
@@ -29,10 +33,6 @@
     </tr>
 
     <tr class="align-right">
-      <td rowspan="5" align="right">
-        <%= render :partial => 'donate' %>
-        <%= render :partial => 'accu' %>
-      </td>
       <td class="button-info-td">
           choose a language<br/>
           and an exercise<br/>
@@ -68,17 +68,6 @@
       </td>
       <td class="button-td">
         <%= render :partial => 'review_button' %>
-      </td>
-    </tr>
-
-    <tr class="align-right">
-      <td class="button-info-td">
-        re-enter as a<br/>
-        specific animal<br/>
-        (occasionally useful)
-      </td>
-      <td class="button-td">
-        <%= render :partial => 'reenter_button' %>
       </td>
     </tr>
 

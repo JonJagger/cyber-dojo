@@ -31,20 +31,6 @@ class DojoController < ApplicationController
     }
   end
 
-  #------------------------------------------------
-
-  def re_enter
-    started_avatar_names =
-      exists ? avatars.each.collect{ |avatar| avatar.name} : [ ]
-    empty = (started_avatar_names == [ ])
-    render :json => {
-      :exists => exists,
-      :empty => empty,
-      :re_enter_dialog_html =>
-        (exists ? re_enter_dialog_html(kata, started_avatar_names) : '')
-    }
-  end
-
 private
 
   def exists
@@ -59,13 +45,6 @@ private
   def full_dialog_html()
     @all_avatar_names = Avatars.names
     bind('/app/views/dojo/full_dialog.html.erb')
-  end
-
-  def re_enter_dialog_html(kata, started_avatar_names)
-    @kata = kata
-    @started_avatar_names = started_avatar_names
-    @all_avatar_names = Avatars.names
-    bind('/app/views/dojo/re_enter_dialog.html.erb')
   end
 
   def bind(pathed_filename)

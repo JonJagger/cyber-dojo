@@ -8,14 +8,6 @@ This would mean I would have to alter the re-enter page
 so I only show the started avatars in colour and not
 the unstarted ones in black and white.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Drop the re-enter button? Instead add help text somewhere
-describing using the URL http://cyber-dojo.org/lion/25649A
-and implement that shortcut URL for all animals.
-Add this to routes.rb
-  Avatars.names.each do |name|
-    get "#{name}(/:id)", to: redirect("kata/edit/%{id}?avatar=#{name}")
-  end
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Have dashboard up/down integer field (mins) to set time-period.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would be handy if the dashboard showed the animals pictures
