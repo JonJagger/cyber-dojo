@@ -3,6 +3,11 @@
 If test run is successful do this?
 $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+When you re-enter as an animal in a C++ dojo you
+always get the makefile highlighted. Instead choose
+largest lit file that has an extension (to avoid
+instructions).
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Increase number of avatars to 100. Olve is investigating.
 This would mean I would have to alter the re-enter page
 so I only show the started avatars in colour and not
