@@ -11,7 +11,7 @@ $(function() {
       var title = "<%= t('views.buttons.enter') %>";
       var cursor = enterButton.css('cursor');
       enterButton.css('cursor', 'wait');
-      $.getJSON('/dojo/enter' , { id: id }, function(dojo) {
+      $.getJSON('/dojo/enter', { id: id }, function(dojo) {
         if (dojo.full) {
           cd.dialog(dojo.full_dialog_html, title, ok).dialog('open');
         } else {

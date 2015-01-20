@@ -1,0 +1,30 @@
+
+<div>
+  <table class="align-center">
+    <% index = 0 %>
+    <% size = 60 %>
+    <% (1..4).each do |_| %>
+    <tr>
+      <% (1..4).each do |_| %>
+      <td class="panel">
+        <% avatar_name = @all_avatar_names[index] %>
+        <% if @started_avatar_names.include?(avatar_name) %>
+          <img onclick='return cd.reEnter("<%= @id %>","<%= avatar_name %>");'
+               src="/images/avatars/<%= avatar_name %>.jpg"
+               title="<%= avatar_name %>"
+               width="<%= size %>"
+               height="<%= size %>"
+               data-cursor="pointer"/>
+        <% else %>
+          <img src="/images/avatars/bw/<%= avatar_name %>.jpg"
+               width="<%= size %>"
+               height="<%= size %>"/>
+        <% end %>
+        <% index += 1 %>
+      </td>
+      <% end %>
+    </tr>
+    <% end %>
+  </table>
+  <div class="align-center small"><%= t("views.labels.click_to_re_enter") %></div>
+</div>
