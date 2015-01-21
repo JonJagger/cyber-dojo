@@ -61,7 +61,7 @@ private
   def seconds_per_column
     flag = params['minute_columns']
     # default is that time-gaps are on
-    return 60*5 if flag.nil? || flag == 'true'
+    return 60 if flag.nil? || flag == 'true'
     return 60*60*24*365*1000
   end
 
