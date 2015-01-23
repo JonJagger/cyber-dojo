@@ -3,16 +3,26 @@
 If test run is successful do this?
 $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Make download *not* save to cyber-dojo/tmp folder.
+Instead have only as non-unit test that actually
+downloads the file and unzips it and verifies
+certain properties of the folders/files unzipped.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 doing < > on the history dialog moves to animals
 in a different order than they appear on on the
 dashboard. Does this matter?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-When you re-enter as an animal in a C++ dojo you
-always (often) get the makefile highlighted. Choose
-largest lit file that has an extension?
+When you re-enter a dojo, or open a history-dialog
+in non-diff mode (eg from dashboard) then you
+often get the makefile highlighted. Poor choice.
+Choose largest lit file that has an extension?
 Will that pick instructions sometime?
-Whatever, avoid [makefile,cyber-dojo.sh,instructions]
-and in general, prefer files with the word test in the name.
+Never pick any of [makefile,cyber-dojo.sh,instructions]
+(unless they are only files).
+If there are lit-filenames from the mainfest only
+pick from those.
+If any file has word test in it. Pick that.
+Otherwise, pick largest file?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 If I record keystrokes I could create a slow-tv like
 view of a practice. Copy paste could possibly be captured
