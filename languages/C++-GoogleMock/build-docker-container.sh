@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/gpp-4.8.1_googlemock .
+docker build -t cyberdojo/gpp-4.9_googlemock .
