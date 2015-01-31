@@ -58,41 +58,7 @@ module GitDiff
     end
   end
 
-  def most_changed_file_id(diffs, current_filename)
-    # Prefers to stay on the same file if it still exists
-    # in the now_tag (it could have been deleted or renamed)
-    # and has at least one change.
-    # Otherwise prefers the file with the most changes.
-    # If nothing has changed prefers the largest file
-    # that isn't output or instructions (this is likely to
-    # be a test file).
-
-    chosen_diff = nil
-    current_filename_diff = diffs.find { |diff| diff[:filename] == current_filename }
-
-    files = diffs.select { |diff| diff[:filename] != 'output' && diff[:filename] != current_filename }
-    files = files.select { |diff| change_count(diff) > 0 }
-    most_changed_diff = files.max { |lhs,rhs| change_count(lhs) <=> change_count(rhs) }
-
-    if !current_filename_diff.nil?
-      if change_count(current_filename_diff) > 0 || most_changed_diff.nil?
-        chosen_diff = current_filename_diff
-      else
-        chosen_diff = most_changed_diff
-      end
-    elsif !most_changed_diff.nil?
-      chosen_diff = most_changed_diff
-    else
-      diffs = diffs.select { |diff| diff[:filename] != 'output' && diff[:filename] != 'instructions' }
-      chosen_diff = diffs.max_by { |diff| diff[:content].size }
-    end
-
-    chosen_diff[:id]
-  end
-
-  def change_count(diff)
-    diff[:deleted_line_count] + diff[:added_line_count]
-  end
+  #- - - - - - - - - - - - - - - - - - - - -
 
   def git_diff_view(diffed_files)
     n = 0

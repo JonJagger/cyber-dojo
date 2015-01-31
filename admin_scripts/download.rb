@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-# Ruby script to download dojos zip file(s)
+# Ruby script to download dojos tar.gz file(s) of cyber-dojos by their IDs
 #
-# xfer.rb cyber-dojo.org 572F35
+# download.rb cyber-dojo.org 572F35 E7734A
 #
 
 ip_address = ARGV[0]

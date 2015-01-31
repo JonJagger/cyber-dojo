@@ -35,6 +35,7 @@ require_relative_in('app/helpers', %w{
 require_relative_in('app/lib', %w{
   Chooser FileDeltaMaker
   GitDiff GitDiffBuilder GitDiffParser LineSplitter
+  ReviewFilePicker
   MakefileFilter OutputParser TdGapper
 
 })

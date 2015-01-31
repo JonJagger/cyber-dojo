@@ -2,9 +2,9 @@
 
 require_relative './app_lib_test_base'
 
-class GitDiffMostChangedTests < AppLibTestBase
+class ReviewFilePickerTests < AppLibTestBase
 
-  include GitDiff
+  include ReviewFilePicker
 
   #------------------------------------------------------------------
 
@@ -79,12 +79,26 @@ class GitDiffMostChangedTests < AppLibTestBase
   #------------------------------------------------------------------
 
   test 'when current_filename is not present and no non-output file ' +
-       'has diffs then largest non-output non-instructions file is chosen' do
+       'has diffs then largest code file is chosen' do
+    @current_filename = nil
+    non_code_filenames = [ 'instructions','makefile','cyber-dojo.sh' ]
+    non_code_filenames.each do |filename|
+      @diffs = [ ] <<
+        diff('output',6,8,'13453453534535345345') <<
+        diff(filename,0,0,'bigger-but-not-codefile') <<
+        (@picked=diff('wibble.c',0,0,'smaller'))
+      assert_picked
+    end
+  end
+
+  #------------------------------------------------------------------
+
+  test 'when current_filename is not present and no non-output file ' +
+       'has diffs and no code files then pick cyber-dojo.sh' do
     @current_filename = nil
     @diffs = [ ] <<
       diff('output',6,8,'13453453534535345345') <<
-      diff('wibble.h',0,0,'smaller') <<
-      (@picked=diff('wibble.c',0,0,'bit-bigger'))
+      (@picked = diff('cyber-dojo.sh',0,0,'145345'))
     assert_picked
   end
 

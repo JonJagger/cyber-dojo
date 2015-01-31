@@ -158,7 +158,7 @@ class DojoControllerTest < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def check_id
-    get 'dojo/check_id', :format => :json, :id => @id
+    get 'dojo/check', :format => :json, :id => @id
   end
 
   def re_enter

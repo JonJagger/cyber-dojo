@@ -12,18 +12,6 @@ doing < > on the history dialog moves to animals
 in a different order than they appear on on the
 dashboard. Does this matter?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-When you re-enter a dojo, or open a history-dialog
-in non-diff mode (eg from dashboard) then you
-often get the makefile highlighted. Poor choice.
-Choose largest lit file that has an extension?
-Will that pick instructions sometime?
-Never pick any of [makefile,cyber-dojo.sh,instructions]
-(unless they are only files).
-If there are lit-filenames from the mainfest only
-pick from those.
-If any file has word test in it. Pick that.
-Otherwise, pick largest file?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 If I record keystrokes I could create a slow-tv like
 view of a practice. Copy paste could possibly be captured
 and marked too. File rename too. Like this idea.

@@ -7,8 +7,8 @@ class DifferController < ApplicationController
 	render :json => {
 	  :lights => @lights,
 	  :diffs => diffs,
-	  :prevAvatar => prevAvatar,
-	  :nextAvatar => nextAvatar,
+	  :prevAvatar => prev_avatar,
+	  :nextAvatar => next_avatar,
 	  :idsAndSectionCounts => prune(diffs),
 	  :currentFilenameId => most_changed_file_id(diffs, current_filename),
 	  :wasTag => was_tag,
@@ -19,6 +19,7 @@ class DifferController < ApplicationController
 private
 
   include GitDiff
+  include ReviewFilePicker
 
   def was_tag
     tag(:was_tag)
@@ -41,14 +42,14 @@ private
     avatars.active.map {|avatar| avatar.name}.sort
   end
 
-  def prevAvatar
+  def prev_avatar
     names = active_avatar_names
     return '' if names.length == 1
     names.unshift(names.last)
     return names[names.rindex(avatar_name) - 1]
   end
 
-  def nextAvatar
+  def next_avatar
     names = active_avatar_names
     return '' if names.length == 1
     names << names[0]
