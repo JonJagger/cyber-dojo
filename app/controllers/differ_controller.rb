@@ -10,7 +10,7 @@ class DifferController < ApplicationController
 	  :prevAvatar => prev_avatar,
 	  :nextAvatar => next_avatar,
 	  :idsAndSectionCounts => prune(diffs),
-	  :currentFilenameId => most_changed_file_id(diffs, current_filename),
+	  :currentFilenameId => pick_file_id(diffs, current_filename),
 	  :wasTag => was_tag,
 	  :nowTag => now_tag
 	}

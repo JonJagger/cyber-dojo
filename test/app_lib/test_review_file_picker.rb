@@ -120,7 +120,7 @@ class ReviewFilePickerTests < AppLibTestBase
   end
 
   def assert_picked
-    id = most_changed_file_id(@diffs, @current_filename)
+    id = pick_file_id(@diffs, @current_filename)
     assert_equal @picked[:id], id
   end
 

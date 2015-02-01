@@ -1,7 +1,7 @@
 
 module ReviewFilePicker
 
-  def most_changed_file_id(diffs, current_filename)
+  def pick_file_id(diffs, current_filename)
     # Prefers to stay on the same file if it still exists
     # in the now_tag (it could have been deleted or renamed)
     # and has at least one change.
