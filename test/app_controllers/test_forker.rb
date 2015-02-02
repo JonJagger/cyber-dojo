@@ -111,6 +111,23 @@ class ForkerControllerTest < ControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'when the exercise no longer exists but everything else ' +
+       "is ok then fork works and the new dojos id is returned" do
+
+    stub_setup
+    fork(:json,@id,@avatar_name,@tag)
+    assert forked?
+
+    exercise = @dojo.exercises['fake-Yatzy']
+    exercise.dir.delete('instructions')
+
+    fork(:json,@id,@avatar_name,@tag)
+    assert forked?
+
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'when language has been renamed but new-name-language exists ' +
        'and id,avatar,tag are all ok ' +
        'the fork works ' +

@@ -58,24 +58,38 @@ class Kata
     avatars.active.count > 0
   end
 
+  #- - - - - - - - - - - - - - - -
+
+  def language_name
+    manifest['language']
+  end
+
   def original_language
     # allow kata to be reviewed/forked even
     # if it's language name has changed
     # See app/models/Language.rb ::new_name()
-    dojo.languages[manifest['language']]
+    dojo.languages[language_name]
   end
 
   def language
     dojo.languages[original_language.new_name]
   end
 
+  #- - - - - - - - - - - - - - - -
+
+  def exercise_name
+    manifest['exercise']
+  end
+
   def original_exercise
-    dojo.exercises[manifest['exercise']]
+    dojo.exercises[exercise_name]
   end
 
   def exercise
     dojo.exercises[original_exercise.new_name]
   end
+
+  #- - - - - - - - - - - - - - - -
 
   def avatars
     Avatars.new(self)

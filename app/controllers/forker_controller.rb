@@ -45,11 +45,19 @@ class ForkerController < ApplicationController
 
     if !error
       language = dojo.languages[kata.language.name]
-      exercise = kata.exercise
       id = unique_id
-      manifest = dojo.katas.create_kata_manifest(language, exercise, id, time_now)
+      manifest = {
+        :created => time_now,
+        :id => id,
+        :language => language.name,
+        :exercise => kata.exercise_name,
+        :unit_test_framework => language.unit_test_framework,
+        :tab_size => language.tab_size
+      }
+
       tag = params['tag'].to_i
       manifest[:visible_files] = avatar.tags[tag].visible_files
+
       kata = dojo.katas[id]
       kata.dir.write('manifest.json', manifest)
       result[:forked] = true

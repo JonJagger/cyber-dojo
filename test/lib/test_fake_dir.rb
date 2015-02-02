@@ -34,6 +34,16 @@ class FakeDirTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'after delete(filename) exists?(filename) is false' do
+    filename = 'wibble.hpp'
+    @dir.write(filename, '#include <iostream>')
+    assert @dir.exists?(filename)
+    @dir.delete(filename)
+    assert !@dir.exists?(filename)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'read(filename) raises if no file exists' do
     filename = 'wibble.rb'
     error = assert_raises(RuntimeError) { @dir.read(filename) }
