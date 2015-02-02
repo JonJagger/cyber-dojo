@@ -32,11 +32,11 @@ class DirFake
     @repo.delete(filename)
   end
 
-  def exists?(filename = '')
+  def exists?(filename = nil)
     matches = @disk.dirs.keys.select {|d| d != path && d.start_with?(path) }
-    return true  if filename === '' && !@repo.nil?
-    return true  if filename === '' && !matches.empty?
-    return false if filename === ''
+    return true  if filename.nil? && !@repo.nil?
+    return true  if filename.nil? && !matches.empty?
+    return false if filename.nil?
     return false if @repo.nil?
     return !@repo[filename].nil?
   end
