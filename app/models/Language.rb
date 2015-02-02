@@ -74,43 +74,6 @@ class Language
     manifest['visible_filenames'] || [ ]
   end
 
-  def new_name
-    # Some languages/ sub-folders have been renamed.
-    # This creates a problem for practice-sessions done
-    # before the rename that you now wish to review or
-    # fork from. Particularly for sessions with
-    # well known id's such as the refactoring dojos.
-    # See app/models/Kata.rb language()
-    # See app/models/Kata.rb original_language()
-    renames = {
-      'C'            => 'C-assert',
-      'C++'          => 'C++-assert',
-      'C#'           => 'C#-NUnit',
-      'Clojure'      => 'Clojure-.test',
-      'CoffeeScript' => 'CoffeeScript-jasmine',
-      'Erlang'       => 'Erlang-eunit',
-      'Go'           => 'Go-testing',
-      'Haskell'      => 'Haskell-hunit',
-
-      'Java'               => 'Java-1.8_JUnit',
-      'Java-JUnit'         => 'Java-1.8_JUnit',
-      'Java-Approval'      => 'Java-1.8_Approval',
-      'Java-ApprovalTests' => 'Java-1.8_Approval',
-      'Java-Cucumber'      => 'Java-1.8_Cucumber',
-      'Java-Mockito'       => 'Java-1.8_Mockito',
-      'Java-JUnit-Mockito' => 'Java-1.8_Mockito',
-      'Java-PowerMockito'  => 'Java-1.8_Powermockito',
-
-      'Javascript' => 'Javascript-assert',
-      'Perl'       => 'Perl-TestSimple',
-      'PHP'        => 'PHP-PHPUnit',
-      'Python'     => 'Python-unittest',
-      'Ruby'       => 'Ruby-TestUnit',
-      'Scala'      => 'Scala-scalatest'
-    }
-    renames[name] || name
-  end
-
   def progress_regexs
     manifest['progress_regexs'] || [ ]
   end

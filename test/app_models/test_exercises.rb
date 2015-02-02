@@ -18,7 +18,7 @@ class ExercisesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'dojo.exercises.each() gives all exercises which exist' do
+  test 'each() gives all exercises which exist' do
     names = ['Unsplice','Verbal','Salmo']
     stub_exists(names)
     exercises_names = @dojo.exercises.each.map {|exercise| exercise.name}
@@ -27,7 +27,7 @@ class ExercisesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'dojo.exercises[name] returns exercise with given name' do
+  test '[name] returns exercise with given name' do
     name = 'Print_Diamond'
     exercise = @dojo.exercises[name]
     assert_equal Exercise, exercise.class
@@ -36,7 +36,7 @@ class ExercisesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'dojo.exercise.instructions' do
+  test 'instructions content' do
     name = 'Yahtzee'
     exercise = @dojo.exercises[name]
     content = 'your task...'
@@ -49,7 +49,7 @@ class ExercisesTests < ModelTestBase
   def stub_exists(exercises_names)
     exercises_names.each do |name|
       exercise = @dojo.exercises[name]
-      exercise.dir.write('instructions', '')
+      exercise.dir.write('instructions', 'nothing')
     end
   end
 

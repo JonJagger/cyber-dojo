@@ -30,46 +30,6 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'new_name is translated when old language dir has been renamed' do
-    renames = {
-      'C'            => 'C-assert',
-      'C++'          => 'C++-assert',
-      'C#'           => 'C#-NUnit',
-      'Clojure'      => 'Clojure-.test',
-      'CoffeeScript' => 'CoffeeScript-jasmine',
-      'Erlang'       => 'Erlang-eunit',
-      'Go'           => 'Go-testing',
-      'Haskell'      => 'Haskell-hunit',
-
-      'Java'               => 'Java-1.8_JUnit',
-      'Java-JUnit'         => 'Java-1.8_JUnit',
-      'Java-Approval'      => 'Java-1.8_Approval',
-      'Java-ApprovalTests' => 'Java-1.8_Approval',
-      'Java-Cucumber'      => 'Java-1.8_Cucumber',
-      'Java-Mockito'       => 'Java-1.8_Mockito',
-      'Java-JUnit-Mockito' => 'Java-1.8_Mockito',
-      'Java-PowerMockito'  => 'Java-1.8_Powermockito',
-
-      'Javascript' => 'Javascript-assert',
-      'Perl'       => 'Perl-TestSimple',
-      'PHP'        => 'PHP-PHPUnit',
-      'Python'     => 'Python-unittest',
-      'Ruby'       => 'Ruby-TestUnit',
-      'Scala'      => 'Scala-scalatest'
-    }
-    renames.each do |was,now|
-      assert_equal now, @dojo.languages[was].new_name
-    end
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'name is not translated when language dir has not been renamed' do
-    assert_equal 'Java-JUnit', @dojo.languages['Java-JUnit'].name
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'exists? is true only when dir and manifest exist' do
     @language = @dojo.languages['Erlang']
     assert !@language.exists?, '1'

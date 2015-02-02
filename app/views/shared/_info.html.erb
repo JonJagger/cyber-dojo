@@ -3,8 +3,8 @@
 
   <span title="this dojo's unique id is <%= @kata.id.to_s[0..5] %>">
   <%= @kata.id.to_s[0..5] %></span>,
-  <span title="this dojo's exercise is <%= @kata.exercise_name.gsub('_',' ') %>">
-    <%= @kata.exercise_name.gsub('_',' ') %></span>,
+  <span title="this dojo's exercise is <%= @kata.exercise.name.gsub('_',' ') %>">
+    <%= @kata.exercise.name.gsub('_',' ') %></span>,
   <span title="this dojo's (language + test framework) is <%= @kata.language.display_name %>">
     <%= @kata.language.display_name %></span>
 

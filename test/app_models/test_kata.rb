@@ -164,8 +164,8 @@ class KataTests < ModelTestBase
     kata = @dojo.katas.create_kata(language, exercise, id, now)
     assert_equal id, kata.id.to_s
     assert_equal Time.mktime(*now), kata.created
-    assert_equal language.name, kata.language_name
-    assert_equal exercise.name, kata.exercise_name
+    assert_equal language.name, kata.language.name
+    assert_equal exercise.name, kata.exercise.name
     expected_visible_files = {
       'output' => '',
       'instructions' => 'your task...',
