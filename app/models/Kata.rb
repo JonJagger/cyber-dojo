@@ -81,16 +81,6 @@ class Kata
     manifest['exercise']
   end
 
-  def original_exercise
-    dojo.exercises[exercise_name]
-  end
-
-  def exercise
-    dojo.exercises[original_exercise.new_name]
-  end
-
-  #- - - - - - - - - - - - - - - -
-
   def avatars
     Avatars.new(self)
   end

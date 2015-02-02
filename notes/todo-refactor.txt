@@ -337,9 +337,6 @@ and return false from a rescue
 Avatar.valid?(id) should in AvatarS
 create Avatars.exists?(name) like Katas.exists?(id)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-I think forker_controller will fail if the exercise
-has been renamed. This does not need to be so.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 should katas.each() check inner and outer are comprised only
 of hex chars and are correct length?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

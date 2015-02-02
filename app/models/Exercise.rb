@@ -7,17 +7,6 @@ class Exercise
 
   attr_reader :name
 
-  def new_name
-    # Some exercises/ sub-folders have been renamed.
-    # See app/models/Kata.rb ::exercise()
-    # See app/models/Kata.rb ::original_exercise()
-    renames = {
-      'Yahtzee' => 'Yatzy',
-      'Yahtzee_Cutdown' => 'Yatzy_Cutdown'
-    }
-    renames[name] || name
-  end
-
   def exists?
     dir.exists?(instructions_filename)
   end

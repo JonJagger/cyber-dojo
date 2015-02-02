@@ -171,7 +171,7 @@ class ForkerControllerTest < ControllerTestBase
     assert forked_kata.exists?
 
     assert_equal kata.language.name, forked_kata.language.name
-    assert_equal kata.exercise.name, forked_kata.exercise.name
+    assert_equal kata.exercise_name, forked_kata.exercise_name
     assert_equal visible_files, forked_kata.visible_files
 
     assert_equal({avatar.path => [ ['show', '2:manifest.json']]}, git.log)
@@ -192,8 +192,8 @@ class ForkerControllerTest < ControllerTestBase
     forked_kata = @dojo.katas[forked_kata_id]
     assert forked_kata.exists?
 
-    assert_equal @kata.language.name, forked_kata.language.name
-    assert_equal @kata.exercise.name, forked_kata.exercise.name
+    assert_equal @kata.language_name, forked_kata.language_name
+    assert_equal @kata.exercise_name, forked_kata.exercise_name
     assert_equal @visible_files, forked_kata.visible_files
 
     assert_equal({@avatar.path => [ ['show', '2:manifest.json']]}, git.log)
@@ -220,7 +220,8 @@ class ForkerControllerTest < ControllerTestBase
     @kata = @dojo.katas[@id]
 
     language_name = 'Ruby-installed-and-working'
-    @kata.dir.write('manifest.json', { :language => language_name })
+    exercise_name = 'fake-Yatzy'
+    stub_kata(@id, language_name, exercise_name)
 
     language = @dojo.languages[language_name]
     language.dir.write('manifest.json', {

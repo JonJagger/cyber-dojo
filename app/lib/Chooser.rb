@@ -9,13 +9,13 @@ module Chooser
 
   def choose_language(languages, id, katas)
     chooser(languages, id, katas) {|kata|
-      kata.language.name
+      kata.language_name
     }
   end
 
   def choose_exercise(exercises, id, katas)
     chooser(exercises, id, katas) {|kata|
-      kata.exercise.name
+      kata.exercise_name
     }
   end
 

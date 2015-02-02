@@ -59,8 +59,6 @@ class SetupControllerTest < ControllerTestBase
     ].sort
 
     exercises_names.each do |exercise_name|
-      exercise = @dojo.exercises[exercise_name]
-      assert_equal exercise.name, exercise.new_name, 'renamed!'
       stub_exercise(exercise_name)
     end
 
