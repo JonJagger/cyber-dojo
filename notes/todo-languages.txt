@@ -1,5 +1,7 @@
 
 install C++14 + boost
+install C++14 (g++4.9.1) GoogleMock
+  https://github.com/meshell/cyber-dojo/tree/master/languages
 install Rust?
 install Dart?
 install APL?
