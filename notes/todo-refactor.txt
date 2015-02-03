@@ -3,10 +3,6 @@
 If test run is successful do this?
 $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-history diff title should be 'history diff'
-which all comes from the dialog title, rather than
-the word diff being tacked on the end of 'history'.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Make download *not* save to cyber-dojo/tmp folder.
 Instead have only as non-unit test that actually
 downloads the file and unzips it and verifies

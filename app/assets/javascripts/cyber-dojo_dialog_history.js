@@ -85,10 +85,6 @@ var cyberDojo = (function(cd, $) {
       return $('#diff-checkbox', titleBar());
     };
 
-    var makeDiffLabelHtml = function() {
-      return '<div id="diff-checkbox-label">diff</div>';
-    };
-
     var makeDiffCheckboxHtml = function() {
       return '<input type="checkbox"' +
                   ' class="regular-checkbox"' +
@@ -120,8 +116,7 @@ var cyberDojo = (function(cd, $) {
     var makeTitleHtml = function() {
       return '<table>' +
                '<tr valign="top">' +
-                 '<td id="title">history</td>' +
-                 cd.td(makeDiffLabelHtml()) +
+                 '<td id="title">history&nbsp;diff</td>' +
                  cd.td(makeDiffCheckboxHtml()) +
                  cd.td('<div id="traffic-lights"></div>') +
                '</tr>' +
