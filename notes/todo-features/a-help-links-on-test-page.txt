@@ -4,6 +4,6 @@ in visible/invisible files.
 The syntax would allow recording of helpfull URLs
 eg c/c++/make references.
 If these are detected then the are created as hyperlinks
-in the test page. Perhaps below the file knave.
+in the [test] page. Perhaps below the file knave?
 They could be "pinged" to see if they are still live.
 Or maybe they could be accessible via a [useful links] popup.

@@ -6,6 +6,6 @@ OUTPUT-HOTLINK (7)
       file+line-number in error message (in pattern of output)
     auto opens that file
     scrolls to the line-number.
-  Why require output file to be selected.
+  Why require output file to be selected?
   Require only that there is an error in the output file.
   That takes care of itself - the pattern matches or it doesn't.

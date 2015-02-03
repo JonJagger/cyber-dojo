@@ -1,0 +1,31 @@
+
+Idea from James.
+On dashboard, hovering over a traffic light makes the js
+to go to the server to retrieve information for the diff
+to that traffic-light.
+  o) number of files changed
+  o) total number of lines added
+  o) total number of lines deleted
+  o) difference between the number of lines added and removed.
+
+http://api.jqueryui.com/tooltip/
+Display other content than just the title, like inline footnotes
+or extra content retrieved via Ajax.
+
+$(document).tooltip({
+    items: '.tooltip',
+    tooltipClass: 'preview-tip',
+    position: { my: "left+15 top", at: "right center" },
+    content: function(callback) {
+        $.get('preview.php', {
+            id:id
+        }, function(data) {
+            callback(data); //**call the callback function to return the value**
+        });
+    },
+});
+
+What version of jQuery do I need?
+Tooltip started in jQuery 1.9
+I think I'm using 1.8.16
+
