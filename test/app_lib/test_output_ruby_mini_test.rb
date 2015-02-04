@@ -143,6 +143,6 @@ class OutputRubyMiniTestTests < AppLibTestBase
   #- - - - - - - - - - - - - - - - - - - - - -
 
   def colour_of(output)
-    OutputParser::parse_ruby_minitest(output)
+    OutputParser::parse_ruby_mini_test(output)
   end
 end
