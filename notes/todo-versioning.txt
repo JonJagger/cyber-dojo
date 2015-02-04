@@ -1,0 +1,38 @@
+
+An cyberdojo's manifest.json file contains the name of the language. Eg
+  cyber-dojo/katas/A9/606FDA05/manifest.json
+    { ....  "language":"Java-1.8_JUnit" .... }
+  cyber-dojo/katas/3F/611E5054/manifest.json
+    { ....  "language":"C++-GoogleTest" .... }
+
+Note this is the name and not the display_name.
+
+This often contains the version number.
+This is a mistake. It makes it harder than necessary
+to update a container (eg Ruby 1.9.3 to 2.1.3)
+
+It is much better to create a base language container
+image which includes its version in its name.
+Eg
+
+Ruby-1.9.3
+  build-docker-container.sh  --> cyberdojo/ruby-1.9.3
+  Dockerfile
+Ruby-2.1.3
+  build-docker-container.sh  --> cyberdojo/ruby-2.1.3
+  Dockerfile
+
+And then to create language+unit-test
+based on a language with a specific version and whose
+docker container name itself *does* contain a
+version number.
+
+Ruby-MiniTest
+  build-docker-container.sh  --> cyberdojo/ruby-2.1.3_mini_test
+  Dockerfile (FROM cyberdojo/ruby-2.1.3)
+
+
+Moving forward I am going to have to create
+a 'rename' adapter for the language which bypasses
+this for existing dojos.
+An extention to app/models/lanuages.rb latest(name)
