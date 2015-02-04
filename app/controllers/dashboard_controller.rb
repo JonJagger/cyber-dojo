@@ -3,7 +3,7 @@ class DashboardController < ApplicationController
 
   def show
     gather
-    @title = 'dashboard'
+    @title = 'dashboard:' + @kata.id[0..5]
     # provide these if you want to open the diff-history for a
     # specific [avatar,was_tag,now_tag] as the dashboard opens.
     # See also app/controllers/differ_controller.rb
