@@ -150,7 +150,7 @@ module OutputParser
     return :red
   end
 
-  def self.parse_ruby_minitest(output)
+  def self.parse_ruby_mini_test(output)
     ruby_pattern = Regexp.new('^(\d*) tests, (\d*) assertions, (\d*) failures, (\d*) errors')
     if match = ruby_pattern.match(output)
       return :amber if match[4] != '0'
