@@ -18,6 +18,7 @@ class Languages
   end
 
   def [](name)
+    # See comment at bottom of file.
     make_language(latest(name))
   end
 
@@ -26,11 +27,7 @@ private
   include ExternalGetter
 
   def latest(name)
-    # Some languages/ sub-folders have been renamed.
-    # This creates a problem for practice-sessions done
-    # before the rename that you now wish to review or
-    # fork from. Particularly for sessions with
-    # well known id's such as the refactoring dojos.
+    # See comment at bottom of file.
     renames = {
       'C'            => 'C-assert',
       'C++'          => 'C++-assert',
@@ -78,3 +75,22 @@ private
   end
 
 end
+
+# Some languages/ sub-folders have been renamed.
+# This creates a problem for practice-sessions done
+# before the rename that you now wish to review or
+# fork from. Particularly for sessions with
+# well known id's such as the refactoring dojos.
+# For example...
+# Suppose a old practice-session was done with a
+# language name of 'Java' then in Kata.rb
+# manifest['language'] will be 'Java'
+# However kata.language  is defined as
+#   dojo.languages[manifest['language']]
+# And Languages' [] index operator (above)
+# maps the incoming name to the latest name.
+# Thus
+#    old_name = kata.maninfest['language']
+#    language = dojo.languages[old_name]
+#    new_name = language.name
+#    assert_sometimes old_name != new_name
