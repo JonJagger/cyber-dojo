@@ -20,7 +20,7 @@ class OutputRubyMiniTestTests < AppLibTestBase
         'Expected: 42',
         '  Actual: 54',
         '',
-        '1 runs, 1 assertions, 1 failures, 0 errors, 0 skips'
+        '1 tests, 1 assertions, 1 failures, 0 errors, 0 skips'
     ].join("\n")
     assert_equal :red, colour_of(output)
   end
@@ -36,7 +36,7 @@ class OutputRubyMiniTestTests < AppLibTestBase
         '<" _     \n| |   |\n|_|   |">.',
         '  3) Failure:',
         '<" _   _ \n  |  _|\n  | |_ ">.',
-        '17 runs, 17 assertions, 3 failures, 0 errors',
+        '17 tests, 17 assertions, 3 failures, 0 errors',
         '',
         '  2) Failure:',
         'test_ten(TestGetDigits) [test_get_digits.rb:81]:',
@@ -48,7 +48,7 @@ class OutputRubyMiniTestTests < AppLibTestBase
         '<" _   _ \n _|   |\n|_    |"> expected but was',
         '<" _   _ \n  |  _|\n  | |_ ">.',
         '',
-        '17 runs, 17 assertions, 3 failures, 0 errors',
+        '17 tests, 17 assertions, 3 failures, 0 errors',
         '[[" _ ", " _ "], ["  |", " _|"], ["  |", "|_ "]]'
       ].join("\n")
     assert_equal :red, colour_of(output)
@@ -67,7 +67,7 @@ class OutputRubyMiniTestTests < AppLibTestBase
         "",
         "Finished tests in 0.016653s, 60.0492 tests/s, 60.0492 assertions/s.",
         "",
-        "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
+        "1 tests, 1 assertions, 0 failures, 0 errors, 0 skips"
       ].join("\n")
     assert_equal :green, colour_of(output)
   end
@@ -90,7 +90,7 @@ class OutputRubyMiniTestTests < AppLibTestBase
         "<54> expected but was",
         "<42>.",
         "",
-        "2 runs, 2 assertions, 1 failures, 0 errors, 0 skips"
+        "2 tests, 2 assertions, 1 failures, 0 errors, 0 skips"
       ].join("\n")
     assert_equal :red, colour_of(output)
   end
@@ -135,7 +135,7 @@ class OutputRubyMiniTestTests < AppLibTestBase
         "    test_untitled.rb:7:in `throw'",
         "    test_untitled.rb:7:in `test_simple'",
         "",
-        "1 runs, 0 assertions, 0 failures, 1 errors, 0 skips"
+        "1 tests, 0 assertions, 0 failures, 1 errors, 0 skips"
       ].join("\n")
     assert_equal :amber, colour_of(output)
   end
