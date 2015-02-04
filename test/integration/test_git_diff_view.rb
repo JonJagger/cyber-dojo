@@ -8,7 +8,7 @@ class GitDiffViewTests < IntegrationTestBase
 
   test 'building diff view from git repo with modified file' do
 
-    language = @dojo.languages['Ruby-TestUnit']
+    language = @dojo.languages['Ruby-MiniTest']
     exercise = @dojo.exercises['Yatzy']
     kata = @dojo.katas.create_kata(language, exercise)
     avatar = kata.start_avatar # tag 0
@@ -101,7 +101,7 @@ class GitDiffViewTests < IntegrationTestBase
 
   test 'building git diff view from repo with deleted file' do
 
-    language = @dojo.languages['Ruby-TestUnit']
+    language = @dojo.languages['Ruby-MiniTest']
     exercise = @dojo.exercises['Yatzy']
     kata = @dojo.katas.create_kata(language, exercise)
     avatar = kata.start_avatar # tag 0

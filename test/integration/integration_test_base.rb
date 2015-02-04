@@ -1,9 +1,9 @@
 
 require_relative '../test_coverage'
 require_relative '../all'
-require 'test/unit'
+require_relative '../test_base'
 
-class IntegrationTestBase < Test::Unit::TestCase
+class IntegrationTestBase < TestBase
 
   def setup
     thread[:disk  ] = Disk.new
@@ -20,10 +20,6 @@ class IntegrationTestBase < Test::Unit::TestCase
     language = dojo.languages[language_name]
     exercise = dojo.exercises[exercise_name]
     dojo.katas.create_kata(language, exercise)
-  end
-
-  def self.test(name, &block)
-    define_method("test_#{name}".to_sym, &block)
   end
 
   def thread

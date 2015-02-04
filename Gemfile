@@ -10,6 +10,7 @@ gem 'thin'
 gem 'therubyracer'
 
 group :test do
+  gem 'minitest', '~> 4.0'
   gem 'rspec'
   gem 'shoulda-matchers'
   gem 'capybara', '= 2.4.4'

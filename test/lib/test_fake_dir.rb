@@ -102,7 +102,7 @@ class FakeDirTests < LibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'write() raises if filename ends in .rb and content is string' do
-    assert_raise RuntimeError do
+    assert_raises RuntimeError do
       @dir.write('filename.rb', 'theory')
     end
   end
@@ -117,7 +117,7 @@ class FakeDirTests < LibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'write() raises if filename ends in .json and content is string' do
-    assert_raise RuntimeError do
+    assert_raises RuntimeError do
       @dir.write('filename.json', 'theory')
     end
   end

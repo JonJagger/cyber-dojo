@@ -1,0 +1,13 @@
+
+{
+  "visible_filenames": [
+    "test_hiker.rb",
+    "hiker.rb",
+    "cyber-dojo.sh"
+  ],
+  "filename_extension" : ".rb",
+  "display_name": "Ruby, MiniTest",
+  "unit_test_framework": "ruby_minitest",
+  "tab_size": 2,
+  "image_name": "cyberdojo/ruby-1.9.3_test_unit"
+}

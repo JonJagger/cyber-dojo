@@ -8,7 +8,7 @@ class LightsTests < IntegrationTestBase
 
   def setup
     super
-    @language = @dojo.languages['Ruby-TestUnit']
+    @language = @dojo.languages['Ruby-MiniTest']
     @exercise = @dojo.exercises['Yatzy']
     @kata = @dojo.katas.create_kata(@language, @exercise)
   end

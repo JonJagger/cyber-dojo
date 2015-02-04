@@ -1,12 +1,8 @@
 
 require_relative '../test_coverage'
 require_relative '../all'
-require 'test/unit'
+require_relative '../test_base'
 
-class LanguagesTestBase < Test::Unit::TestCase
-
-  def self.test(name, &block)
-    define_method("test_#{name}".to_sym, &block)
-  end
+class LanguagesTestBase < TestBase
 
 end

@@ -1,4 +1,5 @@
-#!/usr/bin/env ruby
-require 'test/unit'
-# cannot see how to stop this outputting "ruby -v: ...."
-exit Test::Unit::AutoRunner.run(true)
+#!/bin/bash
+
+cat test*.rb > _temp_all_tests.rb
+ruby _temp_all_tests.rb
+rm _temp_all_tests.rb

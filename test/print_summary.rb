@@ -22,26 +22,50 @@ def modules
   %w( app_helpers app_lib app_models lib languages integration app_controllers )
 end
 
+def tally
+  '([\.|\d]+)'
+end
+
+def finished_pattern_for(mod)
+  # MiniTest
+  #   Finished in 0.083102s, 132.3675 runs/s, 348.9687 assertions/s.
+  # else
+  #   Finished tests in 0.083102s, 132.3675 tests/s, 348.9687 assertions/s.
+
+  if (mod != 'app_controllers')
+    return 'Finished in ' + tally + 's, '+
+             tally + ' runs/s, ' +
+             tally + ' assertions/s'
+  else
+    return 'Finished tests in ' + tally + 's, '+
+             tally + ' tests/s, ' +
+             tally + ' assertions/s'
+  end
+end
+
+def summary_pattern_for(mod)
+  # MiniTest
+  #   11 runs, 29 assertions, 0 failures, 0 errors, 0 skips
+  # else
+  #   11 tests, 29 assertions, 0 failures, 0 errors, 0 skips
+  key = (mod != 'app_controllers') ? 'runs' : 'tests'
+  words = [ key ] + %w( assertions failures errors skips)
+  words.map{ |s| tally + ' ' + s }.join(', ')
+end
+
 def gather_stats
   stats = { }
   modules.each do |mod|
-
     log = `cat #{mod}/log.tmp`
     h = stats[mod] = { }
 
-    # Finished tests in 0.083102s, 132.3675 tests/s, 348.9687 assertions/s.
-    tally = '([\.|\d]+)'
-    pattern = 'Finished tests in ' + tally + 's, '+
-               tally + ' tests/s, ' +
-               tally + ' assertions/s'
+    pattern = finished_pattern_for(mod)
     m = log.match(Regexp.new(pattern))
     h[:took] = f2(m[1])
     h[:tests_per_sec] = f2(m[2])
     h[:assertions_per_sec] = f2(m[3])
 
-    # 11 tests, 29 assertions, 0 failures, 0 errors, 0 skips
-    words = %w( tests assertions failures errors skips)
-    pattern = words.map{ |s| tally + ' ' + s }.join(', ')
+    pattern = summary_pattern_for(mod)
     m = log.match(Regexp.new(pattern))
     h[:test_count] = m[1].to_i
     h[:assertion_count] = m[2].to_i

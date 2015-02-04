@@ -7,7 +7,7 @@ class SandboxTests < IntegrationTestBase
   test 'defect-driven: filename containing space ' +
        'is not accidentally retained in the sandbox' do
 
-    kata = make_kata(@dojo, 'Ruby-TestUnit')
+    kata = make_kata(@dojo, 'Ruby-MiniTest')
     avatar = kata.start_avatar
     visible_files = avatar.tags[0].visible_files
 
