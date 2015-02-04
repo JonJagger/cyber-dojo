@@ -14,6 +14,12 @@ fi
 
 apt-get install -y acl
 
+echo "refreshing exercises/ cache"
+$cyberDojoHome/exercises/cache.rb
+
+echo "refreshing languages/ cache"
+$cyberDojoHome/languages/cache.rb
+
 # cyber-dojo creates folders under katas
 echo "chown/chgrp www-data katas"
 chmod g+rwsx katas
@@ -33,6 +39,12 @@ chmod g+rwsx $cyberDojoHome/test/cyberdojo
 setfacl -d -m group:www-data:rwx $cyberDojoHome/test/cyberdojo
 setfacl -m group:www-data:rwx $cyberDojoHome/test/cyberdojo
 
+echo "poking rails"
+bundle install
+
+echo "restarting apache"
+service apache2 restart
+
 echo "chown www-data:www-data *"
 chown www-data:www-data $cyberDojoHome/*
 
@@ -43,15 +55,3 @@ echo "chown -R www-data:www-data tmp"
 rm -rf tmp/cache
 mkdir -p tmp/cache
 chown -R www-data:www-data $cyberDojoHome/tmp
-
-echo "refreshing exercises/ cache"
-$cyberDojoHome/exercises/cache.rb
-
-echo "refreshing languages/ cache"
-$cyberDojoHome/languages/cache.rb
-
-echo "poking rails"
-bundle install
-
-echo "restarting apache"
-service apache2 restart
