@@ -30,7 +30,6 @@ var cyberDojo = (function(cd, $) {
     var content = cd.fileContentFor(filename);
     var numbers = cd.lineNumbersFor(filename);
     cd.bindLineNumbersFromTo(content, numbers);
-    //cd.bindLineNumbersFromTo(numbers, content);
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -62,19 +61,24 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.scrollToError = function() {
-    var numbers = cd.lineNumbersFor('instructions');
-    var line = $('#45', numbers);
-    var downFromTop = 150;
-    var halfSecond = 500;
-    cd.loadFile('instructions');
-
-    numbers.animate({
-      scrollTop: line.offset().top - numbers.offset().top - downFromTop
-      }, halfSecond);
+    var filename = 'instructions';
+    var lineNumber = '45';
 
     var content = cd.fileContentFor(filename);
-    content.focus();
+    var numbers = cd.lineNumbersFor(filename);
+    var line = $('#' + lineNumber, numbers);
+    var downFromTop = 150;
+    var instantly = 0;
 
+    cd.loadFile(filename);
+
+    // line-numbers is not directly scrollable but animate works!
+    numbers.animate({
+      scrollTop: '+=' + (line.offset().top - downFromTop) + 'px'
+      }, instantly, function() {
+        content.scrollTop(numbers.scrollTop());
+        line.css('color', 'black');
+      });
   };
 
   return cd;
