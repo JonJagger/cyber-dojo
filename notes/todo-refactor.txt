@@ -3,18 +3,31 @@
 If test run is successful do this?
 $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Add Custom exercise whose instructions file
+details how to make a custom exercise
+and/or points you to the blog page Mike helped write.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+doing < > on the history dialog moves to animals
+in a different order than they appear on on the
+dashboard. Does this matter? Feedback from James
+suggests dropping this. Just show in alphabetic order.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+language tests need to check all languages to ensure that
+if you hit [test] when there are no changes
+then a green stays a green and a red stays a red.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Make download *not* save to cyber-dojo/tmp folder.
 Instead have only as non-unit test that actually
 downloads the file and unzips it and verifies
 certain properties of the folders/files unzipped.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-doing < > on the history dialog moves to animals
-in a different order than they appear on on the
-dashboard. Does this matter?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 If I record keystrokes I could create a slow-tv like
 view of a practice. Copy paste could possibly be captured
-and marked too. File rename too. Like this idea.
+and marked too. File rename too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Increase number of avatars to 100. Olve is investigating.
 This would mean I would have to alter the re-enter page
@@ -24,7 +37,7 @@ the unstarted ones in black and white.
 languages/test_languages_manifests.rb
 What happens if "filename_extension" is not present.
 What if support_filenames mentions file that does not exist.
-What is visible_filenames mentions makefile but only makefile.txt exists.
+What if visible_filenames mentions makefile but only makefile.txt exists.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 While building support for C-CppUTest
 the cyber-dojo.sh file had non linux line-endings that caused problems.
@@ -53,10 +66,6 @@ to *get* to each colour (where there actually is a diff)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 run admin_script tests as part of run_all
 put iteration limit in to make them faster?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-language tests need to check all languages to ensure that
-if you hit [test] when there are no changes
-then a green stays a green and a red stays a red.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 If I decided to make dojo ids more than 10 chars long
 I could end up with 2nd level katas dirs some of which were
