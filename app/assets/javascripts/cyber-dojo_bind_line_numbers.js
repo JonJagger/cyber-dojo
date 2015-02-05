@@ -61,15 +61,11 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.scrollToError = function() {
-    return; // work in progress
+    //return; // work in progress
     var filename = 'test_hiker.rb';
     var lineNumber = '41';
 
-    var content = cd.fileContentFor(filename);
-    var numbers = cd.lineNumbersFor(filename);
     var line = $('#' + lineNumber, numbers);
-    var downFromTop = 150;
-    var instantly = 0;
 
     var blinkLineNumber = function() {
       var oneSecond = 1000;
@@ -86,6 +82,11 @@ var cyberDojo = (function(cd, $) {
         line.css('background', background);
       }, oneSecond);
     };
+
+    var content = cd.fileContentFor(filename);
+    var numbers = cd.lineNumbersFor(filename);
+    var downFromTop = 150;
+    var instantly = 0;
 
     cd.loadFile(filename);
 

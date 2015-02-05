@@ -472,10 +472,10 @@ var cyberDojo = (function(cd, $) {
 
           if (sectionCount > 0 && (reselected || !cd.inArray(filename, alreadyOpened))) {
             var section = $('#' + id + '_section_' + sectionIndex);
-            var downFromTop = 150;
+            var downFromTop = 250;
             var halfSecond = 500;
             diffSheet.animate({
-              scrollTop: section.offset().top - diffSheet.offset().top - downFromTop
+              scrollTop: '+=' + (section.offset().top - downFromTop) + 'px'
               }, halfSecond);
             sectionIndex += 1;
             sectionIndex %= sectionCount;
