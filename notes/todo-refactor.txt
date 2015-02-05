@@ -3,6 +3,11 @@
 If test run is successful do this?
 $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+NB the code in cyber-dojo_bind_line_numbers.js
+  scrollTop: '+=' + (line.offset().top - downFromTop) + 'px'
+Will (I think) fix the diff filename click handler moving
+directly to its associated diff.section
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Add Custom exercise whose instructions file
 details how to make a custom exercise
 and/or points you to the blog page Mike helped write.

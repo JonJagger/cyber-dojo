@@ -6,28 +6,11 @@ OUTPUT-HOTLINK (7)
     auto opens that file
     scrolls to the line-number.
 
-If there is no error (green/amber) then the
-pattern should not match.
+If there is no error (green) then the pattern should not match.
+But maybe it could work for both red and amber?
 Require only that there is an error in the output file.
 The pattern matches or it doesn't.
 Don't need to have the output file open.
-
-Have each line number be its own targtable link.
-Then just scroll into view.
-And possibly also highlight the line number?
-How to do this? Line-numbers are in a <textarea>
-I don't think you can embed html inside a textarea.
-Switched to non textarea.
-Almost working. Line numbers are off, but
-if you scroll the tiniest bit inside the
-content the line numbers re-align. Is this the delay?
-I think I need to...
-o) turn off content->lineNumber auto scrolling
-o) turn on  lineNumber->content auto scrolling
-o) do the scroll
-o) turn off lineNumber->content auto scrolling
-o) turn on  content->lineNumber auto scrolling
-
 
 
 Sometimes the error message will be for a non-visible file.
@@ -35,7 +18,7 @@ Eg C++ templates pointing you to a std library file
 that you are misusing. Suggests that the algorithm to
 find the error should be to pattern match for all
 filename:line-number: (or whatever the pattern is)
-and the process those looking for the first filename
+and then process those looking for the first filename
 that is one of the visible filenames.
 
 Suppose you are doing C++ and you wanted to tinker with
@@ -46,16 +29,4 @@ patterns, which are processed one at a time, as
 described above, till a match is made to a visible
 file.
 
-
-In general, it would be nice to capture outputs
-from languages as examples of red/amber/green.
-Capture of these could be automated!
-Then these could be used in tests to verify
-the correct colour is pattern matched, and also
-to verify the file+line-number pattern.
-
-Similarly it would nice to have fakes for
-setting up the FakeDisk/Dir to simulate
-what is actually on the disk. For exercises,
-and for languages.
 

@@ -34,7 +34,7 @@ var cyberDojo = (function(cd, $) {
 
   cd.bindScrollToError = function(event) {
     cancel(event);
-    //cd.scrollToError();
+    cd.scrollToError();
     return false;
   };
 
@@ -55,7 +55,7 @@ var cyberDojo = (function(cd, $) {
   };
 
   cd.scrollToErrorHotKey = function() {
-    return 'Ctrl+e';
+    return 'Alt+g';
   };
 
   cd.bindHotKeys = function(node) {

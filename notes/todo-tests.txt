@@ -1,4 +1,17 @@
 
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+In general, it would be nice to capture outputs
+from languages as examples of red/amber/green.
+Capture of these could be automated!
+Then these could be used in tests to verify
+the correct colour is pattern matched, and also
+to verify the file+line-number pattern.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Similarly it would nice to have fakes for
+setting up the FakeDisk/Dir to simulate
+what is actually on the disk. For exercises,
+and for languages.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test_all_languages.rb
 Has hacked in support for Java-1.8_Cucumber
