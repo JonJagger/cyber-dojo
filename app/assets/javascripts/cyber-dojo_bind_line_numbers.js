@@ -15,7 +15,7 @@ var cyberDojo = (function(cd, $) {
     var numbers = cd.lineNumbersFor(filename);
     cd.bindLineNumbersEvents(filename);
     numbers.attr('readonly', 'true');
-    numbers.val(cd.lineNumbers);
+    numbers.html(cd.lineNumbers);
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -30,6 +30,7 @@ var cyberDojo = (function(cd, $) {
     var content = cd.fileContentFor(filename);
     var numbers = cd.lineNumbersFor(filename);
     cd.bindLineNumbersFromTo(content, numbers);
+    //cd.bindLineNumbersFromTo(numbers, content);
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -51,12 +52,30 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.lineNumbers = (function() {
-    var number, lines = '1';
-    for (number = 2; number < 9999; number += 1) {
-      lines += '\r\n' + number;
+    var number, lines = '';
+    for (number = 1; number < 9999; number += 1) {
+      lines += '<div id="' + number + '">' + number + '</div>';
     }
     return lines;
   })();
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  cd.scrollToError = function() {
+    var numbers = cd.lineNumbersFor('instructions');
+    var line = $('#45', numbers);
+    var downFromTop = 150;
+    var halfSecond = 500;
+    cd.loadFile('instructions');
+
+    numbers.animate({
+      scrollTop: line.offset().top - numbers.offset().top - downFromTop
+      }, halfSecond);
+
+    var content = cd.fileContentFor(filename);
+    content.focus();
+
+  };
 
   return cd;
 })(cyberDojo || {}, $);
