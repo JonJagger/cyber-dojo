@@ -1,5 +1,8 @@
 
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+language tests need to check all languages to ensure that
+if you hit [test] when there are no changes
+then a green stays a green and a red stays a red.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 In general, it would be nice to capture outputs
 from languages as examples of red/amber/green.
