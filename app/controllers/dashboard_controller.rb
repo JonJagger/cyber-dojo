@@ -50,7 +50,7 @@ private
     gapper = TdGapper.new(@kata.created, seconds_per_column, max_seconds_uncollapsed)
     @gapped = gapper.fully_gapped(all_lights, time_now)
     @progress = @kata.language.progress_regexs != [ ]
-    @avatar_names = avatar_names_sorted_by_traffic_light_count(all_lights)
+    @avatar_names = @kata.avatars.active.map{|avatar| avatar.name}.sort
   end
 
   def bool(attribute)
@@ -76,12 +76,6 @@ private
       :text => matches.join,
       :colour => (matches[0] != nil ? 'red' : 'green')
     }
-  end
-
-  def avatar_names_sorted_by_traffic_light_count(all_lights)
-    all_lights.map {|name,lights|
-      [lights.count, name]
-    }.sort.reverse.map {|a| a[1]}
   end
 
 end

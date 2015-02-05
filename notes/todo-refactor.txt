@@ -7,11 +7,6 @@ Add Custom exercise whose instructions file
 details how to make a custom exercise
 and/or points you to the blog page Mike helped write.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-doing < > on the history dialog moves to animals
-in a different order than they appear on on the
-dashboard. Does this matter? Feedback from James
-suggests dropping this. Just show in alphabetic order.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 language tests need to check all languages to ensure that
 if you hit [test] when there are no changes
 then a green stays a green and a red stays a red.
