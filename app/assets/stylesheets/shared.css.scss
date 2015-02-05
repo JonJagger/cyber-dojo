@@ -49,6 +49,16 @@
   margin-right: 5px;
 }
 
+.hover-tip {
+  z-index: 3;
+  position: absolute;
+  background-color: darken($lighter-color, 6%);
+  color: lighten($darker-color, 6%);
+  font-size: 1.15em;
+  @include rounded-corner(6px);
+  padding: 5px;
+}
+
 //----------------------------------------------
 
 #footer {

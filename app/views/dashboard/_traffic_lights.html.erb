@@ -6,9 +6,12 @@ $(function() {
   var dashboard = $('#dashboard-page');
   var lights = $('.diff-traffic-light', dashboard);
   var showRevert = false;
+
   cd.setupTrafficLightOpensHistoryDialogHandlers(lights,showRevert);
+  cd.setupTrafficLightToolTips(lights);
 
   var bulbCounts = $('#traffic-lights .traffic-light-count', dashboard);
+
   cd.setupTrafficLightCountOpensCurrentCode(bulbCounts,showRevert);
 
   cd.pieChart($('#traffic-lights .pie', dashboard));

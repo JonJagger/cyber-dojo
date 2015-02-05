@@ -5,7 +5,10 @@ $(function() {
 
   cd.pieChart($('#traffic-lights .pie'));
   var showRevert = true;
-  cd.setupTrafficLightOpensHistoryDialogHandlers($('.diff-traffic-light'),showRevert);
+  var lights = $('.diff-traffic-light');
+  cd.setupTrafficLightOpensHistoryDialogHandlers(lights,showRevert);
+  cd.setupTrafficLightToolTips(lights);
+  
   var allTheWay = 100000;
   $('#traffic-lights').scrollLeft(allTheWay);
 

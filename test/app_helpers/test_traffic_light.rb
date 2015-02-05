@@ -41,7 +41,7 @@ class TrafficLightTests < AppHelpersTestBase
     expected = "" +
       "<div" +
       " class='diff-traffic-light avatar-image'" +
-      " title='Click to review hippo&#39;s current code'" +
+      " data-tip='Click to review hippo&#39;s current code'" +
       " data-id='ABCD1234'" +
       " data-avatar-name='hippo'" +
       " data-was-tag='-1'" +
@@ -77,7 +77,7 @@ class TrafficLightTests < AppHelpersTestBase
     expected = "" +
       "<div" +
       " class='diff-traffic-light'" +
-      " title='Click to review hippo&#39;s 2 &harr; 3 diff'" +
+      " data-tip='Click to review hippo&#39;s 2 &harr; 3 diff'" +
       " data-id='ABCD1234'" +
       " data-avatar-name='hippo'" +
       " data-was-tag='2'" +

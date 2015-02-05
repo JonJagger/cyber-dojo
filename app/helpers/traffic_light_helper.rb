@@ -11,7 +11,7 @@ module TrafficLightHelper
     number = light.number
     avatar = light.avatar
     "<div class='diff-traffic-light'" +
-        " title='#{tool_tip(light)}'" +
+        " data-tip='#{tool_tip(light)}'" +
         " data-id='#{avatar.kata.id}'" +
         " data-avatar-name='#{avatar.name}'" +
         " data-was-tag='#{number-1}'" +
@@ -22,7 +22,7 @@ module TrafficLightHelper
 
   def diff_avatar_image(avatar)
     "<div class='diff-traffic-light avatar-image'" +
-        " title='Click to review #{avatar.name}#{apostrophe}s current code'" +
+        " data-tip='Click to review #{avatar.name}#{apostrophe}s current code'" +
         " data-id='#{avatar.kata.id}'" +
         " data-avatar-name='#{avatar.name}'" +
         " data-was-tag='-1'" +

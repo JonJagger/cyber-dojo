@@ -7,10 +7,6 @@ Add Custom exercise whose instructions file
 details how to make a custom exercise
 and/or points you to the blog page Mike helped write.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-language tests need to check all languages to ensure that
-if you hit [test] when there are no changes
-then a green stays a green and a red stays a red.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 
