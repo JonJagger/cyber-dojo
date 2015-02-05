@@ -574,7 +574,7 @@ var cyberDojo = (function(cd, $) {
     // historyDialog
     //---------------------------------------------------
 
-    var makeCloseHelpForkRevertButtons = function() {
+    var makeAllButtons = function() {
       var buttons = [ ];
       var makeButton = function(name,handler) {
         return {
@@ -610,7 +610,7 @@ var cyberDojo = (function(cd, $) {
       width: 1150,
       height: 655,
       modal: true,
-      buttons: makeCloseHelpForkRevertButtons(),
+      buttons: makeAllButtons(),
       autoOpen: false,
       open: function() { refresh(); },
       closeOnEscape: true,
