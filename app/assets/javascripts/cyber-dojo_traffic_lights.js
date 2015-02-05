@@ -36,7 +36,7 @@ var cyberDojo = (function(cd, $) {
         ' Click to review ' + avatarName + "'s current code.";
       count.attr('title', toolTip);
       count.click(function() {
-        cd.dialog_history(id,avatarName,lastTag,lastTag(),showRevert);
+        cd.dialog_history(id,avatarName,lastTag,lastTag,showRevert);
       });
     });
   };
