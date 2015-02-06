@@ -1,8 +1,8 @@
 
 OUTPUT-HOTLINK (7)
-    hot key (ALT-E perhaps) causes...
+    hot key (ALT-G perhaps) causes...
     javascript to matches the output for *first*
-      file+line-number in error message (in pattern of output)
+      file+lineNumber in error message
     auto opens that file
     scrolls to the line-number.
 
@@ -12,7 +12,6 @@ Require only that there is an error in the output file.
 The pattern matches or it doesn't.
 Don't need to have the output file open.
 
-
 Sometimes the error message will be for a non-visible file.
 Eg C++ templates pointing you to a std library file
 that you are misusing. Suggests that the algorithm to
@@ -21,12 +20,19 @@ filename:line-number: (or whatever the pattern is)
 and then process those looking for the first filename
 that is one of the visible filenames.
 
-Suppose you are doing C++ and you wanted to tinker with
+Suppose you are doing C++ and you tinker with
 the makefile? In that case you could get an error
 with a different pattern from make.
-This suggests the option of having a *sequence* of
+This suggests having a *sequence* of
 patterns, which are processed one at a time, as
 described above, till a match is made to a visible
 file.
+
+I'm assuming that all languages will use basically
+a similar format, filename first, line-number second,
+since I need to know which is which.
+A simple heuristic would be to check which one
+contains digits only.
+
 
 
