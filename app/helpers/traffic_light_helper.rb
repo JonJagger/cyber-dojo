@@ -4,7 +4,8 @@ module TrafficLightHelper
   # The data-id, data-avatar-name, data-was-tag, data-now-tag
   # values are used to create click handlers that open a diff-dialog
   # See setupTrafficLightOpensDiffDialogHandlers()
-  # in app/asserts/javascripts/cyber-dojo_dialog_diff.rb
+  #     setupTrafficLightToolTips()
+  # in app/asserts/javascripts/cyber-dojo_traffic_lights.js
 
   def diff_traffic_light(light)
     # used from test page and from dashboard page
