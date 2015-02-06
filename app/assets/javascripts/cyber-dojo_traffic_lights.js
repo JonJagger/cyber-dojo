@@ -3,6 +3,13 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
+  cd.currentTrafficLightColour = function() {
+    var count = $('.traffic-light-count');
+    return count.data('current-colour');
+  };
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   cd.setupTrafficLightOpensHistoryDialogHandlers = function(lights,showRevert) {
     lights.click(function() {
       var light = $(this);

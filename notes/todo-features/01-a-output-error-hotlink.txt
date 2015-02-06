@@ -33,6 +33,14 @@ a similar format, filename first, line-number second,
 since I need to know which is which.
 A simple heuristic would be to check which one
 contains digits only.
+Further investigation. It could be I need to anchor
+a regex to the start of a line. In that case the
+regex would be something like
+/(^|\n)([a-zA-Z0-9_\.]*):([0-9]*):
+in which case I will get back three matches and
+the filename will be [1] and the line number [2].
+
+
 
 
 
