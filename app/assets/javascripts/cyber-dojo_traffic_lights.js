@@ -51,7 +51,13 @@ var cyberDojo = (function(cd, $) {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   var setTip = function(light,tip) {
-    light.append($('<span class="hover-tip">' + tip + '</span>'));
+    // mouseenter retrieves the tip via a slow ajax call
+    // which means mouseleave could have already occurred
+    // by the time the ajax returns to set the tip. The
+    // mouse-has-left attribute minimize the chance of this race.
+    if (!light.hasClass('mouse-has-left')) {
+      light.append($('<span class="hover-tip">' + tip + '</span>'));
+    }
   };
 
   cd.setupTrafficLightToolTips = function(lights) {
@@ -59,10 +65,11 @@ var cyberDojo = (function(cd, $) {
       var light = $(this);
       var tip = light.data('tip');
       light.mouseleave(function() {
-          // fast mouse will leave behind orphan tips
-        $('.hover-tip').remove();
+        light.addClass('mouse-has-left');
+        $('.hover-tip',light).remove();
       });
       light.mouseenter(function() {
+        light.removeClass('mouse-has-left');
         if (tip === 'ajax:traffic_light') {
           $.getJSON('/tipper/tip', {
             id: light.data('id'),
