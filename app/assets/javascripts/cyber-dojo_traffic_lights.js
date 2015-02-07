@@ -60,7 +60,7 @@ var cyberDojo = (function(cd, $) {
       // dashboard auto-scroll requires forced positioning.
       $('.hover-tip').position({
         my: 'left top',
-        at: 'right bottom',
+        at: 'right',
         of: light });
     }
   };
