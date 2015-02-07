@@ -50,16 +50,33 @@ var cyberDojo = (function(cd, $) {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  var setTip = function(light,tip) {
+    light.append($('<span class="hover-tip">' + tip + '</span>'));
+  };
+
   cd.setupTrafficLightToolTips = function(lights) {
-    lights.hover(
-      function() { // in
-        var tip = $(this).data('tip');
-        $(this).append($('<span class="hover-tip">' + tip + '</span>'));
-      },
-      function() { // out
-        $(this).find('span:last').remove();
-      }
-    );
+    lights.each(function() {
+      var light = $(this);
+      var tip = light.data('tip');
+      light.mouseleave(function() {
+          // fast mouse will leave behind orphan tips
+        $('.hover-tip').remove();
+      });
+      light.mouseenter(function() {
+        if (tip === 'ajax:traffic_light') {
+          $.getJSON('/tipper/tip', {
+            id: light.data('id'),
+            avatar_name: light.data('avatar-name'),
+            was_tag: light.data('was-tag'),
+            now_tag: light.data('now-tag')
+          }, function(response) {
+            setTip(light,response.html);
+          });
+        } else {
+          setTip(light,tip);
+        }
+      });
+    });
   };
 
   return cd;

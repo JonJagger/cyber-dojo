@@ -6,19 +6,6 @@ class TrafficLightTests < AppHelpersTestBase
 
   include TrafficLightHelper
 
-  test 'tool tip' do
-    kata = nil
-    avatar = Avatar.new(kata,'hippo')
-    light = Light.new(avatar, {
-      'number' => 2,
-      'time' => [2012,5,1,23,20,45],
-      'colour' => 'red'
-    })
-    assert_equal "Click to review hippo&#39;s 1 &harr; 2 diff", tool_tip(light)
-  end
-
-  #- - - - - - - - - - - - - - - -
-
   test 'traffic_light_image' do
     expected = "<img src='/images/traffic_light_red.png'" +
                " alt='red traffic-light'" +
@@ -77,7 +64,7 @@ class TrafficLightTests < AppHelpersTestBase
     expected = "" +
       "<div" +
       " class='diff-traffic-light'" +
-      " data-tip='Click to review hippo&#39;s 2 &harr; 3 diff'" +
+      " data-tip='ajax:traffic_light'" +
       " data-id='ABCD1234'" +
       " data-avatar-name='hippo'" +
       " data-was-tag='2'" +

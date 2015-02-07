@@ -30,6 +30,7 @@ require_relative_in('app/helpers', %w{
   parity_helper
   pie_chart_helper
   traffic_light_helper
+  tip_helper
 })
 
 require_relative_in('app/lib', %w{

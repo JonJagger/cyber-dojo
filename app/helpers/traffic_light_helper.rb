@@ -12,7 +12,7 @@ module TrafficLightHelper
     number = light.number
     avatar = light.avatar
     "<div class='diff-traffic-light'" +
-        " data-tip='#{tool_tip(light)}'" +
+        " data-tip='ajax:traffic_light'" +
         " data-id='#{avatar.kata.id}'" +
         " data-avatar-name='#{avatar.name}'" +
         " data-was-tag='#{number-1}'" +
@@ -42,17 +42,17 @@ module TrafficLightHelper
        " height='#{height}'/>"
   end
 
-  def tool_tip(light)
-    n = light.number
-    "Click to review #{light.avatar.name}#{apostrophe}s #{n-1} #{arrow} #{n} diff"
-  end
+  #def tool_tip(light)
+  #  n = light.number
+  #  "Click to review #{light.avatar.name}#{apostrophe}s #{n-1} #{arrow} #{n} diff"
+  #end
 
   def apostrophe
     '&#39;'
   end
 
-  def arrow
-    '&harr;'
-  end
+  #def arrow
+  #  '&harr;'
+  #end
 
 end
