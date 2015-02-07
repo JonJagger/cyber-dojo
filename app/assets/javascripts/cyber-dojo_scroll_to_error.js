@@ -14,15 +14,26 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - -
 
+  var regexFor = function(s) {
+    var filenamePattern = '([a-zA-Z0-9_\.]*)';
+    var lineNumberPattern = '([0-9]*)';
+    s = s.replace('{F}',filenamePattern);
+    s = s.replace('{L}',lineNumberPattern);
+    return new RegExp(s, 'g');
+  };
+
+  //- - - - - - - - - - - - - - - - - - - -
+
   var getFilenameLineNumberRegexSpecs = function(colour) {
-    // Hard-coded for Ruby MiniTest
     if (colour === 'amber') {
-      var regex = /([a-zA-Z0-9_\.]*):([0-9]*): syntax error/g;
+      var rubyMiniTestAmberPattern = '{F}:{L}: syntax error';
+      var regex = regexFor(rubyMiniTestAmberPattern);
       var slots = [1,2];
       return  [[regex,slots]];
     }
     if (colour === 'red') {
-      var regex = /\[([a-zA-Z0-9_\.]*):([0-9]*)\]:/g;
+      var rubyMiniTestRedPattern = '\[{F}:{L}\]:';
+      var regex = regexFor(rubyMiniTestRedPattern);
       var slots = [1,2];
       return [[regex,slots]];
     }
