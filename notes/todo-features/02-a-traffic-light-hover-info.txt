@@ -14,7 +14,11 @@ git diff has a cool --word-diff option
 $ git diff --word-diff 13 14
 Gives [-DEL-]{+ADD+} for changes *inside* a line (there can be several)
 Eg...
+Note too there is an option for using a regex to decide what's a word
+ --word-diff-regex=<regex>
+http://stackoverflow.com/questions/8219900/filtering-a-diff-with-a-regular-expression
 
+<DIFF>
 diff --git a/sandbox/test_hiker.rb b/sandbox/test_hiker.rb
 index 5f07ee8..424deac 100644
 --- a/sandbox/test_hiker.rb
@@ -30,3 +34,42 @@ class TestHiker < [-MiniTest::Unit::TestCase-]{+MiniTest::Unit::TestCases+}
   end
 
 end
+</DIFF>
+
+Note that 'words' are separated by whitespace.
+How could I rediff the [--]{++} strings above to get the
+minimal diff, which in the above case is just a singel additional s.
+One way would be to write the two strings to two files, putting
+a newline after each character - and then do a regular diff
+on the two files!
+Can you do a diff on two strings?
+
+
+
+added lines come out as
+<DIFF>
+diff --git a/sandbox/instructions b/sandbox/instructions
+index 6d5ab1f..76f00eb 100644
+--- a/sandbox/instructions
++++ b/sandbox/instructions
+@@ -44,7 +44,28 @@ asd
+as
+THIS IS LINE 45
+asd
+{+sdf+}
+{+s+}
+{+fs+}
+{+df+}
+{+sdf+}
+{+s+}
+{+df+}
+</DIFF>
+
+
+Similarly line with a deleted part only
+<DIFF>
+.........
+  def test_life_the_universe_and_everything
+    assert_equal 42, answer[-s-]
+  end
+</DIFF>
