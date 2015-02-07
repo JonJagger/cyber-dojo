@@ -58,6 +58,8 @@ var cyberDojo = (function(cd, $) {
     if (!light.hasClass('mouse-has-left')) {
       light.append($('<span class="hover-tip">' + tip + '</span>'));
     }
+    // Ah figgis. When the dashboard scrolls, the tooltip
+    // is not in the correct place.
   };
 
   cd.setupTrafficLightToolTips = function(lights) {

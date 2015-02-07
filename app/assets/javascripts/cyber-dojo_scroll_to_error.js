@@ -92,7 +92,7 @@ var cyberDojo = (function(cd, $) {
 
   cd.scrollToError = function() {
 
-    return; // work in progress
+    //return; // work in progress
 
     var colour = cd.currentTrafficLightColour();
     if (colour != 'amber' && colour != 'red') {
