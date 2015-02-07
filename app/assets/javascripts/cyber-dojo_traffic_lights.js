@@ -57,9 +57,12 @@ var cyberDojo = (function(cd, $) {
     // mouse-has-left attribute minimizes this race's chance.
     if (!light.hasClass('mouse-has-left')) {
       light.append($('<span class="hover-tip">' + tip + '</span>'));
+      // dashboard auto-scroll requires forced positioning.
+      $('.hover-tip').position({
+        my: 'left top',
+        at: 'right bottom',
+        of: light });
     }
-    // Ah figgis. When the dashboard scrolls, the tooltip
-    // is not in the correct place.
   };
 
   cd.setupTrafficLightToolTips = function(lights) {

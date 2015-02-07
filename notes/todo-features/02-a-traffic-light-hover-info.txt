@@ -8,6 +8,8 @@ to that traffic-light.
   o) total number of lines deleted
   o) difference between the number of lines added and removed.
 
+I could add a tooltips to the traffic-lights on the
+history diff dialog too.
 
 How to detect which lines have been changed?
 git diff has a cool --word-diff option
