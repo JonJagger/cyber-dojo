@@ -8,6 +8,25 @@ to that traffic-light.
   o) total number of lines deleted
   o) difference between the number of lines added and removed.
 
-Can I simply use jQuery hover() for this?
-See example http://api.jquery.com/hover/
 
+How to detect which lines have been changed?
+git diff has a cool --word-diff option
+$ git diff --word-diff 13 14
+Gives [-DEL-]{+ADD+} for changes *inside* a line (there can be several)
+Eg...
+
+diff --git a/sandbox/test_hiker.rb b/sandbox/test_hiker.rb
+index 5f07ee8..424deac 100644
+--- a/sandbox/test_hiker.rb
++++ b/sandbox/test_hiker.rb
+@@ -35,10 +35,10 @@ sd
+sd
+=end
+
+class TestHiker < [-MiniTest::Unit::TestCase-]{+MiniTest::Unit::TestCases+}
+
+  def test_life_the_universe_and_everything
+    assert_equal 42, answer [-sdsd-]{+s+}
+  end
+
+end
