@@ -42,17 +42,8 @@ module TrafficLightHelper
        " height='#{height}'/>"
   end
 
-  #def tool_tip(light)
-  #  n = light.number
-  #  "Click to review #{light.avatar.name}#{apostrophe}s #{n-1} #{arrow} #{n} diff"
-  #end
-
   def apostrophe
     '&#39;'
   end
-
-  #def arrow
-  #  '&harr;'
-  #end
 
 end

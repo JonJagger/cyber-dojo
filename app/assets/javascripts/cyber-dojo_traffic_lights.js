@@ -54,7 +54,7 @@ var cyberDojo = (function(cd, $) {
     // mouseenter retrieves the tip via a slow ajax call
     // which means mouseleave could have already occurred
     // by the time the ajax returns to set the tip. The
-    // mouse-has-left attribute minimize the chance of this race.
+    // mouse-has-left attribute minimizes this race's chance.
     if (!light.hasClass('mouse-has-left')) {
       light.append($('<span class="hover-tip">' + tip + '</span>'));
     }
