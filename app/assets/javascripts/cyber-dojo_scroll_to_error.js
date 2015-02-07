@@ -54,7 +54,7 @@ var cyberDojo = (function(cd, $) {
 
     var output = cd.fileContentFor('output').val();
     var matches = getFileLocations(output, specs);
-    
+
     //TODO: use first filename that names a visible file
     return matches[0];
   };
@@ -81,7 +81,7 @@ var cyberDojo = (function(cd, $) {
 
   cd.scrollToError = function() {
 
-    //return; // work in progress
+    return; // work in progress
 
     var colour = cd.currentTrafficLightColour();
     if (colour != 'amber' && colour != 'red') {
