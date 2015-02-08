@@ -39,6 +39,17 @@ var cyberDojo = (function(cd, $) {
     });
   };
 
+  var setAjaxPieChartTip = function(pie) {
+    $.getJSON('/tipper/pie_chart_tip', {
+      red: pie.data('red-count'),
+      amber: pie.data('amber-count'),
+      green: pie.data('green-count'),
+      timed_out: pie.data('timed-out-count')
+    }, function(response) {
+      setTip(pie,response.html);
+    });
+  };
+
   cd.setupHoverTips = function() {
     $('[data-tip]').each(function() {
       var node = $(this);
@@ -53,6 +64,8 @@ var cyberDojo = (function(cd, $) {
           setAjaxTrafficLightTip(node);
         } else if (tip === 'ajax:traffic_light_count') {
           setAjaxTrafficLightCountTip(node);
+        } else if (tip === 'ajax:pie_chart') {
+          setAjaxPieChartTip(node);
         } else {
           setTip(node,tip);
         }

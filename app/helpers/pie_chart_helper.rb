@@ -16,6 +16,7 @@ module PieChartHelper
   def pie_chart_from_counts(counts, size, key)
      "<canvas" +
         " class='pie'" +
+        " data-tip='ajax:pie_chart'" +
         " data-red-count='#{counts[:red]}'" +
         " data-amber-count='#{counts[:amber]}'" +
         " data-green-count='#{counts[:green]}'" +

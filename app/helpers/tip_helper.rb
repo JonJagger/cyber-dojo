@@ -29,6 +29,10 @@ module TipHelper
     "<span class='#{colour}'>" + colour + '</span>.'
   end
 
+  def pie_chart_tip_html(red,amber,green,timed_out)
+    red + 'sss'
+  end
+
   def colour_tag(lights,tag)
     colour = lights[tag-1].colour
     "<span class='#{colour}'>#{tag}</span>"
