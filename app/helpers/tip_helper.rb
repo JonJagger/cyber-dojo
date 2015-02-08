@@ -3,15 +3,14 @@ module TipHelper
 
   def traffic_light_tip(avatar, was_tag, now_tag)
     lights = avatar.lights
-    tip = "Click to review #{avatar.name}#{apostrophe}s"
-    colour = lights[was_tag-1].colour
+    tip = 'Click to review '
+    tip += "#{avatar.name}#{apostrophe}s"   # panda's
     tip += ' '
-    tip += "<span class='#{colour}'>#{was_tag}</span>"
+    tip += colour_tag(lights, was_tag)      # 13
     tip += ' '
-    tip += "#{arrow}"
+    tip += "#{arrow}"                       # <->
     tip += ' '
-    colour = lights[now_tag-1].colour
-    tip += "<span class='#{colour}'>#{now_tag}</span>"
+    tip += colour_tag(lights, now_tag)      # 14
     tip += ' '
     tip += 'diff'
     diff = avatar.tags[was_tag].diff(now_tag)
@@ -19,6 +18,11 @@ module TipHelper
     tip += "<div>&bull; #{plural(added_count, 'added line')}</div>"
     tip += "<div>&bull; #{plural(deleted_count, 'deleted line')}</div>"
     tip
+  end
+
+  def colour_tag(lights,tag)
+    colour = lights[tag-1].colour
+    "<span class='#{colour}'>#{tag}</span>"
   end
 
   def apostrophe
