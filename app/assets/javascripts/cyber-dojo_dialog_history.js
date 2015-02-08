@@ -155,8 +155,8 @@ var cyberDojo = (function(cd, $) {
 
     var refreshAvatarHandler = function(id,name) {
       var title = function() {
-        var text = 'Click to review ' + name + "'s ";
-        return text + (inDiffMode() ? 'diff history' : 'current code');
+        var text = 'Click to open ' + name + "'s ";
+        return text + (inDiffMode() ? 'history diff' : 'current code');
       };
       $('#' + id + '-avatar')
         .attr('disabled', name === '')
