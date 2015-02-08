@@ -2,8 +2,18 @@
 module TipHelper
 
   def traffic_light_tip(avatar, was_tag, now_tag)
-    tip = "Click to review #{avatar.name}#{apostrophe}s "
-    tip += "#{was_tag} #{arrow} #{now_tag} diff"
+    lights = avatar.lights
+    tip = "Click to review #{avatar.name}#{apostrophe}s"
+    colour = lights[was_tag-1].colour
+    tip += ' '
+    tip += "<span class='#{colour}'>#{was_tag}</span>"
+    tip += ' '
+    tip += "#{arrow}"
+    tip += ' '
+    colour = lights[now_tag-1].colour
+    tip += "<span class='#{colour}'>#{now_tag}</span>"
+    tip += ' '
+    tip += 'diff'
     diff = avatar.tags[was_tag].diff(now_tag)
     added_count,deleted_count = line_counts(diff)
     tip += "<div>&bull; #{plural(added_count, 'added line')}</div>"
