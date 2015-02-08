@@ -1,7 +1,7 @@
 
 module TipHelper
 
-  def traffic_light_tip(id, avatar, was_tag, now_tag)
+  def traffic_light_tip(avatar, was_tag, now_tag)
     tip = "Click to review #{avatar.name}#{apostrophe}s "
     tip += "#{was_tag} #{arrow} #{now_tag} diff"
     diff = avatar.tags[was_tag].diff(now_tag)
