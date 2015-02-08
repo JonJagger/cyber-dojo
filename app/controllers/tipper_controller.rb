@@ -20,16 +20,4 @@ class TipperController < ApplicationController
     }
   end
 
-  def pie_chart_tip
-    render :json => {
-      :html =>
-        pie_chart_tip_html(
-          params['red'],
-          params['amber'],
-          params['green'],
-          params['timed_out']
-        )
-    }
-  end
-
 end

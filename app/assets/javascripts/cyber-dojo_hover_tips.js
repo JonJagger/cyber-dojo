@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  var setTip = function(node,tip) {
+  var setHoverTip = function(node,tip) {
     // mouseenter retrieves the tip via a slow ajax call
     // which means mouseleave could have already occurred
     // by the time the ajax returns to set the tip. The
@@ -13,40 +13,29 @@ var cyberDojo = (function(cd, $) {
       // dashboard auto-scroll requires forced positioning.
       $('.hover-tip').position({
         my: 'left top',
-        at: 'right',
+        at: 'right bottom',
         of: node });
     }
   };
 
-  var setAjaxTrafficLightTip = function(light) {
+  var setAjaxTrafficLightHoverTip = function(light) {
     $.getJSON('/tipper/traffic_light_tip', {
       id: light.data('id'),
       avatar: light.data('avatar-name'),
       was_tag: light.data('was-tag'),
       now_tag: light.data('now-tag')
     }, function(response) {
-      setTip(light,response.html);
+      setHoverTip(light,response.html);
     });
   };
 
-  var setAjaxTrafficLightCountTip = function(node) {
+  var setAjaxTrafficLightCountHoverTip = function(node) {
     $.getJSON('/tipper/traffic_light_count_tip', {
       avatar: node.data('avatar-name'),
       bulb_count: node.data('bulb-count'),
       current_colour: node.data('current-colour')
     }, function(response) {
-      setTip(node,response.html);
-    });
-  };
-
-  var setAjaxPieChartTip = function(pie) {
-    $.getJSON('/tipper/pie_chart_tip', {
-      red: pie.data('red-count'),
-      amber: pie.data('amber-count'),
-      green: pie.data('green-count'),
-      timed_out: pie.data('timed-out-count')
-    }, function(response) {
-      setTip(pie,response.html);
+      setHoverTip(node,response.html);
     });
   };
 
@@ -61,13 +50,11 @@ var cyberDojo = (function(cd, $) {
       node.mouseenter(function() {
         node.removeClass('mouse-has-left');
         if (tip === 'ajax:traffic_light') {
-          setAjaxTrafficLightTip(node);
+          setAjaxTrafficLightHoverTip(node);
         } else if (tip === 'ajax:traffic_light_count') {
-          setAjaxTrafficLightCountTip(node);
-        } else if (tip === 'ajax:pie_chart') {
-          setAjaxPieChartTip(node);
+          setAjaxTrafficLightCountHoverTip(node);
         } else {
-          setTip(node,tip);
+          setHoverTip(node,tip);
         }
       });
     });

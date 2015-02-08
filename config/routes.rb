@@ -43,8 +43,6 @@ CyberDojo::Application.routes.draw do
       :traffic_light_tip, :constraints => { :format => :json }
     get 'traffic_light_count_tip' =>
       :traffic_light_count_tip, :constraints => { :format => :json }
-    get 'pie_chart_tip' =>
-      :pie_chart_tip, :constraints => { :format => :json }
   end
 
 
