@@ -1,10 +1,12 @@
 
 module TipHelper
 
-  def traffic_light_tip(avatar, was_tag, now_tag)
+  def traffic_light_tip_html(avatar, was_tag, now_tag)
+    was_tag = was_tag.to_i
+    now_tag = now_tag.to_i
     lights = avatar.lights
     tip = 'Click to review '
-    tip += "#{avatar.name}#{apostrophe}s"   # panda's
+    tip += "#{avatar.name}'s"   # panda's
     tip += ' '
     tip += colour_tag(lights, was_tag)      # 13
     tip += ' '
@@ -18,6 +20,15 @@ module TipHelper
     tip += "<div>&bull; #{plural(added_count, 'added line')}</div>"
     tip += "<div>&bull; #{plural(deleted_count, 'deleted line')}</div>"
     tip
+  end
+
+  def traffic_light_count_tip_html(avatar_name, bulb_count, colour)
+    ' Click to review ' + avatar_name + "'s current code." +
+    '<br/>' +
+    avatar_name + ' has ' +
+    plural(bulb_count, 'traffic-light') +
+    ' and is at ' +
+    "<span class='#{colour}'>" + colour + '</span>.'
   end
 
   def colour_tag(lights,tag)

@@ -23,70 +23,14 @@ var cyberDojo = (function(cd, $) {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.setupTrafficLightCountOpensCurrentCode = function(bulbs,showRevert) {
-    $.each(bulbs, function(_,bulb) {
-      var count = $(bulb);
+  cd.setupTrafficLightCountOpensCurrentCode = function(counts,showRevert) {
+    counts.click(function() {
+      var count = $(this);
       var id = count.data('id');
       var avatarName = count.data('avatar-name');
-      var wasTag = count.data('bulb-count');
-      var nowTag = count.data('bulb-count');
       var lastTag = -1;
-      var colour  = count.data('current-colour');
-      if (colour === 'timed_out') {
-        colour = 'amber';
-      }
-      var plural = function(count,name) {
-        return count + ' ' + name + (count > 1 ? 's' : '');
-      };
-      var toolTip = avatarName + ' has ' + plural(wasTag, 'traffic-light') +
-        ' and is at ' + colour + '.' +
-        ' Click to review ' + avatarName + "'s current code.";
-      count.attr('title', toolTip);
       count.click(function() {
         cd.dialog_history(id,avatarName,lastTag,lastTag,showRevert);
-      });
-    });
-  };
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  var setTip = function(light,tip) {
-    // mouseenter retrieves the tip via a slow ajax call
-    // which means mouseleave could have already occurred
-    // by the time the ajax returns to set the tip. The
-    // mouse-has-left attribute minimizes this race's chance.
-    if (!light.hasClass('mouse-has-left')) {
-      light.append($('<span class="hover-tip">' + tip + '</span>'));
-      // dashboard auto-scroll requires forced positioning.
-      $('.hover-tip').position({
-        my: 'left top',
-        at: 'right',
-        of: light });
-    }
-  };
-
-  cd.setupTrafficLightToolTips = function(lights) {
-    lights.each(function() {
-      var light = $(this);
-      var tip = light.data('tip');
-      light.mouseleave(function() {
-        light.addClass('mouse-has-left');
-        $('.hover-tip',light).remove();
-      });
-      light.mouseenter(function() {
-        light.removeClass('mouse-has-left');
-        if (tip === 'ajax:traffic_light') {
-          $.getJSON('/tipper/tip', {
-            id: light.data('id'),
-            avatar: light.data('avatar-name'),
-            was_tag: light.data('was-tag'),
-            now_tag: light.data('now-tag')
-          }, function(response) {
-            setTip(light,response.html);
-          });
-        } else {
-          setTip(light,tip);
-        }
       });
     });
   };

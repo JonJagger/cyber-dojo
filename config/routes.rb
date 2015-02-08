@@ -38,10 +38,17 @@ CyberDojo::Application.routes.draw do
     get 'heartbeat'  => :heartbeat, :constraints => { :format => :json }
   end
 
+  scope path: '/tipper', controller: :tipper do
+    get 'traffic_light_tip' =>
+      :traffic_light_tip, :constraints => { :format => :json }
+    get 'traffic_light_count_tip' =>
+      :traffic_light_count_tip, :constraints => { :format => :json }
+  end
+
+
   get 'differ/diff' => 'differ#diff', :constraints => { :format => :json }
   get 'forker/fork(/:id)' => 'forker#fork'
   get 'reverter/revert' => 'reverter#revert', :constraints => { :format => :json }
-  get 'tipper/tip' => 'tipper#tip', :constraints => { :format => :json }
 
   get 'downloader/download(/:id)' => 'downloader#download'
 

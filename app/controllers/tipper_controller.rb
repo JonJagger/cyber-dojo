@@ -3,12 +3,18 @@ class TipperController < ApplicationController
 
   include TipHelper
 
-  def tip
-    avatar_name = params['avatar_name']
-    was_tag = params['was_tag'].to_i
-    now_tag = params['now_tag'].to_i
+  def traffic_light_tip
     render :json => {
-      :html => traffic_light_tip(avatar,was_tag,now_tag)
+      :html => traffic_light_tip_html(avatar,was_tag,now_tag)
+    }
+  end
+
+  def traffic_light_count_tip
+    bulb_count = params['bulb_count']
+    current_colour = params['current_colour']
+    render :json => {
+      :html =>
+        traffic_light_count_tip_html(avatar_name,bulb_count,current_colour)
     }
   end
 

@@ -8,13 +8,13 @@ $(function() {
   var showRevert = false;
 
   cd.setupTrafficLightOpensHistoryDialogHandlers(lights,showRevert);
-  cd.setupTrafficLightToolTips(lights);
 
   var bulbCounts = $('#traffic-lights .traffic-light-count', dashboard);
 
   cd.setupTrafficLightCountOpensCurrentCode(bulbCounts,showRevert);
 
   cd.pieChart($('#traffic-lights .pie', dashboard));
+  cd.setupHoverTips();
 
   var allTheWay = 100000;
   $('#traffic-lights', dashboard).scrollLeft(allTheWay);

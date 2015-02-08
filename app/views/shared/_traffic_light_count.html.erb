@@ -2,6 +2,7 @@
 <% if lights.count != 0 %>
     <% colour = lights[-1].colour %>
     <div class="traffic-light-count <%= colour %>"
+         data-tip="ajax:traffic_light_count"
          data-id="<%= @kata.id %>"
          data-avatar-name="<%= avatar_name %>"
          data-bulb-count="<%= lights.count %>"
