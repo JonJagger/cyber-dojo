@@ -7,8 +7,8 @@ $(function() {
   var showRevert = true;
   var lights = $('.diff-traffic-light');
   cd.setupTrafficLightOpensHistoryDialogHandlers(lights,showRevert);
-  cd.setupTrafficLightToolTips(lights);
-  
+  cd.setupHoverTips();
+
   var allTheWay = 100000;
   $('#traffic-lights').scrollLeft(allTheWay);
 

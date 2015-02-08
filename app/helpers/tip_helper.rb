@@ -23,8 +23,6 @@ module TipHelper
   end
 
   def traffic_light_count_tip_html(avatar_name, bulb_count, colour)
-    ' Click to review ' + avatar_name + "'s current code." +
-    '<br/>' +
     avatar_name + ' has ' +
     plural(bulb_count, 'traffic-light') +
     ' and is at ' +
