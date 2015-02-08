@@ -155,7 +155,7 @@ var cyberDojo = (function(cd, $) {
 
     var refreshAvatarHandler = function(id,name) {
       var title = function() {
-        var text = 'Click to open ' + name + "'s ";
+        var text = 'Click to review ' + name + "'s ";
         return text + (inDiffMode() ? 'history diff' : 'current code');
       };
       $('#' + id + '-avatar')

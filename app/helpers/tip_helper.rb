@@ -2,7 +2,7 @@
 module TipHelper
 
   def traffic_light_tip(id, avatar, was_tag, now_tag)
-    tip = "Click to open #{avatar.name}#{apostrophe}s "
+    tip = "Click to review #{avatar.name}#{apostrophe}s "
     tip += "#{was_tag} #{arrow} #{now_tag} diff"
     diff = avatar.tags[was_tag].diff(now_tag)
     added_count,deleted_count = line_counts(diff)
