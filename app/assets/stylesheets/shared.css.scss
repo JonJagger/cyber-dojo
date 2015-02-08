@@ -15,16 +15,21 @@
   margin: { left : auto; right: auto; }
 }
 
+.align-left { text-align: left; }
+.align-center { @include center-align; }
+.align-right   { text-align: right;  }
+
+.valign-top    { vertical-align: top;    }
+.valign-center { vertical-align: center; }
+
+//----------------------------------------------
+
 @mixin ghost-panel($padding: 5px)
 {
   margin-bottom: 20px;
   padding: $padding;
   background: lighten($darker-color, 6%);
   border: 1px solid lighten($darker-color, 6%);
-}
-
-#info-container {
-  display: inline-block;
 }
 
 .diff-traffic-light, #yin-yang-logo {
@@ -73,15 +78,6 @@
   color: $lighter-color;
 }
 
-#help-container {
-  text-align: right;
-  margin: { right: 12px; bottom: 10px; }
-  #help-button {
-    font-size: 1em;
-    padding-bottom: 4px;
-  }
-}
-
 #tweet-container {
   position: relative;
   top: -2px;
@@ -97,10 +93,3 @@
   @include font-size-tiny();
   text-align: right;
 }
-
-.align-left { text-align: left; }
-.align-center { @include center-align; }
-.align-right   { text-align: right;  }
-
-.valign-top    { vertical-align: top;    }
-.valign-center { vertical-align: center; }

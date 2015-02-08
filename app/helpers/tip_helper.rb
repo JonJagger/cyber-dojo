@@ -2,7 +2,7 @@
 module TipHelper
 
   def traffic_light_tip(id,avatarName,wasTag,nowTag)
-    "Click to review #{avatarName}#{apostrophe}s #{wasTag} #{arrow} #{nowTag} diff"
+    "Click to open #{avatarName}#{apostrophe}s #{wasTag} #{arrow} #{nowTag} diff"
   end
 
   def apostrophe

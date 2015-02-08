@@ -9,14 +9,12 @@ to that traffic-light.
   o) difference between the number of lines added and removed.
 
 Tool-tip can now include any html.
-I could embed an image of the animal instead of using the
-word. I could put a mini image of each traffic-light
-for the diff-tip content.
+I could put a mini image of each traffic-light for the diff-tip content.
 
 I could add a tooltips to the traffic-lights on the
 history diff dialog too.
 
-How to detect which lines have been changed?
+How to detect which lines have been changed? (rather than added/deleted)
 git diff has a cool --word-diff option
 $ git diff --word-diff 13 14
 Gives [-DEL-]{+ADD+} for changes *inside* a line (there can be several)

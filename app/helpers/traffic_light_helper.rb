@@ -28,11 +28,16 @@ module TrafficLightHelper
         " data-avatar-name='#{avatar.name}'" +
         " data-was-tag='-1'" +
         " data-now-tag='-1'>" +
-        "<img src='/images/avatars/#{avatar.name}.jpg'" +
-            " alt='#{avatar.name}'" +
-            " width='45'" +
-            " height='45'/>" +
+        avatar_image(avatar.name) +
      "</div>"
+  end
+
+  def avatar_image(avatar_name)
+    size = 45
+    "<img src='/images/avatars/#{avatar_name}.jpg'" +
+        " alt='#{avatar_name}'" +
+        " width='#{size}'" +
+        " height='#{size}'/>"
   end
 
   def traffic_light_image(colour, width, height)
