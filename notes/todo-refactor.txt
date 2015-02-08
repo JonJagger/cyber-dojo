@@ -7,7 +7,8 @@ Add Custom exercise whose instructions file
 details how to make a custom exercise
 and/or points you to the blog page Mike helped write.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+Split ExternalGetters into three separate modules.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
