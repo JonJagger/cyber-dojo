@@ -2,10 +2,12 @@
 module TrafficLightHelper
 
   # The data-id, data-avatar-name, data-was-tag, data-now-tag
-  # values are used to create click handlers that open a diff-dialog
-  # See setupTrafficLightOpensDiffDialogHandlers()
-  #     setupTrafficLightToolTips()
-  # in app/asserts/javascripts/cyber-dojo_traffic_lights.js
+  # properties are used to create click handlers that open a diff-dialog
+  #   see setupTrafficLightOpensHistoryDialogHandlers()
+  #   in app/asserts/javascripts/cyber-dojo_traffic_lights.js
+  # The data-tip property is used to create a hover-tip.
+  #   see setupHoverTips()
+  #   in app/asserts/javascripts/cyber-dojo_hover_tips.js
 
   def diff_traffic_light(light)
     # used from test page and from dashboard page
