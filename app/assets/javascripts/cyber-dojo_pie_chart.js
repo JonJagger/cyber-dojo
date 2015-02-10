@@ -24,13 +24,6 @@ var cyberDojo = (function(cd, $) {
       var greenCount = count('green');
       var timedOutCount = count('timed-out');
 
-      var title = "" +
-        plural(redCount,   'red') + ', ' +
-        plural(amberCount, 'amber') + ', ' +
-        plural(greenCount, 'green') + ', ' +
-        plural(timedOutCount, 'timeout');
-      $(this).closest('td').prop('title', title);
-
       var data = [
           { value:   redCount, color: '#F00' },
           { value: amberCount+timedOutCount, color: '#FC3' },

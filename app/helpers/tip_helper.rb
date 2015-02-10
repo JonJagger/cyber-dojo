@@ -8,11 +8,11 @@ module TipHelper
     tip = 'Click to review '
     tip += "#{avatar.name}'s"   # panda's
     tip += ' '
-    tip += colour_tag(lights, was_tag)      # 13
+    tip += light_colour_tag(lights, was_tag)      # 13
     tip += ' '
     tip += "#{arrow}"                       # <->
     tip += ' '
-    tip += colour_tag(lights, now_tag)      # 14
+    tip += light_colour_tag(lights, now_tag)      # 14
     tip += ' '
     tip += 'diff'
     diff = avatar.tags[was_tag].diff(now_tag)
@@ -22,15 +22,35 @@ module TipHelper
     tip
   end
 
-  def traffic_light_count_tip_html(avatar_name, bulb_count, colour)
-    avatar_name + ' has ' +
-    plural(bulb_count, 'traffic-light') +
-    ' and is at ' +
-    "<span class='#{colour}'>" + colour + '</span>.'
+  def traffic_light_count_tip_html(params)
+    avatar_name = params['avatar']
+    bulb_count = params['bulb_count'].to_i
+    colour = params['current_colour']
+    red_count = params['red_count'].to_i
+    amber_count = params['amber_count'].to_i
+    green_count = params['green_count'].to_i
+    timed_out_count = params['timed_out_count'].to_i
+    avatar_name + ' has ' + plural(bulb_count, 'traffic-light') + '<br/>' +
+    plural_colour_tag(red_count, 'red') +
+    plural_colour_tag(amber_count, 'amber') +
+    plural_colour_tag(green_count, 'green') +
+    plural_colour_tag(timed_out_count, 'timed out') +
+    "<div>" +
+      avatar_name + ' is ' + "<span class='#{colour}'>" + colour + '</span>.' +
+    "</div>"
   end
 
-  def colour_tag(lights,tag)
-    colour = lights[tag-1].colour
+  def light_colour_tag(lights,tag)
+    colour_tag(lights[tag-1].colour, tag)
+  end
+
+  def plural_colour_tag(count,colour)
+    "<div>" +
+      "&bull; #{colour_tag(colour,count)} #{colour}" +
+    "</div>"
+  end
+
+  def colour_tag(colour,tag)
     "<span class='#{colour}'>#{tag}</span>"
   end
 

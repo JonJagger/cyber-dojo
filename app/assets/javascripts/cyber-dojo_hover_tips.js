@@ -33,7 +33,11 @@ var cyberDojo = (function(cd, $) {
     $.getJSON('/tipper/traffic_light_count_tip', {
       avatar: node.data('avatar-name'),
       bulb_count: node.data('bulb-count'),
-      current_colour: node.data('current-colour')
+      current_colour: node.data('current-colour'),
+      red_count: node.data('red-count'),
+      amber_count: node.data('amber-count'),
+      green_count: node.data('green-count'),
+      timed_out_count: node.data('timed-out-count')
     }, function(response) {
       setHoverTip(node,response.html);
     });

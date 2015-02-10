@@ -56,10 +56,7 @@ $(function() {
       <% avatar = @kata.avatars[name] %>
 
 	  <td class="align-right">
-		<%= render :partial => 'shared/traffic_light_count',
-				   :locals  => { :lights => avatar.lights,
-								 :avatar_name => avatar.name
-							   } %>
+	    <%= raw traffic_light_count(avatar) %>
 	  </td>
 
 	  <td class="align-right">
