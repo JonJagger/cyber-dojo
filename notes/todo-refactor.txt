@@ -9,6 +9,9 @@ and/or points you to the blog page Mike helped write.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Split ExternalGetters into three separate modules.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Split create page's two columns into three columns.
+language? tests? exercise?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
