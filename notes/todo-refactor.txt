@@ -22,6 +22,14 @@ s/timed_out/timeout/
 s/timed_out/timeout/
 Light.rb colour() method can adapt old entries.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+add suffix to traffic-light-count hover-tip for current colour
+eg
+1 red           1 red
+1 amber     ->  1 amber
+2 greens        2 greens (current)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

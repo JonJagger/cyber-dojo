@@ -45,9 +45,6 @@
 .bulb-count {
   font-size: 1em;
   padding-left: 0.3em;
-  &.red {
-    color: darken($red, 0%);
-  }
 }
 
 .pie {
