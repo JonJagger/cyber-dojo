@@ -26,20 +26,15 @@ $(function() {
         <%= raw pie_chart_from_counts(counts, 40, 'zoo') %>
       </td>
       <td>
-        <% [ :red, :amber, :green].each do |colour| %>
+        <% [ :red, :amber, :green, :timed_out].each do |colour| %>
           <% n = lasts[colour] %>
           <% if n > 0 %>
             <div class="traffic-light-count <%= colour %>"
-                 title="<%= pluralize(n,'animal') %> at <%= colour %>">
+                 data-tip="<%= pluralize(n,'animal') %> <%= colour %>">
               <%= n %>
             </div>
           <% end %>
         <% end %>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <div id='timed-out-total'></div>
       </td>
     </tr>
   </table>

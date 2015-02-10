@@ -34,10 +34,7 @@ module TipHelper
     plural_colour_tag(red_count, 'red') +
     plural_colour_tag(amber_count, 'amber') +
     plural_colour_tag(green_count, 'green') +
-    plural_colour_tag(timed_out_count, 'timed out') +
-    "<div>" +
-      avatar_name + ' is ' + "<span class='#{colour}'>" + colour + '</span>.' +
-    "</div>"
+    plural_colour_tag(timed_out_count, 'timed_out')
   end
 
   def light_colour_tag(lights,tag)
@@ -45,9 +42,15 @@ module TipHelper
   end
 
   def plural_colour_tag(count,colour)
+    word = plural_word(colour,count)
     "<div>" +
-      "&bull; #{colour_tag(colour,count)} #{colour}" +
+      "&bull; #{count} #{colour_tag(colour,word)}" +
     "</div>"
+  end
+
+  def plural_word(word,count)
+    word = 'timeout' if word === 'timed_out'
+    word + (count === 1 ? '' : 's')
   end
 
   def colour_tag(colour,tag)

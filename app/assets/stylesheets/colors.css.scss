@@ -9,8 +9,8 @@ $green: #0F0;
 
 .green { color: $green; }
 .amber { color: $amber; }
-.red   { color: lighten($red, 10%);   }
-.timed_out { color: $amber; }
+.red   { color: lighten($red, 10%); }
+.timed_out { color: darkGray; }
 
 $diff-added-color: lighten($green, 25%);
 $diff-deleted-color: lighten($red, 35%);
