@@ -28,7 +28,12 @@ eg
 1 amber     ->  1 amber
 2 greens        2 greens (current)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+traffic-light-count on [test] page has wrong pointer.
+Needs to be plain arrow.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Current title= tooltips could be refactored to hover-tip
+with a delay before the tip appears.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 
