@@ -24,12 +24,13 @@ module TipHelper
 
   def traffic_light_count_tip_html(params)
     avatar_name = params['avatar']
-    bulb_count = params['bulb_count'].to_i
     colour = params['current_colour']
     red_count = params['red_count'].to_i
     amber_count = params['amber_count'].to_i
     green_count = params['green_count'].to_i
     timed_out_count = params['timed_out_count'].to_i
+    bulb_count = params['bulb_count'].to_i
+
     avatar_name + ' has ' + plural(bulb_count, 'traffic-light') + '<br/>' +
     plural_colour_tag(red_count, 'red') +
     plural_colour_tag(amber_count, 'amber') +
@@ -46,6 +47,10 @@ module TipHelper
     "<div>" +
       "&bull; #{count} #{colour_tag(colour,word)}" +
     "</div>"
+  end
+
+  def plural(count, text)
+    count.to_s + ' ' + plural_word(text,count)
   end
 
   def plural_word(word,count)
@@ -74,10 +79,6 @@ module TipHelper
       end
     end
     [added_count,deleted_count]
-  end
-
-  def plural(count, text)
-    count.to_s + ' ' + text + (count == 1 ? '' : 's')
   end
 
 end

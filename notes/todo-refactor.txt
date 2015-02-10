@@ -13,6 +13,16 @@ Split create page's two columns into three columns.
 language? tests? exercise?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+team-bulb-counts hover-tips are lost when dashboard refreshes.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+change time-out traffic-light to grey middle bulb with T in it.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+s/timed_out/timeout/
+s/timed_out/timeout/
+Light.rb colour() method can adapt old entries.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Make download *not* save to cyber-dojo/tmp folder.
