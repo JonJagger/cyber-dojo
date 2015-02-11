@@ -83,7 +83,8 @@ class Language
   end
 
   def red_goto_line_spec
-    ['\[{F}:{L}\]:',1,2] # Ruby-MiniTest
+    #['\[{F}:{L}\]:',1,2] # Ruby-MiniTest
+    ['{F}:{L}',1,2] # Ruby-MiniTest
   end
 
   def colour(output)

@@ -15,8 +15,8 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - -
 
   var regexFor = function(s) {
-    var filenamePattern = '([a-zA-Z0-9_\.]*)';
-    var lineNumberPattern = '([0-9]*)';
+    var filenamePattern = '([a-zA-Z0-9_\.]+)';
+    var lineNumberPattern = '([0-9]+)';
     s = s.replace('{F}',filenamePattern);
     s = s.replace('{L}',lineNumberPattern);
     return new RegExp(s, 'g');
@@ -64,15 +64,15 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - -
 
-  var getFilenameLineNumberRegexSpec = function(colour) {
-    var spec;
+  var getSpec = function() {
+    var colour = cd.currentTrafficLightColour();
     if (colour === 'amber') {
-      spec = cd.amberGotoLineSpec();
+      return cd.amberGotoLineSpec();
     }
     if (colour === 'red') {
-      spec = cd.redGotoLineSpec();
+      return cd.redGotoLineSpec();
     }
-    return spec;
+    return undefined;
   };
 
   //- - - - - - - - - - - - - - - - - - - -
@@ -81,17 +81,14 @@ var cyberDojo = (function(cd, $) {
 
     //return; // work in progress
 
-    var colour = cd.currentTrafficLightColour();
-    if (colour != 'amber' && colour != 'red') {
-        return;
-    }
-    var spec = getFilenameLineNumberRegexSpec(colour);
+    var spec = getSpec();
+    if (spec === undefined) { return; }
+
     var topMatch = getTopMatch(spec);
-
     var filename = topMatch[0];
-    var content = cd.fileContentFor(filename);
-
     var lineNumber = topMatch[1];
+
+    var content = cd.fileContentFor(filename);
     var numbers = cd.lineNumbersFor(filename);
 
     var line = $('#' + lineNumber, numbers);
