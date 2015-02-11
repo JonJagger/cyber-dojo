@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  var getAllMatches = function(string,regex) {
+  var getAllRegexMatches = function(string,regex) {
     var matches = [];
     var match;
     while (match = regex.exec(string)) {
@@ -28,7 +28,7 @@ var cyberDojo = (function(cd, $) {
     var regex = regexFor(spec[0]);
     var fileIndex = spec[1];
     var lineIndex = spec[2];
-    return getAllMatches(string,regex).map(function(match) {
+    return getAllRegexMatches(string,regex).map(function(match) {
       var filename = match[fileIndex];
       var lineNumber = match[lineIndex];
       return [filename,lineNumber];
@@ -37,11 +37,12 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - -
 
-  var getTopMatch = function(spec) {
+  var getAllMatches = function(spec) {
     var output = cd.fileContentFor('output').val();
     var matches = getFileLocations(output, spec);
     //TODO: use first filename that names a visible file
-    return matches[0];
+    //TODO: or return empty array
+    return matches;
   };
 
   //- - - - - - - - - - - - - - - - - - - -
@@ -83,10 +84,12 @@ var cyberDojo = (function(cd, $) {
 
     var spec = getSpec();
     if (spec === undefined) { return; }
+    var matches = getAllMatches(spec);
+    if (matches === []) { return; }
+    var match = matches[0];
 
-    var topMatch = getTopMatch(spec);
-    var filename = topMatch[0];
-    var lineNumber = topMatch[1];
+    var filename = match[0];
+    var lineNumber = match[1];
 
     var content = cd.fileContentFor(filename);
     var numbers = cd.lineNumbersFor(filename);
