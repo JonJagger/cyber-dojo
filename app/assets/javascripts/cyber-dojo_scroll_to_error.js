@@ -25,14 +25,18 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - -
 
   var getFileLocations = function(string,spec) {
-    var regex = regexFor(spec[0]);
-    var fileIndex = spec[1];
-    var lineIndex = spec[2];
-    return getAllRegexMatches(string,regex).map(function(match) {
-      var filename = match[fileIndex];
-      var lineNumber = match[lineIndex];
-      return [filename,lineNumber];
-    });
+    var locations = [];
+    for (var i = 0; i < spec.length; i += 3) {
+      var regex = regexFor(spec[i+0]);
+      var fileIndex = spec[i+1];
+      var lineIndex = spec[i+2];
+      getAllRegexMatches(string,regex).map(function(match) {
+        var filename = match[fileIndex];
+        var lineNumber = match[lineIndex];
+        locations.push([filename,lineNumber]);
+      });
+    }
+    return locations;
   };
 
   //- - - - - - - - - - - - - - - - - - - -
@@ -85,7 +89,7 @@ var cyberDojo = (function(cd, $) {
 
   cd.scrollToError = function() {
 
-    return; // work in progress
+    //return; // work in progress
 
     var spec = getSpec();
     if (spec === undefined) { return; }
