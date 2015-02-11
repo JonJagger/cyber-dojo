@@ -37,12 +37,17 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - -
 
-  var getAllMatches = function(spec) {
+  var getFirstMatch = function(spec) {
     var output = cd.fileContentFor('output').val();
     var matches = getFileLocations(output, spec);
-    //TODO: use first filename that names a visible file
-    //TODO: or return empty array
-    return matches;
+    var filenames = cd.filenames();
+    for (var i = 0; i < matches.length; i++) {
+      var filename = matches[i][0];
+      if (cd.inArray(filename, filenames)) {
+        return matches[i];
+      }
+    }
+    return undefined;
   };
 
   //- - - - - - - - - - - - - - - - - - - -
@@ -80,13 +85,12 @@ var cyberDojo = (function(cd, $) {
 
   cd.scrollToError = function() {
 
-    //return; // work in progress
+    return; // work in progress
 
     var spec = getSpec();
     if (spec === undefined) { return; }
-    var matches = getAllMatches(spec);
-    if (matches === []) { return; }
-    var match = matches[0];
+    var match = getFirstMatch(spec);
+    if (match === undefined) { return; }
 
     var filename = match[0];
     var lineNumber = match[1];
