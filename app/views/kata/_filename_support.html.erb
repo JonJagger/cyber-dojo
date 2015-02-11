@@ -23,6 +23,14 @@ $(function() {
     return "<%= @kata.language.filename_extension %>";
   };
 
+  cd.amberGotoLineSpec = function() {
+    return $.parseJSON('<%= @kata.language.amber_goto_line_spec.inspect.html_safe %>');
+  };
+
+  cd.redGotoLineSpec = function() {
+    return $.parseJSON('<%= @kata.language.red_goto_line_spec.inspect.html_safe %>');
+  };
+
 });
 
 //--></script>

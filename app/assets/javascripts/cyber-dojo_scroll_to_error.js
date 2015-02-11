@@ -25,16 +25,17 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - -
 
   var getFilenameLineNumberRegexSpec = function(colour) {
+    var spec;
     if (colour === 'amber') {
-      var rubyMiniTestAmberPattern = '{F}:{L}: syntax error';
-      var regex = regexFor(rubyMiniTestAmberPattern);
-      return  [regex,1,2];
+      spec = cd.amberGotoLineSpec();
     }
     if (colour === 'red') {
-      var rubyMiniTestRedPattern = '\[{F}:{L}\]:';
-      var regex = regexFor(rubyMiniTestRedPattern);
-      return [regex,1,2];
+      spec = cd.redGotoLineSpec();
     }
+    var regex = regexFor(spec[0]);
+    var fileIndex = parseInt(spec[1]);
+    var lineIndex = parseInt(spec[2]);
+    return [regex, fileIndex, lineIndex];
   };
 
   //- - - - - - - - - - - - - - - - - - - -
@@ -63,7 +64,7 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - -
 
   var blink = function(line) {
-    var oneSecond = 1000;
+    var twoSeconds = 2000;
     // Colors are hard-wired. Saving them
     // and then resetting can fail with
     // rapid repeated Alt+g keystrokes.
@@ -75,7 +76,7 @@ var cyberDojo = (function(cd, $) {
     setTimeout(function() {
       line.css('color', color);
       line.css('background', background);
-    }, oneSecond);
+    }, twoSeconds);
   };
 
   //- - - - - - - - - - - - - - - - - - - -

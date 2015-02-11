@@ -78,6 +78,14 @@ class Language
     manifest['progress_regexs'] || [ ]
   end
 
+  def amber_goto_line_spec
+    ['{F}:{L}: syntax error',1,2] # Ruby-MiniTest
+  end
+
+  def red_goto_line_spec
+    ['\[{F}:{L}\]:',1,2] # Ruby-MiniTest
+  end
+
   def colour(output)
     OutputParser.colour(unit_test_framework, output)
   end
