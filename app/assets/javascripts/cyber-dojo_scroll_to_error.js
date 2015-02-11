@@ -28,14 +28,12 @@ var cyberDojo = (function(cd, $) {
     if (colour === 'amber') {
       var rubyMiniTestAmberPattern = '{F}:{L}: syntax error';
       var regex = regexFor(rubyMiniTestAmberPattern);
-      var slots = [1,2];
-      return  [[regex,slots]];
+      return  [[regex,1,2]];
     }
     if (colour === 'red') {
       var rubyMiniTestRedPattern = '\[{F}:{L}\]:';
       var regex = regexFor(rubyMiniTestRedPattern);
-      var slots = [1,2];
-      return [[regex,slots]];
+      return [[regex,1,2]];
     }
   };
 
@@ -48,10 +46,9 @@ var cyberDojo = (function(cd, $) {
       var regex = spec[0];
       var matches =
         getAllMatches(string,regex).map(function(array) {
-          var slots = spec[1];
-          var filenameSlot = slots[0];
-          var lineNumberSlot = slots[1];
-          return [array[filenameSlot],array[lineNumberSlot]];
+          var filename = array[spec[1]];
+          var lineNumber = array[spec[2]];
+          return [filename,lineNumber];
         });
       result = result.concat(matches);
     }
