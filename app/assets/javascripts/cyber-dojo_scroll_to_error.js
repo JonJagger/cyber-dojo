@@ -89,7 +89,7 @@ var cyberDojo = (function(cd, $) {
 
   cd.scrollToError = function() {
 
-    //return; // work in progress
+    return; // work in progress
 
     var spec = getSpec();
     if (spec === undefined) { return; }

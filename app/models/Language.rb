@@ -79,16 +79,11 @@ class Language
   end
 
   def amber_goto_line_spec
-    [
-     '{F}:{L}: syntax error',1,2,
-     '{F}:{L}',1,2
-    ]
-    # Ruby-MiniTest
+    manifest['amber_goto_line_spec'] || [ ]
   end
 
   def red_goto_line_spec
-    #['\[{F}:{L}\]:',1,2] # Ruby-MiniTest
-    ['{F}:{L}',1,2] # Ruby-MiniTest
+    manifest['red_goto_line_spec'] || [ ]
   end
 
   def colour(output)

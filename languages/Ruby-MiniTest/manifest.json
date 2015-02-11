@@ -9,5 +9,10 @@
   "display_name": "Ruby, MiniTest",
   "unit_test_framework": "ruby_mini_test",
   "tab_size": 2,
-  "image_name": "cyberdojo/ruby-2.1.3_mini_test"
+  "image_name": "cyberdojo/ruby-2.1.3_mini_test",
+
+  "amber_goto_line_spec": [ "{F}:{L}: syntax error",1,2,
+                            "{F}:{L}",1,2
+                          ],
+  "red_goto_line_spec": [ "{F}:{L}",1,2 ]
 }
