@@ -24,41 +24,34 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - -
 
-  var getFilenameLineNumberRegexSpecs = function(colour) {
+  var getFilenameLineNumberRegexSpec = function(colour) {
     if (colour === 'amber') {
       var rubyMiniTestAmberPattern = '{F}:{L}: syntax error';
       var regex = regexFor(rubyMiniTestAmberPattern);
-      return  [[regex,1,2]];
+      return  [regex,1,2];
     }
     if (colour === 'red') {
       var rubyMiniTestRedPattern = '\[{F}:{L}\]:';
       var regex = regexFor(rubyMiniTestRedPattern);
-      return [[regex,1,2]];
+      return [regex,1,2];
     }
   };
 
   //- - - - - - - - - - - - - - - - - - - -
 
-  var getFileLocations = function(string,specs) {
-    var result = [];
-    for (var i = 0; i < specs.length; i++) {
-      var spec = specs[i];
-      var regex = spec[0];
-      var matches =
-        getAllMatches(string,regex).map(function(array) {
-          var filename = array[spec[1]];
-          var lineNumber = array[spec[2]];
-          return [filename,lineNumber];
-        });
-      result = result.concat(matches);
-    }
-    return result;
+  var getFileLocations = function(string,spec) {
+    var regex = spec[0];
+    return getAllMatches(string,regex).map(function(match) {
+      var filename = match[spec[1]];
+      var lineNumber = match[spec[2]];
+      return [filename,lineNumber];
+    });
   };
 
   //- - - - - - - - - - - - - - - - - - - -
 
   var getTopMatch = function(colour) {
-    var specs = getFilenameLineNumberRegexSpecs(colour);
+    var specs = getFilenameLineNumberRegexSpec(colour);
 
     var output = cd.fileContentFor('output').val();
     var matches = getFileLocations(output, specs);
