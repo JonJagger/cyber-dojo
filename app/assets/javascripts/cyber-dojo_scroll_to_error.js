@@ -33,8 +33,8 @@ var cyberDojo = (function(cd, $) {
       spec = cd.redGotoLineSpec();
     }
     var regex = regexFor(spec[0]);
-    var fileIndex = parseInt(spec[1]);
-    var lineIndex = parseInt(spec[2]);
+    var fileIndex = spec[1];
+    var lineIndex = spec[2];
     return [regex, fileIndex, lineIndex];
   };
 
