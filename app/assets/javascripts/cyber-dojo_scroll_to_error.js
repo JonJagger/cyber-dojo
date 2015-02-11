@@ -24,39 +24,22 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - -
 
-  var getFilenameLineNumberRegexSpec = function(colour) {
-    var spec;
-    if (colour === 'amber') {
-      spec = cd.amberGotoLineSpec();
-    }
-    if (colour === 'red') {
-      spec = cd.redGotoLineSpec();
-    }
+  var getFileLocations = function(string,spec) {
     var regex = regexFor(spec[0]);
     var fileIndex = spec[1];
     var lineIndex = spec[2];
-    return [regex, fileIndex, lineIndex];
-  };
-
-  //- - - - - - - - - - - - - - - - - - - -
-
-  var getFileLocations = function(string,spec) {
-    var regex = spec[0];
     return getAllMatches(string,regex).map(function(match) {
-      var filename = match[spec[1]];
-      var lineNumber = match[spec[2]];
+      var filename = match[fileIndex];
+      var lineNumber = match[lineIndex];
       return [filename,lineNumber];
     });
   };
 
   //- - - - - - - - - - - - - - - - - - - -
 
-  var getTopMatch = function(colour) {
-    var specs = getFilenameLineNumberRegexSpec(colour);
-
+  var getTopMatch = function(spec) {
     var output = cd.fileContentFor('output').val();
-    var matches = getFileLocations(output, specs);
-
+    var matches = getFileLocations(output, spec);
     //TODO: use first filename that names a visible file
     return matches[0];
   };
@@ -81,6 +64,19 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - -
 
+  var getFilenameLineNumberRegexSpec = function(colour) {
+    var spec;
+    if (colour === 'amber') {
+      spec = cd.amberGotoLineSpec();
+    }
+    if (colour === 'red') {
+      spec = cd.redGotoLineSpec();
+    }
+    return spec;
+  };
+
+  //- - - - - - - - - - - - - - - - - - - -
+
   cd.scrollToError = function() {
 
     //return; // work in progress
@@ -89,12 +85,15 @@ var cyberDojo = (function(cd, $) {
     if (colour != 'amber' && colour != 'red') {
         return;
     }
-    var topMatch = getTopMatch(colour);
+    var spec = getFilenameLineNumberRegexSpec(colour);
+    var topMatch = getTopMatch(spec);
 
     var filename = topMatch[0];
-    var lineNumber = topMatch[1];
     var content = cd.fileContentFor(filename);
+
+    var lineNumber = topMatch[1];
     var numbers = cd.lineNumbersFor(filename);
+
     var line = $('#' + lineNumber, numbers);
     var downFromTop = 150;
     var instantly = 0;
