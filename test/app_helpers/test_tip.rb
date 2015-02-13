@@ -7,6 +7,28 @@ class TipTests < AppHelpersTestBase
   include TipHelper
   include ExternalSetter
 
+  test 'traffic light count tip' do
+    params = {
+      'avatar' => 'lion',
+      'current_colour' => 'red',
+      'red_count' => 14,
+      'amber_count' => 3,
+      'green_count' => 5,
+      'timed_out_count' => 1,
+      'bulb_count' => 23
+    }
+    expected =
+      'lion has 23 traffic-lights<br/>' +
+      "<div>&bull; 14 <span class='red'>reds</span></div>" +
+      "<div>&bull; 3 <span class='amber'>ambers</span></div>" +
+      "<div>&bull; 5 <span class='green'>greens</span></div>" +
+      "<div>&bull; 1 <span class='timed_out'>timeout</span></div>"
+    actual = traffic_light_count_tip_html(params)
+    assert_equal expected, actual
+  end
+
+  #- - - - - - - - - - - - - - - - - -
+
   test 'traffic light tip' do
 
     reset_external(:disk, DiskFake.new)

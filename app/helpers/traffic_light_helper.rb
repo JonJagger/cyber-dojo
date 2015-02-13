@@ -45,8 +45,7 @@ module TrafficLightHelper
         " data-red-count='#{count(lights, :red)}'" +
         " data-amber-count='#{count(lights, :amber)}'" +
         " data-green-count='#{count(lights, :green)}'" +
-        " data-timed-out-count='#{count(lights, :timed_out)}'" +
-        " data-bulb-count='#{lights.count}'>" +
+        " data-timed-out-count='#{count(lights, :timed_out)}'>" +
       lights.count.to_s +
     "</div>"
   end

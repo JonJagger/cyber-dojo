@@ -29,20 +29,20 @@ module TipHelper
     amber_count = params['amber_count'].to_i
     green_count = params['green_count'].to_i
     timed_out_count = params['timed_out_count'].to_i
-    bulb_count = params['bulb_count'].to_i
+    bulb_count = red_count + amber_count + green_count + timed_out_count
 
     avatar_name + ' has ' + plural(bulb_count, 'traffic-light') + '<br/>' +
-    plural_colour_tag(red_count, 'red') +
-    plural_colour_tag(amber_count, 'amber') +
-    plural_colour_tag(green_count, 'green') +
-    plural_colour_tag(timed_out_count, 'timed_out')
+    plural_colour(red_count, 'red') +
+    plural_colour(amber_count, 'amber') +
+    plural_colour(green_count, 'green') +
+    plural_colour(timed_out_count, 'timed_out')
   end
 
   def light_colour_tag(lights,tag)
     colour_tag(lights[tag-1].colour, tag)
   end
 
-  def plural_colour_tag(count,colour)
+  def plural_colour(count,colour)
     word = plural_word(colour,count)
     "<div>" +
       "&bull; #{count} #{colour_tag(colour,word)}" +
@@ -60,10 +60,6 @@ module TipHelper
 
   def colour_tag(colour,tag)
     "<span class='#{colour}'>#{tag}</span>"
-  end
-
-  def apostrophe
-    '&#39;'
   end
 
   def arrow
