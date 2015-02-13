@@ -22,39 +22,27 @@ class ExternalsTests < LibTestBase
   end
 
   test 'raises RuntimeError if disk not set' do
-    assert_raises RuntimeError do
-      disk
-    end
+    assert_raises(RuntimeError) { disk }
   end
 
   test 'raises RuntimeError if git not set' do
-    assert_raises RuntimeError do
-      git
-    end
+    assert_raises(RuntimeError) { git }
   end
 
   test 'raises RuntimeError if runner not set' do
-    assert_raises RuntimeError do
-      runner
-    end
+    assert_raises(RuntimeError) { runner }
   end
 
   test 'raises RuntimeError if exercises_path not set' do
-    assert_raises RuntimeError do
-      exercises_path
-    end
+    assert_raises(RuntimeError) { exercises_path }
   end
 
   test 'raises RuntimeError if languages_path not set' do
-    assert_raises RuntimeError do
-      languages_path
-    end
+    assert_raises(RuntimeError) { languages_path }
   end
 
   test 'raises RuntimeError if katas_path not set' do
-    assert_raises RuntimeError do
-      katas_path
-    end
+    assert_raises(RuntimeError) { katas_path }
   end
 
   test 'when disk is set it is not overridden' do
