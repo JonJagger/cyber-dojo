@@ -5,7 +5,12 @@ require_relative 'lib_test_base'
 class ExternalsTests < LibTestBase
 
   include ExternalSetter
-  include ExternalGetter
+  include ExternalDiskDir
+  include ExternalGit
+  include ExternalRunner
+  include ExternalExercisesPath
+  include ExternalLanguagesPath
+  include ExternalKatasPath
 
   def setup
     reset_external(:disk, nil)
