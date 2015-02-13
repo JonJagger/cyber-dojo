@@ -16,17 +16,19 @@ class TipTests < AppHelpersTestBase
 
     avatar = Avatar.new(kata,'hippo')
     was_tag = 1
+    was_tag_colour = 'red'
     now_tag = 2
+    now_tag_colour = 'green'
 
     avatar.dir.write('increments.json',
       [
-        { "colour" => "red",
-          "time" => [2015,2,5,9,28,21],
-          "number" => was_tag
+        { "colour" => was_tag_colour,
+          "number" => was_tag,
+          "time" => [2015,2,5,9,28,21]
         },
-        { "colour" => "green",
-          "time" => [2015,2,5,9,29,15],
-          "number" => now_tag
+        { "colour" => now_tag_colour,
+          "number" => now_tag,
+          "time" => [2015,2,5,9,29,15]
         }
       ]
     )
@@ -70,10 +72,15 @@ class TipTests < AppHelpersTestBase
     reset_external(:git, git)
 
     expected =
-      "Click to review hippo&#39;s #{was_tag} &harr; #{now_tag} diff" +
+      "Click to review hippo's " +
+      "<span class='#{was_tag_colour}'>#{was_tag}</span> " +
+      "&harr; " +
+      "<span class='#{now_tag_colour}'>#{now_tag}</span> diff" +
       "<div>&bull; 1 added line</div>" +
       "<div>&bull; 1 deleted line</div>"
-    actual = traffic_light_tip(avatar,was_tag,now_tag)
+
+    actual = traffic_light_tip_html(avatar,was_tag,now_tag)
+
     assert_equal expected, actual
   end
 
