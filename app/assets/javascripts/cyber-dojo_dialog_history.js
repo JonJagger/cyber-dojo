@@ -101,9 +101,9 @@ var cyberDojo = (function(cd, $) {
         var barGap = (nowTag() === light.number) ? '_bar' : '_gap';
         html +=
           "<div class='traffic-light'>" +
-            "<img    src='/images/traffic_light_" + light.colour + barGap + ".png'" +
+            "<img src='/images/traffic_light_" + light.colour + barGap + ".png'" +
             " data-index='" + index + "'" +
-              " data-tag='" + light.number + "'/>" +
+            " data-tag='" + light.number + "'/>" +
           "</div>";
           index += 1;
       });
