@@ -5,7 +5,7 @@ require 'tempfile'
 
 class LanguageTests < ModelTestBase
 
-  test 'path(language)' do
+  test 'path(language) has correct format' do
     language = @dojo.languages['Ruby']
     assert language.path.match(language.name)
     assert path_ends_in_slash?(language)
@@ -190,15 +190,6 @@ class LanguageTests < ModelTestBase
     expected = 'cyberdojo/language_ruby-1.9.3_test_unit'
     spy_manifest({ 'image_name' => expected })
     assert_equal expected, @language.image_name
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'image_name is empty string when not set' do
-    name = 'Ruby-Test::Unit'
-    @language = @dojo.languages[name]
-    spy_manifest({ })
-    assert_equal '', @language.image_name
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

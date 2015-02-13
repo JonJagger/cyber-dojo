@@ -15,20 +15,28 @@ class Language
     runner.runnable?(self)
   end
 
+  def image_name
+    manifest_property
+  end
+
+  def unit_test_framework
+    manifest_property
+  end
+
   def display_name
-    manifest['display_name'] || name
+    manifest_property || name
   end
 
   def display_test_name
-    manifest['display_test_name'] || unit_test_framework
-  end
-
-  def image_name
-    manifest['image_name'] || ''
+    manifest_property || unit_test_framework
   end
 
   def filename_extension
-    manifest['filename_extension'] || ''
+    manifest_property || ''
+  end
+
+  def visible_filenames
+    manifest_property || [ ]
   end
 
   def visible_files
@@ -38,11 +46,27 @@ class Language
   end
 
   def support_filenames
-    manifest['support_filenames'] || [ ]
+    manifest_property || [ ]
   end
 
   def highlight_filenames
-    manifest['highlight_filenames'] || [ ]
+    manifest_property || [ ]
+  end
+
+  def tab_size
+    manifest_property || 4
+  end
+
+  def progress_regexs
+    manifest_property || [ ]
+  end
+
+  def amber_goto_line_spec
+    manifest_property || [ ]
+  end
+
+  def red_goto_line_spec
+    manifest_property || [ ]
   end
 
   def lowlight_filenames
@@ -58,32 +82,8 @@ class Language
     end
   end
 
-  def unit_test_framework
-    manifest['unit_test_framework']
-  end
-
   def tab
     " " * tab_size
-  end
-
-  def tab_size
-    manifest['tab_size'] || 4
-  end
-
-  def visible_filenames
-    manifest['visible_filenames'] || [ ]
-  end
-
-  def progress_regexs
-    manifest['progress_regexs'] || [ ]
-  end
-
-  def amber_goto_line_spec
-    manifest['amber_goto_line_spec'] || [ ]
-  end
-
-  def red_goto_line_spec
-    manifest['red_goto_line_spec'] || [ ]
   end
 
   def colour(output)
@@ -104,6 +104,11 @@ class Language
 private
 
   include ExternalGetter
+
+  def manifest_property
+    property_name = (caller[0] =~ /`([^']*)'/ and $1)
+    manifest[property_name]
+  end
 
   def manifest
     begin
