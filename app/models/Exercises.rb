@@ -23,7 +23,8 @@ class Exercises
 
 private
 
-  include ExternalGetter
+  include ExternalDiskDir
+  include ExternalExercisesPath
 
   def exercises
     @exercises ||= make_cache

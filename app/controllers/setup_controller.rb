@@ -21,6 +21,7 @@ class SetupController < ApplicationController
 
 private
 
+  include ExternalDiskDir
   include Chooser
 
   def read_languages

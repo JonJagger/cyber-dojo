@@ -21,7 +21,7 @@ class Exercise
 
 private
 
-  include ExternalGetter
+  include ExternalDiskDir
 
   def instructions_filename
     'instructions'

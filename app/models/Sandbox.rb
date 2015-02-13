@@ -17,6 +17,6 @@ class Sandbox
 
 private
 
-  include ExternalGetter
+  include ExternalDiskDir
 
 end

@@ -11,7 +11,13 @@ end
 # as some of them depend on loading previous ones
 
 require_relative_in('lib', %w{
-  ExternalGetter
+  External
+  ExternalDiskDir
+  ExternalGit
+  ExternalRunner
+  ExternalExercisesPath
+  ExternalLanguagesPath
+  ExternalKatasPath
   ExternalSetter
   Cleaner
   Docker

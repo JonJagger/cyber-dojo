@@ -26,7 +26,8 @@ class Tag
 
 private
 
-  include ExternalGetter
+  include ExternalDiskDir
+  include ExternalGit
   include GitDiff
 
 end

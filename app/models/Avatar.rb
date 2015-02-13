@@ -102,7 +102,9 @@ class Avatar
 
 private
 
-  include ExternalGetter
+  include ExternalDiskDir
+  include ExternalGit
+  include ExternalRunner
   include TimeNow
 
   def increments

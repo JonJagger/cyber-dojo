@@ -85,7 +85,8 @@ class Kata
 
 private
 
-  include ExternalGetter
+  include ExternalDiskDir
+  include ExternalGit
 
   def manifest
     @manifest ||= JSON.parse(dir.read('manifest.json'))

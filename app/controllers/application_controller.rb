@@ -12,8 +12,8 @@ class ApplicationController < ActionController::Base
 
   def initialize
     super
-    set_external(:disk, Disk.new)
-    set_external(:git, Git.new)
+    set_external(:disk,   Disk.new)
+    set_external(:git,    Git.new)
     set_external(:runner, test_runner)
     set_external(:exercises_path, root_path + '/exercises/')
     set_external(:languages_path, root_path + '/languages/')
@@ -58,7 +58,6 @@ class ApplicationController < ActionController::Base
 
 private
 
-  include ExternalGetter
   include ExternalSetter
 
   def root_path

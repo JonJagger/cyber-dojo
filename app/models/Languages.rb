@@ -24,7 +24,8 @@ class Languages
 
 private
 
-  include ExternalGetter
+  include ExternalDiskDir
+  include ExternalLanguagesPath
 
   def latest(name)
     # See comment at bottom of file.

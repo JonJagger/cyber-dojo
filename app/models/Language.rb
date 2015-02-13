@@ -103,7 +103,8 @@ class Language
 
 private
 
-  include ExternalGetter
+  include ExternalDiskDir
+  include ExternalRunner
 
   def manifest_property
     property_name = (caller[0] =~ /`([^']*)'/ and $1)

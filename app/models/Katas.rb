@@ -80,7 +80,8 @@ class Katas
 
 private
 
-  include ExternalGetter
+  include ExternalDiskDir
+  include ExternalKatasPath
   include UniqueId
   include TimeNow
 
