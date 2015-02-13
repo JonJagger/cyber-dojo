@@ -39,7 +39,8 @@ module TipHelper
   end
 
   def light_colour_tag(lights,tag)
-    colour_tag(lights[tag-1].colour, tag)
+    colour = (tag === 0) ? 'none' :lights[tag-1].colour
+    colour_tag(colour, tag)
   end
 
   def plural_colour(count,colour)
