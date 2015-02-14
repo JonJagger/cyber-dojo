@@ -16,7 +16,13 @@ require_filenames %w{
   Git GitDiff
   Docker
   DockerTestRunner DummyTestRunner
-  ExternalGetter
+  External
+  ExternalDiskDir
+  ExternalGit
+  ExternalRunner
+  ExternalExercisesPath
+  ExternalLanguagesPath
+  ExternalKatasPath
   ExternalSetter
   Dojo
   Languages Language
