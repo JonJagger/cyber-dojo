@@ -10,12 +10,6 @@ and/or points you to the blog page Mike helped write.
 Split create page's two columns into three columns.
 language? tests? exercise?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Put all.rb file into each of the folders.
-Make the current all.rb file simply include the all.rb files
-from each folder. 
-Make the admin_scripts/lib_domain.rb file include what
-it needs by including all.rb files from folders it needs.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 team-bulb-counts hover-tips are lost when dashboard refreshes.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 change time-out traffic-light to grey middle bulb with T in it.

@@ -6,14 +6,12 @@ require_relative '../test_base'
 class ModelTestBase < TestBase
 
   include ExternalSetter
-
   include ExternalDiskDir
   include ExternalGit
   include ExternalRunner
   include ExternalExercisesPath
   include ExternalLanguagesPath
   include ExternalKatasPath
-
   include UniqueId
 
   def setup

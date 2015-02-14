@@ -1,47 +1,21 @@
 
-me = File.expand_path(File.dirname(__FILE__))
-CYBERDOJO_HOME_DIR = File.expand_path('..', me) + '/'
-
-$LOAD_PATH << CYBERDOJO_HOME_DIR + 'lib'
-$LOAD_PATH << CYBERDOJO_HOME_DIR + 'app/lib'
-$LOAD_PATH << CYBERDOJO_HOME_DIR + 'app/models'
-
-def require_filenames(filenames)
-  filenames.each {|filename| require filename}
-end
-
-require_filenames %w{
-  Cleaner UniqueId TimeNow
-  Disk Dir
-  Git GitDiff
-  Docker
-  DockerTestRunner DummyTestRunner
-  External
-  ExternalDiskDir
-  ExternalGit
-  ExternalRunner
-  ExternalExercisesPath
-  ExternalLanguagesPath
-  ExternalKatasPath
-  ExternalSetter
-  Dojo
-  Languages Language
-  Exercises Exercise
-  Katas Kata
-  Avatars Avatar
-  Sandbox Light Tag
-}
-
 require 'json'
+require_relative '../lib/all'
+require_relative '../app/lib/all'
+require_relative '../app/models/all'
 
 def create_dojo
   thread = Thread.current
   thread[:disk] = Disk.new
   thread[:git] = Git.new
   thread[:runner] = DockerTestRunner.new
-  thread[:exercises_path] = CYBERDOJO_HOME_DIR + 'exercises/'
-  thread[:languages_path] = CYBERDOJO_HOME_DIR + 'languages/'
-  thread[:katas_path    ] = CYBERDOJO_HOME_DIR + 'katas/'
+  
+  me = File.expand_path(File.dirname(__FILE__))
+  cyber_dojo_home_dir = File.expand_path('..', me) + '/'  
+  
+  thread[:exercises_path] = cyber_dojo_home_dir + 'exercises/'
+  thread[:languages_path] = cyber_dojo_home_dir + 'languages/'
+  thread[:katas_path    ] = cyber_dojo_home_dir + 'katas/'
   Dojo.new
 end
 
