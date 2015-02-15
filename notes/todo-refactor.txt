@@ -28,6 +28,9 @@ and perhaps also have display names as
   C++ (g++)
   C++ (clang)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If hover-tip is visible and you switch to a different browser
+tab then when you return the hover-tip is still visible.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 
