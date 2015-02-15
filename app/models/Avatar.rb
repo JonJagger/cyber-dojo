@@ -14,14 +14,12 @@ class Avatar
 
   def start
     dir.make
-    git_init('--quiet')    
-    git_config(user_name)
-    git_config(user_email)
-    
-    save_manifest(kata.visible_files)
+    setup_git_repo
+
+    write_manifest(kata.visible_files)
     git_add(manifest_filename)
     
-    save_increments([ ])
+    write_increments([ ])
     git_add(increments_filename)    
     
     sandbox.start
@@ -33,45 +31,33 @@ class Avatar
   end
 
   def active?
-    # See comment below.
     exists? && lights.count > 0
   end
 
   def tags
-    # See comment below.
     (0..increments.length).map{ |n| Tag.new(self,n) }
   end
 
   def lights
-    # See comment below.
     increments.map { |inc| Light.new(self,inc) }
   end
 
   def visible_files
-    # See comment below.
     JSON.parse(read(manifest_filename))
   end
 
-  def test(delta, visible_files, now = time_now, time_limit = 15)
-    
-    pre_test_filenames = visible_files.keys
-    
-    sandbox.pre_test(delta, visible_files)    
-    output = runner.run(sandbox, './cyber-dojo.sh', time_limit)
-    new_files,filenames_to_delete = sandbox.post_test(output, visible_files, pre_test_filenames)
-    
-    save_manifest(visible_files)
-
+  def test(delta, visible_files, now = time_now, time_limit = 15)    
+    new_files,filenames_to_delete = sandbox.run_tests(delta,visible_files,time_limit)    
     rags = increments
     rag = {
-      'colour' => kata.language.colour(output),
+      'colour' => kata.language.colour(visible_files['output']),
       'time'   => now,
       'number' => rags.length + 1
     }
     rags << rag
-    save_increments(rags)
+    write_increments(rags)
+    write_manifest(visible_files)
     commit(rags.length)
-
     [rags,new_files,filenames_to_delete]
   end
 
@@ -83,7 +69,6 @@ private
 
   include ExternalDiskDir
   include ExternalGit
-  include ExternalRunner
   include TimeNow
 
   def commit(tag)
@@ -92,11 +77,11 @@ private
     git_tag("-m '#{tag}' #{tag} HEAD")
   end
 
-  def save_manifest(visible_files)
+  def write_manifest(visible_files)
     write(manifest_filename, visible_files)
   end
 
-  def save_increments(increments)
+  def write_increments(increments)
     write(increments_filename, increments)    
   end
   
@@ -119,7 +104,13 @@ private
   def increments_filename
     'increments.json'
   end
-  
+
+  def setup_git_repo
+    git_init('--quiet')    
+    git_config(user_name)
+    git_config(user_email)
+  end
+
   def user_name
     "user.name #{quoted(name + '_' + kata.id)}"
   end
