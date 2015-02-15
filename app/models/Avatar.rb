@@ -8,6 +8,20 @@ class Avatar
 
   attr_reader :kata, :name
 
+  def start
+    dir.make
+    git.init(path, '--quiet')    
+    user_name = "user.name #{quoted(name + '_' + kata.id)}"
+    git.config(path, user_name)
+    user_email = "user.email #{quoted(name)}@cyber-dojo.org"
+    git.config(path, user_email)
+
+    dir.write('manifest.json', kata.visible_files)
+    git.add(path, 'manifest.json')
+    dir.write('increments.json', [ ])
+    git.add(path, 'increments.json')    
+  end
+  
   def path
     kata.path + name + '/'
   end
@@ -109,6 +123,10 @@ private
 
   def increments
     @increments ||= JSON.parse(dir.read('increments.json'))
+  end
+
+  def quoted(s)
+    '"' + s + '"'
   end
 
 end

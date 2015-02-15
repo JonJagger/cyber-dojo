@@ -10,24 +10,11 @@ class Kata
 
   def start_avatar(avatar_names = Avatars.names.shuffle)
     started_avatar_names = avatars.each.collect { |avatar| avatar.name }
-    unstarted_avatar_names = avatar_names - started_avatar_names
+    free_avatar_names = avatar_names - started_avatar_names
     avatar = nil
-    if unstarted_avatar_names != [ ]
-      avatar_name = unstarted_avatar_names[0]
-      avatar = Avatar.new(self,avatar_name)
-
-      avatar.dir.make
-      git.init(avatar.path, '--quiet')
-      user_name = "user.name #{quoted(avatar_name+'_'+id)}"
-      git.config(avatar.path, user_name)
-      user_email = "user.email #{quoted(avatar.name)}@cyber-dojo.org"
-      git.config(avatar.path, user_email)
-
-      avatar.dir.write('manifest.json', visible_files)
-      git.add(avatar.path, 'manifest.json')
-
-      avatar.dir.write('increments.json', [ ])
-      git.add(avatar.path, 'increments.json')
+    if free_avatar_names != [ ]
+      avatar = Avatar.new(self,free_avatar_names[0])
+      avatar.start
 
       visible_files.each do |filename,content|
         avatar.sandbox.write(filename, content)
@@ -109,10 +96,6 @@ private
 
   def inner(id)
     id[2..-1] # '6A3327FE'
-  end
-
-  def quoted(s)
-    '"' + s + '"'
   end
 
 end
