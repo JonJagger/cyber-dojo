@@ -12,6 +12,14 @@ Refactor admin_scripts/lib_domain.rb so it uses ExternalSetter
 Split create page's two columns into three columns.
 language? tests? exercise?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Dojo.rb
+  o) convert path to absolute path if its not?
+  o) ensure path exists on disk?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+create Ruby helper method to ensure path is in correct format.
+Put it into External.rb helper module.
+Use when setting external paths.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 s/timed_out/timeout/
 s/timed_out/timeout/
 Light.rb colour() method can adapt old entries.
@@ -19,6 +27,8 @@ Light.rb colour() method can adapt old entries.
 history-diff dialog scrolling rightmost top-bar traffic-light
 into view could be better. Show a few traffic-lights to its
 right as well.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+history-diff title-bar does not align correctly in Firefox.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 all-animals traffic-light-count code should be in a helper
 not directly in the erb file.
@@ -113,9 +123,7 @@ Confirmed works on local server too
 For this to work I think my test code would need to simulate
 CyberDojo::Application.config
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-use DirFake for all of app_controller tests.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-app_controller tests can all use DiskFake
+app_controller tests can all use DiskFake DirFake
  TODO test_dojo
  TODO test_differ
  TODO test_reverter
@@ -125,23 +133,14 @@ app_controller tests can all use DiskFake
  DONE test_dashboard
  DONE test_setup
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Move app_controller tests after
-app_helpers
-app_lib
-app_models
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would be nice to get extra metric in coverage.txt which was
-the number of hits per line. Would also be nice to be able
-to plot that as a histogram.
+the number of hits per line (this is in the generated html summary). 
+Would also be nice to be able to plot that as a histogram.
 Another nice metric would be number of lines missed.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Can you mark methods as private in a mixin? Eg lib/Externals.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/app_model/test_avatar.rb has commented out tests.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Dojo.rb
-  o) convert path to absolute path if its not?
-  o) ensure path exists on disk?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Suppose I clone the server and switch over to it.
 Since the clone is not instant, I cannot avoid the
