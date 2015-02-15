@@ -16,10 +16,10 @@ class Avatar
     user_email = "user.email #{quoted(name)}@cyber-dojo.org"
     git.config(path, user_email)
 
-    dir.write(manifest_filename, kata.visible_files)
+    save_manifest(kata.visible_files)
     git.add(path, manifest_filename)
     
-    dir.write(increments_filename, [ ])
+    save_increments([ ])
     git.add(path, increments_filename)    
   end
   
@@ -95,14 +95,10 @@ class Avatar
       'number' => rags.length + 1
     }
     rags << rag
-    dir.write(increments_filename, rags)
+    save_increments(rags)
     commit(rags.length)
 
     [rags,new_files,filenames_to_delete]
-  end
-
-  def save_manifest(visible_files)
-    dir.write(manifest_filename, visible_files)
   end
 
   def commit(tag)
@@ -126,8 +122,16 @@ private
     'manifest.json'
   end
   
+  def save_manifest(visible_files)
+    dir.write(manifest_filename, visible_files)
+  end
+  
   def increments_filename
     'increments.json'
+  end
+  
+  def save_increments(increments)
+    dir.write(increments_filename, increments)    
   end
   
   def increments
