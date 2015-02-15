@@ -3,14 +3,37 @@
 Work towards removing dir as common first argument to all
 Git methods. I think I can do this by making Git a module
 and then just using path (from the containing class) in place
-of dir. 
+of dir. However git is an object set as an external.
+So I think I will need to do something like this...
+
+  module ExternalGit
+  
+    def git_init(args)
+	  git.init(path,args)
+	end
+	
+	def git_config(args)
+	  git.config(path,args)
+	end
+	
+  private
+  
+    include External
+	
+    def git
+	  external(:git)
+	end
+	
+  end
+
+
 This also suggests a way to improve a couple of large methods.
 
 Kata.start_avatar() has several lines like this
   git.config(avatar.path, user_name)
     Which could become
   Avatar.start()
-    git.config(user_name)
+    git_config(user_name)
   
 Avatar.test() has some lines at the start like this
   delta[:new].each do |filename|
@@ -21,7 +44,7 @@ Avatar.test() has some lines at the start like this
   Sandbox.update(delta,visible_files)
     delta[:new].each do |filename|
 	  write(filename,visible_files[filename])
-	  git.add(filename)
+	  git_add(filename)
 	end
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I think its quite likely I'll have two C++ compilers at
