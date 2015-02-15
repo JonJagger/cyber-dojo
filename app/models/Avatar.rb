@@ -33,11 +33,7 @@ class Avatar
   end
 
   def active?
-    # o) Players sometimes start an extra avatar solely to read the
-    #    instructions. I don't want these avatars appearing on the
-    #    dashboard.
-    # o) When forking a new kata you can enter as one animal
-    #    to sanity check it is ok (but not press [test])
+    # See comment below.
     exists? && lights.count > 0
   end
 
@@ -52,9 +48,8 @@ class Avatar
   end
 
   def visible_files
-    # equivalent to tags[-1].visible_files but much easier
-    # to test (faking files is easier than faking git)
-    JSON.parse(dir.read(manifest_filename))
+    # See comment below.
+    JSON.parse(read(manifest_filename))
   end
 
   def test(delta, visible_files, now = time_now, time_limit = 15)
@@ -98,15 +93,23 @@ private
   end
 
   def save_manifest(visible_files)
-    dir.write(manifest_filename, visible_files)
+    write(manifest_filename, visible_files)
   end
 
   def save_increments(increments)
-    dir.write(increments_filename, increments)    
+    write(increments_filename, increments)    
+  end
+  
+  def write(filename,content)
+    dir.write(filename,content)
+  end
+  
+  def read(filename)
+    dir.read(filename)
   end
   
   def increments
-    @increments ||= JSON.parse(dir.read(increments_filename))
+    @increments ||= JSON.parse(read(increments_filename))
   end
 
   def manifest_filename
@@ -131,6 +134,32 @@ private
 
 end
 
+
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# visible_files
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# equivalent to tags[-1].visible_files but much easier
+# to test (faking files is easier than faking git)
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# active?
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# o) Players sometimes start an extra avatar solely to read the
+#    instructions. I don't want these avatars appearing on the
+#    dashboard.
+# o) When forking a new kata you can enter as one animal
+#    to sanity check it is ok (but not press [test])
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# tags
+# lights
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # When a new avatar enters a dojo, kata.start_avatar()
 # will do a 'git commit' + 'git tag' for tag 0 (Zero).
 # This initial tag is *not* recorded in the

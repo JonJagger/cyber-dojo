@@ -32,7 +32,6 @@ class Sandbox
     end    
   end
   
-  
   def post_test(output, visible_files, pre_test_filenames)
     write('output', output) # so output appears in diff-view
     visible_files['output'] = output
@@ -51,10 +50,6 @@ class Sandbox
     [new_files,filenames_to_delete]
   end
   
-  def write(filename, content)
-    dir.write(filename, content)
-  end
-
   def path
     avatar.path + 'sandbox/'
   end
@@ -63,5 +58,9 @@ private
 
   include ExternalDiskDir
   include ExternalGit
+
+  def write(filename, content)
+    dir.write(filename, content)
+  end
 
 end
