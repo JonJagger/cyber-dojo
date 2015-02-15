@@ -25,8 +25,7 @@ class Avatar
     git_add(increments_filename)    
     
     sandbox.start
-    tag = 0
-    commit(tag)    
+    commit(0)    
   end
   
   def path
@@ -59,35 +58,13 @@ class Avatar
   end
 
   def test(delta, visible_files, now = time_now, time_limit = 15)
-    delta[:changed].each do |filename|
-      sandbox.write(filename, visible_files[filename])
-    end
-    delta[:new].each do |filename|
-      sandbox.write(filename, visible_files[filename])
-      git.add(sandbox.path, filename)
-    end
-    delta[:deleted].each do |filename|
-      git.rm(sandbox.path, filename)
-    end
-
+    
     pre_test_filenames = visible_files.keys
-
+    
+    sandbox.pre_test(delta, visible_files)    
     output = runner.run(sandbox, './cyber-dojo.sh', time_limit)
-    sandbox.write('output', output) # so output appears in diff-view
-    visible_files['output'] = output
-    kata.language.after_test(sandbox.dir, visible_files)
-
-    new_files = visible_files.select { |filename|
-      !pre_test_filenames.include?(filename)
-    }
-    new_files.keys.each { |filename|
-      git.add(sandbox.path, filename)
-    }
-
-    filenames_to_delete = pre_test_filenames.select { |filename|
-      !visible_files.keys.include?(filename)
-    }
-
+    new_files,filenames_to_delete = sandbox.post_test(output, visible_files, pre_test_filenames)
+    
     save_manifest(visible_files)
 
     rags = increments
