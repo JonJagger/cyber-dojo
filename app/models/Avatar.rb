@@ -8,27 +8,29 @@ class Avatar
 
   attr_reader :kata, :name
 
+  def exists?
+    dir.exists?
+  end
+
   def start
     dir.make
     git.init(path, '--quiet')    
-    user_name = "user.name #{quoted(name + '_' + kata.id)}"
     git.config(path, user_name)
-    user_email = "user.email #{quoted(name)}@cyber-dojo.org"
     git.config(path, user_email)
-
+    
     save_manifest(kata.visible_files)
     git.add(path, manifest_filename)
     
     save_increments([ ])
     git.add(path, increments_filename)    
+    
+    sandbox.start
+    tag = 0
+    commit(tag)    
   end
   
   def path
     kata.path + name + '/'
-  end
-
-  def exists?
-    dir.exists?
   end
 
   def active?
@@ -101,12 +103,6 @@ class Avatar
     [rags,new_files,filenames_to_delete]
   end
 
-  def commit(tag)
-    git.commit(path, "-a -m '#{tag}' --quiet")
-    git.gc(path, '--auto --quiet')
-    git.tag(path, "-m '#{tag}' #{tag} HEAD")
-  end
-
   def sandbox
     Sandbox.new(self)
   end
@@ -118,24 +114,38 @@ private
   include ExternalRunner
   include TimeNow
 
-  def manifest_filename
-    'manifest.json'
+  def commit(tag)
+    git.commit(path, "-a -m '#{tag}' --quiet")
+    git.gc(path, '--auto --quiet')
+    git.tag(path, "-m '#{tag}' #{tag} HEAD")
   end
-  
+
   def save_manifest(visible_files)
     dir.write(manifest_filename, visible_files)
   end
-  
-  def increments_filename
-    'increments.json'
-  end
-  
+
   def save_increments(increments)
     dir.write(increments_filename, increments)    
   end
   
   def increments
     @increments ||= JSON.parse(dir.read(increments_filename))
+  end
+
+  def manifest_filename
+    'manifest.json'
+  end
+    
+  def increments_filename
+    'increments.json'
+  end
+  
+  def user_name
+    "user.name #{quoted(name + '_' + kata.id)}"
+  end
+
+  def user_email 
+    "user.email #{quoted(name)}@cyber-dojo.org"
   end
 
   def quoted(s)

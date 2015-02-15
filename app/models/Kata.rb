@@ -15,26 +15,12 @@ class Kata
     if free_avatar_names != [ ]
       avatar = Avatar.new(self,free_avatar_names[0])
       avatar.start
-
-      visible_files.each do |filename,content|
-        avatar.sandbox.write(filename, content)
-        git.add(avatar.sandbox.path, filename)
-      end
-
-      language.support_filenames.each do |filename|
-        from = language.path + filename
-          to = avatar.sandbox.path + filename
-        disk.symlink(from, to)
-      end
-
-      tag = 0
-      avatar.commit(tag)
     end
     avatar
   end
 
   def path
-    @katas.path + outer(id) + '/' + inner(id) + '/'
+    katas.path + outer(id) + '/' + inner(id) + '/'
   end
 
   def exists?
@@ -43,14 +29,6 @@ class Kata
 
   def active?
     avatars.active.count > 0
-  end
-
-  def language
-    dojo.languages[manifest['language']]
-  end
-
-  def exercise
-    dojo.exercises[manifest['exercise']]
   end
 
   def avatars
@@ -68,6 +46,14 @@ class Kata
 
   def visible_files
     manifest['visible_files']
+  end
+
+  def language
+    dojo.languages[manifest['language']]
+  end
+
+  def exercise
+    dojo.exercises[manifest['exercise']]
   end
 
 private
