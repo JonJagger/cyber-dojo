@@ -57,7 +57,6 @@ class Kata
 private
 
   include ExternalDiskDir
-  include ExternalGit
 
   def manifest_property
     property_name = (caller[0] =~ /`([^']*)'/ and $1)

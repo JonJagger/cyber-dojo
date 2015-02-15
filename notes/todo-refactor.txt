@@ -54,6 +54,8 @@ becomes
   save_manifest(kata.visible_files)
   save_increments([])  # needs to be written  
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+manifest_property is duplicated in Language.rb and Kata.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I think its quite likely I'll have two C++ compilers at
 some point - one for g++ and one for clang. 
 I can name the folders whatever I like, since the display_name

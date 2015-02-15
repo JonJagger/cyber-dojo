@@ -14,15 +14,15 @@ class Avatar
 
   def start
     dir.make
-    git.init(path, '--quiet')    
-    git.config(path, user_name)
-    git.config(path, user_email)
+    git_init('--quiet')    
+    git_config(user_name)
+    git_config(user_email)
     
     save_manifest(kata.visible_files)
-    git.add(path, manifest_filename)
+    git_add(manifest_filename)
     
     save_increments([ ])
-    git.add(path, increments_filename)    
+    git_add(increments_filename)    
     
     sandbox.start
     tag = 0
@@ -115,9 +115,9 @@ private
   include TimeNow
 
   def commit(tag)
-    git.commit(path, "-a -m '#{tag}' --quiet")
-    git.gc(path, '--auto --quiet')
-    git.tag(path, "-m '#{tag}' #{tag} HEAD")
+    git_commit("-a -m '#{tag}' --quiet")
+    git_gc('--auto --quiet')
+    git_tag("-m '#{tag}' #{tag} HEAD")
   end
 
   def save_manifest(visible_files)

@@ -10,7 +10,7 @@ class Sandbox
   def start
     avatar.visible_files.each do |filename,content|
       write(filename, content)
-      git.add(path, filename)
+      git_add(filename)
     end    
     avatar.kata.language.support_filenames.each do |filename|
       from = avatar.kata.language.path + filename
