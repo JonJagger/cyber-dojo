@@ -41,7 +41,7 @@ var cyberDojo = (function(cd, $) {
     }
 
     //---------------------------------------------------
-    // history diff[x] ...............
+    // title bar        history diff [x] ...............
     //---------------------------------------------------
 
     var diffCheckBox = function() {
@@ -67,7 +67,7 @@ var cyberDojo = (function(cd, $) {
     }
 
     //---------------------------------------------------
-    // history .... [traffic-lights] ......
+    // title-bar           .... [traffic-lights] 
     //---------------------------------------------------
 
     var titleBar = function() {
