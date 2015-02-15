@@ -12,13 +12,13 @@ class Sandbox
   end
 
   def start
-    avatar.visible_files.each do |filename,content|
+    avatar.visible_files.each { |filename,content|
       write(filename, content)
       git_add(filename)
-    end
-    language.support_filenames.each do |filename|
+    }
+    language.support_filenames.each { |filename|
       disk.symlink(language.path + filename, path + filename)
-    end    
+    }
   end
   
   def run_tests(delta, visible_files, time_limit)
