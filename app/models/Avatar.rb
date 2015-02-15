@@ -16,10 +16,11 @@ class Avatar
     user_email = "user.email #{quoted(name)}@cyber-dojo.org"
     git.config(path, user_email)
 
-    dir.write('manifest.json', kata.visible_files)
-    git.add(path, 'manifest.json')
-    dir.write('increments.json', [ ])
-    git.add(path, 'increments.json')    
+    dir.write(manifest_filename, kata.visible_files)
+    git.add(path, manifest_filename)
+    
+    dir.write(increments_filename, [ ])
+    git.add(path, increments_filename)    
   end
   
   def path
@@ -52,7 +53,7 @@ class Avatar
   def visible_files
     # equivalent to tags[-1].visible_files but much easier
     # to test (faking files is easier than faking git)
-    JSON.parse(dir.read('manifest.json'))
+    JSON.parse(dir.read(manifest_filename))
   end
 
   def test(delta, visible_files, now = time_now, time_limit = 15)
@@ -94,14 +95,14 @@ class Avatar
       'number' => rags.length + 1
     }
     rags << rag
-    dir.write('increments.json', rags)
+    dir.write(increments_filename, rags)
     commit(rags.length)
 
     [rags,new_files,filenames_to_delete]
   end
 
   def save_manifest(visible_files)
-    dir.write('manifest.json', visible_files)
+    dir.write(manifest_filename, visible_files)
   end
 
   def commit(tag)
@@ -121,8 +122,16 @@ private
   include ExternalRunner
   include TimeNow
 
+  def manifest_filename
+    'manifest.json'
+  end
+  
+  def increments_filename
+    'increments.json'
+  end
+  
   def increments
-    @increments ||= JSON.parse(dir.read('increments.json'))
+    @increments ||= JSON.parse(dir.read(increments_filename))
   end
 
   def quoted(s)
