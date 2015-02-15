@@ -3,67 +3,67 @@ class GitSpy
 
   def initialize
     @log = { }
-    @stub = { }
+    @stubs = { }
   end
 
   def log
     @log
   end
 
-  def init(dir, options)
-    record(dir, 'init', options)
+  def init(path, options)
+    record(path, 'init', options)
   end
 
-  def config(dir, options)
-    record(dir, 'config', options)
+  def config(path, options)
+    record(path, 'config', options)
   end
 
-  def add(dir, what)
-    record(dir, 'add', what)
+  def add(path, what)
+    record(path, 'add', what)
   end
 
-  def rm(dir, what)
-    record(dir, 'rm', what)
+  def rm(path, what)
+    record(path, 'rm', what)
   end
 
-  def commit(dir, options)
-    record(dir, 'commit', options)
+  def commit(path, options)
+    record(path, 'commit', options)
   end
 
-  def gc(dir, options)
-    record(dir, 'gc', options)
+  def gc(path, options)
+    record(path, 'gc', options)
   end
 
-  def tag(dir, options)
-    record(dir, 'tag', options)
+  def tag(path, options)
+    record(path, 'tag', options)
   end
 
-  def show(dir, options)
-    record(dir, 'show', options)
-    stub(dir,'show',options)
+  def show(path, options)
+    record(path, 'show', options)
+    stub(path,'show',options)
   end
 
-  def diff(dir, options)
-    record(dir, 'diff', options)
-    stub(dir,'diff',options)
+  def diff(path, options)
+    record(path, 'diff', options)
+    stub(path,'diff',options)
   end
 
-  def spy(dir, command, options, stub)
-    tuple = [dir,command,options]
-    @stub[tuple] = stub
+  def spy(path, command, options, stub)
+    tuple = [path,command,options]
+    @stubs[tuple] = stub
   end
 
 private
 
-  def record(dir, command, options)
-    @log[dir] ||= [ ]
-    @log[dir] << [command, options]
-    "{:hack=>'yes'}"
+  def record(path, command, options)
+    @log[path] ||= [ ]
+    @log[path] << [command, options]
+    "{ :hack => 'yes' }"
   end
 
-  def stub(dir, command, options)
-    tuple = [dir,command,options]
-    @stub[tuple]
+  def stub(path, command, options)
+    tuple = [path,command,options]
+    @stubs[tuple]
   end
 
 end

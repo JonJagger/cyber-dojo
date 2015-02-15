@@ -1,43 +1,43 @@
 
 class Git
 
-  def init(dir, args)
-    if !File.directory?(dir)
-      raise "Cannot `cd #{dir};git init` because #{dir} does not exist"
+  def init(path, args)
+    if !File.directory?(path)
+      raise "Cannot `cd #{path};git init` because #{path} does not exist"
     end
-    run(dir, 'init', args)
+    run(path, 'init', args)
   end
 
-  def config(dir, args)
-    run(dir, 'config', args)
+  def config(path, args)
+    run(path, 'config', args)
   end
 
-  def add(dir, args)
-    run(dir, 'add', quoted(args))
+  def add(path, args)
+    run(path, 'add', quoted(args))
   end
 
-  def rm(dir, args)
-    run(dir, 'rm', quoted(args))
+  def rm(path, args)
+    run(path, 'rm', quoted(args))
   end
 
-  def commit(dir, args)
-    run(dir, 'commit', args)
+  def commit(path, args)
+    run(path, 'commit', args)
   end
 
-  def gc(dir, args)
-    run(dir, 'gc', args)
+  def gc(path, args)
+    run(path, 'gc', args)
   end
 
-  def tag(dir, args)
-    run(dir, 'tag', args)
+  def tag(path, args)
+    run(path, 'tag', args)
   end
 
-  def show(dir, args)
-    run(dir, 'show', args)
+  def show(path, args)
+    run(path, 'show', args)
   end
 
-  def diff(dir, args)
-    run(dir, 'diff', args)
+  def diff(path, args)
+    run(path, 'diff', args)
   end
 
 private
@@ -48,9 +48,9 @@ private
     "'" + args + "'"
   end
 
-  def run(dir, command, args)
+  def run(path, command, args)
     log = [ ]
-    cd_cmd = "cd #{dir}"
+    cd_cmd = "cd #{path}"
     git_cmd = "git #{command} #{args}"
     cmd = [cd_cmd,git_cmd].map{|s| stderr2stdout(s)}.join(shell_separator)
     IO.popen(cmd).each do |line|
