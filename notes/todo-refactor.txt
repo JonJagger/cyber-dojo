@@ -1,5 +1,33 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Work towards removing dir as common first argument to all
+Git methods. I think I can do this by making Git a module
+and then just using path (from the containing class) in place
+of dir. 
+This also suggests a way to improve a couple of large methods.
+
+Kata.start_avatar() has several lines like this
+  git.config(avatar.path, user_name)
+    Which could become
+  Avatar.start()
+    git.config(user_name)
+  
+Avatar.test() has some lines at the start like this
+  delta[:new].each do |filename|
+    sandbox.write(filename, visible_files[filename])
+    git.add(sandbox.path, filename)
+  end
+  which could become 
+  Sandbox.update(delta,visible_files)
+    delta[:new].each do |filename|
+	  write(filename,visible_files[filename])
+	  git.add(filename)
+	end
+  
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 If test run is successful do this?
 $rake doc:app
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
