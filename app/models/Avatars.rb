@@ -30,12 +30,12 @@ class Avatars
     each.select{ |avatar| avatar.active? }
   end
 
+  def names
+    each.collect{ |avatar| avatar.name }
+  end
+  
   def [](name)
     Avatar.new(@kata,name)
-  end
-
-  def count
-    each.entries.length
   end
 
 end

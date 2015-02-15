@@ -19,4 +19,5 @@
   Dir
   TimeNow
   UniqueId
+  IdSplitter
 }.each { |sourcefile| require_relative './' + sourcefile }

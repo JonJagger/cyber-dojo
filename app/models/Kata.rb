@@ -9,7 +9,7 @@ class Kata
   attr_reader :katas, :id
 
   def start_avatar(avatar_names = Avatars.names.shuffle)
-    free_names = avatar_names - started_avatar_names
+    free_names = avatar_names - avatars.names
     if free_names != [ ]
       avatar = Avatar.new(self,free_names[0])
       avatar.start
@@ -58,15 +58,20 @@ private
 
   include ExternalDiskDir
   include ManifestProperty
+  include IdSplitter
   
   def manifest_filename
     'manifest.json'
   end
   
   def manifest
-    @manifest ||= JSON.parse(dir.read(manifest_filename))
+    @manifest ||= JSON.parse(read(manifest_filename))
   end
 
+  def read(filename)
+    dir.read(filename)
+  end
+  
   def earliest_light
     # time of first test
     Time.mktime(*avatars.active.map{ |avatar|
@@ -76,18 +81,6 @@ private
 
   def dojo
     katas.dojo
-  end
-
-  def outer(id)
-    id[0..1]  # 'E5'
-  end
-
-  def inner(id)
-    id[2..-1] # '6A3327FE'
-  end
-
-  def started_avatar_names
-    avatars.each.collect { |avatar| avatar.name }
   end
 
 end

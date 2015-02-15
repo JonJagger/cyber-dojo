@@ -44,15 +44,4 @@ class AvatarsTests < ModelTestBase
     assert_equal 'panda', @dojo.katas[kata.id.to_s].avatars['panda'].name
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'avatars.count' do
-    kata = make_kata
-    assert_equal 0, kata.avatars.count
-    kata.start_avatar
-    assert_equal 1, kata.avatars.count
-    kata.start_avatar
-    assert_equal 2, kata.avatars.count
-  end
-
 end
