@@ -1,5 +1,6 @@
 
 %w{
+  ManifestProperty
   Dojo
   Language 
   Languages

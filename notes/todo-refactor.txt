@@ -26,8 +26,6 @@ So I think I will need to do something like this...
 	
   end
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-manifest_property is duplicated in Language.rb and Kata.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I think its quite likely I'll have two C++ compilers at
 some point - one for g++ and one for clang. 
 I can name the folders whatever I like, since the display_name

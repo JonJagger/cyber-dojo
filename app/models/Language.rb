@@ -53,10 +53,6 @@ class Language
     manifest_property || [ ]
   end
 
-  def tab_size
-    manifest_property || 4
-  end
-
   def progress_regexs
     manifest_property || [ ]
   end
@@ -67,6 +63,14 @@ class Language
 
   def red_goto_line_spec
     manifest_property || [ ]
+  end
+
+  def tab_size
+    manifest_property || 4
+  end
+
+  def tab
+    " " * tab_size
   end
 
   def lowlight_filenames
@@ -80,10 +84,6 @@ class Language
     else
       return ['cyber-dojo.sh', 'makefile', 'Makefile', 'unity.license.txt']
     end
-  end
-
-  def tab
-    " " * tab_size
   end
 
   def colour(output)
@@ -105,11 +105,7 @@ private
 
   include ExternalDiskDir
   include ExternalRunner
-
-  def manifest_property
-    property_name = (caller[0] =~ /`([^']*)'/ and $1)
-    manifest[property_name]
-  end
+  include ManifestProperty
 
   def manifest
     begin
