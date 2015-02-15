@@ -12,11 +12,21 @@ Refactor admin_scripts/lib_domain.rb so it uses ExternalSetter
 Split create page's two columns into three columns.
 language? tests? exercise?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-team-bulb-counts hover-tips are lost when dashboard refreshes.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 s/timed_out/timeout/
 s/timed_out/timeout/
 Light.rb colour() method can adapt old entries.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+history-diff dialog scrolling rightmost top-bar traffic-light
+into view could be better. Show a few traffic-lights to its
+right as well.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+all-animals traffic-light-count code should be in a helper
+not directly in the erb file.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+team-bulb-counts hover-tips are lost when dashboard refreshes.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Can hover-tip use $.html() to set tip when it contains html
+formatting. If so this would remove the need for some ajax.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 add suffix to traffic-light-count hover-tip for current colour
 eg
@@ -44,9 +54,8 @@ view of a practice. Copy paste could possibly be captured
 and marked too. File rename too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Increase number of avatars to 100. Olve is investigating.
-This would mean I would have to alter the re-enter page
-so I only show the started avatars in colour and not
-the unstarted ones in black and white.
+I can still keep the re-enter dialog, as a 10 x 10 grid
+but the animal images will need to be a lot smaller.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 languages/test_languages_manifests.rb
 What happens if "filename_extension" is not present.

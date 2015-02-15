@@ -9,11 +9,11 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.dialog_history = function(id,         // eg 'D936E1EB3F'
-                               avatarName, // eg 'lion'
-                               wasTagParam,// eg 8   (1-based)
-                               nowTagParam,// eg 9   (1-based)
-                               showRevert  // eg true
+  cd.dialog_history = function(id,          // 'D936E1EB3F'
+                               avatarName,  // 'lion'
+                               wasTagParam, // 8   (1-based)
+                               nowTagParam, // 9   (1-based)
+                               showRevert   // true
                               ) {
 
     // Arguably, the history would be better as it own page rather
@@ -472,7 +472,7 @@ var cyberDojo = (function(cd, $) {
           });
 
         var noneOrSome = function(property) {
-          return (diff[property] === 0 || diff.filename == 'output') ? 'none' : 'some';
+          return (diff[property] === 0) ? 'none' : 'some';
         };
 
         var deletedLineCountTd = $('<td>', {
