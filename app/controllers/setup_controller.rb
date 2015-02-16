@@ -36,7 +36,7 @@ private
         [language.display_name,language.name]
       }.sort
     end
-    @languages_names = @languages.map{|array| array[1]}
+    @languages_names = @languages.map{|array| array[1]}    
   end
 
   def read_exercises
