@@ -27,6 +27,10 @@ Kata.start_avatar
   needs to do dir.lock do...end
   to ensure you don't get two avatars with the same name.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+200 clones of cyber-dojo yesterday!
+How about making cyber-dojo 'follow-ware'
+I ask users to follow me on twitter?!
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 
