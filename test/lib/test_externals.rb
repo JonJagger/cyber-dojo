@@ -13,12 +13,9 @@ class ExternalsTests < LibTestBase
   include ExternalKatasPath
 
   def setup
-    reset_external(:disk, nil)
-    reset_external(:git, nil)
-    reset_external(:runner, nil)
-    reset_external(:exercises_path, nil)
-    reset_external(:languages_path, nil)
-    reset_external(:katas_path, nil)
+    [:disk,:git,:runner,:exercises_path,:languages_path,:katas_path].each { |symbol|
+      unset_external(symbol)
+    }
   end
 
   test 'raises RuntimeError if disk not set' do
@@ -45,17 +42,17 @@ class ExternalsTests < LibTestBase
     assert_raises(RuntimeError) { katas_path }
   end
 
-  test 'when disk is set it is not overridden' do
+  test 'when disk is reset it is not overridden' do
     reset_external(:disk, Object.new)
     assert_equal 'Object', disk.class.name
   end
 
-  test 'when git is set it is not overridden' do
+  test 'when git is reset it is not overridden' do
     reset_external(:git, Object.new)
     assert_equal 'Object', git.class.name
   end
 
-  test 'when runner is set it is not overridden' do
+  test 'when runner is reset it is not overridden' do
     reset_external(:runner, Object.new)
     assert_equal 'Object', runner.class.name
   end

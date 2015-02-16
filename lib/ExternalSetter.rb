@@ -2,17 +2,25 @@
 module ExternalSetter # mixin
 
   def set_external(symbol, object)
-    Thread.current[symbol] ||= pathed(symbol,object)
+    thread[symbol] ||= pathed(symbol,object)
   end
 
   def reset_external(symbol, object)
-    Thread.current[symbol] = pathed(symbol,object)
+    thread[symbol] = pathed(symbol,object)
   end
 
+  def unset_external(symbol)
+    thread[symbol] = nil
+  end
+  
 private
 
+  def thread
+    Thread.current
+  end
+
   def pathed(symbol,object)
-    if [:exercises_path,:languages_path,:katas_path].include?(symbol) && !object.nil?
+    if symbol.to_s.end_with?('_path')
       object += '/' if !object.end_with?('/')      
     end
     object
