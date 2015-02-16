@@ -44,10 +44,6 @@ private
 
   include Cleaner
 
-  def quoted(args)
-    "'" + args + "'"
-  end
-
   def run(path, command, args)
     log = [ ]
     cd_cmd = "cd #{path}"
@@ -75,6 +71,10 @@ private
 
   def success
     0
+  end
+
+  def quoted(args)
+    "'" + args + "'"
   end
 
 end

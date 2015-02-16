@@ -1,13 +1,8 @@
 
 class Exercises
 
-  def initialize
-    @exercises_path = exercises_path
-    @exercises_path += '/' if !exercises_path.end_with?('/')
-  end
-
   def path
-    @exercises_path
+    exercises_path
   end
 
   def each

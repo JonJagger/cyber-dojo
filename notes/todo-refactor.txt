@@ -9,14 +9,6 @@ app/models/Tag.rb  has this
   end
 which means I have to leave git as public
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Dojo.rb
-  o) convert path to absolute path if its not?
-  o) ensure path exists on disk?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-create Ruby helper method to ensure path is in correct format.
-Put it into External.rb helper module.
-Use when setting external paths.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Refactor admin_scripts/lib_domain.rb so it uses ExternalSetter
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I think its quite likely I'll have two C++ compilers at
@@ -30,6 +22,10 @@ and perhaps also have display names as
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 If hover-tip is visible and you switch to a different browser
 tab then when you return the hover-tip is still visible.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Kata.start_avatar
+  needs to do dir.lock do...end
+  to ensure you don't get two avatars with the same name.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
@@ -257,7 +253,7 @@ How to do this so it's down for minimal time?
 First learn how to do it by doing it on a clone.
 Will need to redirect the IP address... Bringing it down for a
 short period of time would mean no dojos get lost during the
-transition. Nick mentioned an elatic? IP address which allows
+transition. Nick mentioned an elastic? IP address which allows
 the same IP address to be set from the Amazon console, but for
 the server underneath it to be switched.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -341,12 +337,6 @@ flaky network the cursor just spins forever.
 make the traffic-lights scrollbar on [test] page go above
 the traffic-lights rather than below them?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-is there a way to get line-number from caret-position
-I'm thinking about the feature where you have the
-output window open and it names the filename and line number
-of a syntax error and you do alt-E and it opens the file
-named in the syntax error and auto scrolls to the line-number.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Generalize
    Approval.add_created_txt_files(sandbox.path, visible_files)
    Approval.remove_deleted_txt_files(sandbox.path, visible_files)
@@ -375,10 +365,6 @@ to the was-tag and now-tag.
 What about traffic-lights on the edit/test page?
 Do they open a diff-dialog? Perhaps not. Why not have
 just the lights on the dashboard page open a new diff page.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Kata.start_avatar
-  needs to do dir.lock do...end
-  to ensure you don't get two avatars with the same name.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Add manifest parameter to app/model/Language.rb globbing
 the file pattern to add/remove in post-test event?

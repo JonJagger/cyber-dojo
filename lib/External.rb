@@ -2,9 +2,9 @@
 module External # mixin
 
   def external(symbol)
-    thread = Thread.current
-    raise RuntimeError.new('no external(:' + symbol.to_s + ')') if thread[symbol].nil?
-    thread[symbol]
+    object = Thread.current[symbol]
+    raise RuntimeError.new('no external(:' + symbol.to_s + ')') if object.nil?
+    object
   end
 
 end

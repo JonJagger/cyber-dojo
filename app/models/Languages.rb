@@ -1,13 +1,8 @@
 
 class Languages
 
-  def initialize
-    @languages_path = languages_path
-    @languages_path += '/' if !languages_path.end_with?('/')
-  end
-
   def path
-    @languages_path
+    languages_path
   end
 
   def each
@@ -18,7 +13,6 @@ class Languages
   end
 
   def [](name)
-    # See comment at bottom of file.
     make_language(latest(name))
   end
 
@@ -28,7 +22,6 @@ private
   include ExternalLanguagesPath
 
   def latest(name)
-    # See comment at bottom of file.
     renames = {
       'C'            => 'C-assert',
       'C++'          => 'C++-assert',
@@ -77,6 +70,7 @@ private
 
 end
 
+# - - - - - - - - - - - - - - - - - - - - - - - -
 # Some languages/ sub-folders have been renamed.
 # This creates a problem for practice-sessions done
 # before the rename that you now wish to review or
@@ -95,3 +89,4 @@ end
 #    language = dojo.languages[old_name]
 #    new_name = language.name
 #    assert_sometimes old_name != new_name
+# - - - - - - - - - - - - - - - - - - - - - - - -

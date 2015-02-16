@@ -3,20 +3,15 @@ class Katas
 
   def initialize(dojo)
     @dojo = dojo
-    @katas_path = katas_path
-    @katas_path += '/' if !katas_path.end_with?('/')
   end
 
   attr_reader :dojo
 
   def path
-    @katas_path
+    katas_path
   end
 
   def create_kata(language, exercise, id = unique_id, now = time_now)
-    # a kata's id has 10 hex chars. This gives 16^10 possibilities
-    # which is 1,099,511,627,776 which is big enough to not
-    # need to check that a kata with the id already exists.
     manifest = create_kata_manifest(language, exercise, id, now)
     manifest[:visible_files] = language.visible_files
     manifest[:visible_files]['output'] = ''
@@ -47,10 +42,6 @@ class Katas
   end
 
   def complete(id)
-    # if at least 4 characters of the id are
-    # provided attempt to do id-completion
-    # Doing completion with fewer characters would likely result
-    # in a lot of disk activity and no unique outcome
     if !id.nil? && id.length >= 4
       id.upcase!
       inner_dir = disk[path + id[0..1]]
@@ -90,3 +81,22 @@ private
   end
 
 end
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# create_kata
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# a kata's id has 10 hex chars. This gives 16^10 possibilities
+# which is 1,099,511,627,776 which is big enough to not
+# need to check that a kata with the id already exists.
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# complete
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# if at least 4 characters of the id are
+# provided attempt to do id-completion
+# Doing completion with fewer characters would likely result
+# in a lot of disk activity and no unique outcome
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
