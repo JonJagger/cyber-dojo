@@ -6,7 +6,7 @@ $(function() {
   var previousLanguage = undefined;
   var selected = $('#language_' + <%= @selected_language_index %>);
 
-  $('[id^=language_]').each(function(index) {
+  $('[id^=language_]').each(function() {
     var node = $(this);
     node.click(function() {
       cd.radioEntrySwitch(previousLanguage, node);
