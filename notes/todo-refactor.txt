@@ -7,7 +7,9 @@ app/models/Tag.rb  has this
     ...
     diff_lines = git.diff(@avatar.path, command)
   end
-which means I have to leave git as public
+which means I have to leave git as public in ExternalGit
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Rename Runner to TestRunner
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Refactor admin_scripts/lib_domain.rb so it uses ExternalSetter
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
