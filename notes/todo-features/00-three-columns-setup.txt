@@ -1,0 +1,16 @@
+
+Split create page's two columns into three columns.
+language? tests? exercise?
+
+When language with only one test framework is selected
+then the tests? column has only that entry.
+
+How to code the tests? column?
+One way would be to mirror the way files are done on the test page.
+Viz, each tests column has pre-created html and when you select
+a language the tests column for the current language is hidden
+and the tests column for the selected language is displayed.
+
+Only real requirement is that initial display defaults to
+same language,tests,exercise selection as the previous dojo's
+ID (if there was a previous dojo).
