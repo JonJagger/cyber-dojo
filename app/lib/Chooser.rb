@@ -9,12 +9,6 @@ module Chooser # mixin
 
   def choose_language(languages, id, katas)
     chooser(languages, id, katas) {|kata|
-      kata.language.name
-    }
-  end
-
-  def choose_language2(languages, id, katas)
-    chooser(languages, id, katas) {|kata|
       kata.language.display_name
     }
   end

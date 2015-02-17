@@ -4,11 +4,13 @@
 $(function() {
 
   $('#ok').click(function() {
-    var exercise = $('[id^=exercise_][class~=selected]').data('exercise');
     var language = $('[id^=language_][class~=selected]').data('language');
+	var     test = $('[id^=test_][class~=selected]').data('test');
+    var exercise = $('[id^=exercise_][class~=selected]').data('exercise');
     $.getJSON('/setup/save', {
-      exercise: exercise,
-      language: language
+      language: language,
+		  test: test,
+      exercise: exercise
     }, function(dojo) {
       var url = '/dojo/index/' + dojo.id;
       window.location = url;
