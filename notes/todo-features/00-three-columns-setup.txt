@@ -229,18 +229,6 @@ And the controller will need to
     language = dojo.languages[params['language'] + '-' + params['test']]
     exercise = dojo.exercises[params['exercise']]
 
-- - - - - - - - - - - - - - - - - - - - - - - - - -
-Each language manifest instead of this...
-{
-  "display_name": "C++, GoogleMock",
-}
-
-could have this...
-{
-  "display_name": ["C++","GoogleMock"] 
-}
-
-
 
 
 
