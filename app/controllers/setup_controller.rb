@@ -27,7 +27,7 @@ private
   def read_languages
     dir = disk[dojo.languages.path]
     if dir.exists?(cache_filename)
-      # cache.json is created with cyber-dojo/languages/cache.rb
+      # languages/cache.json is created with languages/cache.rb
       @languages = JSON.parse(dir.read(cache_filename)).sort
     else
       @languages = dojo.languages.each.select{ |language|
@@ -42,7 +42,7 @@ private
   def read_exercises
     dir = disk[dojo.exercises.path]
     if dir.exists?(cache_filename)
-      # cache.json is created with cyber-dojo/exercises/cache.rb
+      # exercises/cache.json is created with exercises/cache.rb
       cache = JSON.parse(dir.read(cache_filename)).sort
       @exercises_names = cache.map{|one| one[0]}
       @instructions = Hash[cache]
