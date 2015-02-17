@@ -15,9 +15,9 @@ $(function() {
       cd.radioEntrySwitch(previousTests, node);
       previousTests = node;
 	  
-	  //update current-selection in language
+      //update current-selection in language
       var language = $('[id^=language_][class~=selected]');
-	  language.data('test-index', node.data('index'));	  
+      language.data('test-index', node.data('index'));	  
     });
   });
 
@@ -32,17 +32,17 @@ $(function() {
       cd.radioEntrySwitch(previousLanguage, node);
       previousLanguage = node;
 	  
-	  // hide all tests
-	  $('[id^=test_]').hide();	  
-	  // show tests for this language
-	  var i = node.data('index');
-	  $.each(testIndexes[i], function(_,index) {
-		  $('[id=test_' + index + ']').show();
-	  });
-	  // select test
-	  var ti = node.data('test-index');
-	  $('[id=test_' + ti +']').click();
-	  	  
+      // hide all tests
+      $('[id^=test_]').hide();	  
+      // show tests for this language
+      var i = node.data('index');
+      $.each(testIndexes[i], function(_,index) {
+        $('[id=test_' + index + ']').show();
+      });
+      // select test
+      var ti = node.data('test-index');
+      $('[id=test_' + ti +']').click();
+
     });
   });
 
@@ -60,8 +60,8 @@ $(function() {
     <div class="filename"
          id="language_<%= index %>"
          data-language="<%= name %>"
-		 data-index="<%= index %>"
-		 data-test-index="<%= @split.tests_indexes[index][0] %>">
+         data-index="<%= index %>"
+         data-test-index="<%= @split.tests_indexes[index][0] %>">
       <%= name %>
     </div>
   <% end %>
