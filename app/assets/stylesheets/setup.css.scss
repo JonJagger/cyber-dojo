@@ -4,6 +4,16 @@
   margin-top: 25px;
   margin-left: 35px;
 
+  .filename { 
+	font-size: 11pt; 
+  }
+  
+  #tests-container {
+	.filename {
+	  width: 110px;
+	}
+  }
+  
   #languages-container, #tests-container, #exercises-container {
     height: 475px;
     padding-right: 3px;
@@ -18,12 +28,13 @@
   #choose-language, #choose-tests, #choose-exercise {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     color: darken($lighter-color, 5%);
-    @include font-size-larger();
+    @include font-size-large();
     margin-bottom: 5px;
   }
 
-  #exercises-container, #choose-exercise {
-    padding-left: 35px;
+  #exercises-container, #choose-exercise,
+  #tests-container, #choose-tests {
+    padding-left: 15px;
   }
 
   #instructions {
@@ -42,7 +53,7 @@
   #ok, #cancel {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-largest();
-    margin: { top: 30px; right: 50px; }
+    margin: { top: 20px; right: 50px; }
   }
 
 }

@@ -24,6 +24,7 @@ CyberDojo::Application.routes.draw do
 
   scope path: '/setup2', controller: :setup2 do
     get 'show(/:id)' => :show
+    get 'save' => :save, :constraints => { :format => :json }
   end
 
   scope path: '/setup', controller: :setup do

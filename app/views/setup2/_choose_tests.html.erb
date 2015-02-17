@@ -1,11 +1,13 @@
 
-<script type="text/javascript"><!--
-
-$(function() {
-
-});
-
-//--></script>
-
 <div id="tests-container">
+
+  <% @split.tests_names.each_with_index do |test_name,index| %>
+    <div class="filename"
+         id="test_<%= index %>"
+		 data-index="<%= index %>"
+         data-test="<%= test_name %>">
+      <%= test_name %>
+    </div>
+  <% end %>
+
 </div>
