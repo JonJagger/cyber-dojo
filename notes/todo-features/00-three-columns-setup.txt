@@ -174,24 +174,28 @@ And html for tests will initially look like this
 <div id="tests-container">
   <div class="filename"
        id="test_0"
+	   data-index="0"
 	   data-test="Unity"
 	   style="display:none">
 	 Unity
   </div>
   <div class="filename"
        id="test_1"
+	   data-index="1"	   
 	   data-test="assert"
 	   style="display:none">
 	 assert
   </div>
   <div class="filename"
        id="test_2"
+	   data-index="2"	   
 	   data-test="CppUTest"
 	   style="display:none">
 	 CppUTest
   </div>
   <div class="filename"
        id="test_3"
+	   data-index="3"	   
 	   data-test="testing"
 	   style="display:none">
 	 testing
@@ -207,6 +211,8 @@ o) all tests are set to display:none
 o) process each entry in @languages_display_names, keeping track of its index
    if entry starts with "C-" then set its style to display:block
    The - is important since I don't want to match C++ which also starts with a C
+o) select the test based on the saved test-index in the language
+
 
 The [ok] button handler, 
 
