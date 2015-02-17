@@ -1,0 +1,34 @@
+
+<script type="text/javascript"><!--
+
+$(function() {
+
+  var previousExercise = undefined;
+  var selected = $('#exercise_' + <%= @selected_exercise_index %>);
+
+  $('[id^=exercise_]').each(function(index) {
+    var instructions = $('#instructions_' + index).val();
+    var node = $(this);
+    node.click(function() {
+      cd.radioEntrySwitch(previousExercise, node);
+      previousExercise = node;
+      $('#instructions').val(instructions);
+    });
+  });
+
+  selected.click();
+  selected.scrollIntoView({ direction: 'vertical' });
+
+});
+
+//--></script>
+
+<div id='exercises-container'>
+  <% @exercises_names.each_with_index do |choice,index| %>
+    <div class='filename'
+         id="exercise_<%= index %>"
+         data-exercise="<%= choice %>" >
+      <%= choice.gsub('_', ' ') %>
+    </div>
+  <% end %>
+</div>

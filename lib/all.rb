@@ -20,4 +20,5 @@
   TimeNow
   UniqueId
   IdSplitter
+  LanguagesDisplayNamesSplitter
 }.each { |sourcefile| require_relative './' + sourcefile }

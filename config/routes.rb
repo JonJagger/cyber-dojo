@@ -22,6 +22,10 @@ CyberDojo::Application.routes.draw do
     get 're_enter'    => :re_enter, :constraints => { :format => :json }
   end
 
+  scope path: '/setup2', controller: :setup2 do
+    get 'show(/:id)' => :show
+  end
+
   scope path: '/setup', controller: :setup do
     get 'show(/:id)' => :show
     get 'save' => :save, :constraints => { :format => :json }

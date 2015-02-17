@@ -1,0 +1,25 @@
+
+<script type="text/javascript"><!--
+
+$(function() {
+
+  $('#ok').click(function() {
+    var exercise = $('[id^=exercise_][class~=selected]').data('exercise');
+    var language = $('[id^=language_][class~=selected]').data('language');
+    $.getJSON('/setup/save', {
+      exercise: exercise,
+      language: language
+    }, function(dojo) {
+      var url = '/dojo/index/' + dojo.id;
+      window.location = url;
+    });
+  });
+
+});
+
+//--></script>
+
+<button type="button"
+        id="ok">
+  <%= t("views.buttons.ok") %>
+</button>

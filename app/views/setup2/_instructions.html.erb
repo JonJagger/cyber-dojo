@@ -1,0 +1,12 @@
+
+<textarea name="instructions"
+          id="instructions"
+          readonly="readonly"
+          cols="62"
+          rows="30">
+</textarea>
+
+<% @exercises_names.each_with_index do |choice,index| %>
+   <textarea style="display:none;"
+             id="instructions_<%= index %>"><%=h @instructions[choice] %></textarea>
+<% end %>

@@ -4,12 +4,17 @@
     <tr>
       <td>
         <div id="choose-language">
-          <%= t("views.labels.language") %>?
+          language?
+        </div>
+      </td>
+      <td>
+        <div id="choose-tests">
+          tests?
         </div>
       </td>
       <td>
         <div id="choose-exercise">
-          <%= t("views.labels.exercise") %>?
+          exercise?
         </div>
       </td>
       <td>
@@ -20,6 +25,9 @@
         <%= render :partial => 'choose_language' %>
       </td>
       <td class="valign-top">
+        <%= render :partial => 'choose_tests' %>
+      </td>
+      <td class="valign-top">
         <%= render :partial => 'choose_exercise' %>
       </td>
       <td class="valign-top">
@@ -27,7 +35,7 @@
       </td>
     </tr>
     <tr>
-      <td colspan="2">
+      <td colspan="3">
       </td>
       <td>
         <%= render :partial => 'ok_button' %>
