@@ -4,12 +4,17 @@ require_relative './app_lib_test_base'
 
 class LanguagesDisplayNamesSplitter
 
-  def initialize(display_names)
-    @display_names = display_names
+  def initialize(display_names,selected_index)
+    @display_names,@selected_index = display_names,selected_index
   end
   
   def languages_names
     @languages_names ||= split(0)
+  end
+  
+  def language_selected_index
+    language_name = @display_names[@selected_index].split(',')[0].strip
+    languages_names.index(language_name)
   end
   
   def tests_names
@@ -17,7 +22,7 @@ class LanguagesDisplayNamesSplitter
   end
   
   def tests_indexes
-    languages_names.map { |name| indexes(name) }
+    languages_names.map { |name| make_test_indexes(name) }
   end
   
 private
@@ -26,7 +31,7 @@ private
     @display_names.map{|name| name.split(',')[n].strip }.sort.uniq
   end
 
-  def indexes(language_name)
+  def make_test_indexes(language_name)
     result = [ ]
     @display_names.each { |name|
       if name.start_with?(language_name + ',')
@@ -35,7 +40,20 @@ private
       end
     }
     result.shuffle
-  end
+    
+    # if this is the tests index array for the selected-language
+    # then make sure the index for the selected-language's test 
+    # is at position zero.
+    
+    if language_name === languages_names[language_selected_index]
+      test_name = @display_names[@selected_index].split(',')[1].strip
+      test_index = tests_names.index(test_name)
+      result.delete(test_index)
+      result.unshift(test_index)
+    end
+
+    result
+  end  
   
 end
 
@@ -44,23 +62,38 @@ end
 class LanguageSplitterTests < AppLibTestBase
 
   test 'display_names is split on comma into [languages_names,tests_names]' do
+    
+    # At present 
+    # o) the languages' display_names combine the name of the 
+    #    language *and* the name of the test framework.
+    # o) The languages/ folder does *not* have a nested structure. 
+    #    It probably should have.
+    #
+    # It makes sense to mirror the pattern of each language having its
+    # own docker image, and sub folders underneath it add their
+    # own test framework, and implicitly use their parents folder's
+    # docker image to build FROM in their Dockerfile
+  
     languages_display_names = [
       'C++, GoogleTest',  
-      'C++, assert',      
-      'C, assert',        # <----- selected
+      'C++, assert',      # <----- selected
+      'C, assert',        
       'C, Unity',
       'C, Igloo',
       'Go, testing'
     ]
     
-    split = LanguagesDisplayNamesSplitter.new(languages_display_names)
+    selected_index = languages_display_names.index('C++, assert')
+    assert_equal 1, selected_index
+    
+    split = LanguagesDisplayNamesSplitter.new(languages_display_names, selected_index)
     
     assert_equal [
-      'C',   # <----- selected
-      'C++',
+      'C',   
+      'C++',  # <----- selected_index
       'Go'
     ], split.languages_names
-
+    
     assert_equal [
       'GoogleTest',  # 0
       'Igloo',       # 1
@@ -70,22 +103,22 @@ class LanguageSplitterTests < AppLibTestBase
     ], split.tests_names
 
     # Need to know which tests names to display and initially select
-    # I could make the indexes *not* sorted and the
+    # Make the indexes *not* sorted and the
     # first entry in each array is the initial selection
     
     indexes =   
     [
       [ # C
-        3,  # assert  (C, assert)     <---- selected
         1,  # Igloo   (C, Igloo)
         2,  # Unity   (C, Unity)
+        3,  # assert  (C, assert)    
       ],
       [ # C++
-        3,  # assert      (C++, assert)         <---- selected
         0,  # GoogleTest  (C++, GoogleTest)     
+        3,  # assert      (C++, assert)         <---- selected
       ],
       [ # Go
-        4,  # testing     (Go, testing)         <---- selected
+        4,  # testing     (Go, testing)         
       ]
     ]
       
@@ -93,14 +126,11 @@ class LanguageSplitterTests < AppLibTestBase
     assert_equal indexes.length, actual.length
     
     indexes.each_with_index {|array,at|
-      assert_equal array.sort, actual[at].sort
+      assert_equal array, actual[at].sort
     }
     
-    selected_index = languages_display_names.index('C, assert')
-    assert_equal 2, selected_index
-    
-    # need to make initial_language_index == 0       (C)
-    # need to make split.tests_indexes[0][0] === 3   (assert)
+    assert_equal 1, split.language_selected_index   # C++
+    assert_equal 3, split.tests_indexes[1][0]       # assert
     
   end
 
