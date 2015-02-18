@@ -68,7 +68,8 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   def create_kata(language_name = 'Ruby-TestUnit',
                   exercise_name = 'Yatzy')
     get 'setup/save',
-      :language => language_name,
+      :language => language_name.split('-')[0],
+      :test => language_name.split('-')[1],
       :exercise => exercise_name
 
     json['id']

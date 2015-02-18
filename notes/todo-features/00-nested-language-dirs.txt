@@ -1,0 +1,137 @@
+
+- - - - - - - - - - - - - - - - - - - -
+What needs to be refactored?
+- - - - - - - - - - - - - - - - - - - -
+
+eg
+  C-assert
+  C-CppUTest
+  C-Unity
+  
+becomes
+  C/assert
+  C/CppUTest
+  C/Unity
+  
+- - - - - - - - - - - - - - - - - - - -
+Languages.rb
+- - - - - - - - - - - - - - - - - - - -
+
+  def initialize(path,name)
+    @path,@name = path,name
+  end
+
+  attr_reader :name
+
+  def [](name)
+    make_language(latest(name))
+  end
+
+  def path
+    @path + name + '/'
+  end
+
+private
+
+  def make_cache
+    cache = [ ]
+    dir.each_dir do |sub_dir|
+      language = make_language(sub_dir)
+      cache << language if language.exists? && language.runnable?
+    end
+    cache
+  end
+
+  def make_language(name)
+    Language.new(path,name)
+  end
+
+...becomes...
+
+  def initialize(root_path,language_name,test_name)
+    @root_path,@language_name,@test_name = root_path,language_name,test_name
+  end
+
+  def name
+    @language_name + '-' + @test_name
+  end
+
+  def [](language_name,test_name)
+    make_language(latest(language_name,test_name))
+  end
+
+  def path
+    @root_path + @language_name + '/' + @test_name + '/'
+  end
+
+private
+
+  # s/latest/renamed/
+  
+  def latest(language_name,test_name)
+    will need reworking
+    how do I return two arguments?
+    do I need a splat somewhere?
+  end
+
+  def make_cache
+    cache = [ ]
+    dir.each_dir do |language_name|
+      disk[path + language_name].each_dir do |test_name|
+        language = make_language(language_name,test_name)
+        cache << language if language.exists? && language.runnable?
+      end
+    end
+    cache
+  end
+
+  def make_language(language_name,test_name)
+    Language.new(path,language_name,test_name)
+  end
+
+
+- - - - - - - - - - - - - - - - - - - -
+Kata.rb 
+- - - - - - - - - - - - - - - - - - - -
+
+  def language
+    dojo.languages[manifest_property]
+  end
+
+..becomes...
+
+  def language
+    dojo.languages[language_name,test_name]
+  end
+  
+private
+
+  def language_name
+    manifest['language'].split(',')[0]
+  end
+  
+  def test_name
+    manifest['language'].split(',')[1]
+  end
+  
+  
+- - - - - - - - - - - - - - - - - - - -
+setup_controller.rb 
+- - - - - - - - - - - - - - - - - - - -
+
+  def save
+    language = dojo.languages[params['language'] + '-' + params['test']]
+    ...
+  end
+  
+...becomes...
+
+  def save
+    language = dojo.languages[params['language'], params['test']]
+    ...
+  end
+
+
+
+
+

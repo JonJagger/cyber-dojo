@@ -57,11 +57,11 @@ class Language
     manifest_property || [ ]
   end
 
-  def amber_goto_line_spec
+  def amber_goto_line_spec # wip
     manifest_property || [ ]
   end
 
-  def red_goto_line_spec
+  def red_goto_line_spec # wip
     manifest_property || [ ]
   end
 
@@ -74,11 +74,6 @@ class Language
   end
 
   def lowlight_filenames
-    # Catering for two uses
-    # 1. carefully constructed set of start files (like James Grenning uses)
-    #    with explicitly set highlight_filenames entry in manifest
-    # 2. default set of files direct from languages/
-    #    viz, no highlight_filenames entry in manifest
     if !highlight_filenames.empty?
       return visible_filenames - highlight_filenames
     else
@@ -140,3 +135,16 @@ private
   end
 
 end
+
+# - - - - - - - - - - - - - - - - - - - -
+# lowlight_filenames
+# - - - - - - - - - - - - - - - - - - - -
+# Caters for two uses
+# 1. carefully constructed set of start files
+#    (like James Grenning uses)
+#    with explicitly set highlight_filenames entry 
+#    in manifest
+# 2. default set of files direct from languages/
+#    viz, no highlight_filenames entry in manifest
+# - - - - - - - - - - - - - - - - - - - -
+

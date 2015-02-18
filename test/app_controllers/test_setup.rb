@@ -9,8 +9,8 @@ class SetupControllerTest < ControllerTestBase
 
     languages_dir = disk[@dojo.languages.path]
     languages_dir.write('cache.json', {
-      'fake-C++'  => 'fake-C++-catch',
-      'fake-Java' => 'fake-Java-NUnit'
+      'fakeC++'  => 'fakeC++-catch',
+      'fakeJava' => 'fakeJava-NUnit'
     })
 
     exercise_dir = disk[@dojo.exercises.path]
@@ -22,8 +22,8 @@ class SetupControllerTest < ControllerTestBase
     get 'setup/show'
     assert_response :success
 
-    assert /data-language\=\"fake-C++/.match(html), "fake-C++"
-    assert /data-language\=\"fake-Java/.match(html), "fake-Java"
+    assert /data-language\=\"fakeC++/.match(html), "fakeC++"
+    assert /data-language\=\"fakeJava/.match(html), "fakeJava"
 
     assert /data-exercise\=\"fake-Print-Diamond/.match(html), "fake-Print-Diamond"
     assert /data-exercise\=\"fake-Roman-Numerals/.match(html), "fake-Roman-Numerals"
