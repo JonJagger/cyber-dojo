@@ -9,8 +9,8 @@ class SetupControllerTest < ControllerTestBase
 
     languages_dir = disk[@dojo.languages.path]
     languages_dir.write('cache.json', {
-      'fakeC++'  => 'fakeC++-catch',
-      'fakeJava' => 'fakeJava-NUnit'
+      'C++, catch'  => 'C++-catch',
+      'Java, JMock' => 'Java-1.8_JMock'
     })
 
     exercise_dir = disk[@dojo.exercises.path]
@@ -22,13 +22,16 @@ class SetupControllerTest < ControllerTestBase
     get 'setup/show'
     assert_response :success
 
-    assert /data-language\=\"fakeC++/.match(html), "fakeC++"
-    assert /data-language\=\"fakeJava/.match(html), "fakeJava"
+    assert /data-language\=\"C++/.match(html), "C++"
+    assert /data-language\=\"Java/.match(html), "Java"
+
+    assert /data-test\=\"catch/.match(html), "catch"
+    assert /data-test\=\"JMock/.match(html), "JMock"
 
     assert /data-exercise\=\"fake-Print-Diamond/.match(html), "fake-Print-Diamond"
     assert /data-exercise\=\"fake-Roman-Numerals/.match(html), "fake-Roman-Numerals"
   end
-
+  
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'setup/show chooses language and exercise of kata ' +
@@ -38,10 +41,10 @@ class SetupControllerTest < ControllerTestBase
 
     # setup_languages
     languages_names = [
-      'fake-C++',
-      'fake-C#',
-      'fake-Java',
-      'fake-Ruby',
+      'fakeC++, catch',
+      'fakeC#, NUnit',
+      'fakeJava-1.8, JUnit',
+      'fakeRuby, TestUnit',
     ].sort
 
     languages_names.each do |language_name|
@@ -71,14 +74,13 @@ class SetupControllerTest < ControllerTestBase
     get 'setup/show', :id => id[0...10]
     assert_response :success
 
-    md = /var selected = \$\('#exercise_' \+ (\d+)/.match(html)
+    md = /var selectedExercise = \$\('#exercise_' \+ (\d+)/.match(html)
     selected_exercise = exercises_names[md[1].to_i]
     assert_equal exercise_name, selected_exercise, 'exercise'
 
-    md = /var selected = \$\('#language_' \+ (\d+)/.match(html)
+    md = /var selectedLanguage = \$\('#language_' \+ (\d+)/.match(html)
     selected_language = languages_names[md[1].to_i]
     assert_equal language_name, selected_language, 'language'
-
   end
 
   #- - - - - - - - - - - - - - - - - - -

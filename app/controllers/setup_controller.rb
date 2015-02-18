@@ -4,7 +4,7 @@ class SetupController < ApplicationController
   def show
     @languages,languages_names = read_languages
     @exercises_names,@instructions = read_exercises
-    
+        
     @languages_display_names = @languages.map{|array| array[0]}
     
     @selected_language_index = choose_language(@languages_display_names, id, dojo.katas)

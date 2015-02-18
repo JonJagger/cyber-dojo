@@ -4,7 +4,7 @@
 $(function() {
 
   var previousExercise = undefined;
-  var selected = $('#exercise_' + <%= @selected_exercise_index %>);
+  var selectedExercise = $('#exercise_' + <%= @selected_exercise_index %>);
 
   $('[id^=exercise_]').each(function(index) {
     var instructions = $('#instructions_' + index).val();
@@ -16,8 +16,8 @@ $(function() {
     });
   });
 
-  selected.click();
-  selected.scrollIntoView({ direction: 'vertical' });
+  selectedExercise.click();
+  selectedExercise.scrollIntoView({ direction: 'vertical' });
 
 });
 
