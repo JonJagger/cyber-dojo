@@ -2,12 +2,12 @@
 What needs to be refactored?
 - - - - - - - - - - - - - - - - - - - -
 
-eg
+eg...
   C-assert
   C-CppUTest
   C-Unity
   
-becomes
+becomes...
   C/assert
   C/CppUTest
   C/Unity
