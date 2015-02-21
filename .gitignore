@@ -18,7 +18,7 @@ zipped_dojos.zip
 cyberDojo.db
 *.tmp
 
-test/cyberdojo/*
+test/cyberdojo/katas/*
 
 admin_scripts/exceptions.log
 
