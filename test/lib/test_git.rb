@@ -26,7 +26,7 @@ class GitTests < LibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'git init' do
-    expected = "Initialized empty Git repository in #{@dir}.git/\n"
+    expected = "Initialised empty Git repository in #{@dir}.git/\n"
     assert_equal expected, @git.init(@dir, '')
   end
 
