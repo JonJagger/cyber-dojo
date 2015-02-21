@@ -5,10 +5,6 @@ require_relative 'one_language_checker'
 
 class AllLanguagesTests < LanguagesTestBase
 
-  def setup
-    `rm -rf #{root_path}test/cyberdojo/katas/*`
-  end
-
   def root_path
     File.absolute_path(File.dirname(__FILE__) + '/../../') + '/'
   end
