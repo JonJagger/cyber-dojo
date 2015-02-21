@@ -26,8 +26,11 @@ class GitTests < LibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'git init' do
-    expected = "Initialised empty Git repository in #{@dir}.git/\n"
-    assert_equal expected, @git.init(@dir, '')
+    message = @git.init(@dir, '')
+    assert message.end_with?("empty Git repository in #{@dir}.git/\n")
+    uk_git_init_message = message.start_with?("Initialised");
+    us_git_init_message = message.start_with?("Initialized");
+    assert uk_git_init_message || us_git_init_message
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
