@@ -24,7 +24,7 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     reset_external(:runner, HostTestRunner.new)
     reset_external(:exercises_path, root_path + '/exercises/')
     reset_external(:languages_path, root_path + '/languages/')
-    reset_external(:katas_path, root_path + '/test/cyberdojo/katas/')
+    reset_external(:katas_path, root_path + '/test/cyber-dojo/katas/')
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -

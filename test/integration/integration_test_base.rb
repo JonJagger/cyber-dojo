@@ -11,7 +11,7 @@ class IntegrationTestBase < TestBase
     thread[:runner] = HostTestRunner.new
     thread[:exercises_path] = root_path + 'exercises/'
     thread[:languages_path] = root_path + 'languages/'
-    thread[:katas_path]     = root_path + 'test/cyberdojo/katas/'
+    thread[:katas_path]     = root_path + 'test/cyber-dojo/katas/'
     @dojo = Dojo.new
   end
 
