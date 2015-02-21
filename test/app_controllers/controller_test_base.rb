@@ -25,7 +25,6 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     reset_external(:exercises_path, root_path + '/exercises/')
     reset_external(:languages_path, root_path + '/languages/')
     reset_external(:katas_path, root_path + '/test/cyberdojo/katas/')
-    `rm -rf #{Dojo.new.katas.path}*`
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
