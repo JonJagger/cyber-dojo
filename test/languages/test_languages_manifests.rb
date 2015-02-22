@@ -107,8 +107,8 @@ class LanguagesManifestsTests < LanguagesTestBase
     reset_external(:disk, Disk.new)
     reset_external(:languages_path, root_path + 'languages/')
     display_name = languages[@language].display_name
-    language_name = display_name.split(',')[0].strip
-    test_name = display_name.split(',')[1].strip
+    part = lambda {|n| display_name.split(',')[n].strip }
+    language_name,test_name = part.(0), part.(1)
     round_trip = languages[language_name + '-' + test_name]
     if @language != round_trip.name
       message = 
