@@ -8,7 +8,7 @@ class LightsTests < IntegrationTestBase
 
   def setup
     super
-    @language = @dojo.languages['Ruby-MiniTest']
+    @language = @dojo.languages['C-assert']
     @exercise = @dojo.exercises['Yatzy']
     @kata = @dojo.katas.create_kata(@language, @exercise)
   end
@@ -41,7 +41,7 @@ class LightsTests < IntegrationTestBase
     assert_equal now, lights[-1]['time']
     assert_equal 1, lights[-1]['number']
 
-    filename = 'hiker.rb'
+    filename = 'hiker.c'
     code = visible_files[filename];
     assert code.include?('6 * 9')
     code.sub!('6 * 9', '6 * 7')
@@ -66,14 +66,14 @@ class LightsTests < IntegrationTestBase
     deleted_line =
     {
       :type   => :deleted,
-      :line   => '  6 * 9',
-      :number => 3
+      :line   => "    return 6 * 9;\r",
+      :number => 5
     }
     added_line =
     {
       :type   => :added,
-      :line   => '  6 * 7',
-      :number => 3
+      :line   => "    return 6 * 7;\r",
+      :number => 5
     }
     assert diff[filename].include?(added_line), diff[filename].inspect
     assert diff[filename].include?(deleted_line), diff[filename].inspect

@@ -7,6 +7,7 @@ Docker. Now I've switched my basic dev environment to Ubuntu
 so I can have Docker all the time it makes sense to switch these
 tests to a different language-test combo that is more stable.
 Like C-assert.
+  GitDiffView
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Can't run the tests on the Macbook pro (but can run a rails server).
 Write a script to edit the rights of the cyber-dojo folder

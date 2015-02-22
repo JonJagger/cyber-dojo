@@ -7,7 +7,7 @@ class SandboxTests < IntegrationTestBase
   test 'defect-driven: filename containing space ' +
        'is not accidentally retained in the sandbox' do
 
-    kata = make_kata(@dojo, 'Ruby-MiniTest')
+    kata = make_kata(@dojo, 'C-assert')
     avatar = kata.start_avatar
     visible_files = avatar.tags[0].visible_files
 
@@ -26,19 +26,23 @@ class SandboxTests < IntegrationTestBase
 
     #- - - - - - - -
 
-    SPACE = ' '
     filenames = visible_files.keys
-    assert filenames.include?('hiker.rb')
-    content = visible_files['hiker.rb']
+    filename_base = 'hiker'
+    ext = '.c'
+    filename = filename_base + ext
+    space = ' '
+    filename_with_space = filename_base + space + ext
+    assert filenames.include?(filename)
+    content = visible_files[filename]
 
-    visible_files.delete('hiker.rb')
-    visible_files['hiker' + SPACE + '.rb'] =  content
+    visible_files.delete(filename)
+    visible_files[filename_with_space] =  content
 
     delta = {
-      :unchanged => filenames - [ 'hiker.rb' ],
+      :unchanged => filenames - [ filename ],
       :changed   => [ ],
-      :deleted   => [ 'hiker.rb' ],
-      :new       => [ 'hiker' + SPACE + '.rb' ]
+      :deleted   => [ filename ],
+      :new       => [ filename_with_space ]
     }
 
     avatar.test(delta, visible_files)
@@ -50,14 +54,14 @@ class SandboxTests < IntegrationTestBase
     #- - - - - - - -
     # put it back the way it was
 
-    visible_files.delete('hiker' + SPACE + '.rb')
-    visible_files['hiker.rb'] = content
+    visible_files.delete(filename_with_space)
+    visible_files[filename] = content
 
     delta = {
       :changed   => [ ],
-      :unchanged => visible_files.keys - [ 'hiker.rb' ],
-      :deleted   => [ 'hiker' + SPACE + '.rb' ],
-      :new       => [ 'hiker.rb' ]
+      :unchanged => visible_files.keys - [ filename ],
+      :deleted   => [ filename_with_space ],
+      :new       => [ filename ]
     }
 
     avatar.test(delta, visible_files)
