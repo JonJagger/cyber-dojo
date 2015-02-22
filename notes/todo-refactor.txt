@@ -27,6 +27,11 @@ I think its just
 However, this will mean I have two methods called git.
 One that doesn't accept args and one that does.
 So those two will need to be collapsed into one.
+Something like this:
+  def git(*args)
+    return external(:git) if args.length === 0
+    return git.send(args[0], path, args[1])
+  end
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would like to make git private in ExternalGit
 But app/models/Tag.rb  has this
