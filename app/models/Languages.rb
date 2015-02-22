@@ -39,10 +39,19 @@ private
       'Python'       => 'Python-unittest',
       'Ruby'         => 'Ruby-TestUnit',
       'Scala'        => 'Scala-scalatest',
+        
+      # display name is actually different
+      'C++-catch'                   => 'C++-Catch',
+      'Javascript-Mocha+chai+sinon' => 'Javascript-mocha_chai_sinon',
+      'Perl-Test::Simple'           => 'Perl-TestSimple',
+      'Python-py.test'              => 'Python-pytest',
+      'Ruby-RSpec'                  => 'Ruby-Rspec',
+      'Ruby-Test::Unit'             => 'Ruby-TestUnit',
 
       # version numbers in language name?
       'Java'               => 'Java-1.8_JUnit',
       'Java-JUnit'         => 'Java-1.8_JUnit',
+      'Java-JMock'         => 'Java-1.8_JMock',
       'Java-Approval'      => 'Java-1.8_Approval',
       'Java-ApprovalTests' => 'Java-1.8_Approval',
       'Java-Cucumber'      => 'Java-1.8_Cucumber',

@@ -13,9 +13,9 @@ class LanguagesManifestsTests < LanguagesTestBase
   end
 
   test 'manifests of all languages' do
-    assert File.directory?(root_path + '/languages/')
+    assert File.directory?(root_path + 'languages/')
     languages_names = Dir.entries(root_path + '/languages').select { |name|
-      manifest = root_path + "/languages/#{name}/manifest.json"
+      manifest = root_path + "languages/#{name}/manifest.json"
       name != '.' and name != '..' and File.file?(manifest)
     }
     languages_names.sort.each do |language_name|
@@ -29,6 +29,7 @@ class LanguagesManifestsTests < LanguagesTestBase
     assert manifest_file_exists?
     assert required_keys_exist?
     assert !unknown_keys_exist?
+    assert display_name_maps_back_to_language_name?
     assert !duplicate_visible_filenames?
     assert !duplicate_support_filenames?
     assert progress_regexs_valid?
@@ -55,7 +56,7 @@ class LanguagesManifestsTests < LanguagesTestBase
       puts message
       return false
     end
-    print "."
+    print '.'
     true
   end
 
@@ -96,6 +97,28 @@ class LanguagesManifestsTests < LanguagesTestBase
     end
     print "."
     false
+  end
+
+  def display_name_maps_back_to_language_name?
+    # checks for renames
+    languages = Languages.new
+    Thread.current[:disk] = Disk.new
+    Thread.current[:languages_path] = root_path + 'languages/'
+    display_name = languages[@language].display_name
+    language_name = display_name.split(',')[0].strip
+    test_name = display_name.split(',')[1].strip
+    round_trip = languages[language_name + '-' + test_name]
+    if @language != round_trip.name
+      message = 
+        alert +
+        " #{manifest_filename}'s 'display_name' " +
+        " when used from setup page is not mapped " +
+        " to languages' folder name" 
+      puts message
+      return false
+    end
+    print '.'
+    true
   end
 
   def duplicate_visible_filenames?

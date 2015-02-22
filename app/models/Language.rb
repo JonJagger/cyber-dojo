@@ -106,7 +106,8 @@ private
   def manifest
     begin
       @manifest ||= JSON.parse(read(manifest_filename))
-    rescue
+    rescue Exception => e
+      puts e.message
       raise "JSON.parse(#{manifest_filename}) exception from language:" + path
     end
   end
