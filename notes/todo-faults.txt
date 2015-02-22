@@ -1,4 +1,17 @@
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+FAULT
+  test/integration/test_git_diff_view.rb  problem on line 143
+  Aha! if you remove the .h or .c file then the makefile does
+  not rebuild the test.
+  Same for all the C/C++ makefiles
+  I should do a delete-the-file test for all languages.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+FAULT
+  Inside my Ubuntu VirtualBox guest
+  the line-numbers are showing up as raw html.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HISTORY-DIALOG
