@@ -14,7 +14,7 @@ class Sandbox
   def start
     avatar.visible_files.each { |filename,content|
       write(filename, content)
-      git_add(filename)
+      git(:add, filename)
     }
     language.support_filenames.each { |filename|
       disk.symlink(language.path + filename, path + filename)
@@ -42,10 +42,10 @@ private
     }
     delta[:new].each { |filename|
       write(filename, visible_files[filename])
-      git_add(filename)
+      git(:add, filename)
     }
     delta[:deleted].each { |filename|
-      git_rm(filename)
+      git(:rm, filename)
     }
   end
   
@@ -55,7 +55,7 @@ private
       !pre_test_filenames.include?(filename)
     }
     new_files.keys.each { |filename|
-      git_add(filename)
+      git(:add, filename)
     }
     filenames_to_delete = pre_test_filenames.select { |filename|
       !visible_files.keys.include?(filename)

@@ -19,31 +19,6 @@ to the www-data group.
 line 30 of pull.sh should name the admin_scripts folder
 so it has chown -R run on it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-lib/External.git does this
-  def git
-    external(:git)
-  end
-  def git_init(args)
-    git.init(path, args)
-  end
-and repeats this git_init pattern. Can I simplify to
-  def git(cmd,args)
-    git.cmd(path,args)
-  end
-and call it like this
-  git(:add,'args here')
-How do you call a method named by a symbol.
-I think its just
-  git.send(cmd,path,args)
-However, this will mean I have two methods called git.
-One that doesn't accept args and one that does.
-So those two will need to be collapsed into one.
-Something like this:
-  def git(*args)
-    return external(:git) if args.length === 0
-    return git.send(args[0], path, args[1])
-  end
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would like to make git private in ExternalGit
 But app/models/Tag.rb  has this
   def diff(m)

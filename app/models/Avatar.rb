@@ -18,10 +18,10 @@ class Avatar
     setup_git_repo
 
     write_manifest(kata.visible_files)
-    git_add(manifest_filename)
+    git(:add, manifest_filename)
     
     write_increments([ ])
-    git_add(increments_filename)    
+    git(:add, increments_filename)    
     
     sandbox.start
     commit(0)    
@@ -73,9 +73,9 @@ private
   include TimeNow
 
   def commit(tag)
-    git_commit("-a -m '#{tag}' --quiet")
-    git_gc('--auto --quiet')
-    git_tag("-m '#{tag}' #{tag} HEAD")
+    git(:commit, "-a -m '#{tag}' --quiet")
+    git(:gc, '--auto --quiet')
+    git(:tag, "-m '#{tag}' #{tag} HEAD")
   end
 
   def write_manifest(visible_files)
@@ -107,9 +107,9 @@ private
   end
 
   def setup_git_repo
-    git_init('--quiet')    
-    git_config(user_name)
-    git_config(user_email)
+    git(:init, '--quiet')    
+    git(:config, user_name)
+    git(:config, user_email)
   end
 
   def user_name
