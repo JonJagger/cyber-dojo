@@ -58,13 +58,13 @@ class Language
     manifest_property || [ ]
   end
 
-  def amber_goto_line_spec # wip
-    manifest_property || [ ]
-  end
+  #def amber_goto_line_spec # wip
+  #  manifest_property || [ ]
+  #end
 
-  def red_goto_line_spec # wip
-    manifest_property || [ ]
-  end
+  #def red_goto_line_spec # wip
+  #  manifest_property || [ ]
+  #end
 
   def tab_size
     manifest_property || 4
@@ -107,8 +107,10 @@ private
     begin
       @manifest ||= JSON.parse(read(manifest_filename))
     rescue Exception => e
-      puts e.message
-      raise "JSON.parse(#{manifest_filename}) exception from language:" + path
+      message =  "JSON.parse(#{manifest_filename}) exception" +
+        " from language:" + path + "\n" +
+        "exception: " + e.message
+      raise message
     end
   end
 

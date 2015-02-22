@@ -142,10 +142,10 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'display_name reads back as set' do
-    name = 'Ruby-RSpec'
+  test 'display_name reads back as set when not renamed' do
+    name = 'C-assert'
     @language = @dojo.languages[name]
-    display_name = 'Ruby'
+    display_name = 'C, assert'
     spy_manifest({ 'display_name' => display_name })
     assert_equal name, @language.name
     assert_equal display_name, @language.display_name
