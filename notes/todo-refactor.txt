@@ -13,6 +13,11 @@ Write a script to edit the rights of the cyber-dojo folder
 (chown/chmod/sefacl). Run this from pull.sh?
 I think this is also causing one of the steps when setting
 up a digital-ocean server to appear to fail.
+Might be worth trying to automate adding the current user
+to the www-data group.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+line 30 of pull.sh should name the admin_scripts folder
+so it has chown -R run on it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 lib/External.git does this
   def git
