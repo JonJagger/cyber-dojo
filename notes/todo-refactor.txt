@@ -9,10 +9,13 @@ tests to a different language-test combo that is more stable.
 Like C-assert.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 lib/External.git does this
+  def git
+    external(:git)
+  end
   def git_init(args)
     git.init(path, args)
   end
-and repeats this pattern. Can I simplify to
+and repeats this git_init pattern. Can I simplify to
   def git(cmd,args)
     git.cmd(path,args)
   end
@@ -21,6 +24,9 @@ and call it like this
 How do you call a method named by a symbol.
 I think its just
   git.send(cmd,path,args)
+However, this will mean I have two methods called git.
+One that doesn't accept args and one that does.
+So those two will need to be collapsed into one.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would like to make git private in ExternalGit
 But app/models/Tag.rb  has this
