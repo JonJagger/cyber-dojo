@@ -20,6 +20,13 @@ commit on github. Again, this is so that if and when I update
 the Dockerfile the version on the given commit is still valid if
 anyone wants to build that image.
 
+How to do this?
+Delete the repo from the cyberdojo index.
+The go to a server that has a copy of the image.
+Then $ docker push cyberdojo/image_name
+Then edit its Dockerfile tab to contain a URL.
+
+
 Once I have done these two steps I can start to do actual
 version updates.
 And also fix the Java dir names which still have version

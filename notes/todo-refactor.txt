@@ -8,6 +8,12 @@ so I can have Docker all the time it makes sense to switch these
 tests to a different language-test combo that is more stable.
 Like C-assert.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Can't run the tests on the Macbook pro (but can run a rails server).
+Write a script to edit the rights of the cyber-dojo folder
+(chown/chmod/sefacl). Run this from pull.sh?
+I think this is also causing one of the steps when setting
+up a digital-ocean server to appear to fail.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 lib/External.git does this
   def git
     external(:git)
