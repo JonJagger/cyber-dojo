@@ -13,6 +13,7 @@ If I update the Dockerfile for C++-assert so it now reflects 4.9
 then the docker index will see the change and auto-build a new
 container called g++-4.8.1_assert which will actually be for C++ 4.9
 So I need to revert back to non-auto builds.
+Aside: This was also inflating my git clone statistics on github.
 
 Also, I need to put a URL to the Dockerfile that is for a specific
 commit on github. Again, this is so that if and when I update
