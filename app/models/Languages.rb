@@ -40,7 +40,7 @@ private
       'Ruby'         => 'Ruby-TestUnit',
       'Scala'        => 'Scala-scalatest',
         
-      # display name is actually different
+      # display name is different to folder name
       'C++-catch'                   => 'C++-Catch',
       'Javascript-Mocha+chai+sinon' => 'Javascript-mocha_chai_sinon',
       'Perl-Test::Simple'           => 'Perl-TestSimple',

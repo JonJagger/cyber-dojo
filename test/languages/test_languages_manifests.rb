@@ -99,11 +99,13 @@ class LanguagesManifestsTests < LanguagesTestBase
     false
   end
 
+  include ExternalSetter
+
   def display_name_maps_back_to_language_name?
     # checks for renames
     languages = Languages.new
-    Thread.current[:disk] = Disk.new
-    Thread.current[:languages_path] = root_path + 'languages/'
+    reset_external(:disk, Disk.new)
+    reset_external(:languages_path, root_path + 'languages/')
     display_name = languages[@language].display_name
     language_name = display_name.split(',')[0].strip
     test_name = display_name.split(',')[1].strip
