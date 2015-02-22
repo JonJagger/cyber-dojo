@@ -1,4 +1,13 @@
 
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+several integration tests are failing. They are caused by being
+based on Ruby which seems to have a TestUnit-MiniTest conflict.
+I picked Ruby because the tests originally were run with no
+Docker. Now I've switched my basic dev environment to Ubuntu
+so I can have Docker all the time it makes sense to switch these
+tests to a different language-test combo that is more stable.
+Like C-assert.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would like to make git private in ExternalGit
 But app/models/Tag.rb  has this
