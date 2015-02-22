@@ -1,13 +1,11 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Work towards removing dir as common first argument to all
-Git methods. 
-app/models/Tag.rb  has this
+Would like to make git private in ExternalGit
+But app/models/Tag.rb  has this
   def diff(m)
     ...
     diff_lines = git.diff(@avatar.path, command)
   end
-which means I have to leave git as public in ExternalGit
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Rename Runner to TestRunner
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

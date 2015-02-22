@@ -1,4 +1,45 @@
 
+Thinking in the shower this morning...
+
+Some of the images on the cyberdojo docker index now have auto-builds.
+This needs to be reverted back. The image name includes the version number.
+So as it stands it means I cannot create a new version of g++
+Viz I cannot replace 4.8.1 with 4.9 and have both appear with a display_name
+of just C++. 
+Eg consider the current docker index image g++-4.8.1_assert
+If this is an auto-build then it will see an update to the
+C++-assert/Dockerfile but its name is hard-wired to g++-4.8.1_assert
+If I update the Dockerfile for C++-assert so it now reflects 4.9 
+then the docker index will see the change and auto-build a new
+container called g++-4.8.1_assert which will actually be for C++ 4.9
+So I need to revert back to non-auto builds.
+
+Also, I need to put a URL to the Dockerfile that is for a specific
+commit on github. Again, this is so that if and when I update
+the Dockerfile the version on the given commit is still valid if
+anyone wants to build that image.
+
+Once I have done these two steps I can start to do actual
+version updates.
+And also fix the Java dir names which still have version
+numbers in them.
+
+It also raises the question of whether to actually have the version
+number as part of the display name (and dir name) when I have multiple
+versions appear on the create page.
+I think not.
+cyber-dojo is fundamentally for short lived sessions.
+If you fork from a kata and its language has been upgraded then
+you may have to modify your code to cater for the upgrade.
+This is just like a real upgrade!
+
+Also, it does raise the question of whether to keep old docker images
+around. If I did not keep old images around then I would need to be
+careful that new images were in the cyberdojo docker index before
+their names appear in the git repo master branch. 
+
+
+-----------------------------------------------------------
 An cyberdojo's manifest.json file contains the name of the language. Eg
   cyber-dojo/katas/A9/606FDA05/manifest.json
     { ....  "language":"Java-1.8_JUnit" .... }
