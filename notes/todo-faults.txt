@@ -7,6 +7,10 @@ Ruby-TestUnit is failing on the main server.
   and cannot reproduce the exception. It is suspicious that I've
   recently added the manifest_property refactoring. Is that where
   the fault lies?
+This reveals a lack of testing. Specifically, I need system tests
+  to check that each language can be started ok. Ones that go through
+  the controllers, not just the ones in languages/
+ 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HISTORY-DIALOG
   loses the cursor sometimes. Appears on the projector but
