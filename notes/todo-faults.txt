@@ -1,4 +1,12 @@
 
+
+Ruby-TestUnit is failing on the main server.
+  The log reveals its the same JSON.parse(manifest.json)
+  exception again. The one I was getting from JMock.
+  I've replicated the IO.read(), the clean() and the JSON.parse()
+  and cannot reproduce the exception. It is suspicious that I've
+  recently added the manifest_property refactoring. Is that where
+  the fault lies?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HISTORY-DIALOG
   loses the cursor sometimes. Appears on the projector but
