@@ -70,7 +70,7 @@ class GitDiffViewTests < IntegrationTestBase
         :section_count => 0,
         :deleted_line_count => 0,
         :added_line_count => 0,
-        :content => '<same>make</same>',
+        :content => '<same>make --always-make</same>',
         :line_numbers => '<same><ln>1</ln></same>'
       },
       {
