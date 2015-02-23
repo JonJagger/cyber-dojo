@@ -8,7 +8,7 @@ class Tag
   end
 
   def visible_files
-    @manifest ||= JSON.parse(git.show(@avatar.path, "#{@n}:manifest.json"))
+    @manifest ||= JSON.parse(git(:show, "#{@n}:manifest.json"))
   end
 
   def output
@@ -19,12 +19,16 @@ class Tag
 
   def diff(m)
     command = "--ignore-space-at-eol --find-copies-harder #{@n} #{m} sandbox"
-    diff_lines = git.diff(@avatar.path, command)
+    diff_lines = git(:diff, command)
     visible_files = @avatar.tags[m].visible_files
     git_diff(diff_lines, visible_files)
   end
 
 private
+
+  def path
+    @avatar.path
+  end
 
   include ExternalDiskDir
   include ExternalGit

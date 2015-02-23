@@ -16,13 +16,10 @@ class Avatar
   def start
     dir.make
     setup_git_repo
-
     write_manifest(kata.visible_files)
     git(:add, manifest_filename)
-    
     write_increments([ ])
-    git(:add, increments_filename)    
-    
+    git(:add, increments_filename)     
     sandbox.start
     commit(0)    
   end

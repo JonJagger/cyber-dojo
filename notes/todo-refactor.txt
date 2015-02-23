@@ -11,11 +11,10 @@ to the www-data group.
 line 30 of pull.sh should name the admin_scripts folder
 so it has chown -R run on it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Would like to make git private in ExternalGit
-But app/models/Tag.rb  has this
+app/models/Tag.rb  has this
   def diff(m)
     command = "--ignore-space-at-eol --find-copies-harder #{@n} #{m} sandbox"
-    diff_lines = git.diff(@avatar.path, command)
+    diff_lines = git(:diff, command)
     visible_files = @avatar.tags[m].visible_files
     git_diff(diff_lines, visible_files)
   end
@@ -31,17 +30,6 @@ This suggests a refactoring.
     diffs = git_diff_view(avatar.tags[was_tag].diff(now_tag))
   becomes
     diffs = git_diff_view(avatar.diff(was_tag,now_tag))
-Also Tag.rb has this
-  def visible_files
-    @manifest ||= JSON.parse(git.show(@avatar.path, "#{@n}:manifest.json"))
-  end
-Note that also uses @avatar.path
-Hmmm. There is no reason I cannot expose Tag's path as avatar's path
-and then include ExternalDiskDir in Tag.
-In fact that is the only other use of n.
-Note that tags[n].visible_files is used in the proposed Avatar.rb's diff(n,m)
-
-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Rename Runner to TestRunner
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
