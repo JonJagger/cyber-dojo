@@ -12,6 +12,7 @@ FAULT
   Inside my Ubuntu VirtualBox guest
   the line-numbers are showing up as raw html.
   Also occuring on the main server :-(
+  Ok. Narrowed this down. It only occurs after a revert.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
