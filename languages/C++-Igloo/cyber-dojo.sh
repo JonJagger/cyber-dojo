@@ -1,2 +1,2 @@
 LANG=c
-make
+make --always-make
