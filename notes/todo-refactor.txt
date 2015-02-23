@@ -31,6 +31,17 @@ This suggests a refactoring.
     diffs = git_diff_view(avatar.tags[was_tag].diff(now_tag))
   becomes
     diffs = git_diff_view(avatar.diff(was_tag,now_tag))
+Also Tag.rb has this
+  def visible_files
+    @manifest ||= JSON.parse(git.show(@avatar.path, "#{@n}:manifest.json"))
+  end
+Note that also uses @avatar.path
+Hmmm. There is no reason I cannot expose Tag's path as avatar's path
+and then include ExternalDiskDir in Tag.
+In fact that is the only other use of n.
+Note that tags[n].visible_files is used in the proposed Avatar.rb's diff(n,m)
+
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Rename Runner to TestRunner
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
