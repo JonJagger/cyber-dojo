@@ -56,7 +56,7 @@ class AvatarTests < IntegrationTestBase
     avatar.test(delta, visible_files) # tag 2
     traffic_lights = avatar.lights.each.entries
     assert_equal 2, traffic_lights.length
-    diff = avatar.tags[1].diff(2)
+    diff = avatar.diff(1,2)
     added_line =
     {
       :type   => :added,
@@ -84,7 +84,7 @@ class AvatarTests < IntegrationTestBase
 
     avatar.test(delta, visible_files) # 1
 
-    diff = avatar.tags[0].diff(1)
+    diff = avatar.diff(0,1)
     added =
     [
        { :type=>:section, :index=>0
@@ -124,7 +124,7 @@ class AvatarTests < IntegrationTestBase
     }
     avatar.test(delta, visible_files)  # tag 2
     #- - - - -
-    diff = avatar.tags[1].diff(2)
+    diff = avatar.diff(1,2)
     deleted =
     [
       {

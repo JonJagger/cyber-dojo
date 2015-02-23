@@ -37,7 +37,7 @@ class GitDiffViewTests < IntegrationTestBase
 
     assert_equal :green, avatar.lights[-1].colour
 
-    diffs = avatar.tags[was_tag=1].diff(now_tag=2)
+    diffs = avatar.diff(was_tag=1,now_tag=2)
 
     expected =
     {
@@ -143,7 +143,7 @@ class GitDiffViewTests < IntegrationTestBase
     assert_equal :amber, avatar.lights[-1].colour,
                          kata.id + ":" + avatar.tags[-1].output
 
-    diff = avatar.tags[was_tag=1].diff(now_tag=2)
+    diff = avatar.diff(was_tag=1,now_tag=2)
     diff.delete('output')
 
     expected = deleteify(LineSplitter.line_split(deleted_file_content))
@@ -172,7 +172,7 @@ class GitDiffViewTests < IntegrationTestBase
 
     assert avatar.sandbox.dir.exists?('jj.extra')
 
-    diff = avatar.tags[was_tag=0].diff(now_tag=1)
+    diff = avatar.diff(was_tag=0,now_tag=1)
     diff.keys.each do |filename|
       assert visible_files.keys.include?(filename),
             "visible_files.keys.include?(#{filename})"

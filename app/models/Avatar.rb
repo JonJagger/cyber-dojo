@@ -59,6 +59,13 @@ class Avatar
     [rags,new_files,filenames_to_delete]
   end
 
+  def diff(n,m)
+    command = "--ignore-space-at-eol --find-copies-harder #{n} #{m} sandbox"
+    diff_lines = git(:diff, command)
+    visible_files = tags[m].visible_files
+    git_diff(diff_lines, visible_files)
+  end
+
   def sandbox
     Sandbox.new(self)
   end
@@ -67,6 +74,7 @@ private
 
   include ExternalDiskDir
   include ExternalGit
+  include GitDiff
   include TimeNow
 
   def commit(tag)

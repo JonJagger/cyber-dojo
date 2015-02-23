@@ -17,13 +17,6 @@ class Tag
     visible_files['output'] || ''
   end
 
-  def diff(m)
-    command = "--ignore-space-at-eol --find-copies-harder #{@n} #{m} sandbox"
-    diff_lines = git(:diff, command)
-    visible_files = @avatar.tags[m].visible_files
-    git_diff(diff_lines, visible_files)
-  end
-
 private
 
   def path
@@ -32,6 +25,5 @@ private
 
   include ExternalDiskDir
   include ExternalGit
-  include GitDiff
 
 end

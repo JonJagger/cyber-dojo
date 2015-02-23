@@ -345,6 +345,83 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'tag.diff' do
+    kata = make_kata
+    lion = kata.start_avatar(['lion'])
+    fake_three_tests(lion)
+    manifest = JSON.unparse({
+      'hiker.c' => '#include "hiker.h"',
+      'hiker.h' => '#ifndef HIKER_INCLUDED_H\n#endif',
+      'output' => 'unterminated conditional directive'
+    })
+    filename = 'manifest.json'
+    git.spy(lion.dir.path,'show',"#{3}:#{filename}",manifest)
+    stub_diff = [
+      "diff --git a/sandbox/hiker.h b/sandbox/hiker.h",
+      "index e69de29..f28d463 100644",
+      "--- a/sandbox/hiker.h",
+      "+++ b/sandbox/hiker.h",
+      "@@ -1 +1,2 @@",
+      "-#ifndef HIKER_INCLUDED",
+      "\\ No newline at end of file",
+      "+#ifndef HIKER_INCLUDED_H",
+      "+#endif",
+      "\\ No newline at end of file"
+    ].join("\n")
+    git.spy(lion.dir.path,
+      'diff',
+      '--ignore-space-at-eol --find-copies-harder 2 3 sandbox',
+      stub_diff)
+
+    tags = lion.tags
+    actual = lion.diff(2,3) #tags[2].diff(3)
+    expected =
+    {
+      "hiker.h" =>
+      [
+        { :type => :section, :index => 0 },
+        { :type => :deleted, :line => "#ifndef HIKER_INCLUDED", :number => 1 },
+        { :type => :added,   :line => "#ifndef HIKER_INCLUDED_H", :number => 1 },
+        { :type => :added,   :line => "#endif", :number => 2 }
+      ],
+      "hiker.c" =>
+      [
+        { :line => "#include \"hiker.h\"", :type => :same, :number => 1 }
+      ],
+      "output" =>
+      [
+        { :line => "unterminated conditional directive", :type => :same, :number => 1 }
+      ]
+    }
+    assert_equal expected, actual
+  end
+
+  #- - - - - - - - - - - - - - - - - - -
+
+  def fake_three_tests(avatar)
+    incs =
+    [
+      {
+        'colour' => 'red',
+        'time' => [2014, 2, 15, 8, 54, 6],
+        'number' => 1
+      },
+      {
+        'colour' => 'green',
+        'time' => [2014, 2, 15, 8, 54, 34],
+        'number' => 2
+      },
+      {
+        'colour' => 'green',
+        'time' => [2014, 2, 15, 8, 55, 7],
+        'number' => 3
+      }
+    ]
+    avatar.dir.write('increments.json', incs)
+  end
+
+  #- - - - - - - - - - - - - - - - - - -
+
 =begin
 
   test "avatar (json) creation sets up initial git repo of visible files " +

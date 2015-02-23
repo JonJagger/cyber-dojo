@@ -61,7 +61,7 @@ class LightsTests < IntegrationTestBase
     assert_equal now, lights[-1]['time']
     assert_equal 2, lights[-1]['number']
 
-    diff = avatar.tags[1].diff(2)
+    diff = avatar.diff(1,2)
 
     deleted_line =
     {

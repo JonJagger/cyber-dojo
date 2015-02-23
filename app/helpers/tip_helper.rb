@@ -15,7 +15,7 @@ module TipHelper
     tip += light_colour_tag(lights, now_tag)      # 14
     tip += ' '
     tip += 'diff'
-    diff = avatar.tags[was_tag].diff(now_tag)
+    diff = avatar.diff(was_tag,now_tag)
     added_count,deleted_count = line_counts(diff)
     tip += "<div>&bull; #{plural(added_count, 'added line')}</div>"
     tip += "<div>&bull; #{plural(deleted_count, 'deleted line')}</div>"

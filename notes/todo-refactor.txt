@@ -11,25 +11,8 @@ to the www-data group.
 line 30 of pull.sh should name the admin_scripts folder
 so it has chown -R run on it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-app/models/Tag.rb  has this
-  def diff(m)
-    command = "--ignore-space-at-eol --find-copies-harder #{@n} #{m} sandbox"
-    diff_lines = git(:diff, command)
-    visible_files = @avatar.tags[m].visible_files
-    git_diff(diff_lines, visible_files)
-  end
-This suggests a refactoring.
-  app/models/Avatar.rb
-    def diff(n,m)
-      command = "--ignore-space-at-eol --find-copies-harder #{n} #{m} sandbox"
-      diff_lines = git(:diff, command)
-      visible_files = tags[m].visible_files
-      git_diff(diff_lines, visible_files)
-    end
-  app/controllers/differ_controller.rb has this
-    diffs = git_diff_view(avatar.tags[was_tag].diff(now_tag))
-  becomes
-    diffs = git_diff_view(avatar.diff(was_tag,now_tag))
+Create a Tags.rb file to avoid needing to read the increments.json
+file in Avatar.rb's tags() method.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Rename Runner to TestRunner
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
