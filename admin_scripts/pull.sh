@@ -35,9 +35,9 @@ done
 
 # tests create folders under tests/cyberdojo/katas
 echo "chown www-data test/cyberdojo"
-chmod g+rwsx $cyberDojoHome/test/cyberdojo
-setfacl -d -m group:www-data:rwx $cyberDojoHome/test/cyberdojo
-setfacl -m group:www-data:rwx $cyberDojoHome/test/cyberdojo
+chmod g+rwsx $cyberDojoHome/test/cyber-dojo
+setfacl -d -m group:www-data:rwx $cyberDojoHome/test/cyber-dojo
+setfacl -m group:www-data:rwx $cyberDojoHome/test/cyber-dojo
 
 echo "poking rails"
 bundle install
