@@ -9,6 +9,8 @@ FAULT
   Revert calls cd.newFileContent()
   That implies the same problem exists when you create a new file.
   Confirmed.
+  However, if you create a new filem hit [test] and then refresh
+  the browser, the new file's line-numbers are ok.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
