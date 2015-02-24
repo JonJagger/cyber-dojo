@@ -109,7 +109,7 @@ var cyberDojo = (function(cd, $) {
     var table = $('<table>');
     var tr = $('<tr>');
     var td1 = $('<td>');
-    var lines = $('<textarea>', {
+    var lines = $('<div>', {
       'class': 'line_numbers',
       id: filename + '_line_numbers'
     });

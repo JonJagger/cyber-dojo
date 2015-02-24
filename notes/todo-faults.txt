@@ -1,21 +1,5 @@
 
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-FAULT
-  Inside my Ubuntu VirtualBox guest
-  the line-numbers are showing up as raw html.
-  Also occuring on the main server :-(
-  Ok. Narrowed this down. It only occurs after a revert.
-  Revert calls cd.newFileContent()
-  That implies the same problem exists when you create a new file.
-  Confirmed.
-  However, if you create a new filem hit [test] and then refresh
-  the browser, the new file's line-numbers are ok.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-
-
 HISTORY-DIALOG
   loses the cursor sometimes. Appears on the projector but
   not on the laptop?! 
