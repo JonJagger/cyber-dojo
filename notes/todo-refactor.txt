@@ -57,8 +57,6 @@ history-diff dialog scrolling rightmost top-bar traffic-light
 into view could be better. Show a few traffic-lights to its
 right as well.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-history-diff title-bar does not align correctly in Firefox.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 all-animals traffic-light-count code should be in a helper
 not directly in the erb file.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
