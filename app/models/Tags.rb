@@ -24,7 +24,7 @@ private
   end
 
   def tags
-    @increments ||= JSON.parse(dir.read('increments.json'))
+    @tags ||= JSON.parse(dir.read('increments.json'))
   end
 
 end

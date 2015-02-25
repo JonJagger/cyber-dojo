@@ -33,7 +33,8 @@ class Avatar
   end
 
   def tags
-    Tags.new(self)
+    (0..increments.length).map { |n| Tag.new(self,n) }
+    #Tags.new(self)
   end
 
   def lights

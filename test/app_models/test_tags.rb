@@ -9,7 +9,7 @@ class TagsTest < ModelTestBase
     kata = make_kata
     avatar = kata.start_avatar
     tags = avatar.tags
-    assert_equal 1, tags.count
+    assert_equal 1, tags.length
 
     n = 0
     tags.each { n += 1 }
