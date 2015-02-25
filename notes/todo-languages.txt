@@ -1,7 +1,5 @@
 
 install C++14 + boost
-install C++14 (g++4.9.1) GoogleMock
-  https://github.com/meshell/cyber-dojo/tree/master/languages
 install Rust?
 install Dart?
 install APL?
@@ -16,6 +14,7 @@ install COBOL?
   https://github.com/neopragma/cobol-unit-test
 install Prolog?
   http://www.swi-prolog.org/pldoc/doc_for?object=section(%27packages/plunit.html%27)
+
 
 mutation testing frameworks?
 ----------------------------

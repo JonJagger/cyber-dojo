@@ -35,6 +35,13 @@ Kata.start_avatar
   to ensure you don't get two avatars with the same name.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 200 clones of cyber-dojo yesterday!
+But not really because cyber-dojo docker index auto-build inflates 
+that figure.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Make cyber-dojo free again. Smaller areas on left side but
+with larger font button text that opens a dialog which
+contains suggested amounts and a donate link
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 How about making cyber-dojo 'follow-ware'
 I ask users to follow me on twitter?!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

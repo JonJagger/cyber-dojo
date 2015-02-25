@@ -8,12 +8,12 @@ Viz I cannot replace 4.8.1 with 4.9 and have both appear with a display_name
 of just C++. 
 Eg consider the current docker index image g++-4.8.1_assert
 If this is an auto-build then it will see an update to the
-C++-assert/Dockerfile but its name is hard-wired to g++-4.8.1_assert
+languages/C++-assert/Dockerfile but its name is hard-wired to g++-4.8.1_assert
 If I update the Dockerfile for C++-assert so it now reflects 4.9 
 then the docker index will see the change and auto-build a new
 container called g++-4.8.1_assert which will actually be for C++ 4.9
 So I need to revert back to non-auto builds.
-Aside: This was also inflating my git clone statistics on github.
+Aside: Auto-builds are also inflating my git clone statistics on github.
 
 Also, I need to put a URL to the Dockerfile that is for a specific
 commit on github. Again, this is so that if and when I update
@@ -48,7 +48,7 @@ their names appear in the git repo master branch.
 
 
 -----------------------------------------------------------
-An cyberdojo's manifest.json file contains the name of the language. Eg
+A cyberdojo's manifest.json file contains the name of the language. Eg
   cyber-dojo/katas/A9/606FDA05/manifest.json
     { ....  "language":"Java-1.8_JUnit" .... }
   cyber-dojo/katas/3F/611E5054/manifest.json
@@ -91,9 +91,29 @@ container created, as it appears in the manifest.json
 Moving forward I am going to have to create
 a 'rename' adapter for the language which bypasses
 this for existing dojos.
-An extention to app/models/lanuages.rb latest(name)
+An extension to app/models/lanuages.rb latest(name)
 Viz
       'Java'               => 'Java-1.8_JUnit',
 Becomes
       'Java'               => 'Java-JUnit',
       'Java-1.8_JUnit'     => 'Java-JUnit'
+
+-------------------------------------------------------
+
+I can always keep images for different versions in the cyberdjo docker index.
+The question is whether to 
+
+1) keep version numbers out of the display-name
+   language/test combination always takes you to latest docker image
+
+2) put version numbers on the display name
+   language/test combination takes you to what it says
+
+
+
+
+
+
+
+
+
