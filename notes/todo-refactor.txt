@@ -1,5 +1,15 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Dojo.rb Katas.rb Kata.rb
+These are poorly named. Should have been
+Dojo.rb -> CyberDojo.rb
+Katas.rb -> Dojos.rb
+Kata.rb -> Dojo.rb
+Also Exercses.rb -> Katas.rb
+  and Exercise.rb -> Kata.rb
+and cyber-dojo/katas/  -> cyber-dojo/dojos
+Is the latter too big a change to make?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Can't run the tests on the Macbook pro (but can run a rails server).
 Write a script to edit the rights of the cyber-dojo folder
 (chown/chmod/sefacl). Run this from pull.sh?
@@ -10,9 +20,6 @@ to the www-data group.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 line 30 of pull.sh should name the admin_scripts folder
 so it has chown -R run on it.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Create a Tags.rb file to avoid needing to read the increments.json
-file in Avatar.rb's tags() method.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Rename Runner to TestRunner
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -13,4 +13,5 @@
   Light 
   Sandbox 
   Tag
+  Tags
 }.each {|sourcefile| require_relative './' + sourcefile }

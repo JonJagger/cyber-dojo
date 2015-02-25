@@ -7,9 +7,7 @@ class Exercises
 
   def each
     return enum_for(:each) unless block_given?
-    exercises.each do |exercise|
-      yield exercise
-    end
+    exercises.each { |exercise| yield exercise }
   end
 
   def [](name)

@@ -12,8 +12,6 @@ class Tag
   end
 
   def output
-    # tag 0's manifest (start_avatar commit)
-    # does not have an output file
     visible_files['output'] || ''
   end
 
@@ -27,3 +25,11 @@ private
   include ExternalGit
 
 end
+
+#------------------------------------------
+# output
+#------------------------------------------
+# In very early dojos avatar.create_kata()
+# did not save 'output' in visible_files
+#------------------------------------------
+
