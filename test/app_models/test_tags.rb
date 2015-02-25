@@ -43,7 +43,7 @@ class TagsTest < ModelTestBase
     fake_three_tests(lion)
 
     tags = lion.tags
-    assert_equal 4, tags.count
+    assert_equal 4, tags.length
     assert tags.all?{|tag| tag.class.name === 'Tag'}
 
     # simulate green [test]
