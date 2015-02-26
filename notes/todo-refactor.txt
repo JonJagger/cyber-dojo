@@ -1,5 +1,29 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+line 30 of pull.sh should name the admin_scripts folder?
+so it has chown -R run on it.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Rename external(:runner) to external(:test_runner) ?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Refactor admin_scripts/lib_domain.rb so it uses ExternalSetter
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Make cyber-dojo free again. Smaller areas on left side but
+with larger font button text that opens a dialog which
+contains suggested amounts and a donate link
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+How about making cyber-dojo 'follow-ware'
+I ask users to follow me on twitter?!
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+app/controllers/application_controller.rb has, eg
+  def was_tag
+    params['was_tag']
+  end
+  def now_tag
+    params['now_tag']
+  end
+Could these be turned to symbols?
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dojo.rb Katas.rb Kata.rb
 These are poorly named. Should have been
 Dojo.rb -> CyberDojo.rb
@@ -10,17 +34,6 @@ Also Exercses.rb -> Katas.rb
 and cyber-dojo/katas/  -> cyber-dojo/dojos
 Is the latter too big a change to make?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-app/controllers/application_controller.rb has, eg
-  def was_tag
-    params['was_tag']
-  end
-
-  def now_tag
-    params['now_tag']
-  end
-These could be refactored to do an auto params extraction
-similar to app/models/ManifestProperty.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Can't run the tests on the Macbook pro (but can run a rails server).
 Write a script to edit the rights of the cyber-dojo folder
 (chown/chmod/sefacl). Run this from pull.sh?
@@ -28,13 +41,6 @@ I think this is also causing one of the steps when setting
 up a digital-ocean server to appear to fail.
 Might be worth trying to automate adding the current user
 to the www-data group.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-line 30 of pull.sh should name the admin_scripts folder
-so it has chown -R run on it.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Rename Runner to TestRunner
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Refactor admin_scripts/lib_domain.rb so it uses ExternalSetter
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I think its quite likely I'll have two C++ compilers at
 some point - one for g++ and one for clang. 
@@ -51,17 +57,6 @@ tab then when you return the hover-tip is still visible.
 Kata.start_avatar
   needs to do dir.lock do...end
   to ensure you don't get two avatars with the same name.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-200 clones of cyber-dojo yesterday!
-But not really because cyber-dojo docker index auto-build inflates 
-that figure.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Make cyber-dojo free again. Smaller areas on left side but
-with larger font button text that opens a dialog which
-contains suggested amounts and a donate link
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-How about making cyber-dojo 'follow-ware'
-I ask users to follow me on twitter?!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
