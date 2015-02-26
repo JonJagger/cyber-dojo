@@ -17,17 +17,19 @@ does not use a database.
 You create a dojo object like this...
 
 <code>
-thread = Thread.current
-thread[:disk] = OsDisk.new
-thread[:git] = Git.new
-thread[:runner] = DockerTestRunner.new
-dojo = Dojo.new(root_path)
+set_external(:disk,   Disk.new)
+set_external(:git,    Git.new)
+set_external(:runner, DockerTestRunner.new)
+set_external(:exercises_path, root_path + '/exercises/')
+set_external(:languages_path, root_path + '/languages/')
+set_external(:katas_path,     root_path + '/katas/')
+dojo = Dojo.new
 </code>
 
-The live root_path is
-  /var/www/cyber-dojo
-and the test root_path is
-  /var/www/cyber-dojo/test/cyberdojo
+The live katas_path is
+  /var/www/cyber-dojo/katas/
+and the test katas_path is
+  /var/www/cyber-dojo/test/cyber-dojo/katas/
 
 You can
 o) list all its languages or use [ ] to select a specific language.
