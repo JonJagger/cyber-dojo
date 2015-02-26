@@ -86,7 +86,7 @@ end
 # fork from. Particularly for sessions with
 # well known id's such as the refactoring dojos.
 # For example...
-# Suppose a old practice-session was done with a
+# Suppose an old practice-session was done with a
 # language name of 'Java' then in Kata.rb
 # manifest['language'] will be 'Java'
 # However kata.language  is defined as

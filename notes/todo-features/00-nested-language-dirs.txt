@@ -1,3 +1,24 @@
+
+- - - - - - - - - - - - - - - - - - - -
+Renaming/restructuring the language folders.
+One effect of these will be that existing
+dojos for languages that have sym-linked 
+support files will no longer be resumable.
+Or rather, they will be re-enterable, and
+you will be able to fork, but you will 
+not be able to [test]
+This suggests that the docker container 
+should contain all the files it needs
+and that support filenames should be 
+dropped from the Languages' manifest.
+It might be possible to make them still
+work by including the now failing 
+sym-linked files inside a new Docker container.
+
+- - - - - - - - - - - - - - - - - - - -
+
+
+
 - - - - - - - - - - - - - - - - - - - -
 What needs to be refactored?
 - - - - - - - - - - - - - - - - - - - -
@@ -130,6 +151,12 @@ setup_controller.rb
     ...
   end
 
+...or maybe...
+
+  def save
+    language = dojo.languages[params[:language], params[:test]]
+    ...
+  end
 
 
 

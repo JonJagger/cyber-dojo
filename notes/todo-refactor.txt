@@ -58,6 +58,8 @@ Kata.start_avatar
   needs to do dir.lock do...end
   to ensure you don't get two avatars with the same name.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Why does Language.rb display_name have a default? 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 

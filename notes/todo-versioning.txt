@@ -1,7 +1,4 @@
 
-
-So plan.
-
 1) Docker Cyberdojo index
 Leave docker containers on cyberdojo index.
 Delete auto-build versions. Re-push the images from a cyber-dojo server. 
@@ -9,13 +6,13 @@ Don't worry if some of the Dockerfile hyperlinks are wrong.
 
 2) Convert cyber-dojo to use nested folders.
 
-3) Make Docker Cyberdojo index Dockerfile hyperlink's
+3) Make Docker Cyberdojo index Dockerfiles hyperlink's
 point to new Dockerfiles on github. Use a URL that
-includes the commit.
+includes the commit so future changes to the github
+repo will not invalidate the URL.
+
 
 ------------
-
-Thinking in the shower this morning...
 
 Some of the images on the cyberdojo docker index now have auto-builds.
 This needs to be reverted back. The image name includes the version number.
