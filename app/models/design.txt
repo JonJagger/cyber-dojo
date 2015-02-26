@@ -26,9 +26,9 @@ set_external(:katas_path,     root_path + '/katas/')
 dojo = Dojo.new
 </code>
 
-The live katas_path is
+The live :katas_path is
   /var/www/cyber-dojo/katas/
-and the test katas_path is
+and the test :katas_path is
   /var/www/cyber-dojo/test/cyber-dojo/katas/
 
 You can

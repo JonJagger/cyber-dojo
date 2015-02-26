@@ -10,6 +10,17 @@ Also Exercses.rb -> Katas.rb
 and cyber-dojo/katas/  -> cyber-dojo/dojos
 Is the latter too big a change to make?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+app/controllers/application_controller.rb has, eg
+  def was_tag
+    params['was_tag']
+  end
+
+  def now_tag
+    params['now_tag']
+  end
+These could be refactored to do an auto params extraction
+similar to app/models/ManifestProperty.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Can't run the tests on the Macbook pro (but can run a rails server).
 Write a script to edit the rights of the cyber-dojo folder
 (chown/chmod/sefacl). Run this from pull.sh?
