@@ -25,6 +25,20 @@ contains suggested amounts and a donate link
 How about making cyber-dojo 'follow-ware'
 I ask users to follow me on twitter?!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Try putting set_external() calls into config/initializers/externals.rb
+Check if this works on a Passenger startup
+Chek if works on local server too
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+app_controller tests can all use DiskFake DirFake
+ TODO test_dojo
+ TODO test_differ
+ TODO test_reverter
+ NA   test_download
+ ??   test_exception_controller
+ DONE test_forker
+ DONE test_dashboard
+ DONE test_setup
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dojo.rb Katas.rb Kata.rb
 These are poorly named. Should have been
 Dojo.rb -> CyberDojo.rb
@@ -159,29 +173,6 @@ but katas.create_kata() calls katas.valid?(id)
 which has id.length == 10
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rename tests/integration/ folder to tests/externals/ ?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Tried putting this into config/initializers/externals.rb
-  CyberDojo::Application.config.runner = Object.new
-And this into lib/ExternalGetter.rb
-  def runner
-    CyberDojo::Application.config.runner
-  end
-
-Confirmed works on a Passenger startup
-Confirmed works on local server too
-
-For this to work I think my test code would need to simulate
-CyberDojo::Application.config
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-app_controller tests can all use DiskFake DirFake
- TODO test_dojo
- TODO test_differ
- TODO test_reverter
- NA   test_download
- ??   test_exception_controller
- DONE test_forker
- DONE test_dashboard
- DONE test_setup
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would be nice to get extra metric in coverage.txt which was
 the number of hits per line (this is in the generated html summary). 
