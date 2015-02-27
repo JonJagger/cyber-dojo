@@ -53,17 +53,18 @@
   background: $darker-color;
   color     : $lighter-color;
   padding: none;
+  padding-left: 0px;
   margin: { left: 0px; top: 0px; }
   border: {
     left : 1px dotted lighten($darker-color, 10%);
     right: 1px dotted lighten($darker-color, 10%);
   }
+  
   #diff-controls {
-    position: absolute;
-    top : 10px;
-    left: 817px;
+    margin-left: 5px;
     #navigate-controls {
       padding-bottom: 15px;
+      padding-left: 15px;
       #avatar { width: 48px; height: 48px; padding: 0px; margin: 0px; }
       button#prev-avatar, button#next-avatar {
         padding: 0px;
@@ -125,6 +126,7 @@
 
   #diff-filenames {
     height: 375px;
+    width: 300px;
     overflow-y: auto;
     overflow-x: auto;
     font-size: 11pt;
@@ -151,7 +153,7 @@
 
   .diff-line-numbers {
     width: 45px;
-    margin-left: 28px;
+    margin-left: 20px;
     text-align: right;
     overflow: hidden;
     background: lighten($darker-color, 6%);

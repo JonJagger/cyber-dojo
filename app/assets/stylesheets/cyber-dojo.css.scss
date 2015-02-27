@@ -62,6 +62,13 @@ button[disabled] {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+#filename-knave {
+  height: 450px;
+  width: 250px;    
+  overflow-x: auto;
+  overflow-y: auto;  
+}
+
 div[class~='filename'] {
   @include font-size-small();
   background: lighten($darker-color, 6%);
@@ -97,7 +104,7 @@ div[class~="filename"], button[disabled]:hover {
   display: none;
 }
 
-.line_numbers, .file_content { height: 570px; }
+.line_numbers, .file_content { height: 540px; }
 
 .line_numbers, .file_content, .diff_line_numbers, #instructions { @include code-font; }
 

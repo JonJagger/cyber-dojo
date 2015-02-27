@@ -61,7 +61,7 @@ var cyberDojo = (function(cd, $) {
     var refreshDiffCheckBox = function() {
       diffCheckBox()
         .html(makeDiffCheckboxHtml())
-        .attr('checked', wasTag() != nowTag())
+        .attr('checked', inDiffMode())
         .unbind('click')
         .bind('click', function() { show(nowTag()); });
     }
@@ -299,14 +299,23 @@ var cyberDojo = (function(cd, $) {
     var makeDiffDiv = function()  {
       var div = $('<div>', {
         'id': 'history-dialog'
-      });
-      div.append('<div id="diff-content"></div>');
-      div.append('' +
+      });      
+      var controls = '' +
         '<div id="diff-controls">' +
           makeTagButtonsHtml() +
           "<div id='diff-filenames'>" +
           '</div>' +
-        '</div>');
+        '</div>';
+      var content = '<div id="diff-content"></div>'        
+      var table = '' +
+        '<table>' +
+          '<tr>' +
+            '<td>' + content + '</td>' +
+            '<td>' + controls + '</td>' +
+          '</tr>' +
+        '</table>';
+        
+      div.append(table);        
       return div;
     };
 
@@ -562,8 +571,6 @@ var cyberDojo = (function(cd, $) {
       buttons.push(makeButton('close', function() {
         historyDialog.remove();
       }));
-      buttons[0]['class'] = 'fork-history';
-      buttons[3]['class'] = 'close-history';
       return buttons;
     };
 
@@ -617,29 +624,6 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-    // revertButton
-    //---------------------------------------------------
-
-    var revertButton = function() {
-      return $('.ui-dialog-buttonset :nth-child(2) :first-child');
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var makeRevertButtonHtml = function() {
-      var colour = data.lights[nowTag()-1].colour;
-      return 'revert to ' + nowTag() + ' ' + makeColouredBulb(colour);
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var refreshRevertButton = function() {
-      if (showRevert) {
-        revertButton().html(makeRevertButtonHtml());
-      }
-    };
-
-    //---------------------------------------------------
     // forkButton
     //---------------------------------------------------
 
@@ -647,14 +631,10 @@ var cyberDojo = (function(cd, $) {
       return $('.ui-dialog-buttonset :nth-child(1) :first-child');
     };
 
-    //- - - - - - - - - - - - - - -
-
     var makeForkButtonHtml = function() {
       var colour = data.lights[nowTag()-1].colour;
       return 'fork from ' + nowTag() + ' ' + makeColouredBulb(colour);
     };
-
-    //- - - - - - - - - - - - - - -
 
     var makeColouredBulb = function(colour) {
       return '' +
@@ -665,10 +645,27 @@ var cyberDojo = (function(cd, $) {
          " height='12'/>";
     };
 
-    //- - - - - - - - - - - - - - -
-
     var refreshForkButton = function() {
       forkButton().html(makeForkButtonHtml());
+    };
+
+    //---------------------------------------------------
+    // revertButton
+    //---------------------------------------------------
+
+    var revertButton = function() {
+      return $('.ui-dialog-buttonset :nth-child(2) :first-child');
+    };
+
+    var makeRevertButtonHtml = function() {
+      var colour = data.lights[nowTag()-1].colour;
+      return 'revert to ' + nowTag() + ' ' + makeColouredBulb(colour);
+    };
+
+    var refreshRevertButton = function() {
+      if (showRevert) {
+        revertButton().html(makeRevertButtonHtml());
+      }
     };
 
     //---------------------------------------------------
