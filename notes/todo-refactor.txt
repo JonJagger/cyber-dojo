@@ -5,9 +5,6 @@ should the text to the left of the create button be changed?
 "choose a language, a test framework, and an exercise
 to get your id"
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dashboard age partial. refactor to show/hide instead of setting
-labels dynamically?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 controllers are getting fat. Make them a lot skinnier.
 Possibly by doing an include so scope is same and @ vars
 are still available. Will help testing too.
