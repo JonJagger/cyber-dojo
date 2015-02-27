@@ -15,7 +15,7 @@ $(function() {
         if (dojo.full) {
           cd.dialog(dojo.full_dialog_html, title, ok).dialog('open');
         } else {
-          cd.dialog_enter(title, dojo.id, ok, dojo.avatar_name, dojo.enter_dialog_html).dialog('open');
+          cd.dialog_enter(title, id, ok, dojo.avatar_name, dojo.enter_dialog_html).dialog('open');
           cd.enableDisableEnterReEnterReview();
         }
       }).always(function() {
