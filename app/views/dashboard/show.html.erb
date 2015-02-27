@@ -1,21 +1,4 @@
 
-<script type="text/javascript"><!--
-
-$(function() {
-
-  if ("<%=@avatar_name%>" !== "") {
-    var id = "<%=@id%>";
-    var avatarName = "<%=@avatar_name%>";
-    var wasTag = parseInt("<%=@was_tag%>");
-    var nowTag = parseInt("<%=@now_tag%>");
-    var showRevert = false;
-    cd.dialog_history(id, avatarName, wasTag, nowTag, showRevert);
-  }
-
-});
-
-//--></script>
-
 <div id="dashboard-page">
   <table>
     <tr class="valign-top">
