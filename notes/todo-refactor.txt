@@ -1,8 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 history-diff would look better if the      < animal >
-control was at the end of the top bar (the one containing
-the traffic lights).
+control was at the start the top bar (the one containing
+the traffic lights) and the < << [] >> > control
+was at the end of the top bar.
 Also the < > buttons to the left and right of the animal
 should be the same size as the < > buttons to the 
 immediate left and right of the tag number (since they

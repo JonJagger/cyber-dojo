@@ -50,10 +50,8 @@ $(function() {
       </tr>
       <tr class="valign-top">
         <td>
-        <%= render partial: 'file_new_rename_delete' %>
-          <div id="filename-knave">
-            <%= render partial: 'filename_list' %>
-          </div>
+          <%= render partial: 'file_new_rename_delete' %>
+          <%= render partial: 'filename_list' %>
         </td>
         <td>
           <%= render partial: 'editor' %>

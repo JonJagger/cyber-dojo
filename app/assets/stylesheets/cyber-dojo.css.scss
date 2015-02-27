@@ -62,11 +62,15 @@ button[disabled] {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#filename-knave {
-  height: 450px;
-  width: 250px;    
-  overflow-x: auto;
-  overflow-y: auto;  
+#filename-list {
+  display: block; // don't lose rhs of long filenames when scrolling
+  max-height: 495px;
+  max-width: 250px;    
+  overflow: none; 
+}
+
+.filename_div {
+  display: none;
 }
 
 div[class~='filename'] {
@@ -99,10 +103,6 @@ div[class~="filename"], button[disabled]:hover {
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-.filename_div {
-  display: none;
-}
 
 .line_numbers, .file_content { height: 540px; }
 

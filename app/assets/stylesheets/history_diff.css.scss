@@ -122,11 +122,12 @@
 
   .filename {
     text-align: left;
+    font-size: 16px;
   }
 
   #diff-filenames {
     height: 375px;
-    width: 300px;
+    width: 350px;
     overflow-y: auto;
     overflow-x: auto;
     font-size: 11pt;
@@ -191,12 +192,9 @@
     border: 2px solid $darker-color;
     @include rounded-corner(4px);
     @include right-align(0px);
-  }
-
-  .diff-deleted-line-count {
-    background: $diff-deleted-color;
+    width: 20px !important;
     cursor: pointer;
-
+    
     &.none {
       background: lighten($darker-color,10%);
     }
@@ -207,32 +205,9 @@
     &[disabled].some {
       background: lighten($darker-color,25%);
       color: $diff-deleted-color;
-    }
+    }        
   }
-
-  .diff-added-line-count {
-    background: $diff-added-color;
-    cursor: pointer;
-    border-left: 2px solid $darker-color;
-
-    &.none {
-      background: lighten($darker-color,10%);
-    }
-    &[disabled] {
-      background: lighten($darker-color,10%);
-      cursor: default;
-    }
-    &[disabled].some {
-      background: lighten($darker-color,25%);
-      color: $diff-added-color;
-    }
-  }
-}
-
-.fork-history {
-  margin-left: 26px !important;  
-}
-
-.close-history {
-  margin-left: 250px !important;
+  
+  .diff-deleted-line-count { background: $diff-deleted-color; }
+  .diff-added-line-count   { background: $diff-added-color;   }
 }

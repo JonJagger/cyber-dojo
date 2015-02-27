@@ -1,5 +1,11 @@
 
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+EDIT PAGE
+  very long filename: scroll right, missing part of filename appears
+  delete a different file.
+  now very long filename's missing part is hidden.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HISTORY-DIALOG
   loses the cursor sometimes. Appears on the projector but
   not on the laptop?! 
