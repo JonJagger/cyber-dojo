@@ -151,16 +151,18 @@
 
   .diff-line-numbers {
     width: 45px;
-    margin-left: 8px;
+    margin-left: 28px;
     text-align: right;
     overflow: hidden;
     background: lighten($darker-color, 6%);
     border: 1px dotted lighten($darker-color, 6%);
     border-right: none;
+    position: relative; // lose 1px gap to file-content
+    left: 2px;    
   }
 
   .diff-sheet {
-    width: 720px;
+    width: 680px;
     overflow-x: auto;
     overflow-y: scroll;
     outline: none;
@@ -225,6 +227,10 @@
   }
 }
 
+.fork-history {
+  margin-left: 26px !important;  
+}
+
 .close-history {
-  margin-right: 100px !important;
+  margin-left: 250px !important;
 }

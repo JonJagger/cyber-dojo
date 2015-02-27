@@ -545,9 +545,6 @@ var cyberDojo = (function(cd, $) {
           click: handler
         };
       };
-      buttons.push(makeButton('close', function() {
-        historyDialog.remove();
-      }));
       buttons.push(makeButton('fork', function() {
         doFork();
       }));
@@ -562,7 +559,11 @@ var cyberDojo = (function(cd, $) {
         url += '2014/10/the-cyber-dojo-history-dialog.html';
         window.open(url, '_blank');
       }));
-      buttons[0]['class'] = 'close-history';
+      buttons.push(makeButton('close', function() {
+        historyDialog.remove();
+      }));
+      buttons[0]['class'] = 'fork-history';
+      buttons[3]['class'] = 'close-history';
       return buttons;
     };
 
@@ -620,7 +621,7 @@ var cyberDojo = (function(cd, $) {
     //---------------------------------------------------
 
     var revertButton = function() {
-      return $('.ui-dialog-buttonset :nth-child(3) :first-child');
+      return $('.ui-dialog-buttonset :nth-child(2) :first-child');
     };
 
     //- - - - - - - - - - - - - - -
@@ -643,7 +644,7 @@ var cyberDojo = (function(cd, $) {
     //---------------------------------------------------
 
     var forkButton = function() {
-      return $('.ui-dialog-buttonset :nth-child(2) :first-child');
+      return $('.ui-dialog-buttonset :nth-child(1) :first-child');
     };
 
     //- - - - - - - - - - - - - - -

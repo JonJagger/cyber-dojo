@@ -39,7 +39,7 @@
 
   #instructions {
     height: 465px;
-    width: 650px;
+    width: 550px;
     margin-left: 0px;
     font-size: 12pt;
     background: $lighter-color;
@@ -48,6 +48,7 @@
     padding: 5px;
     border: 0px;
     outline: none;
+    @include code-font();
   }
 
   #ok, #cancel {
