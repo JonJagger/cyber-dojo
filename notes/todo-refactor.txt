@@ -1,18 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-history-diff would look better if the      < animal >
-control was at the start the top bar (the one containing
-the traffic lights) and the < << [] >> > control
-was at the end of the top bar.
-Also the < > buttons to the left and right of the animal
-should be the same size as the < > buttons to the 
-immediate left and right of the tag number (since they
-all move "one").
-However, the background colour of the top bar means
-the < > buttons won't show up as well as below the
-bar either side of the tag number. I guess it might
-be ok with a border.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 controllers are getting fat. Make them a lot skinnier.
 Possibly by doing an include so scope is same and @ vars
 are still available. Will help testing too.
