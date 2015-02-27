@@ -16,8 +16,8 @@
 
     <tr class="align-right">
       <td rowspan="6" align="right">
-        <%= render :partial => 'donate' %>
-        <%= render :partial => 'accu' %>
+        <%= render partial: 'donate' %>
+        <%= render partial: 'accu' %>
       </td>
       <td colspan="2">
         <div id="the-place-to-practice-programming">
@@ -28,7 +28,7 @@
 
     <tr class="align-right">
       <td colspan="3">
-        <%= render :partial => 'learn_more_button' %>
+        <%= render partial: 'learn_more_button' %>
       </td>
     </tr>
 
@@ -39,7 +39,7 @@
           to get your id
       </td>
       <td class="button-td">
-        <%= render :partial => 'create_button' %>
+        <%= render partial: 'create_button' %>
       </td>
     </tr>
 
@@ -49,7 +49,7 @@
           on <em>each</em> computer
       </td>
       <td class="button-td">
-        <%= render :partial => 'enter_id' %>
+        <%= render partial: 'enter_id' %>
       </td>
     </tr>
 
@@ -60,7 +60,7 @@
         and start coding
       </td>
       <td class="button-td">
-        <%= render :partial => 'enter_button' %>
+        <%= render partial: 'enter_button' %>
       </td>
     </tr>
 
@@ -69,14 +69,13 @@
         stop coding, open the dashboard and review everyone's code
       </td>
       <td class="button-td">
-        <%= render :partial => 'review_button' %>
+        <%= render partial: 'review_button' %>
       </td>
     </tr>
 
   </table>
 </div>
 
-<%= render partial: 'footer',
-    locals: { help_url:"http://blog.cyber-dojo.org/p/learn-more.html" } %>
+<%= render partial: 'footer' %>
 
-<%= render :partial => 'custom' %>
+<%= render partial: 'custom' %>
