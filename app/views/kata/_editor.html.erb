@@ -1,18 +1,16 @@
 
 <table>
-
   <tr class="valign-top">
     <td colspan="3">
       <div id="visible-files-container">
 
         <% @visible_files.each do |filename,content| %>
-          <%= render :partial => 'visible_file',
-                     :locals  => { :filename => filename,
-                                   :content  => content} %>
+          <%= render partial: 'visible_file',
+                     locals: { filename: filename,
+                               content: content} %>
         <% end %>
 
       </div>
     </td>
   </tr>
-
 </table>
