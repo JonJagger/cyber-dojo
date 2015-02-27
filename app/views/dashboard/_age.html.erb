@@ -14,19 +14,19 @@ $(function() {
   var sep = '&thinsp;:&thinsp;';
 
   if (days > 0) {
-    $('#days-label').html("<%= t('views.labels.days') %>" + sep);
+    $('#days-label').html("days" + sep);
     $('#days').text(zeroed(days));
   }
   if (days > 0 || hours > 0) {
-    $('#hours-label').html("<%= t('views.labels.hours') %>" + sep);
+    $('#hours-label').html("hours" + sep);
     $('#hours').text(zeroed(hours));
   }
   if (days > 0 || hours > 0 || minutes > 0) {
-    $('#minutes-label').html("<%= t('views.labels.minutes') %>" + sep);
+    $('#minutes-label').html("minutes" + sep);
     $('#minutes').text(zeroed(minutes));
   }
   if (days > 0 || hours > 0 || minutes > 0 || seconds > 0) {
-    $('#seconds-label').html("<%= t('views.labels.seconds') %>" + sep);
+    $('#seconds-label').html("seconds" + sep);
     $('#seconds').text(zeroed(seconds));
   }
 

@@ -1,8 +1,8 @@
 
 <div>
   <div class="align-center small">
-    <div><%= t("views.labels.your_animal_is") %></div>
-    <div><%= t("views.avatars.#{@avatar_name}") %></div>
+    <div>your animal is the</div>
+    <div><%= @avatar_name %></div>
     <% size = 90 %>
     <img class='avatar_image'
          src="/images/avatars/<%= @avatar_name %>.jpg"

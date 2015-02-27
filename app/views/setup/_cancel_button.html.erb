@@ -4,8 +4,7 @@
 $(function() {
 
   $('#cancel').click(function() {
-    var id = "<%= @id %>";
-    var url = '/dojo/index/' + id;
+    var url = "/dojo/index/<%= @id %>";
     window.location = url;
   });
 
@@ -13,7 +12,4 @@ $(function() {
 
 //--></script>
 
-<button type="button"
-        id="cancel">
-  <%= t("views.buttons.cancel") %>
-</button>
+<button type="button" id="cancel">cancel</button>
