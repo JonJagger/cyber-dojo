@@ -24,16 +24,6 @@ contains suggested amounts and a donate link
 How about making cyber-dojo 'follow-ware'
 I ask users to follow me on twitter?!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-app/controllers/application_controller.rb has, eg
-  def was_tag
-    params['was_tag']
-  end
-  def now_tag
-    params['now_tag']
-  end
-Could these be turned to symbols?
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dojo.rb Katas.rb Kata.rb
 These are poorly named. Should have been
 Dojo.rb -> CyberDojo.rb

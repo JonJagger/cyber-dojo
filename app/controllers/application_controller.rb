@@ -49,11 +49,11 @@ class ApplicationController < ActionController::Base
   end
 
   def was_tag
-    params['was_tag']
+    params[:was_tag]
   end
 
   def now_tag
-    params['now_tag']
+    params[:now_tag]
   end
 
 private
