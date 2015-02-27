@@ -11,35 +11,35 @@ $(function() {
   var selectedLanguage = $('#language_' + <%= @selected_language_index %>);
 
   $('[id^=language_]').each(function() {
-    var node = $(this);
-    node.click(function() {      	  	
-      cd.radioEntrySwitch(previousLanguage, node);
-      previousLanguage = node;	  
+    var language = $(this);
+    language.click(function() {      	  	
+      cd.radioEntrySwitch(previousLanguage, language);
+      previousLanguage = language;	  
       // hide all tests
       $('[id^=test_]').hide();	  
       // show tests for this language
-      var i = node.data('index');
+      var i = language.data('index');
       $.each(testIndexes[i], function(_,index) {
         $('[id=test_' + index + ']').show();
       });
       // select test
-      var ti = node.data('test-index');
+      var ti = language.data('test-index');
       $('[id=test_' + ti +']').click();
     });
   });
 
   //- - - - - - - - - - - - - - -
 
-  var previousTests = undefined;
+  var previousTest = undefined;
 	
   $('[id^=test_]').each(function() {
-    var node = $(this);
-    node.click(function() {
-      cd.radioEntrySwitch(previousTests, node);
-      previousTests = node;
+    var test = $(this);
+    test.click(function() {
+      cd.radioEntrySwitch(previousTest, test);
+      previousTest = test;
       //update current-selection in language
       var language = $('[id^=language_][class~=selected]');
-      language.data('test-index', node.data('index'));	  
+      language.data('test-index', test.data('index'));	  
     });
   });
 
@@ -49,11 +49,11 @@ $(function() {
   var selectedExercise = $('#exercise_' + <%= @selected_exercise_index %>);
 
   $('[id^=exercise_]').each(function(index) {
-    var node = $(this);
-    node.click(function() {
+    var exercise = $(this);
+    exercise.click(function() {
       var instructions = $('#instructions_' + index).val();
-      cd.radioEntrySwitch(previousExercise, node);
-      previousExercise = node;
+      cd.radioEntrySwitch(previousExercise, exercise);
+      previousExercise = exercise;
       $('#instructions').val(instructions);
     });
   });
