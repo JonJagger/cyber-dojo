@@ -10,31 +10,33 @@ $(function() {
     return ('00' + n).slice(-2);
   };
   
+  var ageDivMod = function(div,mod) {
+    return Math.floor((age / div) % mod);
+  };
+  
   var hoursPerDay = 24;
   var minutesPerHour = 60  
   var secondsPerMinute = 60;
   var secondsPerHour = secondsPerMinute * minutesPerHour;
   var secondsPerDay = secondsPerHour * hoursPerDay;
 
+  var display = function(name,div,mod) {
+    var n = Math.floor((age / div) % mod);
+    $('#' + name + '-label').html(name + sep);
+    $('#' + name).text(zeroed(n));    
+  };
+
   if (age > secondsPerDay) {
-    var days = Math.floor(age / secondsPerDay);
-    $('#days-label').html("days" + sep);
-    $('#days').text(zeroed(days));
+    display('days', secondsPerDay, 1e10);
   }
   if (age > secondsPerHour) {
-    var hours = Math.floor((age / secondsPerHour) % hoursPerDay);
-    $('#hours-label').html("hours" + sep);
-    $('#hours').text(zeroed(hours));
+    display('hours', secondsPerHour, hoursPerDay);
   }
   if (age > secondsPerMinute) {
-    var minutes = Math.floor((age / secondsPerMinute) % minutesPerHour);    
-    $('#minutes-label').html("minutes" + sep);
-    $('#minutes').text(zeroed(minutes));
+    display('minutes', secondsPerMinute, minutesPerHour);
   }
   if (age > 0) {
-    var seconds = age % secondsPerMinute;    
-    $('#seconds-label').html("seconds" + sep);
-    $('#seconds').text(zeroed(seconds));
+    display('seconds', 1, secondsPerMinute);
   }
 
 });
