@@ -2,30 +2,37 @@
 
 $(function() {
 
-  var age = <%= @kata.age %>;
-  var seconds = age % 60;
-  var minutes = Math.floor((age / 60) % 60);
-  var hours   = Math.floor((age / (60*60)) % 24);
-  var days    = Math.floor(age / (60*60*24));
+  var age = <%= @kata.age %>; // in seconds
+
+  var sep = '&thinsp;:&thinsp;';
 
   var zeroed = function(n) {
     return ('00' + n).slice(-2);
   };
-  var sep = '&thinsp;:&thinsp;';
+  
+  var hoursPerDay = 24;
+  var minutesPerHour = 60  
+  var secondsPerMinute = 60;
+  var secondsPerHour = secondsPerMinute * minutesPerHour;
+  var secondsPerDay = secondsPerHour * hoursPerDay;
 
-  if (days > 0) {
+  if (age > secondsPerDay) {
+    var days = Math.floor(age / secondsPerDay);
     $('#days-label').html("days" + sep);
     $('#days').text(zeroed(days));
   }
-  if (days > 0 || hours > 0) {
+  if (age > secondsPerHour) {
+    var hours = Math.floor((age / secondsPerHour) % hoursPerDay);
     $('#hours-label').html("hours" + sep);
     $('#hours').text(zeroed(hours));
   }
-  if (days > 0 || hours > 0 || minutes > 0) {
+  if (age > secondsPerMinute) {
+    var minutes = Math.floor((age / secondsPerMinute) % minutesPerHour);    
     $('#minutes-label').html("minutes" + sep);
     $('#minutes').text(zeroed(minutes));
   }
-  if (days > 0 || hours > 0 || minutes > 0 || seconds > 0) {
+  if (age > 0) {
+    var seconds = age % secondsPerMinute;    
     $('#seconds-label').html("seconds" + sep);
     $('#seconds').text(zeroed(seconds));
   }
