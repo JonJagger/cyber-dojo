@@ -1,4 +1,6 @@
 
+<%= render partial: 'chooser' %>
+
 <div id="setup-page">
   <table>
     <tr>
@@ -9,13 +11,13 @@
     </tr>
     <tr>
       <td class="valign-top">
-        <%= render partial: 'choose_language' %>
+        <%= render partial: 'list_languages' %>
       </td>
       <td class="valign-top">
-        <%= render partial: 'choose_tests' %>
+        <%= render partial: 'list_tests' %>
       </td>
       <td class="valign-top">
-        <%= render partial: 'choose_exercise' %>
+        <%= render partial: 'list_exercises' %>
       </td>
       <td class="valign-top">
         <%= render partial: 'instructions' %>

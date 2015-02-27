@@ -1,0 +1,72 @@
+
+<script type="text/javascript"><!--
+
+$(function() {
+
+  var testIndexes = $.parseJSON('<%= @split.tests_indexes.inspect.html_safe %>');
+
+  //- - - - - - - - - - - - - - -
+
+  var previousLanguage = undefined;
+  var selectedLanguage = $('#language_' + <%= @selected_language_index %>);
+
+  $('[id^=language_]').each(function() {
+    var node = $(this);
+    node.click(function() {      	  	
+      cd.radioEntrySwitch(previousLanguage, node);
+      previousLanguage = node;	  
+      // hide all tests
+      $('[id^=test_]').hide();	  
+      // show tests for this language
+      var i = node.data('index');
+      $.each(testIndexes[i], function(_,index) {
+        $('[id=test_' + index + ']').show();
+      });
+      // select test
+      var ti = node.data('test-index');
+      $('[id=test_' + ti +']').click();
+    });
+  });
+
+  //- - - - - - - - - - - - - - -
+
+  var previousTests = undefined;
+	
+  $('[id^=test_]').each(function() {
+    var node = $(this);
+    node.click(function() {
+      cd.radioEntrySwitch(previousTests, node);
+      previousTests = node;
+      //update current-selection in language
+      var language = $('[id^=language_][class~=selected]');
+      language.data('test-index', node.data('index'));	  
+    });
+  });
+
+  //- - - - - - - - - - - - - - -
+  
+  var previousExercise = undefined;
+  var selectedExercise = $('#exercise_' + <%= @selected_exercise_index %>);
+
+  $('[id^=exercise_]').each(function(index) {
+    var node = $(this);
+    node.click(function() {
+      var instructions = $('#instructions_' + index).val();
+      cd.radioEntrySwitch(previousExercise, node);
+      previousExercise = node;
+      $('#instructions').val(instructions);
+    });
+  });
+
+  //- - - - - - - - - - - - - - -
+
+  selectedLanguage.click();
+  selectedLanguage.scrollIntoView({ direction: 'vertical' });
+
+  selectedExercise.click();
+  selectedExercise.scrollIntoView({ direction: 'vertical' });
+  
+});
+
+//--></script>
+
