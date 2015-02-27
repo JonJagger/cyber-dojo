@@ -2,30 +2,17 @@
 <div id="footer">
     <table>
         <tr>
-            <td>
-                <%= render partial: 'shared/terms_and_conditions' %>
+            <td><%= render partial: 'shared/terms_and_conditions' %></td>
+            <td><%= render partial: 'shared/bullet' %></td>
+            <td><%= render partial: 'shared/help_link', 
+                             locals: { 
+                               help_url: "http://blog.cyber-dojo.org/p/learn-more.html" 
+                              } %>
             </td>
-            <td>
-                <%= render partial: 'shared/bullet' %>
-            </td>
-            <td>
-                <%= render partial: 'shared/help_link', 
-                           locals: { 
-                             help_url: "http://blog.cyber-dojo.org/p/learn-more.html" 
-                            } %>
-            </td>
-            <td>
-                <%= render partial: 'shared/bullet' %>
-            </td>
-            <td>
-                <%= render partial: 'shared/tweet' %>
-            </td>
-            <td>
-                <%= render partial: 'shared/bullet' %>
-            </td>
-            <td>
-                <%= render partial: 're_enter' %>
-            </td>
+            <td><%= render partial: 'shared/bullet' %></td>
+            <td><%= render partial: 'shared/tweet' %></td>
+            <td><%= render partial: 'shared/bullet' %></td>
+            <td><%= render partial: 're_enter' %></td>
         </tr>
     </table>
 </div>

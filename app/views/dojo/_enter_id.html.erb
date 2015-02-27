@@ -9,13 +9,16 @@ $(function() {
   var review  = $('#review-button');
   var reEnter = $('#re-enter');
 
+  var enable = function(button) {
+    button.removeAttr('disabled');    
+  };
   var disable = function(button) {
-      button.prop('disabled', true);
+    button.prop('disabled', true);
   };
 
-  var enableIf = function(button, condition) {
+  var setEnabled = function(button, condition) {
     if (condition) {
-      button.removeAttr('disabled');
+      enable(button);
     } else {
       disable(button);
     }
@@ -28,12 +31,13 @@ $(function() {
     reEnter.hide();
     if (id.length >= 6) {
       $.getJSON('/dojo/check', { id: id }, function(dojo) {
-        enableIf(enter, dojo.exists);
-        enableIf(review, dojo.exists);
-        if (dojo.exists)
+        setEnabled(enter, dojo.exists);
+        setEnabled(review, dojo.exists);
+        if (dojo.exists) {
           reEnter.show();
-        else
+        } else {
           reEnter.hide();
+        }
       });
     }
   };
