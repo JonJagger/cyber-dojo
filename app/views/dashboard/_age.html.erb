@@ -4,16 +4,6 @@ $(function() {
 
   var age = <%= @kata.age %>; // in seconds
 
-  var sep = '&thinsp;:&thinsp;';
-
-  var zeroed = function(n) {
-    return ('00' + n).slice(-2);
-  };
-  
-  var ageDivMod = function(div,mod) {
-    return Math.floor((age / div) % mod);
-  };
-  
   var hoursPerDay = 24;
   var minutesPerHour = 60  
   var secondsPerMinute = 60;
@@ -22,6 +12,10 @@ $(function() {
 
   var display = function(name,div,mod) {
     var n = Math.floor((age / div) % mod);
+    var sep = '&thinsp;:&thinsp;';
+    var zeroed = function(n) {
+      return ('00' + n).slice(-2);
+    };    
     $('#' + name + '-label').html(name + sep);
     $('#' + name).text(zeroed(n));    
   };
