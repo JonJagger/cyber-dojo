@@ -1,18 +1,21 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-put setup page into jQuery tab on index page.
-makes switching to create a dojo very fast.
+Home page. Now language and test are more clearly separated
+should the text to the left of the create button be changed?
+"choose a language, a test framework, and an exercise
+to get your id"
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+s/CYBERDOJO_USE_HOST/CYBER_DOJO_USE_HOST/
+in application_controller.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 On setup page, when you click [OK] put up a 
-wait cursor until the dojo is created and
+wait-cursor until the dojo is created and
 then switch the browser to the other jQuery tab 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 line 30 of pull.sh should name the admin_scripts folder?
 so it has chown -R run on it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Rename external(:runner) to external(:test_runner) ?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Refactor admin_scripts/lib_domain.rb so it uses ExternalSetter
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Make cyber-dojo free again. Smaller areas on left side but
 with larger font button text that opens a dialog which
