@@ -1,6 +1,6 @@
 
-<%= render :partial => 'test_button_handler' %>
-<%= render :partial => 'filename_support' %>
+<%= render partial: 'test_button_handler' %>
+<%= render partial: 'filename_support' %>
 
 <script type="text/javascript"><!--
 
@@ -27,38 +27,36 @@ $(function() {
 
 //--></script>
 
-<%= form_tag( { :action => 'run_tests',
-                :id     => @kata.id,
-                :avatar => @avatar.name
+<%= form_tag( { action: 'run_tests',
+                id: @kata.id,
+                avatar: @avatar.name
               } ) do %>
 
   <div id="kata-page">
 
-    <%= render :partial => 'test_spinner' %>
-    <%= render :partial => 'current_filename' %>
-    <%= render :partial => 'file_hashes_incoming' %>
-    <%= render :partial => 'file_hashes_outgoing' %>
+    <%= render partial: 'test_spinner' %>
+    <%= render partial: 'current_filename' %>
+    <%= render partial: 'file_hashes_incoming' %>
+    <%= render partial: 'file_hashes_outgoing' %>
 
     <table>
-
       <tr class="valign-top">
         <td align="right">
-          <%= render :partial => 'test_button' %>
+          <%= render partial: 'test_button' %>
         </td>
         <td>
           <div id="traffic-lights">
-            <%= render :partial => 'traffic_lights' %>
+            <%= render partial: 'traffic_lights' %>
           </div>
         </td>
       </tr>
-
       <tr class="valign-top">
         <td>
-          <%= render :partial => 'file_new_rename_delete' %>
-          <%= render :partial => 'filename_list' %>
+          <%= render partial: 'file_new_rename_delete' %>
+          <%= render partial: 'filename_list' %>
         </td>
         <td>
-          <%= render :partial => 'editor' %>
+          <%= render partial: 'editor' %>
         </td>
       </tr>
 

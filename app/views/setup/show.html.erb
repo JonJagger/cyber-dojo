@@ -2,44 +2,30 @@
 <div id="setup-page">
   <table>
     <tr>
-      <td>
-        <div id="choose-language">
-          language?
-        </div>
-      </td>
-      <td>
-        <div id="choose-tests">
-          tests?
-        </div>
-      </td>
-      <td>
-        <div id="choose-exercise">
-          exercise?
-        </div>
-      </td>
-      <td>
-      </td>
+      <td><div id="choose-language">language?</div></td>
+      <td><div id="choose-tests">tests?</div></td>
+      <td><div id="choose-exercise">exercise?</div></td>
+      <td></td>
     </tr>
     <tr>
       <td class="valign-top">
-        <%= render :partial => 'choose_language' %>
+        <%= render partial: 'choose_language' %>
       </td>
       <td class="valign-top">
-        <%= render :partial => 'choose_tests' %>
+        <%= render partial: 'choose_tests' %>
       </td>
       <td class="valign-top">
-        <%= render :partial => 'choose_exercise' %>
+        <%= render partial: 'choose_exercise' %>
       </td>
       <td class="valign-top">
-        <%= render :partial => 'instructions' %>
+        <%= render partial: 'instructions' %>
       </td>
     </tr>
     <tr>
-      <td colspan="3">
-      </td>
+      <td colspan="3"></td>
       <td>
-        <%= render :partial => 'ok_button' %>
-        <%= render :partial => 'cancel_button' %>
+        <%= render partial: 'ok_button' %>
+        <%= render partial: 'cancel_button' %>
 	  </td>
     </tr>
   </table>
