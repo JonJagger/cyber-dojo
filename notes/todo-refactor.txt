@@ -1,5 +1,12 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+put setup page into jQuery tab on index page.
+makes switching to create a dojo very fast.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+On setup page, when you click [OK] put up a 
+wait cursor until the dojo is created and
+then switch the browser to the other jQuery tab 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 line 30 of pull.sh should name the admin_scripts folder?
 so it has chown -R run on it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

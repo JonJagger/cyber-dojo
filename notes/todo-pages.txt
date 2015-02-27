@@ -5,15 +5,8 @@ HOME-PAGE
   clicking yin-yang icon resets back to home page page with no id.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME-PAGE
-  would be nice if it had a heartbeat so it could detect and
-  auto-enable the resume/review buttons.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-HOME-PAGE
   add a [publish] button. Perhaps layout as
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-HOME-PAGE
-  Perhaps disable resume/review buttons until dojo is 30 seconds old?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
