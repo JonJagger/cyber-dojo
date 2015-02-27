@@ -9,7 +9,8 @@ immediate left and right of the tag number (since they
 all move "one").
 However, the background colour of the top bar means
 the < > buttons won't show up as well as below the
-bar either side of the tag number.
+bar either side of the tag number. I guess it might
+be ok with a border.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 controllers are getting fat. Make them a lot skinnier.
 Possibly by doing an include so scope is same and @ vars
