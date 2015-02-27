@@ -107,9 +107,9 @@ private
     begin
       @manifest ||= JSON.parse(read(manifest_filename))
     rescue Exception => e
-      message =  "JSON.parse(#{manifest_filename}) exception" +
-        " from language: " + path + "\n" +
-        "exception: " + e.message
+      message =  "JSON.parse(#{manifest_filename}) exception" + "\n" +
+        "language: " + path + "\n" +
+        " message: " + e.message
       raise message
     end
   end

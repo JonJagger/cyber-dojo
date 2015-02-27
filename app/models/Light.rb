@@ -10,7 +10,6 @@ class Light
   attr_reader :avatar
 
   def colour
-    # old katas used 'outcome'
     (@hash['colour'] || @hash['outcome']).to_sym
   end
 
@@ -35,3 +34,9 @@ class Light
   end
 
 end
+
+#-----------------
+# colour
+#-----------------
+# old katas used 'outcome'
+#-----------------

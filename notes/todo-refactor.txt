@@ -16,6 +16,8 @@ controllers are getting fat. Make them a lot skinnier.
 Possibly by doing an include so scope is same and @ vars
 are still available. Will help testing too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Can path methods in the models be made private?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 On setup page, when you click [OK] put up a 
 wait-cursor until the dojo is created and
 then switch the browser to home page.
@@ -58,7 +60,7 @@ Also Exercses.rb -> Katas.rb
   and Exercise.rb -> Kata.rb
 and cyber-dojo/katas/  -> cyber-dojo/dojos
 Is the latter too big a change to make?
-On setup page could also change exercise? to kata?
+On setup page could also change exercises? to kata?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Can't run the tests on the Macbook pro (but can run a rails server).
 Write a script to edit the rights of the cyber-dojo folder
