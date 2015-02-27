@@ -66,7 +66,7 @@ private
 
   def test_runner
     return DockerTestRunner.new if Docker.installed?
-    return HostTestRunner.new unless ENV['CYBERDOJO_USE_HOST'].nil?
+    return HostTestRunner.new unless ENV['CYBER_DOJO_USE_HOST'].nil?
     return DummyTestRunner.new
   end
 

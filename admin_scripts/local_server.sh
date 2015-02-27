@@ -1,4 +1,4 @@
 #!/bin/bash
 
-export CYBERDOJO_USE_HOST=true
+export CYBER_DOJO_USE_HOST=true
 rails s
