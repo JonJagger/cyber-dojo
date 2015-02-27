@@ -7,9 +7,9 @@ $(function() {
   var selectedExercise = $('#exercise_' + <%= @selected_exercise_index %>);
 
   $('[id^=exercise_]').each(function(index) {
-    var instructions = $('#instructions_' + index).val();
     var node = $(this);
     node.click(function() {
+      var instructions = $('#instructions_' + index).val();
       cd.radioEntrySwitch(previousExercise, node);
       previousExercise = node;
       $('#instructions').val(instructions);

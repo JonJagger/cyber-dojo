@@ -14,7 +14,6 @@ $(function() {
     node.click(function() {
       cd.radioEntrySwitch(previousTests, node);
       previousTests = node;
-	  
       //update current-selection in language
       var language = $('[id^=language_][class~=selected]');
       language.data('test-index', node.data('index'));	  
@@ -27,11 +26,9 @@ $(function() {
 
   $('[id^=language_]').each(function() {
     var node = $(this);
-    node.click(function() {
-	  	
+    node.click(function() {      	  	
       cd.radioEntrySwitch(previousLanguage, node);
-      previousLanguage = node;
-	  
+      previousLanguage = node;	  
       // hide all tests
       $('[id^=test_]').hide();	  
       // show tests for this language
@@ -42,7 +39,6 @@ $(function() {
       // select test
       var ti = node.data('test-index');
       $('[id=test_' + ti +']').click();
-
     });
   });
 

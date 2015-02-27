@@ -10,7 +10,7 @@ $(function() {
   cd.storeOutgoingFileHashes();
 
   var filenames = cd.filenames();
-  $.each(filenames, function(index,filename) {
+  $.each(filenames, function(_,filename) {
     var file = cd.fileContentFor(filename);
     cd.bindHotKeys(file);
     if (filename !== 'output') {
@@ -33,12 +33,10 @@ $(function() {
               } ) do %>
 
   <div id="kata-page">
-
     <%= render partial: 'test_spinner' %>
     <%= render partial: 'current_filename' %>
     <%= render partial: 'file_hashes_incoming' %>
     <%= render partial: 'file_hashes_outgoing' %>
-
     <table>
       <tr class="valign-top">
         <td align="right">
@@ -59,11 +57,12 @@ $(function() {
           <%= render partial: 'editor' %>
         </td>
       </tr>
-
     </table>
   </div>
 
   <%= render partial: 'shared/footer',
-      locals: { help_url:"http://blog.cyber-dojo.org/2014/10/the-cyber-dojo-test-page.html" } %>
+             locals: {
+                help_url:"http://blog.cyber-dojo.org/2014/10/the-cyber-dojo-test-page.html" 
+             } %>
 
 <% end %>
