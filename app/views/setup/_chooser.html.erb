@@ -5,10 +5,12 @@ $(function() {
 
   var testIndexes = $.parseJSON('<%= @split.tests_indexes.inspect.html_safe %>');
 
-  //- - - - - - - - - - - - - - -
-
   var previousLanguage = undefined;
-  var selectedLanguage = $('#language_' + <%= @selected_language_index %>);
+  var previousTest     = undefined;
+  var previousExercise = undefined;
+  
+  var selectedLanguage = $('#language_' + <%= @initial_language_index %>);
+  var selectedExercise = $('#exercise_' + <%= @initial_exercise_index %>);
 
   $('[id^=language_]').each(function() {
     var language = $(this);
@@ -30,14 +32,12 @@ $(function() {
 
   //- - - - - - - - - - - - - - -
 
-  var previousTest = undefined;
-	
   $('[id^=test_]').each(function() {
     var test = $(this);
     test.click(function() {
       cd.radioEntrySwitch(previousTest, test);
       previousTest = test;
-      //update current-selection in language
+      // update current-selection in language
       var language = $('[id^=language_][class~=selected]');
       language.data('test-index', test.data('index'));	  
     });
@@ -45,9 +45,6 @@ $(function() {
 
   //- - - - - - - - - - - - - - -
   
-  var previousExercise = undefined;
-  var selectedExercise = $('#exercise_' + <%= @selected_exercise_index %>);
-
   $('[id^=exercise_]').each(function(index) {
     var exercise = $(this);
     exercise.click(function() {
@@ -61,9 +58,9 @@ $(function() {
   //- - - - - - - - - - - - - - -
 
   selectedLanguage.click();
-  selectedLanguage.scrollIntoView({ direction: 'vertical' });
-
   selectedExercise.click();
+  
+  selectedLanguage.scrollIntoView({ direction: 'vertical' });
   selectedExercise.scrollIntoView({ direction: 'vertical' });
   
 });
