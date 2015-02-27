@@ -4,18 +4,17 @@
 $(function() {
 
   var enterButton = $('#enter-button');
+  
   enterButton.click(function() {
     cd.dialog_ie(function() {
       var id = $('#kata-id-input').val();
-      var ok = "<%= t('views.buttons.ok') %>";
-      var title = "<%= t('views.buttons.enter') %>";
       var cursor = enterButton.css('cursor');
       enterButton.css('cursor', 'wait');
       $.getJSON('/dojo/enter', { id: id }, function(dojo) {
         if (dojo.full) {
-          cd.dialog(dojo.full_dialog_html, title, ok).dialog('open');
+          cd.dialog(dojo.full_dialog_html, 'enter', 'ok').dialog('open');
         } else {
-          cd.dialog_enter(title, id, ok, dojo.avatar_name, dojo.enter_dialog_html).dialog('open');
+          cd.dialog_enter(id, dojo.avatar_name, dojo.enter_dialog_html).dialog('open');
           cd.enableDisableEnterReEnterReview();
         }
       }).always(function() {
@@ -28,7 +27,4 @@ $(function() {
 
 //--></script>
 
-<button type="button"
-        id="enter-button">
-  <%= t("views.buttons.enter") %>
-</button>
+<button type="button" id="enter-button">enter</button>
