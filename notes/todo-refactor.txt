@@ -6,11 +6,8 @@ should the text to the left of the create button be changed?
 to get your id"
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 controllers are getting fat. Make them a lot skinnier.
-Will help testing too.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Drop use of was_tag and now_tag in dashboard_controller.
-Then was_tag and now_tag can move out of application_controller.rb
-into differ_controller.rb
+Possibly by doing an include so scope is same and @ vars
+are still available. Will help testing too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 On setup page, when you click [OK] put up a 
 wait-cursor until the dojo is created and
