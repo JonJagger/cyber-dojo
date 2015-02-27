@@ -8,6 +8,13 @@ to get your id"
 s/CYBERDOJO_USE_HOST/CYBER_DOJO_USE_HOST/
 in application_controller.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+controllers are getting fat. Make them a lot skinnier.
+Will help testing too.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Drop use of was_tag and now_tag in dashboard_controller.
+Then was_tag and now_tag can move out of application_controller.rb
+into differ_controller.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 On setup page, when you click [OK] put up a 
 wait-cursor until the dojo is created and
 then switch the browser to the other jQuery tab 
