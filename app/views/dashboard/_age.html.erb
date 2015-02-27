@@ -11,13 +11,12 @@ $(function() {
   var secondsPerDay = secondsPerHour * hoursPerDay;
 
   var display = function(name,div,mod) {
-    var n = Math.floor((age / div) % mod);
-    var sep = '&thinsp;:&thinsp;';
-    var zeroed = function(n) {
-      return ('00' + n).slice(-2);
+    var n = function() {
+      var value = Math.floor((age / div) % mod);
+      return ('00' + value).slice(-2);
     };    
-    $('#' + name + '-label').html(name + sep);
-    $('#' + name).text(zeroed(n));    
+    $('#' + name + '-label').html(name + '&thinsp;:&thinsp;');
+    $('#' + name).text(n());    
   };
 
   if (age > secondsPerDay) {
