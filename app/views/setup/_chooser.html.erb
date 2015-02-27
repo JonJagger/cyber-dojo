@@ -17,34 +17,26 @@ $(function() {
     language.click(function() {      	  	
       cd.radioEntrySwitch(previousLanguage, language);
       previousLanguage = language;	  
-      // hide all tests
       $('[id^=test_]').hide();	  
-      // show tests for this language
       var i = language.data('index');
       $.each(testIndexes[i], function(_,index) {
         $('[id=test_' + index + ']').show();
       });
-      // select test
       var ti = language.data('test-index');
       $('[id=test_' + ti +']').click();
     });
   });
-
-  //- - - - - - - - - - - - - - -
 
   $('[id^=test_]').each(function() {
     var test = $(this);
     test.click(function() {
       cd.radioEntrySwitch(previousTest, test);
       previousTest = test;
-      // update current-selection in language
       var language = $('[id^=language_][class~=selected]');
       language.data('test-index', test.data('index'));	  
     });
   });
 
-  //- - - - - - - - - - - - - - -
-  
   $('[id^=exercise_]').each(function(index) {
     var exercise = $(this);
     exercise.click(function() {
@@ -54,8 +46,6 @@ $(function() {
       $('#instructions').val(instructions);
     });
   });
-
-  //- - - - - - - - - - - - - - -
 
   selectedLanguage.click();
   selectedExercise.click();
