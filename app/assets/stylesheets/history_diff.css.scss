@@ -32,7 +32,7 @@
   #traffic-lights {
     display: block;
     margin-left: 5px;
-    width: 860px;
+    width: 530px;
     overflow-x: auto;
     &::-webkit-scrollbar:horizontal {
         height: 1px;
@@ -43,6 +43,64 @@
       cursor: pointer;
       img { width: 12px; height: 40px; }
     }
+  }
+}
+
+.navigate-control {
+  
+  padding-bottom: 15px;
+  padding-left: 15px;
+  #avatar { width: 48px; height: 48px; padding: 0px; margin: 0px; }
+  button#prev-avatar, button#next-avatar {
+    padding: 0px;
+    margin: 0px;
+    border: 1px solid Gray;
+  }
+  #prev-avatar img, #next-avatar img {
+    width: 18px;
+    height: 18px;
+    @include rounded-corner(4px);
+    padding: 4px;
+    padding-bottom: 2px;
+    cursor: pointer;
+  }
+
+  .triangle.button { padding: 0px; }
+
+  #first-button img, #last-button img {
+    width: 20px;
+    height: 20px;
+    @include rounded-corner(4px);
+    padding: { top: 2px; bottom: 0px; }
+  }
+  #prev-button img, #next-button img {
+    width: 30px;
+    height: 30px;
+    padding: { top: 2px; bottom: 0px; }
+    @include rounded-corner(4px);
+  }
+  #first-button img {
+    padding: { left: 2px; right: 1px; }
+  }
+  #last-button img {
+    padding: { left: 1px; right: 2px; }
+  }
+  #prev-button img {
+    padding: { left: 1px; right: 4px; }
+  }
+  #next-button img {
+    padding: { left: 4px; right: 1px; }
+  }
+  #now-tag-number {
+    font-size: 1em;
+    background: $lighter-color;
+    color: $darker-color;
+    text-align: center;
+    width: 2.5em;
+    padding: { top: 5px; bottom: 5px; }
+    margin: { top: 2px; right: 3px; }
+    @include rounded-corner(4px);
+    border: 3px dotted;
   }
 }
 
@@ -60,66 +118,9 @@
     right: 1px dotted lighten($darker-color, 10%);
   }
   
-  #diff-controls {
-    margin-left: 5px;
-    #navigate-controls {
-      padding-bottom: 15px;
-      padding-left: 15px;
-      #avatar { width: 48px; height: 48px; padding: 0px; margin: 0px; }
-      button#prev-avatar, button#next-avatar {
-        padding: 0px;
-        margin: 0px;
-        border: 1px solid Gray;
-      }
-      #prev-avatar img, #next-avatar img {
-        width: 18px;
-        height: 18px;
-        @include rounded-corner(4px);
-        padding: 4px;
-        padding-bottom: 2px;
-        cursor: pointer;
-      }
-
-      .triangle.button { padding: 0px; }
-
-      #first-button img, #last-button img {
-        width: 20px;
-        height: 20px;
-        @include rounded-corner(4px);
-        padding: { top: 2px; bottom: 0px; }
-      }
-      #prev-button img, #next-button img {
-        width: 30px;
-        height: 30px;
-        padding: { top: 2px; bottom: 0px; }
-        @include rounded-corner(4px);
-      }
-      #first-button img {
-        padding: { left: 2px; right: 1px; }
-      }
-      #last-button img {
-        padding: { left: 1px; right: 2px; }
-      }
-      #prev-button img {
-        padding: { left: 1px; right: 4px; }
-      }
-      #next-button img {
-        padding: { left: 4px; right: 1px; }
-      }
-      #now-tag-number {
-        font-size: 1em;
-        background: $lighter-color;
-        color: $darker-color;
-        text-align: center;
-        width: 2.5em;
-        padding: { top: 5px; bottom: 5px; }
-        margin: { top: 2px; right: 3px; }
-        @include rounded-corner(4px);
-        border: 3px dotted;
-      }
-    }
-  }
-
+  //#diff-controls {
+  //margin-left: 5px;
+  
   .filename {
     text-align: left;
     font-size: 16px;

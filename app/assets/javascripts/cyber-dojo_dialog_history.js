@@ -79,9 +79,11 @@ var cyberDojo = (function(cd, $) {
     var makeTitleHtml = function() {
       return '<table>' +
                '<tr valign="top">' +
-                 '<td id="title">history&nbsp;diff</td>' +
+                 cd.td(makeAvatarNavigationControl()) +
+                 '<td id="title">diff</td>' +
                  cd.td(makeDiffCheckboxHtml()) +
                  cd.td('<div id="traffic-lights"></div>') +
+                 cd.td(makeTagNavigationControl()) +
                '</tr>' +
              '</table>';
     };
@@ -207,21 +209,25 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var makeTagButtonsHtml = function() {
+    var td = function(align,html) {
+      return '<td align="' + align + '">' + html + '</td>';
+    };
 
-      var td = function(align,html) {
-        return '<td align="' + align + '">' + html + '</td>';
-      };
-
+    var makeAvatarNavigationControl = function() {
       return '' +
-        '<table id="navigate-controls">' +
+        '<table class="navigate-control">' +
           '<tr valign="top">' +
-            cd.td('') +
             td('right', makeAvatarButtonHtml('prev')) +
             td('center', makeAvatarImageHtml()) +
             td('left',  makeAvatarButtonHtml('next')) +
             cd.td('') +
           '</tr>' +
+        '</table>';
+    };
+
+    var makeTagNavigationControl = function() {
+      return '' +
+        '<table class="navigate-control">' +
           '<tr valign="top">' +
             td('right', makeTagButtonHtml('first')) +
             td('right', makeTagButtonHtml('prev')) +
@@ -229,7 +235,15 @@ var cyberDojo = (function(cd, $) {
             td('left',  makeTagButtonHtml('next')) +
             td('left',  makeTagButtonHtml('last')) +
           '</tr>' +
-        '</table>';
+        '</table>';      
+    };
+    
+    var makeTagButtonsHtml = function() {
+      return '' +
+        '<div id="navigate-controls">' +
+          //makeAvatarNavigationControl() +
+          //makeTagNavigationControl() +
+        '</div>';
     };
 
     //- - - - - - - - - - - - - - -
@@ -300,21 +314,15 @@ var cyberDojo = (function(cd, $) {
       var div = $('<div>', {
         'id': 'history-dialog'
       });      
-      var controls = '' +
-        '<div id="diff-controls">' +
-          makeTagButtonsHtml() +
-          "<div id='diff-filenames'>" +
-          '</div>' +
-        '</div>';
-      var content = '<div id="diff-content"></div>'        
+      var content  = '<div id="diff-content"></div>'        
+      var filenames = '<div id="diff-filenames"></div>';
       var table = '' +
         '<table>' +
-          '<tr>' +
+          '<tr valign="top">' +
             '<td>' + content + '</td>' +
-            '<td>' + controls + '</td>' +
+            '<td>' + filenames + '</td>' +
           '</tr>' +
-        '</table>';
-        
+        '</table>';        
       div.append(table);        
       return div;
     };
