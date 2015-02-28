@@ -87,6 +87,10 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  def amber_test
+    any_test
+  end
+  
   def any_test
     kata_run_tests :file_content => {
         'cyber-dojo.sh' => ''
@@ -108,12 +112,6 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
 
   def avatar_name
     json['avatar_name']
-  end
-
-  def show_dashboard(hash =  {})
-    hash[:id] = @id
-    get 'dashboard/show', hash
-    assert_response :success
   end
 
   def json

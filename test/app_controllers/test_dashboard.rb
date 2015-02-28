@@ -4,52 +4,82 @@ require_relative 'controller_test_base'
 
 class DashboardControllerTest < ControllerTestBase
 
-  test 'show no avatars' do
+  def setup
+    super
     stub_setup
-    show_dashboard
-    show_dashboard :minute_columns => false, :auto_refresh => false
+  end
+  
+  test 'dashboard when no avatars' do
+    dashboard
+    options = [ false, true, 'xxx' ]
+    options.each do |mc|
+      options.each do |ar|
+        dashboard minute_columns: mc, auto_refresh: ar
+      end
+    end
     # How do I test @attributes in the controller object?
-    show_dashboard :minute_columns => false, :auto_refresh => true
-    show_dashboard :minute_columns => true,  :auto_refresh => false
-    show_dashboard :minute_columns => true,  :auto_refresh => false
-    show_dashboard :minute_columns => 'xxx', :auto_refresh => false
-    show_dashboard :minute_columns => true,  :auto_refresh => 'xxx'
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'show avatars but no traffic-lights' do
-    stub_setup
+  test 'dashboard when avatars with no traffic-lights' do
     4.times { enter }
-    show_dashboard
+    dashboard
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'show avatars with some traffic lights' do
-    stub_setup
+  test 'dashboard when avatars with some traffic lights' do
     3.times { enter; 2.times { any_test } }
-    show_dashboard
+    dashboard
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'show dashboard and open a history-dialog' do
-    stub_setup
-    enter; 3.times { any_test }
-    show_dashboard :avatar => @avatar_name,
-      :was_tag => 1,
-      :now_tag => 2
-    # Can I test the history-dialog has opened?
+  test 'heartbeat when no avatars' do
+    heartbeat
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'heartbeat' do
-    stub_setup
+  test 'heartbeat when avatars with no traffic-lights' do
+    3.times { enter; 2.times { any_test } }
+    heartbeat
+  end
+    
+  test 'heartbeat when some traffic-lights' do
     enter     # 0
     any_test  # 1
-    get 'dashboard/heartbeat', :format => :js, :id => @id
+    heartbeat
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'progress when no avatars' do
+    progress
+  end
+
+  test 'progress when avatars with no traffic-lights' do
+    enter # 0
+    progress
+  end
+  
+  test 'progress when animal has only amber traffic-lights' do
+    enter     # 0
+    amber_test  # 1
+    progress
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def dashboard(hash =  {})
+    hash[:id] = @id
+    get 'dashboard/show', hash
+    assert_response :success
+  end
+
+  def heartbeat
+    get 'dashboard/heartbeat', :format => :js, :id => @id    
+    assert_response :success
+  end
+
+  def progress  
+    get 'dashboard/progress', :format => :js, :id => @id
+    assert_response :success
+  end
+  
 end
