@@ -4,10 +4,9 @@ var cyberDojo = (function(cd, $) {
   "use strict";
 
   cd.dialog_enter = function(id, avatarName, dialogHtml) {
-    var i18nButtons =  { };
-    i18nButtons['ok'] = function() {
-      var url = '/kata/edit/' + id + '?' +
-                'avatar=' + avatarName;
+    var buttons =  { };
+    buttons['ok'] = function() {
+      var url = '/kata/edit/' + id + '?avatar=' + avatarName;
       window.open(url);
       $(this).dialog('close');
     };
@@ -18,7 +17,7 @@ var cyberDojo = (function(cd, $) {
         autoOpen: false,
         width: 350,
         modal: true,
-        buttons: i18nButtons
+        buttons: buttons
       });
   };
 

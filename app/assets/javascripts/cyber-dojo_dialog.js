@@ -8,10 +8,8 @@ var cyberDojo = (function(cd, $) {
   };
 
   cd.dialog = function(html, title, close) {
-    var i18nButtons = { };
-    i18nButtons[close] = function() {
-      $(this).remove();
-    };
+    var buttons = { };
+    buttons[close] = function() { $(this).remove(); };
     return $('<div>')
       .html(html)
       .dialog({
@@ -20,7 +18,7 @@ var cyberDojo = (function(cd, $) {
         width: $(html).data("width"),
         height: $(html).data("height"),
         modal: true,
-        buttons: i18nButtons
+        buttons: buttons
       });
   };
 

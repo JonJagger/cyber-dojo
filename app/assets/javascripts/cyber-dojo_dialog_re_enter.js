@@ -4,8 +4,7 @@ var cyberDojo = (function(cd, $) {
   "use strict";
 
   cd.reEnter = function(id, avatarName) {
-    var url = '/kata/edit/' + id + '?' +
-              'avatar=' + avatarName;
+    var url = '/kata/edit/' + id + '?avatar=' + avatarName;
     window.open(url);
     cd.closeReEnterDialog();
     return false;
@@ -14,10 +13,8 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - -
   
   cd.dialog_reEnter = function(title, cancel ,dialogHtml) {
-    var i18nButtons = { };
-    i18nButtons[cancel] = function() {
-      $(this).dialog('close');
-    };
+    var buttons = { };
+    buttons[cancel] = function() { $(this).dialog('close'); };
     var reEnter = $('<div class="dialog">')
       .html(dialogHtml)
       .dialog({
@@ -25,11 +22,9 @@ var cyberDojo = (function(cd, $) {
         autoOpen: false,
         width: 500,
         modal: true,
-        buttons: i18nButtons
+        buttons: buttons
       });
-    cd.closeReEnterDialog = function() {
-      reEnter.dialog('close');
-    };
+    cd.closeReEnterDialog = function() { reEnter.dialog('close'); };
     return reEnter;
   };
 
