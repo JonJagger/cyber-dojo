@@ -23,6 +23,7 @@ module TipHelper
   end
 
   def traffic_light_count_tip_html(params)
+    p params
     avatar_name = params['avatar']
     colour = params['current_colour']
     red_count = params['red_count'].to_i
