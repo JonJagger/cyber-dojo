@@ -12,51 +12,55 @@ class ExternalsTests < LibTestBase
   include ExternalLanguagesPath
   include ExternalKatasPath
 
+  def non_path_symbols
+    [:disk,:git,:runner]
+  end
+
+  def path_symbols
+    [:exercises_path,:languages_path,:katas_path]
+  end
+    
+  def symbols
+    non_path_symbols + path_symbols
+  end
+  
   def setup
-    [:disk,:git,:runner,:exercises_path,:languages_path,:katas_path].each { |symbol|
+    symbols.each { |symbol|
       unset_external(symbol)
     }
   end
 
-  test 'raises RuntimeError if disk not set' do
-    assert_raises(RuntimeError) { disk }
+  test 'raises RuntimeError if not set' do
+    symbols.each do |symbol|
+      assert_raises(RuntimeError) { self.send(symbol) }
+    end
   end
 
-  test 'raises RuntimeError if git not set' do
-    assert_raises(RuntimeError) { git }
+  test 'reset sets unconditionally' do
+    non_path_symbols.each do |symbol| 
+      reset_external(symbol, Object.new)
+      assert_equal 'Object', self.send(symbol).class.name
+      reset_external(symbol, Hash.new)
+      assert_equal 'Hash', self.send(symbol).class.name    
+    end        
   end
 
-  test 'raises RuntimeError if runner not set' do
-    assert_raises(RuntimeError) { runner }
+  test 'set sets only if not set already' do
+    non_path_symbols.each do |symbol| 
+      set_external(symbol, Object.new)
+      assert_equal 'Object', self.send(symbol).class.name
+      set_external(symbol, Hash.new)
+      assert_equal 'Object', self.send(symbol).class.name    
+    end        
   end
-
-  test 'raises RuntimeError if exercises_path not set' do
-    assert_raises(RuntimeError) { exercises_path }
+  
+  test 'setting pathed symbols adds trailing slash if not present' do
+    path_symbols.each do |symbol|
+      set_external(symbol, 'wibble')
+      assert_equal 'wibble/', external(symbol)
+    end
   end
-
-  test 'raises RuntimeError if languages_path not set' do
-    assert_raises(RuntimeError) { languages_path }
-  end
-
-  test 'raises RuntimeError if katas_path not set' do
-    assert_raises(RuntimeError) { katas_path }
-  end
-
-  test 'when disk is reset it is not overridden' do
-    reset_external(:disk, Object.new)
-    assert_equal 'Object', disk.class.name
-  end
-
-  test 'when git is reset it is not overridden' do
-    reset_external(:git, Object.new)
-    assert_equal 'Object', git.class.name
-  end
-
-  test 'when runner is reset it is not overridden' do
-    reset_external(:runner, Object.new)
-    assert_equal 'Object', runner.class.name
-  end
-
+  
   test 'dir is disk[path]' do
     reset_external(:disk, DiskFake.new)
     assert_equal path, dir.path
