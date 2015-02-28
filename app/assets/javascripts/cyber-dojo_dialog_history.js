@@ -550,7 +550,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-    // fork revert help close
+    // buttons: fork revert help close
     //---------------------------------------------------
 
     var makeAllButtons = function() {
@@ -638,7 +638,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-    // forkButton
+    // fork button
     //---------------------------------------------------
 
     var makeForkButtonHtml = function() {
@@ -660,7 +660,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-    // revertButton
+    // revert button
     //---------------------------------------------------
 
     var makeRevertButtonHtml = function() {
