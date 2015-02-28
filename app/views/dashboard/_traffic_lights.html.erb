@@ -27,33 +27,34 @@ $(function() {
   <% @avatar_names.each_with_index do |name,index| %>
 	<tr class="<%= parity(index) %> row">
 	  <% td_map = @gapped[name] %>
+    
 	  <% td_map.keys.sort.each do |td_no| %>
-		<% td = td_map[td_no] %>
-        <td class="time-period-marker">
-        </td>
-		<td>
-		<% if td.class == Hash %>
-		  <span class="collapsed-multi-gap"></span>
-		<% end %>
-		<% if td.class == Array %>
-		  <% if td.length == 0 %>
-			<div class="gap"></div>
-		  <% else %>
-			<table>
-			  <tr>
-				<% td.each do |light| %>
-				  <td>
-					<%= raw diff_traffic_light(light) %>
-				  </td>
-				<% end %>
-			  </tr>
-			</table>
+		  <% td = td_map[td_no] %>
+      <td class="time-period-marker">
+      </td>
+		  <td>
+		  <% if td.class == Hash %>
+		    <span class="collapsed-multi-gap"></span>
 		  <% end %>
-		<% end %>
-		</td>
+		  <% if td.class == Array %>
+		    <% if td.length == 0 %>
+			  <div class="gap"></div>
+		    <% else %>
+			  <table>
+			    <tr>
+				  <% td.each do |light| %>
+				    <td>
+					  <%= raw diff_traffic_light(light) %>
+				    </td>
+				  <% end %>
+			    </tr>
+			  </table>
+		    <% end %>
+		  <% end %>
+		  </td>
 	  <% end %>
 
-      <% avatar = @kata.avatars[name] %>
+    <% avatar = @kata.avatars[name] %>
 
 	  <td class="align-right">
 	    <%= raw traffic_light_count(avatar) %>
