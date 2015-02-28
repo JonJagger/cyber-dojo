@@ -619,6 +619,7 @@ var cyberDojo = (function(cd, $) {
           current_filename: currentFilename
         },
         function(historyData) {
+          $('.ui-dialog').removeClass('busy');          
           data = historyData;
           refreshDiffCheckBox();
           refreshTrafficLights();
@@ -629,13 +630,11 @@ var cyberDojo = (function(cd, $) {
           refreshNextAvatarHandler();
           refreshRevertButton();
           refreshForkButton();
+          var light = $('img[src$="_bar.png"]', titleBar());
+          var options = { direction: 'horizontal', duration: 'slow' };
+          light.scrollIntoView(options);
         }
-      ).always(function() {
-        var options = { direction: 'horizontal', duration: 'slow' };
-        var light = $('img[src$="_bar.png"]', titleBar());
-        light.scrollIntoView(options);
-        $('.ui-dialog').removeClass('busy');
-      });
+      );
     };
 
     //---------------------------------------------------
