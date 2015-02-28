@@ -335,7 +335,9 @@ var cyberDojo = (function(cd, $) {
     };
 
     var showFile = function(filenameId) {
-      $('#radio_' + filenameId, diffDiv).click();
+      var filename =  $('#radio_' + filenameId, diffDiv);
+      filename.click();
+      filename.scrollIntoView({ direction: 'vertical' });
     };
 
     var diffContent = $('#diff-content', diffDiv);

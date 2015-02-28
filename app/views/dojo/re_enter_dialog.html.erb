@@ -3,9 +3,9 @@
   <table class="align-center">
     <% index = 0 %>
     <% size = 60 %>
-    <% (1..4).each do |_| %>
+    <% (1..4).each do %>
     <tr>
-      <% (1..4).each do |_| %>
+      <% (1..4).each do %>
       <td class="panel">
         <% avatar_name = @all_avatar_names[index] %>
         <% if @started_avatar_names.include?(avatar_name) %>
