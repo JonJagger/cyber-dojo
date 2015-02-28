@@ -9,10 +9,10 @@ $.fn.clickToggle = function(func1, func2) {
   var funcs = [func1, func2];
   this.data('toggle_clicked', 0);
   this.click(function() {
-	var data = $(this).data();
-	var tc = data.toggle_clicked;
-	$.proxy(funcs[tc], this)();
-	data.toggle_clicked = (tc + 1) % 2;
+	  var data = $(this).data();
+	  var tc = data.toggle_clicked;
+	  $.proxy(funcs[tc], this)();
+	  data.toggle_clicked = (tc + 1) % 2;
   });
   return this;
 };

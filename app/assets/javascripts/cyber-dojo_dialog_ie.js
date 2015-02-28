@@ -11,13 +11,8 @@ var cyberDojo = (function(cd, $) {
         "</div>";
 
       var buttons = { };
-      buttons['yes'] = function() {
-        yesAction();
-        $(this).dialog('close');
-      };
-      buttons['no'] = function() {
-        $(this).dialog('close');
-      };
+      buttons['yes'] = function() { yesAction(); $(this).dialog('close'); };
+      buttons['no'] = function() { $(this).dialog('close'); };
       var warning = $('<div>')
         .html(html)
         .dialog({

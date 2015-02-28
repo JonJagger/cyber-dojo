@@ -4,9 +4,11 @@
 $(function() {
 
   $('#review-button').click(function() {
-    var id = $('#kata-id-input').val();
-    var url = '/dashboard/show/' + id;
-    window.open(url)
+    cd.dialog_ie(function() {
+      var id = $('#kata-id-input').val();
+      var url = '/dashboard/show/' + id;
+      window.open(url)
+    });
   });
 
 });
