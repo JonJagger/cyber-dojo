@@ -18,21 +18,15 @@ class GitTests < LibTestBase
     @path
   end
   
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'git with no arguments returns externally set :git object' do
     assert_equal 'Git', git.class.name
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
   test 'git init raises exception if dir does not exist' do
     set_path 'bad_dir'
     error = assert_raises(RuntimeError) { git(:init,'') }
     assert error.message.start_with?("Cannot `cd #{path}")
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'git init' do
     message = git(:init,'')
@@ -42,8 +36,6 @@ class GitTests < LibTestBase
     assert uk_git_init_message || us_git_init_message
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'git add' do
     git(:init, '')
     write_file
@@ -51,8 +43,6 @@ class GitTests < LibTestBase
     status = `cd #{path};git status`
     assert status.include?("new file:   #{filename}")
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'git commit' do
     git(:init, '')    
@@ -62,8 +52,6 @@ class GitTests < LibTestBase
     assert message.include?("create mode 100644 #{filename}")
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
   test 'git rm' do
     git(:init, '')
     write_file
@@ -72,8 +60,6 @@ class GitTests < LibTestBase
     message = git(:rm, filename)
     assert message.include?("rm '#{filename}'")
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'git tag and show' do
     git(:init, '')
@@ -85,8 +71,6 @@ class GitTests < LibTestBase
     show = git(:show, "1:#{filename}")
     assert_equal content, show
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'git diff' do
     git(:init, '')
@@ -110,16 +94,12 @@ class GitTests < LibTestBase
     assert diff.include?(plus  + new_content)
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'git config' do
     git(:init, '')
     message = git(:config, 'user.name Fred Flintsone')
     assert_equal 0, $?.exitstatus
     assert_equal '', message
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'git gc' do
     git(:init, '')
@@ -128,8 +108,6 @@ class GitTests < LibTestBase
     assert_equal '', message
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'git bad-command logging' do
     git(:init, '')
     message = git(:gc, '--tweedleDee')
@@ -137,8 +115,6 @@ class GitTests < LibTestBase
     assert message.start_with?('error: unknown option')
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
   def set_path(value)
     @path = value
   end

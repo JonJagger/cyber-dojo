@@ -12,27 +12,20 @@ class ExternalsTests < LibTestBase
   include ExternalLanguagesPath
   include ExternalKatasPath
 
-  def non_path_symbols
-    [:disk,:git,:runner]
-  end
-
-  def path_symbols
-    [:exercises_path,:languages_path,:katas_path]
-  end
-    
-  def symbols
-    non_path_symbols + path_symbols
-  end
-  
   def setup
     symbols.each { |symbol|
       unset_external(symbol)
     }
   end
 
+  def path
+    'fubar/'
+  end
+
   test 'raises RuntimeError if not set' do
     symbols.each do |symbol|
-      assert_raises(RuntimeError) { self.send(symbol) }
+      error = assert_raises(RuntimeError) { self.send(symbol) }
+      assert error.message.include? 'no external(:' + symbol.to_s
     end
   end
 
@@ -66,8 +59,16 @@ class ExternalsTests < LibTestBase
     assert_equal path, dir.path
   end
 
-  def path
-    'fubar/'
+  def non_path_symbols
+    [:disk,:git,:runner]
   end
 
+  def path_symbols
+    [:exercises_path,:languages_path,:katas_path]
+  end
+    
+  def symbols
+    non_path_symbols + path_symbols
+  end
+  
 end
