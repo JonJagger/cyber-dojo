@@ -29,7 +29,6 @@ var cyberDojo = (function(cd, $) {
       wasTag: wasTagParam,
       nowTag: nowTagParam
     };
-
     var wasTag = function() {
       return data.wasTag;
     };
@@ -39,110 +38,43 @@ var cyberDojo = (function(cd, $) {
     var inDiffMode = function() {
       return wasTag() != nowTag();
     }
-
-    //---------------------------------------------------
-    // title bar        history diff [x] ...............
-    //---------------------------------------------------
-
-    var diffCheckBox = function() {
-      return $('#diff-checkbox', titleBar());
-    };
-
-    var makeDiffCheckboxHtml = function() {
-      return '<input type="checkbox"' +
-                  ' class="regular-checkbox"' +
-                     ' id="diff-checkbox"' +
-                     ' checked="' + (inDiffMode() ? "checked" : "") + '"' +
-              '/>' +
-              '<label for="diff-checkbox">' +
-              '</label>';
-    };
-
-    var refreshDiffCheckBox = function() {
-      diffCheckBox()
-        .html(makeDiffCheckboxHtml())
-        .attr('checked', inDiffMode())
-        .unbind('click')
-        .bind('click', function() { show(nowTag()); });
-    }
-
-    //---------------------------------------------------
-    // title-bar           .... [traffic-lights] 
-    //---------------------------------------------------
-
     var titleBar = function() {
       return $('#ui-dialog-title-history-dialog');
     };
-
-    //- - - - - - - - - - - - - - -
-
+    var td = function(align,html) {
+      return '<td align="' + align + '">' + html + '</td>';
+    };
+    
+    //-------------------------------------------------------
+    // < avatar > diff [x] traffic-lights << < tag > >>
+    //-------------------------------------------------------
+    
     var makeTitleHtml = function() {
       return '<table>' +
                '<tr valign="top">' +
-                 cd.td(makeAvatarNavigationControl()) +
+                 cd.td(makeAvatarNavigationHtml()) +
                  '<td id="title">diff</td>' +
                  cd.td(makeDiffCheckboxHtml()) +
                  cd.td('<div id="traffic-lights"></div>') +
-                 cd.td(makeTagNavigationControl()) +
+                 cd.td(makeTagNavigationHtml()) +
                '</tr>' +
              '</table>';
     };
 
-    //- - - - - - - - - - - - - - -
-
-    var trafficLights = function() {
-      return $('#traffic-lights', titleBar());
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var makeTrafficLightsHtml = function(lights) {
-      var html = '';
-      var index = 1;
-      $.each(lights, function(n,light) {
-        var barGap = (nowTag() === light.number) ? '_bar' : '_gap';
-        html +=
-          "<div class='traffic-light'>" +
-            "<img src='/images/traffic_light_" + light.colour + barGap + ".png'" +
-            " data-index='" + index + "'" +
-            " data-tag='" + light.number + "'/>" +
-          "</div>";
-          index += 1;
-      });
-      return html;
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var setupTrafficLightHandlers = function() {
-      $.each($('img[src$="_gap.png"]', titleBar()), function(_,light) {
-        var index = $(this).data('index');
-        var tag = $(this).data('tag');
-        $(this)
-          .attr('title', toolTip(index))
-          .click(function() { show(tag); });
-      });
-    };
-
-    var refreshTrafficLights = function() {
-      trafficLights().html(makeTrafficLightsHtml(data.lights));
-      setupTrafficLightHandlers();
-    };
-
     //---------------------------------------------------
-    // navigation controls        < avatar >
-    //                           ............
+    // < avatar >
     //---------------------------------------------------
 
-    var makeAvatarImageHtml = function() {
-      return '<img id="avatar"' +
-                ' src="/images/avatars/' + avatarName + '.jpg"/>';
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var refreshAvatarImage = function() {
-      $('#avatar').parent().html(makeAvatarImageHtml());
+    var makeAvatarNavigationHtml = function() {
+      return '' +
+        '<table class="navigate-control">' +
+          '<tr valign="top">' +
+            td('right',  makeAvatarButtonHtml('prev')) +
+            td('center', makeAvatarImageHtml()) +
+            td('left',   makeAvatarButtonHtml('next')) +
+            cd.td('') +
+          '</tr>' +
+        '</table>';
     };
 
     //- - - - - - - - - - - - - - -
@@ -151,6 +83,33 @@ var cyberDojo = (function(cd, $) {
       return '<button id="' + direction + '-avatar">' +
                 '<img src="/images/triangle_' + direction +'.gif"/>' +
              '</button>';
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var makeAvatarImageHtml = function() {
+      return '<img id="avatar"' +
+                ' src="/images/avatars/' + avatarName + '.jpg"/>';
+    };
+
+    //- - - - - - - - - - - - - - -
+    // refresh < avatar >
+    //- - - - - - - - - - - - - - -
+
+    var refreshAvatarImage = function() {
+      $('#avatar').parent().html(makeAvatarImageHtml());
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var refreshPrevAvatarHandler = function() {
+      refreshAvatarHandler('prev', data.prevAvatar);
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var refreshNextAvatarHandler = function() {
+      refreshAvatarHandler('next', data.nextAvatar);
     };
 
     //- - - - - - - - - - - - - - -
@@ -174,22 +133,103 @@ var cyberDojo = (function(cd, $) {
         });
     };
 
-    //- - - - - - - - - - - - - - -
+    //---------------------------------------------------
+    // diff [x]
+    //---------------------------------------------------
 
-    var refreshPrevAvatarHandler = function() {
-      refreshAvatarHandler('prev', data.prevAvatar);
+    var makeDiffCheckboxHtml = function() {
+      return '<input type="checkbox"' +
+                   ' class="regular-checkbox"' +
+                   ' id="diff-checkbox"' +
+                   ' checked="' + (inDiffMode() ? "checked" : "") + '"' +
+              '/>' +
+              '<label for="diff-checkbox">' +
+              '</label>';
     };
 
     //- - - - - - - - - - - - - - -
+    
+    var diffCheckBox = function() {
+      return $('#diff-checkbox', titleBar());
+    };
 
-    var refreshNextAvatarHandler = function() {
-      refreshAvatarHandler('next', data.nextAvatar);
+    //- - - - - - - - - - - - - - -
+    // refresh diff [x]
+    //- - - - - - - - - - - - - - -
+    
+    var refreshDiffCheckBox = function() {
+      diffCheckBox()
+        .html(makeDiffCheckboxHtml())
+        .attr('checked', inDiffMode())
+        .unbind('click')
+        .bind('click', function() { show(nowTag()); });
+    }
+
+    //---------------------------------------------------
+    // traffic-lights
+    //---------------------------------------------------
+
+    var makeTrafficLightsHtml = function(lights) {
+      var html = '';
+      var index = 1;
+      $.each(lights, function(n,light) {
+        var barGap = (nowTag() === light.number) ? '_bar' : '_gap';
+        html +=
+          "<div class='traffic-light'>" +
+            "<img src='/images/traffic_light_" + light.colour + barGap + ".png'" +
+            " data-index='" + index + "'" +
+            " data-tag='" + light.number + "'/>" +
+          "</div>";
+          index += 1;
+      });
+      return html;
+    };
+    
+    //- - - - - - - - - - - - - - -
+
+    var trafficLights = function() {
+      return $('#traffic-lights', titleBar());
+    };
+
+    //- - - - - - - - - - - - - - -
+    // refresh traffic-lights
+    //- - - - - - - - - - - - - - -
+
+    var refreshTrafficLights = function() {
+      trafficLights().html(makeTrafficLightsHtml(data.lights));
+      setupTrafficLightHandlers();
+    };
+
+    //- - - - - - - - - - - - - - -
+    
+    var setupTrafficLightHandlers = function() {
+      $.each($('img[src$="_gap.png"]', titleBar()), function(_,light) {
+        var index = $(this).data('index');
+        var tag = $(this).data('tag');
+        $(this)
+          .attr('title', toolTip(index))
+          .click(function() { show(tag); });
+      });
     };
 
     //---------------------------------------------------
-    // navigation controls          ...........
-    //                             << < tag  > >>
+    // << < tag  > >>
     //---------------------------------------------------
+
+    var makeTagNavigationHtml = function() {
+      return '' +
+        '<table class="navigate-control">' +
+          '<tr valign="top">' +
+            td('right',  makeTagButtonHtml('first')) +
+            td('right',  makeTagButtonHtml('prev')) +
+            td('center', makeNowTagNumberHtml()) +
+            td('left',   makeTagButtonHtml('next')) +
+            td('left',   makeTagButtonHtml('last')) +
+          '</tr>' +
+        '</table>';      
+    };
+
+    //- - - - - - - - - - - - - - -
 
     var makeTagButtonHtml = function(name) {
       return '<button' +
@@ -208,84 +248,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //- - - - - - - - - - - - - - -
-
-    var td = function(align,html) {
-      return '<td align="' + align + '">' + html + '</td>';
-    };
-
-    var makeAvatarNavigationControl = function() {
-      return '' +
-        '<table class="navigate-control">' +
-          '<tr valign="top">' +
-            td('right', makeAvatarButtonHtml('prev')) +
-            td('center', makeAvatarImageHtml()) +
-            td('left',  makeAvatarButtonHtml('next')) +
-            cd.td('') +
-          '</tr>' +
-        '</table>';
-    };
-
-    var makeTagNavigationControl = function() {
-      return '' +
-        '<table class="navigate-control">' +
-          '<tr valign="top">' +
-            td('right', makeTagButtonHtml('first')) +
-            td('right', makeTagButtonHtml('prev')) +
-            td('center', makeNowTagNumberHtml()) +
-            td('left',  makeTagButtonHtml('next')) +
-            td('left',  makeTagButtonHtml('last')) +
-          '</tr>' +
-        '</table>';      
-    };
-    
-    var makeTagButtonsHtml = function() {
-      return '' +
-        '<div id="navigate-controls">' +
-          //makeAvatarNavigationControl() +
-          //makeTagNavigationControl() +
-        '</div>';
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var toolTip = function(tag) {
-      if (inDiffMode()) {
-        return 'Show diff->' + tag;
-      } else {
-        return 'Show ' + tag;
-      }
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var show = function(tag) {
-      data.wasTag = tag - (diffCheckBox().is(':checked') ? 1 : 0);
-      data.nowTag = tag;
-      refresh();
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var showNoDiff = function() {
-      data.wasTag = lastTag();
-      data.nowTag = lastTag();
-      refresh();
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var refreshTag = function(on, button, newTag) {
-      button
-        .attr('disabled', !on)
-        .css('cursor', on ? 'pointer' : 'default');
-      if (on) {
-        button
-          .attr('title', toolTip(newTag))
-          .unbind('click')
-          .bind('click', function() { show(newTag); });
-      }
-    };
-
+    // refresh << < tag  > >>
     //- - - - - - - - - - - - - - -
 
     var refreshTagControls = function() {
@@ -304,6 +267,50 @@ var cyberDojo = (function(cd, $) {
       refreshTag(tagsToLeft,  $('#prev-button'),  nowTag()-1);
       refreshTag(tagsToRight, $('#next-button'),  nowTag()+1);
       refreshTag(tagsToRight, $('#last-button'),  maxTag);
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var refreshTag = function(on, button, newTag) {
+      button
+        .attr('disabled', !on)
+        .css('cursor', on ? 'pointer' : 'default');
+      if (on) {
+        button
+          .attr('title', toolTip(newTag))
+          .unbind('click')
+          .bind('click', function() { show(newTag); });
+      }
+    };
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+    var show = function(tag) {
+      data.wasTag = tag - (diffCheckBox().is(':checked') ? 1 : 0);
+      data.nowTag = tag;
+      refresh();
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var showNoDiff = function() {
+      data.wasTag = lastTag();
+      data.nowTag = lastTag();
+      refresh();
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var toolTip = function(tag) {
+      if (inDiffMode()) {
+        return 'Show diff->' + tag;
+      } else {
+        return 'Show ' + tag;
+      }
     };
 
     //---------------------------------------------------
@@ -551,7 +558,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-    // historyDialog
+    // fork revert help close
     //---------------------------------------------------
 
     var makeAllButtons = function() {
@@ -582,12 +589,21 @@ var cyberDojo = (function(cd, $) {
       return buttons;
     };
 
+    var forkButton = function() {
+      return $('.ui-dialog-buttonset :nth-child(1) :first-child');
+    };
+
+    var revertButton = function() {
+      return $('.ui-dialog-buttonset :nth-child(2) :first-child');
+    };
+
+    //- - - - - - - - - - - - - - -
+    // dialog
     //- - - - - - - - - - - - - - -
 
     var historyDialog = diffDiv.dialog({
       title: cd.dialogTitle(makeTitleHtml()),
-      width: 1150,
-      height: 655,
+      width: 1125,
       modal: true,
       buttons: makeAllButtons(),
       autoOpen: false,
@@ -597,7 +613,7 @@ var cyberDojo = (function(cd, $) {
     });
 
     //---------------------------------------------------
-    // refresh()
+    // refresh
     //---------------------------------------------------
 
     var refresh = function() {
@@ -635,10 +651,6 @@ var cyberDojo = (function(cd, $) {
     // forkButton
     //---------------------------------------------------
 
-    var forkButton = function() {
-      return $('.ui-dialog-buttonset :nth-child(1) :first-child');
-    };
-
     var makeForkButtonHtml = function() {
       var colour = data.lights[nowTag()-1].colour;
       return 'fork from ' + nowTag() + ' ' + makeColouredBulb(colour);
@@ -660,10 +672,6 @@ var cyberDojo = (function(cd, $) {
     //---------------------------------------------------
     // revertButton
     //---------------------------------------------------
-
-    var revertButton = function() {
-      return $('.ui-dialog-buttonset :nth-child(2) :first-child');
-    };
 
     var makeRevertButtonHtml = function() {
       var colour = data.lights[nowTag()-1].colour;
