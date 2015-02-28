@@ -5,19 +5,9 @@ require 'tempfile'
 
 class HostTestRunnerTests < LibTestBase
 
-  class SandboxStub
-    def path
-      '.'
-    end
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'runnable? is true' do
     assert HostTestRunner.new.runnable?('kermit-the-frog')
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'command executes within timeout and returns command output' do
     sandbox = SandboxStub.new
@@ -25,8 +15,6 @@ class HostTestRunnerTests < LibTestBase
     max_duration = 2 # seconds
     assert_equal "Hello\n", HostTestRunner.new.run(sandbox, command, max_duration)
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'when command times-out output includes unable-to-complete message' do
     sandbox = SandboxStub.new
@@ -42,7 +30,11 @@ class HostTestRunnerTests < LibTestBase
     assert_match /Please try again/, output
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - -
+  class SandboxStub
+    def path
+      '.'
+    end
+  end
 
   def capture_all
     backup_stderr = STDERR.dup

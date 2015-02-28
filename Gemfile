@@ -3,10 +3,6 @@ source 'https://rubygems.org'
 gem 'rails',        '4.1'
 gem 'jquery-rails', '2.1.3'
 gem 'sass-rails', "~> 4.0.3"
-gem 'coffee-rails'
-gem 'uglifier'
-gem 'thin'
-gem 'therubyracer'
 
 group :test do
   gem 'minitest', '~> 5.0'

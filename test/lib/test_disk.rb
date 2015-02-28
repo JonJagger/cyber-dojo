@@ -42,7 +42,7 @@ class DiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'reads back what was written' do
+  test 'read reads back what was written' do
     expected = "content"
     @disk[@dir].write('filename', expected)
     actual = @disk[@dir].read('filename')
@@ -51,9 +51,8 @@ class DiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'on lock if path does not exist exception is thrown, ' +
-       'block is not_executed, ' +
-       'and result is nil' do
+  test 'lock throws exception, does not execute block, ' +
+       'and result is nil, when path does not exist' do
     block_run = false
     exception_thrown = false
     begin
@@ -71,7 +70,7 @@ class DiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'if lock is obtained block is executed ' +
+  test 'when lock is obtained block is executed ' +
        'and result is result of block' do
     block_run = false
     begin
