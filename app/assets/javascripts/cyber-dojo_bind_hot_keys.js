@@ -32,12 +32,6 @@ var cyberDojo = (function(cd, $) {
     return false;
   };
 
-  cd.bindScrollToError = function(event) {
-    cancel(event);
-    cd.scrollToError();
-    return false;
-  };
-
   cd.runTestsHotKey = function() {
     return 'Alt+t';
   };
@@ -54,16 +48,11 @@ var cyberDojo = (function(cd, $) {
     return 'Alt+o';
   };
 
-  cd.scrollToErrorHotKey = function() {
-    return 'Alt+g';
-  };
-
   cd.bindHotKeys = function(node) {
     node.bind('keydown', cd.runTestsHotKey(),     cd.bindRunTests);
     node.bind('keydown', cd.loadNextFileHotKey(), cd.bindLoadNextFile);
     node.bind('keydown', cd.loadPreviousFileHotKey(), cd.bindLoadPreviousFile);
     node.bind('keydown', cd.showOutputFileHotKey(), cd.bindShowOutputFile);
-    node.bind('keydown', cd.scrollToErrorHotKey(), cd.bindScrollToError);
   };
 
   return cd;

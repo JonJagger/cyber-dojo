@@ -58,14 +58,6 @@ class Language
     manifest_property || [ ]
   end
 
-  def amber_goto_line_spec # wip
-    manifest_property || [ ]
-  end
-
-  def red_goto_line_spec # wip
-    manifest_property || [ ]
-  end
-
   def tab_size
     manifest_property || 4
   end
