@@ -12,7 +12,7 @@ class DashboardController < ApplicationController
   end
 
   def progress
-    render :json => { :animals => animals_progress }
+    render json: { animals: animals_progress }
   end
 
 private

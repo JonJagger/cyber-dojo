@@ -2,7 +2,7 @@
 class ForkerController < ApplicationController
 
   def fork
-    result = { :forked => false }
+    result = { forked: false }
     error = false
 
     if !error
@@ -49,13 +49,13 @@ class ForkerController < ApplicationController
       id = unique_id
 
       manifest = {
-        :created => time_now,
-        :id => id,
-        :language => kata.language.name,
-        :exercise => kata.exercise.name,
-        :unit_test_framework => language.unit_test_framework,
-        :tab_size => language.tab_size,
-        :visible_files => avatar.tags[tag].visible_files
+        created: time_now,
+        id: id,
+        language: kata.language.name,
+        exercise: kata.exercise.name,
+        unit_test_framework: language.unit_test_framework,
+        tab_size: language.tab_size,
+        visible_files: avatar.tags[tag].visible_files
       }
 
       kata = dojo.katas[id]
@@ -66,12 +66,12 @@ class ForkerController < ApplicationController
 
     respond_to do |format|
       format.json {
-        render :json => result
+        render json: result
       }
       format.html {
-        redirect_to :controller => 'dojo',
-                    :action => 'index',
-                    :id => result[:id]
+        redirect_to controller: 'dojo',
+                    action: 'index',
+                    id: result[:id]
       }
     end
   end

@@ -30,7 +30,7 @@ class KataController < ApplicationController
     @output = visible_files['output']
 
     respond_to do |format|
-      format.js { render :layout => false }
+      format.js { render layout: false }
     end
   end
 
@@ -46,7 +46,7 @@ private
       # Cater for windows line endings from windows browser
       content = content.gsub(/\r\n/, "\n")
       # Cater for jquery-tabby.js plugin
-      seen[filename] = MakefileFilter.filter(filename,content)
+      seen[filename] = MakefileFilter.filter(filename, content)
     end
     seen
   end

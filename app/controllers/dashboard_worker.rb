@@ -7,8 +7,8 @@ module DashboardWorker
     animals = { }
     avatars.active.each do |avatar|
       animals[avatar.name] = {
-        :colour => avatar.lights[-1].colour,
-        :progress => most_recent_progress(avatar)
+        colour: avatar.lights[-1].colour,
+        progress: most_recent_progress(avatar)
       }
     end
     animals
@@ -48,8 +48,8 @@ module DashboardWorker
     output = non_amber.tag.output
     matches = regexs.map{|regex| Regexp.new(regex).match(output)}
     return {
-      :text => matches.join,
-      :colour => (matches[0] != nil ? 'red' : 'green')
+      text: matches.join,
+      colour: (matches[0] != nil ? 'red' : 'green')
     }
   end
 
