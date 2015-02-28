@@ -24,7 +24,6 @@ class DojoControllerTest < ControllerTestBase
     stub_setup
     @id = 'abcdef'
     check_id
-    assert !exists?
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -36,7 +35,6 @@ class DojoControllerTest < ControllerTestBase
     @id = create_kata('fake-C#','fake-Yatzy')[0..4]
     assert @id.length < 6
     check_id
-    assert exists?
     assert !empty?
     assert !full?
   end
@@ -50,7 +48,6 @@ class DojoControllerTest < ControllerTestBase
     @id = create_kata('fake-C#','fake-Yatzy')[0..5]
     assert @id.length == 6
     check_id
-    assert exists?
     assert !empty?
     assert !full?
   end
@@ -64,7 +61,6 @@ class DojoControllerTest < ControllerTestBase
     @id = create_kata('fake-C#','fake-Yatzy')[0..6]
     assert @id.length > 6
     check_id
-    assert exists?
     assert !empty?
     assert !full?
   end
@@ -75,8 +71,9 @@ class DojoControllerTest < ControllerTestBase
     stub_dojo
     stub_language('fake-C#','nunit')
     stub_exercise('fake-Yatzy')
-    enter
-    assert !exists?
+    assert_raises RuntimeError do 
+      enter
+    end
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -84,8 +81,9 @@ class DojoControllerTest < ControllerTestBase
   test 'enter with empty string id => !exists' do
     stub_setup
     @id = ''
-    enter
-    assert !exists?
+    assert_raises RuntimeError do
+      enter
+    end
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -93,8 +91,9 @@ class DojoControllerTest < ControllerTestBase
   test 'enter with id that does not exist => !exists' do
     stub_setup
     @id = 'ab00ab11ab'
-    enter
-    assert !exists?
+    assert_raises RuntimeError do
+      enter
+    end
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -102,7 +101,6 @@ class DojoControllerTest < ControllerTestBase
   test 'enter with id that does exist => exists,!full,avatar_name' do
     stub_setup
     enter
-    assert exists?
     assert !empty?
     assert !full?
     assert_not_nil avatar_name
@@ -114,12 +112,10 @@ class DojoControllerTest < ControllerTestBase
     stub_setup
     Avatars.names.each do |avatar_name|
       enter
-      assert exists?
       assert !full?
       assert_not_nil avatar_name
     end
     enter
-    assert exists?
     assert !empty?
     assert full?
     assert_nil avatar_name
@@ -131,7 +127,6 @@ class DojoControllerTest < ControllerTestBase
     stub_setup
     @id = 'ab00ab11ab'
     re_enter
-    assert !exists?
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -139,7 +134,6 @@ class DojoControllerTest < ControllerTestBase
   test 're_enter with id that exists but is empty' do
     stub_setup
     re_enter
-    assert exists?
     assert empty?
     assert !full?
   end
@@ -150,7 +144,6 @@ class DojoControllerTest < ControllerTestBase
     stub_setup
     enter
     re_enter
-    assert exists?
     assert !empty?
     assert !full?
   end
@@ -163,10 +156,6 @@ class DojoControllerTest < ControllerTestBase
 
   def re_enter
     get 'dojo/re_enter', :format => :json, :id => @id
-  end
-
-  def exists?
-    json['exists']
   end
 
   def empty?

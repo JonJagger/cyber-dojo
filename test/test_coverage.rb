@@ -25,4 +25,5 @@ SimpleCov.start do
   end
 end
 
-SimpleCov.root File.expand_path('..', File.dirname(__FILE__))
+cov_root = File.expand_path('..', File.dirname(__FILE__))
+SimpleCov.root cov_root

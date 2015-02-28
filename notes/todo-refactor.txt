@@ -7,8 +7,6 @@ controllers are getting fat. Make them a lot skinnier.
 Possibly by doing an include so scope is same and @ vars
 are still available. Will help testing too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Can path methods in the models be made private?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 On setup page, when you click [OK] put up a 
 wait-cursor until the dojo is created and
 then switch the browser to home page.

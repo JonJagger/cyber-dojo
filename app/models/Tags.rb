@@ -8,6 +8,7 @@ class Tags
   end
 
   def [](n)
+    n = length+n if n < 0
     Tag.new(@avatar,n)
   end
 

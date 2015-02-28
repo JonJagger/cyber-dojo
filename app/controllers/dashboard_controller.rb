@@ -1,6 +1,8 @@
 
 class DashboardController < ApplicationController
 
+  protect_from_forgery except: :heartbeat
+
   def show
     gather
     @title = 'dashboard:' + @kata.id[0..5]

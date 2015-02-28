@@ -64,6 +64,28 @@ class TagsTest < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - -
 
+  test 'tags[-1] is the last tag' do
+    kata = make_kata
+    lion = kata.start_avatar(['lion'])
+    fake_three_tests(lion)
+    assert_equal 4, lion.tags.length
+    manifest = JSON.unparse({
+      f1='Hiker.cs' => f1_content='public class Hiker { }',
+      f2='HikerTest.cs' => f2_content='using NUnit.Framework;',
+      f3='output' => 'Tests run: 1, Failures: 0'
+    })
+    n = 3
+    filename = 'manifest.json'
+    git.spy(lion.dir.path,'show',"#{n}:#{filename}",manifest)
+
+    visible_files = lion.tags[-1].visible_files
+    assert_equal [f1,f2,f3], visible_files.keys.sort
+    assert_equal f1_content, visible_files[f1]
+    assert_equal f2_content, visible_files[f2]    
+  end
+  
+  #- - - - - - - - - - - - - - - - - - -
+
   def fake_three_tests(avatar)
     incs =
     [
