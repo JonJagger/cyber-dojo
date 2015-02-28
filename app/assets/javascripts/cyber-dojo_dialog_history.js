@@ -3,11 +3,13 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  var lastTag = function() {
-    return -1;
-  };
-
-  //- - - - - - - - - - - - - - - - - - - - - - - - - -
+  // Arguably, the history would be better as it own page rather
+  // than a dialog. That would help google searchability and
+  // analytics etc. I use a dialog because of revert.
+  // When revert is clicked it has to be for a specific
+  // animal and it has to revert their code! As a dialog,
+  // the revert has access to animal's code on the page
+  // from which the history-dialog opened.
 
   cd.dialog_history = function(id,          // 'D936E1EB3F'
                                avatarName,  // 'lion'
@@ -15,14 +17,6 @@ var cyberDojo = (function(cd, $) {
                                nowTagParam, // 9   (1-based)
                                showRevert   // true
                               ) {
-
-    // Arguably, the history would be better as it own page rather
-    // than a dialog. That would help google searchability and
-    // analytics etc. I use a dialog because of revert.
-    // When revert is clicked it has to be for a specific
-    // animal and it has to revert their code! As a dialog,
-    // the revert has access to animal's code on the page
-    // from which the history-dialog opened.
 
     var currentFilename = '';
     var data = {
@@ -41,9 +35,6 @@ var cyberDojo = (function(cd, $) {
     var titleBar = function() {
       return $('#ui-dialog-title-history-dialog');
     };
-    var td = function(align,html) {
-      return '<td align="' + align + '">' + html + '</td>';
-    };
     
     //-------------------------------------------------------
     // < avatar > diff [x] traffic-lights << < tag > >>
@@ -53,7 +44,7 @@ var cyberDojo = (function(cd, $) {
       return '<table>' +
                '<tr valign="top">' +
                  cd.td(makeAvatarNavigationHtml()) +
-                 '<td id="title">diff</td>' +
+                 cd.td(makeDiffTitleHtml()) +
                  cd.td(makeDiffCheckboxHtml()) +
                  cd.td('<div id="traffic-lights"></div>') +
                  cd.td(makeTagNavigationHtml()) +
@@ -66,19 +57,17 @@ var cyberDojo = (function(cd, $) {
     //---------------------------------------------------
 
     var makeAvatarNavigationHtml = function() {
-      return '' +
-        '<table class="navigate-control">' +
-          '<tr valign="top">' +
-            td('right',  makeAvatarButtonHtml('prev')) +
-            td('center', makeAvatarImageHtml()) +
-            td('left',   makeAvatarButtonHtml('next')) +
-            cd.td('') +
-          '</tr>' +
-        '</table>';
+      return '<table class="navigate-control">' +
+               '<tr valign="top">' +
+                 td('right',  makeAvatarButtonHtml('prev')) +
+                 td('center', makeAvatarImageHtml()) +
+                 td('left',   makeAvatarButtonHtml('next')) +
+               '</tr>' +
+             '</table>';
     };
 
     //- - - - - - - - - - - - - - -
-
+    
     var makeAvatarButtonHtml = function(direction) {
       return '<button id="' + direction + '-avatar">' +
                 '<img src="/images/triangle_' + direction +'.gif"/>' +
@@ -90,6 +79,12 @@ var cyberDojo = (function(cd, $) {
     var makeAvatarImageHtml = function() {
       return '<img id="avatar"' +
                 ' src="/images/avatars/' + avatarName + '.jpg"/>';
+    };
+
+    //- - - - - - - - - - - - - - -
+    
+    var td = function(align,html) {
+      return '<td align="' + align + '">' + html + '</td>';
     };
 
     //- - - - - - - - - - - - - - -
@@ -137,6 +132,10 @@ var cyberDojo = (function(cd, $) {
     // diff [x]
     //---------------------------------------------------
 
+    var makeDiffTitleHtml = function() {
+      return '<div id="title">diff</div>';
+    };
+
     var makeDiffCheckboxHtml = function() {
       return '<input type="checkbox"' +
                    ' class="regular-checkbox"' +
@@ -177,8 +176,8 @@ var cyberDojo = (function(cd, $) {
         html +=
           "<div class='traffic-light'>" +
             "<img src='/images/traffic_light_" + light.colour + barGap + ".png'" +
-            " data-index='" + index + "'" +
-            " data-tag='" + light.number + "'/>" +
+                " data-index='" + index + "'" +
+                " data-tag='" + light.number + "'/>" +
           "</div>";
           index += 1;
       });
@@ -197,12 +196,6 @@ var cyberDojo = (function(cd, $) {
 
     var refreshTrafficLights = function() {
       trafficLights().html(makeTrafficLightsHtml(data.lights));
-      setupTrafficLightHandlers();
-    };
-
-    //- - - - - - - - - - - - - - -
-    
-    var setupTrafficLightHandlers = function() {
       $.each($('img[src$="_gap.png"]', titleBar()), function(_,light) {
         var index = $(this).data('index');
         var tag = $(this).data('tag');
@@ -217,16 +210,15 @@ var cyberDojo = (function(cd, $) {
     //---------------------------------------------------
 
     var makeTagNavigationHtml = function() {
-      return '' +
-        '<table class="navigate-control">' +
-          '<tr valign="top">' +
-            td('right',  makeTagButtonHtml('first')) +
-            td('right',  makeTagButtonHtml('prev')) +
-            td('center', makeNowTagNumberHtml()) +
-            td('left',   makeTagButtonHtml('next')) +
-            td('left',   makeTagButtonHtml('last')) +
-          '</tr>' +
-        '</table>';      
+      return '<table class="navigate-control">' +
+               '<tr valign="top">' +
+                 td('right',  makeTagButtonHtml('first')) +
+                 td('right',  makeTagButtonHtml('prev')) +
+                 td('center', makeNowTagNumberHtml()) +
+                 td('left',   makeTagButtonHtml('next')) +
+                 td('left',   makeTagButtonHtml('last')) +
+               '</tr>' +
+             '</table>';      
     };
 
     //- - - - - - - - - - - - - - -
@@ -298,8 +290,9 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var showNoDiff = function() {
-      data.wasTag = lastTag();
-      data.nowTag = lastTag();
+      var lastTag = -1;
+      data.wasTag = lastTag;
+      data.nowTag = lastTag;
       refresh();
     };
 
@@ -321,16 +314,13 @@ var cyberDojo = (function(cd, $) {
       var div = $('<div>', {
         'id': 'history-dialog'
       });      
-      var content  = '<div id="diff-content"></div>'        
-      var filenames = '<div id="diff-filenames"></div>';
-      var table = '' +
-        '<table>' +
-          '<tr valign="top">' +
-            '<td>' + content + '</td>' +
-            '<td>' + filenames + '</td>' +
-          '</tr>' +
-        '</table>';        
-      div.append(table);        
+      div.append(
+          '<table>' +
+            '<tr valign="top">' +
+              '<td><div id="diff-content"></div></td>' +
+              '<td><div id="diff-filenames"></div></td>' +
+            '</tr>' +
+          '</table>');
       return div;
     };
 
