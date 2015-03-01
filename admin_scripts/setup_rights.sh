@@ -13,7 +13,7 @@ setfacl -d -m group:www-data:rwx $cyberDojoHome/katas
 setfacl -m group:www-data:rwx $cyberDojoHome/katas
 
 # ensure pulled files have correct rights
-for folder in app config exercises languages lib log notes public script spec test
+for folder in admin_scripts app config exercises languages lib log notes public script spec test
 do
   echo "chown www-data:www-data ${folder}"
   chown -R www-data:www-data $cyberDojoHome/$folder

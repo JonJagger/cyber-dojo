@@ -17,9 +17,6 @@ On setup page, when you click [OK] put up a
 wait-cursor until the dojo is created and
 then switch the browser to home page.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-line 30 of pull.sh should name the admin_scripts folder?
-so it has chown -R run on it.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Make cyber-dojo free again. Smaller areas on left side but
 with larger font button text that opens a dialog which
 contains suggested amounts and a donate link
@@ -32,6 +29,11 @@ I ask users to follow me on twitter?!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Make Git.rb raise an exception if the git-command fails.
 Currently just returns a log string.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+languages/test_languages_manifests.rb
+What happens if "filename_extension" is not present.
+What if support_filenames mentions file that does not exist.
+What if visible_filenames mentions makefile but only makefile.txt exists.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
@@ -151,12 +153,7 @@ and marked too. File rename too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Increase number of avatars to 100. Olve is investigating.
 I can still keep the re-enter dialog, as a 10 x 10 grid
-but the animal images will need to be a lot smaller.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-languages/test_languages_manifests.rb
-What happens if "filename_extension" is not present.
-What if support_filenames mentions file that does not exist.
-What if visible_filenames mentions makefile but only makefile.txt exists.
+but the animal images will need to be smaller.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 While building support for C-CppUTest
 the cyber-dojo.sh file had non linux line-endings that caused problems.
