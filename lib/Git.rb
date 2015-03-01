@@ -44,13 +44,13 @@ private
   def cd_run(path, command, args)
     Dir.chdir(path) do
        git_cmd = stderr2stdout("git #{command} #{args}")
-       log = [ ]
-       IO.popen(git_cmd).each{ |line| log << line }.close
+       output = `#{git_cmd}` 
        status = $?.exitstatus
        if status != success
-         log = [ git_cmd ] << "FAILURE: $?.exitstatus=#{status}"
+         log = [git_cmd, output, "FAILURE: $?.exitstatus=#{status}"]
+         output = log.join('')
        end
-       clean(log.join(''))       
+       clean(output)       
     end    
   end
  
