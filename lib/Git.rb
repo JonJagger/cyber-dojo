@@ -10,11 +10,11 @@ class Git
   end
 
   def add(path, args)
-    cd_run(path,quoted(args))
+    cd_run(path,args)
   end
 
   def rm(path, args)
-    cd_run(path,quoted(args))
+    cd_run(path,args)
   end
 
   def commit(path, args)
@@ -44,14 +44,15 @@ private
   def cd_run(path, args)
     command = (caller[0] =~ /`([^']*)'/ and $1)
     Dir.chdir(path) do
-       git_cmd = stderr2stdout("git #{command} #{args}")
-       output = `#{git_cmd}` 
-       status = $?.exitstatus
-       if status != success
-         log = [git_cmd+"\n", output, "$?.exitstatus=#{status}"]
-         output = log.join('')
-       end
-       clean(output)       
+      args = quoted(args) if ['add','rm'].include?(command)
+      git_cmd = stderr2stdout("git #{command} #{args}")
+      output = `#{git_cmd}` 
+      status = $?.exitstatus
+      if status != success
+        log = [git_cmd+"\n", output, "$?.exitstatus=#{status}"]
+        output = log.join('')
+      end
+      clean(output)       
     end    
   end
  
