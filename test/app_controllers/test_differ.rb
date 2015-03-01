@@ -26,37 +26,20 @@ class DifferControllerTest < ControllerTestBase
   test 'no lines different in any files between successive tags' do
     @id = create_kata
     enter # 0
-
     filename = 'hiker.rb'
-    kata_run_tests :file_content => { #1
-        filename => 'wibble'
-      },
-      :file_hashes_incoming => {
-        filename => 234234
-      },
-      :file_hashes_outgoing => {
-        filename => -4545645678
-      }
-
-    kata_run_tests :file_content => { #2
-        filename => 'wibble'
-      },
-      :file_hashes_incoming => {
-        filename => -4545645678
-      },
-      :file_hashes_outgoing => {
-        filename => -4545645678
-      }
-
+    kata_run_tests file_content: { filename => 'wibble' }, #1
+      file_hashes_incoming: { filename => 234234 },
+      file_hashes_outgoing: { filename => -4545645678 }
+    kata_run_tests file_content: { filename => 'wibble' }, #2
+      file_hashes_incoming: { filename => -4545645678 },
+      file_hashes_outgoing: { filename => -4545645678 }
     was_tag = 1
     now_tag = 2
-    get 'differ/diff',
-      :format => :json,
-      :id => @id,
-      :avatar => @avatar_name,
-      :was_tag => was_tag,
-      :now_tag => now_tag
-
+    get 'differ/diff', :format => :json,
+                       id:@id,
+                       avatar:@avatar_name,
+                       was_tag:was_tag,
+                       now_tag:now_tag                      
     assert_response :success
     info = " " + @id + ":" + @avatar_name
 
@@ -84,37 +67,20 @@ class DifferControllerTest < ControllerTestBase
   test 'one line different in one file between successive tags' do
     @id = create_kata
     enter # 0
-
     filename = 'hiker.rb'
-    kata_run_tests :file_content => { #1
-        filename => 'tweedledee'
-      },
-      :file_hashes_incoming => {
-        filename => 234234
-      },
-      :file_hashes_outgoing => {
-        filename => -4545645678
-      }
-
-    kata_run_tests :file_content => { #2
-        filename => 'tweedledum'
-      },
-      :file_hashes_incoming => {
-        filename => -4545645678
-      },
-      :file_hashes_outgoing => {
-        filename => 654356
-      }
-
+    kata_run_tests file_content: { filename => 'tweedledee' },
+      file_hashes_incoming: { filename => 234234 },
+      file_hashes_outgoing: { filename => -4545645678 } #1
+    kata_run_tests file_content: { filename => 'tweedledum' },
+      file_hashes_incoming: { filename => -4545645678 },
+      file_hashes_outgoing: { filename => 654356 } #2
     was_tag = 1
     now_tag = 2
-    get 'differ/diff',
-      :format => :json,
-      :id => @id,
-      :avatar => @avatar_name,
-      :was_tag => was_tag,
-      :now_tag => now_tag
-
+    get 'differ/diff', :format => :json,
+                       id:@id,
+                       avatar:@avatar_name,
+                       was_tag:was_tag,
+                       now_tag:now_tag
     assert_response :success
     info = " " + @id + ':' + @avatar_name + ':'
 
@@ -145,16 +111,13 @@ class DifferControllerTest < ControllerTestBase
     enter     # 0
     any_test  # 1
     any_test  # 2
-
     was_tag = -1
     now_tag = -1
-    get 'differ/diff',
-      :format => :json,
-      :id => @id,
-      :avatar => @avatar_name,
-      :was_tag => was_tag,
-      :now_tag => now_tag
-
+    get 'differ/diff', :format => :json,
+                       id:@id,
+                       avatar:@avatar_name,
+                       was_tag:was_tag,
+                       now_tag:now_tag
     assert_equal 2, json['wasTag']
     assert_equal 2, json['nowTag']
   end
@@ -165,14 +128,11 @@ class DifferControllerTest < ControllerTestBase
     @id = create_kata
     enter     # 0
     any_test  # 1
-
-    get 'differ/diff',
-      :format => :json,
-      :id => @id,
-      :avatar => @avatar_name,
-      :was_tag => 0,
-      :now_tag => 1
-
+    get 'differ/diff', :format => :json,
+                       id:@id,
+                       avatar:@avatar_name,
+                       was_tag:0,
+                       now_tag:1
     assert_equal "", json['prevAvatar']
     assert_equal "", json['nextAvatar']
   end
@@ -181,20 +141,15 @@ class DifferControllerTest < ControllerTestBase
 
   test 'nextAvatar and prevAvatar for dojo with two avatars' do
     @id = create_kata
-
     firstAvatar = enter # 0
     any_test  # 1
-
     secondAvatar = enter # 0
     any_test  # 1
-
-    get 'differ/diff',
-      :format => :json,
-      :id => @id,
-      :avatar => firstAvatar,
-      :was_tag => 0,
-      :now_tag => 1
-
+    get 'differ/diff', :format => :json,
+                       id:@id,
+                       avatar:firstAvatar,
+                       was_tag:0,
+                       now_tag:1
     assert_equal secondAvatar, json['prevAvatar']
     assert_equal secondAvatar, json['nextAvatar']
   end

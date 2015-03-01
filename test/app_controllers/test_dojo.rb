@@ -12,7 +12,7 @@ class DojoControllerTest < ControllerTestBase
 
   test 'index with id' do
     stub_setup
-    get 'dojo/index', :id => '1234512345'
+    get 'dojo/index', id:'1234512345'
     assert_response :success
   end
 
@@ -117,11 +117,11 @@ class DojoControllerTest < ControllerTestBase
   end
 
   def check_id
-    get 'dojo/check', :format => :json, :id => @id
+    get 'dojo/check', :format => :json, id:@id
   end
 
   def re_enter
-    get 'dojo/re_enter', :format => :json, :id => @id
+    get 'dojo/re_enter', :format => :json, id:@id
   end
 
   def empty?

@@ -58,32 +58,31 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   def stub_kata(id, language_name, exercise_name)
     kata = @dojo.katas[id]
     kata.dir.write('manifest.json', {
-      :language => language_name,
-      :exercise => exercise_name
+      language:language_name,
+      exercise:exercise_name
     })
   end
 
   def create_kata(language_name = 'Ruby-TestUnit',
                   exercise_name = 'Yatzy')
     get 'setup/save',
-      :language => language_name.split('-')[0],
-      :test => language_name.split('-')[1],
-      :exercise => exercise_name
-
+      language:language_name.split('-')[0],
+      test:language_name.split('-')[1],
+      exercise:exercise_name
     json['id']
   end
 
   def enter
     if @id.nil?
-      get 'dojo/enter', :format => :json
+      get 'dojo/enter', format: :json
     else
-      get 'dojo/enter', :format => :json, :id => @id
+      get 'dojo/enter', format: :json, id:@id
     end
     @avatar_name = avatar_name
   end
 
   def kata_edit
-    get 'kata/edit', :id => @id, :avatar => @avatar_name
+    get 'kata/edit', id:@id, avatar:@avatar_name
     assert_response :success
   end
 
@@ -92,15 +91,10 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   end
   
   def any_test
-    kata_run_tests :file_content => {
-        'cyber-dojo.sh' => ''
-      },
-      :file_hashes_incoming => {
-        'cyber-dojo.sh' => 234234
-      },
-      :file_hashes_outgoing => {
-        'cyber-dojo.sh' => -4545645678
-      }
+    kata_run_tests(
+      file_content:         { 'cyber-dojo.sh' => '' },
+      file_hashes_incoming: { 'cyber-dojo.sh' => 234234 },
+      file_hashes_outgoing: { 'cyber-dojo.sh' => -4545645678 })
   end
 
   def kata_run_tests(hash)
