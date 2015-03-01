@@ -52,9 +52,6 @@ app_controller tests can all use DiskFake DirFake
  DONE test_dashboard
  DONE test_setup
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-lib/Git.rb has this at line 59 which looks wrong...
-      log << "output=#{log}"
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dojo.rb Katas.rb Kata.rb
 Do I use kata as a noun (the name of the exercise) 
 or kata as a verb (the exercise performed by an animal).
@@ -62,7 +59,6 @@ I think I prefer the former.  When you click [ok] on
 the setup page you get a folder corresponding to the
 ID but no animal has entered it yet. You could be 
 setting up something days in advance of needing it.
-
 Should have been
 Dojo.rb -> CyberDojo.rb
 Katas.rb -> Dojos.rb
@@ -72,14 +68,6 @@ Also Exercses.rb -> Katas.rb
 and cyber-dojo/katas/  -> cyber-dojo/dojos
 Is the latter too big a change to make?
 On setup page could also change exercises? to kata?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Can't run the tests on the Macbook pro (but can run a rails server).
-Write a script to edit the rights of the cyber-dojo folder
-(chown/chmod/sefacl). Run this from pull.sh?
-I think this is also causing one of the steps when setting
-up a digital-ocean server to appear to fail.
-Might be worth trying to automate adding the current user
-to the www-data group.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I think its quite likely I'll have two C++ compilers at
 some point - one for g++ and one for clang. 
