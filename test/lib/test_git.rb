@@ -18,17 +18,18 @@ class GitTests < LibTestBase
     @path
   end
   
-  test 'git with no arguments returns externally set :git object' do
-    assert_equal 'Git', git.class.name
+  test '[git] with no arguments returns externally set :git object' do
+    object = git
+    assert_equal 'Git', object.class.name
   end
 
-  test 'git init raises exception if dir does not exist' do
+  test '[git init] raises if dir does not exist' do
     set_path 'bad_dir'
-    error = assert_raises(RuntimeError) { git(:init,'') }
-    assert error.message.start_with?("Cannot `cd #{path}")
+    error = assert_raises(Errno::ENOENT) { git(:init,'') }
+    assert error.message.start_with?("No such file or directory")
   end
 
-  test 'git init initialized an empty repository in the callers path' do
+  test '[git init] initializes an empty repository in the callers path' do
     message = ok { git(:init,'') }
     assert message.end_with?("empty Git repository in #{path}.git/\n")
     uk_git_init_message = message.start_with?('Initialised');
@@ -43,15 +44,13 @@ class GitTests < LibTestBase
     assert log.include?("FAILURE: $?.exitstatus=128")
   end
     
-  test 'git add succeeds silently' do
+  test '[git add] succeeds silently' do
     ok { git(:init, '') }
     write_file
     silent_ok { git(:add, filename) }
-    status = `cd #{path};git status`
-    assert status.include?("new file:   #{filename}")
   end
 
-  test 'git commit' do
+  test '[git commit] succeeds non-silently' do
     ok { git(:init, '') }
     write_file
     ok { git(:add, filename) }
@@ -59,7 +58,7 @@ class GitTests < LibTestBase
     assert message.include?("create mode 100644 #{filename}")
   end
 
-  test 'git rm' do
+  test '[git rm] succeeds non-silently' do
     ok { git(:init, '') }
     write_file
     ok { git(:add, filename) }
@@ -68,7 +67,7 @@ class GitTests < LibTestBase
     assert message.start_with?("rm '#{filename}'")
   end
 
-  test 'git show tag:filename is content of filename for that tag' do
+  test '[git show tag:filename] is content of filename for that tag' do
     ok { git(:init, '') }
     content = 'greetings'
     write_file(content)
@@ -79,7 +78,7 @@ class GitTests < LibTestBase
     assert_equal content, message
   end
 
-  test 'git diff was_tag now_tag is raw git diff output' do
+  test '[git diff was_tag now_tag] is raw git diff output' do
     ok { git(:init, '') }
     old_content = 'aaaaa'
     write_file(old_content)
@@ -96,21 +95,22 @@ class GitTests < LibTestBase
     assert diff.include?("diff --git a/#{filename} b/#{filename}")
     assert diff.include?("--- a/#{filename}")
     assert diff.include?("+++ b/#{filename}")
-    minus,plus = '-','+'
-    assert diff.include?(minus + old_content)
-    assert diff.include?(plus  + new_content)
+    assert diff.include?('-' + old_content)
+    assert diff.include?('+' + new_content)
   end
 
-  test 'git config succeeds silently' do
+  test '[git config] succeeds silently' do
     ok { git(:init, '') }
     silent_ok { git(:config, 'user.name Fred Flintsone') }
   end
 
-  test 'git gc succeeds silently' do
+  test '[git gc] succeeds silently' do
     ok { git(:init, '') }
     silent_ok { git(:gc, '--auto --quiet') }
   end
   
+  # - - - - - - - - - - - - - - - - - -
+
   def ok(&block)
     message = block.call
     assert_equal 0, $?.exitstatus

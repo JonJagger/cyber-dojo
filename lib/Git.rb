@@ -2,9 +2,6 @@
 class Git
 
   def init(path, args)
-    if !File.directory?(path)
-      raise "Cannot `cd #{path};git init` because #{path} does not exist"
-    end
     cd_run(path, 'init', args)
   end
 
@@ -45,24 +42,20 @@ private
   include Cleaner
 
   def cd_run(path, command, args)
-    cd_cmd = "cd #{path}"
-    git_cmd = "git #{command} #{args}"
-    cmds = [cd_cmd,git_cmd].map{ |cmd| stderr2stdout(cmd) }.join(shell_separator)
-    log = [ ]
-    IO.popen(cmds).each{ |line| log << line }.close
-    status = $?.exitstatus
-    if status != success
-      log = [ cmds ] << "FAILURE: $?.exitstatus=#{status}"
-    end
-    clean(log.join(''))
+    Dir.chdir(path) do
+       git_cmd = stderr2stdout("git #{command} #{args}")
+       log = [ ]
+       IO.popen(git_cmd).each{ |line| log << line }.close
+       status = $?.exitstatus
+       if status != success
+         log = [ git_cmd ] << "FAILURE: $?.exitstatus=#{status}"
+       end
+       clean(log.join(''))       
+    end    
   end
-
+ 
   def stderr2stdout(cmd)
     cmd + ' ' + '2>&1'
-  end
-
-  def shell_separator
-    ';'
   end
 
   def success
