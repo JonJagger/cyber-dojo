@@ -36,22 +36,23 @@ class DifferControllerTest < ControllerTestBase
     assert_equal 'amber', now_light['colour'], info
     assert_equal @now_tag, now_light['number'], info
     diffs = json['diffs']
-    assert_equal filename, diffs[0]['filename'], info
-    assert_equal 0, diffs[0]['section_count'], info
-    assert_equal 0, diffs[0]['deleted_line_count'], info
-    assert_equal 0, diffs[0]['added_line_count'], info
-    assert_equal '<same>wibble</same>', diffs[0]['content'], info
-    assert_equal '<same><ln>1</ln></same>', diffs[0]['line_numbers'], info
+    index = diffs.find_index{|diff| diff['filename'] == filename }    
+    assert_equal filename, diffs[index]['filename'], info
+    assert_equal 0, diffs[index]['section_count'], info
+    assert_equal 0, diffs[index]['deleted_line_count'], info
+    assert_equal 0, diffs[index]['added_line_count'], info
+    assert_equal '<same>wibble</same>', diffs[index]['content'], info
+    assert_equal '<same><ln>1</ln></same>', diffs[index]['line_numbers'], info
   end
 
   test 'one line different in one file between successive tags' do
     @id = create_kata
     enter # 0
     filename = 'hiker.rb'
-    kata_run_tests file_content: { filename => 'tweedledee' },
+    kata_run_tests file_content: { filename => 'def fubar' },
       file_hashes_incoming: { filename => 234234 },
       file_hashes_outgoing: { filename => -4545645678 } #1
-    kata_run_tests file_content: { filename => 'tweedledum' },
+    kata_run_tests file_content: { filename => 'def snafu' },
       file_hashes_incoming: { filename => -4545645678 },
       file_hashes_outgoing: { filename => 654356 } #2
     @was_tag,@now_tag = 1,2
@@ -65,13 +66,15 @@ class DifferControllerTest < ControllerTestBase
     assert_equal 'amber', now_light['colour'], info
     assert_equal @now_tag, now_light['number'], info
     diffs = json['diffs']
-    assert_equal filename, diffs[0]['filename'], info + "diffs[0]['filename']"
-    assert_equal 1, diffs[0]['section_count'], info + "diffs[0]['section_count']"
-    assert_equal 1, diffs[0]['deleted_line_count'], info + "diffs[0]['deleted_line_count']"
-    assert_equal 1, diffs[0]['added_line_count'], info + "diffs[0]['added_line_count']"
-    assert diffs[0]['content'].include?('<deleted>tweedledee</deleted>')
-    assert diffs[0]['content'].include?('<added>tweedledum</added>')
-    assert_equal '<deleted><ln>1</ln></deleted><added><ln>1</ln></added>', diffs[0]['line_numbers'], info + "diffs[0]['line_numbers']"
+    index = diffs.find_index{|diff| diff['filename'] == filename }
+    assert_equal filename, diffs[index]['filename'], info + "diffs[#{index}]['filename']"
+    assert_equal 1, diffs[index]['section_count'], info + "diffs[#{index}]['section_count']"
+    assert_equal 1, diffs[index]['deleted_line_count'], info + "diffs[#{index}]['deleted_line_count']"
+    assert_equal 1, diffs[index]['added_line_count'], info + "diffs[#{index}]['added_line_count']"
+    assert diffs[index]['content'].include?('<deleted>def fubar</deleted>')
+    assert diffs[index]['content'].include?('<added>def snafu</added>')
+    assert_equal '<deleted><ln>1</ln></deleted><added><ln>1</ln></added>', 
+        diffs[index]['line_numbers'], info + "diffs[0]['line_numbers']"
   end
 
   test 'tag -1 gives last traffic-light' do
@@ -102,11 +105,8 @@ class DifferControllerTest < ControllerTestBase
     secondAvatar = enter # 0
     any_test  # 1
     @was_tag,@now_tag = 0,1
-    get 'differ/diff', :format => :json,
-                       id:@id,
-                       avatar:firstAvatar,
-                       was_tag:@was_tag,
-                       now_tag:@now_tag
+    @avatar_name = firstAvatar
+    differ
     assert_equal secondAvatar, json['prevAvatar']
     assert_equal secondAvatar, json['nextAvatar']
   end
