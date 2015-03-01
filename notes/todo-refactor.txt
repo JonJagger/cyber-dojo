@@ -24,6 +24,9 @@ put something mentioning me.
 How about making cyber-dojo 'follow-ware'
 I ask users to follow me on twitter?!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Make Git.rb raise an exception if the git-command fails.
+Currently just returns a log string.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
