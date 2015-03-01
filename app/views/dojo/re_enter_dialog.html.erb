@@ -1,6 +1,7 @@
 
 <div>
   <table class="align-center">
+    <% started_count = 0 %>
     <% index = 0 %>
     <% size = 60 %>
     <% (1..4).each do %>
@@ -9,6 +10,7 @@
       <td class="panel">
         <% avatar_name = @all_avatar_names[index] %>
         <% if @started_avatar_names.include?(avatar_name) %>
+          <% started_count += 1 %>
           <img onclick='return cd.reEnter("<%= @id %>","<%= avatar_name %>");'
                src="/images/avatars/<%= avatar_name %>.jpg"
                title="<%= avatar_name %>"
@@ -26,5 +28,11 @@
     </tr>
     <% end %>
   </table>
-  <div class="align-center small">click the animal</div>
+  <div class="align-center small">
+    <% if started_count === 0 %>
+      no one has entered!
+    <% else %>    
+      click the animal
+    <% end %>
+  </div>
 </div>

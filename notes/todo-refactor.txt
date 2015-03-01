@@ -1,4 +1,5 @@
 
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 history diff dialog - the fork button has the focus.
 Change it so the next tag button has the focus.
@@ -6,6 +7,11 @@ Change it so the next tag button has the focus.
 controllers are getting fat. Make them a lot skinnier.
 Possibly by doing an include so scope is same and @ vars
 are still available. Will help testing too.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Also make base application_controller.rb skinner by
+cutting out things it doesn't need. See
+https://www.amberbit.com/blog/2014/2/14/putting-ruby-on-rails-on-a-diet/
+https://github.com/rails/rails/blob/master/actionpack/lib/action_controller/base.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 On setup page, when you click [OK] put up a 
 wait-cursor until the dojo is created and
@@ -253,15 +259,8 @@ Would be good if the dashboard graphed the execution time.
 Server could record time before starting cyber-dojo.sh execution
 and time it finished and hence duration.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Re-enter dialog needs to change its bottom text if no animals
-have yet started
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 put animal images on front page?
 Put the ones that are in the dojo (with the entered id)
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-http://localhost:3000/kata/edit/0B416E9012?avatar=zebra
-could be simplified to
-http://localhost:3000/zebra/edit/0B416E9012
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Create helper function to execute a backtick command
 with stderr redirected to output, from a given folder.
@@ -291,11 +290,6 @@ short period of time would mean no dojos get lost during the
 transition. Nick mentioned an elastic? IP address which allows
 the same IP address to be set from the Amazon console, but for
 the server underneath it to be switched.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-use scrollIntoView() for
-  traffic-lights on top line on test page?
-  traffic-lights on top line of dashboard page?
-  select diff chunk appears on history dialog?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 progress. Could this be made into a separate regex that can
 extract numbers when used on the output. If so I could replay
@@ -334,20 +328,11 @@ blog.cyber-dojo.org
 docker info (1.3.1)
   WARNING: No swap limit support
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-history.css.scss
-  #diff-controls has absolute positioning.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 check event handlers have event.preventDefault()
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 check dialog() uses remove() and not close()
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cyber-dojo.org could have adverts for software tools etc.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Internet Explorer popup should come from all the home page buttons.
-And perhaps mention it on footer too.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-aim to minimize server-load. Put as much as possible onto
-blog. Eg help pages, videos, etc. Helps google analytics too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dashboard - when user clicks auto-refresh off
 that could be the event that causes the checkboxes for each
@@ -502,11 +487,6 @@ rename Dojo.rb to CyberDojo.rb ?
   What about tests? Is it simpler to substitute a different
   max-duration as a parameter? I think so.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  kata.avatars['lion'].tag[4]
-    handy shortcut for this could be
-  kata.lion.tag[4]
-    only really useful in testing?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   There should be a dependency on the language manifest file
   only for startup. Once started a kata should have a *copy* of
   the manifest. Eg, I edit the manifest's highlight_filenames settings
@@ -521,10 +501,6 @@ rename Dojo.rb to CyberDojo.rb ?
   ...
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   Exception_controller_test.rb needs some assertions!
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  Rename css file,
-    diff->diff_dialog
-    don't forget to update application.css.scss
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   It would be simpler if output and instructions were not mixed
   into kata.language and avatar.setup did an explicit
@@ -542,17 +518,6 @@ traffic-light but the output you get back gets stuck and does
 not reflect edits made to the files. A work-around when this happens
 is to reopen the URL in a new tab.
 -----
-On my Mac (10.7.4) using Firefox (18.0.1) using a local server
-(http://localhost:3000) when you load a file and move the cursor
-position using the mouse-pad then the texarea becomes readonly
-(and the mac beeps at me)????
-Repeatable on the cyber-dojo live server in Firefox.
-Doesn't happen on Chrome on my Mac.
-Doesn't happen on Safari on my Mac.
-Doesn't happen on Opera on my Mac.
-Doesn't happen on Jakub's mac using Firefox.
-Seems to be a problem local to me.
-------------
 It would be simpler if output and instructions were not mixed
 into kata.language and avatar.setup did an explicit
 save(kata.exercise.instructions)
@@ -590,11 +555,7 @@ in the diff view, long lines no longer get truncated but the scrolled
   in place like they do in the main edit-test page.
 -----
 put a readme.txt file into the kata's root folder explaining
-  how to do diffs on the unzipped zip.
------
-add help button (screen cast?) for diff page
------
-add help button (screen cast?) for dashboard page
+  how to do diffs on the unzipped zip?
 -----
 commonality in dialogs with only ok button? with only cancel button?
 -----
