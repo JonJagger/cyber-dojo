@@ -4,7 +4,9 @@ module ExternalGit # mixin
   def git(*args)
     g = external(:git)
     return g if args.length === 0
-    g.send(args[0], path, args[1])
+    command = args[0]
+    options = args[1]
+    g.send(command, path, options)
   end
 
 private
