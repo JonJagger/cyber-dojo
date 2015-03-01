@@ -16,8 +16,9 @@ class TipperControllerTest < ControllerTestBase
     assert_response :success
   end
 
-=begin
   test 'traffic_light_count_tip' do
+    @id = create_kata    
+    1.times { enter; }    
     get 'tipper/traffic_light_count_tip', 
       format: :js, 
       avatar: @avatar_name,
@@ -29,6 +30,5 @@ class TipperControllerTest < ControllerTestBase
       timed_out_count: 0
     assert_response :success
   end
-=end
       
 end
