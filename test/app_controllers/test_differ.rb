@@ -33,25 +33,24 @@ class DifferControllerTest < ControllerTestBase
     kata_run_tests file_content: { filename => 'wibble' }, #2
       file_hashes_incoming: { filename => -4545645678 },
       file_hashes_outgoing: { filename => -4545645678 }
-    was_tag = 1
-    now_tag = 2
+    @was_tag,@now_tag = 1,2
     get 'differ/diff', :format => :json,
                        id:@id,
                        avatar:@avatar_name,
-                       was_tag:was_tag,
-                       now_tag:now_tag                      
+                       was_tag:@was_tag,
+                       now_tag:@now_tag                      
     assert_response :success
     info = " " + @id + ":" + @avatar_name
 
     lights = json['lights']
 
-    was_light = lights[was_tag-1]
+    was_light = lights[@was_tag-1]
     assert_equal 'amber', was_light['colour'], info
-    assert_equal was_tag, was_light['number'], info
+    assert_equal @was_tag, was_light['number'], info
 
-    now_light = lights[now_tag-1]
+    now_light = lights[@now_tag-1]
     assert_equal 'amber', now_light['colour'], info
-    assert_equal now_tag, now_light['number'], info
+    assert_equal @now_tag, now_light['number'], info
 
     diffs = json['diffs']
     assert_equal filename, diffs[0]['filename'], info
@@ -74,25 +73,24 @@ class DifferControllerTest < ControllerTestBase
     kata_run_tests file_content: { filename => 'tweedledum' },
       file_hashes_incoming: { filename => -4545645678 },
       file_hashes_outgoing: { filename => 654356 } #2
-    was_tag = 1
-    now_tag = 2
+    @was_tag,@now_tag = 1,2
     get 'differ/diff', :format => :json,
                        id:@id,
                        avatar:@avatar_name,
-                       was_tag:was_tag,
-                       now_tag:now_tag
+                       was_tag:@was_tag,
+                       now_tag:@now_tag
     assert_response :success
     info = " " + @id + ':' + @avatar_name + ':'
 
     lights = json['lights']
 
-    was_light = lights[was_tag-1]
+    was_light = lights[@was_tag-1]
     assert_equal 'amber', was_light['colour'], info
-    assert_equal was_tag, was_light['number'], info
+    assert_equal @was_tag, was_light['number'], info
 
-    now_light = lights[now_tag-1]
+    now_light = lights[@now_tag-1]
     assert_equal 'amber', now_light['colour'], info
-    assert_equal now_tag, now_light['number'], info
+    assert_equal @now_tag, now_light['number'], info
 
     diffs = json['diffs']
     assert_equal filename, diffs[0]['filename'], info + "diffs[0]['filename']"
@@ -111,13 +109,12 @@ class DifferControllerTest < ControllerTestBase
     enter     # 0
     any_test  # 1
     any_test  # 2
-    was_tag = -1
-    now_tag = -1
+    @was_tag,@now_tag = -1,-1
     get 'differ/diff', :format => :json,
                        id:@id,
                        avatar:@avatar_name,
-                       was_tag:was_tag,
-                       now_tag:now_tag
+                       was_tag:@was_tag,
+                       now_tag:@now_tag
     assert_equal 2, json['wasTag']
     assert_equal 2, json['nowTag']
   end
@@ -128,11 +125,12 @@ class DifferControllerTest < ControllerTestBase
     @id = create_kata
     enter     # 0
     any_test  # 1
+    @was_tag,@now_tag = 0,1
     get 'differ/diff', :format => :json,
                        id:@id,
                        avatar:@avatar_name,
-                       was_tag:0,
-                       now_tag:1
+                       was_tag:@was_tag,
+                       now_tag:@now_tag
     assert_equal "", json['prevAvatar']
     assert_equal "", json['nextAvatar']
   end
@@ -145,11 +143,12 @@ class DifferControllerTest < ControllerTestBase
     any_test  # 1
     secondAvatar = enter # 0
     any_test  # 1
+    @was_tag,@now_tag = 0,1
     get 'differ/diff', :format => :json,
                        id:@id,
                        avatar:firstAvatar,
-                       was_tag:0,
-                       now_tag:1
+                       was_tag:@was_tag,
+                       now_tag:@now_tag
     assert_equal secondAvatar, json['prevAvatar']
     assert_equal secondAvatar, json['nextAvatar']
   end
