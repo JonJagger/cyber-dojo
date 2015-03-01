@@ -35,6 +35,7 @@ Currently just returns a log string.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Try putting set_external() calls into config/initializers/externals.rb
 Check if this works on a Passenger startup
@@ -52,14 +53,14 @@ Rename external(:runner) to external(:test_runner) ?
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 app_controller tests can all use DiskFake DirFake
- TODO test_dojo
- TODO test_differ
- TODO test_reverter
- NA   test_download
- ??   test_exception_controller
- DONE test_forker
- DONE test_dashboard
- DONE test_setup
+ TODO test_differ    2.32s
+ TODO test_reverter  0.40s
+ NA   test_download  0.00s
+ ??   test_exception_controller 0.00s
+ DONE test_dojo      0.52s
+ DONE test_forker    0.19s
+ DONE test_dashboard 0.72s
+ DONE test_setup     0.16s
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dojo.rb Katas.rb Kata.rb
 Do I use kata as a noun (the name of the exercise) 
