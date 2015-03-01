@@ -47,7 +47,7 @@ private
        output = `#{git_cmd}` 
        status = $?.exitstatus
        if status != success
-         log = [git_cmd, output, "FAILURE: $?.exitstatus=#{status}"]
+         log = [git_cmd+"\n", output, "$?.exitstatus=#{status}"]
          output = log.join('')
        end
        clean(output)       

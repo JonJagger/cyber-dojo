@@ -18,15 +18,19 @@ class GitTests < LibTestBase
     @path
   end
   
-  test '[git] with no arguments returns externally set :git object' do
+  test '[git] with no arguments returns ' +
+       'externally set :git object ' +
+       'which is used by other tests' do
     object = git
     assert_equal 'Git', object.class.name
   end
 
-  test '[git init] raises if dir does not exist' do
+  test 'all git commands raise if dir does not exist' do
     set_path 'bad_dir'
-    error = assert_raises(Errno::ENOENT) { git(:init,'') }
-    assert error.message.start_with?("No such file or directory")
+    [:init,:config,:add,:rm,:commit,:gc,:tag,:show,:diff].each do |cmd|
+      error = assert_raises(Errno::ENOENT) { git(cmd,'') }
+      assert error.message.start_with?("No such file or directory")
+    end
   end
 
   test '[git init] initializes an empty repository in the callers path' do
@@ -37,11 +41,17 @@ class GitTests < LibTestBase
     assert uk_git_init_message || us_git_init_message
   end
 
-  test 'git command with bad options returns log of command+failure_message' do
+  test '[git config] succeeds silently' do
+    ok { git(:init, '') }
+    silent_ok { git(:config, 'user.name Fred Flintsone') }
+  end
+
+  test 'git command with bad options returns log of command+message+status' do
     ok { git(:init, '') }
     log = fails { git(:add, 'not-there-file.txt') }
     assert log.include?("git add 'not-there-file.txt")
-    assert log.include?("FAILURE: $?.exitstatus=128")
+    assert log.include?('fatal: pathspec')
+    assert log.include?("$?.exitstatus=128")
   end
     
   test '[git add] succeeds silently' do
@@ -97,11 +107,6 @@ class GitTests < LibTestBase
     assert diff.include?("+++ b/#{filename}")
     assert diff.include?('-' + old_content)
     assert diff.include?('+' + new_content)
-  end
-
-  test '[git config] succeeds silently' do
-    ok { git(:init, '') }
-    silent_ok { git(:config, 'user.name Fred Flintsone') }
   end
 
   test '[git gc] succeeds silently' do
