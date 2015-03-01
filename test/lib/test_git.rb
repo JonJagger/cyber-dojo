@@ -35,10 +35,10 @@ class GitTests < LibTestBase
 
   test '[git init] initializes an empty repository in the callers path' do
     message = ok { git(:init,'') }
-    assert message.end_with?("empty Git repository in #{path}.git/\n")
     uk_git_init_message = message.start_with?('Initialised');
     us_git_init_message = message.start_with?('Initialized');
     assert uk_git_init_message || us_git_init_message
+    assert message.end_with?("empty Git repository in #{path}.git/\n")
   end
 
   test '[git config] succeeds silently' do
