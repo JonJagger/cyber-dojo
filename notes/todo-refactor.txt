@@ -35,6 +35,15 @@ What happens if "filename_extension" is not present.
 What if support_filenames mentions file that does not exist.
 What if visible_filenames mentions makefile but only makefile.txt exists.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+test/app_controllers with duplicate
+    kata_run_tests file_content:         { filename => '#include...' }, #1
+                   file_hashes_incoming: { filename => 234234 },
+                   file_hashes_outgoing: { filename => -4545645678 }
+test_differ.rb
+test_kata.rb
+test_reverter.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
 
 

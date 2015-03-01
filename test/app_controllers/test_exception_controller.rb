@@ -18,10 +18,10 @@ class ExceptionControllerTests < ControllerTestBase
 
 =begin
   # these pass when run
-  #   $ruby exception_controller_tests.rb
-  #   ./run_one.sh exception_controller_tests.rb
+  #   $./test_exception_controller.rb
+  #   ./run_one.sh test_exception_controller.rb
   # but not when run
-  #   ./run_all.sh exception_controller_tests.rb
+  #   ./run_all.sh test_exception_controller.rb
   # ??
 
   test "bad path" do
