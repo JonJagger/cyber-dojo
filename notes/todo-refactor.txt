@@ -14,8 +14,6 @@ then switch the browser to home page.
 line 30 of pull.sh should name the admin_scripts folder?
 so it has chown -R run on it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Rename external(:runner) to external(:test_runner) ?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Make cyber-dojo free again. Smaller areas on left side but
 with larger font button text that opens a dialog which
 contains suggested amounts and a donate link
@@ -26,9 +24,23 @@ put something mentioning me.
 How about making cyber-dojo 'follow-ware'
 I ask users to follow me on twitter?!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Try putting set_external() calls into config/initializers/externals.rb
 Check if this works on a Passenger startup
-Chek if works on local server too
+Check if works on local server too
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+The only line the controller tests do not cover is the one
+to set the runner to DummyTestRunner. If Docker is installed
+there is no way to use the DummyTestRunner. Perhaps I should
+move the decision of what runner to use right out to the 
+shell where an environment variable names the runner.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Rename external(:runner) to external(:test_runner) ?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 app_controller tests can all use DiskFake DirFake
  TODO test_dojo
@@ -40,8 +52,18 @@ app_controller tests can all use DiskFake DirFake
  DONE test_dashboard
  DONE test_setup
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+lib/Git.rb has this at line 59 which looks wrong...
+      log << "output=#{log}"
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dojo.rb Katas.rb Kata.rb
-These are poorly named. Should have been
+Do I use kata as a noun (the name of the exercise) 
+or kata as a verb (the exercise performed by an animal).
+I think I prefer the former.  When you click [ok] on 
+the setup page you get a folder corresponding to the
+ID but no animal has entered it yet. You could be 
+setting up something days in advance of needing it.
+
+Should have been
 Dojo.rb -> CyberDojo.rb
 Katas.rb -> Dojos.rb
 Kata.rb -> Dojo.rb

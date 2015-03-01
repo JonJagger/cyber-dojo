@@ -20,8 +20,8 @@ private
   end
 
   def pathed(symbol,object)
-    if symbol.to_s.end_with?('_path')
-      object += '/' if !object.end_with?('/')      
+    if symbol.to_s.end_with? '_path'
+      object += '/' if !object.end_with? '/'
     end
     object
   end
