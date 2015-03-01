@@ -45,9 +45,7 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
 
   def stub_language(language_name, unit_test_framework)
     language = @dojo.languages[language_name]
-    language.dir.write('manifest.json', {
-        'unit_test_framework' => unit_test_framework
-    })
+    language.dir.write('manifest.json', { 'unit_test_framework' => unit_test_framework })
   end
 
   def stub_exercise(exercise_name)
@@ -57,18 +55,15 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
 
   def stub_kata(id, language_name, exercise_name)
     kata = @dojo.katas[id]
-    kata.dir.write('manifest.json', {
-      language:language_name,
-      exercise:exercise_name
-    })
+    kata.dir.write('manifest.json', { language:language_name,
+                                      exercise:exercise_name })
   end
 
   def create_kata(language_name = 'Ruby-TestUnit',
                   exercise_name = 'Yatzy')
-    get 'setup/save',
-      language:language_name.split('-')[0],
-      test:language_name.split('-')[1],
-      exercise:exercise_name
+    get 'setup/save', language:language_name.split('-')[0],
+                      test:language_name.split('-')[1],
+                      exercise:exercise_name
     json['id']
   end
 
@@ -91,17 +86,15 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   end
   
   def any_test
-    kata_run_tests(
-      file_content:         { 'cyber-dojo.sh' => '' },
-      file_hashes_incoming: { 'cyber-dojo.sh' => 234234 },
-      file_hashes_outgoing: { 'cyber-dojo.sh' => -4545645678 })
+    filename = 'cyber-dojo.sh'
+    kata_run_tests(file_content:         { filename => '' },
+                   file_hashes_incoming: { filename => 234234 },
+                   file_hashes_outgoing: { filename => -4545645678 })
   end
 
   def kata_run_tests(hash)
-    hash[:format] = :js
-    hash[:id] = @id
-    hash[:avatar] = @avatar_name
-    post 'kata/run_tests', hash
+    defaults = { :format=>:js, :id=>@id, :avatar=>@avatar_name }
+    post 'kata/run_tests', hash.merge(defaults)
   end
 
   def avatar_name
