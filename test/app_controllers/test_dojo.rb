@@ -79,7 +79,7 @@ class DojoControllerTest < ControllerTestBase
     enter
     assert !empty?
     assert !full?
-    assert_not_nil avatar_name
+    assert Avatars.names.include?(avatar_name)
   end
 
   test 'enter succeeds once for each avatar name, then dojo is full' do
@@ -118,10 +118,12 @@ class DojoControllerTest < ControllerTestBase
 
   def check_id
     get 'dojo/check', :format => :json, id:@id
+    assert_response :success    
   end
 
   def re_enter
     get 'dojo/re_enter', :format => :json, id:@id
+    assert_response :success    
   end
 
   def empty?
