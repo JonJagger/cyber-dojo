@@ -19,12 +19,12 @@ class DifferControllerTest < ControllerTestBase
     @id = create_kata
     enter # 0
     filename = 'hiker.c'
-    kata_run_tests file_content: { filename => '#include...' }, #1
-      file_hashes_incoming: { filename => 234234 },
-      file_hashes_outgoing: { filename => -4545645678 }
-    kata_run_tests file_content: { filename => 'wibble' }, #2
-      file_hashes_incoming: { filename => -4545645678 },
-      file_hashes_outgoing: { filename => -4545645678 }
+    kata_run_tests file_content:         { filename => '#include...' }, #1
+                   file_hashes_incoming: { filename => 234234 },
+                   file_hashes_outgoing: { filename => -4545645678 }
+    kata_run_tests file_content:         { filename => 'wibble' }, #2
+                   file_hashes_incoming: { filename => -4545645678 },
+                   file_hashes_outgoing: { filename => -4545645678 }
     @was_tag,@now_tag = 1,2
     differ
     lights = json['lights']
@@ -49,12 +49,12 @@ class DifferControllerTest < ControllerTestBase
     @id = create_kata
     enter # 0
     filename = 'hiker.rb'
-    kata_run_tests file_content: { filename => 'def fubar' },
-      file_hashes_incoming: { filename => 234234 },
-      file_hashes_outgoing: { filename => -4545645678 } #1
-    kata_run_tests file_content: { filename => 'def snafu' },
-      file_hashes_incoming: { filename => -4545645678 },
-      file_hashes_outgoing: { filename => 654356 } #2
+    kata_run_tests file_content:         { filename => 'def fubar' },
+                   file_hashes_incoming: { filename => 234234 },
+                   file_hashes_outgoing: { filename => -4545645678 } #1
+    kata_run_tests file_content:         { filename => 'def snafu' },
+                   file_hashes_incoming: { filename => -4545645678 },
+                   file_hashes_outgoing: { filename => 654356 } #2
     @was_tag,@now_tag = 1,2
     differ
     lights = json['lights']

@@ -8,25 +8,16 @@ class KataControllerTest  < ControllerTestBase
     stub_setup
     enter
     kata_edit
-    kata_run_tests :file_content => { #1
-        'cyber-dojo.sh' => ""
-      },
-      :file_hashes_incoming => {
-        'cyber-dojo.sh' => 234234
-      },
-      :file_hashes_outgoing => {
-        'cyber-dojo.sh' => -4545645678
-      }
-
-    kata_run_tests :file_content => { #2
-        'cyber-dojo.sh' => ""
-      },
-      :file_hashes_incoming => {
-        'cyber-dojo.sh' => 234234
-      },
-      :file_hashes_outgoing => {
-        'cyber-dojo.sh' => -4545645678
-      }
+    kata_run_tests file_content:         { filename => '' },
+                   file_hashes_incoming: { filename => 234234 },
+                   file_hashes_outgoing: { filename => -4545645678 } #1
+    kata_run_tests file_content:         { filename => '' },
+                   file_hashes_incoming: { filename => 234234 },
+                   file_hashes_outgoing: { filename => -4545645678 } #2
   end
 
+  def filename
+    'cyber-dojo.sh'
+  end
+  
 end
