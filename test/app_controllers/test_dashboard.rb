@@ -73,12 +73,12 @@ class DashboardControllerTest < ControllerTestBase
   end
 
   def heartbeat
-    get 'dashboard/heartbeat', format: :js, id: @id    
+    get 'dashboard/heartbeat', format: :js, id:@id    
     assert_response :success
   end
 
   def progress  
-    get 'dashboard/progress', format: :js, id: @id
+    get 'dashboard/progress', format: :js, id:@id
     assert_response :success
   end
   
