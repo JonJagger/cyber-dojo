@@ -18,6 +18,13 @@ sym-linked files inside a new Docker container.
 - - - - - - - - - - - - - - - - - - - -
 
 
+Perhaps it would be simpler to nest the test-frameworks
+underneath the languages. Viz instead of 
+dojo.languages[language_name + '-' + test_name]
+do
+dojo.languages[language_name].tests[test_name]
+
+
 
 - - - - - - - - - - - - - - - - - - - -
 What needs to be refactored?
