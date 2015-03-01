@@ -116,13 +116,13 @@ class DojoControllerTest < ControllerTestBase
     assert !full?
   end
 
-  def check_id
-    get 'dojo/check', :format => :json, id:@id
+  def check_id(json = :json)
+    get 'dojo/check', format:json, id:@id
     assert_response :success    
   end
 
-  def re_enter
-    get 'dojo/re_enter', :format => :json, id:@id
+  def re_enter(json = :json)
+    get 'dojo/re_enter', format:json, id:@id
     assert_response :success    
   end
 

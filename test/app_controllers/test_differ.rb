@@ -121,12 +121,8 @@ class DifferControllerTest < ControllerTestBase
     end
   end
 
-  def differ
-    get 'differ/diff', :format => :json,
-                       id:@id,
-                       avatar:@avatar_name,
-                       was_tag:@was_tag,
-                       now_tag:@now_tag
+  def differ(json = :json)
+    get 'differ/diff', format:json,id:@id,avatar:@avatar_name,was_tag:@was_tag,now_tag:@now_tag
     assert_response :success
   end
   

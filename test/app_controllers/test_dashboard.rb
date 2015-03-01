@@ -66,19 +66,19 @@ class DashboardControllerTest < ControllerTestBase
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def dashboard(hash =  {})
+  def dashboard(hash = {})
     hash[:id] = @id
     get 'dashboard/show', hash
     assert_response :success
   end
 
-  def heartbeat
-    get 'dashboard/heartbeat', format: :js, id:@id    
+  def heartbeat(js = :js)
+    get 'dashboard/heartbeat', format:js, id:@id    
     assert_response :success
   end
 
-  def progress  
-    get 'dashboard/progress', format: :js, id:@id
+  def progress(js = :js)
+    get 'dashboard/progress', format:js, id:@id
     assert_response :success
   end
   
