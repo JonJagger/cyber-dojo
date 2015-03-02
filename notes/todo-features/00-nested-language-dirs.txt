@@ -8,9 +8,10 @@ Plan
    make Languages.each work using new structure.
    setup page should still work ok.
 3. simplify setup page to use new languages/ structure
-4. make cyberdojo index use auto-builds for everything.
-5. make dojos have max time limit of 1 day.
-   from time first traffic-light is pressed.
+
+Then think about versioning, auto-builds, dojo-time-limits.
+Ideally they are separate issues.
+
 
 Starting to think that the version number 
 of each language should be part of its folder name.
