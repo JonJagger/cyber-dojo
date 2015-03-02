@@ -43,6 +43,10 @@ test_differ.rb
 test_kata.rb
 test_reverter.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+On Ubuntu test/app_controllers/test_differ.rb fails line 33
+Expected "amber"
+  Actual "red"
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 
