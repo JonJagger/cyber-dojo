@@ -5,7 +5,7 @@ controllers are getting fat. Make them a lot skinnier.
 Possibly by doing an include so scope is same and @ vars
 are still available. Will help testing too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Also make base application_controller.rb skinner by
+Also make base application_controller.rb skinnier by
 cutting out things it doesn't need. See
 https://www.amberbit.com/blog/2014/2/14/putting-ruby-on-rails-on-a-diet/
 https://github.com/rails/rails/blob/master/actionpack/lib/action_controller/base.rb
