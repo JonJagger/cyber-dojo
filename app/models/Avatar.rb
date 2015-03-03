@@ -22,7 +22,7 @@ class Avatar
     git(:add, increments_filename)     
     sandbox.start
     commit(0)    
-    #event_1self_avatar_start
+    #one_self.started(self)
   end
   
   def path
@@ -59,7 +59,7 @@ class Avatar
     write_manifest(visible_files)
     tag = rags.length
     commit(tag)
-    #event_1self_test(tag,colour)
+    #one_self.tested(self,tag,colour)
     [rags,new_files,filenames_to_delete]
   end
 
@@ -78,6 +78,7 @@ private
 
   include ExternalDiskDir
   include ExternalGit
+  #include ExternalOneSelf
   include GitDiff
   include TimeNow
 
@@ -133,80 +134,6 @@ private
     '"' + s + '"'
   end
 
-  # - - - - - - - - - - - - - - - -
-  
-  def event_1self_avatar_start
-    url = URI.parse(one_self_base_url)
-    http = Net::HTTP.new(url.host)
-    header = { 'Content-Type' =>'application/json',
-               'Authorization' => "#{app_key}:#{app_secret}" }    
-    request = Net::HTTP::Post.new(url.path, header)
-    body =  JSON.parse(http.request(request).body)
-    one_self = {
-      :stream_id => body['streamid'],
-      :read_token => body['readToken'],
-      :write_token => body['writeToken']
-    }
-    write(one_self_manifest_filename, one_self)            
-  end
-  
-  # - - - - - - - - - - - - - - - -
-  
-  def event_1self_test(tag,colour)  
-    added_line_count,deleted_line_count = line_counts(diff(tag-1,tag))    
-    stream_id = one_self['stream_id']
-    data = {
-      'objectTags' => [ 'cyber-dojo' ],
-      'actionTags' => [ 'test-run' ],
-      'properties' => {
-        'color' => colour,
-        'diffCount' => (added_line_count+deleted_line_count),
-        'dojoId' => kata.id,
-        'avatar' => name
-      }
-    }
-    url = URI.parse("#{one_self_base_url}/#{stream_id}/events")
-    http = Net::HTTP.new(url.host)
-    header = { 'Content-Type' =>'application/json',
-               'Authorization' => "#{one_self['write_token']}" }    
-    request = Net::HTTP::Post.new(url.path, header)
-    request.body = data.to_json
-    response = http.request(request)
-  end
-  
-  def one_self
-    @one_self ||= JSON.parse(read(one_self_manifest_filename))
-  end
-
-  # copy-pasted from app/helpers/tip_helper.rb
-  def line_counts(diffed_files)
-    added_count,deleted_count = 0,0
-    diffed_files.each do |filename,diff|
-      if filename != 'output'
-        added_count   += diff.count { |line| line[:type] == :added   }
-        deleted_count += diff.count { |line| line[:type] == :deleted }
-      end
-    end
-    [added_count,deleted_count]
-  end
-
-  def one_self_base_url
-    'https://api-staging.1self.co/v1/streams'
-  end
-
-  def one_self_manifest_filename
-    '1self_manifest.json'
-    
-  end
-  
-  def app_key # temporary
-    'app-id-9bb5f1c77f0df722a9b1bc650a41988a'
-  end
-  
-  def app_secret # temporary
-    'app-secret-70ddd9b5cd842c9747246a5510d831b0fd18110d9bbb487d3e276f1a1c31b448'
-  end
-  
 end
 
 

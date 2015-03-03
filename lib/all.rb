@@ -21,4 +21,5 @@
   UniqueId
   IdSplitter
   LanguagesDisplayNamesSplitter
+  OneSelf
 }.each { |sourcefile| require_relative './' + sourcefile }
