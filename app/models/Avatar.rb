@@ -155,9 +155,11 @@ private
   
   def write_1self_test_event(tag,colour)  
     added_line_count,deleted_line_count = line_counts(diff(tag-1,tag))    
+    stream_id = one_self['stream_id']
     data = {
-      'objectTags' => [ 'test' ],
-      'actionTags' => [ 'run' ],
+      'objectTags' => [ 'cyber-dojo' ],
+      'actionTags' => [ 'test-run' ],
+      'streamid' => stream_id,
       'properties' => {
         'color' => colour,
         'diffCount' => (added_line_count+deleted_line_count),
@@ -165,7 +167,7 @@ private
         'avatar' => name
       }
     }
-    url = URI.parse("#{one_self_base_url}/#{one_self['stream_id']}/events")
+    url = URI.parse("#{one_self_base_url}/#{stream_id}/events")
     http = Net::HTTP.new(url.host)
     header = { 'Content-Type' =>'application/json',
                'Authorization' => "#{one_self['write_token']}" }    
