@@ -1,6 +1,21 @@
 
+
 Finer-grained commits
 =====================
+Will allow interesting analysis/data on how much churn there is 
+between test events. Viz, does a file get a few lines added
+and then they are removed, and then they are added back in
+a slightly different form, etc. All of which is hidden at the
+moment since I only see test event diffs.
+What number do I display when fine-grained commits are in place?
+At the moment I display the traffic-light number 14
+I think something like 14.4 where the .4 means 4 fine-grained
+commit events after traffic-light number 14
+
+
+Text below needs reworking.
+It still assumes I'm displaying both the was_tag and the now_tag.
+
 
   Plan
   ----
