@@ -15,13 +15,6 @@ class DifferControllerTest < ControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def make_file_hash(filename,content,incoming,outgoing)
-    { file_content:         { filename => content },
-      file_hashes_incoming: { filename => incoming },
-      file_hashes_outgoing: { filename => outgoing }
-    }
-  end
-  
   test 'no lines different in any files between successive tags' do
     @id = create_kata
     enter # 0

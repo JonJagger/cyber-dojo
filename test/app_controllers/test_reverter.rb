@@ -10,13 +10,9 @@ class ReverterControllerTest  < ControllerTestBase
     kata_edit    
     filename = 'cyber-dojo.sh'
     old_content = 'echo abc'
-    kata_run_tests file_content:         { filename => old_content },
-                   file_hashes_incoming: { filename => 234234 },
-                   file_hashes_outgoing: { filename => -4545645678 } #1
-    new_content = 'something different'
-    kata_run_tests file_content:         { filename => new_content },
-                   file_hashes_incoming: { filename => 234234 },
-                   file_hashes_outgoing: { filename => -4545645678 } #2
+    new_content = 'something different'    
+    kata_run_tests make_file_hash(filename,old_content,234234, -4545645678) #1
+    kata_run_tests make_file_hash(filename,new_content,234234, -5674378)    #2
     get 'reverter/revert', :format => :json,
                            id:@id,
                            avatar:@avatar_name,

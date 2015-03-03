@@ -97,6 +97,13 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     post 'kata/run_tests', hash.merge(defaults)
   end
 
+  def make_file_hash(filename,content,incoming,outgoing)
+    { file_content:         { filename => content },
+      file_hashes_incoming: { filename => incoming },
+      file_hashes_outgoing: { filename => outgoing }
+    }
+  end
+  
   def avatar_name
     json['avatar_name']
   end
