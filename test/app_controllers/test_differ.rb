@@ -15,16 +15,19 @@ class DifferControllerTest < ControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  def make_file_hash(filename,content,incoming,outgoing)
+    { file_content:         { filename => content },
+      file_hashes_incoming: { filename => incoming },
+      file_hashes_outgoing: { filename => outgoing }
+    }
+  end
+  
   test 'no lines different in any files between successive tags' do
     @id = create_kata
     enter # 0
     filename = 'hiker.c'
-    kata_run_tests file_content:         { filename => '#include...' }, #1
-                   file_hashes_incoming: { filename => 234234 },
-                   file_hashes_outgoing: { filename => -4545645678 }
-    kata_run_tests file_content:         { filename => 'wibble' }, #2
-                   file_hashes_incoming: { filename => -4545645678 },
-                   file_hashes_outgoing: { filename => -4545645678 }
+    kata_run_tests make_file_hash(filename,'#include...',234234, -4545645678) #1
+    kata_run_tests make_file_hash(filename,'wibble',-4545645678,-4545645678 ) #2
     @was_tag,@now_tag = 1,2
     differ
     lights = json['lights']
