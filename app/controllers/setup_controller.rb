@@ -19,7 +19,7 @@ class SetupController < ApplicationController
     language = dojo.languages[params['language'] + '-' + params['test']]
     exercise = dojo.exercises[params['exercise']]
     kata = dojo.katas.create_kata(language, exercise)    
-    event_1self_create_dojo(kata.id)        
+    #event_1self_create_dojo(kata.id) }
     render json: { id: kata.id.to_s }
   end
 

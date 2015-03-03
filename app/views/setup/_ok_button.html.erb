@@ -34,12 +34,15 @@ $(function() {
       saveAndRedirect();
     };
 
-    page.addClass('busy');                    
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(geoSuccess,geoFailure);
-    } else {
-      saveAndRedirect();      
-    }
+    page.addClass('busy'); 
+    saveAndRedirect();      
+    //var geo = navigator.geolocation;
+    //if (geo) {
+    //  options = { timeout: 4 };
+    //  geo.getCurrentPosition(geoSuccess,geoFailure,options);
+    //} else {
+    //  saveAndRedirect();      
+    //}
   });
 
 });
