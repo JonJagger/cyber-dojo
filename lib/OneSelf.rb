@@ -33,13 +33,14 @@ class OneSelf
   # - - - - - - - - - - - - - - - - - - - - - -
   
   def tested(avatar,tag,colour)  
-    added_line_count,deleted_line_count = line_counts(avatar.diff(tag-1,tag))    
+    added_line_count,deleted_line_count = line_counts(avatar.diff(tag-1,tag))
+    diff_count = added_line_count + deleted_line_count
     data = {
       'objectTags' => [ 'cyber-dojo' ],
       'actionTags' => [ 'test-run' ],
       'properties' => {
         'color' => colour,
-        'diffCount' => (added_line_count+deleted_line_count),
+        'diffCount' => diff_line_count,
         'dojoId' => kata.id,
         'avatar' => name
       }
@@ -79,9 +80,7 @@ private
   end
 
   def json_header(authorization)
-    { 'Content-Type' =>'application/json',
-      'Authorization' => authorization
-    }
+    { 'Content-Type' =>'application/json', 'Authorization' => authorization }
   end
     
   # below are temporary, need to come from ENV[]

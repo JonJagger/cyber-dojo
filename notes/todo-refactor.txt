@@ -1,6 +1,12 @@
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Provide ExternalOneSelf which will do begin/rescue/end
+to make sure exceptions are captured and ignored.
+Need to include the URL of the cyber-dojo server when
+sending data to 1self. If other people are running their
+own servers then they need to get back to those servers!
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 controllers are getting fat. Make them a lot skinnier.
 Possibly by doing an include so scope is same and @ vars
 are still available. Will help testing too.
