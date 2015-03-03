@@ -1,9 +1,6 @@
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-history diff dialog - the fork button has the focus.
-Change it so the next tag button has the focus.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 controllers are getting fat. Make them a lot skinnier.
 Possibly by doing an include so scope is same and @ vars
 are still available. Will help testing too.

@@ -13,7 +13,7 @@ I think something like 14.4 where the .4 means 4 fine-grained
 commit events after traffic-light number 14
 
 
-Text below needs reworking.
+Some text below needs reworking.
 It still assumes I'm displaying both the was_tag and the now_tag.
 
 
@@ -42,11 +42,7 @@ It still assumes I'm displaying both the was_tag and the now_tag.
      Will I need to modify  the [test] and [dashboard] pages
      traffic-light handlers?
 
-  5) custom serialization only POSTs changed files for [test] event.
-
-  6) drop the form
-
-  7) POST for each file new/rename/delete/edit
+  5) POST for each file new/rename/delete/edit
      In increments.json a non-test increment
      has colour=white and extra key for its type
      Traffic-light retain current numbering, viz
@@ -56,7 +52,7 @@ It still assumes I'm displaying both the was_tag and the now_tag.
      So Light.number is calculated
         Light.tag.number is stored in increments.json
 
-  8) decide on icon(s) for each fine-grained commit.
+  6) decide on icon(s) for each fine-grained commit.
      one for everything?
      one each for file new/rename/delete/edit
      how about just a small N,R,D,E
@@ -65,6 +61,9 @@ It still assumes I'm displaying both the was_tag and the now_tag.
      traffic-lights at top show tags and lights if tags? is checked.
      If tags are being shown then numbering switches to tag numbers.
 
+     How about simply replicating the [new] [delete] [rename]
+     "buttons" next to the filename when it is new/deleted/renamed.
+     
      NB: suppose the lion clicks [new file]
      The server has to do a git add <filename>
      However the server *also* has to update the
@@ -75,29 +74,27 @@ It still assumes I'm displaying both the was_tag and the now_tag.
      come back to the browser and it then creates the new file
      in the file-knave
 
-  9) make was-tag and now-tag draggable.
-     both are constrained and can only move horizontally.
-     they are always locked with a delta of 1.
-     Viz was-tag+1==now-tag and they drag together.
-
-  10) add checkbox for tags? to dashboard
+  7) add checkbox for tags? to dashboard
       if tags? is checked dashboard shows tags as well
       as traffic-lights
 
-  Note: Code for whether/when an animal appears on the dashboard
+  Code for whether/when an animal appears on the dashboard
   may need revisiting when dashboard shows tags as well as lights.
+  Likely to simplify and there will be no need for an 'active' qualifier.
 
   ==============================================
 
 
-  do a commit (on server) when an animal switches from one file
-  to another file (and there is a change in the file switched from),
-  or creates a new file, or renames a file, or deletes a file.
+  Do a non-test commit (on server) when an animal switches from one file
+  to another file.
+  What if there is no change in the file switched from.
+  Have that as a tag event too?
+  
   This will allow you to see if the first code
   entered was code or test code. And also file navigation.
   And also, sometimes, code that was entered and then deleted
   before being tested.
-
+  
   These calls need to be synchronous I think.
   Making them synchrononus helps to keep the code simple.
   If it creates responsiveness issues it is a signal to
@@ -111,6 +108,11 @@ It still assumes I'm displaying both the was_tag and the now_tag.
   o) if it fails
   o)     undo the change
   o)     open small modal popup saying there was an error
+
+
+
+Some text below needs reworking.
+It still assumes I'm displaying both the was_tag and the now_tag.
 
 
   history diff navigator

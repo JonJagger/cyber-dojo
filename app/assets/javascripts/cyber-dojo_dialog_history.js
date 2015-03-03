@@ -599,11 +599,15 @@ var cyberDojo = (function(cd, $) {
       modal: true,
       buttons: makeAllButtons(),
       autoOpen: false,
-      open: function() { refresh(); },
+      open: function() { refresh(); setInitialFocus(); },
       closeOnEscape: true,
       close: function() { $(this).remove(); },
     });
 
+    var setInitialFocus = function() {
+      $("#next-button", titleBar()).focus();
+    };
+    
     //---------------------------------------------------
     // refresh
     //---------------------------------------------------
