@@ -13,10 +13,10 @@ $(function() {
 
     var saveAndRedirect = function() {
       $.getJSON('/setup/save', {
-         language: language,
-             test: test,
-         exercise: exercise,
-         latitude: latitude,
+          language: language,
+              test: test,
+          exercise: exercise,
+          latitude: latitude,
         longtitude: longtitude
       }, function(dojo) {
         var url = '/dojo/index/' + dojo.id;
@@ -39,8 +39,7 @@ $(function() {
       navigator.geolocation.getCurrentPosition(geoSuccess,geoFailure);
     } else {
       saveAndRedirect();      
-    }        
-    
+    }
   });
 
 });

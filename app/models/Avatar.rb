@@ -22,7 +22,7 @@ class Avatar
     git(:add, increments_filename)     
     sandbox.start
     commit(0)    
-    obtain_and_save_1self_stream_id
+    event_1self_avatar_start
   end
   
   def path
@@ -59,8 +59,7 @@ class Avatar
     write_manifest(visible_files)
     tag = rags.length
     commit(tag)
-    write_1self_test_event(tag,colour)
-    
+    event_1self_test(tag,colour)
     [rags,new_files,filenames_to_delete]
   end
 
@@ -136,7 +135,7 @@ private
 
   # - - - - - - - - - - - - - - - -
   
-  def obtain_and_save_1self_stream_id
+  def event_1self_avatar_start
     url = URI.parse(one_self_base_url)
     http = Net::HTTP.new(url.host)
     header = { 'Content-Type' =>'application/json',
@@ -153,7 +152,7 @@ private
   
   # - - - - - - - - - - - - - - - -
   
-  def write_1self_test_event(tag,colour)  
+  def event_1self_test(tag,colour)  
     added_line_count,deleted_line_count = line_counts(diff(tag-1,tag))    
     stream_id = one_self['stream_id']
     data = {
