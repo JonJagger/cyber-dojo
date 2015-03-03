@@ -3,18 +3,44 @@
 
 $(function() {
 
+  var page = $('#setup-page');
   $('#ok').click(function() {
     var language = $('[id^=language_][class~=selected]').data('language');
     var     test = $('[id^=test_][class~=selected]').data('test');
     var exercise = $('[id^=exercise_][class~=selected]').data('exercise');
-    $.getJSON('/setup/save', {
-      language: language,
-          test: test,
-      exercise: exercise
-    }, function(dojo) {
-      var url = '/dojo/index/' + dojo.id;
-      window.location = url;
-    });
+    var latitude = undefined;
+    var longtitude = undefined;
+
+    var saveAndRedirect = function() {
+      $.getJSON('/setup/save', {
+         language: language,
+             test: test,
+         exercise: exercise,
+         latitude: latitude,
+        longtitude: longtitude
+      }, function(dojo) {
+        var url = '/dojo/index/' + dojo.id;
+        page.removeClass('busy');                            
+        window.location = url;
+      });      
+    };
+
+    var geoSuccess = function(position) {
+      latitude = position.coords.latitude;
+      longtitude = position.coords.longitude;
+      saveAndRedirect();
+    };
+    var geoFailure = function() {
+      saveAndRedirect();
+    };
+
+    page.addClass('busy');                    
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(geoSuccess,geoFailure);
+    } else {
+      saveAndRedirect();      
+    }        
+    
   });
 
 });

@@ -159,7 +159,6 @@ private
     data = {
       'objectTags' => [ 'cyber-dojo' ],
       'actionTags' => [ 'test-run' ],
-      'streamid' => stream_id,
       'properties' => {
         'color' => colour,
         'diffCount' => (added_line_count+deleted_line_count),
@@ -193,7 +192,7 @@ private
   end
 
   def one_self_base_url
-    'https://sandbox.1self.co/v1/streams'
+    'https://api-staging.1self.co/v1/streams'
   end
 
   def one_self_manifest_filename

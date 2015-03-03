@@ -19,11 +19,40 @@ class SetupController < ApplicationController
     language = dojo.languages[params['language'] + '-' + params['test']]
     exercise = dojo.exercises[params['exercise']]
     kata = dojo.katas.create_kata(language, exercise)
+    
+    # temporary
+    stream_id = 'PUXUNZEGWRZUWYRG'
+    read_token = '62713acce800c7bcd75829d16a8aa3e2fb9f2d2daeb0'
+    write_token = 'c705e320fd8b9591d27d9579f78fad6ab3a7c0f86078'
+    data = {
+      'objectTags' => [ 'cyber-dojo' ],
+      'actionTags' => [ 'create' ],
+      'location' => {
+        'lat' => params['latitude'].to_f,
+        'long' => params['longtitude'].to_f,
+      },
+      'properties' => {
+        'dojoId' => kata.id
+      }
+    }
+    url = URI.parse("#{one_self_base_url}/#{stream_id}/events")
+    http = Net::HTTP.new(url.host)
+    header = { 'Content-Type' =>'application/json',
+               'Authorization' => "#{write_token}" }
+    request = Net::HTTP::Post.new(url.path, header)
+    request.body = data.to_json
+    response = http.request(request)
+    
+    
     render json: { id: kata.id.to_s }
   end
 
 private
 
   include SetupWorker
+
+  def one_self_base_url
+    'https://api-staging.1self.co/v1/streams'
+  end
 
 end
