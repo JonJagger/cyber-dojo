@@ -33,12 +33,8 @@ $text-color: darken($lighter-color, 10%);
     top: -29px;
   }
 
-  #second-server, #third-server {
-    font-size: 1.10em;
-  }
-
   #learn-more-button {
-    font-size: 1.30em;
+    font-size: 0.9em;
     position: relative;
     top: -25px;
     left: 2px;
@@ -74,7 +70,7 @@ $text-color: darken($lighter-color, 10%);
     position: relative;
     right: -1px;
   }
-  #create-button, #enter-button, #reenter-button,  #review-button {
+  #create-button, #enter-button, #reenter-button,  #review-button, #donate-button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     color: $darker-color;
     @include font-size-largest();
@@ -83,56 +79,44 @@ $text-color: darken($lighter-color, 10%);
     margin-left: 10px;
     text-align: right;
   }
-  #create-button {
-  }
-  #review-button {
-    margin-top: 4px;
+  #review-button { margin-top: 4px; }
+
+  #donate-container, #jon-jagger-container, #accu-container {
+    font-size: 1em;
+    font-size: 0.8em;    
+    @include ghost-panel(10px);    
+    margin: 10px;    
+    width: 280px;
+    text-align: right;
+    
   }
 
   #donate-container {
-    font-size: 1.15em;
-    width: 280px;
-    @include ghost-panel(10px);
-    margin-bottom: 10px;
-    #please-donate {
-      text-align: right;
-      margin: { left: 10px; right: 10px; }
-      color: $lighter-color;
-      @include font-size-tiny();
-    }
-    #donate-form {
-      height: 42px;
-    }
-    #donate-button {
-      text-align: right;
-      padding: { top: 15px; right: 5px; }
-    }
-    #please-invoice-me {
-      display: block;
-      @include font-size-tiny();
-      text-align: right;
-      margin-right: 10px;
-    }
-  }
-
-  #accu-container {
-    font-size: 0.85em;
-    width: 258px;
-    @include ghost-panel(10px);
-    margin-bottom: 10px;
-    #accu-image {
-      margin: { top: 10px; right: 10px; }
+    #donate-button { 
+      width: 80px;
+      font-size: 1.70em;
       padding: 5px;
-      background:CornSilk;
-      width: 60px;
-      height: 15px;
-    }
-    #accu-words {
-      margin: { top: 10px; right: 10px; }
-      color: $lighter-color;
-      text-align: right;
+    }    
+  }
+  
+  #jon-jagger-container {
+    #jon-jagger-image {
+      width: 70px;
+      border: 5px solid lighten($darker-color, 15%);
+      margin-left: 10px;
+    }  
+  }
+  
+  #accu-container {
+    #accu-image {
+      padding: 7px;
+      background: CornSilk;
+      width: 65px;
+      height: 20px;
+      margin-left: 10px;
     }
   }
+  
 }
 
 a:link, a:visited

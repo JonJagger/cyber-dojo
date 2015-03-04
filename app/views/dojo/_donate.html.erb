@@ -1,22 +1,31 @@
 
-<table id="donate-container">
-  <tr>
-    <td>
-      <div id="please-donate">
-        Any use of cyber-dojo within a commercial organization is <em>not</em> free.
-        Please make a one-time contribution of at least $500.
-        Money raised is used solely to cover hosting costs and buy
+<script type="text/javascript"><!--
+
+$(function() {
+
+  $('#donate-button').click(function() {
+    cd.dialog_donate().dialog('open');
+  })
+
+});
+
+//--></script>
+
+
+<div id="donate-container">
+  <table>
+    <tr>
+      <td>
+        100% of your donation buys
         <a href='http://www.raspberrypi.org/' target='_blank'>Raspberry Pi</a>
-        computers
-        <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html' target='_blank'>for children</a>.
-      </div>
-    </td>
-  </tr>
-  <tr>
-    <td id="donate-button"><%= render partial: 'donate_button' %></td>
-  </tr>
-  <tr>
-    <td><%= render partial: 'please_invoice_me' %></td>
-  </tr>
-</table>
+        computers<br/>
+        <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'
+           target='_blank'>for children</a> :-)       
+      </td>
+      <td>
+        <button type="button" id="donate-button">please<br/>donate</button><br/>
+      </td>
+    </tr>
+  </table>
+</div>
 
