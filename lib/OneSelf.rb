@@ -8,7 +8,6 @@ class OneSelf
       'location' => { 'lat' => latitude, 'long' => longtitude },
       'properties' => { 'dojoId' => dojo_id }
     }
-    p data
     url = URI.parse("#{one_self_base_url}/#{stream_id}/events")
     request = Net::HTTP::Post.new(url.path, json_header("#{write_token}"))
     request.body = data.to_json
@@ -34,15 +33,15 @@ class OneSelf
   
   def tested(avatar,tag,colour)  
     added_line_count,deleted_line_count = line_counts(avatar.diff(tag-1,tag))
-    diff_count = added_line_count + deleted_line_count
+    diff_line_count = added_line_count + deleted_line_count
     data = {
       'objectTags' => [ 'cyber-dojo' ],
       'actionTags' => [ 'test-run' ],
       'properties' => {
         'color' => colour,
         'diffCount' => diff_line_count,
-        'dojoId' => kata.id,
-        'avatar' => name
+        'dojoId' => avatar.kata.id,
+        'avatar' => avatar.name
       }
     }
     one_self = JSON.parse(disk[avatar.path].read(one_self_manifest_filename))    

@@ -7,7 +7,8 @@ module ExternalOneSelf # mixin
       def method_missing(symbol,*args) 
         begin
           return external(:one_self).send(symbol,*args)
-        rescue
+        rescue StandardError => error
+          p error.message
         end
       end
     end.new

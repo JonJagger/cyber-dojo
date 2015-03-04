@@ -1,11 +1,14 @@
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Provide ExternalOneSelf which will do begin/rescue/end
-to make sure exceptions are captured and ignored.
 Need to include the URL of the cyber-dojo server when
 sending data to 1self. If other people are running their
 own servers then they need to get back to those servers!
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Provide defaults for external paths. But allow default
+to be overriden by ENV[]
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Provide one_self secrets via ENV[]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 controllers are getting fat. Make them a lot skinnier.
 Possibly by doing an include so scope is same and @ vars
@@ -15,17 +18,6 @@ Also make base application_controller.rb skinnier by
 cutting out things it doesn't need. See
 https://www.amberbit.com/blog/2014/2/14/putting-ruby-on-rails-on-a-diet/
 https://github.com/rails/rails/blob/master/actionpack/lib/action_controller/base.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-On setup page, when you click [OK] put up a 
-wait-cursor until the dojo is created and
-then switch the browser to home page.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Make cyber-dojo free again. Smaller areas on left side but
-with larger font button text that opens a dialog which
-contains suggested amounts and a donate link
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-In space freed up by making smaller 'it's free' text
-put something mentioning me. 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 How about making cyber-dojo 'follow-ware'
 I ask users to follow me on twitter?!
