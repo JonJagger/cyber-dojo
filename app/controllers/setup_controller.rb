@@ -21,7 +21,7 @@ class SetupController < ApplicationController
     kata = dojo.katas.create_kata(language, exercise)
     latitude = params['latitude'].to_f
     longtitude = params['longtitude'].to_f
-    one_self.created(kata.id, latitude, longtitude)
+    #one_self.created(kata.id, latitude, longtitude)
     render json: { id: kata.id.to_s }
   end
 
