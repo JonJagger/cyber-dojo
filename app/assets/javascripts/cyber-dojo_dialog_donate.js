@@ -14,7 +14,6 @@ var cyberDojo = (function(cd, $) {
     var title = 'please donate';
     
     var donateButton = function() {
-      // TODO: add suggested amount as default when paypal page appears
       return '' +
       '<form action="https://www.paypal.com/cgi-bin/webscr"' +
            ' method="post"' +
