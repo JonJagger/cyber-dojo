@@ -8,8 +8,8 @@ $(function() {
     var language = $('[id^=language_][class~=selected]').data('language');
     var     test = $('[id^=test_][class~=selected]').data('test');
     var exercise = $('[id^=exercise_][class~=selected]').data('exercise');
-    var latitude = undefined;
-    var longtitude = undefined;
+    var latitude = undefined;     // I want params['latitude'] on the server to be nil not ''
+    var longtitude = undefined;   // Ditto params['longtitude']
 
     var saveAndRedirect = function() {
       $.getJSON('/setup/save', {
