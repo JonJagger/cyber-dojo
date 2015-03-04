@@ -7,6 +7,7 @@
   ExternalExercisesPath
   ExternalLanguagesPath
   ExternalKatasPath
+  ExternalOneSelf
   ExternalSetter
   Cleaner
   Docker

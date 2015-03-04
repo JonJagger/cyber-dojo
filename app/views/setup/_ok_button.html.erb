@@ -35,15 +35,15 @@ $(function() {
     };
 
     page.addClass('busy'); 
-    saveAndRedirect();      
-    //var geo = navigator.geolocation;
-    //if (geo) {
-    //  var fourSeconds = 4*1000;
-    //  options = { timeout: fourSeconds };
-    //  geo.getCurrentPosition(geoSuccess,geoFailure,options);
-    //} else {
-    //  saveAndRedirect();      
-    //}
+    //saveAndRedirect();      
+    var geo = navigator.geolocation;
+    if (geo) {
+      var fourSeconds = 4*1000;
+      options = { timeout: fourSeconds };
+      geo.getCurrentPosition(geoSuccess,geoFailure,options);
+    } else {
+      saveAndRedirect();      
+    }
   });
 
 });

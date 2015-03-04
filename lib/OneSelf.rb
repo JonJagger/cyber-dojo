@@ -27,7 +27,7 @@ class OneSelf
       :read_token => body['readToken'],
       :write_token => body['writeToken']
     }
-    disk[avatar.path].write(one_self_manifest_filename, one_self)            
+    disk[avatar.path].write(one_self_manifest_filename, one_self)     
   end
   
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -48,9 +48,7 @@ class OneSelf
     one_self = JSON.parse(disk[avatar.path].read(one_self_manifest_filename))    
     url = URI.parse("#{one_self_base_url}/#{one_self['stream_id']}/events")
     http = Net::HTTP.new(url.host)
-    header = { 'Content-Type' =>'application/json',
-               'Authorization' => "#{one_self['write_token']}" }    
-    request = Net::HTTP::Post.new(url.path, header)
+    request = Net::HTTP::Post.new(url.path, json_header("#{one_self['write_token']}"))
     request.body = data.to_json
     response = http.request(request)
   end

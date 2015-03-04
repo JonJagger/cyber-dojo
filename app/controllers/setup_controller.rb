@@ -19,16 +19,15 @@ class SetupController < ApplicationController
     language = dojo.languages[params['language'] + '-' + params['test']]
     exercise = dojo.exercises[params['exercise']]
     kata = dojo.katas.create_kata(language, exercise)
-    #NB: lat and long could be undefined, provide defaults?
-    #latitude = params['latitude'].to_f || default
-    #longtitude = params['longtitude'].to_f || default
-    #one_self.created(kata.id, latitude, longtitude) }
+    latitude = params['latitude'].to_f
+    longtitude = params['longtitude'].to_f
+    #one_self.created(kata.id, latitude, longtitude)
     render json: { id: kata.id.to_s }
   end
 
 private
 
   include SetupWorker
-  #include ExternalOneSelf  
+  include ExternalOneSelf  
 
 end

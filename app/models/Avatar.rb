@@ -78,7 +78,7 @@ private
 
   include ExternalDiskDir
   include ExternalGit
-  #include ExternalOneSelf
+  include ExternalOneSelf
   include GitDiff
   include TimeNow
 
