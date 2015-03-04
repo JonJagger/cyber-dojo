@@ -19,8 +19,6 @@ class SetupController < ApplicationController
     language = dojo.languages[params['language'] + '-' + params['test']]
     exercise = dojo.exercises[params['exercise']]
     kata = dojo.katas.create_kata(language, exercise)
-    latitude = params['latitude'].to_f
-    longtitude = params['longtitude'].to_f
     one_self.created(kata.id, latitude, longtitude)
     render json: { id: kata.id.to_s }
   end
@@ -29,5 +27,13 @@ private
 
   include SetupWorker
   include ExternalOneSelf  
+  
+  def latitude
+    Float(params['latitude'].to_s) rescue ''
+  end
+  
+  def longtitude
+    Float(params['longtitude'].to_s) rescue ''
+  end
 
 end
