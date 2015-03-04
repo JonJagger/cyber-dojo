@@ -18,7 +18,7 @@ class OneSelfTests < LibTestBase
     end
     def throwing
       @throwing_called = true
-      raise RuntimeError.new
+      raise RuntimeError.new("")
       @throwing_finished = true
     end
   end

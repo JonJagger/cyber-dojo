@@ -37,11 +37,45 @@ Expected "amber"
 
 
 
-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Try putting set_external() calls into config/initializers/externals.rb
-Check if this works on a Passenger startup
-Check if works on local server too
+Check if works on local server. It doesn't. Setting thread is different to getting thread.
+How about something like this, just using $ to make a global...
+
+root = File.absolute_path(File.dirname(__FILE__) + '/../../')
+load "#{root}/all.rb"
+$cyber_dojo_externals = {
+  :disk => Externals::Disk.new,
+  :git => Externals::Git.new
+}
+and
+lib/ExternalDisk.rb is
+- - - - -
+module Externals
+  class Disk
+    ...
+  end
+end
+module External_disk
+  $cyber_dojo_externals[:disk]
+end
+- - - - -
+
+which allows code such as
+
+require './ExternalDisk'
+
+class Avatar
+  ..
+private
+  include External_disk
+  ...
+end
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The only line the controller tests do not cover is the one
 to set the runner to DummyTestRunner. If Docker is installed

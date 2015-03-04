@@ -8,7 +8,7 @@ module ExternalOneSelf # mixin
         begin
           return external(:one_self).send(symbol,*args)
         rescue StandardError => error
-          p error.message
+          print error.message
         end
       end
     end.new
