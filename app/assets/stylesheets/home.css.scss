@@ -38,6 +38,7 @@ $text-color: darken($lighter-color, 10%);
     position: relative;
     top: -25px;
     left: 2px;
+    padding-bottom: 4px;
   }
 
   .button-td {
@@ -93,9 +94,9 @@ $text-color: darken($lighter-color, 10%);
 
   #donate-container {
     #donate-button { 
-      width: 80px;
+      width: 82px;
       font-size: 1.70em;
-      padding: 5px;
+      padding: 6px;
     }    
   }
   

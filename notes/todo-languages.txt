@@ -1,5 +1,6 @@
 
 install C++14 + boost
+install TypeScript?
 install Rust?
 install Dart?
 install APL?
