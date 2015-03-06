@@ -55,10 +55,14 @@
     @include code-font();
   }
 
-  #ok, #cancel {
+  #create, #cancel {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-largest();
     margin: { top: 20px; right: 50px; }
+  }
+
+  #cancel {
+    margin-left: 100px;
   }
 
 }

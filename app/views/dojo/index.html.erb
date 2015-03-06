@@ -36,9 +36,8 @@
 
     <tr>
       <td class="button-info-td">
-          choose a language<br/>
-          + test + exercise<br/>
-          to get your id
+          <span class="number">1</span>
+          create your cyber-dojo (choose a language, a test framework, and an exercise)
       </td>
       <td class="button-td">
         <%= render partial: 'create_button' %>
@@ -47,8 +46,9 @@
 
     <tr>
       <td class="enter button-info-td">
-          type in your id<br/>
-          on <em>each</em> computer
+          <span class="number">2</span>
+          type in your cyber-dojo's id
+          in <span class="each">each</span> browser
       </td>
       <td class="button-td">
         <%= render partial: 'enter_id' %>
@@ -57,9 +57,10 @@
 
     <tr>
       <td class="button-info-td">
-        click enter on<br/>
-        <em>each</em> computer<br/>
-        and start coding
+        <span class="number">3</span>
+        click enter in<br/>
+        <span class="each">each</span> browser<br/>
+        to start coding
       </td>
       <td class="button-td">
         <%= render partial: 'enter_button' %>
@@ -68,7 +69,8 @@
 
     <tr>
       <td class="button-info-td">
-        stop coding, open the dashboard and review everyone's code
+        <span class="number">4</span>
+        stop coding, open the dashboard to review everyone's code
       </td>
       <td class="button-td">
         <%= render partial: 'review_button' %>

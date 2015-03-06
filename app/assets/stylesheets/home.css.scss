@@ -53,17 +53,21 @@ $text-color: darken($lighter-color, 10%);
       color: lighten($green, 30%);
     }
   }
+  .each {
+    text-decoration: underline;
+    font-style: italic;
+  }
   .number {
-    font-size: 1em;  
-    width: 20px;
-    height: 20px;
-    display: block;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
     padding: 0px;
-    text-align: right;
-    //position: relative;
-    //left: 10px;
-    @include rounded-corner(20px);
-    background: lighten($darker-color, 20%);;
+    text-align: center;
+    position: relative;
+    left: 0px;
+    bottom: 5px;
+    @include rounded-corner(10px);
+    background: lighten($darker-color, 20%);
   }
   
   #enter-id-info {
