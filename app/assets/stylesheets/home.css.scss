@@ -30,7 +30,7 @@ $text-color: darken($lighter-color, 10%);
     font-size: 1.35em;
     color: lighten($text-color, 5%);
     position: relative;
-    top: -29px;
+    top: -32px;
   }
 
   #learn-more-button {
@@ -46,14 +46,26 @@ $text-color: darken($lighter-color, 10%);
     vertical-align: top;
   }
   .button-info-td {
-    display: inline-block;
-    font-size: 0.9em;
+    vertical-align: center;
+    font-size: 0.7em;
     width: 160px;
     &.enter {
       color: lighten($green, 30%);
     }
   }
-
+  .number {
+    font-size: 1em;  
+    width: 20px;
+    height: 20px;
+    display: block;
+    padding: 0px;
+    text-align: right;
+    //position: relative;
+    //left: 10px;
+    @include rounded-corner(20px);
+    background: lighten($darker-color, 20%);;
+  }
+  
   #enter-id-info {
     color: lighten($green, 30%);
   }
