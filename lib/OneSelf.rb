@@ -12,6 +12,7 @@ class OneSelf
     request = Net::HTTP::Post.new(url.path, json_header("#{write_token}"))
     request.body = data.to_json
     http = Net::HTTP.new(url.host)
+    response = http.request(request) 
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -

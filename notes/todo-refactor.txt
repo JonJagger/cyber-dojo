@@ -4,14 +4,14 @@ The 1self stream capability will give me the option
 of creating a visualization of all dojos. This makes it important
 that when someone claims/saves a dojo, it must become readonly.
 And similarly, even if they don't claim it, after a certain period
-of time ift must become readonly.
+of time it must become readonly.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Need to include the URL of the cyber-dojo server when
 sending data to 1self. If other people are running their
 own servers then they need to get back to those servers!
+This is another external ENV[]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Provide defaults for external paths. But allow default
-to be overriden by ENV[]
+Set paths via external ENV[]. Don't provide a default.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Provide one_self secrets via ENV[]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
