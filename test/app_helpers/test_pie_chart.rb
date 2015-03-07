@@ -5,13 +5,13 @@ require_relative 'app_helpers_test_base'
 class PieChartTests < AppHelpersTestBase
 
   include PieChartHelper
+  include ExternalSetter
 
   test 'pie-chart from avatar.lights' do
-    thread = Thread.current
-    thread[:disk] = DiskFake.new
-    thread[:git] = Object.new
-    thread[:runner] = Object.new
-    thread[:katas_path] = 'katas/'
+    reset_external(:disk, DiskFake.new)
+    reset_external(:git, Object.new)
+    reset_external(:runner, Object.new)
+    reset_external(:katas_path, 'katas/')
     @dojo = Dojo.new
     kata = @dojo.katas['123456789A']
     lion = kata.avatars['lion']

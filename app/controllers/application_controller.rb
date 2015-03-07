@@ -10,17 +10,6 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  def initialize
-    super
-    set_external(:disk,   Disk.new)
-    set_external(:git,    Git.new)
-    set_external(:runner, test_runner)
-    set_external(:one_self, OneSelf.new)
-    set_external(:exercises_path, root_path + '/exercises/')
-    set_external(:languages_path, root_path + '/languages/')
-    set_external(:katas_path,     root_path + '/katas/')
-  end
-
   def dojo
     @dojo ||= Dojo.new
   end
@@ -55,20 +44,6 @@ class ApplicationController < ActionController::Base
 
   def now_tag
     params[:now_tag]
-  end
-
-private
-
-  include ExternalSetter
-
-  def root_path
-    Rails.root.to_s
-  end
-
-  def test_runner
-    return DockerTestRunner.new if Docker.installed?
-    return HostTestRunner.new unless ENV['CYBER_DOJO_USE_HOST'].nil?
-    return DummyTestRunner.new
   end
 
 end

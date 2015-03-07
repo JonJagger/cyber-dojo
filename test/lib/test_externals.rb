@@ -25,7 +25,7 @@ class ExternalsTests < LibTestBase
   test 'raises RuntimeError if not set' do
     symbols.each do |symbol|
       error = assert_raises(RuntimeError) { self.send(symbol) }
-      assert error.message.include? 'no external(:' + symbol.to_s
+      assert error.message.include? 'external(:' + symbol.to_s
     end
   end
 

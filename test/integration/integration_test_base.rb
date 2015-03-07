@@ -5,13 +5,15 @@ require_relative '../test_base'
 
 class IntegrationTestBase < TestBase
 
+  include ExternalSetter
+  
   def setup
-    thread[:disk  ] = Disk.new
-    thread[:git   ] = Git.new
-    thread[:runner] = HostTestRunner.new
-    thread[:exercises_path] = root_path + 'exercises/'
-    thread[:languages_path] = root_path + 'languages/'
-    thread[:katas_path]     = root_path + 'test/cyber-dojo/katas/'
+    reset_external(:disk, Disk.new)
+    reset_external(:git, Git.new)
+    reset_external(:runner, HostTestRunner.new)
+    reset_external(:exercises_path, root_path + 'exercises/')
+    reset_external(:languages_path, root_path + 'languages/')
+    reset_external(:katas_path, root_path + 'test/cyber-dojo/katas/')    
     @dojo = Dojo.new
   end
 
@@ -19,10 +21,6 @@ class IntegrationTestBase < TestBase
     language = dojo.languages[language_name]
     exercise = dojo.exercises[exercise_name]
     dojo.katas.create_kata(language, exercise)
-  end
-
-  def thread
-    Thread.current
   end
 
 private

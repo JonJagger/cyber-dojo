@@ -2,9 +2,9 @@
 module External # mixin
 
   def external(symbol)
-    object = Thread.current[symbol]
-    raise RuntimeError.new('no external(:' + symbol.to_s + ')') if object.nil?
-    object
+    raise RuntimeError.new("external(:#{symbol})") if $cyber_dojo_externals.nil?
+    raise RuntimeError.new("external(:#{symbol}]") if $cyber_dojo_externals[symbol].nil?
+    $cyber_dojo_externals[symbol]
   end
 
 end

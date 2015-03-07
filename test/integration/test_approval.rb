@@ -5,9 +5,11 @@ require 'tmpdir'
 
 class ApprovalTests < IntegrationTestBase
 
+  include ExternalSetter
+  
   def setup
     super
-    thread[:runner] = TestRunnerStub.new
+    reset_external(:runner, TestRunnerStub.new)
     @dir = SandboxStub.new(Dir.mktmpdir).dir
   end
 
@@ -16,12 +18,13 @@ class ApprovalTests < IntegrationTestBase
   end
 
   class SandboxStub
-    def initialize(dir)
-      @dir = dir
+    def initialize(path)
+      @path = path
     end
-    def dir
-      Thread.current[:disk][@dir]
+    def path
+      @path
     end
+    include ExternalDiskDir
   end
 
   test 'after test Approval newly created txt files are added ' +
