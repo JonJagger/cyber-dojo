@@ -60,46 +60,6 @@ Provide a URL next to exercise? list instead
 
 
 
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Try putting set_external() calls into config/initializers/externals.rb
-Check if works on local server. It doesn't. Setting thread is different to getting thread.
-How about something like this, just using $ to make a global...
-
-root = File.absolute_path(File.dirname(__FILE__) + '/../../')
-load "#{root}/all.rb"
-$cyber_dojo_external = {
-  :disk => External::Disk.new,
-  :git => External::Git.new
-}
-and
-lib/ExternalDisk.rb is
-- - - - -
-module External
-  class Disk
-    ...
-  end
-end
-module External_disk
-  $cyber_dojo_external[:disk]
-end
-- - - - -
-
-which allows code such as
-
-require './ExternalDisk'
-
-class Avatar
-  ..
-private
-  include External_disk
-  ...
-end
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-
-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The only line the controller tests do not cover is the one
 to set the runner to DummyTestRunner. If Docker is installed
@@ -109,6 +69,38 @@ shell where an environment variable names the runner.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Rename external(:runner) to external(:test_runner) ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+You can create an object from its class name as a string. Eg
+reset_external(:git, Object.const_get('Git').new)
+This suggests that the external objects could be set by
+naming their class as a string via ENV[]
+Paths would just be left as a string.
+And keys/ids (for 1self) would also be left as a string.
+This starts to get me near my goal of being able to run the same
+tests twice, once with fakee/mocks/stubs and once without.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+In switching to new externals setting the following tests needed refactoring
+test/app_helpers/test_pie_chart.rb
+test/app_lib/test_chooser.rb
+test/integration/integration_test_base.rb
+test/integration/test_approval.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ExternalDiskDir.rb contains this...
+
+  def disk
+    external(:disk)
+  end
+
+which could be refactored to remove the duplication.
+  def disk
+    external_property
+  end
+  def external_property
+    name = (caller[0] =~ /`([^']*)'/ and $1)
+    external(name)
+  end
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

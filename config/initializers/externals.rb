@@ -17,6 +17,3 @@ set_external(:one_self, OneSelf.new)
 set_external(:exercises_path, root_path + '/exercises/')
 set_external(:languages_path, root_path + '/languages/')
 set_external(:katas_path,     root_path + '/katas/')
-
-
-
