@@ -4,7 +4,18 @@ The 1self stream capability will give me the option
 of creating a visualization of all dojos. This makes it important
 that when someone claims/saves a dojo, it must become readonly.
 And similarly, even if they don't claim it, after a certain period
-of time it must become readonly.
+of time a cyberdojo must become readonly.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Once a cyberdojo has a time-period I need to add some words
+to the setup page to describe that the time-period clock starts
+not when the cyberdojo is created, but when the test button is
+pressed. Hmmm, another alternative is the time the first avatar
+enters the cyberdojo.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Where should the "claim" button go? To the right of the 
+traffic-light trail? On the test page and/or the dashboard page?
+Needs to be clear that the claim also finishes. So
+"finish and claim" button?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Need to include the URL of the cyber-dojo server when
 sending data to 1self. If other people are running their
@@ -39,6 +50,14 @@ On Ubuntu test/app_controllers/test_differ.rb fails line 33
 Expected "amber"
   Actual "red"
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Add Custom exercise whose instructions file
+details how to make a custom exercise
+and/or points you to the blog page Mike helped write.
+Ensure it appears first in the exercises list.
+Hmmm. Not sure I like this.
+Provide a URL next to exercise? list instead
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
 
 
@@ -49,20 +68,20 @@ How about something like this, just using $ to make a global...
 
 root = File.absolute_path(File.dirname(__FILE__) + '/../../')
 load "#{root}/all.rb"
-$cyber_dojo_externals = {
-  :disk => Externals::Disk.new,
-  :git => Externals::Git.new
+$cyber_dojo_external = {
+  :disk => External::Disk.new,
+  :git => External::Git.new
 }
 and
 lib/ExternalDisk.rb is
 - - - - -
-module Externals
+module External
   class Disk
     ...
   end
 end
 module External_disk
-  $cyber_dojo_externals[:disk]
+  $cyber_dojo_external[:disk]
 end
 - - - - -
 
@@ -144,10 +163,6 @@ Why does Language.rb display_name have a default?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 If test run is successful do this?
 $rake doc:app
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Add Custom exercise whose instructions file
-details how to make a custom exercise
-and/or points you to the blog page Mike helped write.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 s/timed_out/timeout/
 s/timed_out/timeout/
