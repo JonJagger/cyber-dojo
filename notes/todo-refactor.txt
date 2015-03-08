@@ -69,7 +69,14 @@ there is no way to use the DummyTestRunner. Perhaps I should
 move the decision of what runner to use right out to the 
 shell where an environment variable names the runner.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Rename external(:runner) to external(:test_runner) ?
+Rename external(:runner) to external(:test_runner)
+The problem with this is that code that then does this
+  include ExternalRunner
+would have
+  def test_runner
+  ...
+  end
+and the test framework would then try to run test_runner!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 You can create an object from its class name as a string. Eg
 reset_external(:git, Object.const_get('Git').new)
