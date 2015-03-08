@@ -20,7 +20,6 @@ Needs to be clear that the claim also finishes. So
 Need to include the URL of the cyber-dojo server when
 sending data to 1self. If other people are running their
 own servers then they need to get back to those servers!
-This is another external ENV[]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Set paths via external ENV[]. Don't provide a default.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -40,6 +39,9 @@ I ask users to follow me on twitter?!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Make Git.rb raise an exception if the git-command fails.
 Currently just returns a log string.
+Make each external log to its own log file?
+Then at the end of a test run I can check of the log is empty
+as part of the test.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 languages/test_languages_manifests.rb
 What happens if "filename_extension" is not present.
@@ -91,6 +93,7 @@ ExternalDiskDir.rb contains this...
   end
 
 which could be refactored to remove the duplication.
+
   def disk
     external_property
   end
@@ -99,6 +102,13 @@ which could be refactored to remove the duplication.
     external(name)
   end
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Think about switching away from fake Disk/Dir and using a ram-disk/tmp-fs
+instead. This would allow me to use the real Git. The only 
+externals affecting test times would be the DockerTestRunner.
+I could copy some of exercises/languages onto the ram-disk
+and make exercises/languages readonly, and katas/ read-write. 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
 
 
