@@ -78,7 +78,7 @@ naming their class as a string via ENV[]
 Paths would just be left as a string.
 And keys/ids (for 1self) would also be left as a string.
 This starts to get me near my goal of being able to run the same
-tests twice, once with fakee/mocks/stubs and once without.
+tests twice, once with fake/mocks/stubs and once without.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 In switching to new externals setting the following tests needed refactoring
 test/app_helpers/test_pie_chart.rb

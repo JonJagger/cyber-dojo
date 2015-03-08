@@ -87,9 +87,7 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   
   def any_test
     filename = 'cyber-dojo.sh'
-    kata_run_tests(file_content:         { filename => '' },
-                   file_hashes_incoming: { filename => 234234 },
-                   file_hashes_outgoing: { filename => -4545645678 })
+    kata_run_tests make_file_hash(filename,'',234234,-4545645678)
   end
 
   def kata_run_tests(hash)
