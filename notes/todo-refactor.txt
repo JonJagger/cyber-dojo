@@ -103,10 +103,25 @@ which could be refactored to remove the duplication.
   end
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Think about switching away from fake Disk/Dir and using a ram-disk/tmp-fs
-instead. This would allow me to use the real Git. The only 
-externals affecting test times would be the DockerTestRunner.
+instead. This would allow me to use the real Git. 
+This would mean that setting the paths would be all I'd need to do
+to switch to the ram-disk.
+The main external affecting test times would be the DockerTestRunner.
 I could copy some of exercises/languages onto the ram-disk
 and make exercises/languages readonly, and katas/ read-write. 
+MacOs
+$ diskutil erasevolume HFS+ 'RAM Disk' `hdiutil attach -nomount ram://XXXXX`
+For a 1GB ram disk, XXXXX is 1024 * 2048 == 2097152. So
+$ diskutil erasevolume HFS+ 'RAM Disk' `hdiutil attach -nomount ram://2097152`
+Ok. That seemed to work. I can see it in Finder. I can eject it.
+But I cannot cd to /dev/rdisk2 or create files in it.
+Found this
+https://gist.github.com/pklaus/931579
+No joy
+
+Linux
+$ mkdir ~/RamFS
+$ mount -t ramfs -o size=512m ramfs ~/RamFS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
