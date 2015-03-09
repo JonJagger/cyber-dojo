@@ -79,9 +79,13 @@ would have
 and the test framework would then try to run test_runner!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 You can create an object from its class name as a string. Eg
-reset_external(:git, Object.const_get('Git').new)
+  reset_external(:git, Object.const_get('Git').new)
 This suggests that the external objects could be set by
 naming their class as a string via ENV[]
+  reset_external(:git, Object.const_get(ENV['CYBER_DOJO_GIT']).new)
+Except that once I have ramdisk in place I could probably leave
+Git with no fakes/mocks/stubs. The only external would then be 
+the runner.
 Paths would just be left as a string.
 And keys/ids (for 1self) would also be left as a string.
 This starts to get me near my goal of being able to run the same
@@ -94,13 +98,10 @@ test/integration/integration_test_base.rb
 test/integration/test_approval.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ExternalDiskDir.rb contains this...
-
   def disk
     external(:disk)
   end
-
 which could be refactored to remove the duplication.
-
   def disk
     external_property
   end

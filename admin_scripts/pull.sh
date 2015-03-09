@@ -12,10 +12,14 @@ if [ $ret -ne 0 ]; then
   exit
 fi
 
-echo "refreshing exercises/ cache"
+echo "deleting the rails cache"
+rm -rf $cyberDojoHome/tmp/cache
+mkdir -p $cyberDojoHome/tmp/cache
+
+echo "refreshing the exercises/ cache"
 $cyberDojoHome/exercises/cache.rb
 
-echo "refreshing languages/ cache"
+echo "refreshing the languages/ cache"
 $cyberDojoHome/languages/cache.rb
 
 echo "poking rails"
