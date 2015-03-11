@@ -27,7 +27,8 @@ class OneLanguageChecker
     return DummyTestRunner.new
   end
 
-  def check(language_name)
+  def check(name,test)
+    language_name = [name,test].join('-')
     # if running on a Docker server
     #    return [red,amber,green] state
     # else
@@ -120,11 +121,11 @@ private
     case (@language.name)
       when 'Clojure-.test'
         then make_pattern('* 6 9')
-      when 'Java-1.8_Cucumber',
+      when 'Java1.8-Cucumber',
            'Ruby-Cucumber'
         then make_pattern('6 times 9')
-      when 'Java-1.8_Mockito',
-           'Java-1.8_Powermockito'
+      when 'Java1.8-Mockito',
+           'Java1.8-Powermockito'
         then make_pattern('thenReturn(9)')
       when 'Asm-assert'
         then make_pattern('mov ebx, 9')
