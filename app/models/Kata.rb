@@ -54,6 +54,10 @@ class Kata
     dojo.exercises[manifest_property]
   end
 
+  def manifest
+    @manifest ||= JSON.parse(read(manifest_filename))
+  end
+
 private
 
   include ExternalDiskDir
@@ -64,10 +68,6 @@ private
     'manifest.json'
   end
   
-  def manifest
-    @manifest ||= JSON.parse(read(manifest_filename))
-  end
-
   def read(filename)
     dir.read(filename)
   end

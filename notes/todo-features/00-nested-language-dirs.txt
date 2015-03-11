@@ -7,6 +7,14 @@ Plan
 2. restructure languages/folders
    make Languages.each work using new structure.
    setup page should still work ok. Do in a branch.
+   ----
+   ?Split off new domain class, Language -> Test
+   ?create kata from (exercise,test) pair
+   ?Can always get back to language from test.
+   ----
+   language folder must not have - character in it.
+   
+   
 3. simplify setup page to use new languages/ structure
 
 Then think about versioning, auto-builds, dojo-time-limits.

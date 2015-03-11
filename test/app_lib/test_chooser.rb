@@ -157,8 +157,8 @@ class ChooseTests < AppLibTestBase
   def test_languages_names
     [ 'C#-NUnit',
       'C++-GoogleTest',
-      'Ruby-TestUnit',
-      'Java-1.8_JUnit'
+      'Ruby1.9.3-TestUnit',
+      'Java1.8-JUnit'
     ].sort
   end
 

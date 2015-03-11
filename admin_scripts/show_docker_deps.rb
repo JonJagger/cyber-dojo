@@ -9,7 +9,7 @@ if root_dir.nil?
 end
 
 dependencies = [ ]
-Dir.glob("#{root_dir}/languages/*/Dockerfile") do |file|
+Dir.glob("#{root_dir}/languages/*/*/Dockerfile") do |file|
   sh = File.expand_path(File.dirname(file)) + '/build-docker-container.sh'
   to = IO.read(sh).split[4]
   from = IO.read(file).split[1]

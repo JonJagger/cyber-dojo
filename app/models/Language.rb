@@ -2,11 +2,13 @@
 
 class Language
 
-  def initialize(path,name)
-    @path,@name = path,name
+  def initialize(path,language_name,test_name)
+    @path,@language_name,@test_name = path,language_name,test_name
   end
 
-  attr_reader :name
+  def name
+    @language_name + '-' + @test_name
+  end
 
   def exists?
     dir.exists?(manifest_filename)
@@ -86,7 +88,7 @@ class Language
   end
 
   def path
-    @path + name + '/'
+    @path + @language_name + '/' + @test_name + '/'
   end
 
 private

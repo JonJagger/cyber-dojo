@@ -45,7 +45,11 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
 
   def stub_language(language_name, unit_test_framework)
     language = @dojo.languages[language_name]
-    language.dir.write('manifest.json', { 'unit_test_framework' => unit_test_framework })
+    language.dir.write('manifest.json', 
+      { 
+        'unit_test_framework' => unit_test_framework,
+        'display_name' => language_name.gsub('-',',')
+      })
   end
 
   def stub_exercise(exercise_name)

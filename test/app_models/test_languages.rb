@@ -26,7 +26,7 @@ class LanguagesTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - -
 
   test 'each() not empty' do
-    stub_exists(expected = ['C#-NUnit','Ruby-TestUnit'])
+    stub_exists(expected = ['C#-NUnit','Ruby1.9.3-TestUnit'])
     assert_equal expected, languages.each.map {|language| language.name}.sort
   end
 
@@ -56,22 +56,22 @@ class LanguagesTests < ModelTestBase
       'Perl-Test::Simple'           => 'Perl-TestSimple',
       'Python-py.test'              => 'Python-pytest',
       'Ruby-RSpec'                  => 'Ruby-Rspec',
-      'Ruby-Test::Unit'             => 'Ruby-TestUnit',
+      'Ruby-Test::Unit'             => 'Ruby1.9.3-TestUnit',
 
-      'Java'               => 'Java-1.8_JUnit',
-      'Java-JUnit'         => 'Java-1.8_JUnit',
-      'Java-Approval'      => 'Java-1.8_Approval',
-      'Java-ApprovalTests' => 'Java-1.8_Approval',
-      'Java-Cucumber'      => 'Java-1.8_Cucumber',
-      'Java-Mockito'       => 'Java-1.8_Mockito',
-      'Java-JUnit-Mockito' => 'Java-1.8_Mockito',
-      'Java-PowerMockito'  => 'Java-1.8_Powermockito',
+      'Java'               => 'Java1.8-JUnit',
+      'Java-JUnit'         => 'Java1.8-JUnit',
+      'Java-Approval'      => 'Java1.8-Approval',
+      'Java-ApprovalTests' => 'Java1.8-Approval',
+      'Java-Cucumber'      => 'Java1.8-Cucumber',
+      'Java-Mockito'       => 'Java1.8-Mockito',
+      'Java-JUnit-Mockito' => 'Java1.8-Mockito',
+      'Java-PowerMockito'  => 'Java1.8-Powermockito',
 
       'Javascript' => 'Javascript-assert',
       'Perl'       => 'Perl-TestSimple',
       'PHP'        => 'PHP-PHPUnit',
       'Python'     => 'Python-unittest',
-      'Ruby'       => 'Ruby-TestUnit',
+      'Ruby'       => 'Ruby1.9.3-TestUnit',
       'Scala'      => 'Scala-scalatest'
     }
     renames.each do |was,now|
@@ -81,8 +81,14 @@ class LanguagesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
+  test 'name is recursively translated if multiple renames have occured' do
+    assert_equal 'Ruby1.9.3-TestUnit', languages['Ruby'].name
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - -
+
   test 'name is not translated when language dir has not been renamed' do
-    assert_equal 'Ruby-TestUnit', languages['Ruby-TestUnit'].name
+    assert_equal 'C#-NUnit', languages['C#-NUnit'].name
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
@@ -91,10 +97,9 @@ class LanguagesTests < ModelTestBase
     @dojo.languages
   end
 
-  def stub_exists(languages_names)
+  def stub_exists(languages_names)    
     languages_names.each do |name|
-      language = languages[name]
-      language.dir.write('manifest.json', {})
+      languages[name].dir.write('manifest.json', {})
     end
   end
 

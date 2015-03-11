@@ -6,10 +6,11 @@ require 'tempfile'
 class LanguageTests < ModelTestBase
 
   test 'path(language) has correct format' do
-    language = @dojo.languages['Ruby']
-    assert language.path.match(language.name)
-    assert path_ends_in_slash?(language)
-    assert !path_has_adjacent_separators?(language)
+    language_dir,test_dir = 'C#','NUnit'    
+    language = @dojo.languages[language_dir + '-' + test_dir]
+    assert language.path.match(language_dir + '/' + test_dir), "1"
+    assert path_ends_in_slash?(language), "2"
+    assert !path_has_adjacent_separators?(language), "3"
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -325,10 +326,10 @@ class LanguageTests < ModelTestBase
   end
 
   test 'custom runner that filters the language.runnable?' do
-    reset_external(:runner, CustomRunner.new(['yes']))
+    reset_external(:runner, CustomRunner.new(['yes-x']))
     @dojo = Dojo.new
-    assert @dojo.languages['yes'].runnable?
-    assert !@dojo.languages['no'].runnable?
+    assert @dojo.languages['yes-x'].runnable?
+    assert !@dojo.languages['no-y'].runnable?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -337,7 +338,7 @@ class LanguageTests < ModelTestBase
        'when language does not have image_name set in manifest' do
     reset_external(:runner, DockerTestRunner.new)
     @dojo = Dojo.new
-    ruby = @dojo.languages['Ruby']
+    ruby = @dojo.languages['Ruby-TestUnit']
     ruby.dir.write(manifest_filename, { })
     assert !ruby.runnable?
   end
