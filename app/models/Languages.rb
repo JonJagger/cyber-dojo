@@ -30,35 +30,7 @@ private
     was_name.split('-')
   end
   
-  def new_name(name)
-    
-    # I think this needs more work.
-    # Some existing dojos have language:"Java-1.8_Junit" 
-    # in their manifest with the - part of the name
-    # Also  Ruby-1.9.3 ---> Ruby1.9.3
-    # Also  Ruby-2.1.3 ---> Ruby2.1.3
-    # Do some dojo's have a manifest language: entry with , as a separator
-    #    and some with a - separator. I think they do. 
-    #    Run admin_scripts/show_kata_language_names.rb on main server
-    #
-    # Rule: - and , are not allowed in a language folder name or a test folder name
-    # Idea: parse a dojo's manifest's language: entry backwards, looking for - or ,
-    #       "Java-1.8, assert"
-    # does not parse to 
-    #       "Java", "-1.8, assert"
-    # but to 
-    #       "Java-1.8", "assert"
-    # Then I might be able to have a separate translation function for the language
-    # on its own. (Later refactoring).
-    #
-    # Idea: From now on, store a versionless language name in a kata's
-    #       manifest.json file. Then use Languages.rename to map
-    #       to folder name which may have the latest version number.
-    # Idea: Write a script to fix up all the katas on the main server
-    #       so the language entry in their manifests are fixed.
-    #
-    
-    
+  def new_name(name)    
     renames = {
       # from way back when test name was not part of language name
       'C'            => 'C-assert',
@@ -90,14 +62,10 @@ private
       'Ruby-RSpec'                  => 'Ruby-Rspec',
 
       # - in the wrong place
-      #'Java-JUnit'         => 'Java1.8-JUnit',
-      #'Java-JMock'         => 'Java1.8-JMock',
       'Java-1.8_Cucumber'      => 'Java-Cucumber',
       'Java-1.8_Mockito'       => 'Java-Mockito',
-      #'Java-JUnit-Mockito' => 'Java1.8-Mockito',
-      #'Java-PowerMockito'  => 'Java1.8-Powermockito',       
 
-      # versioning
+      # multiple versions
       'C++-assert'     => 'g++4.8.1-assert',
       'C++-Boost.Test' => 'g++4.8.1-Boost.Test',
       'C++-Catch'      => 'g++4.8.1-Catch',
