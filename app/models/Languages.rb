@@ -48,14 +48,18 @@ private
       'Python'       => 'Python-unittest',
       'Ruby'         => 'Ruby-TestUnit',
       'Scala'        => 'Scala-scalatest',
-        
+
+      # renamed
+      'Java-ApprovalTests' => 'Java-Approval',
+      'Java-JUnit-Mockito' => 'Java-Mockito',
+      'Ruby-Test::Unit'    => 'Ruby-TestUnit',
+
       # display name is different to folder name
       'C++-catch'                   => 'C++-Catch',
       'Javascript-Mocha+chai+sinon' => 'Javascript-mocha_chai_sinon',
       'Perl-Test::Simple'           => 'Perl-TestSimple',
       'Python-py.test'              => 'Python-pytest',
       'Ruby-RSpec'                  => 'Ruby-Rspec',
-      'Ruby-Test::Unit'             => 'Ruby-TestUnit',
 
       # versioning
       'C++-assert'     => 'g++4.8.1-assert',
@@ -65,17 +69,7 @@ private
       'C++-GoogleTest' => 'g++4.8.1-GoogleTest',
       'C++-Igloo'      => 'g++4.8.1-Igloo',
       'C++-GoogleMock' => 'g++4.9-GoogleMock',
-      
-      'Java'               => 'Java1.8-JUnit',
-      'Java-JUnit'         => 'Java1.8-JUnit',
-      'Java-JMock'         => 'Java1.8-JMock',
-      'Java-Approval'      => 'Java1.8-Approval',
-      'Java-ApprovalTests' => 'Java1.8-Approval',
-      'Java-Cucumber'      => 'Java1.8-Cucumber',
-      'Java-Mockito'       => 'Java1.8-Mockito',
-      'Java-JUnit-Mockito' => 'Java1.8-Mockito',
-      'Java-PowerMockito'  => 'Java1.8-Powermockito', 
-      
+            
       'Ruby-Approval'      => 'Ruby1.9.3-Approval',
       'Ruby-Cucumber'      => 'Ruby1.9.3-Cucumber',
       'Ruby-TestUnit'      => 'Ruby1.9.3-TestUnit',
