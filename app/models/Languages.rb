@@ -56,7 +56,7 @@ private
       'Ruby-RSpec'                  => 'Ruby-Rspec',
       'Ruby-Test::Unit'             => 'Ruby-TestUnit',
 
-      # version numbers in language name?
+      # version numbers in language name
       'Java'               => 'Java1.8-JUnit',
       'Java-JUnit'         => 'Java1.8-JUnit',
       'Java-JMock'         => 'Java1.8-JMock',
