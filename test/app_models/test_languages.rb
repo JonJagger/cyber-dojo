@@ -59,7 +59,12 @@ class LanguagesTests < ModelTestBase
       'Python-py.test'              => 'Python-pytest',
       'Perl-Test::Simple'           => 'Perl-TestSimple',
       'Scala'                       => 'Scala-scalatest',
-      
+
+      'Java-ApprovalTests' => 'Java-Approval',
+      'Java-JUnit-Mockito' => 'Java-Mockito',
+      'Perl-Test::Simple'  => 'Perl-TestSimple',
+      'Python-py.test'     => 'Python-pytest',
+            
       'C++'            => 'g++4.8.1-assert',
       'C++-assert'     => 'g++4.8.1-assert',
       'C++-Catch'      => 'g++4.8.1-Catch',
@@ -71,32 +76,19 @@ class LanguagesTests < ModelTestBase
       'C++-GoogleMock' => 'g++4.9-GoogleMock', 
       
 
-#      'Java-JUnit'         => 'Java1.8-JUnit',
-#      'Java-Approval'      => 'Java1.8-Approval',
-      'Java-ApprovalTests' => 'Java-Approval',
-#      'Java-Cucumber'      => 'Java1.8-Cucumber',
-#      'Java-Mockito'       => 'Java1.8-Mockito',
-#      'Java-JUnit-Mockito' => 'Java1.8-Mockito',
-#      'Java-PowerMockito'  => 'Java1.8-Powermockito',
-
       'Ruby'             => 'Ruby1.9.3-TestUnit',      
       'Ruby-Test::Unit'  => 'Ruby1.9.3-TestUnit',
       'Ruby-TestUnit'    => 'Ruby1.9.3-TestUnit',
       'Ruby-Approval'    => 'Ruby1.9.3-Approval',
       'Ruby-Cucumber'    => 'Ruby1.9.3-Cucumber',
       'Ruby-RSpec'       => 'Ruby1.9.3-Rspec',
+      'Ruby-Rspec'       => 'Ruby1.9.3-Rspec',
       'Ruby-MiniTest'    => 'Ruby2.1.3-MiniTest'      
     }
   
     renames.each do |was,now|
       assert_equal now, languages[was].name
     end
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - -
-
-  test 'name is recursively translated if multiple renames have occured' do
-    assert_equal 'Ruby1.9.3-TestUnit', languages['Ruby'].name
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
