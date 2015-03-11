@@ -32,31 +32,32 @@ Remember what is displayed is based on what folders exist
 that have their docker container installed.
 
 
------------
-Auto-Build?
------------
-Y 19
-Y cyberdojo/build-essential
+
+--------------
+Not Auto-build (but were)
+--------------
+Y cyberdojo/nasm-2.10  
+Y cyberdojo/nasm-2.10.0_assert   
 Y cyberdojo/bcpl
 Y cyberdojo/bcpl-all_tests_passed
-Y cyberdojo/csharp-2.10.8.1
-Y cyberdojo/csharp-2.10.8.1_nunit
 Y cyberdojo/fsharp-3.0
 Y cyberdojo/fsharp-3.0_nunit
+Y cyberdojo/csharp-2.10.8.1
+Y cyberdojo/csharp-2.10.8.1_nunit
+Y cyberdojo/build-essential
 Y cyberdojo/gcc-4.8.1
 Y cyberdojo/gcc-4.8.1_assert
 Y cyberdojo/gcc-4.8.1_cpputest
 Y cyberdojo/gpp-4.9
 Y cyberdojo/gpp-4.8.1
 Y cyberdojo/gpp-4.8.1_assert
-Y cyberdojo/gpp-4.8.1_boosttest
 Y cyberdojo/gpp-4.8.1_cpputest
 Y cyberdojo/gpp-4.8.1_googletest
+Y cyberdojo/gpp-4.8.1_boosttest
 Y cyberdojo/gpp-4.9_googlemock
-Y cyberdojo/nasm-2.10
-Y cyberdojo/nasm-2.10.0_assert
-
-
+--------------
+Not Auto-build 
+--------------
 N cyberdojo/clojure-1.4.0
 N cyberdojo/clojure-1.4.0_test
 N cyberdojo/coffeescript-1.14.3
@@ -133,6 +134,7 @@ underneath the languages. Viz instead of
 dojo.languages[language_name + '-' + test_name]
 do
 dojo.languages[language_name].tests[test_name]
+s/tests/testing/
 
 
 
@@ -203,8 +205,6 @@ private
 
 private
 
-  # s/latest/renamed/
-  
   def latest(language_name,test_name)
     will need reworking
     how do I return two arguments?
