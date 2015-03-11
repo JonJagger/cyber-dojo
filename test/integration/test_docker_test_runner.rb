@@ -69,7 +69,7 @@ class DockerTestRunnerTests < IntegrationTestBase
   test "DockerTestRunner when outer command times out " +
        "(simulates breaking out of the docker container)" do
     return if !Docker.installed?
-    thread[:runner] = DockerTestRunnerAdapter.new(runner)
+    reset_external(:runner, DockerTestRunnerAdapter.new(runner))
     dojo = Dojo.new
     kata = make_kata(dojo, 'C-assert')
     lion = kata.start_avatar(['lion'])

@@ -14,11 +14,14 @@ class AllLanguagesTests < LanguagesTestBase
     verbose = false
     checker = OneLanguageChecker.new(root_path,verbose)
     results = {}
-    dirs = Dir.glob("#{root_path}languages/*/manifest.json")
-    languages = dirs.map{|file| File.dirname(file).split('/')[-1] }
-    languages.sort.each do |language|
-      rag = checker.check(language)
-      results[language] = rag if !rag.nil?
+    dirs = Dir.glob("#{root_path}languages/*/*/manifest.json")
+    languages = dirs.map{ |file|
+      File.dirname(file).split('/')[-2..-1]
+    }
+
+    languages.sort.each do |array|
+      rag = checker.check(*array)
+      results[array] = rag if !rag.nil?
     end
     expected = ['red','amber','green']
     fails  = results.select{|language,rag| rag != expected }
