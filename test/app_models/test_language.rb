@@ -155,7 +155,7 @@ class LanguageTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'display_name defaults to name when not set' do
-    name = 'Ruby-Approval'
+    name = 'C-assert'
     @language = @dojo.languages[name]
     spy_manifest({ })
     assert_equal name, @language.name

@@ -33,30 +33,42 @@ class LanguagesTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - -
 
   test '[name] returns language with given name' do
-    ['Ruby-Cucumber','C#-NUnit'].each do |name|
+    ['C-assert','C#-NUnit'].each do |name|
       assert_equal name, languages[name].name
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test 'name is translated when old language dir has been renamed' do
-    renames = {
-      'C'            => 'C-assert',
-      'C++'          => 'C++-assert',
-      'C#'           => 'C#-NUnit',
-      'Clojure'      => 'Clojure-.test',
-      'CoffeeScript' => 'CoffeeScript-jasmine',
-      'Erlang'       => 'Erlang-eunit',
-      'Go'           => 'Go-testing',
-      'Haskell'      => 'Haskell-hunit',
-
-      'C++-catch'                   => 'C++-Catch',
+  test 'name is translated when old language dir has been renamed' do  
+    renames =
+    {
+      'C#'                          => 'C#-NUnit',
+      'C'                           => 'C-assert',      
+      'Clojure'                     => 'Clojure-.test',
+      'CoffeeScript'                => 'CoffeeScript-jasmine',
+      'Erlang'                      => 'Erlang-eunit',
+      'Go'                          => 'Go-testing',
+      'Haskell'                     => 'Haskell-hunit',
+      'Javascript'                  => 'Javascript-assert',
       'Javascript-Mocha+chai+sinon' => 'Javascript-mocha_chai_sinon',
-      'Perl-Test::Simple'           => 'Perl-TestSimple',
+      'Perl'                        => 'Perl-TestSimple',
+      'PHP'                         => 'PHP-PHPUnit',
+      'Python'                      => 'Python-unittest',
       'Python-py.test'              => 'Python-pytest',
-      'Ruby-RSpec'                  => 'Ruby-Rspec',
-      'Ruby-Test::Unit'             => 'Ruby1.9.3-TestUnit',
+      'Perl-Test::Simple'           => 'Perl-TestSimple',
+      'Scala'                       => 'Scala-scalatest',
+      
+      'C++'            => 'g++4.8.1-assert',
+      'C++-assert'     => 'g++4.8.1-assert',
+      'C++-Catch'      => 'g++4.8.1-Catch',
+      'C++-catch'      => 'g++4.8.1-Catch',
+      'C++-Boost.Test' => 'g++4.8.1-Boost.Test', 
+      'C++-CppUTest'   => 'g++4.8.1-CppUTest',
+      'C++-GoogleTest' => 'g++4.8.1-GoogleTest',
+      'C++-Igloo'      => 'g++4.8.1-Igloo',
+      'C++-GoogleMock' => 'g++4.9-GoogleMock', 
+      
 
       'Java'               => 'Java1.8-JUnit',
       'Java-JUnit'         => 'Java1.8-JUnit',
@@ -67,13 +79,15 @@ class LanguagesTests < ModelTestBase
       'Java-JUnit-Mockito' => 'Java1.8-Mockito',
       'Java-PowerMockito'  => 'Java1.8-Powermockito',
 
-      'Javascript' => 'Javascript-assert',
-      'Perl'       => 'Perl-TestSimple',
-      'PHP'        => 'PHP-PHPUnit',
-      'Python'     => 'Python-unittest',
-      'Ruby'       => 'Ruby1.9.3-TestUnit',
-      'Scala'      => 'Scala-scalatest'
+      'Ruby'             => 'Ruby1.9.3-TestUnit',      
+      'Ruby-Test::Unit'  => 'Ruby1.9.3-TestUnit',
+      'Ruby-TestUnit'    => 'Ruby1.9.3-TestUnit',
+      'Ruby-Approval'    => 'Ruby1.9.3-Approval',
+      'Ruby-Cucumber'    => 'Ruby1.9.3-Cucumber',
+      'Ruby-RSpec'       => 'Ruby1.9.3-Rspec',
+      'Ruby-MiniTest'    => 'Ruby2.1.3-MiniTest'      
     }
+  
     renames.each do |was,now|
       assert_equal now, languages[was].name
     end

@@ -41,6 +41,7 @@ private
       'Erlang'       => 'Erlang-eunit',
       'Go'           => 'Go-testing',
       'Haskell'      => 'Haskell-hunit',
+      'Java'         => 'Java-JUnit',      
       'Javascript'   => 'Javascript-assert',
       'Perl'         => 'Perl-TestSimple',
       'PHP'          => 'PHP-PHPUnit',
@@ -56,7 +57,15 @@ private
       'Ruby-RSpec'                  => 'Ruby-Rspec',
       'Ruby-Test::Unit'             => 'Ruby-TestUnit',
 
-      # version numbers in language name
+      # versioning
+      'C++-assert'     => 'g++4.8.1-assert',
+      'C++-Boost.Test' => 'g++4.8.1-Boost.Test',
+      'C++-Catch'      => 'g++4.8.1-Catch',
+      'C++-CppUTest'   => 'g++4.8.1-CppUTest',
+      'C++-GoogleTest' => 'g++4.8.1-GoogleTest',
+      'C++-Igloo'      => 'g++4.8.1-Igloo',
+      'C++-GoogleMock' => 'g++4.9-GoogleMock',
+      
       'Java'               => 'Java1.8-JUnit',
       'Java-JUnit'         => 'Java1.8-JUnit',
       'Java-JMock'         => 'Java1.8-JMock',
@@ -65,8 +74,13 @@ private
       'Java-Cucumber'      => 'Java1.8-Cucumber',
       'Java-Mockito'       => 'Java1.8-Mockito',
       'Java-JUnit-Mockito' => 'Java1.8-Mockito',
-      'Java-PowerMockito'  => 'Java1.8-Powermockito',      
-      'Ruby-TestUnit'      => 'Ruby1.9.3-TestUnit'      
+      'Java-PowerMockito'  => 'Java1.8-Powermockito', 
+      
+      'Ruby-Approval'      => 'Ruby1.9.3-Approval',
+      'Ruby-Cucumber'      => 'Ruby1.9.3-Cucumber',
+      'Ruby-TestUnit'      => 'Ruby1.9.3-TestUnit',
+      'Ruby-Rspec'         => 'Ruby1.9.3-Rspec',
+      'Ruby-MiniTest'      => 'Ruby2.1.3-MiniTest'  
     }
     (renames[name] || name).split('-')
   end
