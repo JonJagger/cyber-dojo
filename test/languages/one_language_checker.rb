@@ -73,7 +73,7 @@ private
     from = pattern[:red]
     to = pattern[colour]
 
-    if @language.name === 'Java-1.8_Cucumber' && colour === :amber
+    if @language.name === 'Java1.8-Cucumber' && colour === :amber
       filename = 'Hiker.java'
       from = '}'
       to = '}typo'
@@ -122,7 +122,7 @@ private
       when 'Clojure-.test'
         then make_pattern('* 6 9')
       when 'Java1.8-Cucumber',
-           'Ruby-Cucumber'
+           'Ruby1.9.3-Cucumber'
         then make_pattern('6 times 9')
       when 'Java1.8-Mockito',
            'Java1.8-Powermockito'
