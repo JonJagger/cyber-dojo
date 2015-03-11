@@ -1,5 +1,13 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Having the starting files called Hiker.rb is not ideal.
+How about prefixing the instructions file with the following
+...
+The initial code and test files are completely
+*unrelated* to the chosen exercise. They are
+merely a simple example to start you off.
+...
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The 1self stream capability will give me the option
 of creating a visualization of all dojos. This makes it important
 that when someone claims/saves a dojo, it must become readonly.
