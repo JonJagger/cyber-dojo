@@ -37,7 +37,41 @@ end
 # IDEA: From now on, store a versionless language name in a kata's
 #       manifest.json file. Then use Languages.rename to map
 #       to folder name which may have the latest version number.
-#       Only way ambiguity can arise is if there are two versions of
+#
+#       Katas.create_kata_manifest(language, exercise, id, now)
+#         {   ...
+#             :language => language.name,
+#             :exercise => exercise.name, 
+#             ...
+#         }
+#       redo
+#       Katas.create_kata_manifest(language, exercise, id, now)
+#         {   ...
+#             :language_name => ...,
+#             :test_name => ...,
+#             :exercise_name => ..., 
+#             ...
+#         }
+#       Hmmm. exercise_name
+#       Maybe create another script to look at the names of those
+#       in all mainfests on the main server.
+#       Then patch those up too?
+#
+# IDEA: Languages/manifest.json files looks like this
+#       {   ...
+#           "display_name": "C++, Igloo",
+#           ...
+#       }
+#       This could also be reworked into two names.
+#       {
+#           ...
+#           "language_display_name": "C++",
+#           "test_display_name": "Igloo",
+#           ...
+#       }
+#
+#
+# NOTE: Only way ambiguity can arise is if there are two versions of
 #       the same language+test, eg g++4.8.1-assert and g++4.9-assert
 #       So never do that. And aim to have two versions of the same
 #       language only when upgrading, or when the tests are split 
