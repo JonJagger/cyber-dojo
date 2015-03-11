@@ -9,14 +9,14 @@ class LanguagesTests < ModelTestBase
     assert_equal 'end_with_slash/', Languages.new.path
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  #- - - - - - - - - - - - - - - - - - - - -
 
   test 'path appends slash if necessary' do
     reset_external(:languages_path, 'languages')
     assert_equal 'languages/', Languages.new.path
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  #- - - - - - - - - - - - - - - - - - - - -
 
   test 'each() empty' do
     stub_exists(expected = [ ])
