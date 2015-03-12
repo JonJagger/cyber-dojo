@@ -86,8 +86,7 @@ private
       'Ruby-Cucumber'      => 'Ruby1.9.3-Cucumber',
       'Ruby-TestUnit'      => 'Ruby1.9.3-TestUnit',
       'Ruby-Rspec'         => 'Ruby1.9.3-Rspec',
-      'Ruby-MiniTest'      => 'Ruby2.1.3-MiniTest',
-            
+      'Ruby-MiniTest'      => 'Ruby2.1.3-MiniTest',            
     }
     (renames[name] || name).split('-')
   end

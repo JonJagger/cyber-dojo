@@ -169,6 +169,29 @@ class LanguagesManifestsTests < LanguagesTestBase
         " which contains digits and looks like it contains a version number"
         puts message
         return false
+        # eg "language":"g++4.8.1-GoogleTest"
+        # Now kata.language -->
+        #       dojo.languages[manifest_property]
+        #       which, if it worked, would mean I'd have to store
+        #       version numbers for every historical version upgrade.
+        #       So a kata's manifest.json file's 'language' entry
+        #       needs to be the display-name
+        #       How does a kata's manifest.json file's 'language' entry get set
+        #       app/models/Katas.rb
+        #        { :language => language.name }
+        #       And app/models/Language.rb
+        #         def name
+        #           @language_name + '-' + @test_name
+        #         end
+        #       and @language_name,@test_name are passed in as the dirs.
+        #       Could I use the display_name (from the manifest here)?
+        #       Eg languages/g++4.8.1/assert/manifest.json
+        #          { :display_name => 'C++, assert' }
+        #       Perhaps do
+        #          display_name.split(',').map{ |s| s.strip }
+        #       Do I have a check that the display_name...
+        #         o) is requird  YES
+        #         o) always has a , in it NO
     end    
     print '.'
     true
