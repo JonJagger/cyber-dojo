@@ -4,8 +4,16 @@ require_relative 'languages_test_base'
 
 class LanguagesManifestsTests < LanguagesTestBase
 
+  include ExternalSetter
+
   def setup
     @root_path = root_path
+    reset_external(:disk, Disk.new)
+    reset_external(:git, Git.new)
+    reset_external(:runner, HostTestRunner.new)
+    reset_external(:exercises_path, root_path + 'exercises/')
+    reset_external(:languages_path, root_path + 'languages/')
+    reset_external(:katas_path, root_path + 'test/cyber-dojo/katas/')    
   end
 
   def root_path
@@ -17,13 +25,12 @@ class LanguagesManifestsTests < LanguagesTestBase
       folders = File.dirname(file).split('/')[-2..-1]
       assert_equal 2, folders.size
       lang,test = folders
-      check("#{lang}/#{test}")
+      check("#{lang}-#{test}")
     end
   end
 
   def check(language_name)
     @language = language_name
-
     assert manifest_file_exists?
     assert required_keys_exist?
     assert !unknown_keys_exist?
@@ -43,9 +50,11 @@ class LanguagesManifestsTests < LanguagesTestBase
     assert Dockerfile_exists?
     assert build_docker_container_exists?
     assert build_docker_container_starts_with_cyberdojo?
+    assert created_kata_manifests_language_entry_round_trips?
     assert display_name_maps_back_to_language_name?
-    # assert created_kata_manifests_language_entry_has_dash_format
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def manifest_file_exists?
     if !File.exists? manifest_filename
@@ -58,6 +67,8 @@ class LanguagesManifestsTests < LanguagesTestBase
     print '.'
     true
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def required_keys_exist?
     required_keys = [ 'visible_filenames', 'display_name', 'unit_test_framework' ]
@@ -73,6 +84,8 @@ class LanguagesManifestsTests < LanguagesTestBase
     print "."
     true
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def unknown_keys_exist?
     known = [ 'visible_filenames',
@@ -98,23 +111,22 @@ class LanguagesManifestsTests < LanguagesTestBase
     false
   end
 
-  include ExternalSetter
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def display_name_maps_back_to_language_name?
     languages = Languages.new
     reset_external(:disk, Disk.new)
     reset_external(:languages_path, root_path + 'languages/')
-    dashed_name = @language.split('/').join('-')
-    display_name = languages[dashed_name].display_name
-    part = lambda {|n| display_name.split(',')[n].strip }
+    display_name = languages[@language].display_name
+    part = lambda { |n| display_name.split(',')[n].strip }
     language_name,test_name = part.(0), part.(1)
     round_trip = languages[language_name + '-' + test_name]
-    if dashed_name != round_trip.name
+    if @language != round_trip.name
       message = 
         alert +
-        " #{manifest_filename}'s 'display_name' " +
+        " #{manifest_filename}'s 'display_name' entry" +
         " when used from setup page is not mapped " +
-        " to languages' folder name" 
+        " back to its own languages/sub/folder name" 
       puts message
       return false
     end
@@ -122,6 +134,48 @@ class LanguagesManifestsTests < LanguagesTestBase
     true
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def created_kata_manifests_language_entry_round_trips?
+    dojo = Dojo.new    
+    language = dojo.languages[@language]
+    exercise = dojo.exercises['Print_Diamond']
+    kata = dojo.katas.create_kata(language, exercise)
+    manifest = JSON.parse(kata.dir.read('manifest.json'))
+    lang = manifest['language']
+    if lang.count('-') != 1
+      message = 
+        alert +
+        " #{kata.id}'s 'language' entry is #{lang}" +
+        " which does not contain a - "
+        puts message
+        return false
+    end
+    print '.'
+    round_tripped = dojo.languages[lang]
+    if !File.directory? round_tripped.path
+      message = 
+        alert +
+        " kata #{kata.id}'s 'language' entry is #{lang}" +
+        " which does not round-trip back to its own languages/sub/folder"
+        puts message
+        return false
+    end
+    print '.'
+    if lang.each_char.any?{|ch| "0123456789".include?(ch)}
+      message =
+        alert +
+        " #{kata.id}'s 'language' entry is #{lang}" +
+        " which contains digits and looks like it contains a version number"
+        puts message
+        return false
+    end    
+    print '.'
+    true
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   def duplicate_visible_filenames?
     visible_filenames.each do |filename|
       if visible_filenames.count(filename) > 1
@@ -133,9 +187,11 @@ class LanguagesManifestsTests < LanguagesTestBase
         return true
       end
     end
-    print "."
+    print '.'
     false
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def duplicate_support_filenames?
     support_filenames.each do |filename|
@@ -152,6 +208,8 @@ class LanguagesManifestsTests < LanguagesTestBase
     false
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def progress_regexs_valid?
     if progress_regexs.class.name != "Array"
         message =
@@ -159,14 +217,12 @@ class LanguagesManifestsTests < LanguagesTestBase
         puts message
         return false
     end
-
     if progress_regexs.length != 0 && progress_regexs.length != 2
         message =
           alert + " #{manifest_filename}'s progress_regexs entry does not contain 2 entries"
         puts message
         return false
     end
-
     progress_regexs.each do |s|
       begin
         Regexp.new(s)
@@ -181,6 +237,8 @@ class LanguagesManifestsTests < LanguagesTestBase
     true
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def filename_extension_starts_with_dot?
     if manifest['filename_extension'][0] != '.'
       message =
@@ -193,13 +251,19 @@ class LanguagesManifestsTests < LanguagesTestBase
     false
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def all_visible_files_exist?
     all_files_exist?(:visible_filenames)
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def all_support_files_exist?
     all_files_exist?(:support_filenames)
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def all_files_exist?(symbol)
     (manifest[symbol] || [ ]).each do |filename|
@@ -212,9 +276,11 @@ class LanguagesManifestsTests < LanguagesTestBase
         return false
       end
     end
-    print "."
+    print '.'
     true
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def highlight_filenames_are_subset_of_visible_filenames?
     highlight_filenames.each do |filename|
@@ -229,9 +295,11 @@ class LanguagesManifestsTests < LanguagesTestBase
         return false
       end
     end
-    print "."
+    print '.'
     true
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def cyberdojo_sh_exists?
     filenames = visible_filenames + support_filenames
@@ -243,9 +311,11 @@ class LanguagesManifestsTests < LanguagesTestBase
       puts message
       return false
     end
-    print "."
+    print '.'
     true
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def cyberdojo_sh_has_execute_permission?
     if !File.stat(language_dir + '/' + 'cyber-dojo.sh').executable?
@@ -255,9 +325,11 @@ class LanguagesManifestsTests < LanguagesTestBase
         puts message
         return false
     end
-    print "."
+    print '.'
     true
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def colour_method_for_unit_test_framework_output_exists?
     has_parse_method = true
@@ -274,9 +346,11 @@ class LanguagesManifestsTests < LanguagesTestBase
       puts message
       return false
     end
-    print "."
+    print '.'
     true
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def any_files_owner_is_root?
     # for HostTestRunner
@@ -291,9 +365,11 @@ class LanguagesManifestsTests < LanguagesTestBase
         return true
       end
     end
-    print "."
+    print '.'
     false
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def any_files_group_is_root?
     # for HostTestRunner
@@ -308,9 +384,11 @@ class LanguagesManifestsTests < LanguagesTestBase
         return true
       end
     end
-    print "."
+    print '.'
     false
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def any_file_is_unreadable?
     (visible_filenames + support_filenames + ['manifest.json']).each do |filename|
@@ -322,9 +400,11 @@ class LanguagesManifestsTests < LanguagesTestBase
         return true
       end
     end
-    print "."
+    print '.'
     false
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def Dockerfile_exists?
     if !File.exists?(language_dir + '/' + 'Dockerfile')
@@ -334,9 +414,11 @@ class LanguagesManifestsTests < LanguagesTestBase
       puts message
       return false
     end
-    print "."
+    print '.'
     true
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def build_docker_container_exists?
     if !File.exists?(language_dir + '/' + 'build-docker-container.sh')
@@ -346,9 +428,11 @@ class LanguagesManifestsTests < LanguagesTestBase
       puts message
       return false
     end
-    print "."
+    print '.'
     true
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def build_docker_container_starts_with_cyberdojo?
     filename = language_dir + '/' + 'build-docker-container.sh'
@@ -360,14 +444,14 @@ class LanguagesManifestsTests < LanguagesTestBase
       puts message
       return false
     end
-    print "."
+    print '.'
     true
   end
 
 private
 
   def language
-    @language
+    @language.split('-').join('/')
   end
 
   def language_dir
