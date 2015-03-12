@@ -189,10 +189,15 @@ class LanguagesManifestsTests < LanguagesTestBase
         #       Eg languages/g++4.8.1/assert/manifest.json
         #          { :display_name => 'C++, assert' }
         #       Perhaps do
-        #          display_name.split(',').map{ |s| s.strip }
-        #       Do I have a check that the display_name...
-        #         o) is requird  YES
-        #         o) always has a , in it NO
+        #       And app/models/Language.rb
+        #         def name
+        #           display_name.split(',').map{ |s| s.strip }.join('-')
+        #         end
+        #
+        # Also, exercise and language don't need to be passed path in their
+        # ctors - they can get it from the relevant external!
+        # Katas [] does Kata.new(self,id) 
+        # So perhaps Exercises and Languages should pass self instead of path.
     end    
     print '.'
     true
