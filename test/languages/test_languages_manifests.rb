@@ -37,6 +37,7 @@ class LanguagesManifestsTests < LanguagesTestBase
     assert !duplicate_visible_filenames?
     assert !duplicate_support_filenames?
     assert progress_regexs_valid?
+    assert display_name_valid?
     assert !filename_extension_starts_with_dot?
     assert cyberdojo_sh_exists?
     assert cyberdojo_sh_has_execute_permission?
@@ -242,7 +243,7 @@ class LanguagesManifestsTests < LanguagesTestBase
     end
     if progress_regexs.length != 0 && progress_regexs.length != 2
         message =
-          alert + " #{manifest_filename}'s progress_regexs entry does not contain 2 entries"
+          alert + " #{manifest_filename}'s 'progress_regexs' entry does not contain 2 entries"
         puts message
         return false
     end
@@ -255,6 +256,21 @@ class LanguagesManifestsTests < LanguagesTestBase
         puts message
         return false
       end
+    end
+    print '.'
+    true
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def display_name_valid?
+    if display_name.count(',') != 1
+      message = 
+        alert +
+        " #{manifest_filename}'s 'display_name' entry is #{display_name} " +
+        " which does not contain a single comma"
+      puts message
+      return false
     end
     print '.'
     true
@@ -489,6 +505,10 @@ private
     JSON.parse(IO.read(manifest_filename))
   end
 
+  def display_name
+    manifest['display_name']
+  end
+  
   def visible_filenames
     manifest['visible_filenames'] || [ ]
   end
