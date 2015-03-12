@@ -33,6 +33,7 @@ private
   def new_name(name)    
     renames = {
       # from way back when test name was not part of language name
+      'BCPL'         => 'BCPL-all_tests_passed',
       'C'            => 'C-assert',
       'C++'          => 'C++-assert',
       'C#'           => 'C#-NUnit',
@@ -62,9 +63,16 @@ private
       'Ruby-RSpec'                  => 'Ruby-Rspec',
 
       # - in the wrong place
+      'Java-1.8_Approval'      => 'Java-Approval',
       'Java-1.8_Cucumber'      => 'Java-Cucumber',
+      'Java-1.8_JMock'         => 'Java-JMock',
+      'Java-1.8_JUnit'         => 'Java-JUnit',
       'Java-1.8_Mockito'       => 'Java-Mockito',
+      'Java-1.8_Powermockito'  => 'Java-PowerMockito',
 
+      # replaced
+      'R-stopifnot' => 'R-RUnit',
+      
       # multiple versions
       'C++-assert'     => 'g++4.8.1-assert',
       'C++-Boost.Test' => 'g++4.8.1-Boost.Test',
