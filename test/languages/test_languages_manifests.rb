@@ -13,13 +13,11 @@ class LanguagesManifestsTests < LanguagesTestBase
   end
 
   test 'manifests of all languages' do
-    assert File.directory?(root_path + 'languages/')
-    languages_names = Dir.entries(root_path + '/languages').select { |name|
-      manifest = root_path + "languages/#{name}/manifest.json"
-      name != '.' and name != '..' and File.file?(manifest)
-    }
-    languages_names.sort.each do |language_name|
-      check(language_name)
+    dirs = Dir.glob("#{root_path}languages/*/*/manifest.json").each do |file|
+      folders = File.dirname(file).split('/')[-2..-1]
+      assert_equal 2, folders.size
+      lang,test = folders
+      check("#{lang}/#{test}")
     end
   end
 
@@ -29,7 +27,6 @@ class LanguagesManifestsTests < LanguagesTestBase
     assert manifest_file_exists?
     assert required_keys_exist?
     assert !unknown_keys_exist?
-    assert display_name_maps_back_to_language_name?
     assert !duplicate_visible_filenames?
     assert !duplicate_support_filenames?
     assert progress_regexs_valid?
@@ -46,6 +43,8 @@ class LanguagesManifestsTests < LanguagesTestBase
     assert Dockerfile_exists?
     assert build_docker_container_exists?
     assert build_docker_container_starts_with_cyberdojo?
+    assert display_name_maps_back_to_language_name?
+    # assert created_kata_manifests_language_entry_has_dash_format
   end
 
   def manifest_file_exists?
@@ -102,15 +101,15 @@ class LanguagesManifestsTests < LanguagesTestBase
   include ExternalSetter
 
   def display_name_maps_back_to_language_name?
-    # checks for renames
     languages = Languages.new
     reset_external(:disk, Disk.new)
     reset_external(:languages_path, root_path + 'languages/')
-    display_name = languages[@language].display_name
+    dashed_name = @language.split('/').join('-')
+    display_name = languages[dashed_name].display_name
     part = lambda {|n| display_name.split(',')[n].strip }
     language_name,test_name = part.(0), part.(1)
     round_trip = languages[language_name + '-' + test_name]
-    if @language != round_trip.name
+    if dashed_name != round_trip.name
       message = 
         alert +
         " #{manifest_filename}'s 'display_name' " +

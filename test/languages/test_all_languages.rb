@@ -15,7 +15,7 @@ class AllLanguagesTests < LanguagesTestBase
     checker = OneLanguageChecker.new(root_path,verbose)
     results = {}
     dirs = Dir.glob("#{root_path}languages/*/*/manifest.json")
-    languages = dirs.map{ |file|
+    languages = dirs.map { |file|
       File.dirname(file).split('/')[-2..-1]
     }
 
