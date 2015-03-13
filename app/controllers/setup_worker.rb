@@ -8,17 +8,15 @@ module SetupWorker # mixin
     dir = disk[dojo.languages.path]
     if dir.exists?(cache_filename)
       # languages/cache.json is created with languages/cache.rb
-      languages = JSON.parse(dir.read(cache_filename)).sort
+      languages = JSON.parse(dir.read(cache_filename))
     else
       languages = dojo.languages.each.select{ |language|
         language.runnable?
       }.map{ |language|
-        [language.display_name,language.name]
-      }.sort
+        language.display_name
+      }
     end
-    languages_names = languages.map{|array| array[1]}
-    
-    [languages,languages_names]
+    languages.sort
   end
 
   def read_exercises

@@ -12,16 +12,15 @@ Plan
    the test-name. Or maybe each test should decide both
    the language display name and the test display name
    
-3. Simplify setup page chooser
-3. Give each language folder its own manifest to control
-   its display name.
 3. 
    Split off new domain class, Language -> Test
    dojo.languages['C++'].tests['assert'].path
    create kata from (exercise,test) pair (not exercise,language pair)
    Can always get back to language from test.
+   
+3. Give each language folder its own manifest to control
+   its display name?
 
-3. simplify setup page to use new languages/ structure
 
 
 Then think about versioning, auto-builds, dojo-time-limits.
