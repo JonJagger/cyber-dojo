@@ -198,6 +198,19 @@ class LanguagesManifestsTests < LanguagesTestBase
         # ctors - they can get it from the relevant external!
         # Katas [] does Kata.new(self,id) 
         # So perhaps Exercises and Languages should pass self instead of path.
+        #
+        # cache.json can be reinstated.
+        #
+        # dojo.languages['C++'].tests['assert'].path
+        #
+        # outer-loop on languages
+        #   inner-loop on tests
+        #       do something here, don't get languages with no tests
+        #
+        # Do I need to have .name at all?
+        # display_name covers what appears in setup
+        # and path covers access to files on disk
+        
     end    
     print '.'
     true
