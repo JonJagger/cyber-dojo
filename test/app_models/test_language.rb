@@ -154,16 +154,6 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'display_name defaults to name when not set' do
-    name = 'C-assert'
-    @language = @dojo.languages[name]
-    spy_manifest({ })
-    assert_equal name, @language.name
-    assert_equal name, @language.display_name
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'display_test_name reads back as set' do
     name = 'Java-Mockito'
     @language = @dojo.languages[name]

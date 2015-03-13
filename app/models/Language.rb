@@ -10,6 +10,10 @@ class Language
     @languages.path + @name + '/' + @test_name + '/'
   end
 
+  #def name
+  #  display_name.split(',').map{ |s| s.strip }.join('-')
+  #end
+
   def name
     @name + '-' + @test_name
   end
@@ -31,7 +35,7 @@ class Language
   end
 
   def display_name
-    manifest_property || name
+    manifest_property
   end
 
   def display_test_name
