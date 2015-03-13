@@ -5,13 +5,13 @@ class LanguagesDisplayNamesSplitter
     @display_names,@selected_index = display_names,selected_index
   end
   
-  def languages_names
-    @languages_names ||= split(0)
+  def names
+    @names ||= split(0)
   end
   
-  def language_selected_index
-    language_name = @display_names[@selected_index].split(',')[0].strip
-    languages_names.index(language_name)
+  def selected_index
+    name = @display_names[@selected_index].split(',')[0].strip
+    names.index(name)
   end
   
   def tests_names
@@ -19,7 +19,7 @@ class LanguagesDisplayNamesSplitter
   end
   
   def tests_indexes
-    languages_names.map { |name| make_test_indexes(name) }
+    names.map { |name| make_test_indexes(name) }
   end
   
 private
@@ -52,7 +52,7 @@ private
     # These ensure the initial selection of the language causes the correct
     # initial selection of the test for that language.
     
-    if language_name === languages_names[language_selected_index]
+    if language_name === names[selected_index]
       test_name = @display_names[@selected_index].split(',')[1].strip
       test_index = tests_names.index(test_name)
       result.delete(test_index)

@@ -29,13 +29,13 @@ class LanguagesDisplayNamesSplitterTests < LibTestBase
     selected_index = languages_display_names.index('C++, assert')
     assert_equal 1, selected_index
     
-    split = LanguagesDisplayNamesSplitter.new(languages_display_names, selected_index)
+    languages = LanguagesDisplayNamesSplitter.new(languages_display_names, selected_index)
     
     assert_equal [
       'C',   
       'C++',  # <----- selected_index
       'Go'
-    ], split.languages_names
+    ], languages.names
     
     assert_equal [
       'GoogleTest',  # 0
@@ -43,7 +43,7 @@ class LanguagesDisplayNamesSplitterTests < LibTestBase
       'Unity',       # 2
       'assert',      # 3
       'testing'      # 4
-    ], split.tests_names
+    ], languages.tests_names
 
     # Need to know which tests names to display and initially select
     # Make the indexes *not* sorted and the
@@ -65,15 +65,15 @@ class LanguagesDisplayNamesSplitterTests < LibTestBase
       ]
     ]
       
-    actual = split.tests_indexes
+    actual = languages.tests_indexes
     assert_equal indexes.length, actual.length
     
     indexes.each_with_index {|array,at|
       assert_equal array, actual[at].sort
     }
     
-    assert_equal 1, split.language_selected_index   # C++
-    assert_equal 3, split.tests_indexes[1][0]       # assert
+    assert_equal 1, languages.selected_index         # C++
+    assert_equal 3, languages.tests_indexes[1][0]    # assert
     
   end
 

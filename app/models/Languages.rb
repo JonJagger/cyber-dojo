@@ -1,7 +1,7 @@
 # comments at end of file
 
 class Languages
-
+  
   def path
     languages_path
   end

@@ -1,5 +1,10 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Figure out how to add Enumerable to Languages/Exercises/Katas
+and then drop .each eg in
+app/controllers/setup_worker.rb
+languages/cache.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dashboard page: summary of timeouts is wrong. Eg
 http://citigroup.cyber-dojo.org/dashboard/show/E1E9D08B5A?minute_columns=true&auto_refresh=false
 should have 14 timeouts....
