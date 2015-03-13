@@ -67,8 +67,8 @@ class ChooseTests < AppLibTestBase
     test_languages_names.each_with_index do |language,n|
       kata = make_kata(@dojo, language, 'Fizz_Buzz')
       assert kata.exists?
-      (1..100).each do
-        assert_equal n, choose_language(test_languages_names, kata.id, @katas)
+      (1..42).each do
+        assert_equal n, choose_language(test_languages_names, kata.id, @katas), language
       end
     end
   end
@@ -158,13 +158,15 @@ class ChooseTests < AppLibTestBase
     [ 'C#-NUnit',
       'g++4.8.1-GoogleTest',
       'Ruby1.9.3-TestUnit',
-      'Java1.8-JUnit'
+      'Java-JUnit'
     ].sort
   end
 
   def fake_languages
     test_languages_names.each do |name|
-      @dojo.languages[name].dir.write('manifest.json', {})
+      @dojo.languages[name].dir.write('manifest.json', {
+        "display_name" => name
+      })
     end
   end
 
