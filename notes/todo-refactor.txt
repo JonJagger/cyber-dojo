@@ -1,5 +1,13 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Set external paths via  ENV[]. Don't provide defaults.
+Set external class names for Git and Runner via ENV[]
+Provide one_self secrets via ENV[]
+Use ram-disk and drop FakeDir FakeDir
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Figure out how to add Enumerable to Languages/Exercises/Katas
 and then drop .each eg in
 app/controllers/setup_worker.rb
@@ -37,10 +45,6 @@ Needs to be clear that the claim also finishes. So
 Need to include the URL of the cyber-dojo server when
 sending data to 1self. If other people are running their
 own servers then they need to get back to those servers!
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Set paths via external ENV[]. Don't provide a default.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Provide one_self secrets via ENV[]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 controllers are getting fat. Make them a lot skinnier.
 Possibly by doing an include so scope is same and @ vars
