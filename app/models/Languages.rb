@@ -107,7 +107,7 @@ private
   end
 
   def make_language(language_dir,test_dir)
-    Language.new(path,language_dir,test_dir)
+    Language.new(self,language_dir,test_dir)
   end
 
 end

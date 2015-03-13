@@ -2,12 +2,16 @@
 
 class Language
 
-  def initialize(path,language_name,test_name)
-    @path,@language_name,@test_name = path,language_name,test_name
+  def initialize(languages,name,test_name)
+    @languages,@name,@test_name = languages,name,test_name
+  end
+
+  def path
+    @languages.path + @name + '/' + @test_name + '/'
   end
 
   def name
-    @language_name + '-' + @test_name
+    @name + '-' + @test_name
   end
 
   def exists?
@@ -85,10 +89,6 @@ class Language
       add_created_txt_files(dir, visible_files)
       remove_deleted_txt_files(dir, visible_files)
     end
-  end
-
-  def path
-    @path + @language_name + '/' + @test_name + '/'
   end
 
 private

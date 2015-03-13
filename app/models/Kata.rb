@@ -8,6 +8,10 @@ class Kata
 
   attr_reader :katas, :id
 
+  def path
+    katas.path + outer(id) + '/' + inner(id) + '/'
+  end
+
   def start_avatar(avatar_names = Avatars.names.shuffle)
     free_names = avatar_names - avatars.names
     if free_names != [ ]
@@ -15,10 +19,6 @@ class Kata
       avatar.start
     end
     avatar
-  end
-
-  def path
-    katas.path + outer(id) + '/' + inner(id) + '/'
   end
 
   def exists?

@@ -194,11 +194,6 @@ class LanguagesManifestsTests < LanguagesTestBase
         #           display_name.split(',').map{ |s| s.strip }.join('-')
         #         end
         #
-        # Also, exercise and language don't need to be passed path in their
-        # ctors - they can get it from the relevant external!
-        # Katas [] does Kata.new(self,id) 
-        # So perhaps Exercises and Languages should pass self instead of path.
-        #
         # cache.json can be reinstated.
         #
         # dojo.languages['C++'].tests['assert'].path
@@ -507,44 +502,49 @@ class LanguagesManifestsTests < LanguagesTestBase
 
 private
 
-  def language
-    @language.split('-').join('/')
+  def display_name
+    manifest_property
+  end
+  
+  def visible_filenames
+    manifest_property || [ ]
   end
 
-  def language_dir
-    @root_path + '/languages/' + language
+  def support_filenames
+    manifest_property || [ ]
   end
 
-  def manifest_filename
-    language_dir + '/' + 'manifest.json'
+  def progress_regexs
+    manifest_property || [ ]
+  end
+
+  def highlight_filenames
+    manifest_property || [ ]
+  end
+
+  def unit_test_framework
+    manifest_property || [ ]
+  end
+  
+  def manifest_property
+    property_name = (caller[0] =~ /`([^']*)'/ and $1)
+    manifest[property_name]
   end
 
   def manifest
     JSON.parse(IO.read(manifest_filename))
   end
 
-  def display_name
-    manifest['display_name']
+  def manifest_filename
+    language_dir + '/' + 'manifest.json'
+  end
+
+  def language_dir
+    @root_path + '/languages/' + language
   end
   
-  def visible_filenames
-    manifest['visible_filenames'] || [ ]
-  end
-
-  def support_filenames
-    manifest['support_filenames'] || [ ]
-  end
-
-  def progress_regexs
-    manifest['progress_regexs'] || [ ]
-  end
-
-  def highlight_filenames
-    manifest['highlight_filenames'] || [ ]
-  end
-
-  def unit_test_framework
-    manifest['unit_test_framework'] || [ ]
+  def language
+    @language.split('-').join('/')
   end
 
   def alert

@@ -33,7 +33,7 @@ private
   end
 
   def make_exercise(name)
-    Exercise.new(path,name)
+    Exercise.new(self,name)
   end
 
 end

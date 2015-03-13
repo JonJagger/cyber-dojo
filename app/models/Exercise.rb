@@ -1,11 +1,15 @@
 
 class Exercise
 
-  def initialize(path,name)
-    @path,@name = path,name
+  def initialize(exercises,name)
+    @exercises,@name = exercises,name
   end
 
   attr_reader :name
+  
+  def path
+    @exercises.path + name + '/'
+  end
 
   def exists?
     dir.exists?(instructions_filename)
@@ -13,10 +17,6 @@ class Exercise
 
   def instructions
     dir.read(instructions_filename)
-  end
-
-  def path
-    @path + name + '/'
   end
 
 private
