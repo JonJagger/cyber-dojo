@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+dashboard page: summary of timeouts is wrong. Eg
+http://citigroup.cyber-dojo.org/dashboard/show/E1E9D08B5A?minute_columns=true&auto_refresh=false
+should have 14 timeouts....
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Having the starting files called Hiker.rb is not ideal.
 How about prefixing the instructions file with the following
 ...

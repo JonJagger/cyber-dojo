@@ -10,22 +10,21 @@ Plan
    can set the display_name of the language and the
    test-sub-folder's manifest can set the display of
    the test-name.
-        # cache.json can be reinstated.
-        #
-        # dojo.languages['C++'].tests['assert'].path
-        #
-        # outer-loop on languages
-        #   inner-loop on tests
-        #       do something here, don't get languages with no tests
-        #
+   # cache.json can be reinstated.
+   #
+   # outer-loop on languages
+   #   inner-loop on tests
+   #       do something here, don't get languages with no tests
+   #   
    
-   
+3. Simplify setup page chooser
 3. Give each language folder its own manifest to control
    its display name.
 3. 
-   ?Split off new domain class, Language -> Test
-   ?create kata from (exercise,test) pair
-   ?Can always get back to language from test.
+   Split off new domain class, Language -> Test
+   dojo.languages['C++'].tests['assert'].path
+   create kata from (exercise,test) pair (not exercise,language pair)
+   Can always get back to language from test.
 
 3. simplify setup page to use new languages/ structure
 

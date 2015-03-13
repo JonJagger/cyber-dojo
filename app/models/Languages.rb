@@ -127,7 +127,7 @@ end
 # And Languages' [] index operator (above)
 # maps the incoming name to the latest name.
 # Thus
-#    old_name = kata.maninfest['language']
+#    old_name = kata.manifest['language']
 #    language = dojo.languages[old_name]
 #    new_name = language.name
 #    assert_sometimes old_name != new_name
