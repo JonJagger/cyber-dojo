@@ -9,13 +9,8 @@ Plan
    Once language folder has its own manifest that
    can set the display_name of the language and the
    test-sub-folder's manifest can set the display of
-   the test-name.
-   # cache.json can be reinstated.
-   #
-   # outer-loop on languages
-   #   inner-loop on tests
-   #       do something here, don't get languages with no tests
-   #   
+   the test-name. Or maybe each test should decide both
+   the language display name and the test display name
    
 3. Simplify setup page chooser
 3. Give each language folder its own manifest to control
