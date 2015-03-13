@@ -52,7 +52,6 @@ class LanguagesManifestsTests < LanguagesTestBase
     assert build_docker_container_exists?
     assert build_docker_container_starts_with_cyberdojo?
     assert created_kata_manifests_language_entry_round_trips?
-    assert display_name_maps_back_to_language_name?
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -114,29 +113,6 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def display_name_maps_back_to_language_name?
-    languages = Languages.new
-    reset_external(:disk, Disk.new)
-    reset_external(:languages_path, root_path + 'languages/')
-    display_name = languages[@language].display_name
-    part = lambda { |n| display_name.split(',')[n].strip }
-    language_name,test_name = part.(0), part.(1)
-    round_trip = languages[language_name + '-' + test_name]
-    if @language != round_trip.name
-      message = 
-        alert +
-        " #{manifest_filename}'s 'display_name' entry" +
-        " when used from setup page is not mapped " +
-        " back to its own languages/sub/folder name" 
-      puts message
-      return false
-    end
-    print '.'
-    true
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   def created_kata_manifests_language_entry_round_trips?
     dojo = Dojo.new    
     language = dojo.languages[@language]
@@ -169,43 +145,7 @@ class LanguagesManifestsTests < LanguagesTestBase
         " #{kata.id}'s 'language' entry is #{lang}" +
         " which contains digits and looks like it contains a version number"
         puts message
-        return false
-        # eg "language":"g++4.8.1-GoogleTest"
-        # Now kata.language -->
-        #       dojo.languages[manifest_property]
-        #       which, if it worked, would mean I'd have to store
-        #       version numbers for every historical version upgrade.
-        #       So a kata's manifest.json file's 'language' entry
-        #       needs to be the display-name
-        #       How does a kata's manifest.json file's 'language' entry get set
-        #       app/models/Katas.rb
-        #        { :language => language.name }
-        #       And app/models/Language.rb
-        #         def name
-        #           @language_name + '-' + @test_name
-        #         end
-        #       and @language_name,@test_name are passed in as the dirs.
-        #       Could I use the display_name (from the manifest here)?
-        #       Eg languages/g++4.8.1/assert/manifest.json
-        #          { :display_name => 'C++, assert' }
-        #       Perhaps do
-        #       And app/models/Language.rb
-        #         def name
-        #           display_name.split(',').map{ |s| s.strip }.join('-')
-        #         end
-        #
-        # cache.json can be reinstated.
-        #
-        # dojo.languages['C++'].tests['assert'].path
-        #
-        # outer-loop on languages
-        #   inner-loop on tests
-        #       do something here, don't get languages with no tests
-        #
-        # Do I need to have .name at all?
-        # display_name covers what appears in setup
-        # and path covers access to files on disk
-        
+        return false        
     end    
     print '.'
     true

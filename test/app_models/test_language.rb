@@ -289,6 +289,9 @@ class LanguageTests < ModelTestBase
        'removed from visible_files' do
     name = 'Ruby-Approval'
     @language = @dojo.languages[name]
+    @language.dir.write('manifest.json', {
+      :display_name => 'Ruby, Approval'
+    })
     sandbox = StubSandbox.new
     sandbox.dir.write('created.txt', 'content')
     sandbox.dir.write('wibble.hpp', 'non txt file')
@@ -318,8 +321,16 @@ class LanguageTests < ModelTestBase
   test 'custom runner that filters the language.runnable?' do
     reset_external(:runner, CustomRunner.new(['yes-x']))
     @dojo = Dojo.new
-    assert @dojo.languages['yes-x'].runnable?
-    assert !@dojo.languages['no-y'].runnable?
+    language = @dojo.languages['yes-x']
+    language.dir.write('manifest.json', {
+      :display_name => 'yes, x'
+    })
+    assert language.runnable?
+    language = @dojo.languages['no-y']
+    language.dir.write('manifest.json', {
+      :display_name => 'no, x'
+    })
+    assert !language.runnable?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

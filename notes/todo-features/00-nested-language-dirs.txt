@@ -10,6 +10,14 @@ Plan
    can set the display_name of the language and the
    test-sub-folder's manifest can set the display of
    the test-name.
+        # cache.json can be reinstated.
+        #
+        # dojo.languages['C++'].tests['assert'].path
+        #
+        # outer-loop on languages
+        #   inner-loop on tests
+        #       do something here, don't get languages with no tests
+        #
    
    
 3. Give each language folder its own manifest to control

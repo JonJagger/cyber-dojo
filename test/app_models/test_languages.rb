@@ -34,6 +34,7 @@ class LanguagesTests < ModelTestBase
 
   test '[name] returns language with given name' do
     ['C-assert','C#-NUnit'].each do |name|
+      stub_exists([name])
       assert_equal name, languages[name].name
     end
   end
@@ -117,18 +118,16 @@ class LanguagesTests < ModelTestBase
     end
   end
 
-  def exists?(name)
-    assert_equal 1, name.count('-')
-    lang,test = name.split('-')
+  def exists?(lang,test)
     root_path = File.absolute_path(File.dirname(__FILE__) + '/../../')
     File.directory?("#{root_path}/languages/#{lang}/#{test}")    
   end
   
   test 'name is translated when katas manifest.json language entry has been renamed' do  
-    all_language_manifest_entries do |s|
-      assert exists?(languages[s].name), s
-    end
-    
+    all_language_manifest_entries do |old_name|
+      new_name = languages.renamed(old_name)
+      assert exists?(*new_name), old_name
+    end    
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
@@ -139,7 +138,9 @@ class LanguagesTests < ModelTestBase
 
   def stub_exists(languages_names)    
     languages_names.each do |name|
-      languages[name].dir.write('manifest.json', {})
+      languages[name].dir.write('manifest.json', {
+        :display_name => name.split('-').join(',')
+      })
     end
   end
 

@@ -49,7 +49,6 @@ class SetupControllerTest < ControllerTestBase
 
     languages_names.each do |language_name|
       language = @dojo.languages[language_name]
-      assert_equal language_name, language.name, 'renamed!'
       stub_language(language_name, 'fakeTestFrameworkName')
     end
 

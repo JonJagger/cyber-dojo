@@ -10,12 +10,12 @@ class Language
     @languages.path + @name + '/' + @test_name + '/'
   end
 
-  #def name
-  #  display_name.split(',').map{ |s| s.strip }.join('-')
-  #end
+  def name    
+    display_name.split(',').map{ |s| s.strip }.join('-')
+  end
 
-  def name
-    @name + '-' + @test_name
+  def display_name
+    manifest_property
   end
 
   def exists?
@@ -31,10 +31,6 @@ class Language
   end
 
   def unit_test_framework
-    manifest_property
-  end
-
-  def display_name
     manifest_property
   end
 

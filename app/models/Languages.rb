@@ -16,11 +16,6 @@ class Languages
     make_language(language_name,testing_name)
   end
 
-private
-
-  include ExternalDiskDir
-  include ExternalLanguagesPath
-
   def renamed(was_name)
     loop do
       now_name = new_name(was_name).join('-')
@@ -30,6 +25,11 @@ private
     was_name.split('-')
   end
   
+private
+
+  include ExternalDiskDir
+  include ExternalLanguagesPath
+
   def new_name(name)    
     renames = {
       # from way back when test name was not part of language name

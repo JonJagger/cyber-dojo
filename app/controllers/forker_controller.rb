@@ -15,10 +15,11 @@ class ForkerController < ApplicationController
     end
 
     if !error
-      if !dojo.languages[kata.language.name].exists?
+      name = kata.manifest['language']
+      if !dojo.languages[name].exists?
         error = true
         result[:reason] = 'language'
-        result[:language] = kata.language.name
+        result[:language] = name
       end
     end
 
