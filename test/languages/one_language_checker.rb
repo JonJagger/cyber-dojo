@@ -121,11 +121,11 @@ private
     case (@language.name)
       when 'Clojure-.test'
         then make_pattern('* 6 9')
-      when 'Java1.8-Cucumber',
-           'Ruby1.9.3-Cucumber'
+      when 'Java-Cucumber',
+           'Ruby-Cucumber'
         then make_pattern('6 times 9')
-      when 'Java1.8-Mockito',
-           'Java1.8-Powermockito'
+      when 'Java-Mockito',
+           'Java-Powermockito'
         then make_pattern('thenReturn(9)')
       when 'Asm-assert'
         then make_pattern('mov ebx, 9')
