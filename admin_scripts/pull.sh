@@ -13,8 +13,7 @@ if [ $ret -ne 0 ]; then
 fi
 
 echo "deleting the rails cache"
-rm -rf $cyberDojoHome/tmp/cache
-mkdir -p $cyberDojoHome/tmp/cache
+rm -rf $cyberDojoHome/tmp/*
 
 echo "refreshing the exercises/ cache"
 $cyberDojoHome/exercises/cache.rb
