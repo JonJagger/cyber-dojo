@@ -7,5 +7,5 @@ When /^they spell (\d+) times (\d+)$/ do |x, y|
 end
 
 Then /^the score is (\d+)$/ do |answer|
-    expect(answer.to_i).to equal(@result)
+    expect(answer.to_i).to eq(@result)
 end

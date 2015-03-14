@@ -104,8 +104,8 @@ module OutputParser
   end
 
   def self.parse_ruby_rspec(output)
-    return :red   if /\A(\.)*F/.match(output)
-    return :green if /\A(\.)+$/.match(output)
+    return :red   if /(\d*) scenario(s?) \((\d*) failed/.match(output)
+    return :green if /(\d*) scenario(s?) \((\d*) passed/.match(output)
     return :amber
   end
 

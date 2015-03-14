@@ -73,7 +73,8 @@ private
     from = pattern[:red]
     to = pattern[colour]
 
-    if @language.name === 'Java1.8-Cucumber' && colour === :amber
+    # Cucumber tests special case handling
+    if @language.name === 'Java-Cucumber' && colour === :amber
       filename = 'Hiker.java'
       from = '}'
       to = '}typo'
