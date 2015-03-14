@@ -7,7 +7,8 @@ class ForkerController < ApplicationController
 
     if !error && !katas.exists?(id)
       error = true
-      result[:reason] = 'id'
+      result[:reason] = 'dojo'
+      result[:dojo] = id
     end
 
     if !error && !kata.language.exists?
@@ -28,8 +29,8 @@ class ForkerController < ApplicationController
       tag = params['tag'].to_i;
       if !is_tag || tag <= 0 || tag > avatar.lights.count
         error = true
-        result[:reason] = 'tag'
-        result[:tag] = tag
+        result[:reason] = 'traffic_light'
+        result[:traffic_light] = tag
       end
     end
 

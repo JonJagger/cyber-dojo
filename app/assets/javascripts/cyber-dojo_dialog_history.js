@@ -772,23 +772,10 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
     var forkFailedDialog = function(data) {
-      var diagnostic = " an unknown failure occurred";
-      if (data.reason === 'id') {
-        diagnostic = "the practice session no longer exists";
-      } else if (data.reason === 'language') {
-        diagnostic = "the language " + data['language'] + " no longer exists";
-      } else if (data.reason === 'avatar') {
-        diagnostic = "there is no " + avatarName +
-                   " in the practice session";
-      } else  if (data.reason === 'tag') {
-        diagnostic = avatarName +
-                  " doesn't have traffic-light[" + data['tag'] + "]" +
-                  " in the practice session";
-      }
       var html = "" +
         "<div class='dialog'>" +
           "<div class='panel' style='font-size:1em;'>" +
-              "On the originating server " + diagnostic + "."
+              "On the originating server, " + data.reason + " " + data[data.reason] + " does not exist" +
           "</div>" +
         "</div>";
       var failed =

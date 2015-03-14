@@ -6,11 +6,11 @@ class ForkerControllerTest < ControllerTestBase
 
   test 'when id is invalid ' +
        'then fork fails ' +
-       'and the reason given is id' do
+       'and the reason given is dojo' do
     stub_dojo
     fork('bad','hippo',1)
     assert !forked?
-    assert_reason_is('id')
+    assert_reason_is('dojo')
     assert_nil forked_kata_id
     assert_equal({ }, git.log)
   end
@@ -59,7 +59,7 @@ class ForkerControllerTest < ControllerTestBase
 
   test 'when tag is bad ' +
        'the fork fails ' +
-       'and the reason given is tag' do
+       'and the reason given is traffic_light' do
     bad_tag_test('xx')      # !is_tag
     bad_tag_test('-14')     # tag <= 0
     bad_tag_test('-1')      # tag <= 0
@@ -87,7 +87,7 @@ class ForkerControllerTest < ControllerTestBase
     end
     fork(id,avatar_name,bad_tag)
     assert !forked?
-    assert_reason_is('tag')
+    assert_reason_is('traffic_light')
     assert_nil forked_kata_id
     assert_equal({ }, git.log)
   end
