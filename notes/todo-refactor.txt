@@ -5,6 +5,11 @@ Set external class names for Git and Runner via ENV[]
 Provide one_self secrets via ENV[]
 Use ram-disk and drop FakeDir FakeDir
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Are the fork_controller failing individual diagnostic reasons worth
+having? Perhaps have a simpler generic failure dialog and
+just attempt the fork and if an exception is raised catch
+it and report a general failure.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
