@@ -18,3 +18,6 @@ RUN mkdir /home/www-data
 RUN chgrp www-data /home/www-data
 RUN chown www-data /home/www-data
 ENV HOME /home/www-data
+
+RUN mkdir /etc/mono/registry
+RUN chmod uog+rw /etc/mono/registry
