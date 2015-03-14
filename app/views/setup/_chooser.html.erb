@@ -3,7 +3,7 @@
 
 $(function() {
 
-  var testIndexes = $.parseJSON('<%= @split.tests_indexes.inspect.html_safe %>');
+  var testIndexes = $.parseJSON('<%= @languages.tests_indexes.inspect.html_safe %>');
 
   var previousLanguage = undefined;
   var previousTest     = undefined;

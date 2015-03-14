@@ -8,10 +8,7 @@ class SetupControllerTest < ControllerTestBase
     stub_dojo
 
     languages_dir = disk[@dojo.languages.path]
-    languages_dir.write('cache.json', {
-      'C++, catch'  => 'C++-catch',
-      'Java, JMock' => 'Java-1.8_JMock'
-    })
+    languages_dir.write('cache.json', [ 'C++, catch', 'Java, JMock' ])
 
     exercise_dir = disk[@dojo.exercises.path]
     exercise_dir.write('cache.json', {
@@ -41,24 +38,22 @@ class SetupControllerTest < ControllerTestBase
 
     # setup_languages
     languages_names = [
-      'fakeC++, catch',
-      'fakeC#, NUnit',
-      'fakeJava-1.8, JUnit',
-      'fakeRuby, TestUnit',
+      'fakeC++-catch',
+      'fakeC#-NUnit',
+      'fakeJava1.8-JUnit',
+      'fakeRuby1.9.3-TestUnit',
     ].sort
 
     languages_names.each do |language_name|
-      language = @dojo.languages[language_name]
-      assert_equal language_name, language.name, 'renamed!'
-      stub_language(language_name, 'fake-test-framework-name')
+      stub_language(language_name, 'fakeTestFrameworkName')
     end
 
     # setup_exercises
     exercises_names = [
-      'fake-Print-Diamond',
-      'fake-Recently-Used-List',
-      'fake-Roman-Numerals',
-      'fake-Yatzy',
+      'fakePrintDiamond',
+      'fakeRecentlyUsedList',
+      'fakeRomanNumerals',
+      'fakeYatzy',
     ].sort
 
     exercises_names.each do |exercise_name|

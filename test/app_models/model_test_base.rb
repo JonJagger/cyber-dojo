@@ -30,8 +30,11 @@ class ModelTestBase < TestBase
         'wibble.hpp' => '#include <iostream>',
         'wibble.cpp' => '#include "wibble.hpp"'
     }
-    language = @dojo.languages['test-C++-Catch']
-    language.dir.write('manifest.json', { :visible_filenames => visible_files.keys })
+    language = @dojo.languages['testC++-Catch']
+    language.dir.write('manifest.json', { 
+      :display_name => 'testC++, Catch',
+      :visible_filenames => visible_files.keys 
+    })
     visible_files.each { |filename,content| language.dir.write(filename, content) }
     exercise = @dojo.exercises['test_Yahtzee']
     exercise.dir.write('instructions', 'your task...')

@@ -11,7 +11,7 @@
     "catch.hpp"
   ],
   "filename_extension" : ".cpp",
-  "display_name": "C++, catch",
+  "display_name": "C++, Catch",
   "unit_test_framework": "catch",
   "image_name": "cyberdojo/gpp-4.8.1_catch"
 }

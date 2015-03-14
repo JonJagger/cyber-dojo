@@ -1,4 +1,6 @@
 
+# comments at end of file
+
 class Kata
 
   def initialize(katas,id)
@@ -8,6 +10,10 @@ class Kata
 
   attr_reader :katas, :id
 
+  def path
+    katas.path + outer(id) + '/' + inner(id) + '/'
+  end
+
   def start_avatar(avatar_names = Avatars.names.shuffle)
     free_names = avatar_names - avatars.names
     if free_names != [ ]
@@ -15,10 +21,6 @@ class Kata
       avatar.start
     end
     avatar
-  end
-
-  def path
-    katas.path + outer(id) + '/' + inner(id) + '/'
   end
 
   def exists?
@@ -54,20 +56,20 @@ class Kata
     dojo.exercises[manifest_property]
   end
 
+  def manifest
+    @manifest ||= JSON.parse(read(manifest_filename))
+  end
+  
 private
 
   include ExternalDiskDir
   include ManifestProperty
   include IdSplitter
-  
+
   def manifest_filename
     'manifest.json'
   end
   
-  def manifest
-    @manifest ||= JSON.parse(read(manifest_filename))
-  end
-
   def read(filename)
     dir.read(filename)
   end
@@ -83,3 +85,12 @@ private
   end
 
 end
+
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# manifest
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# This is a public method because when fork fails it reports
+# the name of language that could not be forked from.
+# kata.language.name will not work since name is based on
+# display_name which is required and comes from the manifest.json
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

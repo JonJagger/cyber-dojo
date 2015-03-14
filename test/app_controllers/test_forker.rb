@@ -8,46 +8,54 @@ class ForkerControllerTest < ControllerTestBase
        'then fork fails ' +
        'and the reason given is id' do
     stub_dojo
-    fork(:json,'bad','hippo',1)
+    fork('bad','hippo',1)
     assert !forked?
     assert_reason_is('id')
     assert_nil forked_kata_id
     assert_equal({ }, git.log)
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   test 'when language folder no longer exists ' +
        'the fork fails ' +
        'and the reason given is language' do
     stub_dojo
     id = '1234512345'
     kata = @dojo.katas[id]
-    language = @dojo.languages['does-not-exist']
-    kata.dir.write('manifest.json', { :language => language.name })
-    fork(:json,id,'hippo',1)
+    language_name = 'doesNot-Exist'
+    kata.dir.write('manifest.json', { :language => language_name })
+    fork(id,'hippo',1)
     assert !forked?
     assert_reason_is('language')
-    assert_equal language.name, json['language']
+    assert_equal language_name, json['language']
     assert_nil forked_kata_id
     assert_equal({ }, git.log)
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'when avatar not started ' +
        'the fork fails ' +
        'and the reason given is avatar' do
     stub_dojo
-    language = @dojo.languages['Ruby-installed-and-working']
+    language = @dojo.languages['Ruby-Approval']
     language.dir.make
-    language.dir.write('manifest.json', {})
+    language.dir.write('manifest.json', {
+      :display_name => 'Ruby, Approval'
+    })
     id = '1234512345'
     kata = @dojo.katas[id]
     kata.dir.write('manifest.json', { :language => language.name })
-    fork(:json,id,'hippo',1)
+    fork(id,'hippo',1)
     assert !forked?
     assert_reason_is('avatar')
     assert_equal 'hippo', json['avatar']
     assert_nil forked_kata_id
     assert_equal({ }, git.log)
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'when tag is bad ' +
        'the fork fails ' +
@@ -61,10 +69,12 @@ class ForkerControllerTest < ControllerTestBase
 
   def bad_tag_test(bad_tag, more_than_number_of_lights = false)
     stub_dojo
-    language_name = 'Ruby-installed-and-working'
+    language_name = 'Ruby-Approval'
     language = @dojo.languages[language_name]
     language.dir.make
-    language.dir.write('manifest.json', {})
+    language.dir.write('manifest.json', {
+      :display_name => 'Ruby, Approval'
+    })
     id = '1234512345'
     kata = @dojo.katas[id]
     kata.dir.make
@@ -75,23 +85,27 @@ class ForkerControllerTest < ControllerTestBase
     if more_than_number_of_lights
       stub_traffic_lights(avatar, red)
     end
-    fork(:json,id,avatar_name,bad_tag)
+    fork(id,avatar_name,bad_tag)
     assert !forked?
     assert_reason_is('tag')
     assert_nil forked_kata_id
     assert_equal({ }, git.log)
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'when the exercise no longer exists but everything else ' +
        "is ok then fork works and the new dojos id is returned" do
     stub_setup
-    fork(:json,@id,@avatar_name,@tag)
+    fork(@id,@avatar_name,@tag)
     assert forked?
     exercise = @dojo.exercises['fake-Yatzy']
     exercise.dir.delete('instructions')
-    fork(:json,@id,@avatar_name,@tag)
+    fork(@id,@avatar_name,@tag)
     assert forked?
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'when language has been renamed but new-name-language exists ' +
        'and id,avatar,tag are all ok ' +
@@ -101,10 +115,13 @@ class ForkerControllerTest < ControllerTestBase
     id = '1234512345'
     kata = @dojo.katas[id]
     old_language_name = 'C#'
-    new_language_name = 'C#-NUnit'
     kata.dir.write('manifest.json', { :language => old_language_name })
+    new_language_name = 'C#-NUnit'
     language = @dojo.languages[new_language_name]
-    language.dir.write('manifest.json', { 'unit_test_framework' => 'fake' })
+    language.dir.write('manifest.json', { 
+      :display_name => 'C#, NUnit',
+      :unit_test_framework => 'fake' 
+    })
     avatar_name = 'hippo'
     avatar = kata.avatars[avatar_name]
     stub_traffic_lights(avatar, [ red, green ])
@@ -114,7 +131,7 @@ class ForkerControllerTest < ControllerTestBase
     tag = 2
     filename = 'manifest.json'
     git.spy(avatar.dir.path,'show',"#{tag}:#{filename}",manifest)
-    fork(:json,id,avatar_name,tag)
+    fork(id,avatar_name,tag)
     assert forked?
     assert_equal 10, forked_kata_id.length
     assert_not_equal id, forked_kata_id
@@ -126,11 +143,13 @@ class ForkerControllerTest < ControllerTestBase
     assert_equal({avatar.path => [ ['show', '2:manifest.json']]}, git.log)
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'when id,language,avatar,tag are all ok ' +
        'format=json fork works ' +
        "and the new dojo's id is returned" do
     stub_setup
-    fork(:json,@id,@avatar_name,@tag)
+    fork(@id,@avatar_name,@tag)
     assert forked?
     assert_equal 10, forked_kata_id.length
     assert_not_equal @id, forked_kata_id
@@ -142,13 +161,16 @@ class ForkerControllerTest < ControllerTestBase
     assert_equal({@avatar.path => [ ['show', '2:manifest.json']]}, git.log)
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'when id,language,avatar,tag are all ok ' +
        'format=html fork works ' +
        'and you are redirected to the home page ' +
        "with the new dojo's id" do
     stub_setup
-    fork(:html,@id,@avatar_name,@tag)
-    #assert_redirected_to(:controller => 'dojo', :action => 'index')
+    fork(@id,@avatar_name,@tag,:html)
+    assert_response :redirect
+    assert @response.location.include? '/dojo/index/'
   end
 
   #- - - - - - - - - - - - - - - - - -
@@ -157,11 +179,14 @@ class ForkerControllerTest < ControllerTestBase
     stub_dojo
     @id = '1234512345'
     @kata = @dojo.katas[@id]
-    language_name = 'Ruby-installed-and-working'
+    language_name = 'Ruby-TestUnit'
     exercise_name = 'fake-Yatzy'
     stub_kata(@id, language_name, exercise_name)
     language = @dojo.languages[language_name]
-    language.dir.write('manifest.json', { 'unit_test_framework' => 'ruby_test_unit' })
+    language.dir.write('manifest.json', { 
+      :display_name => 'Ruby, TestUnit',
+      :unit_test_framework => 'ruby_test_unit' 
+    })
     @avatar_name = 'hippo'
     @avatar = @kata.avatars[@avatar_name]
     stub_traffic_lights(@avatar, [ red, green ])
@@ -173,7 +198,7 @@ class ForkerControllerTest < ControllerTestBase
     git.spy(@avatar.dir.path,'show',"#{@tag}:#{filename}",manifest)
   end
 
-  def fork(format,id,avatar,tag)
+  def fork(id,avatar,tag,format = :json)
     get 'forker/fork', format:format,id:id,avatar:avatar,tag:tag
   end
 

@@ -5,31 +5,21 @@ class ForkerController < ApplicationController
     result = { forked: false }
     error = false
 
-    if !error
-      if !katas.exists?(id)
-        error = true
-        result[:reason] = 'id'
-      else
-        kata = katas[id]
-      end
+    if !error && !katas.exists?(id)
+      error = true
+      result[:reason] = 'id'
     end
 
-    if !error
-      if !dojo.languages[kata.language.name].exists?
-        error = true
-        result[:reason] = 'language'
-        result[:language] = kata.language.name
-      end
+    if !error && !kata.language.exists?
+      error = true
+      result[:reason] = 'language'
+      result[:language] = kata.manifest['language']
     end
 
-    avatar_name = params['avatar']
-    if !error
-      avatar = avatars[avatar_name]
-      if !error && !avatar.exists?
-        error = true
-        result[:reason] = 'avatar'
-        result[:avatar] = avatar_name
-      end
+    if !error && !avatar.exists?
+      error = true
+      result[:reason] = 'avatar'
+      result[:avatar] = avatar_name
     end
 
     #tag = avatar.tags[params['tag']]
@@ -37,9 +27,9 @@ class ForkerController < ApplicationController
       is_tag = params['tag'].match(/^\d+$/)
       tag = params['tag'].to_i;
       if !is_tag || tag <= 0 || tag > avatar.lights.count
+        error = true
         result[:reason] = 'tag'
         result[:tag] = tag
-        error = true
       end
     end
 
@@ -82,3 +72,4 @@ private
   include TimeNow
 
 end
+

@@ -8,15 +8,11 @@
 module Chooser # mixin
 
   def choose_language(languages, id, katas)
-    chooser(languages, id, katas) {|kata|
-      kata.language.display_name
-    }
+    chooser(languages, id, katas) { |kata| kata.language.display_name }
   end
 
   def choose_exercise(exercises, id, katas)
-    chooser(exercises, id, katas) {|kata|
-      kata.exercise.name
-    }
+    chooser(exercises, id, katas) { |kata| kata.exercise.name }
   end
 
   def chooser(choices, id, katas)

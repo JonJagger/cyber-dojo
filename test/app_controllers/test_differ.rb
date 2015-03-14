@@ -16,10 +16,10 @@ class DifferControllerTest < ControllerTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'no lines different in any files between successive tags' do
-    @id = create_kata
+    @id = create_kata('g++4.8.1-assert')
     enter # 0
-    filename = 'hiker.c'
-    kata_run_tests make_file_hash(filename,'#include...',234234, -4545645678) #1
+    filename = 'hiker.cpp'
+    kata_run_tests make_file_hash(filename,'#include <badname>',234234, -4545645678) #1
     kata_run_tests make_file_hash(filename,'wibble',-4545645678,-4545645678 ) #2
     @was_tag,@now_tag = 1,2
     differ

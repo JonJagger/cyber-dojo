@@ -2,11 +2,21 @@
 
 class Language
 
-  def initialize(path,name)
-    @path,@name = path,name
+  def initialize(languages,name,test_name)
+    @languages,@name,@test_name = languages,name,test_name
   end
 
-  attr_reader :name
+  def path
+    @languages.path + @name + '/' + @test_name + '/'
+  end
+
+  def name    
+    display_name.split(',').map{ |s| s.strip }.join('-')
+  end
+
+  def display_name
+    manifest_property
+  end
 
   def exists?
     dir.exists?(manifest_filename)
@@ -22,10 +32,6 @@ class Language
 
   def unit_test_framework
     manifest_property
-  end
-
-  def display_name
-    manifest_property || name
   end
 
   def display_test_name
@@ -83,10 +89,6 @@ class Language
       add_created_txt_files(dir, visible_files)
       remove_deleted_txt_files(dir, visible_files)
     end
-  end
-
-  def path
-    @path + name + '/'
   end
 
 private

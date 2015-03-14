@@ -115,6 +115,7 @@ class KataTests < ModelTestBase
        'creates unique-id and uses-time-now' do
     language = @dojo.languages['Java-JUnit']
     language.dir.write('manifest.json', {
+      :display_name => 'Java, JUnit',
       :unit_test_framework => 'JUnit'
     })
     exercise = @dojo.exercises['test_Yahtzee']
@@ -133,6 +134,7 @@ class KataTests < ModelTestBase
   test 'make_kata saves manifest in kata dir' do
     language = @dojo.languages['Java-JUnit']
     language.dir.write('manifest.json', {
+      :display_name => 'Java, JUnit',
       :unit_test_framework => 'waffle'
     })
     exercise = @dojo.exercises['test_Yahtzee']
@@ -148,12 +150,13 @@ class KataTests < ModelTestBase
   test 'kata.id, kata.created, kata.language_name, ' +
        'kata.exercise_name, kata.visible_files ' +
        'all read from manifest' do
-    language = @dojo.languages['test-C++-catch']
+    language = @dojo.languages['testC++-catch']
     visible_files = {
         'wibble.hpp' => '#include <iostream>',
         'wibble.cpp' => '#include "wibble.hpp"'
     }
     language.dir.write('manifest.json', {
+      :display_name => 'testC++, catch',
       :visible_filenames => visible_files.keys
     })
     language.dir.write('wibble.hpp', visible_files['wibble.hpp'])

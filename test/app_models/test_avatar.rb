@@ -105,6 +105,7 @@ class AvatarTests < ModelTestBase
 
     support_filename = 'lib.a'
     language.dir.write('manifest.json', {
+      :display_name => 'C, assert',
       :unit_test_framework => 'assert',
       :visible_filenames => visible_files.keys,
       :support_filenames => [ support_filename ]
@@ -160,14 +161,15 @@ class AvatarTests < ModelTestBase
     }
 
     language = @dojo.languages['C-assert']
-    manifest = {
+    language.dir.write('manifest.json', {
+      :display_name => 'C, assert',
+      :unit_test_framework => 'cassert'
+    })
+    kata.dir.write('manifest.json', {
       :id => @id,
       :visible_files => visible_files,
       :language => language.name,
-      :unit_test_framework => 'cassert'
-    }
-    language.dir.write('manifest.json', manifest)
-    kata.dir.write('manifest.json', manifest)
+    })
     avatar.dir.write('increments.json', [])
 
     time_limit = 15
@@ -198,14 +200,15 @@ class AvatarTests < ModelTestBase
     }
 
     language = @dojo.languages['C-assert']
-    manifest = {
+    language.dir.write('manifest.json', {
+      :display_name => 'C, assert',
+      :unit_test_framework => 'cassert'
+    })
+    kata.dir.write('manifest.json', {
       :id => @id,
       :visible_files => visible_files,
       :language => language.name,
-      :unit_test_framework => 'cassert'
-    }
-    language.dir.write('manifest.json', manifest)
-    kata.dir.write('manifest.json', manifest)
+    })
     avatar.dir.write('increments.json', [])
 
     time_limit = 15
@@ -235,14 +238,15 @@ class AvatarTests < ModelTestBase
     }
 
     language = @dojo.languages['C-assert']
-    manifest = {
+    language.dir.write('manifest.json', {
+      :display_name => 'C, assert',
+      :unit_test_framework => 'cassert'
+    })
+    kata.dir.write('manifest.json', {
       :id => @id,
       :visible_files => visible_files,
       :language => language.name,
-      :unit_test_framework => 'cassert'
-    }
-    language.dir.write('manifest.json', manifest)
-    kata.dir.write('manifest.json', manifest)
+    })
     avatar.dir.write('increments.json', [])
 
     time_limit = 15
@@ -272,14 +276,19 @@ class AvatarTests < ModelTestBase
     }
 
     language = @dojo.languages['C-assert']
-    manifest = {
+    language_manifest = {
+      :display_name => 'C, assert',
+      :unit_test_framework => 'cassert'
+    }
+    language.dir.write('manifest.json', language_manifest)
+
+    kata_manifest = {
       :id => @id,
       :visible_files => visible_files,
       :language => language.name,
-      :unit_test_framework => 'cassert'
-    }
-    language.dir.write('manifest.json', manifest)
-    kata.dir.write('manifest.json', manifest)
+    }    
+    kata.dir.write('manifest.json', kata_manifest)
+    
     avatar.dir.write('increments.json', [])
 
     time_limit = 15
@@ -312,14 +321,15 @@ class AvatarTests < ModelTestBase
     }
 
     language = @dojo.languages['C-assert']
-    manifest = {
+    language.dir.write('manifest.json', {
+      :display_name => 'C, assert',
+      :unit_test_framework => 'cassert'
+    })
+    kata.dir.write('manifest.json', {
       :id => @id,
       :visible_files => visible_files,
       :language => language.name,
-      :unit_test_framework => 'cassert'
-    }
-    language.dir.write('manifest.json', manifest)
-    kata.dir.write('manifest.json', manifest)
+    })
     avatar.dir.write('increments.json', [])
 
     time_limit = 15

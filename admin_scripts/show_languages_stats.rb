@@ -10,15 +10,17 @@ def gather_stats(dojo)
   dot_count = 0
   dojo.katas.each do |kata|
     begin
-      if !languages_names.include? kata.original_language.name
-        renamed[kata.original_language.name] ||= [ ]
-        renamed[kata.original_language.name] << kata.id
+      was_named = kata.manifest['language']
+      now_named = kata.language.name
+      if was_named != now_named
+        renamed[was_named] ||= [ ]
+        renamed[was_named] << kata.id
       else
-        rest[kata.language.name] ||= [ ]
-        rest[kata.language.name] << kata.id
+        rest[now_named] ||= [ ]
+        rest[now_named] << kata.id
       end
-      totals[kata.language.name] ||= 0
-      totals[kata.language.name] += 1
+      totals[now_named] ||= 0
+      totals[now_named] += 1
     rescue Exception => error
       exceptions << error.message
     end
@@ -43,11 +45,12 @@ def show_renamed(renamed,dojo)
     count += n
     print number(n,5)
     print "  #{renamed[name].shuffle[0]}"
-    if name == dojo.languages[name].new_name
-      print " --> MISSING new_name "
-    else
-      print " --> " + dojo.languages[name].new_name
-    end
+    
+    #if name == language.name
+    #  print " --> MISSING new_name "
+    #else
+    #  print " --> " + dojo.languages[name].new_name
+    #end
     puts
   end
   print ' ' * (33)
@@ -68,8 +71,8 @@ def show_rest(rest,dojo)
     n = rest[name].length
     count += n
     print number(n,5)
-    print "  #{rest[name].shuffle[0]}"
-    print " --> MISSING new_name " if name != dojo.languages[name].new_name
+    print "  #{rest[name].shuffle[0]}"    
+    print " --> MISSING new_name " if name != dojo.languages[name].name
     puts
   end
   print ' ' * (33)

@@ -2,12 +2,32 @@
 -----------
 Plan
 -----------
-1. revert auto-builds back to non-auto-builds.
+1. revert auto-builds back to non-auto-builds. DONE
    don't worry about making URL link
-2. restructure languages/folders
-   make Languages.each work using new structure.
-   setup page should still work ok. Do in a branch.
-3. simplify setup page to use new languages/ structure
+2. restructure languages/folders DONE
+   NB. language folder must not have - character in it
+   Once/if language folder has its own manifest that
+   can set the display_name of the language and the
+   test-sub-folder's manifest can set the display of
+   the test-name. Or maybe each test should decide both
+   the language display name and the test display name
+   
+3. in setup_controller.rb
+   maybe...
+    language = dojo.languages[params['language'] + '-' + params['test']]
+   ...becomes...
+    language = dojo.languages[params['language'], params['test']]
+   
+3. 
+   Split off new domain class, Language[name] -> Language -> Tests[name] -> Test
+   dojo.languages['C++'].tests['assert'].path
+   create kata from (exercise,test) pair (not exercise,language pair)
+   Can always get back to language from test.
+   
+3. Give each language folder its own manifest to control
+   its display name?
+
+
 
 Then think about versioning, auto-builds, dojo-time-limits.
 Ideally they are separate issues.
@@ -122,159 +142,10 @@ you will be able to fork, but you will
 not be able to [test]
 This suggests that dojos should have a
 max duration. Say one day.
+Maybe work to rework languages that have sym-links
+so their symlinked files are inside the docker 
+container, and then remove sym-linking completely.
 - - - - - - - - - - - - - - - - - - - -
-
-
-
-- - - - - - - - - - - - - - - - - - - -
-Nesting Structure
-- - - - - - - - - - - - - - - - - - - -
-Perhaps it would be simpler to nest the test-frameworks
-underneath the languages. Viz instead of 
-dojo.languages[language_name + '-' + test_name]
-do
-dojo.languages[language_name].tests[test_name]
-s/tests/testing/
-
-
-
-- - - - - - - - - - - - - - - - - - - -
-What needs to be refactored?
-- - - - - - - - - - - - - - - - - - - -
-eg...
-  C-assert
-  C-CppUTest
-  C-Unity
-  
-becomes...
-  C/assert
-  C/CppUTest
-  C/Unity
-  
-
-- - - - - - - - - - - - - - - - - - - -
-Languages.rb
-- - - - - - - - - - - - - - - - - - - -
-
-  def initialize(path,name)
-    @path,@name = path,name
-  end
-
-  attr_reader :name
-
-  def [](name)
-    make_language(latest(name))
-  end
-
-  def path
-    @path + name + '/'
-  end
-
-private
-
-  def make_cache
-    cache = [ ]
-    dir.each_dir do |sub_dir|
-      language = make_language(sub_dir)
-      cache << language if language.exists? && language.runnable?
-    end
-    cache
-  end
-
-  def make_language(name)
-    Language.new(path,name)
-  end
-
-...becomes...
-
-  def initialize(root_path,language_name,test_name)
-    @root_path,@language_name,@test_name = root_path,language_name,test_name
-  end
-
-  def name
-    @language_name + '-' + @test_name
-  end
-
-  def [](language_name,test_name)
-    make_language(latest(language_name,test_name))
-  end
-
-  def path
-    @root_path + @language_name + '/' + @test_name + '/'
-  end
-
-private
-
-  def latest(language_name,test_name)
-    will need reworking
-    how do I return two arguments?
-    do I need a splat somewhere?
-  end
-
-  def make_cache
-    cache = [ ]
-    dir.each_dir do |language_name|
-      disk[path + language_name].each_dir do |test_name|
-        language = make_language(language_name,test_name)
-        cache << language if language.exists? && language.runnable?
-      end
-    end
-    cache
-  end
-
-  def make_language(language_name,test_name)
-    Language.new(path,language_name,test_name)
-  end
-
-
-- - - - - - - - - - - - - - - - - - - -
-Kata.rb 
-- - - - - - - - - - - - - - - - - - - -
-
-  def language
-    dojo.languages[manifest_property]
-  end
-
-..becomes...
-
-  def language
-    dojo.languages[language_name,test_name]
-  end
-  
-private
-
-  def language_name
-    manifest['language'].split(',')[0]
-  end
-  
-  def test_name
-    manifest['language'].split(',')[1]
-  end
-  
-  
-- - - - - - - - - - - - - - - - - - - -
-setup_controller.rb 
-- - - - - - - - - - - - - - - - - - - -
-
-  def save
-    language = dojo.languages[params['language'] + '-' + params['test']]
-    ...
-  end
-  
-...becomes...
-
-  def save
-    language = dojo.languages[params['language'], params['test']]
-    ...
-  end
-
-...or maybe...
-
-  def save
-    language = dojo.languages[params[:language], params[:test]]
-    ...
-  end
-
 
 
 

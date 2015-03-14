@@ -4,15 +4,12 @@ class SetupController < ApplicationController
   def show
     @id = id
     @title = 'create'
-
-    @languages,languages_names = read_languages
-    @exercises_names,@instructions = read_exercises
-        
-    @languages_display_names = @languages.map{|array| array[0]}
-    @initial_language_index = choose_language(@languages_display_names, id, dojo.katas)
+    @exercises_names,@instructions = read_exercises        
     @initial_exercise_index = choose_exercise(@exercises_names, id, dojo.katas)    
-    @split = ::LanguagesDisplayNamesSplitter.new(@languages_display_names, @initial_language_index)
-    @initial_language_index = @split.language_selected_index
+    languages_names = read_languages
+    index = choose_language(languages_names, id, dojo.katas)
+    @languages = ::LanguagesDisplayNamesSplitter.new(languages_names, index)
+    @initial_language_index = @languages.selected_index
   end
 
   def save

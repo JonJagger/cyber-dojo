@@ -1,11 +1,11 @@
 
 <div id="languages-container">
-  <% @split.languages_names.each_with_index do |name,index| %>
+  <% @languages.names.each_with_index do |name,index| %>
     <div class="filename"
          id="language_<%= index %>"
          data-language="<%= name %>"
          data-index="<%= index %>"
-         data-test-index="<%= @split.tests_indexes[index][0] %>">
+         data-test-index="<%= @languages.tests_indexes[index][0] %>">
       <%= name %>
     </div>
   <% end %>

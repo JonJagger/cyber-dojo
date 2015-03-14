@@ -6,10 +6,11 @@ require 'tempfile'
 class LanguageTests < ModelTestBase
 
   test 'path(language) has correct format' do
-    language = @dojo.languages['Ruby']
-    assert language.path.match(language.name)
-    assert path_ends_in_slash?(language)
-    assert !path_has_adjacent_separators?(language)
+    language_dir,test_dir = 'C#','NUnit'    
+    language = @dojo.languages[language_dir + '-' + test_dir]
+    assert language.path.match(language_dir + '/' + test_dir), "1"
+    assert path_ends_in_slash?(language), "2"
+    assert !path_has_adjacent_separators?(language), "3"
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -153,16 +154,6 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'display_name defaults to name when not set' do
-    name = 'Ruby-Approval'
-    @language = @dojo.languages[name]
-    spy_manifest({ })
-    assert_equal name, @language.name
-    assert_equal name, @language.display_name
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'display_test_name reads back as set' do
     name = 'Java-Mockito'
     @language = @dojo.languages[name]
@@ -298,6 +289,9 @@ class LanguageTests < ModelTestBase
        'removed from visible_files' do
     name = 'Ruby-Approval'
     @language = @dojo.languages[name]
+    @language.dir.write('manifest.json', {
+      :display_name => 'Ruby, Approval'
+    })
     sandbox = StubSandbox.new
     sandbox.dir.write('created.txt', 'content')
     sandbox.dir.write('wibble.hpp', 'non txt file')
@@ -325,10 +319,18 @@ class LanguageTests < ModelTestBase
   end
 
   test 'custom runner that filters the language.runnable?' do
-    reset_external(:runner, CustomRunner.new(['yes']))
+    reset_external(:runner, CustomRunner.new(['yes-x']))
     @dojo = Dojo.new
-    assert @dojo.languages['yes'].runnable?
-    assert !@dojo.languages['no'].runnable?
+    language = @dojo.languages['yes-x']
+    language.dir.write('manifest.json', {
+      :display_name => 'yes, x'
+    })
+    assert language.runnable?
+    language = @dojo.languages['no-y']
+    language.dir.write('manifest.json', {
+      :display_name => 'no, x'
+    })
+    assert !language.runnable?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -337,7 +339,7 @@ class LanguageTests < ModelTestBase
        'when language does not have image_name set in manifest' do
     reset_external(:runner, DockerTestRunner.new)
     @dojo = Dojo.new
-    ruby = @dojo.languages['Ruby']
+    ruby = @dojo.languages['Ruby-TestUnit']
     ruby.dir.write(manifest_filename, { })
     assert !ruby.runnable?
   end
