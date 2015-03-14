@@ -29,7 +29,7 @@ $(function() {
 		<%= raw traffic_light_count(@avatar) %>
 	  </td>
 	  <td>
-		<%= raw pie_chart(@avatar.lights, 40, @avatar.name) %>
+		<%= raw pie_chart(@avatar.lights, @avatar.name) %>
 	  </td>
     <% end %>
 

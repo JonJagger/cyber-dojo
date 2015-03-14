@@ -36,21 +36,6 @@
   cursor: pointer;
 }
 
-.traffic-light-count {
-  font-size: 2.5em;
-  padding: 0.1em;
-  text-align: right;
-}
-
-.bulb-count {
-  font-size: 1em;
-  padding-left: 0.3em;
-}
-
-.pie {
-  margin-right: 5px;
-}
-
 .hover-tip {
   z-index: 3;
   position: absolute;
@@ -81,6 +66,39 @@
     position: relative;
     top: 5px;
   }
+}
+
+//----------------------------------------------
+
+.diff-traffic-light {
+  margin : { left: 0px; right: 0px; }
+  padding: { left: 0px; right: 0px; }
+  img {
+    width: 20px;
+    height: 20px;
+    padding: { left: 0px; right: 0px; }
+    margin : { left: 0px; right: 0px; }
+  }
+}
+
+.avatar-image img {
+  width: 25px;
+  height: 25px;  
+}
+
+.traffic-light-count {
+  font-size: 20px;
+  padding: { left: 3px; bottom: 3px; }
+  text-align: center;
+}
+
+.bulb-count {
+  font-size: 1em;
+  padding-left: 0.3em;
+}
+
+.pie {
+  margin-right: 5px;
 }
 
 //----------------------------------------------

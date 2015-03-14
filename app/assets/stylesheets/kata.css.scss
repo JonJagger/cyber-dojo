@@ -14,7 +14,7 @@
 
   #test-button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    @include font-size-largest();
+    @include font-size-medium();
     @include right-align(15px);
     margin-right: 0px;
     margin-bottom: 2px;
@@ -51,8 +51,7 @@
     overflow-x: auto;
     overflow-y: hidden;
     margin-bottom: 0px;
-    &::-webkit-scrollbar:horizontal { height: 6px; }
-    .diff-traffic-light { padding-right: 2px; }
+    &::-webkit-scrollbar:horizontal { height: 1px; }
   }
 
   .file_content {

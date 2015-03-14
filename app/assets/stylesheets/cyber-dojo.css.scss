@@ -104,7 +104,7 @@ div[class~="filename"], button[disabled]:hover {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-.line_numbers, .file_content { height: 540px; }
+.line_numbers, .file_content { height: 580px; }
 
 .line_numbers, .file_content, .diff_line_numbers, #instructions { @include code-font; }
 
@@ -113,7 +113,8 @@ div[class~="filename"], button[disabled]:hover {
   margin: 0px;
   padding: 0px;
   display: block;
-  overflow: auto;
+  overflow: auto;  
+  &::-webkit-scrollbar:vertical { width: 8px; }  
 }
 
 .line_numbers {

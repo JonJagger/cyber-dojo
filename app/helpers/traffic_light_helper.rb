@@ -19,7 +19,7 @@ module TrafficLightHelper
         " data-avatar-name='#{avatar.name}'" +
         " data-was-tag='#{number-1}'" +
         " data-now-tag='#{number}'>" +
-        traffic_light_image(light.colour, 17, 54) +
+        traffic_light_image(light.colour) +
      "</div>"
   end
 
@@ -55,18 +55,14 @@ module TrafficLightHelper
   end
 
   def avatar_image(avatar_name)
-    size = 45
     "<img src='/images/avatars/#{avatar_name}.jpg'" +
-        " alt='#{avatar_name}'" +
-        " width='#{size}'" +
-        " height='#{size}'/>"
+        " alt='#{avatar_name}'/>"
   end
 
-  def traffic_light_image(colour, width, height)
-    "<img src='/images/traffic_light_#{colour}.png'" +
-       " alt='#{colour} traffic-light'" +
-       " width='#{width}'" +
-       " height='#{height}'/>"
+  def traffic_light_image(colour)
+    #"<img src='/images/traffic_light_#{colour}.png'" +
+    "<img src='/images/edged_bulb_#{colour}.png'" +
+       " alt='#{colour} traffic-light'/>"
   end
 
   def apostrophe

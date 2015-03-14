@@ -21,3 +21,7 @@ ids.each do |id|
   `#{untar_cmd}`
   `#{rm_cmd}`
 end
+
+
+#if wget is not installed you can use curl instead
+#curl http://#{ip_address}/downloader/download/#{id} -o #{id}.tar.gz"

@@ -1,7 +1,7 @@
 
 module PieChartHelper
 
-  def pie_chart(traffic_lights, size, key)
+  def pie_chart(traffic_lights, key)
      # key is often the traffic-light's avatar's name
      # but is 'zoo' for the collective-pie-chart of
      # all the animals
@@ -10,7 +10,7 @@ module PieChartHelper
         :amber => count(traffic_lights, :amber),
         :green => count(traffic_lights, :green),
         :timed_out => count(traffic_lights, :timed_out)
-     }, size, key)
+     }, 30, key)
   end
 
   def pie_chart_from_counts(counts, size, key)
