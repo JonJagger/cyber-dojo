@@ -125,7 +125,7 @@ private
            'Ruby-Cucumber'
         then make_pattern('6 times 9')
       when 'Java-Mockito',
-           'Java-Powermockito'
+           'Java-PowerMockito'
         then make_pattern('thenReturn(9)')
       when 'Asm-assert'
         then make_pattern('mov ebx, 9')
