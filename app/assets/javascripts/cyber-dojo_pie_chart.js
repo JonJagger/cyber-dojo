@@ -6,8 +6,7 @@ var cyberDojo = (function(cd, $) {
   cd.pieChart = function(nodes) {
     // Chart.js http://www.chartjs.org/docs/
     var options = {
-      segmentShowStroke : true,
-      segmentStrokeWidth: 1,
+      segmentShowStroke : false,
       segmentStrokeColor : '#757575',
       animationEasing : 'easeOutExpo'
     };
