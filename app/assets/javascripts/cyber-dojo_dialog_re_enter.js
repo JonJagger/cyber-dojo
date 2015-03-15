@@ -20,7 +20,7 @@ var cyberDojo = (function(cd, $) {
       .dialog({
         title: cd.dialogTitle(title),
         autoOpen: false,
-        width: 500,
+        width: 420,
         modal: true,
         buttons: buttons
       });
