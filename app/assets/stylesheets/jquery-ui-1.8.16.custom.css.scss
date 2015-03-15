@@ -387,22 +387,35 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-widget,
 .ui-widget-content,
 .ui-widget-header {
-    background: $lighter-color;
-    color: $darker-color;
+    color: $lighter-color;
+    background: $darker-color;
     border: 0;
     padding: 0;
     margin: 0;
 }
 
+.ui-dialog { border: 2px dotted $lighter-color; }
 .ui-dialog .ui-dialog-titlebar,
 .ui-dialog .ui-dialog-buttonpane,
-.ui-dialog { background: $lighter-color; }
+.ui-dialog { color: $lighter-color; }
 
-.ui-dialog .ui-dialog-buttonpane button
+.large.dialog.title 
 {
-  background: $lighter-color;
-  color: $darker-color;
+  color: $lighter-color;
+  background: $darker-color;  
+}
+
+.ui-dialog .ui-dialog-buttonpane 
+{
+  color: $lighter-color;
+  background: $darker-color;
   border: 1px solid $darker-color;
+  button 
+  {
+    background: $lighter-color;
+    color: $darker-color;
+    border: 1px solid $darker-color;    
+  }
 }
 
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset

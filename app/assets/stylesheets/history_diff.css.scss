@@ -21,7 +21,9 @@
   position: relative;
   bottom: -5px;
 
-  .ui-dialog-titlebar { padding: 0px; }
+  .ui-dialog-titlebar { 
+    padding: 0px; 
+  }
   
   #title {
     font-size: 20px;
@@ -114,13 +116,12 @@
 
 
 #history-dialog {
-
+  
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   background: $darker-color;
   color     : $lighter-color;
-  padding: none;
-  padding-left: 0px;
-  margin: { left: 0px; top: 0px; }
+  padding: none !important;
+  margin: 0px;
   border: {
     left : 1px dotted lighten($darker-color,10%);
     right: 1px dotted lighten($darker-color,10%);
@@ -131,10 +132,10 @@
     font-size: 16px;
   }
 
-  #diff-filenames, .diff-line-numbers, .diff-sheet { height: 500px; }
+  #diff-filenames, .diff-line-numbers, .diff-sheet { height: 480px; }
 
   #diff-filenames {
-    width: 350px;
+    width: 340px;
     overflow-y: auto;
     overflow-x: auto;
     font-size: 11pt;
@@ -171,7 +172,7 @@
   }
 
   .diff-sheet {
-    width: 680px;
+    width: 660px;
     overflow-x: auto;
     overflow-y: scroll;
     outline: none;
