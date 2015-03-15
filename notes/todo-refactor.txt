@@ -1,6 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-o) tidy up edged_bulb png files
 o) use bulb and bulb-bar png files on history-diff dialog
 o) reduce font-size of header/footer on history-diff dialog
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
