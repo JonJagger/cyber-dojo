@@ -47,14 +47,10 @@ class TrafficLightTests < AppHelpersTestBase
   #- - - - - - - - - - - - - - - -
 
   test 'traffic_light_image' do
-    expected = "<img src='/images/traffic_light_red.png'" +
-               " alt='red traffic-light'" +
-               " width='12'" +
-               " height='38'/>"
     color = 'red'
-    width = '12'
-    height = '38'
-    actual = traffic_light_image(color,width,height)
+    expected = "<img src='/images/edged_bulb_#{color}.png'" +
+               " alt='red traffic-light'/>"
+    actual = traffic_light_image(color)
     assert_equal expected, actual
   end
 
@@ -74,9 +70,7 @@ class TrafficLightTests < AppHelpersTestBase
       " data-was-tag='-1'" +
       " data-now-tag='-1'>" +
       "<img src='/images/avatars/hippo.jpg'" +
-          " alt='hippo'" +
-          " width='45'" +
-          " height='45'/>" +
+          " alt='hippo'/>" +
         "</div>"
     actual = diff_avatar_image(avatar)
     assert_equal expected, actual
@@ -85,7 +79,6 @@ class TrafficLightTests < AppHelpersTestBase
   #- - - - - - - - - - - - - - - -
 
   test 'diff_traffic_light' do
-    # light[:colour] used to be light[:outcome]
     diff_traffic_light_func({'colour' => 'red'})
     diff_traffic_light_func({'outcome' => 'red'})
   end
@@ -97,9 +90,11 @@ class TrafficLightTests < AppHelpersTestBase
     def kata.id; 'ABCD1234'; end
     avatar = Avatar.new(kata,'hippo')
     def avatar.lights; [1]*7; end
+    tag = 3
+    color = 'red'
     light = Light.new(avatar, {
-      'number' => 3,
-      'colour' => 'red'
+      'number' => tag,
+      'colour' => color
     })
     expected = "" +
       "<div" +
@@ -107,12 +102,10 @@ class TrafficLightTests < AppHelpersTestBase
       " data-tip='ajax:traffic_light'" +
       " data-id='ABCD1234'" +
       " data-avatar-name='hippo'" +
-      " data-was-tag='2'" +
-      " data-now-tag='3'>" +
-      "<img src='/images/traffic_light_red.png'" +
-          " alt='red traffic-light'" +
-          " width='17'" +
-          " height='54'/>" +
+      " data-was-tag='#{tag-1}'" +
+      " data-now-tag='#{tag}'>" +
+      "<img src='/images/edged_bulb_#{color}.png'" +
+          " alt='#{color} traffic-light'/>" +
       "</div>"
     actual = diff_traffic_light(light)
     assert_equal expected, actual

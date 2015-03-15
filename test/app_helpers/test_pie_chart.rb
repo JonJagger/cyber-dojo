@@ -28,6 +28,7 @@ class PieChartTests < AppHelpersTestBase
       }
       ])
 
+    size = 30
     expected = "" +
       "<canvas" +
       " class='pie'" +
@@ -36,11 +37,11 @@ class PieChartTests < AppHelpersTestBase
       " data-green-count='1'" +
       " data-timed-out-count='0'" +
       " data-key='lion'" +
-      " width='40'" +
-      " height='40'>" +
+      " width='#{size}'" +
+      " height='#{size}'>" +
       "</canvas>"
 
-    actual = pie_chart(lion.lights, 40, 'lion')
+    actual = pie_chart(lion.lights, 'lion')
 
     assert_equal expected, actual
   end
@@ -56,6 +57,7 @@ class PieChartTests < AppHelpersTestBase
       green_light,
       timed_out_light,
     ]
+    size = 30
     expected = "" +
       "<canvas" +
       " class='pie'" +
@@ -64,10 +66,10 @@ class PieChartTests < AppHelpersTestBase
       " data-green-count='1'" +
       " data-timed-out-count='1'" +
       " data-key='alligator'" +
-      " width='45'" +
-      " height='45'>" +
+      " width='#{size}'" +
+      " height='#{size}'>" +
       "</canvas>"
-    actual = pie_chart(lights, 45, 'alligator')
+    actual = pie_chart(lights, 'alligator')
     assert_equal expected, actual
   end
 

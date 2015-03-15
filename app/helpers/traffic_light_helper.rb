@@ -60,7 +60,6 @@ module TrafficLightHelper
   end
 
   def traffic_light_image(colour)
-    #"<img src='/images/traffic_light_#{colour}.png'" +
     "<img src='/images/edged_bulb_#{colour}.png'" +
        " alt='#{colour} traffic-light'/>"
   end
