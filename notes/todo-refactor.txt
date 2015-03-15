@@ -3,6 +3,17 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 redo all images on blog that use traffic-lights
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+move tweet button to lhs of test button?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Rename starting files as starter.* 
+Having the starting files called Hiker.rb is not ideal.
+How about *prefixing* the instructions file with the following
+...
+The names and content of the initial code and test files
+are *not* related to the chosen exercise. They are merely
+a simple example to start you off.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Set external paths via  ENV[]. Don't provide defaults.
@@ -26,14 +37,7 @@ languages/cache.rb
 dashboard page: summary of timeouts is wrong. Eg
 http://citigroup.cyber-dojo.org/dashboard/show/E1E9D08B5A?minute_columns=true&auto_refresh=false
 should have 14 timeouts....
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Rename starting files as starter.* 
-Having the starting files called Hiker.rb is not ideal.
-How about *prefixing* the instructions file with the following
-...
-The names and content of the initial code and test files
-are *not* related to the chosen exercise. They are merely
-a simple example to start you off.
+the tooltip does not refresh...
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The 1self stream capability will give me the option
 of creating a visualization of all dojos. This makes it important
