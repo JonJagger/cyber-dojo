@@ -22,46 +22,59 @@ def modules
   %w( app_helpers app_lib app_models lib languages integration app_controllers )
 end
 
-def tally
-  '([\.|\d]+)'
+def columns
+  {
+    :test_count         => [ 5, '#t'      ], # number of tests
+    :assertion_count    => [ 7, '#ass'    ], # number of assertions
+    :failure_count      => [ 3, '#f'      ], # number of failures
+    :error_count        => [ 3, '#e'      ], # number of errors
+    :skip_count         => [ 3, '#s'      ], # number of skips
+    :took               => [ 9, 'time(s)' ], # time in seconds
+    :tests_per_sec      => [ 9, 't/s'     ], # tests per second
+    :assertions_per_sec => [ 9, 'ass/s'   ], # assertions per second
+    :coverage           => [ 9, 'cov(%)'  ], # coverage    
+  }
 end
 
-def finished_pattern
-  # MiniTest
-  #   Finished in 0.083102s, 132.3675 runs/s, 348.9687 assertions/s.
-  return 'Finished in ' + tally + 's, '+
-            tally + ' runs/s, ' +
-            tally + ' assertions/s'
+def column_names
+  [ :test_count, :assertion_count, :failure_count, :error_count, :skip_count,
+    :took, :tests_per_sec, :assertions_per_sec, :coverage ]
 end
 
-def summary_pattern
-  # MiniTest
-  #   11 runs, 29 assertions, 0 failures, 0 errors, 0 skips
-  words = %w( runs assertions failures errors skips)
-  words.map{ |s| tally + ' ' + s }.join(', ')
+def indent
+  16
 end
+
+def print_line  
+  puts '-' * 73
+end
+
+#- - - - - - - - - - - - - - - - - - - - -
 
 def gather_stats
   stats = { }
-  modules.each do |mod|
+  number = '([\.|\d]+)'
+  modules.each do |module_name|
         
-    log = `cat #{mod}/log.tmp`
-    h = stats[mod] = { }
+    log = `cat #{module_name}/log.tmp`
+    h = stats[module_name] = { }
 
+    finished_pattern = "Finished in #{number}s, #{number} runs/s, #{number} assertions/s"
     m = log.match(Regexp.new(finished_pattern))
-    h[:took] = f2(m[1])
-    h[:tests_per_sec] = f2(m[2])
+    h[:took]               = f2(m[1])
+    h[:tests_per_sec]      = f2(m[2])
     h[:assertions_per_sec] = f2(m[3])
 
+    summary_pattern = %w( runs assertions failures errors skips).map{ |s| "#{number} #{s}" }.join(', ')
     m = log.match(Regexp.new(summary_pattern))
-    h[:test_count] = m[1].to_i
+    h[:test_count]      = m[1].to_i
     h[:assertion_count] = m[2].to_i
-    h[:failure_count] = m[3].to_i
-    h[:error_count] = m[4].to_i
-    h[:skip_count] = m[5].to_i
-    # Coverage = 100.0%
-    pattern = 'Coverage = ' + tally + '%'
-    m = log.match(Regexp.new(pattern))
+    h[:failure_count]   = m[3].to_i
+    h[:error_count]     = m[4].to_i
+    h[:skip_count]      = m[5].to_i
+
+    coverage_pattern = "Coverage = #{number}%"    
+    m = log.match(Regexp.new(coverage_pattern))
     h[:coverage] = f2(m[1])
   end
   stats
@@ -69,54 +82,36 @@ end
 
 def print_heading
   puts
-  print_left(15,'')
-  print_right( 5,'#t')        # number of tests
-  print_right( 7,'#ass')      # number of assertions
-  print_right( 3,'#f')        # number of failures
-  print_right( 3,'#e')        # number of errors
-  print_right( 3,'#s')        # number of skips
-  print_right( 9,'took(s)')   # time in seconds
-  print_right( 9,'t/s')       # tests per second
-  print_right( 9,'ass/s')     # assertions per second
-  print_right( 9,'cov(%)')    # coverage
+  print_left(indent, '')
+  column_names.each { |name| print_right(*columns[name]) }
   puts
   print_line
 end
 
 def print_module(stats)
-  modules.each do |mod|
-    h = stats[mod]
-    print_left(15,mod)
-    print_right( 5,h[:test_count])
-    print_right( 7,h[:assertion_count])
-    print_right( 3,h[:failure_count])
-    print_right( 3,h[:error_count])
-    print_right( 3,h[:skip_count])
-    print_right( 9,h[:took])
-    print_right( 9,h[:tests_per_sec])
-    print_right( 9,h[:assertions_per_sec])
-    print_right( 9,h[:coverage])
+  modules.each do |module_name|
+    h = stats[module_name]
+    print_left(indent, module_name)
+    column_names.each { |name| print_right(columns[name][0], stats[module_name][name]) }
     puts
   end
 end
 
 def print_totals(stats)
-  puts ' -' * 36
-  print_left(15,'total')
-  print_right( 5,    c=stats.map{|_,h| h[:test_count].to_i}.reduce(:+))
-  print_right( 7,    a=stats.map{|_,h| h[:assertion_count].to_i}.reduce(:+))
-  print_right( 3,      stats.map{|_,h| h[:failure_count]}.reduce(:+))
-  print_right( 3,      stats.map{|_,h| h[:error_count]}.reduce(:+))
-  print_right( 3,      stats.map{|_,h| h[:skip_count]}.reduce(:+))
-  print_right( 9, t=f2(stats.map{|_,h| h[:took].to_f}.reduce(:+)))
-  print_right( 9, f2(c / t.to_f))
-  print_right( 9, f2(a / t.to_f))
+  puts '- ' * 37
+  pr = lambda { |key,value| print_right(columns[key][0], value) }
+  stat = lambda { |key| stats.map{|_,h| h[key].to_i}.reduce(:+) }
+  print_left(indent, 'total')
+  pr.call(:test_count,         c=stat.call(:test_count))
+  pr.call(:assertion_count,    a=stat.call(:assertion_count))
+  pr.call(:failure_count,        stat.call(:failure_count))
+  pr.call(:error_count,          stat.call(:error_count))
+  pr.call(:skip_count,           stat.call(:skip_count))
+  pr.call(:took,               t=f2(stats.map{|_,h| h[:took].to_f}.reduce(:+)))
+  pr.call(:tests_per_sec,        f2(c / t.to_f))
+  pr.call(:assertions_per_sec,   f2(a / t.to_f))
   puts
   print_line
-end
-
-def print_line
-  puts '-' * 72
 end
 
 #- - - - - - - - - - - - - - - - - - - - -
