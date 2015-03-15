@@ -558,6 +558,7 @@ var cyberDojo = (function(cd, $) {
       var makeButton = function(name,handler) {
         return {
           text: name,
+          'class': 'history-button',
           click: handler
         };
       };
@@ -647,14 +648,7 @@ var cyberDojo = (function(cd, $) {
 
     var makeForkButtonHtml = function() {
       var colour = data.lights[nowTag()-1].colour;
-      return 'fork from ' + nowTag() + ' ' + makeColouredBulb(colour);
-    };
-
-    var makeColouredBulb = function(colour) {
-      return "<img src='/images/bulb_" + colour + ".png'" +
-               " class='edged-bulb'" +
-               " width='15'" +
-              " height='15'/>";
+      return 'fork from ' + nowTag();
     };
 
     var refreshForkButton = function() {

@@ -21,21 +21,22 @@
   position: relative;
   bottom: -5px;
 
+  .ui-dialog-titlebar { padding: 0px; }
+  
   #title {
-    font-size: 2.2em;
+    font-size: 20px;
     position: relative;
-    top: -5px;
   }
 
   label {
     position: relative;
-    top: 10px;
+    top: 4px;
   }
 
   #traffic-lights {
     display: block;
     margin: { left: 5px; right: 12px; }
-    width: 530px;
+    width: 575px;
     overflow-x: auto;
     &::-webkit-scrollbar:horizontal {
         height: 1px;
@@ -53,19 +54,19 @@
 .navigate-control {
   
   padding-bottom: 8px;
-  #avatar { width: 34px; height: 34px; padding: 0px; margin: 0px; }
+  #avatar { width: 25px; height: 25px; padding: 0px; margin: 0px; }
   button#prev-avatar, button#next-avatar {
     padding: 0px;
     margin: 0px;
-    border: 1px dotted lighten($darker-color, 20%);
+    border: 1px dotted lighten($darker-color,20%);
   }
   button#prev-avatar:hover, button#next-avatar:hover {
     border: 1px solid $darker-color;
   }
   
   #prev-avatar img, #next-avatar img {
-    width: 25px;
-    height: 25px;
+    width: 18px;
+    height: 18px;
     @include rounded-corner(4px);
     padding: { top: 2px; bottom: 0px; }
     cursor: pointer;
@@ -80,29 +81,28 @@
     @include rounded-corner(4px);
   }
 
-  #first-button img, #last-button img { width: 20px; height: 20px; }
-  #prev-button  img, #next-button img { width: 25px; height: 25px; }
+  #first-button img, #last-button img { width: 15px; height: 15px; }
+  #prev-button  img, #next-button img { width: 20px; height: 20px; }
   
   #first-button img { padding: { left: 2px; right: 1px; } }
   #last-button  img { padding: { left: 1px; right: 2px; } }
   #prev-button  img { padding: { left: 1px; right: 4px; } }
   #next-button  img { padding: { left: 4px; right: 1px; } }
   
-  .triangle.button { border: 1px dotted lighten($darker-color, 20%); }
+  .triangle.button { border: 1px dotted lighten($darker-color,20%); }
   
   .triangle.button:hover { border: 1px solid $darker-color; }
 
   .triangle.button[disabled]:hover { border: 1px dotted lighten($darker-color,20%); }
   
   #now-tag-number {
-    font-size: 1em;
+    font-size: 15px;
     background: $lighter-color;
     color: $darker-color;
     text-align: center;
     width: 30px;
-    height: 20px;
-    padding: 2px;
-    margin: 2px;
+    height: 21px;
+    padding-top: 2px;
     @include rounded-corner(4px);
     border: 3px dotted;
   }
@@ -118,8 +118,8 @@
   padding-left: 0px;
   margin: { left: 0px; top: 0px; }
   border: {
-    left : 1px dotted lighten($darker-color, 10%);
-    right: 1px dotted lighten($darker-color, 10%);
+    left : 1px dotted lighten($darker-color,10%);
+    right: 1px dotted lighten($darker-color,10%);
   }
   
   .filename {
@@ -127,8 +127,9 @@
     font-size: 16px;
   }
 
+  #diff-filenames, .diff-line-numbers, .diff-sheet { height: 500px; }
+
   #diff-filenames {
-    height: 475px;
     width: 350px;
     overflow-y: auto;
     overflow-x: auto;
@@ -137,7 +138,6 @@
   }
 
   .diff-line-numbers, .diff-sheet {
-    height: 475px;
     margin: 0;
     padding: 0;
     @include code-font;
@@ -151,7 +151,7 @@
     added, deleted, same { @include diff-pre-block; }
     added   ln { color: $diff-added-color; }
     deleted ln { color: $diff-deleted-color; }
-    same    ln { color: lighten($darker-color, 30%); }
+    same    ln { color: lighten($darker-color,30%); }
   }
 
   .diff-line-numbers {
@@ -159,8 +159,8 @@
     margin-left: 20px;
     text-align: right;
     overflow: hidden;
-    background: lighten($darker-color, 6%);
-    border: 1px dotted lighten($darker-color, 6%);
+    background: lighten($darker-color,6%);
+    border: 1px dotted lighten($darker-color,6%);
     border-right: none;
     position: relative; // lose 1px gap to file-content
     left: 2px;    
@@ -176,15 +176,15 @@
     added, deleted, same { padding-left: 3px; }
     added {
       background: $diff-added-color;
-      &:hover { background: lighten($diff-added-color, 10%); }
+      &:hover { background: lighten($diff-added-color,10%); }
     }
     deleted {
       background: $diff-deleted-color;
       text-decoration: line-through;
-      &:hover { background: lighten($diff-deleted-color, 5%); }
+      &:hover { background: lighten($diff-deleted-color,5%); }
     }
     same {
-      &:hover { background: lighten($lighter-color, 10%); }
+      &:hover { background: lighten($lighter-color,10%); }
     }
   }
 
@@ -212,4 +212,15 @@
   
   .diff-deleted-line-count { background: $diff-deleted-color; }
   .diff-added-line-count   { background: $diff-added-color;   }
+    
 }
+  
+.history-button {
+  margin-top: 0px !important; 
+  margin-left: 0px !important;
+  .ui-button-text {
+    font-size: 12px !important;   
+  }
+}
+  
+

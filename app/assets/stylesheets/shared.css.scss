@@ -41,7 +41,7 @@
   position: absolute;
   background-color: lighten($darker-color, 6%);
   color: darken($lighter-color, 6%);
-  border: 2px solid darken($lighter-color, 6%);
+  border: 1px dotted darken($lighter-color, 6%);
   font-size: 15px;
   @include rounded-corner(10px);
   padding: 10px;
