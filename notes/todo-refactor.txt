@@ -1,5 +1,12 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+o) tidy up edged_bulb png files
+o) use bulb and bulb-bar png files on history-diff dialog
+o) reduce font-size of header/footer on history-diff dialog
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Set external paths via  ENV[]. Don't provide defaults.
 Set external class names for Git and Runner via ENV[]
 Provide one_self secrets via ENV[]
@@ -22,13 +29,13 @@ dashboard page: summary of timeouts is wrong. Eg
 http://citigroup.cyber-dojo.org/dashboard/show/E1E9D08B5A?minute_columns=true&auto_refresh=false
 should have 14 timeouts....
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Rename starting files as starter.* 
 Having the starting files called Hiker.rb is not ideal.
-How about prefixing the instructions file with the following
+How about *prefixing* the instructions file with the following
 ...
-The initial code and test files are completely
-*unrelated* to the chosen exercise. They are
-merely a simple example to start you off.
-...
+The names and content of the initial code and test files
+are *not* related to the chosen exercise. They are merely
+a simple example to start you off.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The 1self stream capability will give me the option
 of creating a visualization of all dojos. This makes it important
