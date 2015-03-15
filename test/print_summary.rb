@@ -18,31 +18,8 @@ def print_right(width,it)
   print padded(width,it) + it.to_s
 end
 
-def modules
-  %w( app_helpers app_lib app_models lib languages integration app_controllers )
-end
-
 def indent
   16
-end
-
-def columns
-  {
-    :test_count         => [  5, 't',      'number of tests' ],
-    :assertion_count    => [  7, 'a',      'number of assertions' ],
-    :failure_count      => [  3, 'f',      'number of failures' ],
-    :error_count        => [  3, 'e',      'number of errors' ],
-    :skip_count         => [  3, 's',      'number of skips' ],
-    :time               => [  6, 'time',   'time in seconds' ],
-    :tests_per_sec      => [  9, 't/s',    'tests per second' ],
-    :assertions_per_sec => [ 10, 'a/s',    'assertions per second' ],
-    :coverage           => [  9, 'cov',    'coverage %' ],
-  }
-end
-
-def column_names
-  [ :test_count, :assertion_count, :failure_count, :error_count, :skip_count,
-    :time, :tests_per_sec, :assertions_per_sec, :coverage ]
 end
 
 def line_width
@@ -50,7 +27,47 @@ def line_width
 end
 
 def print_line
-  puts '-' * line_width
+  puts '- ' * ((line_width+1)/2)
+end
+
+#- - - - - - - - - - - - - - - - - - - - -
+
+def modules
+  %w( app_helpers app_lib app_models lib languages integration app_controllers )
+end
+
+#- - - - - - - - - - - - - - - - - - - - -
+
+def column_names
+  [ 
+    :test_count, 
+    :assertion_count, 
+    :failure_count, 
+    :error_count, 
+    :skip_count,
+    :time, 
+    :tests_per_sec, 
+    :assertions_per_sec, 
+    :coverage
+  ]
+end
+
+#- - - - - - - - - - - - - - - - - - - - -
+
+def columns
+  names = column_names
+  n = -1
+  {
+    names[n += 1] => [  5, 't',    'number of tests'       ],
+    names[n += 1] => [  7, 'a',    'number of assertions'  ],
+    names[n += 1] => [  3, 'f',    'number of failures'    ],
+    names[n += 1] => [  3, 'e',    'number of errors'      ],
+    names[n += 1] => [  3, 's',    'number of skips'       ],
+    names[n += 1] => [  6, 'time', 'time in seconds'       ],
+    names[n += 1] => [  9, 't/s',  'tests per second'      ],
+    names[n += 1] => [ 10, 'a/s',  'assertions per second' ],
+    names[n += 1] => [  9, 'cov',  'coverage %'            ],
+  }
 end
 
 #- - - - - - - - - - - - - - - - - - - - -
@@ -84,40 +101,50 @@ def gather_stats
   stats
 end
 
+#- - - - - - - - - - - - - - - - - - - - -
+
 def print_heading
   print_left(indent, '')
   column_names.each { |name| print_right(columns[name][0], columns[name][1]) }
-  puts
-  print_line
+  print "\n"
 end
+
+#- - - - - - - - - - - - - - - - - - - - -
 
 def print_stats(stats)
   modules.each do |module_name|
     h = stats[module_name]
     print_left(indent, module_name)
     column_names.each { |name| print_right(columns[name][0], stats[module_name][name]) }
-    puts
+    print "\n"
   end
 end
 
+#- - - - - - - - - - - - - - - - - - - - -
+
 def print_totals(stats)
-  puts '- ' * ((line_width+1)/2)
   pr = lambda { |key,value| print_right(columns[key][0], value) }
   stat = lambda { |key| stats.map{|_,h| h[key].to_i}.reduce(:+) }
   print_left(indent, 'total')
-  pr.call(:test_count,         c=stat.call(:test_count))
-  pr.call(:assertion_count,    a=stat.call(:assertion_count))
-  pr.call(:failure_count,        stat.call(:failure_count))
-  pr.call(:error_count,          stat.call(:error_count))
-  pr.call(:skip_count,           stat.call(:skip_count))
-  pr.call(:time,               t=f2(stats.map{|_,h| h[:time].to_f}.reduce(:+)))
+  name = :test_count
+  pr.call(name, c=stat.call(name))
+  name = :assertion_count
+  pr.call(name, a=stat.call(name))
+  name = :failure_count
+  pr.call(name, stat.call(name))
+  name = :error_count
+  pr.call(name, stat.call(name))
+  name = :skip_count
+  pr.call(name, stat.call(name))
+  name = :time
+  pr.call(name, t=f2(stats.map{|_,h| h[name].to_f}.reduce(:+)))
   pr.call(:tests_per_sec,        f2(c / t.to_f))
   pr.call(:assertions_per_sec,   f2(a / t.to_f))
-  puts
-  print_line
 end
 
-def print_key
+#- - - - - - - - - - - - - - - - - - - - -
+
+def print_column_keys
   column_names.each do |name|
     puts columns[name][1] + ' == ' + columns[name][2]
   end
@@ -126,10 +153,13 @@ end
 #- - - - - - - - - - - - - - - - - - - - -
 
 stats = gather_stats
-puts
+print "\n"
 print_heading
+print_line
 print_stats(stats)
+print_line
 print_totals(stats)
-puts
-print_key
-puts
+print "\n"
+print "\n"
+print_column_keys
+print "\n"
