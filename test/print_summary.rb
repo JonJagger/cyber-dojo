@@ -22,31 +22,35 @@ def modules
   %w( app_helpers app_lib app_models lib languages integration app_controllers )
 end
 
+def indent
+  16
+end
+
 def columns
   {
-    :test_count         => [ 5, '#t'      ], # number of tests
-    :assertion_count    => [ 7, '#ass'    ], # number of assertions
-    :failure_count      => [ 3, '#f'      ], # number of failures
-    :error_count        => [ 3, '#e'      ], # number of errors
-    :skip_count         => [ 3, '#s'      ], # number of skips
-    :took               => [ 9, 'time(s)' ], # time in seconds
-    :tests_per_sec      => [ 9, 't/s'     ], # tests per second
-    :assertions_per_sec => [ 9, 'ass/s'   ], # assertions per second
-    :coverage           => [ 9, 'cov(%)'  ], # coverage    
+    :test_count         => [  5, 't',      'number of tests' ],
+    :assertion_count    => [  7, 'a',      'number of assertions' ],
+    :failure_count      => [  3, 'f',      'number of failures' ],
+    :error_count        => [  3, 'e',      'number of errors' ],
+    :skip_count         => [  3, 's',      'number of skips' ],
+    :time               => [  6, 'time',   'time in seconds' ],
+    :tests_per_sec      => [  9, 't/s',    'tests per second' ],
+    :assertions_per_sec => [ 10, 'a/s',    'assertions per second' ],
+    :coverage           => [  9, 'cov',    'coverage %' ],
   }
 end
 
 def column_names
   [ :test_count, :assertion_count, :failure_count, :error_count, :skip_count,
-    :took, :tests_per_sec, :assertions_per_sec, :coverage ]
+    :time, :tests_per_sec, :assertions_per_sec, :coverage ]
 end
 
-def indent
-  16
+def line_width
+  columns.map{|_,values| values[0]}.reduce(:+) + indent
 end
 
-def print_line  
-  puts '-' * 73
+def print_line
+  puts '-' * line_width
 end
 
 #- - - - - - - - - - - - - - - - - - - - -
@@ -61,7 +65,7 @@ def gather_stats
 
     finished_pattern = "Finished in #{number}s, #{number} runs/s, #{number} assertions/s"
     m = log.match(Regexp.new(finished_pattern))
-    h[:took]               = f2(m[1])
+    h[:time]               = f2(m[1])
     h[:tests_per_sec]      = f2(m[2])
     h[:assertions_per_sec] = f2(m[3])
 
@@ -81,14 +85,13 @@ def gather_stats
 end
 
 def print_heading
-  puts
   print_left(indent, '')
-  column_names.each { |name| print_right(*columns[name]) }
+  column_names.each { |name| print_right(columns[name][0], columns[name][1]) }
   puts
   print_line
 end
 
-def print_module(stats)
+def print_stats(stats)
   modules.each do |module_name|
     h = stats[module_name]
     print_left(indent, module_name)
@@ -98,7 +101,7 @@ def print_module(stats)
 end
 
 def print_totals(stats)
-  puts '- ' * 37
+  puts '- ' * ((line_width+1)/2)
   pr = lambda { |key,value| print_right(columns[key][0], value) }
   stat = lambda { |key| stats.map{|_,h| h[key].to_i}.reduce(:+) }
   print_left(indent, 'total')
@@ -107,16 +110,26 @@ def print_totals(stats)
   pr.call(:failure_count,        stat.call(:failure_count))
   pr.call(:error_count,          stat.call(:error_count))
   pr.call(:skip_count,           stat.call(:skip_count))
-  pr.call(:took,               t=f2(stats.map{|_,h| h[:took].to_f}.reduce(:+)))
+  pr.call(:time,               t=f2(stats.map{|_,h| h[:time].to_f}.reduce(:+)))
   pr.call(:tests_per_sec,        f2(c / t.to_f))
   pr.call(:assertions_per_sec,   f2(a / t.to_f))
   puts
   print_line
 end
 
+def print_key
+  column_names.each do |name|
+    puts columns[name][1] + ' == ' + columns[name][2]
+  end
+end
+
 #- - - - - - - - - - - - - - - - - - - - -
 
 stats = gather_stats
+puts
 print_heading
-print_module(stats)
+print_stats(stats)
 print_totals(stats)
+puts
+print_key
+puts
