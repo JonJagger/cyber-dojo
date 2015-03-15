@@ -8,7 +8,7 @@ class DifferController < ApplicationController
 	      lights: @lights,
 	      diffs: diffs,
 	      prevAvatar: prev_ring(active_avatar_names,avatar_name),
-	      nextAvatar: prev_ring(active_avatar_names,avatar_name),
+	      nextAvatar: next_ring(active_avatar_names,avatar_name),
 	      idsAndSectionCounts: prune(diffs),
 	      currentFilenameId: pick_file_id(diffs, current_filename),
 	      wasTag: was_tag,

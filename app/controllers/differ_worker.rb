@@ -23,7 +23,7 @@ module DifferWorker
   end
 
   def active_avatar_names
-    @active_avatar_names ||= avatars.active.map { |avatar| avatar.name}.sort
+    @active_avatar_names ||= avatars.active.map { |avatar| avatar.name }.sort
   end
 
   def prune(array)
