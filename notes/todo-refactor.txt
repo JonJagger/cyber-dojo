@@ -1,7 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-o) use bulb and bulb-bar png files on history-diff dialog
-o) reduce font-size of header/footer on history-diff dialog
+history-diff dialog
+o) add edge to red/amber/green bulbs on
+o) put bar/gap at top of image not bottom
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 

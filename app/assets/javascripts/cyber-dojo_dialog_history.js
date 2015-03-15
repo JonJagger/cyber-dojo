@@ -661,7 +661,7 @@ var cyberDojo = (function(cd, $) {
 
     var makeRevertButtonHtml = function() {
       var colour = data.lights[nowTag()-1].colour;
-      return 'revert to ' + nowTag() + ' ' + makeColouredBulb(colour);
+      return 'revert to ' + nowTag();
     };
 
     var refreshRevertButton = function() {
