@@ -6,7 +6,7 @@ var cyberDojo = (function(cd, $) {
   // Arguably, the history would be better as it own page rather
   // than a dialog. That would help google searchability and
   // analytics etc. I use a dialog because of revert.
-  // When revert is clicked it has to be for a specific
+  // When revert is clicked it has to be for a *specific*
   // animal and it has to revert their code! As a dialog,
   // the revert has access to animal's code on the page
   // from which the history-dialog opened.
@@ -172,10 +172,10 @@ var cyberDojo = (function(cd, $) {
       var html = '';
       var index = 1;
       $.each(lights, function(n,light) {
-        var barGap = (nowTag() === light.number) ? '_bar' : '_gap';
+        var barGap = (nowTag() === light.number) ? 'bar' : 'gap';
         html +=
           "<div class='traffic-light'>" +
-            "<img src='/images/traffic_light_" + light.colour + barGap + ".png'" +
+            "<img src='/images/bulb_" + light.colour + '_' + barGap + ".png'" +
                 " data-index='" + index + "'" +
                 " data-tag='" + light.number + "'/>" +
           "</div>";
@@ -651,12 +651,10 @@ var cyberDojo = (function(cd, $) {
     };
 
     var makeColouredBulb = function(colour) {
-      return '' +
-        '<img' +
-            " src='/images/" + 'edged_bulb_' + colour + ".png'" +
-          " class='edged-bulb'" +
-          " width='12'" +
-         " height='12'/>";
+      return "<img src='/images/bulb_" + colour + ".png'" +
+               " class='edged-bulb'" +
+               " width='15'" +
+              " height='15'/>";
     };
 
     var refreshForkButton = function() {
