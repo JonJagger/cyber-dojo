@@ -46,7 +46,7 @@
       padding-top: 5px;
       padding-right: 3px;
       cursor: pointer;
-      img { width: 15px; height: 22px; }
+      img { width: 15px; height: 20px; }
     }
   }
 }
@@ -105,6 +105,10 @@
     padding-top: 2px;
     @include rounded-corner(4px);
     border: 3px dotted;
+    &.red   { border-color: red; }
+    &.amber { border-color: orange; }
+    &.green { border-color: darken(lime,10%); }
+    &.timed_out { border-color: gray; }
   }
 }
 

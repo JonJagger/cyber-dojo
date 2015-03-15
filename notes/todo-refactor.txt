@@ -1,10 +1,4 @@
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-history-diff dialog
-o) add edge to red/amber/green bulbs on
-o) put bar/gap at top of image not bottom
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Set external paths via  ENV[]. Don't provide defaults.

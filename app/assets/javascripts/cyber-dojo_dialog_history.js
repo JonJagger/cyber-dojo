@@ -245,16 +245,14 @@ var cyberDojo = (function(cd, $) {
 
     var refreshTagControls = function() {
       var colour = data.lights[nowTag()-1].colour;
-      if (colour === 'amber' || colour === 'timed_out') {
-        colour = 'orange';
-      }
-      $('#now-tag-number')
-        .html(nowTag())
-        .css('border-color', colour);
       var minTag = 1;
       var maxTag = data.lights.length;
       var tagsToLeft = minTag < nowTag();
       var tagsToRight = nowTag() < maxTag;
+      $('#now-tag-number')
+        .removeClass()
+        .addClass(colour)
+        .html(nowTag());
       refreshTag(tagsToLeft,  $('#first-button'), minTag);
       refreshTag(tagsToLeft,  $('#prev-button'),  nowTag()-1);
       refreshTag(tagsToRight, $('#next-button'),  nowTag()+1);
