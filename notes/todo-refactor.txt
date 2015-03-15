@@ -1,6 +1,10 @@
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+redo all images on blog that use traffic-lights
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Set external paths via  ENV[]. Don't provide defaults.
 Set external class names for Git and Runner via ENV[]
 Provide one_self secrets via ENV[]
