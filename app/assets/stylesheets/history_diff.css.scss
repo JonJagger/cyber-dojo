@@ -26,19 +26,20 @@
   }
   
   #title {
-    font-size: 20px;
+    font-size: 24px;
     position: relative;
+    top: 0px;
   }
 
   label {
     position: relative;
-    top: 4px;
+    top: 6px;
   }
 
   #traffic-lights {
     display: block;
-    margin: { left: 5px; right: 12px; }
-    width: 575px;
+    margin: { left: 0px; right: 12px; }
+    width: 698px;
     overflow-x: auto;
     &::-webkit-scrollbar:horizontal {
         height: 1px;
@@ -48,15 +49,16 @@
       padding-top: 5px;
       padding-right: 3px;
       cursor: pointer;
-      img { width: 15px; height: 20px; }
+      img { width: 17px; height: 23px; }
     }
   }
 }
 
 .navigate-control {
   
-  padding-bottom: 8px;
-  #avatar { width: 25px; height: 25px; padding: 0px; margin: 0px; }
+  @include ghost-panel(5px);  
+  margin: { top: 0px; bottom: 0px; left: 0px; right: 10px; }
+  #avatar { width: 26px; height: 26px; padding: 0px; margin: 0px; }
   button#prev-avatar, button#next-avatar {
     padding: 0px;
     margin: 0px;
@@ -67,8 +69,8 @@
   }
   
   #prev-avatar img, #next-avatar img {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     @include rounded-corner(4px);
     padding: { top: 2px; bottom: 0px; }
     cursor: pointer;

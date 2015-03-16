@@ -43,11 +43,11 @@ var cyberDojo = (function(cd, $) {
     var makeTitleHtml = function() {
       return '<table>' +
                '<tr valign="top">' +
+                 cd.td('<div id="traffic-lights"></div>') +
+                 cd.td(makeTagNavigationHtml()) +
                  cd.td(makeAvatarNavigationHtml()) +
                  cd.td(makeDiffTitleHtml()) +
                  cd.td(makeDiffCheckboxHtml()) +
-                 cd.td('<div id="traffic-lights"></div>') +
-                 cd.td(makeTagNavigationHtml()) +
                '</tr>' +
              '</table>';
     };
@@ -594,7 +594,7 @@ var cyberDojo = (function(cd, $) {
 
     var historyDialog = diffDiv.dialog({
       title: cd.dialogTitle(makeTitleHtml()),
-      width: 1125,
+      width: 1100,
       modal: true,
       buttons: makeAllButtons(),
       autoOpen: false,
