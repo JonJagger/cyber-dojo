@@ -394,7 +394,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
     margin: 0;
 }
 
-.ui-dialog { border: 2px dotted $lighter-color; }
+.ui-dialog { border: 1px dotted $lighter-color; }
 .ui-dialog .ui-dialog-titlebar,
 .ui-dialog .ui-dialog-buttonpane,
 .ui-dialog { color: $lighter-color; }

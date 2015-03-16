@@ -108,7 +108,7 @@
     height: 21px;
     padding-top: 2px;
     @include rounded-corner(4px);
-    border: 3px dotted;
+    border: 2px dotted;
     &.red   { border-color: red; }
     &.amber { border-color: orange; }
     &.green { border-color: darken(lime,10%); }

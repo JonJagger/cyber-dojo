@@ -560,6 +560,11 @@ var cyberDojo = (function(cd, $) {
           click: handler
         };
       };
+      buttons.push(makeButton('help', function() {
+        var url = 'http://blog.cyber-dojo.org/';
+        url += '2014/10/the-cyber-dojo-history-dialog.html';
+        window.open(url, '_blank');
+      }));
       buttons.push(makeButton('fork', function() {
         doFork();
       }));
@@ -569,11 +574,6 @@ var cyberDojo = (function(cd, $) {
           historyDialog.remove();
         }));
       }
-      buttons.push(makeButton('help', function() {
-        var url = 'http://blog.cyber-dojo.org/';
-        url += '2014/10/the-cyber-dojo-history-dialog.html';
-        window.open(url, '_blank');
-      }));
       buttons.push(makeButton('close', function() {
         historyDialog.remove();
       }));
@@ -581,11 +581,11 @@ var cyberDojo = (function(cd, $) {
     };
 
     var forkButton = function() {
-      return $('.ui-dialog-buttonset :nth-child(1) :first-child');
+      return $('.ui-dialog-buttonset :nth-child(2) :first-child');
     };
 
     var revertButton = function() {
-      return $('.ui-dialog-buttonset :nth-child(2) :first-child');
+      return $('.ui-dialog-buttonset :nth-child(3) :first-child');
     };
 
     //- - - - - - - - - - - - - - -
@@ -598,15 +598,11 @@ var cyberDojo = (function(cd, $) {
       modal: true,
       buttons: makeAllButtons(),
       autoOpen: false,
-      open: function() { refresh(); setInitialFocus(); },
+      open: function() { refresh(); },
       closeOnEscape: true,
       close: function() { $(this).remove(); },
     });
 
-    var setInitialFocus = function() {
-      $("#next-button", titleBar()).focus();
-    };
-    
     //---------------------------------------------------
     // refresh
     //---------------------------------------------------
@@ -729,25 +725,17 @@ var cyberDojo = (function(cd, $) {
 
     var forkSucceededDialog = function(fork) {
       var html = '' +
-        "<div class='dialog'>" +
-          "<div class='panel' style='font-size:1.5em;'>" +
-            "your forked dojo's id is" +
-            "<div class='align-center'>" +
-              "<span class='kata-id-input'>" +
-                "&nbsp;" +
+          "<div style='font-size:1.5em;'>" +
+            "your forked dojo's id is&nbsp;" +
                 fork.id.substring(0,6) +
-                "&nbsp;" +
-              "</span>" +
-            "</div>" +
-          "</div>" +
-        "</div>";
+          "</div>";
       var succeeded =
         $('<div>')
           .html(html)
           .dialog({
             autoOpen: false,
             modal: true,
-            width: 450,
+            width: 250,
             buttons: {
               ok: function() {
                 var url = '/dojo/index/' + fork.id;
