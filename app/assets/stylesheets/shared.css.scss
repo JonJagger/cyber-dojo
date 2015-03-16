@@ -26,6 +26,7 @@
 
 @mixin ghost-panel($padding: 5px)
 {
+  display: block;
   margin-bottom: 20px;
   padding: $padding;
   background: lighten($darker-color, 6%);

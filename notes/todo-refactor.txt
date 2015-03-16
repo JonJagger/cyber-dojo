@@ -2,6 +2,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 redo all images on blog that use traffic-lights
+use time-spaced bulbs on history-diff?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move tweet button to lhs of test button?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

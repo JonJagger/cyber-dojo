@@ -399,10 +399,14 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-dialog .ui-dialog-buttonpane,
 .ui-dialog { color: $lighter-color; }
 
+.ui-dialog-titlebar { padding: 0px; }
+
 .large.dialog.title 
 {
   color: $lighter-color;
   background: $darker-color;  
+  table { border-collapse: collapse; }
+  th, td { padding: 0; }
 }
 
 .ui-dialog .ui-dialog-buttonpane 

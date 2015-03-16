@@ -17,18 +17,15 @@
 #ui-dialog-title-history-dialog {
 
   font-size: 0.5em;
-  margin-left: 5px;
-  position: relative;
-  bottom: -5px;
+  margin: 0px;
 
   .ui-dialog-titlebar { 
     padding: 0px; 
   }
   
   #title {
+    margin-left: 13px;
     font-size: 24px;
-    position: relative;
-    top: 0px;
   }
 
   label {
@@ -38,8 +35,8 @@
 
   #traffic-lights {
     display: block;
-    margin: { left: 0px; right: 12px; }
-    width: 698px;
+    margin: { left: 8px; right: 0px; top: 5px; }
+    width: 694px;
     overflow-x: auto;
     &::-webkit-scrollbar:horizontal {
         height: 1px;
@@ -56,9 +53,9 @@
 
 .navigate-control {
   
-  @include ghost-panel(5px);  
-  margin: { top: 0px; bottom: 0px; left: 0px; right: 10px; }
-  #avatar { width: 26px; height: 26px; padding: 0px; margin: 0px; }
+  @include ghost-panel(2px);  
+  margin: { top: 0px; bottom: 0px; left: 15px; right: 0px; }
+  #avatar { width: 28px; height: 28px; padding: 0px; margin: { left: 3px; right: 3px; } }
   button#prev-avatar, button#next-avatar {
     padding: 0px;
     margin: 0px;
@@ -86,14 +83,17 @@
   }
 
   #first-button img, #last-button img { width: 15px; height: 15px; }
-  #prev-button  img, #next-button img { width: 20px; height: 20px; }
+  #prev-button img, #next-button img { 
+    width: 20px; 
+    height: 20px; 
+  }
   
   #first-button img { padding: { left: 2px; right: 1px; } }
   #last-button  img { padding: { left: 1px; right: 2px; } }
   #prev-button  img { padding: { left: 1px; right: 4px; } }
   #next-button  img { padding: { left: 4px; right: 1px; } }
   
-  .triangle.button { border: 1px dotted lighten($darker-color,20%); }
+  .triangle.button { border: 1px dotted lighten($darker-color,20%); margin: 2px;}
   
   .triangle.button:hover { border: 1px solid $darker-color; }
 
@@ -107,6 +107,7 @@
     width: 30px;
     height: 21px;
     padding-top: 2px;
+    margin-top: 2px;
     @include rounded-corner(4px);
     border: 2px dotted;
     &.red   { border-color: red; }
@@ -118,6 +119,8 @@
 
 
 #history-dialog {
+    
+  &.ui-dialog-content { padding: { top: 0px; bottom: 0px; } }
   
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   background: $darker-color;
