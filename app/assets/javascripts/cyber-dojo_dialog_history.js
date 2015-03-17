@@ -37,7 +37,7 @@ var cyberDojo = (function(cd, $) {
     };
     
     //-------------------------------------------------------
-    // < avatar > diff [x] traffic-lights << < tag > >>
+    // traffic-lights [<< < tag > >>]  [< avatar >] diff? [x] 
     //-------------------------------------------------------
     
     var makeTitleHtml = function() {
@@ -50,6 +50,113 @@ var cyberDojo = (function(cd, $) {
                  cd.td(makeDiffCheckboxHtml()) +
                '</tr>' +
              '</table>';
+    };
+
+    //---------------------------------------------------
+    // traffic-lights
+    //---------------------------------------------------
+
+    var makeTrafficLightsHtml = function(lights) {
+      var html = '';
+      var index = 1;
+      $.each(lights, function(n,light) {
+        var barGap = (nowTag() === light.number) ? 'bar' : 'gap';
+        html +=
+          "<div class='traffic-light'>" +
+            "<img src='/images/bulb_" + light.colour + '_' + barGap + ".png'" +
+                " data-index='" + index + "'" +
+                " data-tag='" + light.number + "'/>" +
+          "</div>";
+          index += 1;
+      });
+      return html;
+    };
+    
+    //- - - - - - - - - - - - - - -
+
+    var trafficLights = function() {
+      return $('#traffic-lights', titleBar());
+    };
+
+    //- - - - - - - - - - - - - - -
+    // refresh traffic-lights
+    //- - - - - - - - - - - - - - -
+
+    var refreshTrafficLights = function() {
+      trafficLights().html(makeTrafficLightsHtml(data.lights));
+      $.each($('img[src$="_gap.png"]', titleBar()), function(_,light) {
+        var index = $(this).data('index');
+        var tag = $(this).data('tag');
+        $(this)
+          .attr('title', toolTip(index))
+          .click(function() { show(tag); });
+      });
+    };
+
+    //---------------------------------------------------
+    // << < tag  > >>
+    //---------------------------------------------------
+
+    var makeTagNavigationHtml = function() {
+      return '<table class="navigate-control">' +
+               '<tr valign="top">' +
+                 td('right',  makeTagButtonHtml('first')) +
+                 td('right',  makeTagButtonHtml('prev')) +
+                 td('center', makeNowTagNumberHtml()) +
+                 td('left',   makeTagButtonHtml('next')) +
+                 td('left',   makeTagButtonHtml('last')) +
+               '</tr>' +
+             '</table>';      
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var makeTagButtonHtml = function(name) {
+      return '<button class="triangle button"' +
+                       ' id="' + name + '-button">' +
+               '<img src="/images/triangle_' + name + '.gif"' +
+                   ' alt="move to ' + name + ' diff"/>' +
+             '</button>';
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var makeNowTagNumberHtml = function() {
+      return '<div id="now-tag-number"/></div>';
+    };
+
+    //- - - - - - - - - - - - - - -
+    // refresh << < tag  > >>
+    //- - - - - - - - - - - - - - -
+
+    var refreshTagControls = function() {
+      var colour = data.lights[nowTag()-1].colour;
+      var minTag = 1;
+      var maxTag = data.lights.length;
+      var tagsToLeft = minTag < nowTag();
+      var tagsToRight = nowTag() < maxTag;
+      $('#now-tag-number')
+        .removeClass()
+        .addClass(colour)
+        .html(nowTag());
+      refreshTag(tagsToLeft,  $('#first-button'), minTag);
+      refreshTag(tagsToLeft,  $('#prev-button'),  nowTag()-1);
+      refreshTag(tagsToRight, $('#next-button'),  nowTag()+1);
+      refreshTag(tagsToRight, $('#last-button'),  maxTag);
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var refreshTag = function(on, button, newTag) {
+      button
+        .attr('disabled', !on)
+        .css('cursor', on ? 'pointer' : 'default');
+      if (on) {
+        button
+          .attr('title', toolTip(newTag))
+          .unbind('click')
+          .bind('click', function() { show(newTag); });
+      }
     };
 
     //---------------------------------------------------
@@ -129,21 +236,19 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-    // diff [x]
+    // diff? [x]
     //---------------------------------------------------
 
     var makeDiffTitleHtml = function() {
-      return '<div id="title">diff</div>';
+      return '<div id="title">diff?</div>';
     };
 
     var makeDiffCheckboxHtml = function() {
       return '<input type="checkbox"' +
                    ' class="regular-checkbox"' +
                    ' id="diff-checkbox"' +
-                   ' checked="' + (inDiffMode() ? "checked" : "") + '"' +
-              '/>' +
-              '<label for="diff-checkbox">' +
-              '</label>';
+                   ' checked="' + (inDiffMode() ? "checked" : "") + '"/>' +
+              '<label for="diff-checkbox"></label>';
     };
 
     //- - - - - - - - - - - - - - -
@@ -153,7 +258,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //- - - - - - - - - - - - - - -
-    // refresh diff [x]
+    // refresh diff? [x]
     //- - - - - - - - - - - - - - -
     
     var refreshDiffCheckBox = function() {
@@ -163,115 +268,6 @@ var cyberDojo = (function(cd, $) {
         .unbind('click')
         .bind('click', function() { show(nowTag()); });
     }
-
-    //---------------------------------------------------
-    // traffic-lights
-    //---------------------------------------------------
-
-    var makeTrafficLightsHtml = function(lights) {
-      var html = '';
-      var index = 1;
-      $.each(lights, function(n,light) {
-        var barGap = (nowTag() === light.number) ? 'bar' : 'gap';
-        html +=
-          "<div class='traffic-light'>" +
-            "<img src='/images/bulb_" + light.colour + '_' + barGap + ".png'" +
-                " data-index='" + index + "'" +
-                " data-tag='" + light.number + "'/>" +
-          "</div>";
-          index += 1;
-      });
-      return html;
-    };
-    
-    //- - - - - - - - - - - - - - -
-
-    var trafficLights = function() {
-      return $('#traffic-lights', titleBar());
-    };
-
-    //- - - - - - - - - - - - - - -
-    // refresh traffic-lights
-    //- - - - - - - - - - - - - - -
-
-    var refreshTrafficLights = function() {
-      trafficLights().html(makeTrafficLightsHtml(data.lights));
-      $.each($('img[src$="_gap.png"]', titleBar()), function(_,light) {
-        var index = $(this).data('index');
-        var tag = $(this).data('tag');
-        $(this)
-          .attr('title', toolTip(index))
-          .click(function() { show(tag); });
-      });
-    };
-
-    //---------------------------------------------------
-    // << < tag  > >>
-    //---------------------------------------------------
-
-    var makeTagNavigationHtml = function() {
-      return '<table class="navigate-control">' +
-               '<tr valign="top">' +
-                 td('right',  makeTagButtonHtml('first')) +
-                 td('right',  makeTagButtonHtml('prev')) +
-                 td('center', makeNowTagNumberHtml()) +
-                 td('left',   makeTagButtonHtml('next')) +
-                 td('left',   makeTagButtonHtml('last')) +
-               '</tr>' +
-             '</table>';      
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var makeTagButtonHtml = function(name) {
-      return '<button' +
-                ' class="triangle button"' +
-                ' id="' + name + '-button">' +
-               '<img' +
-                    ' src="/images/triangle_' + name + '.gif"' +
-                    ' alt="move to ' + name + ' diff"/>' +
-             '</button>';
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var makeNowTagNumberHtml = function() {
-      return '<div id="now-tag-number"/></div>';
-    };
-
-    //- - - - - - - - - - - - - - -
-    // refresh << < tag  > >>
-    //- - - - - - - - - - - - - - -
-
-    var refreshTagControls = function() {
-      var colour = data.lights[nowTag()-1].colour;
-      var minTag = 1;
-      var maxTag = data.lights.length;
-      var tagsToLeft = minTag < nowTag();
-      var tagsToRight = nowTag() < maxTag;
-      $('#now-tag-number')
-        .removeClass()
-        .addClass(colour)
-        .html(nowTag());
-      refreshTag(tagsToLeft,  $('#first-button'), minTag);
-      refreshTag(tagsToLeft,  $('#prev-button'),  nowTag()-1);
-      refreshTag(tagsToRight, $('#next-button'),  nowTag()+1);
-      refreshTag(tagsToRight, $('#last-button'),  maxTag);
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var refreshTag = function(on, button, newTag) {
-      button
-        .attr('disabled', !on)
-        .css('cursor', on ? 'pointer' : 'default');
-      if (on) {
-        button
-          .attr('title', toolTip(newTag))
-          .unbind('click')
-          .bind('click', function() { show(newTag); });
-      }
-    };
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 

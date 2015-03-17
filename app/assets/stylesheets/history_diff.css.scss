@@ -7,7 +7,7 @@
 @mixin diff-line-count {
   text-align: right;
   margin: none;
-  padding: { top: 0em; right: 0.2em; bottom: 0em; left: 0.2em; }
+  padding: { top: 0px; right: 0.2em; bottom: 0px; left: 0.2em; }
   @include font-size-tiny();
   width: 20px;
 }
@@ -24,8 +24,8 @@
   }
   
   #title {
-    margin-left: 13px;
     font-size: 24px;
+    margin-left: 13px;
   }
 
   label {
@@ -54,7 +54,7 @@
 .navigate-control {
   
   @include ghost-panel(2px);  
-  margin: { top: 0px; bottom: 0px; left: 15px; right: 0px; }
+  margin: { top: 5px; bottom: 0px; left: 15px; right: 0px; }
   #avatar { width: 28px; height: 28px; padding: 0px; margin: { left: 3px; right: 3px; } }
   button#prev-avatar, button#next-avatar {
     padding: 0px;
@@ -204,7 +204,6 @@
     border: 2px solid $darker-color;
     @include rounded-corner(4px);
     @include right-align(0px);
-    width: 20px !important;
     cursor: pointer;
     
     &.none {
