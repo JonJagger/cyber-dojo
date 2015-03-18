@@ -121,7 +121,7 @@
   #diff-filenames, .diff-line-numbers, .diff-sheet { height: 480px; }
 
   #diff-filenames {
-    width: 277px;
+    width: 287px;
     overflow-y: auto;
     overflow-x: auto;
     &::-webkit-scrollbar:vertical { width: 8px; }    
@@ -131,7 +131,7 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;     
     .filename { max-width: 1200px; }    
-    tbody { @include edged-panel(); max-width: 610px; }   
+    tbody { @include edged-panel(); max-width: 660px; }   
   }
 
   .diff-line-numbers, .diff-sheet {

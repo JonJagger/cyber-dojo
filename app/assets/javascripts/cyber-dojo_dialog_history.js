@@ -590,7 +590,7 @@ var cyberDojo = (function(cd, $) {
 
     var historyDialog = diffDiv.dialog({
       title: cd.dialogTitle(makeTitleHtml()),
-      width: 1025,
+      width: 1045,
       modal: true,
       buttons: makeAllButtons(),
       autoOpen: false,
