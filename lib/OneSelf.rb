@@ -70,7 +70,7 @@ private
   end
 
   def one_self_base_url
-    'https://api-staging.1self.co/v1/streams'
+    'https://api.1self.co/v1/streams'
   end
 
   def one_self_manifest_filename

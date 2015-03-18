@@ -1,8 +1,9 @@
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-redo all images on blog that use traffic-lights
-use time-spaced bulbs on history-diff?
+redo tag-navigation image on blog history-dialog page
+use time-spaced bulbs on history-dialog?
+tweak size of added/removed line-count on history-dialog
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move tweet button to lhs of test button?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
