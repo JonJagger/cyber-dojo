@@ -22,7 +22,7 @@
 
   .ui-dialog-titlebar { padding: 0px; }
   
-  #title { font-size: 24px; margin-left: 5px; position: relative; top: 5px; }
+  #title { font-size: 24px; margin-left: 5px; position: relative; top: 5px; left: 2px; }
 
   label { position: relative; top: 10px; }
 
@@ -213,7 +213,9 @@
 .history-button {
   margin-top: 0px !important; 
   margin-left: 0px !important;
-  .ui-button-text { font-size: 12px !important; }
+  .ui-button-text { font-size: 10pt !important; }
+  position: relative;
+  left: -3px;
 }
   
 
