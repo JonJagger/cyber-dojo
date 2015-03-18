@@ -66,7 +66,9 @@ button[disabled] {
   display: block; // don't lose rhs of long filenames when scrolling
   max-height: 495px;
   max-width: 250px;    
-  overflow: none; 
+  overflow: none;
+  margin-top: 3px; 
+  margin-right: 2px;
 }
 
 .filename_div {
@@ -132,6 +134,8 @@ div[class~="filename"], button[disabled]:hover {
   outline: none;
   position: relative; // lose 1px gap to file-content
   left: 2px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .file_content {
