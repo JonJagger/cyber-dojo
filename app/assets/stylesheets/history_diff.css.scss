@@ -136,6 +136,7 @@
   .filename {
     text-align: left;
     font-size: 16px;
+    width: 250px;
   }
 
   #diff-filenames, .diff-line-numbers, .diff-sheet { height: 480px; }
@@ -181,6 +182,7 @@
     width: 660px;
     overflow-x: auto;
     overflow-y: scroll;
+    &::-webkit-scrollbar:vertical { width: 8px; }
     outline: none;
     color     : $darker-color;
     background: $lighter-color;
@@ -231,7 +233,14 @@
       color: lighten($diff-added-color,5%);
     }
   }
-    
+   
+  #diff-filenames tbody {
+    display: block;
+    border: 1px dotted gray;
+    padding: 5px;
+    border-radius: 10px;
+    margin-left: 10px;
+  } 
 }
   
 .history-button {

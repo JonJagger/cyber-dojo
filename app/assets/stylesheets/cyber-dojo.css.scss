@@ -152,9 +152,7 @@ div[class~="filename"], button[disabled]:hover {
   color: $darker-color;
   display: table;
   margin: { top: 0; bottom: auto; left: 45px; right: 45px; }
-  a:link, a:visited {
-    color: $lighter-color;
-  }
+  a:link, a:visited { color: $lighter-color; }
 
   &.title {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
