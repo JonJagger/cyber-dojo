@@ -7,8 +7,9 @@
 @mixin diff-line-count {
   text-align: right;
   margin: none;
-  padding: { top: 0px; right: 0.2em; bottom: 0px; left: 0.2em; }
-  @include font-size-tiny();
+  margin-bottom: 2px;
+  padding: 2px;
+  font-size: 13px;
   width: 20px;
 }
 
@@ -200,10 +201,10 @@
 
   .diff-deleted-line-count, .diff-added-line-count {
     color: $darker-color;
-    @include diff-line-count;
-    border: 2px solid $darker-color;
+    border: 1px solid $darker-color;
     @include rounded-corner(4px);
     @include right-align(0px);
+    @include diff-line-count;
     cursor: pointer;
     
     &.none {
@@ -215,12 +216,21 @@
     }
     &[disabled].some {
       background: lighten($darker-color,25%);
-      color: $diff-deleted-color;
     }        
   }
   
-  .diff-deleted-line-count { background: $diff-deleted-color; }
-  .diff-added-line-count   { background: $diff-added-color;   }
+  .diff-deleted-line-count { 
+    background: $diff-deleted-color; 
+    &[disabled].some {
+      color: lighten($diff-deleted-color,5%);
+    }
+  }
+  .diff-added-line-count { 
+    background: $diff-added-color;   
+    &[disabled].some {
+      color: lighten($diff-added-color,5%);
+    }
+  }
     
 }
   

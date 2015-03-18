@@ -485,14 +485,14 @@ var cyberDojo = (function(cd, $) {
           return (diff[property] === 0) ? 'none' : 'some';
         };
 
-        var deletedLineCountTd = $('<td>', {
+        var deletedLineCountDiv = $('<div>', {
           'class': 'diff-deleted-line-count ' +
                     noneOrSome('deleted_line_count') +
                     ' button',
           'data-filename': diff.filename
         });
 
-        var addedLineCountTd = $('<td>', {
+        var addedLineCountDiv = $('<div>', {
           'class': 'diff-added-line-count ' +
                    noneOrSome('added_line_count') +
                    ' button',
@@ -500,16 +500,16 @@ var cyberDojo = (function(cd, $) {
         });
 
         if (diff.deleted_line_count > 0) {
-          deletedLineCountTd.append(diff.deleted_line_count);
+          deletedLineCountDiv.append(diff.deleted_line_count);
         }
         if (diff.added_line_count > 0) {
-          addedLineCountTd.append(diff.added_line_count);
+          addedLineCountDiv.append(diff.added_line_count);
         }
 
         td.append(filenameDiv);
         if (diffCheckBox().is(':checked')) {
-          tr.append(deletedLineCountTd);
-          tr.append(addedLineCountTd)
+          tr.append($('<td>').append(deletedLineCountDiv));
+          tr.append($('<td>').append(addedLineCountDiv));
         }
         tr.append(td);
         table.append(tr);
