@@ -111,11 +111,7 @@
   padding: none !important;
   margin: 0px;
   
-  .filename {
-    text-align: left;
-    font-size: 16px;
-    width: 240px;
-  }
+  .filename { text-align: left; font-size: 16px; }
 
   #diff-filenames, .diff-line-numbers, .diff-sheet { height: 480px; }
 

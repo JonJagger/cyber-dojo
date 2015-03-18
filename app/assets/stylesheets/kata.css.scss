@@ -14,7 +14,7 @@
 
   #test-button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    @include font-size-medium();
+    @include font-size-large();
     @include right-align(15px);
     margin-right: 0px;
     margin-bottom: 2px;
@@ -26,7 +26,7 @@
     margin: { top: 2px; bottom: 4px; left: 16px; right: 1px; }
     #new, #rename, #delete {
       text-align: right;
-      font-size: 1em;
+      font-size: 12px;
       margin-bottom: 2px;
       padding-bottom: 3px;
     }
