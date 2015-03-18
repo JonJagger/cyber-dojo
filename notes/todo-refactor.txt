@@ -5,10 +5,9 @@ dialogs for file:new/rename/delete input for filename needs to be wider.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 redo tag-navigation image on blog history-dialog page
 use time-spaced bulbs on history-dialog?
-add border-highlight focus to history-dialog added-deleted line counts
-history-dialog very long filename: when not selected you can scroll
+kata filename: very long filename: when not selected you can scroll
   horizontally to see the end of the filename. When selected you
-  can't.
+  can't. Ok on history-dialog
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move tweet button to lhs of test button?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

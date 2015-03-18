@@ -177,7 +177,9 @@
 
   .diff-deleted-line-count, .diff-added-line-count {
     color: $darker-color;
-    border: 1px solid $darker-color;
+    border: 1px solid lighten($darker-color,6%);
+    &:hover { border: 1px dotted lighten($darker-color,6%); }
+    &[disabled]:hover { border: 1px solid lighten($darker-color,6%); }    
     @include rounded-corner(4px);
     @include right-align(0px);
     @include diff-line-count;
