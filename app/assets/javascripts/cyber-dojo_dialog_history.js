@@ -37,20 +37,54 @@ var cyberDojo = (function(cd, $) {
     };
     
     //-------------------------------------------------------
-    // traffic-lights [<< < tag > >>]  [< avatar >] diff? [x] 
+    // diff? [x] traffic-lights [<< < tag > >>]  [< avatar >]  
     //-------------------------------------------------------
     
     var makeTitleHtml = function() {
       return '<table>' +
                '<tr valign="top">' +
+                 cd.td(makeDiffTitleHtml()) +
+                 cd.td(makeDiffCheckboxHtml()) +
                  cd.td('<div id="traffic-lights"></div>') +
                  cd.td(makeTagNavigationHtml()) +
                  cd.td(makeAvatarNavigationHtml()) +
-                 cd.td(makeDiffTitleHtml()) +
-                 cd.td(makeDiffCheckboxHtml()) +
                '</tr>' +
              '</table>';
     };
+
+    //---------------------------------------------------
+    // diff? [x]
+    //---------------------------------------------------
+
+    var makeDiffTitleHtml = function() {
+      return '<div id="title">diff?</div>';
+    };
+
+    var makeDiffCheckboxHtml = function() {
+      return '<input type="checkbox"' +
+                   ' class="regular-checkbox"' +
+                   ' id="diff-checkbox"' +
+                   ' checked="' + (inDiffMode() ? "checked" : "") + '"/>' +
+              '<label for="diff-checkbox"></label>';
+    };
+
+    //- - - - - - - - - - - - - - -
+    
+    var diffCheckBox = function() {
+      return $('#diff-checkbox', titleBar());
+    };
+
+    //- - - - - - - - - - - - - - -
+    // refresh diff? [x]
+    //- - - - - - - - - - - - - - -
+    
+    var refreshDiffCheckBox = function() {
+      diffCheckBox()
+        .html(makeDiffCheckboxHtml())
+        .attr('checked', inDiffMode())
+        .unbind('click')
+        .bind('click', function() { show(nowTag()); });
+    }
 
     //---------------------------------------------------
     // traffic-lights
@@ -234,40 +268,6 @@ var cyberDojo = (function(cd, $) {
           }
         });
     };
-
-    //---------------------------------------------------
-    // diff? [x]
-    //---------------------------------------------------
-
-    var makeDiffTitleHtml = function() {
-      return '<div id="title">diff?</div>';
-    };
-
-    var makeDiffCheckboxHtml = function() {
-      return '<input type="checkbox"' +
-                   ' class="regular-checkbox"' +
-                   ' id="diff-checkbox"' +
-                   ' checked="' + (inDiffMode() ? "checked" : "") + '"/>' +
-              '<label for="diff-checkbox"></label>';
-    };
-
-    //- - - - - - - - - - - - - - -
-    
-    var diffCheckBox = function() {
-      return $('#diff-checkbox', titleBar());
-    };
-
-    //- - - - - - - - - - - - - - -
-    // refresh diff? [x]
-    //- - - - - - - - - - - - - - -
-    
-    var refreshDiffCheckBox = function() {
-      diffCheckBox()
-        .html(makeDiffCheckboxHtml())
-        .attr('checked', inDiffMode())
-        .unbind('click')
-        .bind('click', function() { show(nowTag()); });
-    }
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -590,7 +590,7 @@ var cyberDojo = (function(cd, $) {
 
     var historyDialog = diffDiv.dialog({
       title: cd.dialogTitle(makeTitleHtml()),
-      width: 1100,
+      width: 1025,
       modal: true,
       buttons: makeAllButtons(),
       autoOpen: false,

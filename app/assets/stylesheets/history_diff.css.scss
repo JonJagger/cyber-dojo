@@ -22,14 +22,14 @@
 
   .ui-dialog-titlebar { padding: 0px; }
   
-  #title { font-size: 24px; margin-left: 13px; }
+  #title { font-size: 24px; margin-left: 5px; position: relative; top: 5px; }
 
-  label { position: relative; top: 6px; }
+  label { position: relative; top: 10px; }
 
   #traffic-lights {
     display: block;
-    margin: { left: 8px; right: 12px; top: 5px; }
-    width: 696px;
+    margin: { left: 8px; right: 11px; top: 5px; }
+    width: 625px;
     overflow-x: auto;
     &::-webkit-scrollbar:horizontal { height: 1px; }
     .traffic-light {
@@ -104,7 +104,10 @@
 
 
 #history-dialog {
-    
+
+  overflow-y: hidden;
+  overflow-x: hidden;
+  
   &.ui-dialog-content { padding: { top: 0px; bottom: 0px; } }
   
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
@@ -118,18 +121,22 @@
   #diff-filenames, .diff-line-numbers, .diff-sheet { height: 480px; }
 
   #diff-filenames {
-    width: 340px;
+    width: 277px;
     overflow-y: auto;
     overflow-x: auto;
     &::-webkit-scrollbar:vertical { width: 8px; }    
     &::-webkit-scrollbar:horizontal { height: 8px; }    
     font-size: 11pt;
     text-align: left;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;     
+    .filename { max-width: 1200px; }    
+    tbody { @include edged-panel(); width: 610px; }   
   }
 
   .diff-line-numbers, .diff-sheet {
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
     @include code-font;
     font-size: 10pt;
     ln { margin: { left : 4px; right: 3px; } font-weight: normal; }
@@ -147,8 +154,11 @@
     background: lighten($darker-color,6%);
     border: 1px dotted lighten($darker-color,6%);
     border-right: none;
+    border-bottom: none;
     position: relative; // lose 1px gap to file-content
     left: 2px;    
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;         
   }
 
   .diff-sheet {
@@ -197,9 +207,7 @@
   .diff-added-line-count { 
     background: $diff-added-color;   
     &[disabled].some { color: lighten($diff-added-color,5%); }
-  }
-   
-  #diff-filenames tbody { @include edged-panel(); }   
+  }   
 }
   
 .history-button {
