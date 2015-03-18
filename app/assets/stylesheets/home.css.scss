@@ -101,7 +101,7 @@ $text-color: darken($lighter-color, 10%);
   #donate-container, #jon-jagger-container, #accu-container {
     font-size: 1em;
     font-size: 0.8em;    
-    @include ghost-panel(10px);    
+    @include edged-panel();
     margin: 10px;    
     width: 280px;
     text-align: right;
@@ -113,6 +113,7 @@ $text-color: darken($lighter-color, 10%);
       width: 82px;
       font-size: 1.70em;
       padding: 6px;
+      padding-right: 7px;
     }    
   }
   

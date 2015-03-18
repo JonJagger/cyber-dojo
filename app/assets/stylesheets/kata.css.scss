@@ -22,7 +22,7 @@
   }
 
   #file-operations {
-    @include ghost-panel(8px);
+    @include edged-panel();
     margin: { top: 2px; bottom: 4px; left: 16px; right: 1px; }
     #new, #rename, #delete {
       text-align: right;
@@ -33,13 +33,11 @@
   }
 
   #filename-list {
+    @include edged-panel();
     margin-left: 15px;
-    height: 520px;
     overflow-x: auto;
     overflow-y: auto;
-    div[class~='filename'][class~='highlight'] {
-      &:before { content: ">"; }
-    }
+    div[class~='filename'][class~='highlight'] { &:before { content: ">"; } }
     #radio_output, div[class~='filename'][class~='lowlight'] {
       color: lighten($darker-color, 25%);
     }
@@ -54,10 +52,7 @@
     &::-webkit-scrollbar:horizontal { height: 1px; }
   }
 
-  .file_content {
-    overflow-x: auto;
-    overflow-y: scroll;
-  }
+  .file_content { overflow-x: auto; overflow-y: scroll; }
 
 }
 

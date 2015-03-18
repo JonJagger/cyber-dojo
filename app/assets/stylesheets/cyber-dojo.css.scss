@@ -99,7 +99,7 @@ div[class~="filename"]:hover, button:hover {
 }
 
 div[class~="filename"], button[disabled]:hover {
-  border: $filename_and_button_border_size solid $darker-color;
+  border: $filename_and_button_border_size solid lighten($darker-color,6%);  
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -

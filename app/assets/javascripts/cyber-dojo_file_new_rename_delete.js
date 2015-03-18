@@ -162,11 +162,11 @@ var cyberDojo = (function(cd, $) {
     var renameFileDialog = $('<div id="rename_file_dialog">')
       .html(div)
       .dialog({
-		autoOpen: false,
-		width: 350,
-		title: cd.dialogTitle(title),
-		modal: true,
-		buttons: [ okButton, cancelButton ]
+		    autoOpen: false,
+		    width: 350,
+		    title: cd.dialogTitle(title),
+		    modal: true,
+		    buttons: [ okButton, cancelButton ]
       });
 
     div.append(input);
@@ -224,21 +224,11 @@ var cyberDojo = (function(cd, $) {
   // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 
   cd.isValidFilename = function(filename) {
-    if (filename === "") {
-      return false;
-    }
-    if (cd.filenameAlreadyExists(filename)) {
-      return false;
-    }
-    if (filename.indexOf("\\") !== -1) {
-      return false;
-    }
-    if (filename[0] === '/') {
-      return false;
-    }
-    if (filename.indexOf("..") !== -1) {
-      return false;
-    }
+    if (filename === "") { return false; }
+    if (cd.filenameAlreadyExists(filename)) { return false; }
+    if (filename.indexOf("\\") !== -1) { return false; }
+    if (filename[0] === '/') { return false; }
+    if (filename.indexOf("..") !== -1) { return false; }
     return true;
   };
 

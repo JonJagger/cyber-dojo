@@ -1,19 +1,7 @@
 
-@mixin right-align($margin-right)
-{
-  margin: { left : auto; right: $margin-right; }
-}
-
-@mixin left-align($margin-left)
-{
-  margin: { left : $margin-left; right: auto; }
-}
-
-@mixin center-align
-{
-  text-align: center;
-  margin: { left : auto; right: auto; }
-}
+@mixin right-align($margin-right) { margin: { left : auto; right: $margin-right; } }
+@mixin left-align($margin-left) { margin: { left : $margin-left; right: auto; } }
+@mixin center-align { text-align: center; margin: { left : auto; right: auto; } }
 
 .align-left { text-align: left; }
 .align-center { @include center-align; }
@@ -24,18 +12,17 @@
 
 //----------------------------------------------
 
-@mixin ghost-panel($padding: 5px)
+@mixin edged-panel 
 {
-  display: block;
-  margin-bottom: 20px;
-  padding: $padding;
+  display: inline-block;
+  border: 1px dotted gray;
+  padding: 5px;
+  border-radius: 10px;
+  margin-left: 10px;
   background: lighten($darker-color, 6%);
-  border: 1px solid lighten($darker-color, 6%);
 }
 
-.diff-traffic-light, #yin-yang-logo {
-  cursor: pointer;
-}
+.diff-traffic-light, #yin-yang-logo { cursor: pointer; }
 
 .hover-tip {
   z-index: 3;
@@ -62,12 +49,7 @@
   color: $lighter-color;
 }
 
-#tweet-container {
-  #twitter-widget-0 {
-    position: relative;
-    top: 5px;
-  }
-}
+#tweet-container { #twitter-widget-0 { position: relative; top: 5px; } }
 
 //----------------------------------------------
 
@@ -82,10 +64,7 @@
   }
 }
 
-.avatar-image img {
-  width: 25px;
-  height: 25px;  
-}
+.avatar-image img { width: 25px; height: 25px; }
 
 .traffic-light-count {
   font-size: 23px;
@@ -93,18 +72,10 @@
   text-align: center;
 }
 
-.bulb-count {
-  font-size: 1em;
-  padding-left: 0.3em;
-}
+.bulb-count { font-size: 1em; padding-left: 0.3em; }
 
-.pie {
-  margin-right: 3px;
-}
+.pie { margin-right: 3px; }
 
 //----------------------------------------------
 
-.avatar_name, #id {
-  @include font-size-tiny();
-  text-align: right;
-}
+.avatar_name, #id { @include font-size-tiny(); text-align: right; }

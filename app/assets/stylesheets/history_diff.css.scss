@@ -13,14 +13,6 @@
   width: 20px;
 }
 
-@mixin edged-panel {
-  display: block;
-  border: 1px dotted gray;
-  padding: 5px;
-  border-radius: 10px;
-  margin-left: 10px;  
-}
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 #ui-dialog-title-history-dialog {

@@ -4,13 +4,11 @@
   margin: 25px;
 
   #age-container, #controls-container, #team-bulb-counts-container {
-    @include ghost-panel(5px);
+    @include edged-panel();
     @include right-align(15px);
   }
 
-  #team-bulb-counts-container .traffic-light-count {
-    font-size: 1.5em;
-  }
+  #team-bulb-counts-container .traffic-light-count { font-size: 1.5em; }
 
   #age-container {
     #days, #hours, #minutes, #seconds {
@@ -20,12 +18,14 @@
   }
 
   #progress-button-container, #download-button-container {
-    @include right-align(12px);
+    @include right-align(15px);
     text-align: right;
     #progress-button, #download-button {
       font-size: 1em;
       padding-bottom: 4px;
-      margin-bottom: 17px;
+      margin-bottom: 2px;
+      width: 80px;
+      text-align: right;
     }
   }
 
@@ -36,9 +36,7 @@
     .row      td { padding: 0px; }
     .row.odd  td { background: lighten($darker-color, 3%); }
     .row.even td { background: lighten($darker-color, 6%); }
-    td.time-period-marker {
-      border-left: dotted lighten(black,60%) 1px;
-    }
+    td.time-period-marker { border-left: dotted lighten(black,60%) 1px; }
     .collapsed-multi-gap {
       display: inline-block;
       font-size: 0.1em;
@@ -54,9 +52,7 @@
       color: lighten(black,40%);
       text-align: center;
     }
-    .traffic-light-count {
-      cursor: pointer;
-    }
+    .traffic-light-count { cursor: pointer; }
   }
 
 }
