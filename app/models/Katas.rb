@@ -17,7 +17,7 @@ class Katas
     manifest[:visible_files] = language.visible_files
     manifest[:visible_files]['output'] = ''
     text = [
-      "Note: The initial code and test files form a"
+      "Note: The initial code and test files form a",
       "simple example to start you off.",
       "They are *not* related to the chosen exercise.",
       "- - - - - - - - - - - - - - - - - - - - - - -",
