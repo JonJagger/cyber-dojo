@@ -66,9 +66,10 @@ button[disabled] {
   display: block; // don't lose rhs of long filenames when scrolling
   max-height: 495px;
   max-width: 250px;    
-  overflow: none;
   margin-top: 3px; 
   margin-right: 2px;
+  overflow: auto;
+  &::-webkit-scrollbar:horizontal { height: 8px; }      
 }
 
 .filename_div {
@@ -85,6 +86,8 @@ div[class~='filename'] {
   cursor: pointer;
   white-space: nowrap;
   @include rounded-corner(4px);
+  max-width: 1200px;
+  overflow: none;  
 
   &[class~='selected'] {
     // See app/assets/javascripts/cyber-dojo_file_load.js

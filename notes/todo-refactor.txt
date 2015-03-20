@@ -3,6 +3,7 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 redo tag-navigation image on blog history-dialog page
 use time-spaced bulbs on history-dialog?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 kata filename: very long filename: when not selected you can scroll
   horizontally to see the end of the filename. When selected you
   can't. Ok on history-dialog
