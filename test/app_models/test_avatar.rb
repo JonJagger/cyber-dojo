@@ -126,10 +126,8 @@ class AvatarTests < ModelTestBase
     visible_files.each do |filename,content|
       expected_manifest[filename] = content
     end
-    expected_manifest['output'] = ''
-    expected_manifest['instructions'] = 'your task...'
-
-    assert_equal expected_manifest, JSON.parse(avatar.dir.read('manifest.json'))
+    manifest = JSON.parse(avatar.dir.read('manifest.json'))
+    assert_equal '', manifest['output']
     assert_equal [ ], JSON.parse(avatar.dir.read('increments.json'))
 
     expected_symlink = [
@@ -343,14 +341,11 @@ class AvatarTests < ModelTestBase
 
   test 'visible_files' do
     kata = make_kata
-    lion = kata.start_avatar(['lion'])
-    expected = {
-      'wibble.hpp' => '#include <iostream>',
-      'wibble.cpp' => '#include "wibble.hpp"',
-      'output' => '',
-      'instructions' => 'your task...'
-    }
-    assert_equal expected, lion.visible_files
+    visible_files = kata.start_avatar(['lion']).visible_files
+    assert visible_files['wibble.hpp'].start_with?('#include <iostream>')
+    assert visible_files['wibble.cpp'].start_with?('#include "wibble.hpp"')
+    assert visible_files['instructions'].start_with?('Note: The initial code')
+    assert_equal '', visible_files['output']
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -

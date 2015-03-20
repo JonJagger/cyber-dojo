@@ -169,13 +169,10 @@ class KataTests < ModelTestBase
     assert_equal Time.mktime(*now), kata.created
     assert_equal language.name, kata.language.name
     assert_equal exercise.name, kata.exercise.name
-    expected_visible_files = {
-      'output' => '',
-      'instructions' => 'your task...',
-      'wibble.hpp' => visible_files['wibble.hpp'],
-      'wibble.cpp' => visible_files['wibble.cpp'],
-    }
-    assert_equal expected_visible_files, kata.visible_files
+    assert_equal visible_files['wibble.hpp'], kata.visible_files['wibble.hpp']
+    assert_equal visible_files['wibble.cpp'], kata.visible_files['wibble.cpp']
+    assert_equal '', kata.visible_files['output']
+    assert kata.visible_files['instructions'].start_with?('Note: The initial code')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
