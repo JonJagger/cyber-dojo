@@ -1,8 +1,6 @@
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dialogs for file:new/rename/delete input for filename needs to be wider.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 redo tag-navigation image on blog history-dialog page
 use time-spaced bulbs on history-dialog?
 kata filename: very long filename: when not selected you can scroll

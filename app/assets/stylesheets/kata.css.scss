@@ -56,6 +56,9 @@
 
 }
 
+#new_filename, #rename_filename, #delete_filename { width: 270px !important; }
+
+
 #test-overlay {
     // mimic jQuery modal dialog background
     background: #666666 url(images/ui-bg_diagonals-thick_20_666666_40x40.png) 50% 50% repeat;
