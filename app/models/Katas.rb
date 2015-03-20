@@ -16,7 +16,14 @@ class Katas
     manifest = create_kata_manifest(language, exercise, id, now)
     manifest[:visible_files] = language.visible_files
     manifest[:visible_files]['output'] = ''
-    manifest[:visible_files]['instructions'] = exercise.instructions
+    text = [
+      "Note: The initial code and test files form a"
+      "simple example to start you off.",
+      "They are *not* related to the chosen exercise.",
+      "- - - - - - - - - - - - - - - - - - - - - - -",
+      ""
+    ].join("\n") + exercise.instructions
+    manifest[:visible_files]['instructions'] = text
     kata = self[id]
     kata.dir.write('manifest.json', manifest)
     kata

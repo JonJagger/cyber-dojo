@@ -6,17 +6,14 @@ use time-spaced bulbs on history-dialog?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 kata filename: very long filename: when not selected you can scroll
   horizontally to see the end of the filename. When selected you
-  can't. Ok on history-dialog
+  can't. Ok on history-dialog.
+  Add table tbody so it styles the same as the filename list
+  on history-dialog.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move tweet button to lhs of test button?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Rename starting files as starter.* 
 Having the starting files called Hiker.rb is not ideal.
-How about *prefixing* the instructions file with the following
-...
-The names and content of the initial code and test files
-are *not* related to the chosen exercise. They are merely
-a simple example to start you off.
+Rename starting files as starter.* 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
