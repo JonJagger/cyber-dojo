@@ -11,6 +11,10 @@ var cyberDojo = (function(cd, $) {
   // the revert has access to animal's code on the page
   // from which the history-dialog opened.
 
+  cd.td = function(html) {
+	  return '<td>' + html + '</td>';
+  };
+
   cd.dialog_history = function(id,          // 'D936E1EB3F'
                                avatarName,  // 'lion'
                                wasTagParam, // 8   (1-based)
@@ -35,6 +39,10 @@ var cyberDojo = (function(cd, $) {
     var titleBar = function() {
       return $('#ui-dialog-title-history-dialog');
     };
+    var td = function(align,html) {
+      return '<td align="' + align + '">' + html + '</td>';
+    };
+
     
     //-------------------------------------------------------
     // diff? [x] traffic-lights [<< < tag > >>]  [< avatar >]  
@@ -220,12 +228,6 @@ var cyberDojo = (function(cd, $) {
     var makeAvatarImageHtml = function() {
       return '<img id="avatar"' +
                 ' src="/images/avatars/' + avatarName + '.jpg"/>';
-    };
-
-    //- - - - - - - - - - - - - - -
-    
-    var td = function(align,html) {
-      return '<td align="' + align + '">' + html + '</td>';
     };
 
     //- - - - - - - - - - - - - - -
