@@ -18,7 +18,7 @@ var cyberDojo = (function(cd, $) {
   cd.node = function(name, content) {
     return '<'+name+'>'
           +  content
-	  +'</'+name+'>';
+	        +'</'+name+'>';
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -34,7 +34,7 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.td = function(html) {
-	return cd.node('td',html);
+	  return cd.node('td',html);
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -57,12 +57,6 @@ var cyberDojo = (function(cd, $) {
        src: "/images/avatars/" + avatarName + ".jpg",
        title: avatarName
     });
-  };
-
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  cd.divPanel = function(content) {
-    return '<div class="panel">' + content + '</div>';
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
