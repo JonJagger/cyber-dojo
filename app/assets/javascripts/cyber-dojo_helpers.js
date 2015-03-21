@@ -37,17 +37,6 @@ var cyberDojo = (function(cd, $) {
 	  return cd.node('td',html);
   };
 
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  cd.avatarImage = function(avatarName, imageSize) {
-    return $('<img>', {
-       alt: avatarName,
-      'height': imageSize,
-      'width': imageSize,
-       src: "/images/avatars/" + avatarName + ".jpg",
-       title: avatarName
-    });
-  };
-
   return cd;
+
 })(cyberDojo || {}, $);
