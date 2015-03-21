@@ -39,16 +39,6 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.centeredDiv = function(node) {
-    var div = $('<div>', {
-     align: 'center'
-    });
-    div.append(node);
-    return div;
-  };
-
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   cd.avatarImage = function(avatarName, imageSize) {
     return $('<img>', {
        alt: avatarName,
