@@ -38,16 +38,6 @@ var cyberDojo = (function(cd, $) {
 	  deleter.dialog('open');
   };
 
-  // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-
-  cd.doDelete = function(filename) {
-	  // Also used in cyber-dojo_dialog_history.js (revert)
-    cd.fileDiv(filename).remove();
-    var filenames = cd.rebuildFilenameList();
-	  var i = cd.nonBoringFilenameIndex(filenames);
-    cd.loadFile(filenames[i]);
-  };
-
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // new file
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -63,8 +53,7 @@ var cyberDojo = (function(cd, $) {
       name: 'new_filename',
       value: newFilename
     });
-    var okButton =
-	  {
+    var okButton = {
 	    id: 'new_file_ok',
 	    text: 'ok',
 	    disabled: !cd.isValidFilename(newFilename),
@@ -74,26 +63,23 @@ var cyberDojo = (function(cd, $) {
 		    $(this).remove();
 	    }
 	  };
-	  var cancelButton =
-	  {
+	  var cancelButton = {
 	    id: 'new_file_cancel',
 	    text: 'cancel',
 	    click: function() {
-		  $(this).remove();
-	  }
-	};
-  
-  // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-
-  var newFileDialog = $('<div id="new_file_dialog">')
-    .html(div)
-    .dialog({
-		  autoOpen: false,
-		  width: 350,
-		  title: cd.dialogTitle(title),
-		  modal: true,
-		  buttons: [ okButton, cancelButton ]
-    });
+		    $(this).remove();
+	    }
+	  };
+    var newFileDialog = $('<div id="new_file_dialog">')
+      .html(div)
+      .dialog({
+		    autoOpen: false,
+		    width: 350,
+		    title: cd.dialogTitle(title),
+		    modal: true,
+		    buttons: [ okButton, cancelButton ]
+      });
+    
     div.append(input);
 
   	input.keyup(function(event) {
@@ -118,17 +104,6 @@ var cyberDojo = (function(cd, $) {
     input[0].setSelectionRange(0, newFilename.length);
   };
 
-  // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-
-  cd.newFileContent = function(filename, content) {
-	// Also used in cyber-dojo_dialog_revert.js
-	var newFile = cd.makeNewFile(filename, content);
-    $('#visible-files-container').append(newFile);
-    cd.bindLineNumbers(filename);
-    cd.rebuildFilenameList();
-    cd.loadFile(filename);
-  };
-
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // rename file
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -144,8 +119,7 @@ var cyberDojo = (function(cd, $) {
       name: 'rename_filename',
       value: oldFilename
     });
-    var okButton =
-	  {
+    var okButton = {
 	    id: 'rename_file_ok',
 	    text: 'ok',
 	    disabled: !cd.isValidFilename(oldFilename),
@@ -155,26 +129,22 @@ var cyberDojo = (function(cd, $) {
 		    $(this).remove();
 	    }
 	  };
-	  var cancelButton =
-	  {
+	  var cancelButton = {
   	  id: 'rename_file_cancel',
 	    text: 'cancel',
 	    click: function() {
-		  $(this).remove();
-	  }
-	};
-  
-  // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-
-  var renameFileDialog = $('<div id="rename_file_dialog">')
-    .html(div)
-    .dialog({
-		  autoOpen: false,
-		  width: 350,
-		  title: cd.dialogTitle(title),
-		  modal: true,
-		  buttons: [ okButton, cancelButton ]
-    });
+		    $(this).remove();
+	    }
+	  };  
+    var renameFileDialog = $('<div id="rename_file_dialog">')
+      .html(div)
+      .dialog({
+		    autoOpen: false,
+		    width: 350,
+		    title: cd.dialogTitle(title),
+		    modal: true,
+		    buttons: [ okButton, cancelButton ]
+      });
 
     div.append(input);
 
@@ -237,6 +207,25 @@ var cyberDojo = (function(cd, $) {
     if (filename[0] === '/') { return false; }
     if (filename.indexOf("..") !== -1) { return false; }
     return true;
+  };
+
+  // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+  // These two functions are also used in the
+  // revert functionality in cyber-dojo_dialog_history.js
+
+  cd.newFileContent = function(filename, content) {
+	  var newFile = cd.makeNewFile(filename, content);
+    $('#visible-files-container').append(newFile);
+    cd.bindLineNumbers(filename);
+    cd.rebuildFilenameList();
+    cd.loadFile(filename);
+  };
+
+  cd.doDelete = function(filename) {
+    cd.fileDiv(filename).remove();
+    var filenames = cd.rebuildFilenameList();
+	  var i = cd.nonBoringFilenameIndex(filenames);
+    cd.loadFile(filenames[i]);
   };
 
   return cd;

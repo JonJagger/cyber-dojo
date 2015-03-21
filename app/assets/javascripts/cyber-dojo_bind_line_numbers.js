@@ -4,7 +4,7 @@ var cyberDojo = (function(cd, $) {
   "use strict";
 
   cd.bindAllLineNumbers = function() {
-    $.each(cd.filenames(), function(i, filename) {
+    $.each(cd.filenames(), function(_, filename) {
       cd.bindLineNumbers(filename);
     });
   };
