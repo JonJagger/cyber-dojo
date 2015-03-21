@@ -546,7 +546,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-    // buttons: fork revert help close
+    // buttons: help fork revert close
     //---------------------------------------------------
 
     var makeAllButtons = function() {
@@ -639,7 +639,6 @@ var cyberDojo = (function(cd, $) {
     //---------------------------------------------------
 
     var makeForkButtonHtml = function() {
-      var colour = data.lights[nowTag()-1].colour;
       return 'fork from ' + nowTag();
     };
 
@@ -652,7 +651,6 @@ var cyberDojo = (function(cd, $) {
     //---------------------------------------------------
 
     var makeRevertButtonHtml = function() {
-      var colour = data.lights[nowTag()-1].colour;
       return 'revert to ' + nowTag();
     };
 
