@@ -59,18 +59,5 @@ var cyberDojo = (function(cd, $) {
     });
   };
 
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  cd.fakeFilenameButton = function(filename) {
-    return cd.makeTable(''
-      + '<div class="filename selected">'
-      +   '<input style="display:none;"'
-      +         ' type="radio"'
-      +         ' checked="checked"'
-      +         ' value="filename"/>'
-      +   '<label>' + filename + '</label>'
-      + '</div>');
-  };
-
   return cd;
 })(cyberDojo || {}, $);
