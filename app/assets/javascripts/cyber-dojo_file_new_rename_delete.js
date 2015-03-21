@@ -9,7 +9,7 @@ var cyberDojo = (function(cd, $) {
 
   cd.deleteFile = function(title) {
     var filename = cd.currentFilename();
-    var div = $(cd.divPanel(''));
+    var div = $('<div>');
 	  var deleter = $('<div>')
 	    .html(div)
 	    .dialog({
@@ -18,14 +18,9 @@ var cyberDojo = (function(cd, $) {
 		    title: cd.dialogTitle(title),
 		    modal: true,
 		    buttons: {
-		    ok: function() {
-			    cd.doDelete(filename);
-			    $(this).remove();
-		    },
-		    cancel: function() {
-			    $(this).remove();
+  		    ok: function() { cd.doDelete(filename); $(this).remove(); },
+		      cancel: function() { $(this).remove(); }
 		    }
-		  }
 	  });
     var input = $('<input>', {
       type: 'text',
@@ -44,9 +39,7 @@ var cyberDojo = (function(cd, $) {
 
   cd.newFile = function(title) {
     var newFilename = 'filename' + cd.extensionFilename();
-    var div = $('<div>', {
-      'class': 'panel'
-    });
+    var div = $('<div>');
     var input = $('<input>', {
       type: 'text',
       id: 'new_filename',
@@ -66,9 +59,7 @@ var cyberDojo = (function(cd, $) {
 	  var cancelButton = {
 	    id: 'new_file_cancel',
 	    text: 'cancel',
-	    click: function() {
-		    $(this).remove();
-	    }
+	    click: function() { $(this).remove(); }
 	  };
     var newFileDialog = $('<div id="new_file_dialog">')
       .html(div)
@@ -110,9 +101,7 @@ var cyberDojo = (function(cd, $) {
 
   cd.renameFile = function(title) {
     var oldFilename = cd.currentFilename();
-    var div = $('<div>', {
-      'class': 'panel'
-    });
+    var div = $('<div>');
     var input = $('<input>', {
       type: 'text',
       id: 'rename_filename',
@@ -132,9 +121,7 @@ var cyberDojo = (function(cd, $) {
 	  var cancelButton = {
   	  id: 'rename_file_cancel',
 	    text: 'cancel',
-	    click: function() {
-		    $(this).remove();
-	    }
+	    click: function() { $(this).remove(); }
 	  };  
     var renameFileDialog = $('<div id="rename_file_dialog">')
       .html(div)
