@@ -25,9 +25,7 @@ var cyberDojo = (function(cd, $) {
     // function invoked when the radio button filename is clicked sees
     //    $('input:radio[name=filename]:checked')
     // as having _already_ changed. Thus you cannot retrieve the
-    // old filename. This matters since I need to retrieve and store
-    // the scrollTop and scrollLeft positions of a file when it is
-    // switched out of the editor by a call to hide().
+    // old filename. 
 
     return $('#current-filename').val();
   };
@@ -71,7 +69,7 @@ var cyberDojo = (function(cd, $) {
   cd.filenames = function() {
     var prefix = 'file_content_for_';
     var filenames = [ ];
-    $('textarea[id^=' + prefix + ']').each(function(index) {
+    $('textarea[id^=' + prefix + ']').each(function(_) {
       var id = $(this).attr('id');
       var filename = id.substr(prefix.length, id.length - prefix.length);
       filenames.push(filename);

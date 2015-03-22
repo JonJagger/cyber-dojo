@@ -22,20 +22,13 @@ var cyberDojo = (function(cd, $) {
     var newFile    = fileOps.find('#new');
     var renameFile = fileOps.find('#rename');
     var deleteFile = fileOps.find('#delete');
-
-    var disable = function(node) {
-      node.prop('disabled', true);
-    };
-
-    var enable = function(node) {
-      node.prop('disabled', false);
-    };
+    var disable = function(node) { node.prop('disabled', true); };
+    var enable = function(node) { node.prop('disabled', false); };
 
     if (cd.cantBeRenamedOrDeleted(filename)) {
       disable(renameFile);
       disable(deleteFile);
-    }
-    else {
+    } else {
       enable(renameFile);
       enable(deleteFile);
     }
