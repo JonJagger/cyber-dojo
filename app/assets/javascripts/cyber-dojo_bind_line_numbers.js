@@ -51,6 +51,9 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.lineNumbers = (function() {
+    // This is used to be 9999 lines but profiling revealed this 
+    // to be a hotspot. Reducing 9999 to 999 shaved about 2
+    // seconds off the typical user-perceived reponse time.
     var number, lines = '';
     for (number = 1; number < 999; number += 1) {
       lines += '<div id="' + number + '">' + number + '</div>';
