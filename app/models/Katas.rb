@@ -19,7 +19,8 @@ class Katas
     text = [
       "Note: The initial code and test files form a",
       "simple example to start you off.",
-      "They are *not* related to the chosen exercise.",
+      "They are *not* related to the chosen exercise,",
+      "whose instructions now follow...",
       "- - - - - - - - - - - - - - - - - - - - - - -",
       ""
     ].join("\n") + exercise.instructions
