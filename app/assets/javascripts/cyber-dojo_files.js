@@ -26,7 +26,6 @@ var cyberDojo = (function(cd, $) {
     //    $('input:radio[name=filename]:checked')
     // as having _already_ changed. Thus you cannot retrieve the
     // old filename. 
-
     return $('#current-filename').val();
   };
 
@@ -42,25 +41,25 @@ var cyberDojo = (function(cd, $) {
   cd.rebuildFilenameList = function() {
     var filenameList = $('#filename-list');
     var filenames = cd.filenames();
+    // output first
     filenames.splice(filenames.indexOf('output'), 1);
     filenameList.empty();
     filenameList.append(cd.makeFileListEntry('output'));
     filenames.sort();
-
-    $.each(filenames, function(n, filename) {
+    // then highlight filenames
+    $.each(filenames, function(_, filename) {
       if (!cd.inArray(filename, cd.lowlightFilenames())) {
         var fileListEntry = cd.makeFileListEntry(filename);
         filenameList.append(fileListEntry);
       }
     });
-
-    $.each(filenames, function(n, filename) {
+    // then lowlight filenames
+    $.each(filenames, function(_, filename) {
       if (cd.inArray(filename, cd.lowlightFilenames())) {
         var fileListEntry = cd.makeFileListEntry(filename);
         filenameList.append(fileListEntry);
       }
     });
-
     return filenames;
   };
 
@@ -91,9 +90,7 @@ var cyberDojo = (function(cd, $) {
     if (cd.inArray(filename, cd.lowlightFilenames())) {
       div.addClass('lowlight');
     }
-    div.click(function() {
-      cd.loadFile(filename);
-    });
+    div.click(function() { cd.loadFile(filename); });
     return div;
   };
 
@@ -123,10 +120,9 @@ var cyberDojo = (function(cd, $) {
       //
     });
     // For some reason, setting wrap cannot be done as per the
-    // commented out line above. Well, I mean you can write
-    // it that way, but when you create a new file in FireFox 17.0.1
-    // it still wraps at the textarea width. So instead I do it
-    // like this, which works in FireFox?!
+    // commented out line above... when you create a new file in
+    // FireFox 17.0.1 it still wraps at the textarea width. 
+    // So instead I do it like this, which works in FireFox?!
     text.attr('wrap', 'off');
 
     text.val(content);
