@@ -32,16 +32,4 @@ response = http.request(request)
 p response
 p response.body
 
-=begin
-{ 
-  "token": "cda582ef7ff49dbefff8ad4470eadd1bc35f6b0d339e13b7cec031cafc20ad5a", 
-  "appId": "app-id-9bb5f1c77f0df722a9b1bc650a41988a",
-  "scope": { 
-    "objectTags": ["cyber-dojo"],
-    "actionTags": ["create"],
-    "location": true
-  }
-}
-=end
-
 
