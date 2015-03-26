@@ -8,19 +8,19 @@ $(function() {
 	  $.getJSON('/dashboard/progress', { id: id }, function(data) {
 
         var progressDiv = $('<div id="progress-dialog">');
-
-        var html = '<table>';
+        var html = '';
         var index = 0;
+        html += '<table>';
         $.each(data.animals, function(name,animal) {
           var parity = (index % 2 === 0) ? 'even' : 'odd';
           index += 1;
           html += '' +
             "<tr class='" + parity + " animal'>" +
               "<td class='progress'>" +
-                "<img src='/images/traffic_light_" + animal.colour + ".png'" +
+                "<img src='/images/bulb_" + animal.colour + ".png'" +
                     " alt='" + animal.colour + " traffic-light'" +
-                    " width='10'" +
-                    " height='30'/>" +
+                    " width='20'" +
+                    " height='20'/>" +
               "</td>" +
               "<td>" +
                 "<img src='/images/avatars/" + name + ".jpg'" +
@@ -42,7 +42,7 @@ $(function() {
             autoOpen: false,
             title: cd.dialogTitle(title),
             height: 'auto',
-			width: 'auto',
+			      width: 'auto',
             modal: true,
             buttons: {
               close: function() {
