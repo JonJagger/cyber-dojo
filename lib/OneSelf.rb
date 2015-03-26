@@ -8,7 +8,7 @@ class OneSelf
       'location' => { 'lat' => latitude, 'long' => longtitude },
       'properties' => { 'dojoId' => dojo_id }
     }
-    url = URI.parse("#{one_self_base_url}/#{stream_id}/events")
+    url = URI.parse("#{streams_url}/#{stream_id}/events")
     request = Net::HTTP::Post.new(url.path, json_header("#{write_token}"))
     request.body = data.to_json
     http = Net::HTTP.new(url.host)
@@ -16,9 +16,9 @@ class OneSelf
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
-  
+
   def started(avatar)
-    url = URI.parse(one_self_base_url)
+    url = URI.parse(streams_url)
     request = Net::HTTP::Post.new(url.path, json_header("#{app_key}:#{app_secret}"))
     http = Net::HTTP.new(url.host)
     body =  JSON.parse(http.request(request).body)
@@ -46,7 +46,7 @@ class OneSelf
       }
     }
     one_self = JSON.parse(disk[avatar.path].read(one_self_manifest_filename))    
-    url = URI.parse("#{one_self_base_url}/#{one_self['stream_id']}/events")
+    url = URI.parse("#{streams_url}/#{one_self['stream_id']}/events")
     http = Net::HTTP.new(url.host)
     request = Net::HTTP::Post.new(url.path, json_header("#{one_self['write_token']}"))
     request.body = data.to_json
@@ -69,7 +69,7 @@ private
     [added_count,deleted_count]
   end
 
-  def one_self_base_url
+  def streams_url
     'https://api.1self.co/v1/streams'
   end
 
