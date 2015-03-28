@@ -4,53 +4,55 @@ require_relative 'model_test_base'
 
 class ExercisesTests < ModelTestBase
 
-  test 'external path is as set' do
-    reset_external(:exercises_path, 'end_with_slash/')
+  def env_var
+    'CYBER_DOJO_EXERCISES_ROOT'
+  end
+  
+  def setup
+    super
+    @root_dir = ENV[env_var]
+  end
+  
+  def teardown
+    ENV[env_var] = @root_dir  
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'test caller has setup exercises-environment-variable' do
+    assert_not_nil @root_dir
+    assert File.directory? @root_dir
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test "path is set from ENV['CYBER_DOJO_EXERCISES_ROOT'] " do
+    ENV[env_var] = 'end_with_slash/'
     assert_equal 'end_with_slash/', Exercises.new.path
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'path appends slash if necessary' do
-    reset_external(:exercises_path, 'exercises')
-    assert_equal 'exercises/', Exercises.new.path
+    ENV[env_var] = 'unslashed'
+    assert_equal 'unslashed/', Exercises.new.path
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'each() gives all exercises which exist' do
-    names = ['Unsplice','Verbal','Salmo']
-    stub_exists(names)
-    exercises_names = @dojo.exercises.each.map {|exercise| exercise.name}
-    assert_equal names.sort, exercises_names.sort
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test '[name] returns exercise with given name' do
-    name = 'Print_Diamond'
-    exercise = @dojo.exercises[name]
-    assert_equal Exercise, exercise.class
-    assert_equal name, exercise.name
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'instructions content' do
-    name = 'Yahtzee'
-    exercise = @dojo.exercises[name]
-    content = 'your task...'
-    exercise.dir.write('instructions', content)
-    assert_equal content, exercise.instructions
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def stub_exists(exercises_names)
-    exercises_names.each do |name|
-      exercise = @dojo.exercises[name]
-      exercise.dir.write('instructions', 'nothing')
+    exercises_names = @dojo.exercises.each.map {|exercise| exercise.name }
+    ['Unsplice','Verbal'].each do |name|
+      assert exercises_names.include? name
     end
+    
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'exercises[name] gives access to exercise with given name' do
+    name = 'Print_Diamond'
+    assert_equal name, @dojo.exercises[name].name
+  end
+  
 end
