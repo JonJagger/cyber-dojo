@@ -15,13 +15,15 @@ class ModelTestBase < TestBase
   include UniqueId
 
   def setup
-    reset_external(:disk, Disk.new)
-    reset_external(:git, GitSpy.new)
-    reset_external(:runner, TestRunnerStub.new)
+    check_test_environment_setup
     @dojo = Dojo.new
     @max_duration = 15
   end
 
+  def teardown
+    restore_original_test_environment
+  end
+  
   def make_kata(id = unique_id)
     language = @dojo.languages['C-assert']
     exercise = @dojo.exercises['Fizz_Buzz']
@@ -37,4 +39,19 @@ class ModelTestBase < TestBase
     object.path.scan(doubled_separator).length > 0
   end
 
+private
+
+  def check_test_environment_setup
+    @test_env = { }
+    assert exercises_path?, "exercises_path not set"
+    @test_env['exercises_path'] = exercises_path
+    assert disk?, "disk not set"
+    @test_env['disk_class_name'] = disk_class_name
+  end
+  
+  def restore_original_test_environment    
+    set_exercises_path(@test_env['exercises_path']) if !@test_env['exercises_path'].nil?
+    set_disk_class_name(@test_env['disk_class_name']) if !@test_env['disk_class_name'].nil?
+  end
+  
 end

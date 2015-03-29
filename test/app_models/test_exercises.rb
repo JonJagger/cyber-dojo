@@ -4,24 +4,6 @@ require_relative 'model_test_base'
 
 class ExercisesTests < ModelTestBase
 
-  def setup
-    super
-    @root_dir = exercises_path
-  end
-  
-  def teardown
-    set_exercises_path(@root_dir)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'test caller has setup exercises-environment-variable' do
-    assert_not_nil @root_dir
-    assert File.directory? @root_dir
-  end
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
   test "path is set from ENV['CYBER_DOJO_EXERCISES_ROOT'] " do
     set_exercises_path('end_with_slash/')
     assert_equal 'end_with_slash/', Exercises.new.path
