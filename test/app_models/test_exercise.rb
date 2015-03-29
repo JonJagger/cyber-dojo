@@ -21,8 +21,9 @@ class ExerciseTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - -
 
   test 'name is as set in ctor' do
-    exercise = @dojo.exercises['Fizz_Buzz']
-    assert_equal 'Fizz_Buzz', exercise.name
+    name = 'Fizz_Buzz'
+    exercise = @dojo.exercises[name]
+    assert_equal name, exercise.name
   end
 
   #- - - - - - - - - - - - - - - - - - - - - -

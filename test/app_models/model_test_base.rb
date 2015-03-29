@@ -9,35 +9,22 @@ class ModelTestBase < TestBase
   include ExternalDiskDir
   include ExternalGit
   include ExternalRunner
-  #include ExternalExercisesPath
-  #include ExternalLanguagesPath
-  #include ExternalKatasPath
+  include ExternalExercisesPath
+  include ExternalLanguagesPath
+  include ExternalKatasPath
   include UniqueId
 
   def setup
     reset_external(:disk, Disk.new)
     reset_external(:git, GitSpy.new)
     reset_external(:runner, TestRunnerStub.new)
-    #reset_external(:exercises_path, 'exercises/')
-    #reset_external(:languages_path, 'languages/')
-    #reset_external(:katas_path, 'katas/')
     @dojo = Dojo.new
     @max_duration = 15
   end
 
   def make_kata(id = unique_id)
-    #visible_files = {
-    #    'wibble.hpp' => '#include <iostream>',
-    #    'wibble.cpp' => '#include "wibble.hpp"'
-    #}
     language = @dojo.languages['C-assert']
-    #language.dir.write('manifest.json', { 
-    #  :display_name => 'testC++, Catch',
-    #  :visible_filenames => visible_files.keys 
-    #})
-    #visible_files.each { |filename,content| language.dir.write(filename, content) }
     exercise = @dojo.exercises['Fizz_Buzz']
-    #exercise.dir.write('instructions', 'your task...')
     @dojo.katas.create_kata(language, exercise, id)
   end
 
