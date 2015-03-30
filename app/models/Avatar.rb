@@ -45,7 +45,7 @@ class Avatar
     JSON.parse(read(manifest_filename))
   end
 
-  def test(delta, visible_files, now = time_now, time_limit = 15)    
+  def test(delta, visible_files, now = time_now, time_limit = 15)        
     new_files,filenames_to_delete = sandbox.run_tests(delta,visible_files,time_limit)
     colour = kata.language.colour(visible_files['output'])
     rags = increments

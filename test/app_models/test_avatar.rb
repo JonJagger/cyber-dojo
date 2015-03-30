@@ -6,16 +6,27 @@ class AvatarTests < ModelTestBase
 
   include TimeNow
 
-  test 'attempting to create an Avatar with an invalid name raises' do
-    kata = @dojo.katas[id]
-    assert !Avatars.names.include?('salmon')
-    assert_raises(RuntimeError) { kata.avatars['salmon'] }
+  test 'path(avatar)' do
+    kata = make_kata
+    avatar = kata.start_avatar(Avatars.names)
+    assert path_ends_in_slash?(avatar)
+    assert path_has_no_adjacent_separators?(avatar)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+  test 'attempting to create an Avatar with an invalid name raises RuntimeError' do
+    kata = @dojo.katas[unique_id]
+    invalid_name = 'salmon'
+    assert !Avatars.names.include?(invalid_name)
+    assert_raises(RuntimeError) { kata.avatars[invalid_name] }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'avatar is not active? when it does not exist' do
-    kata = @dojo.katas[id]
+    kata = @dojo.katas[unique_id]
     lion = kata.avatars['lion']
     assert !lion.exists?
     assert !lion.active?
@@ -24,7 +35,7 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'avatar is not active? when it has zero traffic-lights' do
-    kata = @dojo.katas[id]
+    kata = @dojo.katas[unique_id]
     lion = kata.avatars['lion']
     lion.dir.write('increments.json', [])
     assert !lion.active?
@@ -33,12 +44,12 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'avatar is active? when it has one traffic-light' do
-    kata = @dojo.katas[id]
+    kata = @dojo.katas[unique_id]
     lion = kata.avatars['lion']
     lion.dir.write('increments.json', [
       {
         'colour' => 'red',
-        'time' => [2014, 2, 15, 8, 54, 6],
+        'time' => [2015, 2, 15, 8, 54, 6],
         'number' => 1
       }
     ])
@@ -47,30 +58,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'avatar is active? when it has 2 or more traffic-lights' do
-    kata = @dojo.katas[id]
-    lion = kata.avatars['lion']
-    lion.dir.write('increments.json', [
-      {
-        'colour' => 'red',
-        'time' => [2014, 2, 15, 8, 54, 6],
-        'number' => 1
-      },
-      {
-        'colour' => 'green',
-        'time' => [2014, 2, 15, 8, 54, 34],
-        'number' => 2
-      }
-      ])
-    assert lion.active?
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'exists? is true' +
-       ' when dir exists' +
-       ' and name is in Avatar.names' do
-    kata = @dojo.katas[id]
+  test 'exists? is true when dir exists and name is in Avatar.names' do
+    kata = @dojo.katas[unique_id]
     lion = kata.avatars['lion']
     assert !lion.exists?
     lion.dir.make
@@ -79,108 +68,60 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'path(avatar)' do
-    kata = make_kata
-    avatar = kata.start_avatar(Avatars.names)
-    assert path_ends_in_slash?(avatar)
-    assert !path_has_adjacent_separators?(avatar)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'avatar creation saves' +
-          ' visible_files in avatar/manifest.json,' +
+          ' each visible_file into avatar/sandbox,' +
           ' and empty avatar/increments.json,' +
-          ' and each visible_file into avatar/sandbox,' +
           ' and links each support_filename into avatar/sandbox' do
-    language = @dojo.languages['C-assert']
-
-    visible_files = {
-      'wibble.h' => '#include <stdio.h>',
-      'wibble.c' => '#include "wibble.h"'
-    }
-    visible_files.each do |filename,content|
-      language.dir.write(filename, content)
-    end
-
-    support_filename = 'lib.a'
-    language.dir.write('manifest.json', {
-      :display_name => 'C, assert',
-      :unit_test_framework => 'assert',
-      :visible_filenames => visible_files.keys,
-      :support_filenames => [ support_filename ]
-    })
-    exercise = @dojo.exercises['test_Yahtzee']
-    exercise.dir.write('instructions', 'your task...')
-
+    language = @dojo.languages['Java-JUnit']    
+    exercise = @dojo.exercises['Fizz_Buzz']
     kata = @dojo.katas.create_kata(language, exercise)
     avatar = kata.start_avatar
     sandbox = avatar.sandbox
-
-    visible_files.each do |filename,content|
+    language.visible_files.each do |filename,content|
       assert_equal content, sandbox.dir.read(filename)
     end
-
-    avatar = kata.start_avatar
-    expected_manifest = { }
-    visible_files.each do |filename,content|
-      expected_manifest[filename] = content
+    assert_not_equal 0, language.support_filenames.size
+    language.support_filenames.each do |support_filename|
+      assert sandbox.dir.exists? support_filename
     end
-    manifest = JSON.parse(avatar.dir.read('manifest.json'))
-    assert_equal '', manifest['output']
     assert_equal [ ], JSON.parse(avatar.dir.read('increments.json'))
-
-    expected_symlink = [
-      'symlink',
-      language.path + support_filename,
-      sandbox.path + support_filename
-    ]
-    assert disk.symlink_log.include?(expected_symlink), disk.symlink_log.inspect
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'after test() output-file is saved in sandbox ' +
-       'and output-file is inserted into the visible_files argument' do
-    kata = @dojo.katas['45ED23A2F1']
-    avatar = kata.avatars['hippo']
-    sandbox = avatar.sandbox
+       'and output is inserted into the visible_files argument' do
+         
+    kata = make_kata
+    avatar = kata.start_avatar
+    code_filename = 'hiker.c'
+    test_filename = 'hiker.tests.c'
+    filenames = kata.language.visible_files.keys
+    [code_filename,test_filename].each {|filename| assert filenames.include? filename}
     visible_files = {
-      'untitled.c' => 'content for code file',
-      'untitled.test.c' => 'content for test file',
+      code_filename => 'content for code file',
+      test_filename => kata.language.visible_files[test_filename],
       'cyber-dojo.sh' => 'make'
     }
-    assert !visible_files.keys.include?('output')
     delta = {
-      :changed => [ 'untitled.c' ],
-      :unchanged => [ 'untitled.test.c' ],
+      :changed => [ code_filename ],
+      :unchanged => [ test_filename ],
       :deleted => [ ],
       :new => [ ]
     }
-
-    language = @dojo.languages['C-assert']
-    language.dir.write('manifest.json', {
-      :display_name => 'C, assert',
-      :unit_test_framework => 'cassert'
-    })
-    kata.dir.write('manifest.json', {
-      :id => @id,
-      :visible_files => visible_files,
-      :language => language.name,
-    })
-    avatar.dir.write('increments.json', [])
-
     time_limit = 15
-    avatar.test(delta, visible_files, time_limit, time_now)
-    output = visible_files['output']
-
-    assert_equal 'stubbed-output', output
+    set_runner_class_name('DummyTestRunner')
+    assert !visible_files.keys.include?('output')    
+    avatar.test(delta, visible_files, time_now, time_limit)
     assert visible_files.keys.include?('output')
-    assert_equal output, sandbox.dir.read('output')
+    output = visible_files['output']
+    assert_not_nil output
+    assert_equal output, avatar.sandbox.dir.read('output')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+=begin
   test 'save():delta[:changed] files are saved' do
     kata = @dojo.katas['45ED23A2F1']
     avatar = kata.avatars['hippo']
@@ -424,7 +365,10 @@ class AvatarTests < ModelTestBase
     ]
     avatar.dir.write('increments.json', incs)
   end
-
+=end
+  
+  #- - - - - - - - - - - - - - - - - - -
+  #- - - - - - - - - - - - - - - - - - -
   #- - - - - - - - - - - - - - - - - - -
 
 =begin
@@ -835,8 +779,8 @@ class AvatarTests < ModelTestBase
 
 =end
 
-  def id
-    '45ED23A2F1'
-  end
+  #def id
+  #  '45ED23A2F1'
+  #end
 
 end

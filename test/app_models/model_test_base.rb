@@ -26,9 +26,9 @@ class ModelTestBase < TestBase
     restore_original_test_environment
   end
   
-  def make_kata(id = unique_id)
-    language = @dojo.languages['C-assert']
-    exercise = @dojo.exercises['Fizz_Buzz']
+  def make_kata(id = unique_id, language_name = 'C-assert', exercise_name = 'Fizz_Buzz')
+    language = @dojo.languages[language_name]
+    exercise = @dojo.exercises[exercise_name]
     @dojo.katas.create_kata(language, exercise, id)
   end
 

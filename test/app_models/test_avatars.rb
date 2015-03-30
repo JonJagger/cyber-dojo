@@ -43,5 +43,5 @@ class AvatarsTests < ModelTestBase
     assert_equal ['panda'], kata.avatars.each.map{|avatar| avatar.name}
     assert_equal 'panda', @dojo.katas[kata.id.to_s].avatars['panda'].name
   end
-
+  
 end
