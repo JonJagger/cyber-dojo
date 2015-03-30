@@ -4,7 +4,12 @@ require_relative 'model_test_base'
 
 class ExercisesTests < ModelTestBase
 
-  test "path is set from ENV['CYBER_DOJO_EXERCISES_ROOT'] " do
+  def setup
+    super
+    assert_equal disk_class_name, "Disk"    
+  end
+  
+  test "path is set from ENV" do
     path = 'end_with_slash/'
     set_exercises_path(path)
     assert_equal path, Exercises.new.path
@@ -19,20 +24,32 @@ class ExercisesTests < ModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test 'each() empty' do
+    set_disk_class_name('DiskFake')
+    assert_equal [], exercises.each.map {|exercise| exercise.name}    
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'each() gives all exercises which exist' do
-    exercises_names = @dojo.exercises.each.map {|exercise| exercise.name }
+    exercises_names = exercises.each.map {|exercise| exercise.name }
     ['Unsplice','Verbal','Fizz_Buzz'].each do |name|
       assert exercises_names.include? name
-    end
-    
+    end    
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'exercises[X] is exercise named X' do
     name = 'Print_Diamond'
-    assert_equal name, @dojo.exercises[name].name
+    assert_equal name, exercises[name].name
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def exercises
+    @dojo.exercises
   end
   
 end

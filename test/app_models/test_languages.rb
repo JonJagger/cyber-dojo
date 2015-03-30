@@ -4,10 +4,15 @@ require_relative 'model_test_base'
 
 class LanguagesTests < ModelTestBase
 
-  test 'path is set from :languages_path' do
+  def setup
+    super
+    assert_equal 'Disk', disk_class_name
+  end
+  
+  test 'path is set from ENV' do
     path = 'end_with_slash/'
     set_languages_path(path)    
-    assert_equal 'end_with_slash/', Languages.new.path
+    assert_equal path, Languages.new.path
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
@@ -15,43 +20,42 @@ class LanguagesTests < ModelTestBase
   test 'path appends slash if necessary' do
     path = 'unslashed'
     set_languages_path(path)    
-    assert_equal path+'/', Languages.new.path
+    assert_equal path + '/', Languages.new.path
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-=begin
   test 'each() empty' do
-    stub_exists(expected = [ ])
-    assert_equal expected, languages.each.map {|language| language.name}
+    set_disk_class_name('DiskFake')
+    assert_equal [], languages.each.map {|language| language.name}
   end
-
+  
   #- - - - - - - - - - - - - - - - - - - - -
-
+  
   test 'each() not empty' do
-    stub_exists(expected = ['C#-NUnit','Ruby1.9.3-TestUnit'])
-    assert_equal expected, languages.each.map {|language| language.name}.sort
+    set_runner_class_name('StubTestRunner')
+    languages_names = languages.each.map {|language| language.name }
+    ['C#-NUnit','Ruby-Test::Unit'].each do |name|
+      assert languages_names.include? name
+    end        
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test '[name] returns language with given name' do
+  test 'languages[X] is language named X' do
     ['C-assert','C#-NUnit'].each do |name|
-      stub_exists([name])
       assert_equal name, languages[name].name
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  
   test 'name is translated when katas manifest.json language entry has been renamed' do  
     all_language_manifest_entries do |old_name|
       new_name = languages.renamed(old_name)
       assert exists?(*new_name), old_name
     end    
   end
-=end
   
   def all_language_manifest_entries
     # these names harvested from cyber-dojo.org using
@@ -131,20 +135,11 @@ class LanguagesTests < ModelTestBase
   end
 
   def exists?(lang,test)
-    root_path = File.absolute_path(File.dirname(__FILE__) + '/../../')
-    File.directory?("#{root_path}/languages/#{lang}/#{test}")    
+    File.directory?("#{languages_path}/#{lang}/#{test}")    
   end
 
   def languages
     @dojo.languages
-  end
-
-  def stub_exists(languages_names)    
-    languages_names.each do |name|
-      languages[name].dir.write('manifest.json', {
-        :display_name => name.split('-').join(',')
-      })
-    end
   end
 
 end
