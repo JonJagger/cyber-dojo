@@ -17,6 +17,9 @@ class ModelTestBase < TestBase
     check_test_environment_setup
     @dojo = Dojo.new
     @max_duration = 15
+    if disk_class_name === 'Disk'
+      `rm -rf #{katas_path}*`
+    end
   end
 
   def teardown
@@ -33,9 +36,9 @@ class ModelTestBase < TestBase
     object.path.end_with?(disk.dir_separator)
   end
 
-  def path_has_adjacent_separators?(object)
+  def path_has_no_adjacent_separators?(object)
     doubled_separator = disk.dir_separator * 2
-    object.path.scan(doubled_separator).length > 0
+    object.path.scan(doubled_separator).length === 0
   end
 
 private
@@ -52,19 +55,22 @@ private
     @test_env['disk_class_name'] = disk_class_name
     assert runner?, "runner not set"
     @test_env['runner_class_name'] = runner_class_name
+    assert git?, "git not set"
+    @test_env['git_class_name'] = git_class_name
   end
   
   def restore_original_test_environment    
-    restore('set_exercises_path', 'exercises_path')
-    restore('set_languages_path', 'languages_path')
-    restore('set_katas_path', 'katas_path')
-    restore('set_disk_class_name', 'disk_class_name')
-    restore('set_runner_class_name', 'runner_class_name')
+    restore('exercises_path')
+    restore('languages_path')
+    restore('katas_path')
+    restore('disk_class_name')
+    restore('runner_class_name')
+    restore('git_class_name')
   end
   
-  def restore(method,key)
+  def restore(key)
     value = @test_env[key]
-    send(method, value) if !value.nil?
+    send('set_' + key, value) if !value.nil?
   end
   
 end

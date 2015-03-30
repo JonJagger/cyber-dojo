@@ -8,7 +8,7 @@ class ExerciseTests < ModelTestBase
     exercise = @dojo.exercises['Fizz_Buzz']
     assert exercise.path.match(exercise.name)
     assert path_ends_in_slash?(exercise)
-    assert !path_has_adjacent_separators?(exercise)
+    assert path_has_no_adjacent_separators?(exercise)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - -

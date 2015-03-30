@@ -12,7 +12,9 @@ class ExercisesTests < ModelTestBase
   test "path is set from ENV" do
     path = 'end_with_slash/'
     set_exercises_path(path)
-    assert_equal path, Exercises.new.path
+    assert_equal path, exercises.path
+    assert path_ends_in_slash?(exercises)
+    assert path_has_no_adjacent_separators?(exercises)    
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -20,7 +22,9 @@ class ExercisesTests < ModelTestBase
   test 'path appends slash if necessary' do
     path = 'unslashed'
     set_exercises_path(path)
-    assert_equal path + '/', Exercises.new.path
+    assert_equal path + '/', exercises.path
+    assert path_ends_in_slash?(exercises)
+    assert path_has_no_adjacent_separators?(exercises)    
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

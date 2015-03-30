@@ -4,6 +4,13 @@ require_relative 'model_test_base'
 
 class KataTests < ModelTestBase
 
+  def setup
+    super
+    assert_equal 'Disk', disk_class_name
+    @id = unique_id
+    @kata = @dojo.katas[@id]
+  end
+  
   test 'attempting to create a Kata with an invalid id raises' do
     bad_ids = [
       nil,          # not string
@@ -20,29 +27,30 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'id read back as set' do
-    kata = @dojo.katas[id]
-    assert_equal id, kata.id
+  test 'id reads back as set' do
+    assert_equal @id, @kata.id
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'path format basics' do
+    assert path_ends_in_slash?(@kata)
+    assert path_has_no_adjacent_separators?(@kata)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'path is split ala git' do
-    kata = @dojo.katas[id]
-    assert kata.path.include?(kata.id[0..1])
-    assert kata.path.include?(kata.id[2..-1])
-    assert path_ends_in_slash?(kata)
-    assert !path_has_adjacent_separators?(kata)
+    assert @kata.path.include?(@kata.id[0..1])
+    assert @kata.path.include?(@kata.id[2..-1])
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'when kata does exist it is not active ' +
-       'and its age is zero' do
-    kata = @dojo.katas[id]
-    assert !kata.exists?
-    assert !kata.active?
-    assert_equal 0, kata.age
+  
+  test 'when kata does exist it is not active and its age is zero' do
+    assert !@kata.exists?
+    assert !@kata.active?
+    assert_equal 0, @kata.age
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -57,20 +65,19 @@ class KataTests < ModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  
   test 'when kata exists but all its avatars have 0 traffic-lights ' +
        'then it is not active ' +
        'and its age is zero' do
     kata = make_kata
     kata.start_avatar(['hippo'])
     kata.start_avatar(['lion'])
-
     assert !kata.active?
     assert_equal 0, kata.age
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  
   test 'when kata exists and at least one avatar has 1 or more traffic-lights ' +
        'then kata is active ' +
        'and age is from earliest traffic-light to now' do
@@ -103,28 +110,18 @@ class KataTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'exists? is false before dir is made' do
-    kata = @dojo.katas[id]
-    assert !kata.exists?
-    disk[kata.path].make
-    assert kata.exists?
+    assert !@kata.exists?
+    disk[@kata.path].make
+    assert @kata.exists?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'make_kata with default-id and default-now ' +
-       'creates unique-id and uses-time-now' do
-    language = @dojo.languages['Java-JUnit']
-    language.dir.write('manifest.json', {
-      :display_name => 'Java, JUnit',
-      :unit_test_framework => 'JUnit'
-    })
-    exercise = @dojo.exercises['test_Yahtzee']
-    exercise.dir.write('instructions', 'your task...')
+  test 'make_kata with default-now uses-time-now' do
     now = Time.now
-    past = Time.mktime(now.year, now.month, now.day, now.hour, now.min, now.sec)
-    kata = @dojo.katas.create_kata(language, exercise)
-    assert_not_equal id, kata.id
+    kata = make_kata
     created = Time.mktime(*kata.created)
+    past = Time.mktime(now.year, now.month, now.day, now.hour, now.min, now.sec)
     diff = created - past
     assert 0 <= diff && diff <= 1, "created=#{created}, past=#{past}, diff=#{past}"
   end
@@ -132,16 +129,7 @@ class KataTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'make_kata saves manifest in kata dir' do
-    language = @dojo.languages['Java-JUnit']
-    language.dir.write('manifest.json', {
-      :display_name => 'Java, JUnit',
-      :unit_test_framework => 'waffle'
-    })
-    exercise = @dojo.exercises['test_Yahtzee']
-    exercise.dir.write('instructions', 'your task...')
-    now = [2014,7,17,21,15,45]
-    kata = @dojo.katas.create_kata(language, exercise, id, now)
-
+    kata = make_kata
     assert kata.dir.exists?('manifest.json')
   end
 
@@ -150,33 +138,20 @@ class KataTests < ModelTestBase
   test 'kata.id, kata.created, kata.language_name, ' +
        'kata.exercise_name, kata.visible_files ' +
        'all read from manifest' do
-    language = @dojo.languages['testC++-catch']
-    visible_files = {
-        'wibble.hpp' => '#include <iostream>',
-        'wibble.cpp' => '#include "wibble.hpp"'
-    }
-    language.dir.write('manifest.json', {
-      :display_name => 'testC++, catch',
-      :visible_filenames => visible_files.keys
-    })
-    language.dir.write('wibble.hpp', visible_files['wibble.hpp'])
-    language.dir.write('wibble.cpp', visible_files['wibble.cpp'])
-    exercise = @dojo.exercises['test_Yahtzee']
-    exercise.dir.write('instructions', 'your task...')
+    language = @dojo.languages['Java-JUnit']
+    exercise = @dojo.exercises['Fizz_Buzz']
     now = [2014,7,17,21,15,45]
-    kata = @dojo.katas.create_kata(language, exercise, id, now)
-    assert_equal id, kata.id.to_s
+    kata = @dojo.katas.create_kata(language, exercise, @id, now)
+    assert_equal @id, kata.id.to_s
     assert_equal Time.mktime(*now), kata.created
     assert_equal language.name, kata.language.name
     assert_equal exercise.name, kata.exercise.name
-    assert_equal visible_files['wibble.hpp'], kata.visible_files['wibble.hpp']
-    assert_equal visible_files['wibble.cpp'], kata.visible_files['wibble.cpp']
     assert_equal '', kata.visible_files['output']
     assert kata.visible_files['instructions'].start_with?('Note: The initial code')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  
   test 'start_avatar with specific avatar-name ' +
        '(useful for testing)' do
     kata = make_kata
@@ -186,7 +161,7 @@ class KataTests < ModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  
   test 'start_avatar with specific avatar-names arg is used ' +
        '(useful for testing)' do
     kata = make_kata
@@ -215,12 +190,6 @@ class KataTests < ModelTestBase
     assert_equal Avatars.names.sort, created.collect{|avatar| avatar.name}.sort
     avatar = kata.start_avatar
     assert_nil avatar
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def id
-    '45ED23A2F1'
   end
 
 end

@@ -13,9 +13,9 @@ class LanguageTests < ModelTestBase
   test 'path(language) has correct format' do
     language_dir,test_dir = 'C#','NUnit'    
     language = @dojo.languages[language_dir + '-' + test_dir]
-    assert language.path.match(language_dir + '/' + test_dir), "1"
-    assert path_ends_in_slash?(language), "2"
-    assert !path_has_adjacent_separators?(language), "3"
+    assert language.path.match(language_dir + '/' + test_dir)
+    assert path_ends_in_slash?(language)
+    assert path_has_no_adjacent_separators?(language)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
