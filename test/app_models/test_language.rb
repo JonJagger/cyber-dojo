@@ -5,6 +5,11 @@ require 'tempfile'
 
 class LanguageTests < ModelTestBase
 
+  def setup
+    super
+    set_disk_class_name('DiskFake')
+  end
+  
   test 'path(language) has correct format' do
     language_dir,test_dir = 'C#','NUnit'    
     language = @dojo.languages[language_dir + '-' + test_dir]
@@ -254,7 +259,8 @@ class LanguageTests < ModelTestBase
 
   test 'language can be asked if it is runnable' do
     @language = @dojo.languages['Ruby']
-    assert @language.runnable?
+    spy_manifest({:display_name => 'Ruby, TestUnit'})
+    assert !@language.runnable?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -289,9 +295,7 @@ class LanguageTests < ModelTestBase
        'removed from visible_files' do
     name = 'Ruby-Approval'
     @language = @dojo.languages[name]
-    @language.dir.write('manifest.json', {
-      :display_name => 'Ruby, Approval'
-    })
+    @language.dir.write('manifest.json', { :display_name => 'Ruby, Approval' })
     sandbox = StubSandbox.new
     sandbox.dir.write('created.txt', 'content')
     sandbox.dir.write('wibble.hpp', 'non txt file')
@@ -309,35 +313,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  class CustomRunner
-    def initialize(installed)
-      @installed = installed
-    end
-    def runnable?(language)
-      @installed.include?(language.name)
-    end
-  end
-
-  test 'custom runner that filters the language.runnable?' do
-    reset_external(:runner, CustomRunner.new(['yes-x']))
-    @dojo = Dojo.new
-    language = @dojo.languages['yes-x']
-    language.dir.write('manifest.json', {
-      :display_name => 'yes, x'
-    })
-    assert language.runnable?
-    language = @dojo.languages['no-y']
-    language.dir.write('manifest.json', {
-      :display_name => 'no, x'
-    })
-    assert !language.runnable?
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'DockerTestRunner.runnable?(language) is false ' +
        'when language does not have image_name set in manifest' do
-    reset_external(:runner, DockerTestRunner.new)
     @dojo = Dojo.new
     ruby = @dojo.languages['Ruby-TestUnit']
     ruby.dir.write(manifest_filename, { })
@@ -348,10 +325,6 @@ class LanguageTests < ModelTestBase
 
   def spy_manifest(manifest)
     @language.dir.write(manifest_filename, manifest)
-  end
-
-  def spy_exists?(filename)
-    @language.dir.write(filename, '')
   end
 
   def manifest_filename

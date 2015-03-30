@@ -1,13 +1,24 @@
 
 module ExternalKatasPath # mixin
 
-  def katas_path
-    #external(:katas_path)
-    ENV['CYBER_DOJO_KATAS_ROOT']    
+  def katas_path?
+    !ENV[katas_key].nil?
   end
 
+  def katas_path
+    path = ENV[katas_key]
+    path += '/' if !path.end_with? '/'
+    path
+  end
+
+  def set_katas_path(path)
+    ENV[katas_key] = path
+  end
+  
 private
 
-  #include External
+  def katas_key
+    'CYBER_DOJO_KATAS_ROOT'
+  end
 
 end

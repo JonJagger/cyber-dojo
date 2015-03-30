@@ -5,13 +5,12 @@ require_relative '../test_base'
 
 class ModelTestBase < TestBase
 
-  include ExternalSetter
-  include ExternalDiskDir
-  include ExternalGit
-  include ExternalRunner
   include ExternalExercisesPath
   include ExternalLanguagesPath
   include ExternalKatasPath
+  include ExternalDiskDir
+  include ExternalRunner
+  include ExternalGit
   include UniqueId
 
   def setup
@@ -45,13 +44,27 @@ private
     @test_env = { }
     assert exercises_path?, "exercises_path not set"
     @test_env['exercises_path'] = exercises_path
+    assert languages_path?, "languages_path not set"
+    @test_env['languages_path'] = languages_path
+    assert katas_path?, "katas_path not set"
+    @test_env['katas_path'] = katas_path
     assert disk?, "disk not set"
     @test_env['disk_class_name'] = disk_class_name
+    assert runner?, "runner not set"
+    @test_env['runner_class_name'] = runner_class_name
   end
   
   def restore_original_test_environment    
-    set_exercises_path(@test_env['exercises_path']) if !@test_env['exercises_path'].nil?
-    set_disk_class_name(@test_env['disk_class_name']) if !@test_env['disk_class_name'].nil?
+    restore('set_exercises_path', 'exercises_path')
+    restore('set_languages_path', 'languages_path')
+    restore('set_katas_path', 'katas_path')
+    restore('set_disk_class_name', 'disk_class_name')
+    restore('set_runner_class_name', 'runner_class_name')
+  end
+  
+  def restore(method,key)
+    value = @test_env[key]
+    send(method, value) if !value.nil?
   end
   
 end

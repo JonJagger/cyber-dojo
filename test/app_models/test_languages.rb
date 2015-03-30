@@ -5,19 +5,22 @@ require_relative 'model_test_base'
 class LanguagesTests < ModelTestBase
 
   test 'path is set from :languages_path' do
-    reset_external(:languages_path, 'end_with_slash/')
+    path = 'end_with_slash/'
+    set_languages_path(path)    
     assert_equal 'end_with_slash/', Languages.new.path
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
   test 'path appends slash if necessary' do
-    reset_external(:languages_path, 'languages')
-    assert_equal 'languages/', Languages.new.path
+    path = 'unslashed'
+    set_languages_path(path)    
+    assert_equal path+'/', Languages.new.path
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
+=begin
   test 'each() empty' do
     stub_exists(expected = [ ])
     assert_equal expected, languages.each.map {|language| language.name}
@@ -41,6 +44,15 @@ class LanguagesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
+  
+  test 'name is translated when katas manifest.json language entry has been renamed' do  
+    all_language_manifest_entries do |old_name|
+      new_name = languages.renamed(old_name)
+      assert exists?(*new_name), old_name
+    end    
+  end
+=end
+  
   def all_language_manifest_entries
     # these names harvested from cyber-dojo.org using
     # admin_scripts/show_kata_language_names.rb
@@ -122,15 +134,6 @@ class LanguagesTests < ModelTestBase
     root_path = File.absolute_path(File.dirname(__FILE__) + '/../../')
     File.directory?("#{root_path}/languages/#{lang}/#{test}")    
   end
-  
-  test 'name is translated when katas manifest.json language entry has been renamed' do  
-    all_language_manifest_entries do |old_name|
-      new_name = languages.renamed(old_name)
-      assert exists?(*new_name), old_name
-    end    
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - -
 
   def languages
     @dojo.languages

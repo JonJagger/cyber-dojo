@@ -5,16 +5,17 @@ require_relative 'model_test_base'
 class ExercisesTests < ModelTestBase
 
   test "path is set from ENV['CYBER_DOJO_EXERCISES_ROOT'] " do
-    set_exercises_path('end_with_slash/')
-    assert_equal 'end_with_slash/', Exercises.new.path
+    path = 'end_with_slash/'
+    set_exercises_path(path)
+    assert_equal path, Exercises.new.path
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'path appends slash if necessary' do
-    expected = 'unslashed'
-    set_exercises_path(expected)
-    assert_equal expected + '/', Exercises.new.path
+    path = 'unslashed'
+    set_exercises_path(path)
+    assert_equal path + '/', Exercises.new.path
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

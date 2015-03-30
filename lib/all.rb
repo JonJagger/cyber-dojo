@@ -8,7 +8,6 @@
   ExternalLanguagesPath
   ExternalKatasPath
   ExternalOneSelf
-  ExternalSetter
   Cleaner
   Docker
   TestRunner
