@@ -72,6 +72,7 @@ class AvatarTests < ModelTestBase
           ' each visible_file into avatar/sandbox,' +
           ' and empty avatar/increments.json,' +
           ' and links each support_filename into avatar/sandbox' do
+            
     language = @dojo.languages['Java-JUnit']    
     exercise = @dojo.exercises['Fizz_Buzz']
     kata = @dojo.katas.create_kata(language, exercise)
@@ -109,10 +110,9 @@ class AvatarTests < ModelTestBase
       :deleted => [ ],
       :new => [ ]
     }
-    time_limit = 15
     set_runner_class_name('DummyTestRunner')
     assert !visible_files.keys.include?('output')    
-    avatar.test(delta, visible_files, time_now, time_limit)
+    avatar.test(delta, visible_files)
     assert visible_files.keys.include?('output')
     output = visible_files['output']
     assert_not_nil output
@@ -121,39 +121,33 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-=begin
   test 'save():delta[:changed] files are saved' do
-    kata = @dojo.katas['45ED23A2F1']
-    avatar = kata.avatars['hippo']
+    kata = make_kata
+    language = kata.language
+    avatar = kata.start_avatar
     sandbox = avatar.sandbox
+    code_filename = 'hiker.c'
+    test_filename = 'hiker.tests.c'
+    filenames = language.visible_files.keys
+    [code_filename,test_filename].each {|filename| assert filenames.include? filename }
     visible_files = {
-      'untitled.cs' => 'content for code file',
-      'untitled.test.cs' => 'content for test file',
-      'cyber-dojo.sh' => 'gmcs'
+      code_filename => 'changed content for code file',
+      test_filename => 'changed content for test file',
+      'cyber-dojo.sh' => 'make'
     }
     delta = {
-      :changed => [ 'untitled.cs', 'untitled.test.cs'  ],
+      :changed => [ code_filename, test_filename ],
       :unchanged => [ ],
       :deleted => [ ],
       :new => [ ]
-    }
-
-    language = @dojo.languages['C-assert']
-    language.dir.write('manifest.json', {
-      :display_name => 'C, assert',
-      :unit_test_framework => 'cassert'
-    })
-    kata.dir.write('manifest.json', {
-      :id => @id,
-      :visible_files => visible_files,
-      :language => language.name,
-    })
-    avatar.dir.write('increments.json', [])
-
-    time_limit = 15
-    avatar.test(delta, visible_files, time_limit, time_now)
-
-    delta[:new].each do |filename|
+    }    
+    delta[:changed].each do |filename|
+      assert_equal language.visible_files[filename], sandbox.dir.read(filename)
+      assert_not_equal language.visible_files[filename], visible_files[filename]
+    end
+    set_runner_class_name('DummyTestRunner')    
+    avatar.test(delta, visible_files)    
+    delta[:changed].each do |filename|
       assert_equal visible_files[filename], sandbox.dir.read(filename)
     end
   end
@@ -161,36 +155,27 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'save():delta[:unchanged] files are not saved' do
-    kata = @dojo.katas['45ED23A2F1']
-    avatar = kata.avatars['hippo']
-    sandbox = avatar.sandbox
+    kata = make_kata
+    language = kata.language  
+    avatar = kata.start_avatar
+    sandbox = avatar.sandbox  
+    code_filename = 'abc.c'
+    test_filename = 'abc.tests.c'
+    filenames = language.visible_files.keys
+    [code_filename,test_filename].each {|filename| assert !filenames.include?(filename) }
     visible_files = {
-      'untitled.cs' => 'content for code file',
-      'untitled.test.cs' => 'content for test file',
-      'cyber-dojo.sh' => 'gmcs'
+      code_filename => 'changed content for code file',
+      test_filename => 'changed content for test file',
+      'cyber-dojo.sh' => 'make'
     }
     delta = {
-      :changed => [ 'untitled.cs' ],
-      :unchanged => [ 'cyber-dojo.sh', 'untitled.test.cs' ],
+      :changed => [ ], 
+      :unchanged => [ code_filename, test_filename ],
       :deleted => [ ],
       :new => [ ]
-    }
-
-    language = @dojo.languages['C-assert']
-    language.dir.write('manifest.json', {
-      :display_name => 'C, assert',
-      :unit_test_framework => 'cassert'
-    })
-    kata.dir.write('manifest.json', {
-      :id => @id,
-      :visible_files => visible_files,
-      :language => language.name,
-    })
-    avatar.dir.write('increments.json', [])
-
-    time_limit = 15
-    avatar.test(delta, visible_files, time_limit, time_now)
-
+    }  
+    set_runner_class_name('DummyTestRunner')    
+    avatar.test(delta, visible_files)
     delta[:unchanged].each do |filename|
       assert !sandbox.dir.exists?(filename)
     end
@@ -198,6 +183,7 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+=begin
   test 'save():delta[:new] files are saved and git added' do
     kata = @dojo.katas['45ED23A2F1']
     avatar = kata.avatars['hippo']
