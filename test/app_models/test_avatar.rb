@@ -180,55 +180,43 @@ class AvatarTests < ModelTestBase
       assert !sandbox.dir.exists?(filename)
     end
   end
-
+  
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-=begin
   test 'save():delta[:new] files are saved and git added' do
-    kata = @dojo.katas['45ED23A2F1']
-    avatar = kata.avatars['hippo']
+    kata = make_kata
+    avatar = kata.start_avatar
+    language = kata.language
     sandbox = avatar.sandbox
+    new_filename = 'ab.c'
     visible_files = {
-      'wibble.cs' => 'content for code file',
-      'untitled.test.cs' => 'content for test file',
-      'cyber-dojo.sh' => 'gmcs'
+      new_filename => 'content for new code file',
     }
     delta = {
       :changed => [ ],
-      :unchanged => [ 'cyber-dojo.sh', 'untitled.test.cs' ],
+      :unchanged => [ ],
       :deleted => [ ],
-      :new => [ 'wibble.cs' ]
+      :new => [ new_filename ]
     }
+    set_runner_class_name('DummyTestRunner')            
 
-    language = @dojo.languages['C-assert']
-    language_manifest = {
-      :display_name => 'C, assert',
-      :unit_test_framework => 'cassert'
-    }
-    language.dir.write('manifest.json', language_manifest)
-
-    kata_manifest = {
-      :id => @id,
-      :visible_files => visible_files,
-      :language => language.name,
-    }    
-    kata.dir.write('manifest.json', kata_manifest)
-    
-    avatar.dir.write('increments.json', [])
-
-    time_limit = 15
-    avatar.test(delta, visible_files, time_limit, time_now)
-
+    assert !git_log_line_starts?("git add '#{new_filename}'")
     delta[:new].each do |filename|
-      assert_equal visible_files[filename], sandbox.dir.read(filename)
+      assert !sandbox.dir.exists?(filename)
+    end           
+    
+    avatar.test(delta, visible_files)
+    
+    assert git_log_line_starts?("git add '#{new_filename}'")
+    delta[:new].each do |filename|
+      assert sandbox.dir.exists?(filename)
+      assert_equal visible_files[filename], sandbox.dir.read(filename)      
     end
-
-    git_log = git.log[sandbox.path]
-    assert git_log.include?([ 'add', 'wibble.cs' ]), git_log.inspect
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+=begin
   test "save():delta[:deleted] files are git rm'd" do
     kata = @dojo.katas['45ED23A2F1']
     avatar = kata.avatars['hippo']
@@ -765,8 +753,8 @@ class AvatarTests < ModelTestBase
 
 =end
 
-  #def id
-  #  '45ED23A2F1'
-  #end
+  def git_log_line_starts?(s)
+    git.log.any?{|line| line.start_with? s}    
+  end  
 
 end

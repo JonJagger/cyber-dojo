@@ -7,16 +7,19 @@ class Git
     options = quoted(options) if ['add','rm'].include?(cmd.to_s)
     Dir.chdir(path) do
       git_cmd = stderr2stdout("git #{cmd} #{options}")
+      log << git_cmd
       output = `#{git_cmd}` 
+      log << output if output != ""
       status = $?.exitstatus
-      if status != success
-        log = [git_cmd + "\n", output, "$?.exitstatus=#{status}"]
-        output = log.join('')
-      end
+      log << "$?.exitstatus=#{status}" if status != success
       clean(output)       
     end        
   end
 
+  def log
+    @log ||= [ ]
+  end
+  
 private
 
   include Cleaner

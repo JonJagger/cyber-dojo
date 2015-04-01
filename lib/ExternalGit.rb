@@ -1,12 +1,12 @@
 
 module ExternalGit # mixin
 
-  def git(*args)
-    g = Object.const_get(git_class_name).new
-    return g if args.length === 0
+  def git(*args)    
+    @@g ||= Object.const_get(git_class_name).new    
+    return @@g if args.length === 0
     command = args[0]
     options = args[1]
-    g.send(command, path, options)
+    @@g.send(command, path, options)
   end
 
   def git?
