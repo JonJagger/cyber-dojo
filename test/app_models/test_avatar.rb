@@ -207,6 +207,8 @@ class AvatarTests < ModelTestBase
     #is there a git command that confirms a file has been added?
     #git show filename  --> nothing returned (but success) if added
     #git show filename  --> error message if not added
+    #how about using method_missing() up a child->parent tree
+    #and put externals in root Dojo object...
     
     delta[:new].each do |filename|
       assert !sandbox.dir.exists?(filename)
