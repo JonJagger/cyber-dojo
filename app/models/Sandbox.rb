@@ -1,12 +1,15 @@
 
 class Sandbox
-
+  include ExternalParentChain
+  
   def initialize(avatar)
-    @avatar = avatar
+    @parent = avatar
   end
 
-  attr_reader :avatar
-
+  def avatar
+    @parent
+  end
+  
   def path
     avatar.path + 'sandbox/'
   end
@@ -31,10 +34,6 @@ class Sandbox
   end
   
 private
-
-  include ExternalDisk
-  include ExternalGit
-  include ExternalRunner  
 
   def before_test(delta, visible_files)
     delta[:changed].each { |filename| write(filename, visible_files[filename]) }

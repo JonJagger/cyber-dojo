@@ -1,5 +1,6 @@
 
 %w{
+  ExternalParentChain
   ManifestProperty
   Dojo
   Language 

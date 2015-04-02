@@ -1,13 +1,14 @@
 # comments at end of file
 
 class Language
+  include ExternalParentChain
 
   def initialize(languages,name,test_name)
-    @languages,@name,@test_name = languages,name,test_name
+    @parent,@name,@test_name = languages,name,test_name
   end
 
   def path
-    @languages.path + @name + '/' + @test_name + '/'
+    @parent.path + @name + '/' + @test_name + '/'
   end
 
   def name    
@@ -93,8 +94,6 @@ class Language
 
 private
 
-  include ExternalDisk
-  include ExternalRunner
   include ManifestProperty
 
   def manifest

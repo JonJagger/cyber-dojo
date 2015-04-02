@@ -1,14 +1,19 @@
 # comments at end of file
 
 class Avatar
+  include ExternalParentChain
 
   def initialize(kata,name)
     raise 'Invalid Avatar(name)' if !Avatars.valid?(name)
-    @kata,@name = kata,name
+    @parent,@name = kata,name
   end
 
-  attr_reader :kata, :name
+  attr_reader :name
 
+  def kata
+    @parent
+  end
+  
   def exists?
     dir.exists?
   end
@@ -76,9 +81,6 @@ class Avatar
 
 private
 
-  include ExternalDisk
-  include ExternalGit
-  include ExternalOneSelf
   include GitDiff
   include TimeNow
 

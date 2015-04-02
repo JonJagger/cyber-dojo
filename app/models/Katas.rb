@@ -1,16 +1,17 @@
 # comments at end of file
 
 class Katas
-
-  def initialize(dojo)
-    @dojo = dojo
+  include ExternalParentChain
+  
+  def initialize(dojo,path)
+    @parent,@path = dojo,path
   end
 
-  attr_reader :dojo
-
-  def path
-    katas_path
+  def dojo
+    @parent
   end
+  
+  attr_reader :path
 
   def create_kata(language, exercise, id = unique_id, now = time_now)
     manifest = create_kata_manifest(language, exercise, id, now)
@@ -80,8 +81,6 @@ class Katas
 
 private
 
-  include ExternalDisk
-  include ExternalKatasPath
   include UniqueId
   include TimeNow
 

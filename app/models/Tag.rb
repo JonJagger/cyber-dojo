@@ -2,9 +2,10 @@
 # See comment at bottom of Avatar.rb
 
 class Tag
+  include ExternalParentChain
 
   def initialize(avatar,n)
-    @avatar,@n = avatar,n
+    @parent,@n = avatar,n
   end
 
   def visible_files
@@ -18,11 +19,8 @@ class Tag
 private
 
   def path
-    @avatar.path
+    @parent.path
   end
-
-  include ExternalDisk
-  include ExternalGit
 
 end
 

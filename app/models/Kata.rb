@@ -2,16 +2,17 @@
 # comments at end of file
 
 class Kata
-
+  include ExternalParentChain
+  
   def initialize(katas,id)
     raise "Invalid Kata(id)" if !katas.valid?(id)
-    @katas,@id = katas,id
+    @parent,@id = katas,id
   end
 
-  attr_reader :katas, :id
+  attr_reader :id
 
   def path
-    katas.path + outer(id) + '/' + inner(id) + '/'
+    @parent.path + outer(id) + '/' + inner(id) + '/'
   end
 
   def start_avatar(avatar_names = Avatars.names.shuffle)
@@ -62,7 +63,6 @@ class Kata
   
 private
 
-  include ExternalDisk
   include ManifestProperty
   include IdSplitter
 
@@ -81,7 +81,7 @@ private
   end
 
   def dojo
-    katas.dojo
+    @parent.dojo
   end
 
 end

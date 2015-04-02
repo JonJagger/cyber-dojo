@@ -1,10 +1,13 @@
 
 class Exercises
-
-  def path
-    exercises_path
+  include ExternalParentChain
+  
+  def initialize(dojo,path)
+    @parent,@path = dojo,path
   end
-
+  
+  attr_reader :path
+  
   def each
     return enum_for(:each) unless block_given?
     exercises.each { |exercise| yield exercise }
@@ -15,9 +18,6 @@ class Exercises
   end
 
 private
-
-  include ExternalDisk
-  include ExternalExercisesPath
 
   def exercises
     @exercises ||= make_cache

@@ -41,6 +41,11 @@ and test base classes have these
   def set_disk_class_name(value)
     ENV[disk_key] = value
   end
+  
+But this wont work for ExternalGit which does this...
+    @@g.send(command, path, options)
+and assumes path is available in <self>
+I need to pass self in the method_missing parent call...
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 

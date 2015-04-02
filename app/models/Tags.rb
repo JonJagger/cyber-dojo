@@ -2,14 +2,15 @@
 
 class Tags
   include Enumerable
+  include ExternalParentChain
 
   def initialize(avatar)
-    @avatar = avatar
+    @parent = avatar
   end
 
   def [](n)
     n = length+n if n < 0
-    Tag.new(@avatar,n)
+    Tag.new(@parent,n)
   end
 
   def each
@@ -23,10 +24,8 @@ class Tags
 
 private
 
-  include ExternalDisk
-
   def path
-    @avatar.path
+    @parent.path
   end
 
   def tags
