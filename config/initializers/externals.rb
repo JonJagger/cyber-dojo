@@ -2,18 +2,17 @@
 root_path = File.absolute_path(File.dirname(__FILE__) + '/../../')
 load "#{root_path}/all.rb"
 
-def test_runner
-  return DockerTestRunner.new if Docker.installed?
-  return HostTestRunner.new unless ENV['CYBER_DOJO_USE_HOST'].nil?
-  return DummyTestRunner.new
-end
+include ExternalRunner
+include ExternalDisk
+include ExternalGit
+include ExternalLanguagesPath
+include ExternalExercisesPath
+include ExternalKatasPath
 
-include ExternalSetter
 
-set_external(:disk,   Disk.new)
-set_external(:git,    Git.new)
-set_external(:runner, test_runner)
-set_external(:one_self, OneSelf.new)
-set_external(:exercises_path, root_path + '/exercises/')
-set_external(:languages_path, root_path + '/languages/')
-set_external(:katas_path,     root_path + '/katas/')
+set_runner_class_name('HostTestRunner')
+set_disk_class_name('Disk')
+set_git_class_name('Git')
+set_languages_path(root_path + '/languages/')
+set_exercises_path(root_path + '/exercises/')
+set_katas_path(root_path + '/katas/')

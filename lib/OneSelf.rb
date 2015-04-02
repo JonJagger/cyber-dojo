@@ -55,7 +55,7 @@ class OneSelf
   
 private
   
-  include ExternalDiskDir
+  include ExternalDisk
   
   # copy-pasted from app/helpers/tip_helper.rb
   def line_counts(diffed_files)

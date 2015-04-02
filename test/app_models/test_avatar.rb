@@ -201,6 +201,13 @@ class AvatarTests < ModelTestBase
     set_runner_class_name('DummyTestRunner')            
 
     assert !git_log_line_starts?("git add '#{new_filename}'")
+    #don't like git needing a @@class based member so different
+    #objects share the same object so it's log is shared
+    #can I test the git behaviour in any other way?
+    #is there a git command that confirms a file has been added?
+    #git show filename  --> nothing returned (but success) if added
+    #git show filename  --> error message if not added
+    
     delta[:new].each do |filename|
       assert !sandbox.dir.exists?(filename)
     end           

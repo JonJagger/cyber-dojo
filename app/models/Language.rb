@@ -93,7 +93,7 @@ class Language
 
 private
 
-  include ExternalDiskDir
+  include ExternalDisk
   include ExternalRunner
   include ManifestProperty
 

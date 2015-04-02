@@ -27,7 +27,7 @@ class Languages
   
 private
 
-  include ExternalDiskDir
+  include ExternalDisk
   include ExternalLanguagesPath
 
   def new_name(name)    

@@ -21,7 +21,7 @@ private
     @avatar.path
   end
 
-  include ExternalDiskDir
+  include ExternalDisk
   include ExternalGit
 
 end

@@ -23,7 +23,7 @@ class Tags
 
 private
 
-  include ExternalDiskDir
+  include ExternalDisk
 
   def path
     @avatar.path

@@ -62,7 +62,7 @@ class Kata
   
 private
 
-  include ExternalDiskDir
+  include ExternalDisk
   include ManifestProperty
   include IdSplitter
 

@@ -1,5 +1,5 @@
 
-module ExternalDiskDir # mixin
+module ExternalDisk # mixin
   
   def dir
     disk[path]

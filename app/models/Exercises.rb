@@ -16,7 +16,7 @@ class Exercises
 
 private
 
-  include ExternalDiskDir
+  include ExternalDisk
   include ExternalExercisesPath
 
   def exercises

@@ -32,7 +32,7 @@ class Sandbox
   
 private
 
-  include ExternalDiskDir
+  include ExternalDisk
   include ExternalGit
   include ExternalRunner  
 

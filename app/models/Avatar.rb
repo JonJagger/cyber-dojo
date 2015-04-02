@@ -76,11 +76,17 @@ class Avatar
 
 private
 
-  include ExternalDiskDir
+  include ExternalDisk
   include ExternalGit
   include ExternalOneSelf
   include GitDiff
   include TimeNow
+
+  def setup_git_repo
+    git(:init, '--quiet')    
+    git(:config, user_name)
+    git(:config, user_email)
+  end
 
   def commit(tag)
     git(:commit, "-a -m '#{tag}' --quiet")
@@ -114,12 +120,6 @@ private
     
   def increments_filename
     'increments.json'
-  end
-
-  def setup_git_repo
-    git(:init, '--quiet')    
-    git(:config, user_name)
-    git(:config, user_email)
   end
 
   def user_name

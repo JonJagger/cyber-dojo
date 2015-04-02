@@ -1,9 +1,8 @@
 
 %w{
-  External
-  ExternalDiskDir
-  ExternalGit
   ExternalRunner
+  ExternalDisk
+  ExternalGit
   ExternalExercisesPath
   ExternalLanguagesPath
   ExternalKatasPath
@@ -22,5 +21,5 @@
   UniqueId
   IdSplitter
   LanguagesDisplayNamesSplitter
-  OneSelf
+  OneSelf  
 }.each { |sourcefile| require_relative './' + sourcefile }
