@@ -5,6 +5,42 @@ Set external paths via  ENV[]. Don't provide defaults.
 Set external class names for Git and Runner via ENV[]
 Provide one_self secrets via ENV[]
 Use ram-disk and drop FakeDir FakeDir
+Get access to externals via ParentChain using method_missing
+Each model class mixes in this...
+module ExternalParentChain # mixin
+  def dir
+    disk[path]
+  end
+  def method_missing(command,*args)    
+    @parent.send(command.to_s)
+  end
+end
+eg
+class Avatar
+  include ExternalParentChain
+end
+except the root class Dojo which adds this
+class Dojo
+  ...
+  def disk
+    @disk ||= external('CYBER_DOJO_DISK_NAME')
+  end
+  def runner
+    @runner ||= external('CYBER_DOJO_RUNNER_NAME')
+  end
+private
+  def external(name)
+    raise RuntimeError("ENV['#{name}'] not set") if ENV[name].nil?
+    Object.const_get(ENV[name]).new  
+  end
+end
+and test base classes have these
+  def set_runner_class_name(value)
+    ENV[runner_key] = value
+  end
+  def set_disk_class_name(value)
+    ENV[disk_key] = value
+  end
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
