@@ -111,7 +111,7 @@ class KataTests < ModelTestBase
 
   test 'exists? is false before dir is made' do
     assert !@kata.exists?
-    disk[@kata.path].make
+    @kata.dir.make
     assert @kata.exists?
   end
 
@@ -161,7 +161,7 @@ class KataTests < ModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+    
   test 'start_avatar with specific avatar-names arg is used ' +
        '(useful for testing)' do
     kata = make_kata
@@ -191,5 +191,5 @@ class KataTests < ModelTestBase
     avatar = kata.start_avatar
     assert_nil avatar
   end
-
+  
 end
