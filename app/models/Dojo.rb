@@ -28,6 +28,7 @@ class Dojo
 
   def git(*args)
     @git ||= new_obj(external(cd('GIT_CLASS_NAME')))
+    return @git if args == []
     command = args.delete_at(1)
     @git.send(command,*args)    
   end
