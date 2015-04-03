@@ -45,13 +45,8 @@ and test base classes have these
 But this wont work for ExternalGit which does this...
     @@g.send(command, path, options)
 and assumes path is available in <self>
-I need to pass self in the method_missing parent call...
-Also, how it git used... like this...
- git(:add, manifest_filename)
-So this already has many arguments...
-Change this to
- git.add(manifest_filename)
-This should still work since Git.rb uses method_missing.
+For git, ExternalParentChain has to insert path
+into the args.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 

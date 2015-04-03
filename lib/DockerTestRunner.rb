@@ -136,10 +136,10 @@ end
 #   (as volume mounted in the first -v option)
 #
 # #{language.image_name}
-#   The name of the docker container to run the inner-command inside.
+#   The name of the docker image to run the inner-command inside.
 #   specified in the language's manifest as its image_name.
 #
 # /bin/bash -c #{quoted(command)}
-#   The command that is run inside the docker container is always
+#   The command that is run as the docker container's "main" is always
 #   './cyber-dojo.sh' which is run via bash inside a timeout.
 #

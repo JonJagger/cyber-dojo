@@ -6,7 +6,7 @@ class KatasTests < ModelTestBase
 
   test 'path is set from ENV' do
     path = 'end_with_slash/'
-    set_katas_path(path)
+    set_katas_root(path)
     assert_equal path, katas.path
     assert path_ends_in_slash?(katas)
     assert path_has_no_adjacent_separators?(katas)
@@ -14,12 +14,10 @@ class KatasTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  test 'path appends slash if necessary' do
+  test 'path must end in /' do
     path = 'unslashed'
-    set_katas_path(path)
-    assert_equal path + '/', katas.path
-    assert path_ends_in_slash?(katas)
-    assert path_has_no_adjacent_separators?(katas)    
+    set_katas_root(path)
+    assert_raises(RuntimeError) { katas.path }
   end
 
   #- - - - - - - - - - - - - - - -

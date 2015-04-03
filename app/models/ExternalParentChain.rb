@@ -5,8 +5,11 @@ module ExternalParentChain # mixin
     disk[path]
   end
 
-  def method_missing(command,*args)    
-    @parent.send(command.to_s)
+  def method_missing(command,*args)   
+    if command == :git && args[0].class == Symbol
+      args.unshift(path)
+    end    
+    return @parent.send(command,*args) 
   end
 
 end

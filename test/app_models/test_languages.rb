@@ -11,7 +11,7 @@ class LanguagesTests < ModelTestBase
   
   test 'path is set from ENV' do
     path = 'end_with_slash/'
-    set_languages_path(path)  
+    set_languages_root(path)  
     assert_equal path, languages.path
     assert path_ends_in_slash?(languages)
     assert path_has_no_adjacent_separators?(languages)    
@@ -19,12 +19,10 @@ class LanguagesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test 'path appends slash if necessary' do
+  test 'path must end in slash' do
     path = 'unslashed'
-    set_languages_path(path) 
-    assert_equal path + '/', languages.path
-    assert path_ends_in_slash?(languages)
-    assert path_has_no_adjacent_separators?(languages)
+    set_languages_root(path) 
+    assert_raises(RuntimeError) { languages.path }
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
@@ -139,7 +137,7 @@ class LanguagesTests < ModelTestBase
   end
 
   def exists?(lang,test)
-    File.directory?("#{languages_path}/#{lang}/#{test}")    
+    File.directory?("#{languages_root}/#{lang}/#{test}")    
   end
 
   def languages

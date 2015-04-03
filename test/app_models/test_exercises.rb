@@ -6,12 +6,12 @@ class ExercisesTests < ModelTestBase
 
   def setup
     super
-    assert_equal disk_class_name, "Disk"    
+    assert_equal disk_class_name, 'Disk'
   end
   
-  test "path is set from ENV" do
+  test 'path is set from ENV' do
     path = 'end_with_slash/'
-    set_exercises_path(path)
+    set_exercises_root(path)
     assert_equal path, exercises.path
     assert path_ends_in_slash?(exercises)
     assert path_has_no_adjacent_separators?(exercises)    
@@ -19,12 +19,10 @@ class ExercisesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'path appends slash if necessary' do
+  test 'path must end in slash' do
     path = 'unslashed'
-    set_exercises_path(path)
-    assert_equal path + '/', exercises.path
-    assert path_ends_in_slash?(exercises)
-    assert path_has_no_adjacent_separators?(exercises)    
+    set_exercises_root(path)
+    assert_raises(RuntimeError) { exercises.path }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,6 +1,8 @@
 
 class OneSelf
     
+  #needs access to disk...
+  
   def created(dojo_id,latitude,longtitude)
     data = {
       'objectTags' => [ 'cyber-dojo' ],
@@ -54,8 +56,6 @@ class OneSelf
   end
   
 private
-  
-  include ExternalDisk
   
   # copy-pasted from app/helpers/tip_helper.rb
   def line_counts(diffed_files)

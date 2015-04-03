@@ -27,7 +27,7 @@ end
 #------------------------------------------
 # output
 #------------------------------------------
-# In very early dojos avatar.create_kata()
+# In very early dojos katas.create_kata()
 # did not save 'output' in visible_files
 #------------------------------------------
 

@@ -5,12 +5,6 @@ require_relative '../test_base'
 
 class ModelTestBase < TestBase
 
-  include ExternalExercisesPath
-  include ExternalLanguagesPath
-  include ExternalKatasPath
-  include ExternalDiskDir
-  include ExternalRunner
-  include ExternalGit
   include UniqueId
 
   def setup
@@ -18,7 +12,7 @@ class ModelTestBase < TestBase
     @dojo = Dojo.new
     @max_duration = 15
     if disk_class_name === 'Disk'
-      `rm -rf #{katas_path}*`
+      `rm -rf #{katas_root}*`
     end
   end
 
@@ -33,44 +27,72 @@ class ModelTestBase < TestBase
   end
 
   def path_ends_in_slash?(object)
-    object.path.end_with?(disk.dir_separator)
+    object.path.end_with?('/')
   end
 
   def path_has_no_adjacent_separators?(object)
-    doubled_separator = disk.dir_separator * 2
+    doubled_separator = '/' * 2
     object.path.scan(doubled_separator).length === 0
   end
 
+  def languages_root; get('LANGUAGES_ROOT'); end
+  def set_languages_root(value); set('LANGUAGES_ROOT',value); end
+  
+  def exercises_root; get('EXERCISES_ROOT'); end
+  def set_exercises_root(value); set('EXERCISES_ROOT',value); end
+
+  def katas_root; get('KATAS_ROOT'); end
+  def set_katas_root(value); set('KATAS_ROOT',value); end
+  
+  def runner_class_name; get('RUNNER_CLASS_NAME'); end  
+  def set_runner_class_name(value); set('RUNNER_CLASS_NAME',value); end  
+
+  def disk_class_name; get('DISK_CLASS_NAME'); end
+  def set_disk_class_name(value); set('DISK_CLASS_NAME',value); end
+  
+  def git_class_name; get('GIT_CLASS_NAME'); end
+  def set_git_class_name(value); set('GIT_CLASS_NAME',value); end
+    
 private
 
   def check_test_environment_setup
-    @test_env = { }
-    assert exercises_path?, "exercises_path not set"
-    @test_env['exercises_path'] = exercises_path
-    assert languages_path?, "languages_path not set"
-    @test_env['languages_path'] = languages_path
-    assert katas_path?, "katas_path not set"
-    @test_env['katas_path'] = katas_path
-    assert disk?, "disk not set"
-    @test_env['disk_class_name'] = disk_class_name
-    assert runner?, "runner not set"
-    @test_env['runner_class_name'] = runner_class_name
-    assert git?, "git not set"
-    @test_env['git_class_name'] = git_class_name
+    store('EXERCISES_ROOT')
+    store('LANGUAGES_ROOT')
+    store('KATAS_ROOT')
+    store('DISK_CLASS_NAME')
+    store('RUNNER_CLASS_NAME')
+    store('GIT_CLASS_NAME')    
   end
   
   def restore_original_test_environment    
-    restore('exercises_path')
-    restore('languages_path')
-    restore('katas_path')
-    restore('disk_class_name')
-    restore('runner_class_name')
-    restore('git_class_name')
+    restore('EXERCISES_ROOT')
+    restore('LANGUAGES_ROOT')
+    restore('KATAS_ROOT')
+    restore('DISK_CLASS_NAME')
+    restore('RUNNER_CLASS_NAME')
+    restore('GIT_CLASS_NAME')
+  end
+  
+  def store(key)
+    raise RuntimeError.new("ENV['#{cd(key)}'] not set") if ENV[cd(key)].nil?
+    @test_env ||= { }        
+    @test_env[cd(key)] = get(key)    
   end
   
   def restore(key)
-    value = @test_env[key]
-    send('set_' + key, value) if !value.nil?
+    ENV[cd(key)] = @test_env[cd(key)]
+  end
+
+  def get(key)  
+    ENV[cd(key)]
+  end
+  
+  def set(key,value)
+    ENV[cd(key)] = value
+  end
+  
+  def cd(name)
+    'CYBER_DOJO_' + name
   end
   
 end

@@ -1,12 +1,5 @@
 
 %w{
-  ExternalRunner
-  ExternalDisk
-  ExternalGit
-  ExternalExercisesPath
-  ExternalLanguagesPath
-  ExternalKatasPath
-  ExternalOneSelf
   Cleaner
   Docker
   TestRunner
