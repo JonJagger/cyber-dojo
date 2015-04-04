@@ -47,7 +47,7 @@ class OutputPythonPyTestTests < AppLibTestBase
   end
 
   #- - - - - - - - - - - - - - - -
-
+  
   test "two tests passed and none failing is green" do
     output =
       [
@@ -123,7 +123,7 @@ class OutputPythonPyTestTests < AppLibTestBase
     ].join("\n")
     assert_equal :amber, colour_of(output)
   end
-
+  
   #- - - - - - - - - - - - - - - -
 
   def colour_of(output)

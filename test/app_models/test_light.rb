@@ -73,8 +73,8 @@ class LightTests < ModelTestBase
     # Need to use real git and StubTestRunner
     # stubbed with output for given language and given colour
     # The output tests could be restructured so all the outputs
-    # for all languages are held in one object which can be
-    # queried to access with a key of [language,colour]
+    # for all languages are held in one object/directory which 
+    # can be queried to access with a key of [language,colour]
     # Two kinds of query: 
     #   get all matches (for the output tests themselves)
     #   get one random match (for stubbing)
