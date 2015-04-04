@@ -2,6 +2,8 @@
 install C++14 + boost
 install TypeScript?
 install Rust?
+  http://doc.rust-lang.org/book/installing-rust.html
+  http://doc.rust-lang.org/book/testing.html
 install Dart?
 install APL?
 install Swift?

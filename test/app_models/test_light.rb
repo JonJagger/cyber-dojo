@@ -69,6 +69,16 @@ class LightTests < ModelTestBase
       'output' => output='unterminated conditional directive'
     })
     filename = 'manifest.json'
+    #
+    # Need to use real git and StubTestRunner
+    # stubbed with output for given language and given colour
+    # The output tests could be restructured so all the outputs
+    # for all languages are held in one object which can be
+    # queried to access with a key of [language,colour]
+    # Two kinds of query: 
+    #   get all matches (for the output tests themselves)
+    #   get one random match (for stubbing)
+    # 
     git.spy(lion.dir.path,'show',"#{3}:#{filename}",manifest)
 
     lights = lion.lights
