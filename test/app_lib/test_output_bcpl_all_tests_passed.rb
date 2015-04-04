@@ -4,7 +4,7 @@ require_relative './app_lib_test_base'
 
 class OutputBCPLAllTestsPassedTests < AppLibTestBase
 
-  test 'All tests passed green' do
+  test 'all tests passed green' do
     output =
       [
         "BCPL 32-bit Cintcode System (30 May 2013)",
@@ -36,7 +36,7 @@ class OutputBCPLAllTestsPassedTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test 'All tests passed as part of diagnostic is amber' do
+  test 'all tests passed as part of diagnostic is amber' do
     output =
       [
         "Error near hiker.test.b[27]:  '}' or '$)' expected",
