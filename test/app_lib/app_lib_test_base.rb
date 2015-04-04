@@ -41,15 +41,30 @@ class AppLibTestBase < TestBase
     largest = smaller.sort[-1]
     test_name = @@info[largest]
 
-    languages = Dojo.new.languages 
-    lang = languages.each.select{|language| language.unit_test_framework == $test_framework}[0]
+    dojo = Dojo.new
+    languages = dojo.languages 
+    langs = languages.each.select{|language| language.unit_test_framework == $test_framework}
+    if langs.length != 1
+      names = langs.map{|lang| lang.name}
+      #raise RuntimeError.new
+      p "-------"
+      p caller[0]
+      p ("#{$test_framework} --> #{names} languages")
+    end
     filename = sanitized_filename(test_name)
+
+    #>>>>Problem with this is that some unit_test_frameworks names are
+    #>>>>used by several languages...
     
-    p "------------------"
-    p '      language: ' + lang.path
-    p '      filename: ' + filename
-    p '        colour: ' + @colour.to_s
-    #p '        output: ' + $output    
+    #path = "#{langs[0].path}test_output/#{@colour}"
+    #`mkdir -p #{path}`
+    #dojo.disk[path].write(filename, $output)
+        
+    #p "------------------"
+    #p '      language: ' + langs[0].path
+    #p '      filename: ' + filename
+    #p '        colour: ' + @colour.to_s
+    #p '        output: ' + $output
   end
   
   class OutputParser
