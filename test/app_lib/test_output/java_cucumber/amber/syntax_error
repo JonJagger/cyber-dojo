@@ -1,0 +1,7 @@
+Hiker.java:6: <identifier> expected
+    }ssss
+         ^
+Hiker.java:7: reached end of file while parsing
+}
+ ^
+2 errors

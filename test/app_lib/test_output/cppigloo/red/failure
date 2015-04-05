@@ -1,0 +1,8 @@
+g++ -I. -g -std=c++11 -Wall -Wextra -Werror -pthread -O *.cpp -lgtest -o run.tests
+./run.tests
+F
+
+F_0::F_1 failed:
+Caught unknown exception
+Test run complete. 1 tests run, 0 succeeded, 1 failed.
+make: *** [run.tests.output] Error 1

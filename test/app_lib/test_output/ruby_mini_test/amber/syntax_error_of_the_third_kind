@@ -1,0 +1,15 @@
+Run options: 
+
+# Running tests:
+
+E
+
+Finished tests in 0.000941s, 1062.6993 tests/s, 0.0000 assertions/s.
+
+  1) Error:
+test_simple(TestUntitled):
+ArgumentError: uncaught throw 42
+    test_untitled.rb:7:in `throw'
+    test_untitled.rb:7:in `test_simple'
+
+1 tests, 0 assertions, 0 failures, 1 errors, 0 skips

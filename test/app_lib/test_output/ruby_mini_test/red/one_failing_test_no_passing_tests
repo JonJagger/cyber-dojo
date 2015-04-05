@@ -1,0 +1,14 @@
+Run options: --seed 33473
+
+# Running:
+
+F
+
+Finished in 0.001633s, 612.3699 runs/s, 612.3699 assertions/s.
+
+  1) Failure:
+TestHiker#test_life_the_universe_and_everything [test_hiker.rb:7]:
+Expected: 42
+  Actual: 54
+
+1 tests, 1 assertions, 1 failures, 0 errors, 0 skips

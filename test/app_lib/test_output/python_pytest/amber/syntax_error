@@ -1,0 +1,15 @@
+============================= test session starts ==============================
+platform linux2 -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+collected 0 items / 1 errors
+
+==================================== ERRORS ====================================
+______________________ ERROR collecting test_untitled.py _______________________
+/usr/local/lib/python2.7/dist-packages/_pytest/python.py:451: in _importtestmodule
+>           mod = self.fspath.pyimport(ensuresyspath=True)
+/usr/local/lib/python2.7/dist-packages/py/_path/local.py:620: in pyimport
+>           __import__(modname)
+E             File "/sandbox/test_untitled.py", line 6
+E               assert obj.answer() == 6*7 ssd
+E                                            ^
+E           SyntaxError: invalid syntax
+=========================== 1 error in 0.06 seconds ============================

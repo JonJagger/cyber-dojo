@@ -1,0 +1,17 @@
+JUnit version 4.10
+.E
+Time: 0.74
+There was 1 failure:
+1) It must be forty two(UntitledSpec)
+Condition not satisfied:
+
+eg.hhg() == (6*9)
+|  |     |    |
+|  42    |    54
+|        false
+Untitled@24988707
+
+	at UntitledSpec.It must be forty two(UntitledSpec.groovy:8)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1

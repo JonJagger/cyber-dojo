@@ -1,0 +1,3 @@
+Loading required package: methods
+Error in checkTrue(42 == 41) : Test not TRUE
+Execution halted

@@ -13,15 +13,15 @@ class AppLibTestBase < TestBase
 
   def setup
     super
-    #set_runner_class_name('TestRunnerStub')
-    #set_languages_root('/var/www/cyber-dojo/languages/')
+    set_runner_class_name('TestRunnerStub')
+    set_languages_root('/var/www/cyber-dojo/languages/')
   end
   
   def teardown
     super
   end
 
-=begin
+#=begin
   def self.line_number(s)
     s.match(/^(.+?):(\d+)/)
     $2.to_i
@@ -34,37 +34,19 @@ class AppLibTestBase < TestBase
   end
 
   def assert_equal(expected,actual)
-    @colour = expected    
-    
+    @colour = expected        
     num =  self.class.line_number(caller[0])
     smaller = @@info.keys.select{|n| n < num }
     largest = smaller.sort[-1]
     test_name = @@info[largest]
-
     dojo = Dojo.new
-    languages = dojo.languages 
-    langs = languages.each.select{|language| language.unit_test_framework == $test_framework}
-    if langs.length != 1
-      names = langs.map{|lang| lang.name}
-      #raise RuntimeError.new
-      p "-------"
-      p caller[0]
-      p ("#{$test_framework} --> #{names} languages")
-    end
-    filename = sanitized_filename(test_name)
-
-    #>>>>Problem with this is that some unit_test_frameworks names are
-    #>>>>used by several languages...
-    
-    #path = "#{langs[0].path}test_output/#{@colour}"
-    #`mkdir -p #{path}`
-    #dojo.disk[path].write(filename, $output)
-        
-    #p "------------------"
-    #p '      language: ' + langs[0].path
-    #p '      filename: ' + filename
-    #p '        colour: ' + @colour.to_s
-    #p '        output: ' + $output
+    filename = sanitized_filename(test_name)    
+    filename.slice! "_is_red"
+    filename.slice! "_is_amber"
+    filename.slice! "_is_green"
+    path = "/var/www/cyber-dojo/test/app_lib/test_output/#{$test_framework}/#{@colour}"
+    `mkdir -p #{path}`
+    dojo.disk[path].write(filename, $output)
   end
   
   class OutputParser
@@ -93,6 +75,6 @@ class AppLibTestBase < TestBase
     # Finally, join the parts with a period and return the result
     return fn.join '.'
   end
-=end
+#=end
         
 end

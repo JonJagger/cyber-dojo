@@ -1,0 +1,16 @@
+F.
+
+Failures:
+
+  1) untitled sums has answer
+     Failure/Error: verify do
+     Approvals::ApprovalError:
+       Approval Error: Received file "./untitled_sums_has_answer.received.txt" does not match approved "./untitled_sums_has_answer.approved.txt".
+     # ./untitled_spec.rb:12:in `block (3 levels) in <top (required)>'
+
+Finished in 0.0336 seconds
+2 examples, 1 failure
+
+Failed examples:
+
+rspec ./untitled_spec.rb:11 # untitled sums has answer

@@ -1,0 +1,3 @@
+# _/sandbox
+./hiker.go:4: syntax error: unexpected name, expecting semicolon or newline or }
+FAIL   _/sandbox [build failed]

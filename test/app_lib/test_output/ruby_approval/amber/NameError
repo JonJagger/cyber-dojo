@@ -1,0 +1,16 @@
+F
+
+Failures:
+
+  1) untitled sums has answer
+     Failure/Error: it "has answer" do asdasdasd
+     NameError:
+       undefined local variable or method `asdasdasd' for #<RSpec::Core::ExampleGroup::Nested_1::Nested_1:0x00000001acb150>
+     # ./untitled_spec.rb:11:in `block (3 levels) in <top (required)>'
+
+Finished in 0.0009 seconds
+1 example, 1 failure
+
+Failed examples:
+
+rspec ./untitled_spec.rb:11 # untitled sums has answer

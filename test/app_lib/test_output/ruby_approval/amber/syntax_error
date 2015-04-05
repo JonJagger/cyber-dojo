@@ -1,0 +1,4 @@
+/usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require': /sandbox/untitled.rb:3: syntax error, unexpected tIDENTIFIER, expecting keyword_end (SyntaxError)
+	from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
+	from /sandbox/untitled_spec.rb:3:in `<top (required)>'
+	from /var/lib/gems/1.9.1/gems/rspec-core-2.14.8/lib/rspec/core/configuration.rb:896:in `load'
