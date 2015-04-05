@@ -10,7 +10,6 @@ class ModelTestBase < TestBase
   def setup
     super    
     @dojo = Dojo.new
-    @max_duration = 15
     if disk_class_name === 'Disk'
       `rm -rf #{katas_root}*`
     end
