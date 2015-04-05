@@ -9,7 +9,7 @@ class SandboxTests < ModelTestBase
     avatar = kata.start_avatar(Avatars.names)
     sandbox = avatar.sandbox
     assert path_ends_in_slash?(sandbox)
-    assert !path_has_adjacent_separators?(sandbox)
+    assert path_has_no_adjacent_separators?(sandbox)
     assert sandbox.path.include?('sandbox')
   end
 

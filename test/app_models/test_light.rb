@@ -22,12 +22,12 @@ class LightTests < ModelTestBase
     year,month,day,hh,mm,ss = 2015,2,15,8,54,6
     light = make_light(:red,[year,month,day,hh,mm,ss],1)
     time = light.time
-    assert_equal year, time.year
-    assert_equal month, time.month
-    assert_equal day, time.day
-    assert_equal hh, time.hour
-    assert_equal mm, time.min
-    assert_equal ss, time.sec
+    assert_equal year, time.year, 'year'
+    assert_equal month, time.month, 'month'
+    assert_equal day, time.day, 'day'
+    assert_equal hh, time.hour, 'hour'
+    assert_equal mm, time.min, 'min'
+    assert_equal ss, time.sec, 'sec'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - -
