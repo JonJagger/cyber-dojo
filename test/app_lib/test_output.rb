@@ -10,9 +10,9 @@ class OutputTests < AppLibTestBase
         path = "#{root}/#{unit_test_framework}/#{colour}"
         dir = disk[path]
         dir.each_file do |filename|
-          output = dir.read(filename)
-          method_name = 'parse_' + unit_test_framework
           expected = colour.to_sym
+          method_name = 'parse_' + unit_test_framework
+          output = dir.read(filename)
           actual = OutputParser.send(method_name, output)
           diagnostic = '' +
             "OutputParser::parse_#{unit_test_framework}(output)\n" +
