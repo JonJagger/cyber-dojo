@@ -10,8 +10,6 @@ class AppLibTestBase < TestBase
 
   def setup
     super
-    set_runner_class_name('TestRunnerStub')
-    set_languages_root('/var/www/cyber-dojo/languages/')
   end
   
   def teardown
