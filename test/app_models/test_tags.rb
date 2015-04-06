@@ -31,12 +31,11 @@ class TagsTest < ModelTestBase
     tags = lion.tags
     assert_equal 4, tags.length
     assert tags.all?{|tag| tag.class.name === 'Tag'}
-    n = 2
-    visible_files = tags[n].visible_files
-    #p visible_files.inspect
-    #assert_equal [f1,f2,f3], visible_files.keys.sort
-    #assert_equal f1_content, visible_files[f1]
-    #assert_equal f2_content, visible_files[f2]
+
+    visible_files = tags[2].visible_files
+    filenames = visible_files.keys
+    #assert filenames.include?('hiker.h'), filenames
+    #why does this only contain 'output'    
   end
 
   #- - - - - - - - - - - - - - - - - - -
