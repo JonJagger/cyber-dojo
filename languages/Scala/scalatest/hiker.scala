@@ -1,7 +1,7 @@
 
 class Hiker {
 
-    def answer() : Int = {
+    def answer(): Int = {
       return 6 * 9
     }
 
