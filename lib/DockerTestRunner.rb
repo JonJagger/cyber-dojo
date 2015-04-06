@@ -9,6 +9,7 @@ class DockerTestRunner
     include TestRunner
 
   def initialize
+    raise RuntimeError.new("Docker not installed") if !installed?    
     command = stderr2stdout('docker images')
     @image_names = image_names(`#{command}`)
   end
@@ -87,6 +88,16 @@ private
 
   def read_only
     'ro'
+  end
+
+  def installed?
+    command = stderr2stdout('docker info > /dev/null')
+    `#{command}`
+    $?.exitstatus === 0
+  end
+
+  def stderr2stdout(cmd)
+    cmd + ' 2>&1'
   end
 
 end

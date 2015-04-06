@@ -1,15 +1,13 @@
 
 %w{
   Cleaner
-  Docker
   TestRunner
     HostTestRunner
     DockerTestRunner
     DummyTestRunner
     StubTestRunner
   Git
-  Disk
-  Dir
+  Disk  Dir
   TimeNow
   UniqueId
   IdSplitter

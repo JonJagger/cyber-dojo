@@ -6,7 +6,6 @@ class KataController < ApplicationController
     @avatar = avatar
     @tab = @kata.language.tab
     @visible_files = @avatar.visible_files
-
     @new_files = { }
     @filenames_to_delete = [ ]
     @traffic_lights = @avatar.lights
@@ -17,18 +16,14 @@ class KataController < ApplicationController
   def run_tests
     @kata   = kata
     @avatar = avatar
-
-    was = params[:file_hashes_incoming]
-    now = params[:file_hashes_outgoing]
-    delta = FileDeltaMaker.make_delta(was, now)
+    incoming = params[:file_hashes_incoming]
+    outgoing = params[:file_hashes_outgoing]
+    delta = FileDeltaMaker.make_delta(incoming, outgoing)
     visible_files = received_files
     time_limit = 15
-
     @traffic_lights,@new_files,@filenames_to_delete =
       @avatar.test(delta, visible_files, time_now, time_limit)
-
     @output = visible_files['output']
-
     respond_to do |format|
       format.js { render layout: false }
     end
