@@ -5,7 +5,7 @@ require_relative 'model_test_base'
 class ExerciseTests < ModelTestBase
 
   test 'path(exercise)' do
-    exercise = dojo.exercises['Fizz_Buzz']
+    exercise = exercises['Fizz_Buzz']
     assert exercise.path.match(exercise.name)
     assert path_ends_in_slash?(exercise)
     assert path_has_no_adjacent_separators?(exercise)
@@ -14,7 +14,7 @@ class ExerciseTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - -
 
   test 'exists? is false if exercise does not exist' do
-    exercise = dojo.exercises['wibble_XXX']
+    exercise = exercises['wibble_XXX']
     assert !exercise.exists?
   end
   
@@ -22,14 +22,14 @@ class ExerciseTests < ModelTestBase
 
   test 'name is as set in ctor' do
     name = 'Fizz_Buzz'
-    exercise = dojo.exercises[name]
+    exercise = exercises[name]
     assert_equal name, exercise.name
   end
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
   test 'instructions are loaded from file of same name' do
-    exercise = dojo.exercises['Fizz_Buzz']
+    exercise = exercises['Fizz_Buzz']
     assert exercise.instructions.start_with? 'Write a program that prints'
   end
 

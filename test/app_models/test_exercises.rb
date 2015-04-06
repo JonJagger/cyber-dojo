@@ -48,10 +48,4 @@ class ExercisesTests < ModelTestBase
     assert_equal name, exercises[name].name
   end
   
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def exercises
-    dojo.exercises
-  end
-  
 end

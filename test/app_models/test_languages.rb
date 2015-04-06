@@ -140,8 +140,4 @@ class LanguagesTests < ModelTestBase
     File.directory?("#{languages_root}/#{lang}/#{test}")    
   end
 
-  def languages
-    dojo.languages
-  end
-
 end

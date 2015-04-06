@@ -8,7 +8,7 @@ class KataTests < ModelTestBase
     super
     assert_equal 'Disk', disk_class_name
     @id = unique_id
-    @kata = dojo.katas[@id]
+    @kata = katas[@id]
   end
   
   test 'attempting to create a Kata with an invalid id raises' do
@@ -21,7 +21,7 @@ class KataTests < ModelTestBase
       '123456789S'  # not 0-9A-F
     ]
     bad_ids.each do |bad_id|
-      assert_raises(RuntimeError) { dojo.katas[bad_id] }
+      assert_raises(RuntimeError) { katas[bad_id] }
     end
   end
 
@@ -138,10 +138,10 @@ class KataTests < ModelTestBase
   test 'kata.id, kata.created, kata.language_name, ' +
        'kata.exercise_name, kata.visible_files ' +
        'all read from manifest' do
-    language = @dojo.languages['Java-JUnit']
-    exercise = @dojo.exercises['Fizz_Buzz']
+    language = languages['Java-JUnit']
+    exercise = exercises['Fizz_Buzz']
     now = [2014,7,17,21,15,45]
-    kata = @dojo.katas.create_kata(language, exercise, @id, now)
+    kata = katas.create_kata(language, exercise, @id, now)
     assert_equal @id, kata.id.to_s
     assert_equal Time.mktime(*now), kata.created
     assert_equal language.name, kata.language.name

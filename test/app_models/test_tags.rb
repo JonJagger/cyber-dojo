@@ -63,28 +63,4 @@ class TagsTest < ModelTestBase
   end
 =end
   
-  #- - - - - - - - - - - - - - - - - - -
-
-  def fake_three_tests(avatar)
-    incs =
-    [
-      {
-        'colour' => 'red',
-        'time' => [2014, 2, 15, 8, 54, 6],
-        'number' => 1
-      },
-      {
-        'colour' => 'green',
-        'time' => [2014, 2, 15, 8, 54, 34],
-        'number' => 2
-      },
-      {
-        'colour' => 'green',
-        'time' => [2014, 2, 15, 8, 55, 7],
-        'number' => 3
-      }
-    ]
-    avatar.dir.write('increments.json', incs)
-  end
-
 end

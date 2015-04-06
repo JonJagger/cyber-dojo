@@ -19,9 +19,9 @@ class ModelTestBase < TestBase
   end
   
   def make_kata(id = unique_id, language_name = 'C-assert', exercise_name = 'Fizz_Buzz')
-    language = dojo.languages[language_name]
-    exercise = dojo.exercises[exercise_name]
-    dojo.katas.create_kata(language, exercise, id)
+    language = languages[language_name]
+    exercise = exercises[exercise_name]
+    katas.create_kata(language, exercise, id)
   end
 
   def path_ends_in_slash?(object)

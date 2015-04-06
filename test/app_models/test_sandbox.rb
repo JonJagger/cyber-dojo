@@ -16,7 +16,7 @@ class SandboxTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "avatar's sandbox == sandbox's avatar" do
-    kata = dojo.katas['45ED23A2F1']
+    kata = katas['45ED23A2F1']
     avatar = kata.avatars['hippo']
     sandbox = avatar.sandbox
     assert_equal avatar, sandbox.avatar
@@ -25,7 +25,7 @@ class SandboxTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'dir is not initially created' do
-    kata = dojo.katas['45ED23A2F1']
+    kata = katas['45ED23A2F1']
     avatar = kata.avatars['hippo']
     sandbox = avatar.sandbox
     assert !sandbox.dir.exists?

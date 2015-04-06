@@ -26,22 +26,22 @@ class AvatarsTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'dojo.katas[id].avatars returns all avatars started in kata with given id' do
+  test 'katas[id].avatars returns all avatars started in kata with given id' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     hippo = kata.start_avatar(['hippo'])
     expected_names = [lion.name, hippo.name]
-    names = @dojo.katas[kata.id.to_s].avatars.each.map{|avatar| avatar.name}
+    names = katas[kata.id.to_s].avatars.each.map{|avatar| avatar.name}
     assert_equal expected_names.sort, names.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'dojo.katas[id].avatars[name] finds avatar with given name' do
+  test 'katas[id].avatars[name] finds avatar with given name' do
     kata = make_kata
     kata.start_avatar(['panda'])
     assert_equal ['panda'], kata.avatars.each.map{|avatar| avatar.name}
-    assert_equal 'panda', @dojo.katas[kata.id.to_s].avatars['panda'].name
+    assert_equal 'panda', katas[kata.id.to_s].avatars['panda'].name
   end
   
 end

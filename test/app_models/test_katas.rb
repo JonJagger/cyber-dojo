@@ -70,7 +70,7 @@ class KatasTests < ModelTestBase
 
   test 'complete(id): id unchanged when 4 chars long' do
     id = make_kata.id
-    assert_equal id, dojo.katas.complete(id[0..3])
+    assert_equal id, katas.complete(id[0..3])
   end
 
   #- - - - - - - - - - - - - - - -
@@ -100,8 +100,8 @@ class KatasTests < ModelTestBase
   test 'valid?(id) and exists?(id) is false when string is not 10 chars long' do
     nine = unique_id[0..-2]
     assert_equal 9, nine.length
-    assert !dojo.katas.valid?(nine)
-    assert !dojo.katas.exists?(nine)
+    assert !katas.valid?(nine)
+    assert !katas.exists?(nine)
   end
 
   #- - - - - - - - - - - - - - - -
@@ -128,10 +128,4 @@ class KatasTests < ModelTestBase
     assert katas.exists?(id), "X"
   end
 
-  #- - - - - - - - - - - - - - - -
-  
-  def katas
-    dojo.katas
-  end
-  
 end

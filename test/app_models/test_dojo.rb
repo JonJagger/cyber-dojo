@@ -40,10 +40,4 @@ class DojoTests < ModelTestBase
     assert_equal name, dojo.git.class.name
   end
   
-  # - - - - - - - - - - - - - - - -
-  
-  def dojo
-    Dojo.new
-  end
-  
 end

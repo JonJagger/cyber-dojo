@@ -17,7 +17,7 @@ class AvatarTests < ModelTestBase
 
 
   test 'attempting to create an Avatar with an invalid name raises RuntimeError' do
-    kata = dojo.katas[unique_id]
+    kata = katas[unique_id]
     invalid_name = 'salmon'
     assert !Avatars.names.include?(invalid_name)
     assert_raises(RuntimeError) { kata.avatars[invalid_name] }
@@ -26,7 +26,7 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'avatar is not active? when it does not exist' do
-    kata = dojo.katas[unique_id]
+    kata = katas[unique_id]
     lion = kata.avatars['lion']
     assert !lion.exists?
     assert !lion.active?
@@ -35,7 +35,7 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'avatar is not active? when it has zero traffic-lights' do
-    kata = dojo.katas[unique_id]
+    kata = katas[unique_id]
     lion = kata.avatars['lion']
     lion.dir.write('increments.json', [])
     assert !lion.active?
@@ -44,7 +44,7 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'avatar is active? when it has one traffic-light' do
-    kata = dojo.katas[unique_id]
+    kata = katas[unique_id]
     lion = kata.avatars['lion']
     lion.dir.write('increments.json', [
       {
@@ -59,7 +59,7 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'exists? is true when dir exists and name is in Avatar.names' do
-    kata = dojo.katas[unique_id]
+    kata = katas[unique_id]
     lion = kata.avatars['lion']
     assert !lion.exists?
     lion.dir.make
@@ -73,9 +73,9 @@ class AvatarTests < ModelTestBase
           ' and empty avatar/increments.json,' +
           ' and links each support_filename into avatar/sandbox' do
             
-    language = dojo.languages['Java-JUnit']    
-    exercise = dojo.exercises['Fizz_Buzz']
-    kata = dojo.katas.create_kata(language, exercise)
+    language = languages['Java-JUnit']    
+    exercise = exercises['Fizz_Buzz']
+    kata = katas.create_kata(language, exercise)
     avatar = kata.start_avatar
     sandbox = avatar.sandbox
     language.visible_files.each do |filename,content|
@@ -754,7 +754,7 @@ class AvatarTests < ModelTestBase
 =end
 
   def git_log_line_starts?(s)
-    @dojo.git.log.any?{|line| line.start_with? s}    
+    dojo.git.log.any?{|line| line.start_with? s}    
   end  
 
 end
