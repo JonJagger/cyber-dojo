@@ -16,6 +16,10 @@ class Tag
     visible_files['output'] || ''
   end
 
+  def number
+    @n
+  end
+  
 private
 
   def path

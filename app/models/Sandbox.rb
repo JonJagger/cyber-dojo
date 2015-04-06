@@ -15,8 +15,9 @@ class Sandbox
   end
 
   def start
-    avatar.visible_files.each { |filename,content| git_add(filename,content) }
-    
+    avatar.visible_files.each { |filename,content| 
+      git_add(filename,content) 
+    }
     language.support_filenames.each { |filename|
       disk.symlink(language.path + filename, path + filename)
     }

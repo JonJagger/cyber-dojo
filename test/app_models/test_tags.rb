@@ -5,7 +5,8 @@ require_relative 'model_test_base'
 class TagsTest < ModelTestBase
 
   test 'tag zero exists after avatar is started ' +
-       'and before first [test] is run' do
+       'and before first [test] is run ' +
+       'and contains all visible files' do
     kata = make_kata
     avatar = kata.start_avatar
     tags = avatar.tags
@@ -13,11 +14,9 @@ class TagsTest < ModelTestBase
     n = 0
     tags.each { n += 1 }
     assert_equal 1, n
-    # starting an avatar causes commit tag=0 with initial visible files.
     visible_files = tags[0].visible_files
-    ['hiker.h', 'hiker.c', 'instructions','cyber-dojo.sh','makefile','output'].each do |filename|
-      assert visible_files.keys.include?(filename), filename
-    end
+    filenames = ['hiker.h', 'hiker.c', 'instructions','cyber-dojo.sh','makefile','output']
+    filenames.each { |filename| assert visible_files.keys.include?(filename), filename }
     assert_equal '', tags[0].output
   end
 
@@ -27,39 +26,21 @@ class TagsTest < ModelTestBase
     set_runner_class_name('StubTestRunner')            
     kata = make_kata
     lion = kata.start_avatar(['lion'])
-    stub_test(lion, [:red,:amber,:green])
+    stub_test(lion, test_count=3)
     tags = lion.tags
-    assert_equal 4, tags.length
-    assert tags.all?{|tag| tag.class.name === 'Tag'}
-
-    visible_files = tags[2].visible_files
-    filenames = visible_files.keys
-    #assert filenames.include?('hiker.h'), filenames
-    #why does this only contain 'output'    
+    assert_equal test_count+1, tags.length
+    (0..tags.length).each { |i| assert_equal i, tags[i].number }
   end
 
   #- - - - - - - - - - - - - - - - - - -
 
-=begin
-  test 'tags[-1] is the last tag' do
+  test 'tags[-n] duplicates Array[-n] behaviour' do
+    set_runner_class_name('StubTestRunner')            
     kata = make_kata
     lion = kata.start_avatar(['lion'])
-    fake_three_tests(lion)
-    assert_equal 4, lion.tags.length
-    manifest = JSON.unparse({
-      f1='Hiker.cs' => f1_content='public class Hiker { }',
-      f2='HikerTest.cs' => f2_content='using NUnit.Framework;',
-      f3='output' => 'Tests run: 1, Failures: 0'
-    })
-    n = 3
-    filename = 'manifest.json'
-    git.spy(lion.dir.path,'show',"#{n}:#{filename}",manifest)
-
-    visible_files = lion.tags[-1].visible_files
-    assert_equal [f1,f2,f3], visible_files.keys.sort
-    assert_equal f1_content, visible_files[f1]
-    assert_equal f2_content, visible_files[f2]    
+    stub_test(lion, test_count=3)
+    tags = lion.tags
+    (1..tags.length).each {|i| assert_equal tags.length-i, tags[-i].number }
   end
-=end
-  
+    
 end

@@ -54,11 +54,7 @@ class Avatar
     new_files,filenames_to_delete = sandbox.run_tests(delta,files,time_limit)    
     colour = kata.language.colour(files['output'])
     rags = increments
-    rag = {
-      'colour' => colour,
-      'time'   => now,
-      'number' => rags.length + 1
-    }
+    rag = { 'colour' => colour, 'time' => now, 'number' => rags.length + 1 }
     rags << rag
     write_increments(rags)
     write_manifest(files)

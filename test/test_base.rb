@@ -53,7 +53,14 @@ class TestBase < MiniTest::Test
     assert lhs != rhs
   end
     
-  def stub_test(avatar,colours)
+  def stub_test(avatar,param)
+    stub_test_colours(avatar,param) if param.class.name == 'Array'
+    stub_test_n(avatar,param) if param.class.name == 'Fixnum'
+  end
+  
+private
+  
+  def stub_test_colours(avatar,colours)
     disk = dojo.disk
     root = File.expand_path(File.dirname(__FILE__)) + '/app_lib/test_output'    
     colours.each do |colour|    
@@ -68,8 +75,13 @@ class TestBase < MiniTest::Test
       assert_equal colour, rags[-1]['colour'].to_sym
     end
   end
+
+  def stub_test_n(avatar, n)
+    colours = (1..n).collect { [:red,:amber,:green].shuffle[0] }
+    stub_test_colours(avatar, colours)
+  end
   
-private
+  # - - - - - - - - - - - - - - - - - - - - - - - - -
   
   def check_test_environment_setup
     store('EXERCISES_ROOT')
