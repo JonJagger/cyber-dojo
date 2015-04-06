@@ -24,14 +24,16 @@ class TagsTest < ModelTestBase
   #- - - - - - - - - - - - - - - - - - -
 
   test 'each [test]-event creates a new tag' do
+    set_runner_class_name('StubTestRunner')            
     kata = make_kata
     lion = kata.start_avatar(['lion'])
-    #fake_three_tests(lion)
+    stub_test(lion, [:red,:amber,:green])
     tags = lion.tags
     assert_equal 4, tags.length
     assert tags.all?{|tag| tag.class.name === 'Tag'}
-    #n = 2
+    n = 2
     visible_files = tags[n].visible_files
+    #p visible_files.inspect
     #assert_equal [f1,f2,f3], visible_files.keys.sort
     #assert_equal f1_content, visible_files[f1]
     #assert_equal f2_content, visible_files[f2]

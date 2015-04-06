@@ -51,7 +51,7 @@ class Avatar
   end
 
   def test(delta, files, now = time_now, time_limit = 15)        
-    new_files,filenames_to_delete = sandbox.run_tests(delta,files,time_limit)
+    new_files,filenames_to_delete = sandbox.run_tests(delta,files,time_limit)    
     colour = kata.language.colour(files['output'])
     rags = increments
     rag = {

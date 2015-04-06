@@ -8,7 +8,7 @@ class KataTests < ModelTestBase
     super
     assert_equal 'Disk', disk_class_name
     @id = unique_id
-    @kata = @dojo.katas[@id]
+    @kata = dojo.katas[@id]
   end
   
   test 'attempting to create a Kata with an invalid id raises' do
@@ -21,7 +21,7 @@ class KataTests < ModelTestBase
       '123456789S'  # not 0-9A-F
     ]
     bad_ids.each do |bad_id|
-      assert_raises(RuntimeError) { @dojo.katas[bad_id] }
+      assert_raises(RuntimeError) { dojo.katas[bad_id] }
     end
   end
 

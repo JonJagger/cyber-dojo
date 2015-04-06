@@ -9,11 +9,17 @@ class TestBase < MiniTest::Test
   def teardown
     restore_original_test_environment    
   end
-  
+
   def self.test(name, &block)
     define_method("test_#{name}".to_sym, &block)
   end
 
+  def dojo
+    @dojo ||= Dojo.new    
+  end
+
+
+  
   def assert_not_nil(o)
     assert !o.nil?
   end
@@ -40,6 +46,26 @@ class TestBase < MiniTest::Test
   def git_class_name; get('GIT_CLASS_NAME'); end
   def set_git_class_name(value); set('GIT_CLASS_NAME',value); end
     
+  def stub_test(avatar,colours)
+    disk = dojo.disk
+    root = File.expand_path(File.dirname(__FILE__)) + '/app_lib/test_output'    
+    colours.each do |colour|    
+      path = "#{root}/#{avatar.kata.language.unit_test_framework}/#{colour}"
+      all_outputs = disk[path].each_file.collect{|filename| filename}
+      filename = all_outputs.shuffle[0]
+      output = disk[path].read(filename)
+      #p ">>> ----------------------------"
+      #p ">>> filename:#{path}"
+      #p ">>> utf:#{avatar.kata.language.unit_test_framework}"
+      #p ">>> stubbing output:#{output}"
+      dojo.runner.stub(output)      
+      delta = { :changed => [], :new => [], :deleted => [] }
+      files = { }
+      rags,_,_ = avatar.test(delta,files)
+      assert_equal colour, rags[-1]['colour'].to_sym
+    end
+  end
+  
 private
   
   def check_test_environment_setup

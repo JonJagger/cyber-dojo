@@ -51,7 +51,7 @@ class ExercisesTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def exercises
-    @dojo.exercises
+    dojo.exercises
   end
   
 end

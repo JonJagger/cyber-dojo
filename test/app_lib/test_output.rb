@@ -29,9 +29,8 @@ class OutputTests < AppLibTestBase
     disk[root].each_dir do |unit_test_framework|
       ['red','amber','green'].each do |colour|
         path = "#{root}/#{unit_test_framework}/#{colour}"
-        dir = disk[path]
         diagnostic = "#{path}/ does not exist"
-        assert dir.exists?, diagnostic
+        assert disk[path].exists?, diagnostic
       end
     end
   end
@@ -39,16 +38,18 @@ class OutputTests < AppLibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test 'all dojo.languages have corresponding test_output/unit_test_framework' do
-    set_runner_class_name('TestRunnerStub')    
+    set_runner_class_name('RunnableTestRunner')
+    count = 0    
     dojo.languages.each do |language|
+      count += 1
       path = root + '/' + language.unit_test_framework
-      dir = disk[path]
       diagnostic = '' +
         "language: #{language.name}\n" +
         "unit_test_framework: #{language.unit_test_framework}\n" +
         "...#{path}/ does not exist"
-      assert dir.exists?, diagnostic
+      assert disk[path].exists?, diagnostic
     end
+    assert count > 0, "no languages"
   end
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -54,44 +54,20 @@ class LightTests < ModelTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'tag' do
-    set_runner_class_name('StubTestRunner')
+  test 'each test creates a new light' do
+    set_runner_class_name('StubTestRunner')        
     kata = make_kata
     lion = kata.start_avatar(['lion'])    
-    stub_test(lion, [:red,:green,:green])
+    stub_test(lion, [:red,:amber,:green])
     lights = lion.lights
     assert_equal 3, lights.length
-    light = lights[2]
-    assert_equal :green, light.colour
-    tag = light.tag
-    #assert_equal output, tag.output
+    assert_equal :red  , lights[0].colour
+    assert_equal :amber, lights[1].colour
+    assert_equal :green, lights[2].colour
   end
   
   # - - - - - - - - - - - - - - - - - - - - - - -
   
-  def stub_test(avatar,colours)
-    # The output tests have been restructured so all the outputs
-    # for all languages are held in one object/directory which 
-    # can be queried to access with a key of [language,colour]
-    # Two kinds of query: 
-    #   get all matches (for the output tests themselves) REFACTOR test_output.rb
-    #   get one random match (for stubbing - here)
-    # 
-    root = File.expand_path(File.dirname(__FILE__) + '/..') + '/app_lib/test_output'    
-    colours.each do |colour|    
-      path = "#{root}/#{avatar.kata.language.unit_test_framework}/#{colour}"
-      all_outputs = disk[path].each_file.collect{|filename| filename}
-      filename = all_outputs.shuffle[0]
-      output = disk[path].read(filename)
-      dojo.runner.stub(output)      
-      delta = { :changed => [], :new => [], :deleted => [] }
-      files = { }
-      avatar.test(delta,files)
-    end
-  end
-  
-  # - - - - - - - - - - - - - - - - - - - - - - -
-
   def make_light(rgb,time,n, key='colour')
     Light.new(dummy_avatar, {
       key => rgb.to_sym,
@@ -102,14 +78,6 @@ class LightTests < ModelTestBase
 
   def dummy_avatar
     Object.new
-  end
-
-  def dojo
-    @dojo ||= Dojo.new
-  end
-  
-  def disk
-    dojo.disk
   end
 
 end

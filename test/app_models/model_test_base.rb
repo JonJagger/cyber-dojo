@@ -9,7 +9,6 @@ class ModelTestBase < TestBase
 
   def setup
     super    
-    @dojo = Dojo.new
     if disk_class_name === 'Disk'
       `rm -rf #{katas_root}*`
     end
@@ -20,9 +19,9 @@ class ModelTestBase < TestBase
   end
   
   def make_kata(id = unique_id, language_name = 'C-assert', exercise_name = 'Fizz_Buzz')
-    language = @dojo.languages[language_name]
-    exercise = @dojo.exercises[exercise_name]
-    @dojo.katas.create_kata(language, exercise, id)
+    language = dojo.languages[language_name]
+    exercise = dojo.exercises[exercise_name]
+    dojo.katas.create_kata(language, exercise, id)
   end
 
   def path_ends_in_slash?(object)

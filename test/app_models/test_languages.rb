@@ -141,7 +141,7 @@ class LanguagesTests < ModelTestBase
   end
 
   def languages
-    @dojo.languages
+    dojo.languages
   end
 
 end
