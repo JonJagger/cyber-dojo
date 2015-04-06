@@ -58,11 +58,12 @@ private
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# External paths/objects are set from environment variables
-# (see config/initializers/externals.rb)
-# There main reason for this arrangment is testability.
+# External paths/objects are set via environment variables
+# (see config/initializers/cyber_dojo.rb)
+#
+# The main reason for this arrangement is testability.
 # It allows me to do polymorphic testing, viz to run
-# the *same* multiple times under different environments.
+# the *same* test multiple times under different environments.
 # For example, I could run a test with all the externals mocked
 # out (a true unit test) and then run the same test again with
 # the true externals in place (an integration/system test).
