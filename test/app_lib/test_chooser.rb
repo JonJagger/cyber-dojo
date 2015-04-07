@@ -5,15 +5,15 @@ require_relative './app_lib_test_base'
 class ChooseTests < AppLibTestBase
 
   include Chooser
-  include ExternalSetter
+  #include ExternalSetter
 
   def setup
-    reset_external(:disk, DiskFake.new)    
-    reset_external(:git, Git.new)
-    reset_external(:runner, DummyTestRunner.new)
-    reset_external(:exercises_path, 'exercises/')
-    reset_external(:languages_path, 'languages/')
-    reset_external(:katas_path, 'katas/')
+    #reset_external(:disk, DiskFake.new)    
+    #reset_external(:git, Git.new)
+    #reset_external(:runner, DummyTestRunner.new)
+    #reset_external(:exercises_path, 'exercises/')
+    #reset_external(:languages_path, 'languages/')
+    #reset_external(:katas_path, 'katas/')
     @dojo = Dojo.new
     @katas = @dojo.katas
     fake_languages
@@ -189,10 +189,11 @@ class ChooseTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  def make_kata(dojo, language_name, exercise_name = 'Fizz_Buzz')
-    language = dojo.languages[language_name]
-    exercise = dojo.exercises[exercise_name]
-    dojo.katas.create_kata(language, exercise)
-  end
+  #Use make_kata in test_base.rb
+  #def make_kata(dojo, language_name, exercise_name = 'Fizz_Buzz')
+  #  language = dojo.languages[language_name]
+  #  exercise = dojo.exercises[exercise_name]
+  #  dojo.katas.create_kata(language, exercise)
+  #end
 
 end

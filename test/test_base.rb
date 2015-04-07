@@ -2,6 +2,12 @@ require 'minitest/autorun'
 
 class TestBase < MiniTest::Test
 
+  # TODO: test/app_controllers/controller_test_base.rb
+  # has ActionDispatch::IntegrationTest as its base class
+  # That means it can't also inherit from this class
+  # (since Ruby has single inheritance)
+  # Make this a module and mix it in?
+  
   def setup
     check_test_environment_setup    
   end
@@ -51,6 +57,14 @@ class TestBase < MiniTest::Test
 
   def assert_not_equal(lhs,rhs)
     assert lhs != rhs
+  end
+    
+  # - - - - - - - - - - - - - - - - - - -
+    
+  def make_kata(id = unique_id, language_name = 'C-assert', exercise_name = 'Fizz_Buzz')
+    language = languages[language_name]
+    exercise = exercises[exercise_name]
+    katas.create_kata(language, exercise, id)
   end
     
   def stub_test(avatar,param)

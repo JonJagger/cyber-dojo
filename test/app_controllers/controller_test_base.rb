@@ -10,21 +10,14 @@ require 'minitest/autorun'
 
 class ControllerTestBase < ActionDispatch::IntegrationTest
 
-  include ExternalSetter
-  include ExternalDiskDir
-  include ExternalGit
-  include ExternalRunner
-  include ExternalExercisesPath
-  include ExternalLanguagesPath
-  include ExternalKatasPath
-
   def setup
-    reset_external(:disk, Disk.new)
-    reset_external(:git, Git.new)
-    reset_external(:runner, HostTestRunner.new)
-    reset_external(:exercises_path, root_path + '/exercises/')
-    reset_external(:languages_path, root_path + '/languages/')
-    reset_external(:katas_path, root_path + '/test/cyber-dojo/katas/')
+    super
+    #reset_external(:disk, Disk.new)
+    #reset_external(:git, Git.new)
+    #reset_external(:runner, HostTestRunner.new)
+    #reset_external(:exercises_path, root_path + '/exercises/')
+    #reset_external(:languages_path, root_path + '/languages/')
+    #reset_external(:katas_path, root_path + '/test/cyber-dojo/katas/')
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -36,12 +29,12 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     @id = create_kata('fake-C#','fake-Yatzy')
   end
 
-  def stub_dojo
-    reset_external(:disk, DiskFake.new)
-    reset_external(:git, GitSpy.new)
-    reset_external(:runner, TestRunnerStub.new)
-    @dojo = Dojo.new
-  end
+  #def stub_dojo
+    #reset_external(:disk, DiskFake.new)
+    #reset_external(:git, GitSpy.new)
+    #reset_external(:runner, TestRunnerStub.new)
+    #@dojo = Dojo.new
+  #end
 
   def stub_language(language_name, unit_test_framework)
     language = @dojo.languages[language_name]
