@@ -4,7 +4,6 @@
   TestRunner
     HostTestRunner
     DockerTestRunner
-    DummyTestRunner
     StubTestRunner
   Git
   Disk  Dir
