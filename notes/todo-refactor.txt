@@ -1,6 +1,10 @@
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+When you resize the edit textarea you cannot (manually) resize the linenumbers
+textarea to its left. You used to be able to do this. Why is the linenumbers
+textarea no longer resizable?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Set external paths via  ENV[]. Don't provide defaults.
 Set external class names for Git and Runner via ENV[]
 Provide one_self secrets via ENV[]

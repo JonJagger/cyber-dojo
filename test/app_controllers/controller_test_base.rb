@@ -88,7 +88,7 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   end
 
   def kata_run_tests(hash)
-    defaults = { :format=>:js, :id=>@id, :avatar=>@avatar_name }
+    defaults = { :format => :js, :id => @id, :avatar => @avatar_name }
     post 'kata/run_tests', hash.merge(defaults)
   end
 
