@@ -2,6 +2,7 @@
 class SetupController < ApplicationController
 
   def show
+    p "INSIDE SetupController::show"
     @id = id
     @title = 'create'
     @exercises_names,@instructions = read_exercises        

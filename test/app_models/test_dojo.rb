@@ -23,7 +23,7 @@ class DojoTests < ModelTestBase
   end
 
   test 'runner' do
-    name = 'DockerTestRunner'
+    name = 'StubTestRunner'
     set_runner_class_name(name)
     assert_equal name, dojo.runner.class.name
   end

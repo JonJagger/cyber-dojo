@@ -110,12 +110,13 @@ class AvatarTests < ModelTestBase
       :deleted => [ ],
       :new => [ ]
     }
-    set_runner_class_name('DummyTestRunner')
+    set_runner_class_name('StubTestRunner')
+    dojo.runner.stub_output('hello')
     assert !visible_files.keys.include?('output')    
     avatar.test(delta, visible_files)
     assert visible_files.keys.include?('output')
     output = visible_files['output']
-    assert_not_nil output
+    assert_equal 'hello', output
     assert_equal output, avatar.sandbox.dir.read('output')
   end
 
@@ -145,7 +146,8 @@ class AvatarTests < ModelTestBase
       assert_equal language.visible_files[filename], sandbox.dir.read(filename)
       assert_not_equal language.visible_files[filename], visible_files[filename]
     end
-    set_runner_class_name('DummyTestRunner')    
+    set_runner_class_name('StubTestRunner')    
+    dojo.runner.stub_output('')
     avatar.test(delta, visible_files)    
     delta[:changed].each do |filename|
       assert_equal visible_files[filename], sandbox.dir.read(filename)
@@ -174,7 +176,8 @@ class AvatarTests < ModelTestBase
       :deleted => [ ],
       :new => [ ]
     }  
-    set_runner_class_name('DummyTestRunner')    
+    set_runner_class_name('StubTestRunner')    
+    dojo.runner.stub_output('')
     avatar.test(delta, visible_files)
     delta[:unchanged].each do |filename|
       assert !sandbox.dir.exists?(filename)
@@ -198,13 +201,14 @@ class AvatarTests < ModelTestBase
       :deleted => [ ],
       :new => [ new_filename ]
     }
-    set_runner_class_name('DummyTestRunner')            
+    set_runner_class_name('StubTestRunner')            
 
     assert !git_log_line_starts?("git add '#{new_filename}'")    
     delta[:new].each do |filename|
       assert !sandbox.dir.exists?(filename)
     end           
     
+    dojo.runner.stub_output('')
     avatar.test(delta, visible_files)
     
     assert git_log_line_starts?("git add '#{new_filename}'")

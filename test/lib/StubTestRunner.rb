@@ -1,16 +1,26 @@
 
 class StubTestRunner
 
-  def stub(output)
-    @output = output
+  def stub_output(stub)
+    @output = stub
   end
 
+  def stub_runnable(stub)
+    @runnable = stub
+  end
+  
   def run(sandbox, command, max_duration)
+    if @output.nil?
+      raise RuntimeError.new("StubTestRunner.run()) called unexpectedly")
+    end
     @output
   end
 
   def runnable?(language)
-    raise RuntimeError.new("StubTestRunner.runnable? called unexpectedly")
+    if @runnable.nil?      
+      raise RuntimeError.new("StubTestRunner.runnable? called unexpectedly")
+    end
+    @runnable
   end
 
 end

@@ -5,19 +5,15 @@ root = '../..'
 
 require_relative root + '/test/test_coverage'
 require_relative root + '/test/all'
+require_relative root + '/test/TestHelpers'
 require_relative root + '/config/environment'
-require 'minitest/autorun'
-
+  
 class ControllerTestBase < ActionDispatch::IntegrationTest
 
-  def setup
-    super
-    #reset_external(:disk, Disk.new)
-    #reset_external(:git, Git.new)
-    #reset_external(:runner, HostTestRunner.new)
-    #reset_external(:exercises_path, root_path + '/exercises/')
-    #reset_external(:languages_path, root_path + '/languages/')
-    #reset_external(:katas_path, root_path + '/test/cyber-dojo/katas/')
+  include TestHelpers
+  
+  def self.test(name, &block)
+    define_method("test_#{name}".to_sym, &block)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -

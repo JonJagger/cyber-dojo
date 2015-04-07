@@ -35,7 +35,8 @@ class LanguagesTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - -
   
   test 'each() not empty' do
-    set_runner_class_name('RunnableTestRunner')
+    set_runner_class_name('StubTestRunner')
+    dojo.runner.stub_runnable(true)
     languages_names = languages.each.map {|language| language.name }
     ['C#-NUnit','Ruby-Test::Unit'].each do |name|
       assert languages_names.include? name

@@ -258,9 +258,9 @@ class LanguageTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'language can be asked if it is runnable' do
-    @language = languages['Ruby']
-    spy_manifest({:display_name => 'Ruby, TestUnit'})
-    assert !@language.runnable?
+    set_runner_class_name('StubTestRunner')
+    dojo.runner.stub_runnable(true)
+    assert languages['Ruby'].runnable?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -313,10 +313,11 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'DockerTestRunner.runnable?(language) is false ' +
+  test 'TestRunner.runnable?(language) is false ' +
        'when language does not have image_name set in manifest' do
-    @dojo = Dojo.new
-    ruby = @dojo.languages['Ruby-TestUnit']
+    set_runner_class_name('StubTestRunner')
+    dojo.runner.stub_runnable(false)
+    ruby = dojo.languages['Ruby-TestUnit']
     ruby.dir.write(manifest_filename, { })
     assert !ruby.runnable?
   end
