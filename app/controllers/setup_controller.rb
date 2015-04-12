@@ -1,3 +1,4 @@
+p "passed through setup_controller.rb"
 
 class SetupController < ApplicationController
 

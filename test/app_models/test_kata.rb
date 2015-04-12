@@ -178,7 +178,7 @@ class KataTests < ModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  
   test 'start_avatar succeeds once for each avatar name then fails' do
     kata = make_kata
     created = [ ]
@@ -191,5 +191,5 @@ class KataTests < ModelTestBase
     avatar = kata.start_avatar
     assert_nil avatar
   end
-  
+      
 end
