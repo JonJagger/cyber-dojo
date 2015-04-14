@@ -4,14 +4,13 @@ require_relative 'controller_test_base'
 
 class SetupControllerTest < ControllerTestBase
 
-  def setup
+  def X_setup
     super
     set_disk_class_name('DiskFake')
   end
 
   test 'setup uses cached languages and exercises if present' do
     #stub_dojo
-
     languages.dir.write('cache.json', [ 'C++, catch', 'Java, JMock' ])
     exercises.dir.write('cache.json', {
       'fake-Print-Diamond'  => 'fake-Print-Diamond instructions',
