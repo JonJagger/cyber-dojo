@@ -10,21 +10,8 @@ require_relative root + '/test/TestHelpers'
   
 class ControllerTestBase < ActionDispatch::IntegrationTest
 
-  def dojo; @dojo ||= Dojo.new; end  
-  def languages; dojo.languages; end
-  def exercises; dojo.exercises; end
-  def katas; dojo.katas; end
-  def disk; dojo.disk; end
-  def runner; dojo.runner; end
-
-  #include TestHelpers
+  include TestHelpers
   
-  #def self.test(name, &block)
-  #  define_method("test_#{name}".to_sym, &block)
-  #end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - -
-
   def stub_setup
     stub_dojo
     stub_language('fake-C#','nunit')

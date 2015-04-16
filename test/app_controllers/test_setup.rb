@@ -10,24 +10,17 @@ class SetupControllerTest < ControllerTestBase
   end
 
   test 'setup uses cached languages and exercises if present' do
-    #stub_dojo
     languages.dir.write('cache.json', [ 'C++, catch', 'Java, JMock' ])
     exercises.dir.write('cache.json', {
       'fake-Print-Diamond'  => 'fake-Print-Diamond instructions',
       'fake-Roman-Numerals' => 'fake-Roman-Numerals instructions'
     })
-
-    #this does not get to SetupController::show
-    get 'setup/show'
-    
+    get 'setup/show'    
     assert_response :success
-
     assert /data-language\=\"C++/.match(html), "C++"
     assert /data-language\=\"Java/.match(html), "Java"
-
     assert /data-test\=\"catch/.match(html), "catch"
     assert /data-test\=\"JMock/.match(html), "JMock"
-
     assert /data-exercise\=\"fake-Print-Diamond/.match(html), "fake-Print-Diamond"
     assert /data-exercise\=\"fake-Roman-Numerals/.match(html), "fake-Roman-Numerals"
   end

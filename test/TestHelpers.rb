@@ -5,7 +5,7 @@ module TestHelpers # mixin
   def setup
     check_test_environment_setup    
   end
-  
+
   def teardown
     restore_original_test_environment    
   end
@@ -18,26 +18,26 @@ module TestHelpers # mixin
   def katas; dojo.katas; end
   def disk; dojo.disk; end
   def runner; dojo.runner; end
-  
+
   # - - - - - - - - - - - - - - - - - - -
-  
-  def languages_root; get(languages_key); end
-  def set_languages_root(value); set(languages_key,value); end
-  
-  def exercises_root; get(exercises_key); end
-  def set_exercises_root(value); set(exercises_key,value); end
 
-  def katas_root; get(katas_key); end
-  def set_katas_root(value); set(katas_key,value); end
+  def languages_root; cd_get(languages_key); end
+  def set_languages_root(value); cd_set(languages_key,value); end
   
-  def runner_class_name; get(runner_key); end  
-  def set_runner_class_name(value); set(runner_key,value); end  
+  def exercises_root; cd_get(exercises_key); end
+  def set_exercises_root(value); cd_set(exercises_key,value); end
 
-  def disk_class_name; get(disk_key); end  
-  def set_disk_class_name(value); set(disk_key,value); end
+  def katas_root; cd_get(katas_key); end
+  def set_katas_root(value); cd_set(katas_key,value); end
   
-  def git_class_name; get(git_key); end
-  def set_git_class_name(value); set(git_key,value); end
+  def runner_class_name; cd_get(runner_key); end  
+  def set_runner_class_name(value); cd_set(runner_key,value); end  
+
+  def disk_class_name; cd_get(disk_key); end  
+  def set_disk_class_name(value); cd_set(disk_key,value); end
+  
+  def git_class_name; cd_get(git_key); end
+  def set_git_class_name(value); cd_set(git_key,value); end
     
   # - - - - - - - - - - - - - - - - - - -
     
@@ -56,7 +56,7 @@ module TestHelpers # mixin
     exercise = exercises[exercise_name]
     katas.create_kata(language, exercise, id)
   end
-    
+        
   def stub_test(avatar,param)
     stub_test_colours(avatar,param) if param.class.name == 'Array'
     stub_test_n(avatar,param) if param.class.name == 'Fixnum'
@@ -105,23 +105,15 @@ private
   def restore_original_test_environment    
     env_vars.each { |var| restore(var) }
   end
-  
+   
   def store(key)
     raise RuntimeError.new("ENV['#{cd(key)}'] not set") if ENV[cd(key)].nil?
     @test_env ||= { }       
-    @test_env[cd(key)] = get(key)    
+    @test_env[cd(key)] = cd_get(key)    
   end
   
   def restore(key)
     ENV[cd(key)] = @test_env[cd(key)]
-  end
-
-  def get(key)
-    ENV[cd(key)]
-  end
-  
-  def set(key,value)
-    ENV[cd(key)] = value
   end
   
   def cd(name)
@@ -129,4 +121,12 @@ private
     'CYBER_DOJO_' + name
   end
 
+  def cd_set(key,value)
+    ENV[cd(key)] = value
+  end
+
+  def cd_get(key)
+    ENV[cd(key)]
+  end       
+  
 end
