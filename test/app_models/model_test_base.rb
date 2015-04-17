@@ -9,8 +9,8 @@ class ModelTestBase < TestBase
 
   def setup
     super    
-    if disk_class_name === 'Disk'
-      `rm -rf #{katas_root}*`
+    if get_disk_class_name === 'Disk'
+      `rm -rf #{get_katas_root}*`
     end
   end
 

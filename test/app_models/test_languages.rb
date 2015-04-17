@@ -6,7 +6,7 @@ class LanguagesTests < ModelTestBase
 
   def setup
     super
-    assert_equal 'Disk', disk_class_name
+    assert_equal 'Disk', get_disk_class_name
   end
   
   test 'path is set from ENV' do
@@ -138,7 +138,7 @@ class LanguagesTests < ModelTestBase
   end
 
   def exists?(lang,test)
-    File.directory?("#{languages_root}/#{lang}/#{test}")    
+    File.directory?("#{get_languages_root}/#{lang}/#{test}")    
   end
 
 end

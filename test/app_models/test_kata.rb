@@ -6,7 +6,7 @@ class KataTests < ModelTestBase
 
   def setup
     super
-    assert_equal 'Disk', disk_class_name
+    assert_equal 'Disk', get_disk_class_name
     @id = unique_id
     @kata = katas[@id]
   end

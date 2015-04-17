@@ -5,8 +5,8 @@ require_relative 'controller_test_base'
 class SetupControllerTest < ControllerTestBase
 
   test 'setup uses cached languages and exercises if present' do    
-    temp_dir = Dir.mktmpdir + '/'
-    set_languages_root(temp_dir)    
+    set_disk_class_name('Disk')
+    set_languages_root(Dir.mktmpdir + '/')    
     languages.dir.write('cache.json', [ 'C++, catch', 'Java, JMock' ])
     exercises.dir.write('cache.json', {
       'fake-Print-Diamond'  => 'fake-Print-Diamond instructions',
@@ -14,7 +14,7 @@ class SetupControllerTest < ControllerTestBase
     })
     
     get 'setup/show'    
-    FileUtils.remove_entry temp_dir
+    FileUtils.remove_entry get_languages_root
     
     assert_response :success
     assert /data-language\=\"C++/.match(html), "C++"
@@ -33,8 +33,9 @@ class SetupControllerTest < ControllerTestBase
        'whose 10-char id is passed in URL ' +
        '(to encourage repetition)' do
          
-    # this fails because the exercises/ and languages/ folders
-    # contain cache.json files which take precedence
+    # this fails because the GET call creates a *new* rails stack
+    # and thus a new Dojo and this a new Dojo.runner
+    # So I can't dynamically stub. 
     
     set_runner_class_name('StubTestRunner')
     dojo.runner.stub_runnable(true)
