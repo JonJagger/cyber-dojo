@@ -127,8 +127,14 @@ module OutputParser
     return :red
   end
 
-  #-------------------------------------------------
+  def self.parse_bash_shunit2(output)
+    return :red   if /Ran (\d*) test(s?)\.\n\nFAILED/.match(output)
+    return :green if /Ran (\d*) test(s?)\.\n\nOK/.match(output)
+    return :amber
+  end
 
+  #-------------------------------------------------
+  
   def self.parse_go_testing(output)
     return :amber if /FAIL(\s*)_\/sandbox \[build failed\]/.match(output)
     return :red   if /FAIL/.match(output)
