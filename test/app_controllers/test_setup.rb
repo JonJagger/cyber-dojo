@@ -6,7 +6,12 @@ class SetupControllerTest < ControllerTestBase
 
   test 'setup uses cached languages and exercises if present' do
     
-    #FIX: this overwrites the cache.json files on the ramdisk. 
+    #FIX: this overwrites the cache.json files on the ramdisk.     
+    
+    # If I do
+    set_disk_class_name('DiskFake')  # set_disk('DiskFake')      
+    # it doesn't work. Why?
+    # setup_worker is not seeing the cache.json files in the DiskFake
     
     languages.dir.write('cache.json', [ 'C++, catch', 'Java, JMock' ])
     exercises.dir.write('cache.json', {
@@ -32,7 +37,7 @@ class SetupControllerTest < ControllerTestBase
        '(to encourage repetition)' do
          
     # this fails because the exercises/ and languages/ folders
-    # contain cache.json files which are used
+    # contain cache.json files which take precedence
     
     set_runner_class_name('StubTestRunner')
     dojo.runner.stub_runnable(true)

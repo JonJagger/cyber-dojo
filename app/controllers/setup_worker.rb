@@ -5,7 +5,7 @@ module SetupWorker # mixin
   
   def read_languages
     dir = disk[languages.path]
-    if dir.exists?(cache_filename)
+    if dir.exists?(cache_filename)      
       # languages/cache.json is created with languages/cache.rb
       read = JSON.parse(dir.read(cache_filename))
     else
