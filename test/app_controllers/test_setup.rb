@@ -4,15 +4,9 @@ require_relative 'controller_test_base'
 
 class SetupControllerTest < ControllerTestBase
 
-  test 'setup uses cached languages and exercises if present' do
-    
-    #FIX: this overwrites the cache.json files on the ramdisk.     
-    
-    # If I do
-    set_disk_class_name('DiskFake')  # set_disk('DiskFake')      
-    # it doesn't work. Why?
-    # setup_worker is not seeing the cache.json files in the DiskFake
-    
+  test 'setup uses cached languages and exercises if present' do    
+    temp_dir = Dir.mktmpdir + '/'
+    set_languages_root(temp_dir)    
     languages.dir.write('cache.json', [ 'C++, catch', 'Java, JMock' ])
     exercises.dir.write('cache.json', {
       'fake-Print-Diamond'  => 'fake-Print-Diamond instructions',
@@ -20,6 +14,7 @@ class SetupControllerTest < ControllerTestBase
     })
     
     get 'setup/show'    
+    FileUtils.remove_entry temp_dir
     
     assert_response :success
     assert /data-language\=\"C++/.match(html), "C++"
@@ -28,10 +23,12 @@ class SetupControllerTest < ControllerTestBase
     assert /data-test\=\"JMock/.match(html), "JMock"
     assert /data-exercise\=\"fake-Print-Diamond/.match(html), "fake-Print-Diamond"
     assert /data-exercise\=\"fake-Roman-Numerals/.match(html), "fake-Roman-Numerals"
+    
   end
   
   # - - - - - - - - - - - - - - - - - - - - - -
-
+  
+=begin
   test 'setup/show chooses language and exercise of kata ' +
        'whose 10-char id is passed in URL ' +
        '(to encourage repetition)' do
@@ -59,7 +56,7 @@ class SetupControllerTest < ControllerTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - -
-=begin
+
   # another test to verify language/exercise default
   # to that of kata's id when id is only 6 chars long.
 
