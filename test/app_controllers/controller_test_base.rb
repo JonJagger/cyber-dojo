@@ -20,6 +20,15 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     json['id']
   end
     
+  def enter
+    if @id.nil?
+      get 'dojo/enter', format: :json
+    else
+      get 'dojo/enter', format: :json, id:@id
+    end
+    @avatar_name = avatar_name
+  end
+    
   def json
     ActiveSupport::JSON.decode @response.body
   end
@@ -61,15 +70,6 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     kata = @dojo.katas[id]
     kata.dir.write('manifest.json', { language:language_name,
                                       exercise:exercise_name })
-  end
-
-  def enter
-    if @id.nil?
-      get 'dojo/enter', format: :json
-    else
-      get 'dojo/enter', format: :json, id:@id
-    end
-    @avatar_name = avatar_name
   end
 
   def kata_edit

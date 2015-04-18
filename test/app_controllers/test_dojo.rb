@@ -5,28 +5,23 @@ require_relative 'controller_test_base'
 class DojoControllerTest < ControllerTestBase
 
   test 'index without id' do
-    stub_setup
     get 'dojo/index'
     assert_response :success
   end
 
   test 'index with id' do
-    stub_setup
     get 'dojo/index', id:'1234512345'
     assert_response :success
   end
 
   test 'check_id exists=false when no kata for id' do
-    stub_setup
     @id = 'abcdef'
     check_id
   end
 
   test 'check_id exists=true when id.length < 6 and kata exists' do
-    stub_dojo
-    stub_language('fake-C#','nunit')
-    stub_exercise('fake-Yatzy')
-    @id = create_kata('fake-C#','fake-Yatzy')[0..4]
+    @id = create_kata
+    @id = @id[0..4]
     assert @id.length < 6
     check_id
     assert !empty?
@@ -34,10 +29,8 @@ class DojoControllerTest < ControllerTestBase
   end
 
   test 'check_id exists=true when id.length == 6 and kata exists' do
-    stub_dojo
-    stub_language('fake-C#','nunit')
-    stub_exercise('fake-Yatzy')
-    @id = create_kata('fake-C#','fake-Yatzy')[0..5]
+    @id = create_kata
+    @id = @id[0..5]
     assert @id.length == 6
     check_id
     assert !empty?
@@ -45,10 +38,8 @@ class DojoControllerTest < ControllerTestBase
   end
 
   test 'check_id exists=true when id.length > 6 and kata exists' do
-    stub_dojo
-    stub_language('fake-C#','nunit')
-    stub_exercise('fake-Yatzy')
-    @id = create_kata('fake-C#','fake-Yatzy')[0..6]
+    @id = create_kata
+    @id = @id[0..6]
     assert @id.length > 6
     check_id
     assert !empty?
@@ -56,11 +47,10 @@ class DojoControllerTest < ControllerTestBase
   end
 
   test 'enter with no id raises RuntimeError' do
-    stub_dojo
-    stub_language('fake-C#','nunit')
-    stub_exercise('fake-Yatzy')
     assert_raises(RuntimeError) { enter }
   end
+
+=begin
 
   test 'enter with empty string id raises RuntimeError' do
     stub_setup
@@ -116,13 +106,15 @@ class DojoControllerTest < ControllerTestBase
     assert !full?
   end
 
-  def check_id(json = :json)
-    get 'dojo/check', format:json, id:@id
+  def re_enter(json = :json)
+    get 'dojo/re_enter', format:json, id:@id
     assert_response :success    
   end
 
-  def re_enter(json = :json)
-    get 'dojo/re_enter', format:json, id:@id
+=end
+  
+  def check_id(json = :json)
+    get 'dojo/check', format:json, id:@id
     assert_response :success    
   end
 
@@ -133,5 +125,5 @@ class DojoControllerTest < ControllerTestBase
   def full?
     json['full']
   end
-
+  
 end
