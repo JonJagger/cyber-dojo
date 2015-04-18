@@ -12,6 +12,23 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
 
   include TestHelpers
   
+  def create_kata(language_name = 'Ruby, TestUnit',
+                  exercise_name = 'Yatzy')
+    get 'setup/save', language:language_name.split(',')[0].strip,
+                      test:language_name.split(',')[1].strip,
+                      exercise:exercise_name
+    json['id']
+  end
+    
+  def json
+    ActiveSupport::JSON.decode @response.body
+  end
+
+  def html
+    @response.body
+  end
+  
+=begin
   def stub_setup
     stub_dojo
     stub_language('fake-C#','nunit')
@@ -19,12 +36,12 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     @id = create_kata('fake-C#','fake-Yatzy')
   end
 
-  #def stub_dojo
-    #reset_external(:disk, DiskFake.new)
-    #reset_external(:git, GitSpy.new)
-    #reset_external(:runner, TestRunnerStub.new)
-    #@dojo = Dojo.new
-  #end
+  def stub_dojo
+    reset_external(:disk, DiskFake.new)
+    reset_external(:git, GitSpy.new)
+    reset_external(:runner, TestRunnerStub.new)
+    @dojo = Dojo.new
+  end
 
   def stub_language(language_name, unit_test_framework)
     language = @dojo.languages[language_name]
@@ -44,14 +61,6 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     kata = @dojo.katas[id]
     kata.dir.write('manifest.json', { language:language_name,
                                       exercise:exercise_name })
-  end
-
-  def create_kata(language_name = 'Ruby, TestUnit',
-                  exercise_name = 'Yatzy')
-    get 'setup/save', language:language_name.split(',')[0].strip,
-                      test:language_name.split(',')[1].strip,
-                      exercise:exercise_name
-    json['id']
   end
 
   def enter
@@ -93,18 +102,11 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     json['avatar_name']
   end
 
-  def json
-    ActiveSupport::JSON.decode @response.body
-  end
-
-  def html
-    @response.body
-  end
-
 private
 
   def root_path
     File.absolute_path(File.dirname(__FILE__) + '/../../')
   end
-
+=end
+  
 end
