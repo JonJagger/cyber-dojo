@@ -20,10 +20,10 @@ class DojoControllerTest < ControllerTestBase
   end
 
   test 'check_id exists=true when id.length ~ 6 and kata exists' do
-    (4..5).each do |n|
+    [5,6,7].each do |n|
       create_kata
-      @id = @id[0..n]
-      assert_equal n+1, @id.length
+      @id = @id[0..(n-1)]
+      assert_equal n, @id.length
       check_id
       assert !empty?
       assert !full?
