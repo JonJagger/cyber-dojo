@@ -17,7 +17,7 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     get 'setup/save', language:language_name.split(',')[0].strip,
                       test:language_name.split(',')[1].strip,
                       exercise:exercise_name
-    json['id']
+    @id = json['id']
   end
     
   def enter
@@ -29,12 +29,21 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     @avatar_name = avatar_name
   end
     
+  def re_enter(json = :json)
+    get 'dojo/re_enter', format:json, id:@id
+    assert_response :success    
+  end
+    
   def json
     ActiveSupport::JSON.decode @response.body
   end
 
   def html
     @response.body
+  end
+  
+  def avatar_name
+    json['avatar_name']
   end
   
 =begin
@@ -98,10 +107,6 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     }
   end
   
-  def avatar_name
-    json['avatar_name']
-  end
-
 private
 
   def root_path
