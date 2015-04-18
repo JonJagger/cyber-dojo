@@ -12,5 +12,5 @@ class KataControllerTest  < ControllerTestBase
     kata_run_tests make_file_hash(filename,'',234234, -4545645678) #1
     kata_run_tests make_file_hash(filename,'',234234, -4545645678) #2
   end
-  
+    
 end

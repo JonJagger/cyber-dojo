@@ -201,7 +201,7 @@ class ForkerControllerTest < ControllerTestBase
   def fork(id,avatar,tag,format = :json)
     get 'forker/fork', format:format,id:id,avatar:avatar,tag:tag
   end
-
+  
   def stub_traffic_lights(avatar, lights)
     avatar.dir.write('increments.json', lights)
   end

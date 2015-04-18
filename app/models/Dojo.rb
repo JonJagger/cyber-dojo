@@ -5,6 +5,7 @@
 class Dojo
 
   def languages
+    #If I use @@languages I can do 'proper' stubbing...
     @languages ||= Languages.new(self, external(root))
   end
 
