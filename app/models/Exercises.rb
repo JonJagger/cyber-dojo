@@ -4,6 +4,7 @@ class Exercises
   
   def initialize(dojo,path)
     @parent,@path = dojo,path
+    @path += '/' if !@path.end_with? '/'
   end
   
   attr_reader :path

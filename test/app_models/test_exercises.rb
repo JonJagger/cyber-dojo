@@ -19,10 +19,12 @@ class ExercisesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'path must end in slash' do
+  test 'path is forced to end in a slash' do
     path = 'unslashed'
     set_exercises_root(path)
-    assert_raises(RuntimeError) { exercises.path }
+    assert_equal path+'/', exercises.path
+    assert path_ends_in_slash?(exercises)
+    assert path_has_no_adjacent_separators?(exercises)    
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

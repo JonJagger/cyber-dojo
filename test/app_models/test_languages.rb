@@ -19,10 +19,12 @@ class LanguagesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test 'path must end in slash' do
+  test 'path is forced to end in a slash' do
     path = 'unslashed'
-    set_languages_root(path) 
-    assert_raises(RuntimeError) { languages.path }
+    set_languages_root(path)  
+    assert_equal path+'/', languages.path
+    assert path_ends_in_slash?(languages)
+    assert path_has_no_adjacent_separators?(languages)    
   end
 
   #- - - - - - - - - - - - - - - - - - - - -

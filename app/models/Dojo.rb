@@ -5,27 +5,27 @@
 class Dojo
 
   def languages
-    @languages ||= Languages.new(self, external_path(cd_root))
+    @languages ||= Languages.new(self, external(root))
   end
 
   def exercises
-    @exercises ||= Exercises.new(self, external_path(cd_root))
+    @exercises ||= Exercises.new(self, external(root))
   end
 
   def katas
-    @katas ||= Katas.new(self, external_path(cd_root))
+    @katas ||= Katas.new(self, external(root))
   end
 
   def runner
-    @runner ||= new_obj(external(cd_class_name))
+    @runner ||= new_obj(external(class_name))
   end
 
   def disk
-    @disk ||= new_obj(external(cd_class_name))
+    @disk ||= new_obj(external(class_name))
   end
 
   def git(*args)
-    @git ||= new_obj(external(cd_class_name))
+    @git ||= new_obj(external(class_name))
     return @git if args == []
     command = args.delete_at(1)
     @git.send(command,*args)    
@@ -39,23 +39,17 @@ private
     Object.const_get(name).new  
   end
   
-  def external_path(key)
-    result = external(key)
-    raise RuntimeError.new("ENV['#{key}']='#{result}' must end in /") if !result.end_with? '/'
-    result
-  end
-  
   def external(key)
     result = ENV[key]
     raise RuntimeError.new("ENV['#{key}'] not set") if result.nil?
     result
   end
   
-  def cd_root
+  def root
     cd(name_of(caller[0]) + '_ROOT')
   end
   
-  def cd_class_name
+  def class_name
     cd(name_of(caller[0]) + '_CLASS_NAME')
   end
   

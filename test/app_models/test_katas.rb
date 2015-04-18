@@ -14,10 +14,12 @@ class KatasTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  test 'path must end in /' do
+  test 'path is forced to end in a slash' do
     path = 'unslashed'
     set_katas_root(path)
-    assert_raises(RuntimeError) { katas.path }
+    assert_equal path+'/', katas.path
+    assert path_ends_in_slash?(katas)
+    assert path_has_no_adjacent_separators?(katas)
   end
 
   #- - - - - - - - - - - - - - - -
