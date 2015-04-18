@@ -4,7 +4,6 @@ def setup_external(key,value)
   value = root_path + '/' + value + '/' if key.end_with? '_ROOT'
   key = key + '_CLASS_NAME' if !key.end_with? '_ROOT'
   ENV['CYBER_DOJO_' + key] ||= value
-  #print "ENV['CYBER_DOJO_#{key}'] ||= '#{value}'\n"
 end
 
 setup_external('RUNNER', 'DockerTestRunner')

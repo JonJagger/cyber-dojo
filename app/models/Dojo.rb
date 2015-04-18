@@ -5,34 +5,34 @@
 class Dojo
 
   def languages
-    @languages ||= Languages.new(self, external_path(cd('LANGUAGES_ROOT')))
+    @languages ||= Languages.new(self, external_path(cd_root))
   end
 
   def exercises
-    @exercises ||= Exercises.new(self, external_path(cd('EXERCISES_ROOT')))
+    @exercises ||= Exercises.new(self, external_path(cd_root))
   end
 
   def katas
-    @katas ||= Katas.new(self, external_path(cd('KATAS_ROOT')))
+    @katas ||= Katas.new(self, external_path(cd_root))
   end
 
-  #one_self
-  
   def runner
-    @runner ||= new_obj(external(cd('RUNNER_CLASS_NAME')))
+    @runner ||= new_obj(external(cd_class_name))
   end
 
   def disk
-    @disk ||= new_obj(external(cd('DISK_CLASS_NAME')))
+    @disk ||= new_obj(external(cd_class_name))
   end
 
   def git(*args)
-    @git ||= new_obj(external(cd('GIT_CLASS_NAME')))
+    @git ||= new_obj(external(cd_class_name))
     return @git if args == []
     command = args.delete_at(1)
     @git.send(command,*args)    
   end
 
+  #one_self
+  
 private
 
   def new_obj(name)
@@ -51,10 +51,22 @@ private
     result
   end
   
+  def cd_root
+    cd(name_of(caller[0]) + '_ROOT')
+  end
+  
+  def cd_class_name
+    cd(name_of(caller[0]) + '_CLASS_NAME')
+  end
+  
   def cd(key)
     'CYBER_DOJO_' + key
   end
-  
+
+  def name_of(caller)
+    (caller =~ /`([^']*)'/ and $1).upcase
+  end
+    
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
