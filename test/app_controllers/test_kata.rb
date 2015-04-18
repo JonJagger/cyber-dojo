@@ -5,7 +5,7 @@ require_relative 'controller_test_base'
 class KataControllerTest  < ControllerTestBase
 
   test 'edit and then run-tests' do
-    stub_setup
+    create_kata
     enter
     kata_edit
     filename = 'cyber-dojo.sh'

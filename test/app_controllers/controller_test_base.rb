@@ -33,6 +33,23 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     get 'dojo/re_enter', format:json, id:@id
     assert_response :success    
   end
+
+  def kata_edit
+    get 'kata/edit', id:@id, avatar:@avatar_name
+    assert_response :success
+  end
+    
+  def kata_run_tests(hash)
+    defaults = { :format => :js, :id => @id, :avatar => @avatar_name }
+    post 'kata/run_tests', hash.merge(defaults)
+  end
+
+  def make_file_hash(filename,content,incoming,outgoing)
+    { file_content:         { filename => content },
+      file_hashes_incoming: { filename => incoming },
+      file_hashes_outgoing: { filename => outgoing }
+    }
+  end
     
   def json
     ActiveSupport::JSON.decode @response.body
@@ -81,11 +98,6 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
                                       exercise:exercise_name })
   end
 
-  def kata_edit
-    get 'kata/edit', id:@id, avatar:@avatar_name
-    assert_response :success
-  end
-
   def amber_test
     any_test
   end
@@ -93,18 +105,6 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   def any_test
     filename = 'cyber-dojo.sh'
     kata_run_tests make_file_hash(filename,'',234234,-4545645678)
-  end
-
-  def kata_run_tests(hash)
-    defaults = { :format => :js, :id => @id, :avatar => @avatar_name }
-    post 'kata/run_tests', hash.merge(defaults)
-  end
-
-  def make_file_hash(filename,content,incoming,outgoing)
-    { file_content:         { filename => content },
-      file_hashes_incoming: { filename => incoming },
-      file_hashes_outgoing: { filename => outgoing }
-    }
   end
   
 private

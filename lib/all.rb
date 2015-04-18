@@ -2,9 +2,8 @@
 %w{
   Cleaner
   TestRunner
-    HostTestRunner
     DockerTestRunner
-    StubTestRunner
+    HostTestRunner
   Git
   Disk  Dir
   TimeNow
