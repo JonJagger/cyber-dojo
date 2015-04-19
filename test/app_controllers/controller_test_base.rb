@@ -51,6 +51,11 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     }
   end
     
+  def any_test
+    filename = 'cyber-dojo.sh'
+    kata_run_tests make_file_hash(filename,'',234234,-4545645678)
+  end
+    
   def json
     ActiveSupport::JSON.decode @response.body
   end
@@ -101,12 +106,7 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   def amber_test
     any_test
   end
-  
-  def any_test
-    filename = 'cyber-dojo.sh'
-    kata_run_tests make_file_hash(filename,'',234234,-4545645678)
-  end
-  
+
 private
 
   def root_path

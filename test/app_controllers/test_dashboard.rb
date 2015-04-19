@@ -6,7 +6,7 @@ class DashboardControllerTest < ControllerTestBase
 
   def setup
     super
-    stub_setup
+    create_kata
   end
   
   test 'dashboard when no avatars' do
@@ -58,12 +58,14 @@ class DashboardControllerTest < ControllerTestBase
     progress
   end
   
+=begin
   test 'progress when animal has only amber traffic-lights' do
     enter     # 0
     amber_test  # 1
     progress
   end
-  
+=end
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def dashboard(hash = {})
