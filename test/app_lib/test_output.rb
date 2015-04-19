@@ -5,6 +5,7 @@ require_relative './app_lib_test_base'
 class OutputTests < AppLibTestBase
 
   test 'all saved TestRunner outputs are correctly coloured red/amber/green' do
+    root = test_output_path
     disk[root].each_dir do |unit_test_framework|
       ['red','amber','green'].each do |colour|
         path = "#{root}/#{unit_test_framework}/#{colour}"
@@ -26,6 +27,7 @@ class OutputTests < AppLibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test 'all saved TestRunner outputs have red cases & amber cases & green cases' do
+    root = test_output_path    
     disk[root].each_dir do |unit_test_framework|
       ['red','amber','green'].each do |colour|
         path = "#{root}/#{unit_test_framework}/#{colour}"
@@ -38,7 +40,9 @@ class OutputTests < AppLibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test 'all dojo.languages have corresponding test_output/unit_test_framework' do
-    set_runner_class_name('RunnableTestRunner')
+    set_runner_class_name('StubTestRunner')
+    runner.stub_runnable(true)
+    root = test_output_path        
     count = 0    
     dojo.languages.each do |language|
       count += 1
@@ -51,19 +55,11 @@ class OutputTests < AppLibTestBase
     end
     assert count > 0, "no languages"
   end
-  
+    
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def root
+  def test_output_path
     File.expand_path(File.dirname(__FILE__)) + '/test_output'    
-  end
-  
-  def disk
-    @disk ||= Disk.new
-  end
-  
-  def dojo
-    @dojo ||= Dojo.new
-  end
-  
+  end  
+
 end
