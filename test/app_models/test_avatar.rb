@@ -93,6 +93,7 @@ class AvatarTests < ModelTestBase
   test 'after test() output-file is saved in sandbox ' +
        'and output is inserted into the visible_files argument' do
          
+    set_runner_class_name('StubTestRunner')         
     kata = make_kata
     avatar = kata.start_avatar
     code_filename = 'hiker.c'
@@ -110,7 +111,6 @@ class AvatarTests < ModelTestBase
       :deleted => [ ],
       :new => [ ]
     }
-    set_runner_class_name('StubTestRunner')
     dojo.runner.stub_output('hello')
     assert !visible_files.keys.include?('output')    
     avatar.test(delta, visible_files)
@@ -123,6 +123,7 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'save():delta[:changed] files are saved' do
+    set_runner_class_name('StubTestRunner')        
     kata = make_kata
     language = kata.language
     avatar = kata.start_avatar
@@ -146,7 +147,6 @@ class AvatarTests < ModelTestBase
       assert_equal language.visible_files[filename], sandbox.dir.read(filename)
       assert_not_equal language.visible_files[filename], visible_files[filename]
     end
-    set_runner_class_name('StubTestRunner')    
     dojo.runner.stub_output('')
     avatar.test(delta, visible_files)    
     delta[:changed].each do |filename|
@@ -157,6 +157,7 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'save():delta[:unchanged] files are not saved' do
+    set_runner_class_name('StubTestRunner')        
     kata = make_kata
     language = kata.language  
     avatar = kata.start_avatar
@@ -176,7 +177,6 @@ class AvatarTests < ModelTestBase
       :deleted => [ ],
       :new => [ ]
     }  
-    set_runner_class_name('StubTestRunner')    
     dojo.runner.stub_output('')
     avatar.test(delta, visible_files)
     delta[:unchanged].each do |filename|
@@ -187,6 +187,7 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'save():delta[:new] files are saved and git added' do
+    set_runner_class_name('StubTestRunner')            
     kata = make_kata
     avatar = kata.start_avatar
     language = kata.language
@@ -201,7 +202,6 @@ class AvatarTests < ModelTestBase
       :deleted => [ ],
       :new => [ new_filename ]
     }
-    set_runner_class_name('StubTestRunner')            
 
     assert !git_log_line_starts?("git add '#{new_filename}'")    
     delta[:new].each do |filename|
