@@ -12,36 +12,40 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
 
   include TestHelpers
   
-  def create_kata(language_name = 'Ruby, TestUnit',
-                  exercise_name = 'Yatzy')
-    get 'setup/save', language:language_name.split(',')[0].strip,
-                      test:language_name.split(',')[1].strip,
-                      exercise:exercise_name
+  # todo: make language_name and exercise_name default to random choices
+  def create_kata(language_name = 'Ruby, TestUnit', exercise_name = 'Yatzy')
+    parts = language_name.split(',')
+    params = { 
+      :language => parts[0].strip,
+      :test => parts[1].strip,
+      :exercise => exercise_name
+    }
+    get 'setup/save', params
     @id = json['id']
   end
     
   def enter
-    if @id.nil?
-      get 'dojo/enter', format: :json
-    else
-      get 'dojo/enter', format: :json, id:@id
-    end
+    params = { :format => :json }
+    params[:id] = @id if !@id.nil?
+    get 'dojo/enter', params
     @avatar_name = avatar_name
   end
     
-  def re_enter(json = :json)
-    get 'dojo/re_enter', format:json, id:@id
+  def re_enter
+    params = { :format => :json, :id => @id }
+    get 'dojo/re_enter', params
     assert_response :success    
   end
 
   def kata_edit
-    get 'kata/edit', id:@id, avatar:@avatar_name
+    params = { :id => @id, :avatar_name => @avatar_name }
+    get 'kata/edit', params
     assert_response :success
   end
     
-  def kata_run_tests(hash)
+  def kata_run_tests(params)
     defaults = { :format => :js, :id => @id, :avatar => @avatar_name }
-    post 'kata/run_tests', hash.merge(defaults)
+    post 'kata/run_tests', params.merge(defaults)
   end
 
   def make_file_hash(filename,content,incoming,outgoing)
