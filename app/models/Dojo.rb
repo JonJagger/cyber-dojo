@@ -5,67 +5,62 @@
 class Dojo
 
   def languages
-    #If I use @@languages I can do 'proper' stubbing...
-    @languages ||= Languages.new(self, external(root))
+    @languages ||= Languages.new(self, external_root)
   end
 
   def exercises
-    @exercises ||= Exercises.new(self, external(root))
+    @exercises ||= Exercises.new(self, external_root)
   end
 
   def katas
-    @katas ||= Katas.new(self, external(root))
+    @katas ||= Katas.new(self, external_root)
   end
 
   def runner
-    @runner ||= new_obj(external(class_name))
+    @runner ||= external_obj
   end
 
   def disk
-    @disk ||= new_obj(external(class_name))
+    @disk ||= external_obj
   end
 
   def git(*args)
-    @git ||= new_obj(external(class_name))
+    @git ||= external_obj
     return @git if args == []
     command = args.delete_at(1)
-    @git.send(command,*args)    
+    @git.send(command,*args)            
   end
 
   #one_self
   
 private
 
-  def new_obj(name)
-    Object.const_get(name).new  
+  def external_root
+    external(cd(name_of(caller) + '_ROOT'))
+  end
+  
+  def external_obj
+    external(cd(name_of(caller) + '_CLASS_NAME'))
   end
   
   def external(key)
-    result = ENV[key]
-    raise RuntimeError.new("ENV['#{key}'] not set") if result.nil?
+    result = $cyber_dojo[key]
+    raise RuntimeError.new("$cyber_dojo['#{key}'] not set") if result.nil?
     result
   end
   
-  def root
-    cd(name_of(caller[0]) + '_ROOT')
-  end
-  
-  def class_name
-    cd(name_of(caller[0]) + '_CLASS_NAME')
-  end
-  
-  def cd(key)
-    'CYBER_DOJO_' + key
+  def name_of(caller)
+    (caller[0] =~ /`([^']*)'/ and $1).upcase
   end
 
-  def name_of(caller)
-    (caller =~ /`([^']*)'/ and $1).upcase
+  def cd(key)
+    'CYBER_DOJO_' + key
   end
     
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# External paths/objects are set via environment variables
+# External paths/objects are set via the global $cyber_dojo hash
 # (see config/initializers/cyber_dojo.rb)
 #
 # The main reason for this arrangement is testability.

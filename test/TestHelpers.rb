@@ -3,24 +3,13 @@ require 'minitest/autorun'
 module TestHelpers # mixin
 
   def setup
-    check_test_environment_setup    
-  end
-
-  def teardown
-    restore_original_test_environment    
+    check_external_setup
+    store_external_setup
   end
 
   # - - - - - - - - - - - - - - - - - - -
-
-  def dojo; @dojo ||= Dojo.new; end  
-  def languages; dojo.languages; end
-  def exercises; dojo.exercises; end
-  def katas; dojo.katas; end
-  def disk; dojo.disk; end
-  def runner; dojo.runner; end
-
-  # - - - - - - - - - - - - - - - - - - -
-
+  # call these before accessing dojo
+  
   def get_languages_root; cd_get(languages_key); end
   def set_languages_root(value); cd_set(languages_key,value); end
   
@@ -40,6 +29,19 @@ module TestHelpers # mixin
   def set_git_class_name(value); cd_set(git_key,value); end
     
   # - - - - - - - - - - - - - - - - - - -
+  
+  def dojo
+    @dojo ||= make_dojo
+  end  
+
+  def languages; dojo.languages; end
+  def exercises; dojo.exercises; end  
+  def katas; dojo.katas; end  
+  def disk; dojo.disk; end  
+  def runner; dojo.runner; end
+
+  # - - - - - - - - - - - - - - - - - - -
+
     
   def assert_not_nil(o)
     assert !o.nil?
@@ -87,46 +89,69 @@ private
   
   # - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  def languages_key; 'LANGUAGES_ROOT'; end
-  def exercises_key; 'EXERCISES_ROOT'; end
-  def katas_key; 'KATAS_ROOT'; end
-  def disk_key; 'DISK'; end
-  def runner_key; 'RUNNER'; end
-  def git_key; 'GIT'; end
-    
+  def languages_key; root('LANGUAGES'); end
+  def exercises_key; root('EXERCISES'); end
+  def     katas_key; root(    'KATAS'); end   
+  
+  def   disk_key; class_name('DISK'); end
+  def runner_key; class_name('RUNNER'); end
+  def    git_key; class_name('GIT'); end
+
+  def root(key)
+    cd(key + '_ROOT')
+  end
+
+  def class_name(key)
+    cd(key + '_CLASS_NAME')
+  end
+
+  def cd(key)
+    'CYBER_DOJO_' + key
+  end
+  
   def env_vars
     [languages_key,exercises_key,katas_key,disk_key,runner_key,git_key]
   end
-  
-  def check_test_environment_setup
-    env_vars.each { |var| store(var) }
+    
+  # - - - - - - - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - - - - -
+    
+  def check_external_setup
+    env_vars.each { |var| 
+      raise RuntimeError.new("ENV['#{var}'] not set") if ENV[var].nil?
+    }
   end
   
-  def restore_original_test_environment    
-    env_vars.each { |var| restore(var) }
-  end
-   
-  def store(key)
-    raise RuntimeError.new("ENV['#{cd(key)}'] not set") if ENV[cd(key)].nil?
-    @test_env ||= { }       
-    @test_env[cd(key)] = cd_get(key)    
-  end
-  
-  def restore(key)
-    ENV[cd(key)] = @test_env[cd(key)]
-  end
-  
-  def cd(name)
-    name = name + '_CLASS_NAME' if !name.end_with? '_ROOT'
-    'CYBER_DOJO_' + name
+  def store_external_setup
+    @test_env = {}       
+    env_vars.each { |var| 
+      @test_env[var] = ENV[var]
+    }    
   end
 
-  def cd_set(key,value)
-    ENV[cd(key)] = value
-  end
+  # - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def cd_get(key)
-    ENV[cd(key)]
+    @test_env[key]
   end       
+  
+  def cd_set(key,value)
+    @test_env[key] = value
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - -
+      
+  def make_dojo
+    $cyber_dojo = {}
+    [languages_key,exercises_key,katas_key].each { |path_var|
+      var = @test_env[path_var]
+      $cyber_dojo[path_var] = var
+    }
+    [disk_key,runner_key,git_key].each { |class_name_var|
+      var = @test_env[class_name_var]
+      $cyber_dojo[class_name_var] = Object.const_get(var).new     
+    }
+    Dojo.new
+  end
   
 end
