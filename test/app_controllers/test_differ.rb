@@ -6,11 +6,11 @@ class DifferControllerTest < ControllerTestBase
 
   def setup
     super
-    reset_external(:runner, runner)
+    #reset_external(:runner, runner)
   end
 
   def teardown
-    reset_external(:runner, nil)
+    #reset_external(:runner, nil)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -40,6 +40,8 @@ class DifferControllerTest < ControllerTestBase
     assert_equal '<same>wibble</same>', diffs[index]['content'], info
     assert_equal '<same><ln>1</ln></same>', diffs[index]['line_numbers'], info
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'one line different in one file between successive tags' do
     @id = create_kata
@@ -73,6 +75,8 @@ class DifferControllerTest < ControllerTestBase
         diffs[index]['line_numbers'], info + "diffs[0]['line_numbers']"
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'tag -1 gives last traffic-light' do
     @id = create_kata
     enter     # 0
@@ -84,6 +88,8 @@ class DifferControllerTest < ControllerTestBase
     assert_equal 2, json['nowTag']
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'nextAvatar and prevAvatar are empty string for dojo with one avatar' do
     @id = create_kata
     enter     # 0
@@ -93,6 +99,8 @@ class DifferControllerTest < ControllerTestBase
     assert_equal "", json['prevAvatar']
     assert_equal "", json['nextAvatar']
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'nextAvatar and prevAvatar for dojo with two avatars' do
     @id = create_kata
@@ -117,8 +125,15 @@ class DifferControllerTest < ControllerTestBase
     end
   end
 
-  def differ(json = :json)
-    get 'differ/diff', format:json,id:@id,avatar:@avatar_name,was_tag:@was_tag,now_tag:@now_tag
+  def differ
+    params = {
+      :format => :json,
+      :id => @id,
+      :avatar => @avatar_name,
+      :was_tag => @was_tag,
+      :now_tag => @now_tag
+    }
+    get 'differ/diff', params
     assert_response :success
   end
   

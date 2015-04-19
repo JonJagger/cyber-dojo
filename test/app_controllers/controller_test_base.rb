@@ -92,6 +92,9 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
 private
 
   def random_language
+    # languages.each.collect....
+    # will cause TestRunner.runnable?() to be executed...
+    # which means I can't later Stub a different TestRunner...
     'Ruby, TestUnit'  # todo
   end
   

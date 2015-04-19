@@ -85,8 +85,11 @@ class DojoControllerTest < ControllerTestBase
     assert !full?
   end
   
-  def check_id(json = :json)
-    get 'dojo/check', format:json, id:@id
+private
+  
+  def check_id
+    params = { :format => :json, :id => @id }
+    get 'dojo/check', params
     assert_response :success    
   end
 
