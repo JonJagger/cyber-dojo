@@ -53,9 +53,6 @@ module TestHelpers # mixin
     
   # - - - - - - - - - - - - - - - - - - -
     
-  # TODO: duplication with
-  # test/app_controllers/controller_test_base/create_kata  
-
   include UniqueId
 
   def make_kata(id = unique_id, language_name = 'C-assert', exercise_name = 'Fizz_Buzz')
