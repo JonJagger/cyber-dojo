@@ -61,23 +61,21 @@ end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # External paths/objects are set via the global $cyber_dojo hash
+# which are in turn set from environment variables.
 # (see config/initializers/cyber_dojo.rb)
 #
 # The main reason for this arrangement is testability.
-# It allows me to do polymorphic testing, viz to run
+# For example, I can run controller tests by setting the
+# environment variables, then run the test which issue 
+# a GET/POST, let the call work its way through the rails stack, 
+# eventually reaching Dojo.rb where it picks up the externals as setup.
+# I cannot see how how I do this using Parameterize-From-Above
+# since I know of no way to 'tunnel' the parameters 'through'
+# the rails stack.
+#
+# It also allows me to do polymorphic testing, viz to run
 # the *same* test multiple times under different environments.
 # For example, I could run a test with all the externals mocked
 # out (a true unit test) and then run the same test again with
 # the true externals in place (an integration/system test).
-#
-# It also greatly expands the reach of the tests I can perform.
-# For example, I can run controller tests in the same
-# polymorphic testing manner: set the environment variables,
-# then run the test which issue a GET/POST, let the call
-# work its way through the rails stack, eventually getting
-# back to Dojo.rb where it picks up the externals as setup.
-#
-# I cannot see how how I do this using Parameterize From Above
-# since I know of no way to 'tunnel' the parameters 'through'
-# the rails stack.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

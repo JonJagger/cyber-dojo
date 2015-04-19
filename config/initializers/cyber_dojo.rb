@@ -1,7 +1,8 @@
 
-#TODO: need to load named classes Disk,Git,DockerTestRunner
-
 def setup_externals
+  root_path = File.absolute_path(File.dirname(__FILE__) + '/../../')
+  load "#{root_path}/lib/all.rb"
+
   path_vars = [
     'CYBER_DOJO_LANGUAGES_ROOT',
     'CYBER_DOJO_EXERCISES_ROOT',
