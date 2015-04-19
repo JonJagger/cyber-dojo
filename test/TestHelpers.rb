@@ -39,9 +39,9 @@ module TestHelpers # mixin
   def katas; dojo.katas; end  
   def disk; dojo.disk; end  
   def runner; dojo.runner; end
+  def git; dojo.git; end
 
   # - - - - - - - - - - - - - - - - - - -
-
     
   def assert_not_nil(o)
     assert !o.nil?
@@ -53,6 +53,11 @@ module TestHelpers # mixin
     
   # - - - - - - - - - - - - - - - - - - -
     
+  # TODO: duplication with
+  # test/app_controllers/controller_test_base/create_kata  
+
+  include UniqueId
+
   def make_kata(id = unique_id, language_name = 'C-assert', exercise_name = 'Fizz_Buzz')
     language = languages[language_name]
     exercise = exercises[exercise_name]

@@ -5,7 +5,6 @@ require_relative 'app_helpers_test_base'
 class TipTests < AppHelpersTestBase
 
   include TipHelper
-  include ExternalSetter
 
   test 'traffic light count tip' do
     params = {
@@ -30,19 +29,15 @@ class TipTests < AppHelpersTestBase
   #- - - - - - - - - - - - - - - - - -
 
   test 'traffic light tip' do
-
-    reset_external(:disk, DiskFake.new)
-
-    kata = Object.new
-    def kata.path; 'katas/12/3456789A/'; end
-
-    avatar = Avatar.new(kata,'hippo')
+    set_git_class_name('GitSpy')
+    kata = make_kata
+    lion = kata.start_avatar(['lion'])
+    
     was_tag = 1
     was_tag_colour = 'red'
     now_tag = 2
     now_tag_colour = 'green'
-
-    avatar.dir.write('increments.json',
+    lion.dir.write('increments.json',
       [
         { "colour" => was_tag_colour,
           "number" => was_tag,
@@ -55,7 +50,7 @@ class TipTests < AppHelpersTestBase
       ]
     )
 
-    git = GitSpy.new
+    #git = GitSpy.new
     options =
       "--ignore-space-at-eol " +
       "--find-copies-harder " +
@@ -76,7 +71,7 @@ class TipTests < AppHelpersTestBase
       " end"
     ].join("\n")
 
-    git.spy(avatar.path,'diff',options,stub)
+    git.spy(lion.path,'diff',options,stub)
 
     stub_manifest = JSON.unparse(
     { "hiker.rb" =>
@@ -89,19 +84,17 @@ class TipTests < AppHelpersTestBase
         ].join("\n")
     })
 
-    git.spy(avatar.path,'show',"#{now_tag}:manifest.json",stub_manifest)
-
-    reset_external(:git, git)
+    git.spy(lion.path,'show',"#{now_tag}:manifest.json",stub_manifest)
 
     expected =
-      "Click to review hippo's " +
+      "Click to review lion's " +
       "<span class='#{was_tag_colour}'>#{was_tag}</span> " +
       "&harr; " +
       "<span class='#{now_tag_colour}'>#{now_tag}</span> diff" +
       "<div>&bull; 1 added line</div>" +
       "<div>&bull; 1 deleted line</div>"
 
-    actual = traffic_light_tip_html(avatar,was_tag,now_tag)
+    actual = traffic_light_tip_html(lion,was_tag,now_tag)
 
     assert_equal expected, actual
   end
