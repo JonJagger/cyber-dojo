@@ -36,11 +36,11 @@ class Dojo
 private
 
   def external_root
-    external(cd(name_of(caller) + '_ROOT'))
+    external(name_of(caller) + '_ROOT')
   end
   
   def external_obj
-    external(cd(name_of(caller) + '_CLASS_NAME'))
+    external(name_of(caller) + '_CLASS_NAME')
   end
   
   def external(key)
@@ -50,11 +50,7 @@ private
   end
   
   def name_of(caller)
-    (caller[0] =~ /`([^']*)'/ and $1).upcase
-  end
-
-  def cd(key)
-    'CYBER_DOJO_' + key
+    'CYBER_DOJO_' + (caller[0] =~ /`([^']*)'/ and $1).upcase
   end
     
 end

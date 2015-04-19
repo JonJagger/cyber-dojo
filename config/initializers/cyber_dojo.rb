@@ -1,3 +1,4 @@
+# see comments in app/models/Dojo.rb
 
 def setup_externals
   root_path = File.absolute_path(File.dirname(__FILE__) + '/../../')

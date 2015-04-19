@@ -8,7 +8,7 @@ module TestHelpers # mixin
   end
 
   # - - - - - - - - - - - - - - - - - - -
-  # call these before accessing dojo
+  # call these *before* accessing dojo
   
   def get_languages_root; cd_get(languages_key); end
   def set_languages_root(value); cd_set(languages_key,value); end
