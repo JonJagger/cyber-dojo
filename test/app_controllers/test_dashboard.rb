@@ -36,7 +36,7 @@ class DashboardControllerTest < ControllerTestBase
     heartbeat
   end
 
-  test 'heartbeat when avatars with no traffic-lights' do
+  test 'heartbeat when avatars with no traffic-lights' do    
     3.times { enter; 2.times { any_test } }
     heartbeat
   end
@@ -58,13 +58,12 @@ class DashboardControllerTest < ControllerTestBase
     progress
   end
   
-=begin
-  test 'progress when animal has only amber traffic-lights' do
-    enter     # 0
-    amber_test  # 1
+  test 'progress when avatar has only amber traffic-lights' do
+    set_runner_class_name('StubTestRunner')
+    enter                     # 0
+    stub_test_output(:amber)  # 1
     progress
   end
-=end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

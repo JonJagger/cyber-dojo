@@ -12,8 +12,7 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
 
   include TestHelpers
   
-  # todo: make language_name and exercise_name default to random choices
-  def create_kata(language_name = 'Ruby, TestUnit', exercise_name = 'Yatzy')
+  def create_kata(language_name = random_language, exercise_name = random_exercise)
     parts = language_name.split(',')
     params = { 
       :language => parts[0].strip,
@@ -38,14 +37,14 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   end
 
   def kata_edit
-    params = { :id => @id, :avatar_name => @avatar_name }
+    params = { :id => @id, :avatar => @avatar_name }
     get 'kata/edit', params
     assert_response :success
   end
     
-  def kata_run_tests(params)
-    defaults = { :format => :js, :id => @id, :avatar => @avatar_name }
-    post 'kata/run_tests', params.merge(defaults)
+  def kata_run_tests(file_hash)
+    params = { :format => :js, :id => @id, :avatar => @avatar_name }
+    post 'kata/run_tests', params.merge(file_hash)
   end
 
   def make_file_hash(filename,content,incoming,outgoing)
@@ -59,7 +58,25 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     filename = 'cyber-dojo.sh'
     kata_run_tests make_file_hash(filename,'',234234,-4545645678)
   end
-    
+
+  def stub_test_output(rag)
+    # todo: refactor
+    #       copied from test/TestHelpers.rb stub_test_colours (private)
+    avatar = katas[@id].avatars[@avatar_name]
+    disk = dojo.disk
+    root = File.expand_path(File.dirname(__FILE__) + '/..') + '/app_lib/test_output'
+    assert [:red,:amber,:green].include? rag
+    path = "#{root}/#{avatar.kata.language.unit_test_framework}/#{rag}"
+    all_outputs = disk[path].each_file.collect{|filename| filename}
+    filename = all_outputs.shuffle[0]
+    output = disk[path].read(filename)
+    dojo.runner.stub_output(output)      
+    delta = { :changed => [], :new => [], :deleted => [] }
+    files = { }
+    rags,_,_ = avatar.test(delta,files)
+    assert_equal rag, rags[-1]['colour'].to_sym
+  end
+        
   def json
     ActiveSupport::JSON.decode @response.body
   end
@@ -70,6 +87,16 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   
   def avatar_name
     json['avatar_name']
+  end
+  
+private
+
+  def random_language
+    'Ruby, TestUnit'  # todo
+  end
+  
+  def random_exercise
+    'Yatzy' # todo
   end
   
 =begin
@@ -106,12 +133,6 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     kata.dir.write('manifest.json', { language:language_name,
                                       exercise:exercise_name })
   end
-
-  def amber_test
-    any_test
-  end
-
-private
 
   def root_path
     File.absolute_path(File.dirname(__FILE__) + '/../../')
