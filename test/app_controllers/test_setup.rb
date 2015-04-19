@@ -46,7 +46,8 @@ class SetupControllerTest < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
   
   def setup_show(n)
-    set_runner_class_name('UniversalStubTestRunner')
+    set_runner_class_name('StubTestRunner')
+    runner.stub_runnable(true)
     languages_names = languages.each.map{|language| language.display_name}.sort
     exercises_names = exercises.each.map{|exercise| exercise.name}.sort    
     language_name = languages_names.shuffle[0]
