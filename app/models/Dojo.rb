@@ -24,11 +24,8 @@ class Dojo
     @disk ||= external_obj
   end
 
-  def git(*args)
+  def git
     @git ||= external_obj
-    return @git if args == []
-    command = args.delete_at(1)
-    @git.send(command,*args)            
   end
 
   #one_self

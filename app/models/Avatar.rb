@@ -22,9 +22,9 @@ class Avatar
     dir.make
     git_setup
     write_manifest(kata.visible_files)
-    git(:add,manifest_filename)
+    git.add(path,manifest_filename)
     write_increments([ ])
-    git(:add,increments_filename)     
+    git.add(path,increments_filename)     
     sandbox.start
     git_commit(0)    
     #one_self.started(self)
@@ -66,7 +66,7 @@ class Avatar
 
   def diff(n,m)
     command = "--ignore-space-at-eol --find-copies-harder #{n} #{m} sandbox"
-    diff_lines = git(:diff,command)
+    diff_lines = git.diff(path,command)
     visible_files = tags[m].visible_files
     git_diff(diff_lines, visible_files)
   end
@@ -81,15 +81,15 @@ private
   include TimeNow
 
   def git_setup
-    git(:init, '--quiet')
-    git(:config, 'user.name ' + user_name)
-    git(:config, 'user.email ' + user_email)
+    git.init(path, '--quiet')
+    git.config(path, 'user.name ' + user_name)
+    git.config(path, 'user.email ' + user_email)
   end
 
   def git_commit(tag)
-    git(:commit, "-a -m '#{tag}' --quiet")
-    git(:gc, '--auto --quiet')
-    git(:tag, "-m '#{tag}' #{tag} HEAD")
+    git.commit(path, "-a -m '#{tag}' --quiet")
+    git.gc(path, '--auto --quiet')
+    git.tag(path, "-m '#{tag}' #{tag} HEAD")
   end
 
   def write_manifest(files)

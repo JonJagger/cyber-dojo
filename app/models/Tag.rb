@@ -9,7 +9,7 @@ class Tag
   end
 
   def visible_files
-    @manifest ||= JSON.parse(git(:show, "#{@n}:manifest.json"))
+    @manifest ||= JSON.parse(git.show(path, "#{@n}:manifest.json"))
   end
 
   def output
