@@ -18,5 +18,8 @@ end
 # Its effect is to pass calls (to externals) up
 # the child->parent chain all the way to the root
 # Dojo object where the externals are held.
+# It inserts the calling object's path into args
+# being careful to do this only once if there are
+# several parent connections. 
 # See also app/models/Dojo.rb
 #- - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -6,23 +6,40 @@ class GitTests < LibTestBase
 
   include ExternalParentChain
   
+  class StubDojo
+    def git(*args)
+      # duplication of Dojo.git = a bit of a smell
+      @git ||= Git.new
+      return @git if args == []
+      command = args.delete_at(1)
+      @git.send(command,*args)                  
+    end
+  end
+  
   def setup
-    super
-    `rm -rf #{tmp_dir}`
-    `mkdir #{tmp_dir}`
-    set_path tmp_dir
-    #@parent = self
+    `mkdir -p #{tmp_dir}`
+    `rm -rf #{tmp_dir}/.git`
+    # force ExternalParentChain.method_missing
+    undef :git if respond_to? :git
+    # ExternalParentChain requires path and @parent
+    set_path tmp_dir    
+    @parent = StubDojo.new
   end
 
   def path
     @path
   end
   
+  def set_path(value)
+    @path = value
+  end
+    
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   test '[git] with no arguments returns ' +
        'externally set :git object ' +
-       'which is used by other tests' do
-    object = git
-    assert_equal 'Git', object.class.name
+       'which can by Stub object' do
+    assert_equal 'Git', git.class.name
   end
 
   test 'all git commands raise if dir does not exist' do
@@ -33,7 +50,6 @@ class GitTests < LibTestBase
     end
   end
 
-=begin
   test '[git init] initializes an empty repository in the callers path' do
     message = ok { git(:init,'') }
     uk_git_init_message = message.start_with?('Initialised');
@@ -50,9 +66,9 @@ class GitTests < LibTestBase
   test 'git command with bad options returns log of command+message+status' do
     ok { git(:init, '') }
     log = fails { git(:add, 'not-there-file.txt') }
-    assert log.include?("git add 'not-there-file.txt")
-    assert log.include?('fatal: pathspec')
-    assert log.include?("$?.exitstatus=128")
+    assert log.include?("git add 'not-there-file.txt'"), log
+    assert log.include?('fatal: pathspec'), log
+    assert log.include?("$?.exitstatus=128"), log
   end
     
   test '[git add] succeeds silently' do
@@ -114,7 +130,6 @@ class GitTests < LibTestBase
     ok { git(:init, '') }
     silent_ok { git(:gc, '--auto --quiet') }
   end
-=end
 
   # - - - - - - - - - - - - - - - - - -
 
@@ -132,11 +147,7 @@ class GitTests < LibTestBase
   def fails(&block)
     message = block.call
     assert_not_equal 0, $?.exitstatus
-    message
-  end
-  
-  def set_path(value)
-    @path = value
+    git.log.inspect
   end
   
   def tmp_dir

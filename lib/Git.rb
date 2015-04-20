@@ -2,8 +2,7 @@
 class Git
 
   def method_missing(cmd,*args)
-    path = args[0]
-    options = args[1]
+    path,options = args[0],args[1]
     options = quoted(options) if ['add','rm'].include?(cmd.to_s)
     Dir.chdir(path) do
       git_cmd = stderr2stdout("git #{cmd} #{options}")
