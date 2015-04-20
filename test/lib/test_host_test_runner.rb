@@ -18,7 +18,7 @@ class HostTestRunnerTests < LibTestBase
 
   test 'when command times-out output includes unable-to-complete message' do
     sandbox = SandboxStub.new
-    command = 'sleep 10000'
+    command = 'sleep 10000' # 10 seconds
     max_duration = 1 # second
     output = nil
     capture_all do

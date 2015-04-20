@@ -1,8 +1,5 @@
 
 # Deprecated test runner that runs directly on the host server
-# (if Docker not installed and CYBERDOJO_USE_HOST is set)
-# $ export CYBERDOJO_USE_HOST=true
-#
 # No isolation/protection/security, nothing.
 # See DockerTestRunner.rb
 

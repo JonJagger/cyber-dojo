@@ -4,14 +4,14 @@ require_relative 'lib_test_base'
 
 class GitTests < LibTestBase
 
-  include ExternalGit
-  include ExternalSetter
+  include ExternalParentChain
   
   def setup
+    super
     `rm -rf #{tmp_dir}`
     `mkdir #{tmp_dir}`
-    reset_external(:git, Git.new);
     set_path tmp_dir
+    #@parent = self
   end
 
   def path
@@ -33,6 +33,7 @@ class GitTests < LibTestBase
     end
   end
 
+=begin
   test '[git init] initializes an empty repository in the callers path' do
     message = ok { git(:init,'') }
     uk_git_init_message = message.start_with?('Initialised');
@@ -113,7 +114,8 @@ class GitTests < LibTestBase
     ok { git(:init, '') }
     silent_ok { git(:gc, '--auto --quiet') }
   end
-  
+=end
+
   # - - - - - - - - - - - - - - - - - -
 
   def ok(&block)
