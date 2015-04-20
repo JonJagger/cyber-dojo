@@ -4,18 +4,8 @@ require_relative '../lib/all'
 require_relative '../app/lib/all'
 require_relative '../app/models/all'
 
-include ExternalSetter
-
 def create_dojo
-  me = File.expand_path(File.dirname(__FILE__))
-  root_folder = File.expand_path('..', me) + '/'  
-  
-  set_external(:disk,   Disk.new)
-  set_external(:git,    Git.new)
-  set_external(:runner, DockerTestRunner.new)
-  set_external(:exercises_path, root_folder + 'exercises/')
-  set_external(:languages_path, root_folder + 'languages/')
-  set_external(:katas_path,     root_folder + 'katas/')
+  load '../config/initializers/cyber_dojo.rb'
   Dojo.new
 end
 
