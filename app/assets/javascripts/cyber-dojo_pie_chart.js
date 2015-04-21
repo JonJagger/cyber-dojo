@@ -25,7 +25,7 @@ var cyberDojo = (function(cd, $) {
 
       var data = [
           { value:      redCount, color: '#F00' },
-          { value:    amberCount, color: '#FC3' },
+          { value:    amberCount, color: '#FF0' },
           { value:    greenCount, color: '#0F0' },
           { value: timedOutCount, color: 'darkGray' }
       ];
