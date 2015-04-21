@@ -1,5 +1,21 @@
 
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+make ExternalParentChain do this
+  def dir;    external_disk[path]; end
+  def git;    external_git[path]; end
+  def runner; external_runner[path]; end
+viz duplicate the structure of Disk->Dir for 
+Git and the Runner. This will allow the git object to have 
+its path. Is it possible that the root objects could all be 
+fixed and the type of the [path] child objects could be 
+controlled via the ENV[key] setting?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DockerTestRunner has this 
+    `rm #{cidfile}`
+    `docker stop #{pid}`
+    `docker rm #{pid}`
+how do I put all of these into a single shell invocation?
+vi what is the shell command separator? semi-colon?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 When you resize the edit textarea you cannot (manually) resize the linenumbers
 textarea to its left. You used to be able to do this. Why is the linenumbers

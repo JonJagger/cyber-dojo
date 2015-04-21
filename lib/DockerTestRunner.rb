@@ -1,6 +1,7 @@
 
 # test runner providing isolation/protection/security
 # via Docker containers https://www.docker.io/
+# comments at end of file
 
 require_relative 'TestRunner'
 require 'tempfile' # Dir::Tmpname
@@ -61,12 +62,11 @@ private
   include Cleaner
 
   def timeout(command,after)
-    # I put a timeout on the outer docker-run command and not
-    # on the inner bash -c command. The reason for this is
-    # security. If it was on the inner bash -c command it seems
-    # possible that a determined attacker could kill the
-    # timeout but not the task that was being timed and thus
-    # acquire unlimited time to run any command.
+    # I put a timeout on the outer docker-run command and not on the
+    # inner bash -c command. The reason for this is security. If it 
+    # was on the inner bash -c command a determined attacker might
+    # kill the timeout but not the timed-task and thus acquire 
+    # unlimited time to run any command.
     "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
   end
 
