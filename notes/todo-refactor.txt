@@ -1,5 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Now all the output_parser tests have been refactored I should be able to rename
+parse_X to colour_of_X
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 make ExternalParentChain do this
   def dir; external_disk[self]; end
   def git; external_git[self]; end
