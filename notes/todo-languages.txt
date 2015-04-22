@@ -1,6 +1,7 @@
 
 install Rust?
 install Visual.BASIC? Chris Oldwood?
+install RPG for Chris Oldwood.
 install C++14 + boost
 install TypeScript?
   http://doc.rust-lang.org/book/installing-rust.html
