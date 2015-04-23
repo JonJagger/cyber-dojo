@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# store the current git user.name
+# store the current git user.email
+
 cat test*.rb > _temp_all_tests.rb
 ruby _temp_all_tests.rb
 rm _temp_all_tests.rb
+
+# verify the git user.name has not changed
+# verify the git user.email has not changed

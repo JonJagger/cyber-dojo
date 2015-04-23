@@ -51,7 +51,7 @@ class GitTests < LibTestBase
 
   test '[git config] succeeds silently' do
     ok { git.init(path, '') }
-    silent_ok { git.config(path, 'user.name Fred Flintsone') }
+    silent_ok { git.config(path, 'user.name "Fred Flintsone"') }
   end
 
   test 'git command with bad options returns log of command+message+status' do
