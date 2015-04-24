@@ -1,4 +1,5 @@
 
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Now all the output_parser tests have been refactored I should be able to rename
 parse_X to colour_of_X
@@ -31,9 +32,10 @@ put all of these into a single shell invocation
       "docker stop #{pid}",
       "docker rm #{pid}"
     ]
-    command_separator = ';'
+    command_separator = ' && '
     `#{commands.join(command_separator)}`
     
+Use of && to ensure command runs only if previous command succeeds.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 When you resize the edit textarea you cannot (manually) resize the linenumbers
 textarea to its left. You used to be able to do this. Why is the linenumbers

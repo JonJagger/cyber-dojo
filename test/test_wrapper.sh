@@ -1,24 +1,12 @@
-#!/bin/bash
-
-GIT_USER_NAME_BEFORE=`git config user.name`
-
-echo $1
-cat $1
+# WORK IN PROGRESS...
 
 #rm -rf ../../coverage/.resultset.json
 
-#../testrb . 2>&1 | tee log.tmp
-# WHICH EXECUTES THIS...
-
-#cat test*.rb > _temp_all_tests.rb
-# NOW HAVE TO TAIL IT
-#ruby _temp_all_tests.rb
-#rm _temp_all_tests.rb
-
-
-#cp -R ../../coverage/* .
-#ruby ../print_coverage_percent.rb index.html $1 | tee -a log.tmp
-
+GIT_USER_NAME_BEFORE=`git config user.name`
+ 
+cat $@ | tail -n +2 > temp.xx
+ruby temp.xx 2>&1 | tee log.tmp
+rm temp.xx
 
 GIT_USER_NAME_AFTER=`git config user.name`
 
@@ -35,3 +23,7 @@ if [ "$GIT_USER_NAME_BEFORE" != "$GIT_USER_NAME_AFTER" ]; then
   echo "  $GIT_USER_NAME_AFTER"
   echo "--------------------------------------"
 fi
+
+#cp -R ../../coverage/* .
+#ruby ../print_coverage_percent.rb index.html $1 | tee -a log.tmp
+ 

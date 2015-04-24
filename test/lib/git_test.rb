@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ../test_wrapper.sh 
 
 require_relative 'lib_test_base'
 
@@ -13,9 +13,11 @@ class GitTests < LibTestBase
   end
   
   def setup
-    `mkdir -p #{tmp_dir}`
-    `rm -rf #{tmp_dir}/.git`
+    mkdir = "mkdir -p #{tmp_dir}"
+    rmgit = "rm -rf #{tmp_dir}/.git"
+    `#{mkdir} && #{rmgit}`
     # force ExternalParentChain.method_missing
+    # (LibTestBase has git helper method)
     undef :git if respond_to? :git
     # ExternalParentChain requires @parent
     set_path tmp_dir    
@@ -25,12 +27,12 @@ class GitTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test '[git] with no arguments returns ' +
-       'externally set :git object ' +
-       'which can by Stub object' do
+       'externally the set :git object ' +
+       'which can be Stub object' do
     assert_equal 'Git', git.class.name
   end
 
-  test 'all git commands raise if dir does not exist' do
+  test 'all git commands raise exception if path names a dir that does not exist' do
     set_path 'bad_dir'
     [:init,:config,:add,:rm,:commit,:gc,:tag,:show,:diff].each do |cmd|
       error = assert_raises(Errno::ENOENT) { 
