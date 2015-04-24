@@ -1,4 +1,4 @@
-#!/usr/bin/env ../test_wrapper.sh 
+#!/usr/bin/env ../test_wrapper.sh lib
 
 require_relative 'lib_test_base'
 
