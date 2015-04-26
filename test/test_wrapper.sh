@@ -5,7 +5,7 @@
 #     in a test (for an animal) and the main git repo of cyber-dojo!
 # 2. collect and processes coverage stats
 # 
-# Programmed for these three cases...
+# Programmed for three cases...
 # 1. running a single test (you must in the test's folder)
 #    $ cd /var/www/cyber-dojo/test/lib
 #    $ ./git_test.rb
@@ -23,11 +23,10 @@ rm -rf ../../coverage/.resultset.json
 # Ok. Something odd here. Ruby (on my mac book) is *not* ignoring
 # the first shebang line in test/*_test.rb files.
 # So I'm stripping the first shebang line using tail. Yeuch!
-# 
-# filename/line-numbers reported in failing test will only be 
-# helpful for running single tests.
+# In the diagnostic filename will be wrong and line-number
+# will be off by one. 
 
-cat $@ | tail -n +2 > temp.xx
+cat ${*:2} | tail -n +2 > temp.xx
 ruby temp.xx 2>&1 | tee log.tmp
 
 cp -R ../../coverage/* .
