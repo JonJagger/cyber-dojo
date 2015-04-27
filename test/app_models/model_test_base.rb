@@ -9,6 +9,7 @@ class ModelTestBase < TestBase
 
   def setup
     super    
+    set_runner_class_name('DummyTestRunner')        
     if get_disk_class_name === 'Disk'
       `rm -rf #{get_katas_root}*`
     end

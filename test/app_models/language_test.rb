@@ -7,7 +7,6 @@ class LanguageTests < ModelTestBase
 
   def setup
     super
-    set_runner_class_name('DummyTestRunner')
     set_disk_class_name('DiskFake')
   end
   

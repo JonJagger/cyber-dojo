@@ -4,11 +4,6 @@ require_relative 'model_test_base'
 
 class AvatarTests < ModelTestBase
 
-  def setup
-    super
-    set_runner_class_name('DummyTestRunner')
-  end
-
   include TimeNow
 
   test 'path(avatar)' do

@@ -6,7 +6,6 @@ class KataTests < ModelTestBase
 
   def setup
     super
-    set_runner_class_name('DummyTestRunner')
     assert_equal 'Disk', get_disk_class_name
     @id = unique_id
     @kata = katas[@id]

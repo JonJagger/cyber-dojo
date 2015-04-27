@@ -4,11 +4,6 @@ require_relative 'model_test_base'
 
 class AvatarsTests < ModelTestBase
 
-  def setup
-    super
-    set_runner_class_name('DummyTestRunner')
-  end
-
   test 'there are 16 avatar names' do
     assert_equal 16, Avatars.names.length
   end

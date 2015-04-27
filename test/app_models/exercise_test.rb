@@ -4,11 +4,6 @@ require_relative 'model_test_base'
 
 class ExerciseTests < ModelTestBase
 
-  def setup
-    super
-    set_runner_class_name('DummyTestRunner')
-  end
-
   test 'path(exercise)' do
     exercise = exercises['Fizz_Buzz']
     assert exercise.path.match(exercise.name)

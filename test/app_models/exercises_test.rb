@@ -7,7 +7,6 @@ class ExercisesTests < ModelTestBase
   def setup
     super
     assert_equal get_disk_class_name, 'Disk'
-    set_runner_class_name('DummyTestRunner')
   end
   
   test 'path is set from ENV' do

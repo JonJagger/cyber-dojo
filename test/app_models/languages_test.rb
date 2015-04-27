@@ -6,7 +6,6 @@ class LanguagesTests < ModelTestBase
 
   def setup
     super
-    set_runner_class_name('DummyTestRunner')
     assert_equal 'Disk', get_disk_class_name
   end
   

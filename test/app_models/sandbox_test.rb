@@ -4,11 +4,6 @@ require_relative 'model_test_base'
 
 class SandboxTests < ModelTestBase
 
-  def setup
-    super
-    set_runner_class_name('DummyTestRunner')    
-  end
-
   test 'path(avatar)' do
     kata = make_kata
     avatar = kata.start_avatar(Avatars.names)
