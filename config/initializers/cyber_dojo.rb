@@ -1,5 +1,8 @@
 # see comments in app/models/Dojo.rb
 
+root_path = File.absolute_path(File.dirname(__FILE__) + '/../../')
+load "#{root_path}/all.rb"
+
 def setup_externals
   root_path = File.absolute_path(File.dirname(__FILE__) + '/../../')
   load "#{root_path}/lib/all.rb"

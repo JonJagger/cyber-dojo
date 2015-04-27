@@ -16,7 +16,8 @@ class SetupController < ApplicationController
     language = languages[params['language'] + '-' + params['test']]
     exercise = exercises[params['exercise']]
     kata = katas.create_kata(language, exercise)
-    #one_self.created(kata.id, latitude, longtitude)
+    # trying to diagnose OneSelf data not getting to Ed...
+    OneSelf.new.created(kata.id, latitude, longtitude)
     render json: { id: kata.id.to_s }
   end
 
