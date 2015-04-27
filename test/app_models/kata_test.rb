@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ../test_wrapper.sh app/models
 
 require_relative 'model_test_base'
 
@@ -6,6 +6,7 @@ class KataTests < ModelTestBase
 
   def setup
     super
+    set_runner_class_name('DummyTestRunner')
     assert_equal 'Disk', get_disk_class_name
     @id = unique_id
     @kata = katas[@id]

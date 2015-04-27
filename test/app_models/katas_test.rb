@@ -1,8 +1,13 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ../test_wrapper.sh app/models
 
 require_relative 'model_test_base'
 
 class KatasTests < ModelTestBase
+
+  def setup
+    super
+    set_runner_class_name('DummyTestRunner')
+  end
 
   test 'path is set from ENV' do
     path = 'end_with_slash/'
