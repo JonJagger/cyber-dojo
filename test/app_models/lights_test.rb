@@ -1,9 +1,14 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ../test_wrapper.sh app/models
 
 require_relative 'model_test_base'
 
 class LightsTests < ModelTestBase
 
+  def setup
+    super
+    set_runner_class_name('DummyTestRunner')    
+  end
+  
   test 'lights initially empty' do
     kata = make_kata
     lights = kata.start_avatar.lights

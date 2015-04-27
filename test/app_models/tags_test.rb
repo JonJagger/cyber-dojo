@@ -1,8 +1,13 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ../test_wrapper.sh app/models
 
 require_relative 'model_test_base'
 
 class TagsTest < ModelTestBase
+
+  def setup
+    super
+    set_runner_class_name('DummyTestRunner')    
+  end
 
   test 'tag zero exists after avatar is started ' +
        'and before first [test] is run ' +

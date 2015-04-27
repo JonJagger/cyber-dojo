@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ../test_wrapper.sh app/models
 
 require_relative 'model_test_base'
 
