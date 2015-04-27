@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ../test_wrapper.sh app/helpers
 
 require_relative 'app_helpers_test_base'
 
@@ -6,6 +6,11 @@ class TipTests < AppHelpersTestBase
 
   include TipHelper
 
+  def setup
+    super
+    set_runner_class_name('DummyTestRunner')
+  end
+  
   test 'traffic light count tip' do
     params = {
       'avatar' => 'lion',
