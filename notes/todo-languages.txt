@@ -1,4 +1,5 @@
 
+install clang (C,C++,Objective-C)  sudo apt-get install clang-3.6
 install Rust?
 install Visual.BASIC? Chris Oldwood?
 install RPG for Chris Oldwood.
