@@ -1,19 +1,14 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ../test_wrapper.sh app/helpers
 
 require_relative 'app_helpers_test_base'
 
 class PieChartTests < AppHelpersTestBase
 
   include PieChartHelper
-  include ExternalSetter
 
   test 'pie-chart from avatar.lights' do
-    reset_external(:disk, DiskFake.new)
-    reset_external(:git, Object.new)
-    reset_external(:runner, Object.new)
-    reset_external(:katas_path, 'katas/')
-    @dojo = Dojo.new
-    kata = @dojo.katas['123456789A']
+    set_runner_class_name('DummyTestRunner')
+    kata = katas['123456789A']
     lion = kata.avatars['lion']
     lion.dir.write('increments.json', [
       {
@@ -45,7 +40,7 @@ class PieChartTests < AppHelpersTestBase
 
     assert_equal expected, actual
   end
-
+  
   #- - - - - - - - - - - - - - - - - - - -
 
   test 'pie-chart from traffic-lights' do
