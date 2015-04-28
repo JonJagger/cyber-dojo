@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ../test_wrapper.sh app/lib
 
 require_relative './app_lib_test_base'
 
