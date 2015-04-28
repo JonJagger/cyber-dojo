@@ -1,4 +1,8 @@
 
+#require 'net/http'
+#require 'uri'
+#require 'json'
+
 class OneSelf
     
   #needs access to disk...
@@ -96,15 +100,15 @@ private
   end
   
   def stream_id
-    'PUXUNZEGWRZUWYRG'
+    'GSYZNQSYANLMWEEH'
   end
   
   def read_token
-    '62713acce800c7bcd75829d16a8aa3e2fb9f2d2daeb0'
+    '474f621260b2f9e5b6f6025cd5eea836b362b0bf1bfa'
   end
   
   def write_token
-    'c705e320fd8b9591d27d9579f78fad6ab3a7c0f86078'
+    'ddbc8384eaf4b6f0e70d66b606ccbf7ad4bb22bfe113'
   end
   
 end
