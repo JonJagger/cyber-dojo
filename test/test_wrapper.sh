@@ -16,6 +16,8 @@
 #   $ cd /var/www/cyber-dojo/test
 #   $ ./run_all.sh
 
+echo 'test_wrapper.sh....'
+
 GIT_USER_NAME_BEFORE=`git config user.name`
 
 rm -rf ../../coverage/.resultset.json

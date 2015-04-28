@@ -1,24 +1,8 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ../test_wrapper.sh app/lib
 
 require_relative './app_lib_test_base'
 
 class TdGapperTests < AppLibTestBase
-
-  def year; 2011; end
-  def month;   5; end
-  def day;    18; end
-  def hour;    2; end
-
-  def start; Time.mktime(*[year,month,day,hour,30,0]); end
-
-  def max_seconds_uncollapsed; 30 * 60; end
-  def seconds_per_td; 20; end
-
-  def make_light(min,sec)
-    Light.new(avatar=nil, { 'time' => [year,month,day,hour,min,sec] })
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "number" do
     # 0 : 2:30:00 - 2:30:20
@@ -164,6 +148,29 @@ class TdGapperTests < AppLibTestBase
     now = [year,month,day+1,hour,32,23] #td 4327
     actual = gapper.fully_gapped(all_lights, now)
     assert_equal expected, actual
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def year; 2011; end
+  def month;   5; end
+  def day;    18; end
+  def hour;    2; end
+
+  def start
+    Time.mktime(*[year,month,day,hour,30,0])
+  end
+
+  def max_seconds_uncollapsed
+    30 * 60
+  end
+  
+  def seconds_per_td
+    20
+  end
+
+  def make_light(min,sec)
+    Light.new(avatar=nil, { 'time' => [year,month,day,hour,min,sec] })
   end
 
 end
