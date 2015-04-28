@@ -14,15 +14,11 @@ class OneSelf
       'location' => { 'lat' => latitude, 'long' => longtitude },
       'properties' => { 'dojoId' => dojo_id }
     }
-    p "data=#{data}"
     url = URI.parse("#{streams_url}/#{stream_id}/events")
-    p "url=#{url}"
-    p "json_header=#{json_header(write_token)}"
     request = Net::HTTP::Post.new(url.path, json_header(write_token))
     request.body = data.to_json
     http = Net::HTTP.new(url.host)
     response = http.request(request) 
-    p "response=#{response}"
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
