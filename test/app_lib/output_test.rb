@@ -1,9 +1,24 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ../test_wrapper.sh app/lib
 
 require_relative './app_lib_test_base'
 
 class OutputTests < AppLibTestBase
 
+  def setup
+    super
+    set_runner_class_name('StubTestRunner')
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  
+  test 'terminated by the server after n seconds gives timed_out colour ' do
+    [1,5,10].each do |n|
+      assert_equal 'timed_out', OutputParser::colour('ignored', terminated(n))
+    end
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  
   test 'all saved TestRunner outputs are correctly coloured red/amber/green' do
     root = test_output_path
     disk[root].each_dir do |unit_test_framework|
@@ -40,7 +55,7 @@ class OutputTests < AppLibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test 'all dojo.languages have corresponding test_output/unit_test_framework' do
-    set_runner_class_name('StubTestRunner')
+    set_languages_root('/var/www/cyber-dojo/languages')    
     runner.stub_runnable(true)
     root = test_output_path        
     count = 0    
@@ -58,8 +73,27 @@ class OutputTests < AppLibTestBase
     
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  def terminated(n)
+    "Unable to complete the test in #{n} seconds"
+  end
+
   def test_output_path
     File.expand_path(File.dirname(__FILE__)) + '/test_output'    
   end  
 
 end
+
+# If a player creates a cyberdojo.sh file which runs two
+# test files then it's possible the first one will pass and
+# the second one will have a failure.
+# The tests could be improved...
+# Each language+test_framework test file will be data-driven
+# an array of green output
+# an array of red output, and
+# an array of amber output.
+# Then the tests should verify that each has its correct
+# colour individually, and also that
+# any amber + any red => amber
+# any amber + any green => amber
+# any green + any red => red
+

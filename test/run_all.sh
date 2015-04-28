@@ -4,7 +4,7 @@
 modules=( 
   lib 
   app_helpers 
-  # app_lib 
+  app_lib 
   app_models 
   # languages
   # integration 
@@ -23,4 +23,4 @@ done
 echo
 echo
 
-./print_summary.rb | tee coverage.txt
+#./print_summary.rb | tee coverage.txt

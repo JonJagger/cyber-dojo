@@ -1,3 +1,3 @@
 #!/bin/bash
 
-../run_one.sh app/lib
+../test_wrapper.sh app/lib *_test.rb
