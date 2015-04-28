@@ -1,6 +1,7 @@
 # Runner that does nothing.
 
 class DummyTestRunner
+  include TestRunner
 
   def runnable?(language)
     false

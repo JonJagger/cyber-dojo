@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ../test_wrapper.sh lib
 
 require_relative 'lib_test_base'
 
@@ -12,7 +12,8 @@ class DummyTestRunnerTests < LibTestBase
 
   test 'run tells you how to use HostTestRunner' do
     output = DummyTestRunner.new.run(nil,nil,nil)
-    assert output.include?('$ export CYBERDOJO_USE_HOST=true')
+    assert output.include?('to use DockerTestRunner')
+    assert output.include?('$ export CYBERDOJO_RUNNER_CLASS_NAME=DockerTestRunner')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
