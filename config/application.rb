@@ -59,6 +59,15 @@ module CyberDojo
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    config.before_configuration do
+      ENV['CYBER_DOJO_LANGUAGES_ROOT'] ||= '/var/www/cyber-dojo/languages'
+      ENV['CYBER_DOJO_EXERCISES_ROOT'] ||= '/var/www/cyber-dojo/exercises'
+      ENV['CYBER_DOJO_KATAS_ROOT']     ||= '/var/www/cyber-dojo/katas'
+      ENV['CYBER_DOJO_RUNNER_CLASS_NAME'] ||= 'DockerTestRunner'
+      ENV['CYBER_DOJO_DISK_CLASS_NAME']   ||= 'Disk'
+      ENV['CYBER_DOJO_GIT_CLASS_NAME']    ||= 'Git'
+    end
+
     config.colorize_logging = true
 
     config.exceptions_app = lambda do |env|
