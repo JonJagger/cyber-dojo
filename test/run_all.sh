@@ -1,6 +1,4 @@
 
-#export CYBER_DOJO_USE_HOST=true
-
 modules=( 
   lib 
   app_helpers 

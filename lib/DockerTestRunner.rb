@@ -44,9 +44,7 @@ class DockerTestRunner
     exit_status = $?.exitstatus
 
     pid = `cat #{cidfile}`
-    `rm #{cidfile}`
-    `docker stop #{pid}`
-    `docker rm #{pid}`
+    `rm #{cidfile} ; docker stop #{pid} ; docker rm #{pid}`
 
     exit_status != fatal_error(kill) ?
         limited(clean(output),50*1024) :

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-../test_wrapper.sh app/controllers dojo.rb setup.rb
+../test_wrapper.sh app/controllers *_test.rb

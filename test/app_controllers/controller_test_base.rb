@@ -1,5 +1,6 @@
 
 ENV['RAILS_ENV'] = 'test'
+ENV['CYBER_DOJO_RUNNER_CLASS_NAME'] = 'DummyTestRunner'
 
 root = '../..'
 
