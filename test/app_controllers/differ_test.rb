@@ -1,22 +1,11 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ../test_wrapper.sh app/controllers
 
 require_relative 'controller_test_base'
 
 class DifferControllerTest < ControllerTestBase
 
-  def setup
-    super
-    #reset_external(:runner, runner)
-  end
-
-  def teardown
-    #reset_external(:runner, nil)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'no lines different in any files between successive tags' do
-    @id = create_kata('g++4.8.1-assert')
+    @id = create_kata('C++, assert')
     enter # 0
     filename = 'hiker.cpp'
     kata_run_tests make_file_hash(filename,'#include <badname>',234234, -4545645678) #1
@@ -89,7 +78,7 @@ class DifferControllerTest < ControllerTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  
   test 'nextAvatar and prevAvatar are empty string for dojo with one avatar' do
     @id = create_kata
     enter     # 0
@@ -114,16 +103,8 @@ class DifferControllerTest < ControllerTestBase
     assert_equal secondAvatar, json['prevAvatar']
     assert_equal secondAvatar, json['nextAvatar']
   end
-
+  
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def runner
-    if Docker.installed?
-      DockerTestRunner.new
-    else
-      HostTestRunner.new
-    end
-  end
 
   def differ
     params = {
