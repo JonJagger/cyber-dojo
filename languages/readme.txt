@@ -13,3 +13,11 @@ being embedded inside the docker container. This is partly
 historical since that was the way I did it pre-docker but
 it fits well with the readonly docker volume-mounting feature.
 
+New docker images are pushed to the cyberdojo registry
+https://registry.hub.docker.com/repos/cyberdojo/
+as follows
+$ docker push cyberdojo/NAME
+username: cyberdojo
+password: ....
+email: jon@jaggersoft.com
+
