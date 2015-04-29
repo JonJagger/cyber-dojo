@@ -1,13 +1,17 @@
 
 $text-color: darken($lighter-color, 10%);
 
-#home-page {
+#globe {
+  border: 0;
+}
 
+#home-page {
+  
   font-size: 1.15em;
 
   margin-top: 25px;
   margin-left: 0px;
-
+  
   #cyber-dojo {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     font-size: 7.4em;
