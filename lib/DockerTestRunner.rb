@@ -12,7 +12,7 @@ class DockerTestRunner
   def initialize
     raise RuntimeError.new("Docker not installed") if !installed?    
     command = stderr2stdout('docker images')
-    @image_names = image_names(`#{command}`)
+    @image_names = DockerTestRunner.image_names(`#{command}`)
   end
 
   def runnable?(language)
@@ -53,7 +53,7 @@ class DockerTestRunner
         didnt_complete(max_seconds)
   end
 
-  def image_names(output)
+  def self.image_names(output)
     output.split("\n")[1..-1].collect{|line| line.split[0]}.sort.uniq
   end
 

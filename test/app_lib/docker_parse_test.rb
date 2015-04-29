@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ../test_wrapper.sh app/lib
 
 require_relative './app_lib_test_base'
 
@@ -21,7 +21,7 @@ class DockerParseTests < AppLibTestBase
       'cyberdojo/language_gcc-4.8.1_assert',
       'cyberdojo/language_gpp-4.8.1_assert',
       'ubuntu'
-    ].sort, DockerTestRunner.new.image_names(output)
+    ].sort, DockerTestRunner.image_names(output)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -29,7 +29,7 @@ class DockerParseTests < AppLibTestBase
   test 'parse `docker images` when none installed' do
     output =
       'REPOSITORY                            TAG                 IMAGE ID            CREATED             VIRTUAL SIZE'
-    assert_equal [ ], DockerTestRunner.new.image_names(output)
+    assert_equal [ ], DockerTestRunner.image_names(output)
   end
 
 end
