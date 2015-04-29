@@ -1,0 +1,8 @@
+g++ -x c++ -I. -std=c++11 -Wall -Wextra -Werror -DBOOST_TEST_DYN_LINK -c -o hiker.compiled_hpp hiker.hpp
+g++ -I. -std=c++11 -Wall -Wextra -Werror -DBOOST_TEST_DYN_LINK -O hiker.cpp hiker.tests.cpp -lboost_unit_test_framework -o test
+./test
+Running 1 test case...
+hiker.tests.cpp(11): fatal error in "Life_the_universe_and_everything": critical check 42 == answer() failed [42 != 54]
+
+*** 1 failure detected in test suite "HikerTest"
+make: *** [test] Error 201

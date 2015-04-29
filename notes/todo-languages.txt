@@ -1,11 +1,14 @@
 
+install clang (C,C++,Objective-C)  sudo apt-get install clang-3.6
+install Rust?
+install Visual.BASIC? Chris Oldwood?
+install RPG for Chris Oldwood.
 install C++14 + boost
 install TypeScript?
-install Rust?
-install Dart?
+  http://doc.rust-lang.org/book/installing-rust.html
+  http://doc.rust-lang.org/book/testing.html
 install APL?
 install Swift?
-install Visual.BASIC? Chris Oldwood?
 install J?
 install Java-TestNG?
 install Java-EasyMock

@@ -8,7 +8,7 @@ class ForkerControllerTest < ControllerTestBase
        'then fork fails ' +
        'and the reason given is dojo' do
     stub_dojo
-    fork('bad','hippo',1)
+    fork('bad', 'hippo', 1)
     assert !forked?
     assert_reason_is('dojo')
     assert_nil forked_kata_id
@@ -174,7 +174,7 @@ class ForkerControllerTest < ControllerTestBase
   end
 
   #- - - - - - - - - - - - - - - - - -
-
+  
   def stub_setup
     stub_dojo
     @id = '1234512345'
@@ -195,13 +195,13 @@ class ForkerControllerTest < ControllerTestBase
     manifest = JSON.unparse(@visible_files)
     @tag = 2
     filename = 'manifest.json'
-    git.spy(@avatar.dir.path,'show',"#{@tag}:#{filename}",manifest)
+    git.spy(@avatar.dir.path, 'show', "#{@tag}:#{filename}",manifest)
   end
 
-  def fork(id,avatar,tag,format = :json)
-    get 'forker/fork', format:format,id:id,avatar:avatar,tag:tag
+  def fork(id, avatar, tag,format = :json)
+    get 'forker/fork', format:format, id:id, avatar:avatar, tag:tag
   end
-
+  
   def stub_traffic_lights(avatar, lights)
     avatar.dir.write('increments.json', lights)
   end

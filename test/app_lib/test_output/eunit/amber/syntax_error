@@ -1,0 +1,2 @@
+./untitled_tests.erl:5: function ddd/1 undefined
+make: *** [untitled_tests.beam] Error 1

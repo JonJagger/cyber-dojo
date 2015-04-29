@@ -1,0 +1,12 @@
+JUnit version 4.11
+..E
+Time: 0.884
+There was 1 failure:
+1) anotherIsItFortyTwo(UntitledTest)
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:86)
+
+	at org.junit.runner.JUnitCore.main(JUnitCore.java:40)
+
+FAILURES!!!
+Tests run: 2,  Failures: 1

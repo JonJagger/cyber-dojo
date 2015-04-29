@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "test_untitled.py", line 1, in <module>
+    import untitled
+  File "/Users/jonjagger/Desktop/Repos/cyberdojo/sandboxes/AB/2ED984F2/hippo/untitled.py", line 4
+    return 42sdsdsdsd
+                    ^
+SyntaxError: invalid syntax

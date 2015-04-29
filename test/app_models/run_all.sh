@@ -1,3 +1,3 @@
 #!/bin/bash
 
-../run_one.sh app/models
+../test_wrapper.sh app/models *_test.rb

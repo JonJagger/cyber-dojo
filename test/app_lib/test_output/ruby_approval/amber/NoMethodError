@@ -1,0 +1,2 @@
+/sandbox/untitled_spec.rb:3:in `<top (required)>': undefined method `srequire' for main:Object (NoMethodError)
+	from /var/lib/gems/1.9.1/gems/rspec-core-

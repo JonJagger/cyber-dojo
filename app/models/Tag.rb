@@ -2,34 +2,36 @@
 # See comment at bottom of Avatar.rb
 
 class Tag
+  include ExternalParentChain
 
   def initialize(avatar,n)
-    @avatar,@n = avatar,n
+    @parent,@n = avatar,n
   end
 
   def visible_files
-    @manifest ||= JSON.parse(git(:show, "#{@n}:manifest.json"))
+    @manifest ||= JSON.parse(git.show(path, "#{@n}:manifest.json"))
   end
 
   def output
     visible_files['output'] || ''
   end
 
+  def number
+    @n
+  end
+  
 private
 
   def path
-    @avatar.path
+    @parent.path
   end
-
-  include ExternalDiskDir
-  include ExternalGit
 
 end
 
 #------------------------------------------
 # output
 #------------------------------------------
-# In very early dojos avatar.create_kata()
+# In very early dojos katas.create_kata()
 # did not save 'output' in visible_files
 #------------------------------------------
 

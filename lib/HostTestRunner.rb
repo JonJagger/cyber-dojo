@@ -1,8 +1,5 @@
 
 # Deprecated test runner that runs directly on the host server
-# (if Docker not installed and CYBERDOJO_USE_HOST is set)
-# $ export CYBERDOJO_USE_HOST=true
-#
 # No isolation/protection/security, nothing.
 # See DockerTestRunner.rb
 
@@ -10,10 +7,6 @@ require_relative 'TestRunner'
 
 class HostTestRunner
   include TestRunner
-
-  def runnable?(language)
-    true
-  end
 
   def run(sandbox, command, max_seconds)
     command = "cd '#{sandbox.path}';" + stderr2stdout(command)
@@ -33,6 +26,10 @@ class HostTestRunner
       output += didnt_complete(max_seconds)
     end
     limited(clean(output),50*1024)
+  end
+
+  def runnable?(language)
+    true
   end
 
 private

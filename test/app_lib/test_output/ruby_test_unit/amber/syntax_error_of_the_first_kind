@@ -1,0 +1,2 @@
+test_untitled.rb:5:in `<class:TestUntitled>': undefined local variable or method `ddd' for TestUntitled:Class (NameError)
+	from test_untitled.rb:4:in `<main>'

@@ -1,6 +1,12 @@
 
+require 'net/http'
+require 'uri'
+require 'json'
+
 class OneSelf
     
+  #needs access to disk...
+  
   def created(dojo_id,latitude,longtitude)
     data = {
       'objectTags' => [ 'cyber-dojo' ],
@@ -9,7 +15,7 @@ class OneSelf
       'properties' => { 'dojoId' => dojo_id }
     }
     url = URI.parse("#{streams_url}/#{stream_id}/events")
-    request = Net::HTTP::Post.new(url.path, json_header("#{write_token}"))
+    request = Net::HTTP::Post.new(url.path, json_header(write_token))
     request.body = data.to_json
     http = Net::HTTP.new(url.host)
     response = http.request(request) 
@@ -55,8 +61,6 @@ class OneSelf
   
 private
   
-  include ExternalDiskDir
-  
   # copy-pasted from app/helpers/tip_helper.rb
   def line_counts(diffed_files)
     added_count,deleted_count = 0,0
@@ -92,15 +96,15 @@ private
   end
   
   def stream_id
-    'PUXUNZEGWRZUWYRG'
+    'GSYZNQSYANLMWEEH'
   end
   
   def read_token
-    '62713acce800c7bcd75829d16a8aa3e2fb9f2d2daeb0'
+    '474f621260b2f9e5b6f6025cd5eea836b362b0bf1bfa'
   end
   
   def write_token
-    'c705e320fd8b9591d27d9579f78fad6ab3a7c0f86078'
+    'ddbc8384eaf4b6f0e70d66b606ccbf7ad4bb22bfe113'
   end
   
 end

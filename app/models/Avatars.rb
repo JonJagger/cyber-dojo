@@ -15,7 +15,7 @@ class Avatars
   end
 
   def initialize(kata)
-    @kata = kata
+    @parent = kata
   end
 
   def each
@@ -35,7 +35,7 @@ class Avatars
   end
   
   def [](name)
-    Avatar.new(@kata,name)
+    Avatar.new(@parent,name)
   end
 
 end

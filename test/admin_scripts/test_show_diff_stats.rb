@@ -34,4 +34,5 @@ class TestAdminScriptsTests < CyberDojoTestBase
       assert exit_status === 0, script_name
     end
   end
+
 end

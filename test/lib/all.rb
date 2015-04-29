@@ -3,5 +3,6 @@
   DiskFake
   DirFake
   GitSpy
-  TestRunnerStub
+  StubTestRunner
+  DummyTestRunner  
 }.each {|sourcefile| require_relative './' + sourcefile }

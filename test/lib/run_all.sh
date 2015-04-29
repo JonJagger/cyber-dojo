@@ -1,4 +1,4 @@
 #!/bin/bash
 
-../run_one.sh lib
+../test_wrapper.sh lib *_test.rb 
 

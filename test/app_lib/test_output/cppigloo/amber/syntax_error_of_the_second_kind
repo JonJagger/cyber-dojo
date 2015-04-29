@@ -1,0 +1,5 @@
+g++ -I. -g -std=c++11 -Wall -Wextra -Werror -pthread -O *.cpp -lgtest -o run.tests
+hiker.c:2:2: error: invalid preprocessing directive #lone
+ #lone
+  ^
+make: *** [run.tests] Error 1

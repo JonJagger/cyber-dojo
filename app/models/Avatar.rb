@@ -1,27 +1,32 @@
 # comments at end of file
 
 class Avatar
+  include ExternalParentChain
 
   def initialize(kata,name)
     raise 'Invalid Avatar(name)' if !Avatars.valid?(name)
-    @kata,@name = kata,name
+    @parent,@name = kata,name
   end
 
-  attr_reader :kata, :name
+  attr_reader :name
 
+  def kata
+    @parent
+  end
+  
   def exists?
     dir.exists?
   end
 
   def start
     dir.make
-    setup_git_repo
+    git_setup
     write_manifest(kata.visible_files)
-    git(:add, manifest_filename)
+    git.add(path,manifest_filename)
     write_increments([ ])
-    git(:add, increments_filename)     
+    git.add(path,increments_filename)     
     sandbox.start
-    commit(0)    
+    git_commit(0)    
     #one_self.started(self)
   end
   
@@ -45,27 +50,23 @@ class Avatar
     JSON.parse(read(manifest_filename))
   end
 
-  def test(delta, visible_files, now = time_now, time_limit = 15)    
-    new_files,filenames_to_delete = sandbox.run_tests(delta,visible_files,time_limit)
-    colour = kata.language.colour(visible_files['output'])
+  def test(delta, files, now = time_now, time_limit = 15)        
+    new_files,filenames_to_delete = sandbox.run_tests(delta,files,time_limit)    
+    colour = kata.language.colour(files['output'])
     rags = increments
-    rag = {
-      'colour' => colour,
-      'time'   => now,
-      'number' => rags.length + 1
-    }
+    rag = { 'colour' => colour, 'time' => now, 'number' => rags.length + 1 }
     rags << rag
     write_increments(rags)
-    write_manifest(visible_files)
+    write_manifest(files)
     tag = rags.length
-    commit(tag)
+    git_commit(tag)
     #one_self.tested(self,tag,colour)
     [rags,new_files,filenames_to_delete]
   end
 
   def diff(n,m)
     command = "--ignore-space-at-eol --find-copies-harder #{n} #{m} sandbox"
-    diff_lines = git(:diff, command)
+    diff_lines = git.diff(path,command)
     visible_files = tags[m].visible_files
     git_diff(diff_lines, visible_files)
   end
@@ -76,20 +77,23 @@ class Avatar
 
 private
 
-  include ExternalDiskDir
-  include ExternalGit
-  include ExternalOneSelf
   include GitDiff
   include TimeNow
 
-  def commit(tag)
-    git(:commit, "-a -m '#{tag}' --quiet")
-    git(:gc, '--auto --quiet')
-    git(:tag, "-m '#{tag}' #{tag} HEAD")
+  def git_setup
+    git.init(path, '--quiet')
+    git.config(path, 'user.name ' + user_name)
+    git.config(path, 'user.email ' + user_email)
   end
 
-  def write_manifest(visible_files)
-    write(manifest_filename, visible_files)
+  def git_commit(tag)
+    git.commit(path, "-a -m '#{tag}' --quiet")
+    git.gc(path, '--auto --quiet')
+    git.tag(path, "-m '#{tag}' #{tag} HEAD")
+  end
+
+  def write_manifest(files)
+    write(manifest_filename, files)
   end
 
   def write_increments(increments)
@@ -116,18 +120,12 @@ private
     'increments.json'
   end
 
-  def setup_git_repo
-    git(:init, '--quiet')    
-    git(:config, user_name)
-    git(:config, user_email)
-  end
-
   def user_name
-    "user.name #{quoted(name + '_' + kata.id)}"
+    "#{quoted(name + '_' + kata.id)}"
   end
 
   def user_email 
-    "user.email #{quoted(name)}@cyber-dojo.org"
+    "#{quoted(name)}@cyber-dojo.org"
   end
 
   def quoted(s)

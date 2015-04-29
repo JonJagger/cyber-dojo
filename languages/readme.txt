@@ -1,7 +1,7 @@
 
 I structure the docker-containers so that each language
 has its own folder with its own base container, and each
-language/test sub-folder and its own derived
+language/test sub-folder has its own derived
 docker-container. Often a language/test Dockerfile
 will contain nothing except a FROM command. Viz, I could use
 the language's base docker-container. But I do it anyway for

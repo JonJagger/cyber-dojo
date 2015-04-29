@@ -1,0 +1,11 @@
+untitled_tests: answer_test (module 'untitled_tests')...*failed*
+::error:{assertEqual_failed,[{module,untitled_tests},
+                           {line,6},
+                           {expression,"untitled : answer ( )"},
+                           {expected,54},
+                           {value,42}]}
+  in function untitled_tests:'-answer_test/0-fun-0-'/1
+
+
+=======================================================
+  Failed: 1.  Skipped: 0.  Passed: 0.

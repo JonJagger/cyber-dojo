@@ -1,0 +1,7 @@
+gcc -Wall -Werror -O -std=c99 *.c -o run.tests
+untitled.tests.c: In function 'example':
+untitled.tests.c:7: error: 'ssss' undeclared (first use in this function)
+untitled.tests.c:7: error: (Each undeclared identifier is reported only once
+untitled.tests.c:7: error: for each function it appears in.)
+untitled.tests.c:8: error: expected ';' before '}' token
+make: *** [run.tests] Error 1

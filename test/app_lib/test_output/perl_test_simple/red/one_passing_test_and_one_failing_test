@@ -1,0 +1,15 @@
+#   Failed test 'Life, the universe, and everything'
+#   at untitled.t line 9.
+# Looks like you failed 1 test of 2.
+untitled.t .. 
+Dubious, test returned 1 (wstat 256, 0x100)
+Failed 1/2 subtests 
+
+Test Summary Report
+-------------------
+untitled.t (Wstat: 256 Tests: 2 Failed: 1)
+  Failed test:  2
+  Non-zero exit status: 1
+Files=1, Tests=2,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.02 cusr  0.01 csys =  0.05 CPU)
+Result: FAIL
+Failed 1/1 test programs. 1/2 subtests failed.

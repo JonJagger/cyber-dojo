@@ -48,7 +48,7 @@ class LanguagesManifestsTests < LanguagesTestBase
     assert !any_files_owner_is_root?
     assert !any_files_group_is_root?
     assert !any_file_is_unreadable?
-    assert Dockerfile_exists?
+    assert dockerfile_exists?
     assert build_docker_container_exists?
     assert build_docker_container_starts_with_cyberdojo?
     assert created_kata_manifests_language_entry_round_trips?
@@ -398,7 +398,7 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def Dockerfile_exists?
+  def dockerfile_exists?
     if !File.exists?(language_dir + '/' + 'Dockerfile')
       message =
         alert +

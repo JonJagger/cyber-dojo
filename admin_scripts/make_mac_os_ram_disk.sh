@@ -10,6 +10,5 @@ mkdir -p ${mount_point}
 mount -o noatime -t hfs ${ramdisk_dev} ${mount_point}
 
 echo "remove with:"
-echo "umount ${mount_point}"
-echo "diskutil eject ${ramdisk_dev}"
-
+echo " $ umount ${mount_point}"
+echo " $ diskutil eject ${ramdisk_dev}"

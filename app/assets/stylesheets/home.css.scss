@@ -1,13 +1,17 @@
 
 $text-color: darken($lighter-color, 10%);
 
-#home-page {
+#globe {
+  border: 0;
+}
 
+#home-page {
+  
   font-size: 1.15em;
 
   margin-top: 25px;
   margin-left: 0px;
-
+  
   #cyber-dojo {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     font-size: 7.4em;
@@ -146,7 +150,7 @@ a:link, a:visited
 {
   position: absolute;
   top: 50px;
-  left: 900px;
+  left: 850px;
 }
 
 #get_a_new_practice_id

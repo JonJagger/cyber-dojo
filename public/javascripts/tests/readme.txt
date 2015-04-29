@@ -1,5 +1,5 @@
 
-From the cyberdojo/public/javascripts/tests folder
+From the cyber-dojo/public/javascripts/tests folder
 >source .bashrc
 >java -jar $JSTESTDRIVER_HOME/JsTestDriver-1.3.3d.jar --port 4224 &
 
@@ -11,7 +11,7 @@ If this succeeds you can generate coverage stats
 you can do both steps using the
 >./run.sh
 which will create the file
-  cyberdojo/public/javascripts/tests/coverage/index.html
+  cyber-dojo/public/javascripts/tests/coverage/index.html
 open this in a browser and click on the
   javascripts
 link on the lhs to open a page containing coverage of all

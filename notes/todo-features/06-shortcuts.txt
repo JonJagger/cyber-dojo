@@ -1,0 +1,3 @@
+
+[shorcuts] button opens a dialog page
+showing you the shortcuts.

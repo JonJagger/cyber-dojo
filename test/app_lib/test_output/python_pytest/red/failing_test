@@ -1,0 +1,19 @@
+============================= test session starts ==============================
+platform linux2 -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+collected 1 items
+
+test_untitled.py F
+
+=================================== FAILURES ===================================
+_________________________________ test_answer __________________________________
+
+    def test_answer():
+        '''simple example to start you off'''
+        obj = untitled.Untitled()
+>       assert obj.answer() == 6*9
+E       assert 42 == (6 * 9)
+E        +  where 42 = <bound method Untitled.answer of <untitled.Untitled instance at 0x1665998>>()
+E        +    where <bound method Untitled.answer of <untitled.Untitled instance at 0x1665998>> = <untitled.Untitled instance at 0x1665998>.answer
+
+test_untitled.py:6: AssertionError
+=========================== 1 failed in 0.02 seconds ===========================

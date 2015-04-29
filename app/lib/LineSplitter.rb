@@ -26,5 +26,4 @@ end
 # This means that it is not guaranteed that
 # line_split(source).join("\n") == source
 # - - - - - - - - - - - - - - - - -
-# See tests/lib/line_splitter_tests.rb
 

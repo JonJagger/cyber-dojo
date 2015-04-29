@@ -1,6 +1,7 @@
 
 # test runner providing isolation/protection/security
 # via Docker containers https://www.docker.io/
+# comments at end of file
 
 require_relative 'TestRunner'
 require 'tempfile' # Dir::Tmpname
@@ -9,8 +10,9 @@ class DockerTestRunner
     include TestRunner
 
   def initialize
+    raise RuntimeError.new("Docker not installed") if !installed?    
     command = stderr2stdout('docker images')
-    @image_names = image_names(`#{command}`)
+    @image_names = DockerTestRunner.image_names(`#{command}`)
   end
 
   def runnable?(language)
@@ -42,16 +44,14 @@ class DockerTestRunner
     exit_status = $?.exitstatus
 
     pid = `cat #{cidfile}`
-    `rm #{cidfile}`
-    `docker stop #{pid}`
-    `docker rm #{pid}`
+    `rm #{cidfile} ; docker stop #{pid} ; docker rm #{pid}`
 
     exit_status != fatal_error(kill) ?
         limited(clean(output),50*1024) :
         didnt_complete(max_seconds)
   end
 
-  def image_names(output)
+  def self.image_names(output)
     output.split("\n")[1..-1].collect{|line| line.split[0]}.sort.uniq
   end
 
@@ -60,12 +60,11 @@ private
   include Cleaner
 
   def timeout(command,after)
-    # I put a timeout on the outer docker-run command and not
-    # on the inner bash -c command. The reason for this is
-    # security. If it was on the inner bash -c command it seems
-    # possible that a determined attacker could kill the
-    # timeout but not the task that was being timed and thus
-    # acquire unlimited time to run any command.
+    # I put a timeout on the outer docker-run command and not on the
+    # inner bash -c command. The reason for this is security. If it 
+    # was on the inner bash -c command a determined attacker might
+    # kill the timeout but not the timed-task and thus acquire 
+    # unlimited time to run any command.
     "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
   end
 
@@ -87,6 +86,16 @@ private
 
   def read_only
     'ro'
+  end
+
+  def installed?
+    command = stderr2stdout('docker info > /dev/null')
+    `#{command}`
+    $?.exitstatus === 0
+  end
+
+  def stderr2stdout(cmd)
+    cmd + ' 2>&1'
   end
 
 end
@@ -136,10 +145,10 @@ end
 #   (as volume mounted in the first -v option)
 #
 # #{language.image_name}
-#   The name of the docker container to run the inner-command inside.
+#   The name of the docker image to run the inner-command inside.
 #   specified in the language's manifest as its image_name.
 #
 # /bin/bash -c #{quoted(command)}
-#   The command that is run inside the docker container is always
+#   The command that is run as the docker container's "main" is always
 #   './cyber-dojo.sh' which is run via bash inside a timeout.
 #

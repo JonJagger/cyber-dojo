@@ -18,7 +18,6 @@ class AllLanguagesTests < LanguagesTestBase
     languages = dirs.map { |file|
       File.dirname(file).split('/')[-2..-1]
     }
-
     languages.sort.each do |array|
       rag = checker.check(*array)
       results[array] = rag if !rag.nil?

@@ -1,11 +1,15 @@
 # comments at end of file
 
 class Languages
+  include ExternalParentChain
   
-  def path
-    languages_path
+  def initialize(dojo,path)
+    @parent,@path = dojo,path
+    @path += '/' if !@path.end_with? '/'
   end
-
+  
+  attr_reader :path
+  
   def each
     return enum_for(:each) unless block_given?
     languages.each { |language| yield language }
@@ -26,9 +30,6 @@ class Languages
   end
   
 private
-
-  include ExternalDiskDir
-  include ExternalLanguagesPath
 
   def new_name(name)    
     renames = {

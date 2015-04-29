@@ -1,26 +1,14 @@
 
 %w{
-  External
-  ExternalDiskDir
-  ExternalGit
-  ExternalRunner
-  ExternalExercisesPath
-  ExternalLanguagesPath
-  ExternalKatasPath
-  ExternalOneSelf
-  ExternalSetter
   Cleaner
-  Docker
   TestRunner
-    HostTestRunner
     DockerTestRunner
-    DummyTestRunner
+    HostTestRunner
   Git
-  Disk
-  Dir
+  Disk  Dir
   TimeNow
   UniqueId
   IdSplitter
   LanguagesDisplayNamesSplitter
-  OneSelf
+  OneSelf  
 }.each { |sourcefile| require_relative './' + sourcefile }

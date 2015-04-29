@@ -1,0 +1,4 @@
+gcc -Wall -Werror -O -std=c99 *.c -o run.tests
+./run.tests
+Assertion failed: (hhg() == 6*9), function example, file untitled.tests.c, line 7.
+make: *** [run.tests.output] Abort trap: 6

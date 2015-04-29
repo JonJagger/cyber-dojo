@@ -1,7 +1,56 @@
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Now all the output_parser tests have been refactored I should be able to rename
+parse_X to colour_of_X
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+make ExternalParentChain do this
+  def dir; external_disk[self]; end
+  def git; external_git[self]; end
+  def runner; external_runner[self]; end
+  def method_missing(command,*args)
+    @parent.send(command,*args)
+  end
+Dojo.rb does this
+  def external_disk
+    $cyber_dojo['...DISK...']
+  end
+and
+  class Disk
+    def [](obj)
+      Dir.new(obj.path)
+    end
+  end  
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DockerTestRunner has this 
+    `rm #{cidfile}`
+    `docker stop #{pid}`
+    `docker rm #{pid}`
+put all of these into a single shell invocation
+    commands = 
+    [ "rm #{cidfile}",
+      "docker stop #{pid}",
+      "docker rm #{pid}"
+    ]
+    command_separator = ' && '
+    `#{commands.join(command_separator)}`
+    
+Use of && to ensure command runs only if previous command succeeds.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+When you resize the edit textarea you cannot (manually) resize the linenumbers
+textarea to its left. You used to be able to do this. Why is the linenumbers
+textarea no longer resizable?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Reinstate the re-enter button...
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Provide one_self secrets via ENV[]
+Use ram-disk and drop FakeDir FakeDir
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 redo tag-navigation image on blog history-dialog page
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 use time-spaced bulbs on history-dialog?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 kata filename: very long filename: when not selected you can scroll
@@ -17,17 +66,6 @@ Rename starting files as starter.*
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Set external paths via  ENV[]. Don't provide defaults.
-Set external class names for Git and Runner via ENV[]
-Provide one_self secrets via ENV[]
-Use ram-disk and drop FakeDir FakeDir
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Are the fork_controller failing individual diagnostic reasons worth
-having? Perhaps have a simpler generic failure dialog and
-just attempt the fork and if an exception is raised catch
-it and report a general failure.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

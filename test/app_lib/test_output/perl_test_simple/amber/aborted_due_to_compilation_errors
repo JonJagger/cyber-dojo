@@ -1,0 +1,15 @@
+Bareword "sss" not allowed while "strict subs" in use at untitled.t line 8.
+Execution of untitled.t aborted due to compilation errors.
+# Looks like your test exited with 255 before it could output anything.
+untitled.t .. 
+Dubious, test returned 255 (wstat 65280, 0xff00)
+No subtests run 
+
+Test Summary Report
+-------------------
+untitled.t (Wstat: 65280 Tests: 0 Failed: 0)
+  Non-zero exit status: 255
+  Parse errors: No plan found in TAP output
+Files=1, Tests=0,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.02 cusr  0.01 csys =  0.05 CPU)
+Result: FAIL
+Failed 1/1 test programs. 0/0 subtests failed.

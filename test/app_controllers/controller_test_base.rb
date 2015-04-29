@@ -1,34 +1,109 @@
 
 ENV['RAILS_ENV'] = 'test'
+ENV['CYBER_DOJO_RUNNER_CLASS_NAME'] = 'DummyTestRunner'
 
 root = '../..'
 
 require_relative root + '/test/test_coverage'
 require_relative root + '/test/all'
 require_relative root + '/config/environment'
-require 'minitest/autorun'
-
+require_relative root + '/test/TestHelpers'
+  
 class ControllerTestBase < ActionDispatch::IntegrationTest
 
-  include ExternalSetter
-  include ExternalDiskDir
-  include ExternalGit
-  include ExternalRunner
-  include ExternalExercisesPath
-  include ExternalLanguagesPath
-  include ExternalKatasPath
-
-  def setup
-    reset_external(:disk, Disk.new)
-    reset_external(:git, Git.new)
-    reset_external(:runner, HostTestRunner.new)
-    reset_external(:exercises_path, root_path + '/exercises/')
-    reset_external(:languages_path, root_path + '/languages/')
-    reset_external(:katas_path, root_path + '/test/cyber-dojo/katas/')
+  include TestHelpers
+  
+  def create_kata(language_name = random_language, exercise_name = random_exercise)
+    parts = language_name.split(',')
+    params = { 
+      :language => parts[0].strip,
+      :test => parts[1].strip,
+      :exercise => exercise_name
+    }
+    get 'setup/save', params
+    @id = json['id']
+  end
+    
+  def enter
+    params = { :format => :json }
+    params[:id] = @id if !@id.nil?
+    get 'dojo/enter', params
+    @avatar_name = avatar_name
+  end
+    
+  def re_enter
+    params = { :format => :json, :id => @id }
+    get 'dojo/re_enter', params
+    assert_response :success    
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - -
+  def kata_edit
+    params = { :id => @id, :avatar => @avatar_name }
+    get 'kata/edit', params
+    assert_response :success
+  end
+    
+  def kata_run_tests(file_hash)
+    params = { :format => :js, :id => @id, :avatar => @avatar_name }
+    post 'kata/run_tests', params.merge(file_hash)
+  end
 
+  def make_file_hash(filename,content,incoming,outgoing)
+    { file_content:         { filename => content },
+      file_hashes_incoming: { filename => incoming },
+      file_hashes_outgoing: { filename => outgoing }
+    }
+  end
+    
+  def any_test
+    filename = 'cyber-dojo.sh'
+    kata_run_tests make_file_hash(filename,'',234234,-4545645678)
+  end
+
+  def stub_test_output(rag)
+    # todo: refactor
+    #       copied from test/TestHelpers.rb stub_test_colours (private)
+    avatar = katas[@id].avatars[@avatar_name]
+    disk = dojo.disk
+    root = File.expand_path(File.dirname(__FILE__) + '/..') + '/app_lib/test_output'
+    assert [:red,:amber,:green].include? rag
+    path = "#{root}/#{avatar.kata.language.unit_test_framework}/#{rag}"
+    all_outputs = disk[path].each_file.collect{|filename| filename}
+    filename = all_outputs.shuffle[0]
+    output = disk[path].read(filename)
+    dojo.runner.stub_output(output)      
+    delta = { :changed => [], :new => [], :deleted => [] }
+    files = { }
+    rags,_,_ = avatar.test(delta,files)
+    assert_equal rag, rags[-1]['colour'].to_sym
+  end
+        
+  def json
+    ActiveSupport::JSON.decode @response.body
+  end
+
+  def html
+    @response.body
+  end
+  
+  def avatar_name
+    json['avatar_name']
+  end
+  
+private
+
+  def random_language
+    # languages.each.collect....
+    # will cause TestRunner.runnable?() to be executed...
+    # which means I can't later Stub a different TestRunner...
+    'Ruby, TestUnit'  # todo
+  end
+  
+  def random_exercise
+    'Yatzy' # todo
+  end
+  
+=begin
   def stub_setup
     stub_dojo
     stub_language('fake-C#','nunit')
@@ -63,65 +138,9 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
                                       exercise:exercise_name })
   end
 
-  def create_kata(language_name = 'Ruby-TestUnit',
-                  exercise_name = 'Yatzy')
-    get 'setup/save', language:language_name.split('-')[0],
-                      test:language_name.split('-')[1],
-                      exercise:exercise_name
-    json['id']
-  end
-
-  def enter
-    if @id.nil?
-      get 'dojo/enter', format: :json
-    else
-      get 'dojo/enter', format: :json, id:@id
-    end
-    @avatar_name = avatar_name
-  end
-
-  def kata_edit
-    get 'kata/edit', id:@id, avatar:@avatar_name
-    assert_response :success
-  end
-
-  def amber_test
-    any_test
-  end
-  
-  def any_test
-    filename = 'cyber-dojo.sh'
-    kata_run_tests make_file_hash(filename,'',234234,-4545645678)
-  end
-
-  def kata_run_tests(hash)
-    defaults = { :format=>:js, :id=>@id, :avatar=>@avatar_name }
-    post 'kata/run_tests', hash.merge(defaults)
-  end
-
-  def make_file_hash(filename,content,incoming,outgoing)
-    { file_content:         { filename => content },
-      file_hashes_incoming: { filename => incoming },
-      file_hashes_outgoing: { filename => outgoing }
-    }
-  end
-  
-  def avatar_name
-    json['avatar_name']
-  end
-
-  def json
-    ActiveSupport::JSON.decode @response.body
-  end
-
-  def html
-    @response.body
-  end
-
-private
-
   def root_path
     File.absolute_path(File.dirname(__FILE__) + '/../../')
   end
-
+=end
+  
 end

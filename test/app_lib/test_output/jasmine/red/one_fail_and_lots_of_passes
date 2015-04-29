@@ -1,0 +1,12 @@
+..F
+
+Failures:
+
+  1) should pass 2
+   Message:
+     Expected 42 to equal 54.
+   Stacktrace:
+     Error: Expected 42 to equal 54.
+
+Finished in 0.032 seconds
+3 tests, 3 assertions, 1 failure

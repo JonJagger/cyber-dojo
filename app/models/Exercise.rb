@@ -1,14 +1,15 @@
 
 class Exercise
-
+  include ExternalParentChain
+  
   def initialize(exercises,name)
-    @exercises,@name = exercises,name
+    @parent,@name = exercises,name
   end
 
   attr_reader :name
   
   def path
-    @exercises.path + name + '/'
+    @parent.path + name + '/'
   end
 
   def exists?
@@ -20,8 +21,6 @@ class Exercise
   end
 
 private
-
-  include ExternalDiskDir
 
   def instructions_filename
     'instructions'
