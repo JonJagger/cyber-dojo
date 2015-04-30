@@ -1,0 +1,3 @@
+
+The cyber-dojo github repo assumes it will be cloned into the folder called...
+/var/www/cyber-dojo

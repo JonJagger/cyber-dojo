@@ -1,4 +1,4 @@
-require 'minitest/autorun'
+
 require_relative './TestHelpers'
 
 class TestBase < MiniTest::Test
