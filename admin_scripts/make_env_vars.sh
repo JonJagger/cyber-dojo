@@ -1,3 +1,7 @@
+
+# to set environment variables in calling terminal...
+# . ./local_server.sh
+
 cyberdojo_root=/var/www/cyber-dojo
 
 export CYBER_DOJO_EXERCISES_ROOT=${cyberdojo_root}/test/cyber-dojo/exercises/
