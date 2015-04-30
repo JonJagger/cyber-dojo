@@ -19,6 +19,8 @@ cyberDojo.db
 *.tmp
 
 test/cyber-dojo/katas/*
+test/cyber-dojo/test/languages
+test/cyber-dojo/test/exercises
 
 admin_scripts/exceptions.log
 
