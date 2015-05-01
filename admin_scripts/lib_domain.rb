@@ -5,7 +5,7 @@ require_relative '../app/lib/all'
 require_relative '../app/models/all'
 
 def cyberdojo_root
-    '/var/www/cyber-dojo'
+  '/var/www/cyber-dojo'
 end
 
 ENV['CYBER_DOJO_EXERCISES_ROOT'] ||= "#{cyberdojo_root}/exercises/"

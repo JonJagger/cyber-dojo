@@ -12,7 +12,7 @@ module TestHelpers # mixin
   end
     
   # - - - - - - - - - - - - - - - - - - -
-  # call these *before* accessing dojo
+  # call the setters at the start of tests *before* accessing dojo
   
   def set_languages_root(value); cd_set(languages_key,value); end
   def set_exercises_root(value); cd_set(exercises_key,value); end
@@ -31,12 +31,8 @@ module TestHelpers # mixin
   # - - - - - - - - - - - - - - - - - - -
   
   def dojo
-    @dojo ||= make_dojo
+    @dojo ||= Dojo.new
   end  
-
-  def make_dojo
-    Dojo.new
-  end
 
   def languages; dojo.languages; end
   def exercises; dojo.exercises; end  
