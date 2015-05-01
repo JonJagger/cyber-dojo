@@ -54,15 +54,6 @@ $cyberDojoHome/languages/cache.rb
 echo "poking rails"
 bundle install
 
-echo "setting ENV[]"
-export CYBER_DOJO_EXERCISES_ROOT=$cyberDojoHome/exercises/
-export CYBER_DOJO_LANGUAGES_ROOT=$cyberDojoHome/languages/
-export CYBER_DOJO_KATAS_ROOT=$cyberDojoHome/katas/
-
-export CYBER_DOJO_RUNNER_CLASS_NAME=DockerTestRunner
-export CYBER_DOJO_DISK_CLASS_NAME=Disk
-export CYBER_DOJO_GIT_CLASS_NAME=Git
-
 echo "restarting apache"
 service apache2 restart
 
