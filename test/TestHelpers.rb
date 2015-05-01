@@ -7,32 +7,36 @@ module TestHelpers # mixin
     store_external_setup
   end
 
+  def teardown
+    restore_external_setup    
+  end
+    
   # - - - - - - - - - - - - - - - - - - -
   # call these *before* accessing dojo
   
-  def get_languages_root; cd_get(languages_key); end
   def set_languages_root(value); cd_set(languages_key,value); end
-  
-  def get_exercises_root; cd_get(exercises_key); end
   def set_exercises_root(value); cd_set(exercises_key,value); end
-
-  def get_katas_root; cd_get(katas_key); end
-  def set_katas_root(value); cd_set(katas_key,value); end
-  
-  def get_runner_class_name; cd_get(runner_key); end  
+  def set_katas_root(value);     cd_set(    katas_key,value); end
   def set_runner_class_name(value); cd_set(runner_key,value); end  
-
-  def get_disk_class_name; cd_get(disk_key); end  
-  def set_disk_class_name(value); cd_set(disk_key,value); end
+  def set_disk_class_name(value);   cd_set(  disk_key,value); end
+  def set_git_class_name(value);    cd_set(   git_key,value); end
   
-  def get_git_class_name; cd_get(git_key); end
-  def set_git_class_name(value); cd_set(git_key,value); end
+  def get_languages_root; cd_get(languages_key); end  
+  def get_exercises_root; cd_get(exercises_key); end
+  def get_katas_root;     cd_get(    katas_key); end  
+  def get_runner_class_name; cd_get(runner_key); end  
+  def get_disk_class_name;   cd_get(  disk_key); end  
+  def get_git_class_name;    cd_get(   git_key); end
     
   # - - - - - - - - - - - - - - - - - - -
   
   def dojo
     @dojo ||= make_dojo
   end  
+
+  def make_dojo
+    Dojo.new
+  end
 
   def languages; dojo.languages; end
   def exercises; dojo.exercises; end  
@@ -131,29 +135,21 @@ private
     }    
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def cd_get(key)
-    @test_env[key]
-  end       
-  
-  def cd_set(key,value)
-    @test_env[key] = value
+  def restore_external_setup
+    env_vars.each { |var| 
+      ENV[var] = @test_env[var]
+    }    
+    @test_env = {}       
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - -
-      
-  def make_dojo
-    $cyber_dojo = {}
-    [languages_key,exercises_key,katas_key].each { |path_var|
-      var = @test_env[path_var]
-      $cyber_dojo[path_var] = var
-    }
-    [disk_key,runner_key,git_key].each { |class_name_var|
-      var = @test_env[class_name_var]
-      $cyber_dojo[class_name_var] = Object.const_get(var).new     
-    }
-    Dojo.new
+
+  def cd_get(key)
+    ENV[key]
+  end       
+  
+  def cd_set(key,value)
+    ENV[key] = value
   end
   
 end

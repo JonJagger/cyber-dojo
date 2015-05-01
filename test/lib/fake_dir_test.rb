@@ -5,6 +5,7 @@ require_relative 'lib_test_base'
 class FakeDirTests < LibTestBase
 
   def setup
+    super
     @disk = DiskFake.new
     @path = 'fake/'
     @dir = DirFake.new(@disk,@path)

@@ -31,7 +31,7 @@ class TagsTest < ModelTestBase
     assert_equal test_count+1, tags.length
     (0..tags.length).each { |i| assert_equal i, tags[i].number }
   end
-
+  
   #- - - - - - - - - - - - - - - - - - -
 
   test 'tags[-n] duplicates Array[-n] behaviour' do

@@ -13,6 +13,7 @@ class GitTests < LibTestBase
   end
   
   def setup
+    super
     mkdir = "mkdir -p #{tmp_dir}"
     rmgit = "rm -rf #{tmp_dir}/.git"
     `#{mkdir} && #{rmgit}`

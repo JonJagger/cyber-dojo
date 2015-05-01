@@ -17,7 +17,6 @@ ENV['CYBER_DOJO_DISK_CLASS_NAME']   ||= 'Disk'
 ENV['CYBER_DOJO_GIT_CLASS_NAME']    ||= 'Git'
 
 def create_dojo
-  load "#{cyberdojo_root}/config/initializers/cyber_dojo.rb"
   Dojo.new
 end
 

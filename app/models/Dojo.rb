@@ -37,12 +37,12 @@ private
   end
   
   def external_obj
-    external(name_of(caller) + '_CLASS_NAME')
+    Object.const_get(external(name_of(caller) + '_CLASS_NAME')).new
   end
   
   def external(key)
-    result = $cyber_dojo[key]
-    raise RuntimeError.new("$cyber_dojo['#{key}'] not set") if result.nil?
+    result = ENV[key]
+    raise RuntimeError.new("ENV['#{key}'] not set") if result.nil?
     result
   end
   
