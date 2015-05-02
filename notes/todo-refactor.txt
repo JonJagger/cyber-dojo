@@ -4,6 +4,10 @@
 Now all the output_parser tests have been refactored I should be able to rename
 parse_X to colour_of_X
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+When I support 100 avatars in a cyber-dojo determining which
+avatars have started, and hence which are left, when starting
+a new avatar will get slow.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 make ExternalParentChain do this
@@ -23,13 +27,20 @@ and
       env = 'CYBER_DOJO_DISK_CLASS_NAME'
       Object.const_get(env).new(self,path)
     end
+    def log
+      @log ||= []
+    end
   end  
   class Git
     def [](path)
       env = 'CYBER_DOJO_GIT_CLASS_NAME'
       Object.const_get(env).new(self,path)
     end
+    def log
+      @log ||= []
+    end
   end  
+  # obvious duplication above ripe for refactoring
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Provide one_self secrets via ENV[]
 Use ram-disk and drop FakeDir FakeDir?

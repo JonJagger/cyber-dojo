@@ -53,15 +53,16 @@ private
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# External paths/objects are set via the global $cyber_dojo hash
-# which are in turn set from environment variables.
-# (see config/initializers/cyber_dojo.rb)
+# External paths/objects are set via environment variables.
+# See config/initializers/cyber_dojo.rb
+# See config/application.rb (config.before_configuration)
 #
 # The main reason for this arrangement is testability.
 # For example, I can run controller tests by setting the
 # environment variables, then run the test which issue 
 # a GET/POST, let the call work its way through the rails stack, 
-# eventually reaching Dojo.rb where it picks up the externals as setup.
+# eventually reaching Dojo.rb where it creates Disk/Runner/Git
+# objects as named in the ENV[]
 # I cannot see how how I do this using Parameterize-From-Above
 # since I know of no way to 'tunnel' the parameters 'through'
 # the rails stack.
