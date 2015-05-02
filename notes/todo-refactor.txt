@@ -4,33 +4,45 @@
 Now all the output_parser tests have been refactored I should be able to rename
 parse_X to colour_of_X
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Should OneSelf calls be code fire-and-forget to avoid needless delay?
+
+# fire_and_forget.rb
+module FireAndForget
+  def forked(&block)
+    pid = Process.fork
+    if pid.nil?  # child
+      block.call
+      exit
+    else # parent
+      Process.detach(pid)
+    end
+  end
+end
+
+class SetupController
+  include FireAndForget
+  def save
+    ...
+    forked do; OneSelf.new.created(kata.id, latitude, longtitude); end
+    ...
+  end
+end
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 When I support 100 avatars in a cyber-dojo determining which
 avatars have started, and hence which are left, when starting
 a new avatar will get slow.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-make ExternalParentChain do this
+make ExternalParentChain do this?
   def method_missing(command,*args)
     @parent.send(command,*args)
   end
 Dojo.rb do this
-  def disk
-    @disk ||= Disk.new
-  end
   def git
     @git ||= Git.new
   end
 and
-  class Disk
-    def [](path)
-      env = 'CYBER_DOJO_DISK_CLASS_NAME'
-      Object.const_get(env).new(self,path)
-    end
-    def log
-      @log ||= []
-    end
-  end  
   class Git
     def [](path)
       env = 'CYBER_DOJO_GIT_CLASS_NAME'
@@ -40,7 +52,10 @@ and
       @log ||= []
     end
   end  
-  # obvious duplication above ripe for refactoring
+and model code changes from
+  git.commit(path, "-a -m '#{tag}' --quiet")
+to
+  git[path].commit("-a -m '#{tag}' --quiet")
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Provide one_self secrets via ENV[]
 Use ram-disk and drop FakeDir FakeDir?
