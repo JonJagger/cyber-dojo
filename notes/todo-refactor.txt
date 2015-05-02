@@ -4,28 +4,35 @@
 Now all the output_parser tests have been refactored I should be able to rename
 parse_X to colour_of_X
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 make ExternalParentChain do this
   def method_missing(command,*args)
     @parent.send(command,*args)
   end
-Dojo.rb does this
+Dojo.rb do this
   def disk
-    $cyber_dojo['...DISK...']
+    @disk ||= Disk.new
   end
   def git
-    $cyber_dojo['...GIT...']
+    @git ||= Git.new
   end
 and
   class Disk
     def [](path)
-      Dir.new(self,path)
+      env = 'CYBER_DOJO_DISK_CLASS_NAME'
+      Object.const_get(env).new(self,path)
     end
   end  
   class Git
     def [](path)
-      GitPath.new(self,path)
+      env = 'CYBER_DOJO_GIT_CLASS_NAME'
+      Object.const_get(env).new(self,path)
     end
   end  
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Provide one_self secrets via ENV[]
+Use ram-disk and drop FakeDir FakeDir?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 When you resize the edit textarea you cannot (manually) resize the linenumbers
 textarea to its left. You used to be able to do this. Why is the linenumbers
@@ -33,8 +40,14 @@ textarea no longer resizable?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Reinstate the re-enter button...
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Provide one_self secrets via ENV[]
-Use ram-disk and drop FakeDir FakeDir?
+I think its quite likely I'll have two C++ compilers at
+some point - one for g++ and one for clang. 
+I can name the folders whatever I like, since the display_name
+is what actually appears on the setup page. So have 
+/gpp/  and  /clang/  folders
+and perhaps also have display names as
+  C++ (g++)
+  C++ (clang)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
@@ -129,43 +142,11 @@ Provide a URL next to exercise? list instead
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-The only line the controller tests do not cover is the one
-to set the runner to DummyTestRunner. If Docker is installed
-there is no way to use the DummyTestRunner. Perhaps I should
-move the decision of what runner to use right out to the 
-shell where an environment variable names the runner.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-You can create an object from its class name as a string. Eg
-  reset_external(:git, Object.const_get('Git').new)
-This suggests that the external objects could be set by
-naming their class as a string via ENV[]
-  reset_external(:git, Object.const_get(ENV['CYBER_DOJO_GIT']).new)
-Except that once I have ramdisk in place I could probably leave
-Git with no fakes/mocks/stubs. The only external would then be 
-the runner.
-Paths would just be left as a string.
-And keys/ids (for 1self) would also be left as a string.
-This starts to get me near my goal of being able to run the same
-tests twice, once with fake/mocks/stubs and once without.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 In switching to new externals setting the following tests needed refactoring
 test/app_helpers/test_pie_chart.rb
 test/app_lib/test_chooser.rb
 test/integration/integration_test_base.rb
 test/integration/test_approval.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ExternalDiskDir.rb contains this...
-  def disk
-    external(:disk)
-  end
-which could be refactored to remove the duplication.
-  def disk
-    external_property
-  end
-  def external_property
-    name = (caller[0] =~ /`([^']*)'/ and $1)
-    external(name)
-  end
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Think about switching away from fake Disk/Dir and using a ram-disk/tmp-fs
 instead. This would allow me to use the real Git. 
@@ -220,15 +201,6 @@ Also Exercses.rb -> Katas.rb
 and cyber-dojo/katas/  -> cyber-dojo/dojos
 Is the latter too big a change to make?
 On setup page could also change exercises? to kata?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-I think its quite likely I'll have two C++ compilers at
-some point - one for g++ and one for clang. 
-I can name the folders whatever I like, since the display_name
-is what actually appears on the setup page. So have 
-/gpp/  and  /clang/  folders
-and perhaps also have display names as
-  C++ (g++)
-  C++ (clang)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 If hover-tip is visible and you switch to a different browser
 tab then when you return the hover-tip is still visible.
@@ -478,12 +450,6 @@ file which is eval'd. Then I could have a map where the keys
 were the unit_test_framework string and the values were the
 functions. Each language/ folder would have its own colour.rb
 file which would somehow insert itself into the map.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-s/parse_NAME/colour_of_NAME/
-in app/lib/OutputParser.rb (rename to OutputColour.rb)
-Also rename the tests files, eg
-test/output_c_unity.rb -> test_cunity_output_colour.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 diff-dialog uses ajax call to navigate around diff tags.
 these ajax calls do not have timeouts. If you are on a
 flaky network the cursor just spins forever.
