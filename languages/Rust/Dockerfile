@@ -7,5 +7,8 @@ RUN apt-get update
 RUN apt-get upgrade -y
 
 RUN apt-get install -y curl
-
 RUN curl -s https://static.rust-lang.org/rustup.sh | sudo sh
+
+# needed for cc linker
+# http://www.linuxuser.co.uk/tutorials/programming-in-rust
+RUN apt-get install -y gcc
