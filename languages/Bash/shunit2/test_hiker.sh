@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/bash
 
 test_life_the_universe_and_everything()
 {

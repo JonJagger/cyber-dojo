@@ -1,7 +1,10 @@
 
-install clang (C,C++,Objective-C)  sudo apt-get install clang-3.6
+install clang (C,C++,Objective-C)  
+  sudo apt-get install clang-3.6
 install Rust?
+  curl -s https://static.rust-lang.org/rustup.sh | sudo sh
 install Visual.BASIC? Chris Oldwood?
+  sudo apt-get install -y mono-vbnc
 install RPG for Chris Oldwood.
 install C++14 + boost
 install TypeScript?
@@ -13,13 +16,13 @@ install J?
 install Java-TestNG?
 install Java-EasyMock
 install Java-AssertJ
-install Objective-C?
 install COBOL?
   https://github.com/neopragma/cobol-unit-test
+  sudo apt-get install -y open-cobol
 install Prolog?
   http://www.swi-prolog.org/pldoc/doc_for?object=section(%27packages/plunit.html%27)
-
-
+  sudo apt-get install -y swi-prolog
+  
 mutation testing frameworks?
 ----------------------------
 http://en.wikipedia.org/wiki/Mutation_testing

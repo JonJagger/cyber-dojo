@@ -1,0 +1,2 @@
+./test_hiker.sh: line 17: syntax error near unexpected token `newline'
+./test_hiker.sh: line 17: `oneTimeSetUp('

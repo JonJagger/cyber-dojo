@@ -1,6 +1,6 @@
-#! /bin/sh
+#!/bin/bash
 
 answer()
 {
-  echo $[6 * 7]
+  echo $[6 * 9]
 }
