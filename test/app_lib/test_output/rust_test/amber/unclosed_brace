@@ -1,0 +1,6 @@
+hiker.rs:2:24: 2:25 help: did you mean to close this delimiter?
+hiker.rs:2 pub fn answer() -> i32 {
+                                  ^
+hiker.rs:14:2: 14:3 error: this file contains an un-closed delimiter 
+hiker.rs:14 }
+             ^

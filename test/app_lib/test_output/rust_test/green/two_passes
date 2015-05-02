@@ -1,0 +1,6 @@
+running 2 tests
+test tests::life_the_universe_and_everything ... ok
+test tests::life_the_universe_and_everything2 ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured
+

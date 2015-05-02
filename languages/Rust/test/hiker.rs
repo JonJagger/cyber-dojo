@@ -1,7 +1,7 @@
 
 pub fn answer() -> i32 {
     6 * 9
-}
+
 
 #[cfg(test)]
 mod tests {

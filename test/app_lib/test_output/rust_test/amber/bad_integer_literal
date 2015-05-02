@@ -1,0 +1,5 @@
+hiker.rs:3:9: 3:12 error: illegal suffix `ss` for numeric literal
+hiker.rs:3     6 * 7ss
+                   ^~~
+hiker.rs:3:9: 3:12 help: the suffix must be one of the integral types (`u32`, `isize`, etc)
+error: aborting due to previous error

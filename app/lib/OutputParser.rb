@@ -135,6 +135,8 @@ module OutputParser
   end
 
   def self.parse_rust_test(output)
+    return :red   if /test result: FAILED/.match(output)
+    return :green if /test result: ok/.match(output)
     return :amber
   end
   
