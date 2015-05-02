@@ -134,6 +134,10 @@ module OutputParser
     return :amber
   end
 
+  def self.parse_rust_test(output)
+    return :amber
+  end
+  
   def self.parse_go_testing(output)
     return :amber if /FAIL(\s*)_\/sandbox \[build failed\]/.match(output)
     return :red   if /FAIL/.match(output)
