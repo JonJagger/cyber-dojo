@@ -1,9 +1,10 @@
 
 module OutputParser
 
-  #  'red'   - this means the tests ran but at least one failed
-  #  'amber' - this means the tests could not be run (eg syntax error)
-  #  'green' - this means the tests ran and all passed
+  #  'red'   - the tests ran but at least one failed
+  #  'amber' - the tests could not be run (eg syntax error)
+  #  'green' - the tests ran and all passed
+  #  'timed_out' - the tests did not complete in time
 
   def self.colour(unit_test_framework, output)
     if Regexp.new('Unable to complete the test').match(output)
@@ -173,10 +174,14 @@ module OutputParser
   end
 
   def self.parse_ruby_test_unit(output)
-    ruby_pattern = Regexp.new('^(\d*) tests, (\d*) assertions, (\d*) failures, (\d*) errors')
-    if match = ruby_pattern.match(output)
-      return :amber if match[4] != '0'
-      return :red   if match[3] != '0'
+    self.parse_ruby_mini_test(output)
+  end
+
+  def self.parse_hunit(output)
+    hunit_pattern = /Counts \{cases = (\d+), tried = (\d+), errors = (\d+), failures = (\d+)\}/
+    if match = hunit_pattern.match(output)
+      return :amber if match[3] != '0'
+      return :red   if match[4] != '0'
       return :green
     else
       return :amber
@@ -195,57 +200,31 @@ module OutputParser
   def self.parse_groovy_spock(output)
     green_pattern = Regexp.new('^OK \((\d*) test')
     if match = green_pattern.match(output)
-      if match[1] != "0"
-        :green
-      else # treat zero passes as a fail
-        :red
-      end
-    else
-      amber_pattern0 = Regexp.new('groovyc: command not found')
-      amber_pattern1 = Regexp.new('groovy\.lang')
-      amber_pattern2 = Regexp.new('MultipleCompilationErrorsException')
-      if amber_pattern0.match(output) ||
-         amber_pattern1.match(output) ||
-         amber_pattern2.match(output)
-        :amber
-      else
-        :red
-      end
+      return :green if match[1] != '0'
+      return :red # treat zero passes as a fail
     end
-  end
-
-  def self.parse_hunit(output)
-    if output =~ /Counts \{cases = (\d+), tried = (\d+), errors = (\d+), failures = (\d+)\}/
-      if $3.to_i != 0
-        :amber
-      elsif $4.to_i != 0
-        :red
-      else
-        :green
-      end
-    else
-      :amber
-    end
+    amber_patterns = [
+      'groovyc: command not found',
+      'groovy\.lang',
+      'MultipleCompilationErrorsException'
+    ]
+    return :amber if amber_patterns.any?{ |pattern| Regexp.new(pattern).match(output) }
+    return :red
   end
 
   def self.parse_clojure_test(output)
     syntax_error_pattern = /Exception in thread/
     ran_pattern = /Ran (\d+) tests containing (\d+) assertions.(\s*)(\d+) failures, (\d+) errors./
-    if syntax_error_pattern.match(output)
-      :amber
-    elsif output.scan(ran_pattern).any? { |res| res[3] != "0" || res[4] != "0" }
-      :red
-    elsif output.scan(ran_pattern).any? { |res| res[3] == "0" && res[4] == "0" }
-      :green
-    else
-      :amber
-    end
+    return :amber if syntax_error_pattern.match(output)
+    return :red   if output.scan(ran_pattern).any? { |res| res[3] != '0' || res[4] != '0' }
+    return :green if output.scan(ran_pattern).any? { |res| res[3] == '0' && res[4] == '0' }
+    return :amber
   end
 
   def self.parse_jasmine(output)
     jasmine_pattern = /(\d+) tests?, (\d+) assertions?, (\d+) failures?/
-    if jasmine_pattern.match(output)
-      $3 == "0" ? :green : :red
+    if match = jasmine_pattern.match(output)
+      match[3] === '0' ? :green : :red
     else
       :amber
     end
@@ -253,8 +232,8 @@ module OutputParser
 
   def self.parse_scala_test(output)
     scala_pattern = /Tests: succeeded (\d+), failed (\d+), ignored (\d+), pending (\d+)/
-    if scala_pattern.match(output)
-      $2 == "0" ? :green : :red
+    if match = scala_pattern.match(output)
+      match[2] === '0' ? :green : :red
     else
       :amber
     end
@@ -262,8 +241,8 @@ module OutputParser
 
   def self.parse_cppigloo(output)
     igloo_pattern =  /Test run complete. (\d+) tests run, (\d+) succeeded, (\d+) failed./
-    if igloo_pattern.match(output)
-      $3 == "0" ? :green : :red
+    if match = igloo_pattern.match(output)
+      match[3] === '0' ? :green : :red
     else
       :amber
     end
