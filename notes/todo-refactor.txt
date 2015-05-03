@@ -1,5 +1,7 @@
 
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Put two commented out one_self.started and one_self.tested
+in Avatar.rb into controllers inside ChildProcess.exec { }
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Figure out how to add Enumerable to Languages/Exercises/Katas
 and then drop .each eg in
