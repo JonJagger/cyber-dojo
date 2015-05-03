@@ -28,7 +28,9 @@ class Dojo
     @git ||= external_obj
   end
 
-  #one_self
+  def one_self
+    @one_self ||= OneSelf.new
+  end
   
 private
 

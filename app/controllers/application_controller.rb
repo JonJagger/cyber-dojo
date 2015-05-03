@@ -11,10 +11,12 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   def dojo; @dojo ||= Dojo.new; end
-  def disk; dojo.disk; end  
   def languages; dojo.languages; end
   def exercises; dojo.exercises; end
-  def katas; dojo.katas;     end  
+  def katas; dojo.katas; end  
+  def disk; dojo.disk; end
+  def one_self; dojo.one_self; end
+  
   def id; @id ||= katas.complete(params[:id]); end
   def kata; katas[id]; end
   def avatars; kata.avatars; end
