@@ -29,7 +29,7 @@ class Dojo
   end
 
   def one_self
-    @one_self ||= OneSelf.new
+    @one_self ||= OneSelf.new(disk)
   end
   
 private

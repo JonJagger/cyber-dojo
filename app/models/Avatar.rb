@@ -27,7 +27,6 @@ class Avatar
     git.add(path,increments_filename)     
     sandbox.start
     git_commit(0)    
-    #one_self.started(self)
   end
   
   def path
@@ -60,7 +59,6 @@ class Avatar
     write_manifest(files)
     tag = rags.length
     git_commit(tag)
-    #one_self.tested(self,tag,colour)
     [rags,new_files,filenames_to_delete]
   end
 

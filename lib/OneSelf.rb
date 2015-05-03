@@ -5,7 +5,9 @@ require 'json'
 
 class OneSelf
     
-  #needs access to disk...
+  def initialize(disk)
+    @disk = disk
+  end
   
   def created(dojo_id,latitude,longtitude)
     data = {
@@ -33,7 +35,7 @@ class OneSelf
       :read_token => body['readToken'],
       :write_token => body['writeToken']
     }
-    disk[avatar.path].write(one_self_manifest_filename, one_self)     
+    @disk[avatar.path].write(one_self_manifest_filename, one_self)     
   end
   
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -51,7 +53,7 @@ class OneSelf
         'avatar' => avatar.name
       }
     }
-    one_self = JSON.parse(disk[avatar.path].read(one_self_manifest_filename))    
+    one_self = JSON.parse(@disk[avatar.path].read(one_self_manifest_filename))    
     url = URI.parse("#{streams_url}/#{one_self['stream_id']}/events")
     http = Net::HTTP.new(url.host)
     request = Net::HTTP::Post.new(url.path, json_header("#{one_self['write_token']}"))

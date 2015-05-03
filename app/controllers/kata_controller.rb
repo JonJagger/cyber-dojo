@@ -23,6 +23,11 @@ class KataController < ApplicationController
     time_limit = 15
     @traffic_lights,@new_files,@filenames_to_delete =
       @avatar.test(delta, visible_files, time_now, time_limit)
+    
+    tag = @traffic_lights.length
+    colour = @traffic_lights[0]['colour']
+    ChildProcess.exec { one_self.tested(@avatar,tag,colour) }
+      
     @output = visible_files['output']
     respond_to do |format|
       format.js { render layout: false }
