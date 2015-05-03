@@ -1,9 +1,6 @@
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Now all the output_parser tests have been refactored I should be able to rename
-parse_X to colour_of_X
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Should OneSelf calls be code fire-and-forget to avoid needless delay?
 
 # fire_and_forget.rb

@@ -82,7 +82,7 @@ class Language
   end
 
   def colour(output)
-    OutputParser.colour(unit_test_framework, output)
+    OutputColour.of(unit_test_framework, output)
   end
 
   def after_test(dir, visible_files)

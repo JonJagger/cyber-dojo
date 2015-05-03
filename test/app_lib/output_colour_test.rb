@@ -2,7 +2,7 @@
 
 require_relative './app_lib_test_base'
 
-class OutputTests < AppLibTestBase
+class OutputColourTests < AppLibTestBase
 
   def setup
     super
@@ -13,7 +13,7 @@ class OutputTests < AppLibTestBase
   
   test 'terminated by the server after n seconds gives timed_out colour ' do
     [1,5,10].each do |n|
-      assert_equal 'timed_out', OutputParser::colour('ignored', terminated(n))
+      assert_equal 'timed_out', OutputColour::of('ignored', terminated(n))
     end
   end
 
@@ -27,9 +27,9 @@ class OutputTests < AppLibTestBase
         dir = disk[path]
         dir.each_file do |filename|
           output = dir.read(filename)
-          actual = OutputParser.colour(unit_test_framework, output)
+          actual = OutputColour::of(unit_test_framework, output)
           diagnostic = '' +
-            "OutputParser::colour(output)\n" +
+            "OutputColour::of(output)\n" +
             "  output read from: #{root}/#{unit_test_framework}/#{expected}/#{filename}\n"
           assert_equal expected, actual, diagnostic
         end

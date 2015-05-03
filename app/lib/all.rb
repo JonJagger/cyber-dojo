@@ -9,7 +9,7 @@
   ReviewFilePicker
   PrevNextRing
   MakefileFilter 
-  OutputParser 
+  OutputColour 
   TdGapper
 }.each { |sourcefile| require_relative './' + sourcefile }
 

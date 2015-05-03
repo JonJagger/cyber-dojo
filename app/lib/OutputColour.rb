@@ -1,12 +1,12 @@
 
-module OutputParser
+module OutputColour
 
   #  'red'   - the tests ran but at least one failed
   #  'amber' - the tests could not be run (eg syntax error)
   #  'green' - the tests ran and all passed
   #  'timed_out' - the tests did not complete in time
 
-  def self.colour(unit_test_framework, output)
+  def self.of(unit_test_framework, output)
     if Regexp.new('Unable to complete the test').match(output)
       'timed_out'
     else
@@ -208,7 +208,7 @@ module OutputParser
       'groovy\.lang',
       'MultipleCompilationErrorsException'
     ]
-    return :amber if amber_patterns.any?{ |pattern| Regexp.new(pattern).match(output) }
+    return :amber if amber_patterns.any? { |pattern| Regexp.new(pattern).match(output) }
     return :red
   end
 
