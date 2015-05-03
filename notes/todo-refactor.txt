@@ -1,34 +1,16 @@
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Should OneSelf calls be code fire-and-forget to avoid needless delay?
-
-# fire_and_forget.rb
-module FireAndForget
-  def forked(&block)
-    pid = Process.fork
-    if pid.nil?  # child
-      block.call
-      exit
-    else # parent
-      Process.detach(pid)
-    end
-  end
-end
-
-class SetupController
-  include FireAndForget
-  def save
-    ...
-    forked do; OneSelf.new.created(kata.id, latitude, longtitude); end
-    ...
-  end
-end
+Figure out how to add Enumerable to Languages/Exercises/Katas
+and then drop .each eg in
+app/controllers/setup_worker.rb
+languages/cache.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 When I support 100 avatars in a cyber-dojo determining which
 avatars have started, and hence which are left, when starting
 a new avatar will get slow.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 make ExternalParentChain do this?
@@ -57,8 +39,8 @@ to
 Provide one_self secrets via ENV[]
 Use ram-disk and drop FakeDir FakeDir?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-When you resize the edit textarea you cannot (manually) resize the linenumbers
-textarea to its left. You used to be able to do this. Why is the linenumbers
+When you resize the edit textarea you cannot (manually) resize the line-numbers
+textarea to its left. You used to be able to do this. Why is the line-numbers
 textarea no longer resizable?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Reinstate the re-enter button...
@@ -94,11 +76,6 @@ Rename starting files as starter.*
 
 
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Figure out how to add Enumerable to Languages/Exercises/Katas
-and then drop .each eg in
-app/controllers/setup_worker.rb
-languages/cache.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dashboard page: summary of timeouts is wrong. Eg
 http://citigroup.cyber-dojo.org/dashboard/show/E1E9D08B5A?minute_columns=true&auto_refresh=false
