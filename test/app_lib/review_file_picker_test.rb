@@ -6,6 +6,11 @@ class ReviewFilePickerTests < AppLibTestBase
 
   include ReviewFilePicker
 
+  def setup
+    super
+    @n = -1
+  end
+
   #------------------------------------------------------------------
 
   test 'when current_filename has diffs it is chosen '+
@@ -101,12 +106,8 @@ class ReviewFilePickerTests < AppLibTestBase
       (@picked = diff('cyber-dojo.sh',0,0,'145345'))
     assert_picked
   end
-
+  
   #------------------------------------------------------------------
-
-  def setup
-    @n = -1
-  end
 
   def diff(filename,dc,ac,content='')
     @n += 1

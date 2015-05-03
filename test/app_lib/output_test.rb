@@ -22,17 +22,15 @@ class OutputTests < AppLibTestBase
   test 'all saved TestRunner outputs are correctly coloured red/amber/green' do
     root = test_output_path
     disk[root].each_dir do |unit_test_framework|
-      ['red','amber','green'].each do |colour|
-        path = "#{root}/#{unit_test_framework}/#{colour}"
+      ['red','amber','green'].each do |expected|
+        path = "#{root}/#{unit_test_framework}/#{expected}"
         dir = disk[path]
         dir.each_file do |filename|
-          expected = colour.to_sym
-          method_name = 'parse_' + unit_test_framework
           output = dir.read(filename)
-          actual = OutputParser.send(method_name, output)
+          actual = OutputParser.colour(unit_test_framework, output)
           diagnostic = '' +
-            "OutputParser::parse_#{unit_test_framework}(output)\n" +
-            "  output read from: #{root}/#{unit_test_framework}/#{colour}/#{filename}\n"
+            "OutputParser::colour(output)\n" +
+            "  output read from: #{root}/#{unit_test_framework}/#{expected}/#{filename}\n"
           assert_equal expected, actual, diagnostic
         end
       end
