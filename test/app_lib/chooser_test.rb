@@ -34,12 +34,12 @@ class ChooseTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when id is given and katas[id].exists? but language is unknown' +
-       ' then choose random known language' do
-    test_languages_names.each do |language|
-      languages = test_languages_names - [language]
-      assert !languages.include?(language)
-      kata = make_kata(unique_id, language, 'Fizz_Buzz')
+  test "when id is given and katas[id].exists? but kata's language is unknown" +
+       ' then choose random language' do
+    test_languages_names.each do |unknown_language|
+      languages = test_languages_names - [unknown_language]
+      assert !languages.include?(unknown_language)
+      kata = make_kata(unique_id, unknown_language, test_exercises_names.shuffle[0])
       assert kata.exists?, "kata.exists?"
       assert_is_randomly_chosen_language(languages, kata.id, katas)
     end
@@ -47,37 +47,37 @@ class ChooseTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when id is given and katas[id].exists? but exercise is unknown' +
-       ' then choose random known exercise' do
-    test_exercises_names.each do |exercise|
-      exercises = test_exercises_names - [exercise]
-      assert !exercises.include?(exercise)
-      kata = make_kata(unique_id, 'Ruby-TestUnit', exercise)
-      assert kata.exists?
+  test "when id is given and katas[id].exists? but kata's exercise is unknown" +
+       ' then choose random exercise' do
+    test_exercises_names.each do |unknown_exercise|
+      exercises = test_exercises_names - [unknown_exercise]
+      assert !exercises.include?(unknown_exercise)
+      kata = make_kata(unique_id, test_languages_names.shuffle[0], unknown_exercise)
+      assert kata.exists?, "kata.exists?"
       assert_is_randomly_chosen_exercise(exercises, kata.id, katas)
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  # This fails because of language-test changes
-  #test 'when id and katas[id].exists? and language is known' +
-  #     ' then choose that language' do
-  #  test_languages_names.each_with_index do |language,n|
-  #    kata = make_kata(unique_id, language, 'Fizz_Buzz')
-  #    assert kata.exists?
-  #    (1..42).each do
-  #      assert_equal n, choose_language(test_languages_names, kata.id, katas), language
-  #    end
-  #  end
-  #end
+  test "when id is given and katas[id].exists? and kata's language is known" +
+       ' then choose that language' do
+    commad = test_languages_names.map{ |name| name.split('-').join(', ') }
+    test_languages_names.each_with_index do |language,n|
+      kata = make_kata(unique_id, language, test_exercises_names.shuffle[0])
+      assert kata.exists?
+      (1..42).each do
+        assert_equal n, choose_language(commad, kata.id, katas), language
+      end
+    end
+  end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when id and katas[id].exists? and exercise is known' +
+  test "when id is given and katas[id].exists? and kata's exercise is known" +
        ' then choose that exercise' do
     test_exercises_names.each_with_index do |exercise,n|
-      kata = make_kata(unique_id, 'Ruby-TestUnit', exercise)
+      kata = make_kata(unique_id, test_languages_names.shuffle[0], exercise)
       assert kata.exists?
       (1..42).each do
         assert_equal n, choose_exercise(test_exercises_names, kata.id, katas)
@@ -119,8 +119,8 @@ class ChooseTests < AppLibTestBase
 
   def test_languages_names
     [ 'C#-NUnit',
-      'g++4.8.1-GoogleTest',
-      'Ruby1.9.3-TestUnit',
+      'C++-GoogleTest',
+      'Ruby-Test::Unit',
       'Java-JUnit'
     ].sort
   end
