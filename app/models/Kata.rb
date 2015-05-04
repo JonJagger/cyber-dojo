@@ -15,6 +15,10 @@ class Kata
     @parent.path + outer(id) + '/' + inner(id) + '/'
   end
 
+  def avatars
+    Avatars.new(self)
+  end
+
   def start_avatar(avatar_names = Avatars.names.shuffle)
     free_names = avatar_names - avatars.names
     if free_names != [ ]
@@ -32,15 +36,17 @@ class Kata
     avatars.active.count > 0
   end
 
-  def avatars
-    Avatars.new(self)
-  end
-
   def age(now = Time.now.to_a[0..5].reverse)
     return 0 if !active?
     return (Time.mktime(*now) - earliest_light).to_i
   end
 
+  def expired?(now = Time.now.to_a[0..5].reverse)
+    return false if !active?
+    seconds_per_pay = 24 * 60 * 60    
+    return age(now) >= seconds_per_pay
+  end
+  
   def created
     Time.mktime(*manifest_property)
   end

@@ -1,8 +1,30 @@
 
+
+Cut from http://blog.cyber-dojo.org/2014/09/adding-new-language-and-unit-test-to-cyber-dojo.html
+<br>
+<br>
+<h2>check your output parse function</h2>
+For example
+    <div class="bash">
+    $ cd /var/www/cyber-dojo/test/languages
+    $ ./check_one_language.rb Lisp-2.3_LUnit
+    </div>
+
+You want output like this:
+    <div class="bash">
+    ...Lisp-2.3_LUnit --> ["red", "amber", "green"] ==> PASS
+    </div>
+
+
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 When I support 100 avatars in a cyber-dojo determining which
 avatars have started, and hence which are left, when starting
 a new avatar will get slow.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Kata.start_avatar
+  needs to do dir.lock do...end
+  to ensure you don't get two avatars with the same name.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
@@ -137,8 +159,6 @@ Provide a URL next to exercise? list instead
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 In switching to new externals setting the following tests needed refactoring
-test/app_helpers/test_pie_chart.rb
-test/app_lib/test_chooser.rb
 test/integration/integration_test_base.rb
 test/integration/test_approval.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -198,12 +218,6 @@ On setup page could also change exercises? to kata?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 If hover-tip is visible and you switch to a different browser
 tab then when you return the hover-tip is still visible.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Kata.start_avatar
-  needs to do dir.lock do...end
-  to ensure you don't get two avatars with the same name.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Why does Language.rb display_name have a default? 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 

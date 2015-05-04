@@ -7,11 +7,9 @@ class KataTests < ModelTestBase
   def setup
     super
     assert_equal 'Disk', get_disk_class_name
-    @id = unique_id
-    @kata = katas[@id]
   end
   
-  test 'attempting to create a Kata with an invalid id raises' do
+  test 'attempting to create a Kata with an invalid id raises a RuntimeError' do
     bad_ids = [
       nil,          # not string
       Object.new,   # not string
@@ -28,59 +26,86 @@ class KataTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'id reads back as set' do
-    assert_equal @id, @kata.id
+    id = unique_id
+    kata = katas[id]    
+    assert_equal id, kata.id
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'path format basics' do
-    assert path_ends_in_slash?(@kata)
-    assert path_has_no_adjacent_separators?(@kata)
+    id = unique_id
+    kata = katas[id]        
+    assert path_ends_in_slash?(kata)
+    assert path_has_no_adjacent_separators?(kata)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'path is split ala git' do
-    assert @kata.path.include?(@kata.id[0..1])
-    assert @kata.path.include?(@kata.id[2..-1])
+    id = unique_id
+    kata = katas[id]        
+    assert kata.path.include?(kata.id[0..1])
+    assert kata.path.include?(kata.id[2..-1])
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test 'when kata does exist it is not active and its age is zero' do
-    assert !@kata.exists?
-    assert !@kata.active?
-    assert_equal 0, @kata.age
+  test 'exists? is false before dir is made' do
+    id = unique_id
+    kata = katas[id]        
+    assert !kata.exists?
+    kata.dir.make
+    assert kata.exists?
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test 'when kata does not exist' +
+       ' then it is not active' +
+       ' and it has not expired' +
+       ' and its age is zero' do
+    id = unique_id
+    kata = katas[id]             
+    assert !kata.exists?
+    assert !kata.active?
+    assert !kata.expired?
+    assert_equal 0, kata.age
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when kata exists but has no avatars ' +
-       'then it is not active ' +
-       'and its age is zero' do
+  test 'when kata exists but has no avatars' +
+       ' then it is not active ' +
+       ' and it has not expired ' +
+       ' and its age is zero' do
     kata = make_kata
     assert kata.exists?
     assert !kata.active?
+    assert !kata.expired?
     assert_equal 0, kata.age
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test 'when kata exists but all its avatars have 0 traffic-lights ' +
-       'then it is not active ' +
-       'and its age is zero' do
+  test 'when kata exists but all its avatars have 0 traffic-lights' +
+       ' then it is not active ' +
+       ' and it has not expired' +
+       ' and its age is zero' do
     kata = make_kata
     kata.start_avatar(['hippo'])
     kata.start_avatar(['lion'])
     assert !kata.active?
+    assert !kata.expired?
     assert_equal 0, kata.age
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test 'when kata exists and at least one avatar has 1 or more traffic-lights ' +
-       'then kata is active ' +
-       'and age is from earliest traffic-light to now' do
+  test 'when kata exists and at least one avatar has 1 or more traffic-lights' +
+       ' then kata is active ' +
+       ' and age is from earliest traffic-light to now' +
+       ' and expires when age >= 1 day' do
     kata = make_kata
     hippo = kata.start_avatar(['hippo'])
     lion = kata.start_avatar(['lion'])
@@ -102,21 +127,27 @@ class KataTests < ModelTestBase
     lion.dir.write('increments.json', [first])
 
     assert kata.active?
-    now = first["time"]
-    now[5] += 17
+    now = first['time']
+    now[seconds=5] += 17
+    assert !kata.expired?(now), "!kata.expired?(one-second-old)"
     assert_equal 17, kata.age(now)
+
+    now = first['time']
+    now[minutes=4] += 1
+    assert !kata.expired?(now), "!kata.expired?(one-minute-old)"
+    
+    now = first['time']
+    now[hours=3] += 1
+    assert !kata.expired?(now), "!kata.expired?(one-hour-old)"
+    
+    now = first['time']
+    now[days=2] += 1
+    assert kata.expired?(now), "kata.expired?(one-day-old)"
+    
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'exists? is false before dir is made' do
-    assert !@kata.exists?
-    @kata.dir.make
-    assert @kata.exists?
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  
   test 'make_kata with default-now uses-time-now' do
     now = Time.now
     kata = make_kata
@@ -141,8 +172,9 @@ class KataTests < ModelTestBase
     language = languages['Java-JUnit']
     exercise = exercises['Fizz_Buzz']
     now = [2014,7,17,21,15,45]
-    kata = katas.create_kata(language, exercise, @id, now)
-    assert_equal @id, kata.id.to_s
+    id = unique_id
+    kata = katas.create_kata(language, exercise, id, now)
+    assert_equal id, kata.id.to_s
     assert_equal Time.mktime(*now), kata.created
     assert_equal language.name, kata.language.name
     assert_equal exercise.name, kata.exercise.name
@@ -180,6 +212,7 @@ class KataTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test 'start_avatar succeeds once for each avatar name then fails' do
+    # using DiskFake/DirFake here would be good...
     kata = make_kata
     created = [ ]
     Avatars.names.length.times do |n|
@@ -191,5 +224,5 @@ class KataTests < ModelTestBase
     avatar = kata.start_avatar
     assert_nil avatar
   end
-      
+     
 end

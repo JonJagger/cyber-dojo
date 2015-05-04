@@ -19,13 +19,13 @@ $(function() {
     $('#' + name).text(n());    
   };
 
-  if (age > secondsPerDay) {
+  if (age >= secondsPerDay) {
     display('days', secondsPerDay, 1e10);
   }
-  if (age > secondsPerHour) {
+  if (age >= secondsPerHour) {
     display('hours', secondsPerHour, hoursPerDay);
   }
-  if (age > secondsPerMinute) {
+  if (age >= secondsPerMinute) {
     display('minutes', secondsPerMinute, minutesPerHour);
   }
   if (age > 0) {
