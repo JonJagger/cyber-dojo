@@ -30,12 +30,11 @@ class LanguagesTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - -
 
   test 'each() empty' do
-    set_disk_class_name('DiskFake')
     assert_equal [], languages.each.map {|language| language.name}
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - -
-  
+
   test 'each() not empty' do
     set_runner_class_name('StubTestRunner')
     dojo.runner.stub_runnable(true)
@@ -46,7 +45,18 @@ class LanguagesTests < ModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
-
+  
+  test 'is Enumerable, eg each() not needed if doing a map' do
+    set_runner_class_name('StubTestRunner')
+    dojo.runner.stub_runnable(true)
+    languages_names = languages.map {|language| language.name}
+    ['C#-NUnit','Ruby-Test::Unit'].each do |name|
+      assert languages_names.include? name
+    end        
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - -
+  
   test 'languages[X] is language named X' do
     ['C-assert','C#-NUnit'].each do |name|
       assert_equal name, languages[name].name

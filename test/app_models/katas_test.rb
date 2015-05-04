@@ -41,6 +41,15 @@ class KatasTests < ModelTestBase
   end
 
   #- - - - - - - - - - - - - - - -
+  
+  test 'is Enumerable, eg each not needed if doing map' do
+    kata1 = make_kata
+    kata2 = make_kata
+    ids = katas.map{|kata| kata.id.to_s.gsub('/','') }
+    assert_equal [kata1.id.to_s,kata2.id.to_s].sort, ids.sort    
+  end
+
+  #- - - - - - - - - - - - - - - -
 
   test 'complete(id=nil) is ""' do
     assert_equal "", katas.complete(nil)

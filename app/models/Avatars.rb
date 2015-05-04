@@ -1,5 +1,6 @@
 
 class Avatars
+  include Enumerable
 
   def self.names
       %w(
@@ -26,16 +27,16 @@ class Avatars
     end
   end
 
-  def active
-    each.select{ |avatar| avatar.active? }
-  end
-
-  def names
-    each.collect{ |avatar| avatar.name }
-  end
-  
   def [](name)
     Avatar.new(@parent,name)
   end
 
+  def active
+    select{ |avatar| avatar.active? }
+  end
+
+  def names
+    collect{ |avatar| avatar.name }
+  end
+  
 end

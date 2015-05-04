@@ -2,6 +2,7 @@
 
 class Katas
   include ExternalParentChain
+  include Enumerable
   
   def initialize(dojo,path)
     @parent,@path = dojo,path
@@ -52,20 +53,6 @@ class Katas
     end
   end
 
-  def complete(id)
-    if !id.nil? && id.length >= 4
-      id.upcase!
-      inner_dir = disk[path + id[0..1]]
-      if inner_dir.exists?
-        dirs = inner_dir.each_dir.select { |outer_dir|
-          outer_dir.start_with?(id[2..-1])
-        }
-        id = id[0..1] + dirs[0] if dirs.length === 1
-      end
-    end
-    id || ''
-  end
-
   def [](id)
     Kata.new(self,id)
   end
@@ -78,6 +65,20 @@ class Katas
 
   def exists?(id)
     valid?(id) && self[id].exists?
+  end
+
+  def complete(id)
+    if !id.nil? && id.length >= 4
+      id.upcase!
+      inner_dir = disk[path + id[0..1]]
+      if inner_dir.exists?
+        dirs = inner_dir.each_dir.select { |outer_dir|
+          outer_dir.start_with?(id[2..-1])
+        }
+        id = id[0..1] + dirs[0] if dirs.length === 1
+      end
+    end
+    id || ''
   end
 
 private

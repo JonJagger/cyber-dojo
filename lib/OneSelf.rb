@@ -87,7 +87,7 @@ private
     { 'Content-Type' =>'application/json', 'Authorization' => authorization }
   end
     
-  # below are temporary, need to come from ENV[]
+  # below need to come from ENV[]
   
   def app_key 
     'app-id-9bb5f1c77f0df722a9b1bc650a41988a'

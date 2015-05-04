@@ -1,10 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Figure out how to add Enumerable to Languages/Exercises/Katas
-and then drop .each eg in
-app/controllers/setup_worker.rb
-languages/cache.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 When I support 100 avatars in a cyber-dojo determining which
 avatars have started, and hence which are left, when starting
 a new avatar will get slow.
@@ -18,10 +13,10 @@ make ExternalParentChain do this?
   end
 Dojo.rb do this
   def git
-    @git ||= Git.new
+    @git ||= GitPather.new
   end
 and
-  class Git
+  class GitPather
     def [](path)
       env = 'CYBER_DOJO_GIT_CLASS_NAME'
       Object.const_get(env).new(self,path)

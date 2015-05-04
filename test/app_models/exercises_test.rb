@@ -45,6 +45,15 @@ class ExercisesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'is Enumerable, eg each() not needed if doing a map' do
+    exercises_names = exercises.map {|exercise| exercise.name}
+    ['Unsplice','Verbal','Fizz_Buzz'].each do |name|
+      assert exercises_names.include? name
+    end    
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'exercises[X] is exercise named X' do
     name = 'Print_Diamond'
     assert_equal name, exercises[name].name

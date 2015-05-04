@@ -9,7 +9,7 @@ module SetupWorker # mixin
       # languages/cache.json is created with languages/cache.rb
       read = JSON.parse(dir.read(cache_filename))
     else
-      read = languages.each.select{ |language|
+      read = languages.select{ |language|
         language.runnable?
       }.map{ |language|
         language.display_name
@@ -26,7 +26,7 @@ module SetupWorker # mixin
       exercises_names = cache.map{|one| one[0]}
       instructions = Hash[cache]
     else
-      exercises_names = exercises.each.map{ |exercise|
+      exercises_names = exercises.map{ |exercise|
         exercise.name
       }.sort
       instructions = Hash[exercises_names.collect{ |name|

@@ -4,7 +4,7 @@ require_relative 'lib_domain'
 
 dojo = create_dojo
 
-exercises_names = dojo.exercises.each.collect {|exercise| exercise.name}
+exercises_names = dojo.exercises.collect {|exercise| exercise.name}
 
 puts
 renamed,rest,totals = { },{ },{ }

@@ -1,6 +1,7 @@
 
 class Exercises
   include ExternalParentChain
+  include Enumerable
   
   def initialize(dojo,path)
     @parent,@path = dojo,path

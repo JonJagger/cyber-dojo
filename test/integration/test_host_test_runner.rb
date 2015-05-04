@@ -5,7 +5,7 @@ require_relative 'integration_test_base'
 class HostTestRunnerTests < IntegrationTestBase
 
   test "HostTestRunner says it can run any language" do
-    languages = @dojo.languages.each.entries
+    languages = @dojo.languages.entries
     languages_names = languages.map{|language| language.display_name}.sort
     
     expected = [ 

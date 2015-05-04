@@ -54,7 +54,7 @@ class AvatarTests < IntegrationTestBase
       :new => [ ]
      }
     avatar.test(delta, visible_files) # tag 2
-    traffic_lights = avatar.lights.each.entries
+    traffic_lights = avatar.lights.entries
     assert_equal 2, traffic_lights.length
     diff = avatar.diff(1,2)
     added_line =

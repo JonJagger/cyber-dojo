@@ -1,21 +1,21 @@
 # comments at end of file
 
 class Tags
-  include Enumerable
   include ExternalParentChain
+  include Enumerable
 
   def initialize(avatar)
     @parent = avatar
   end
 
-  def [](n)
-    n = length+n if n < 0
-    Tag.new(@parent,n)
-  end
-
   def each
     return enum_for(:each) unless block_given?
     (0...length).each { |n| yield Tag.new(self,n) }
+  end
+
+  def [](n)
+    n = length+n if n < 0
+    Tag.new(@parent,n)
   end
 
   def length

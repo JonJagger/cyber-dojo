@@ -55,7 +55,7 @@ private
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# External paths/objects are set via environment variables.
+# External paths/class-names are set via environment variables.
 # See config/initializers/cyber_dojo.rb
 # See config/application.rb (config.before_configuration)
 #
