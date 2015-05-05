@@ -63,13 +63,13 @@ class KataTests < ModelTestBase
   
   test 'when kata does not exist' +
        ' then it is not active' +
-       ' and it has not expired' +
+       ' and it has not finished' +
        ' and its age is zero' do
     id = unique_id
     kata = katas[id]             
     assert !kata.exists?
     assert !kata.active?
-    assert !kata.expired?
+    assert !kata.finished?
     assert_equal 0, kata.age
   end
 
@@ -77,12 +77,12 @@ class KataTests < ModelTestBase
 
   test 'when kata exists but has no avatars' +
        ' then it is not active ' +
-       ' and it has not expired ' +
+       ' and it has not finished ' +
        ' and its age is zero' do
     kata = make_kata
     assert kata.exists?
     assert !kata.active?
-    assert !kata.expired?
+    assert !kata.finished?
     assert_equal 0, kata.age
   end
 
@@ -90,13 +90,13 @@ class KataTests < ModelTestBase
   
   test 'when kata exists but all its avatars have 0 traffic-lights' +
        ' then it is not active ' +
-       ' and it has not expired' +
+       ' and it has not finished' +
        ' and its age is zero' do
     kata = make_kata
     kata.start_avatar(['hippo'])
     kata.start_avatar(['lion'])
     assert !kata.active?
-    assert !kata.expired?
+    assert !kata.finished?
     assert_equal 0, kata.age
   end
 
@@ -105,7 +105,7 @@ class KataTests < ModelTestBase
   test 'when kata exists and at least one avatar has 1 or more traffic-lights' +
        ' then kata is active ' +
        ' and age is from earliest traffic-light to now' +
-       ' and expires when age >= 1 day' do
+       ' and finishes when age >= 1 day' do
     kata = make_kata
     hippo = kata.start_avatar(['hippo'])
     lion = kata.start_avatar(['lion'])
@@ -129,20 +129,20 @@ class KataTests < ModelTestBase
     assert kata.active?
     now = first['time']
     now[seconds=5] += 17
-    assert !kata.expired?(now), "!kata.expired?(one-second-old)"
+    assert !kata.finished?(now), "!kata.finished?(one-second-old)"
     assert_equal 17, kata.age(now)
 
     now = first['time']
     now[minutes=4] += 1
-    assert !kata.expired?(now), "!kata.expired?(one-minute-old)"
+    assert !kata.finished?(now), "!kata.finished?(one-minute-old)"
     
     now = first['time']
     now[hours=3] += 1
-    assert !kata.expired?(now), "!kata.expired?(one-hour-old)"
+    assert !kata.finished?(now), "!kata.finished?(one-hour-old)"
     
     now = first['time']
     now[days=2] += 1
-    assert kata.expired?(now), "kata.expired?(one-day-old)"
+    assert kata.finished?(now), "kata.finished?(one-day-old)"
     
   end
 

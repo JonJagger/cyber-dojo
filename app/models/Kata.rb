@@ -41,7 +41,7 @@ class Kata
     return (Time.mktime(*now) - earliest_light).to_i
   end
 
-  def expired?(now = Time.now.to_a[0..5].reverse)
+  def finished?(now = Time.now.to_a[0..5].reverse)
     return false if !active?
     seconds_per_pay = 24 * 60 * 60    
     return age(now) >= seconds_per_pay
