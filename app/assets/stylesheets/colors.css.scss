@@ -2,6 +2,7 @@
 $black: #000;
 $darker-color: lighten($black, 40%);
 $lighter-color: lighten(Khaki, 10%);
+$text-color: darken($lighter-color, 10%);
 
 $red: #F00;
 $amber: #FF0;
@@ -14,5 +15,6 @@ $green: #0F0;
 
 $diff-added-color: lighten($green, 25%);
 $diff-deleted-color: lighten($red, 35%);
+
 
 $thin-space: "\2009";

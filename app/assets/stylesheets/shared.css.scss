@@ -12,6 +12,18 @@
 
 //----------------------------------------------
 
+a:link, a:visited
+{
+  color: $text-color;
+}
+
+[data-cursor=pointer]
+{
+  cursor: pointer;
+}
+
+//----------------------------------------------
+
 @mixin edged-panel 
 {
   display: inline-block;

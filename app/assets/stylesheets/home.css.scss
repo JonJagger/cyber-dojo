@@ -1,6 +1,4 @@
 
-$text-color: darken($lighter-color, 10%);
-
 #home-page {
 
   font-size: 1.15em;
@@ -143,14 +141,4 @@ $text-color: darken($lighter-color, 10%);
     }
   }
   
-}
-
-a:link, a:visited
-{
-  color: $text-color;
-}
-
-[data-cursor=pointer]
-{
-  cursor: pointer;
 }
