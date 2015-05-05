@@ -1,14 +1,20 @@
 
 $text-color: darken($lighter-color, 10%);
 
-#globe { border: 0; }
-
 #home-page {
-  
+
   font-size: 1.15em;
 
   margin-top: 25px;
   margin-left: 0px;
+  
+  #globe, #custom {
+    border: 0; 
+    position: absolute;
+    left: 850px;    
+  }
+  #globe  { top:  50px; }
+  #custom { top: 325px; }
   
   #cyber-dojo {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
@@ -142,13 +148,6 @@ $text-color: darken($lighter-color, 10%);
 a:link, a:visited
 {
   color: $text-color;
-}
-
-#custom
-{
-  position: absolute;
-  top: 50px;
-  left: 850px;
 }
 
 #get_a_new_practice_id

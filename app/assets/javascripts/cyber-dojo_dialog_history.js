@@ -5,11 +5,17 @@ var cyberDojo = (function(cd, $) {
 
   // Arguably, the history would be better as it own page rather
   // than a dialog. That would help google searchability and
-  // analytics etc. I use a dialog because of revert.
+  // analytics and useability and restfulness etc. 
+  // I use a dialog because of revert.
   // When revert is clicked it has to be for a *specific*
   // animal and it has to revert their code! As a dialog,
   // the revert has access to animal's code on the page
   // from which the history-dialog opened.
+  // An alternative would be to do a post for the animal
+  // and then get the server to push a notification to the
+  // animal or get the animl to poll an update from the server.
+  // The test post does not know the tag number of the test
+  // so this might be doable.
 
   cd.td = function(html) {
 	  return '<td>' + html + '</td>';
