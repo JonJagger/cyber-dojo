@@ -7,11 +7,10 @@
   margin-left: 0px;
   
   #globe-container, #custom-container {
-    border: 0; 
     position: absolute;
     left: 850px;    
   }
-  #globe-container  { top:  50px; }
+  #globe-container  { top:  50px; #globe { border: 0; } }
   #custom-container { top: 350px; }
   
   #cyber-dojo {
