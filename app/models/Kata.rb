@@ -43,8 +43,8 @@ class Kata
 
   def finished?(now = Time.now.to_a[0..5].reverse)
     return false if !active?
-    seconds_per_pay = 24 * 60 * 60    
-    return age(now) >= seconds_per_pay
+    seconds_per_day = 60 * 60 * 24
+    return age(now) >= seconds_per_day
   end
   
   def created
