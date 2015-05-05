@@ -150,18 +150,6 @@ a:link, a:visited
   color: $text-color;
 }
 
-#get_a_new_practice_id
-{
-  color: $text-color;
-  @include font-size-tiny();
-}
-
-#enter_the_practice_id
-{
-  color: lighten($green, 30%);
-  @include font-size-small();
-}
-
 #full_dojo_text, #empty_dojo_text
 {
   color: $darker-color;
