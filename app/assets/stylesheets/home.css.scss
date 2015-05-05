@@ -6,13 +6,13 @@
   margin-top: 25px;
   margin-left: 0px;
   
-  #globe, #custom {
+  #globe-container, #custom-container {
     border: 0; 
     position: absolute;
     left: 850px;    
   }
-  #globe  { top:  50px; }
-  #custom { top: 325px; }
+  #globe-container  { top:  50px; }
+  #custom-container { top: 350px; }
   
   #cyber-dojo {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
