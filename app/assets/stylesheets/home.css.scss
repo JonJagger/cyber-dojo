@@ -150,12 +150,6 @@ a:link, a:visited
   color: $text-color;
 }
 
-#full_dojo_text, #empty_dojo_text
-{
-  color: $darker-color;
-  @include font-size-medium();
-}
-
 [data-cursor=pointer]
 {
   cursor: pointer;
