@@ -27,19 +27,22 @@ class DockerTestRunner
     cidfile = Dir::Tmpname.create(['cidfile', '.txt']) {}
 
     language = sandbox.avatar.kata.language
+    language_volume = "#{language.path}:#{language.path}:#{read_only}"
+    sandbox_volume = "#{sandbox.path}:/sandbox:#{read_write}"
+    
     docker_command =
       "docker run" +
         " -u www-data" +
         " --net=#{quoted('none')}" +
         " --cidfile=#{quoted(cidfile)}" +
-        " -v #{sandbox.path}:/sandbox:#{read_write}" +
-        " -v #{language.path}:#{language.path}:#{read_only}" +
+        " -v #{quoted(language_volume)}" +
+        " -v #{quoted(sandbox_volume)}" +
         " -w /sandbox" +
         " #{language.image_name}" +
         " /bin/bash -c" +
         " #{quoted(command)}"
+        
     outer_command = timeout(docker_command,max_seconds+5)
-
     output = `#{outer_command}`
     exit_status = $?.exitstatus
 

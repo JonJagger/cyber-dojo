@@ -78,15 +78,16 @@ private
       # replaced
       'R-stopifnot' => 'R-RUnit',
       
-      # multiple versions
-      'C++-assert'     => 'g++4.8.1-assert',
-      'C++-Boost.Test' => 'g++4.8.1-Boost.Test',
-      'C++-Catch'      => 'g++4.8.1-Catch',
-      'C++-CppUTest'   => 'g++4.8.1-CppUTest',
-      'C++-GoogleTest' => 'g++4.8.1-GoogleTest',
-      'C++-Igloo'      => 'g++4.8.1-Igloo',
-      'C++-GoogleMock' => 'g++4.9-GoogleMock',
+      # rename to distinguish from clang++
+      'C++-assert'     => 'C++ (g++)-assert',
+      'C++-Boost.Test' => 'C++ (g++)-Boost.Test',
+      'C++-Catch'      => 'C++ (g++)-Catch',
+      'C++-CppUTest'   => 'C++ (g++)-CppUTest',
+      'C++-GoogleTest' => 'C++ (g++)-GoogleTest',
+      'C++-Igloo'      => 'C++ (g++)-Igloo',
+      'C++-GoogleMock' => 'C++ (g++)-GoogleMock',
 
+      # multiple versions
       'C++ (g++)-assert'     => 'g++4.8.1-assert',
       'C++ (g++)-Boost.Test' => 'g++4.8.1-Boost.Test',
       'C++ (g++)-Catch'      => 'g++4.8.1-Catch',
