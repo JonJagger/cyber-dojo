@@ -3,7 +3,8 @@ MAINTAINER Byran Wills-Heath <byran@adgico.co.uk>
 
 RUN apt-get install -y libgtest-dev
 RUN apt-get install -y cmake
-RUN cd /usr/src/gtest && cmake .
-RUN cd /usr/src/gtest && make
-RUN cd /usr/src/gtest && mv libg* /usr/lib
+WORKDIR /usr/src/gtest
+RUN cmake .
+RUN make
+RUN mv libg* /usr/lib
 
