@@ -33,6 +33,9 @@ class Languages
 private
 
   def new_name(name)    
+    # maps from a language&test display_name into a 
+    # Language-Test name corresponding to its Language/Test/ folder
+    # See comment at bottom of file.
     renames = {
       # from way back when test name was not part of language name
       'BCPL'         => 'BCPL-all_tests_passed',
@@ -89,9 +92,6 @@ private
       'Ruby-TestUnit'      => 'Ruby1.9.3-TestUnit',
       'Ruby-Rspec'         => 'Ruby1.9.3-Rspec',
       'Ruby-MiniTest'      => 'Ruby2.1.3-MiniTest',
-
-      # clang
-      'C++ (Sanitized)-GoogleTest' => 'Clang3.6.0-GoogleTest',
     }
     (renames[name] || name).split('-')
   end
@@ -117,6 +117,47 @@ private
 
 end
 
+# - - - - - - - - - - - - - - - - - - - - - - - -
+# Upgrading? Multiple language versions?
+# - - - - - - - - - - -  - - - - - - - -
+# It's common to want to add a new test-framework to
+# an existing language and, when doing this, to take
+# advantage of upgrading the language to a newer version.
+#
+# For example 
+#    Ruby1.9.3/Approval
+#    Ruby1.9.3/Cucumber
+#    Ruby1.9.3/Rspec
+#    Ruby1.9.3/TestUnit
+# existed when I wanted to add MiniTest as a new Ruby test-framework.
+# By then the latest Ruby version was 2.1.3 
+#    Ruby2.1.3/MiniTest
+#
+# I didn't want to have to upgrade the existing for Ruby test-frameworks
+# to Ruby2.1.3. This meant on the create page I wanted these different
+# Ruby test-frameworks (from two different versions of Ruby) to appear
+# under the *same* language name in the language? column. 
+# This is why a language/test's  manifest.json file has a display_name entry.
+# It is the display_name that governs the language/test's names as they appear
+# on the create page.
+#
+# Many people will have built their own cyber-dojo servers and might not want
+# or need to upgrade their servers to use the latest docker containers for
+# the latest language/test even if it exists.
+# This means the cyberdojo docker index needs to keep old versions of
+# language/test docker containers even when newer ones exist. 
+# Viz, a docker container name needs to have a version number in it.
+
+# Further, if you upgrade a language/test to a newer version
+# and delete the old version of the docker container from your server, 
+# you still want to be able to fork from a kata done in the old version.
+# And when you do such a fork you want the new kata to use the new version. 
+# So what is stored in the kata's manifest is *not* the docker container's
+# image_name but the display_name.
+# The renamed() function above maps the display_name
+# into a name in the form "Language-Test" which corresponds to its
+# Language/Test folder which in turn contains its manifest.json file.
+#
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # Some languages/ sub-folders have been renamed.
 # This creates a problem for practice-sessions done

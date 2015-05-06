@@ -108,5 +108,5 @@ end
 # if at least 4 characters of the id are
 # provided attempt to do id-completion
 # Doing completion with fewer characters would likely result
-# in a lot of disk activity and no unique outcome
+# in a lot of disk activity and no unique outcome.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

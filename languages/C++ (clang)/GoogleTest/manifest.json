@@ -8,7 +8,7 @@
     "cyber-dojo.sh"
   ],
   "filename_extension" : ".cpp",
-  "display_name": "C++ (Sanitized), GoogleTest",
+  "display_name": "C++ (clang), GoogleTest",
   "unit_test_framework": "google_test",
   "image_name": "cyberdojo/clang-3.6.0_googletest"
 }
