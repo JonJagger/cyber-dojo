@@ -78,7 +78,7 @@ private
       # replaced
       'R-stopifnot' => 'R-RUnit',
       
-      # rename to distinguish from clang++
+      # rename to distinguish from [C++ (clang++)]
       'C++-assert'     => 'C++ (g++)-assert',
       'C++-Boost.Test' => 'C++ (g++)-Boost.Test',
       'C++-Catch'      => 'C++ (g++)-Catch',
@@ -87,7 +87,7 @@ private
       'C++-Igloo'      => 'C++ (g++)-Igloo',
       'C++-GoogleMock' => 'C++ (g++)-GoogleMock',
 
-      # multiple versions
+      # multiple language versions (4.8.1 & 4.9)
       'C++ (g++)-assert'     => 'g++4.8.1-assert',
       'C++ (g++)-Boost.Test' => 'g++4.8.1-Boost.Test',
       'C++ (g++)-Catch'      => 'g++4.8.1-Catch',
@@ -96,6 +96,7 @@ private
       'C++ (g++)-Igloo'      => 'g++4.8.1-Igloo',
       'C++ (g++)-GoogleMock' => 'g++4.9-GoogleMock',
                   
+      # multiple language versions (1.9.3 & 2.1.3)
       'Ruby-Approval'      => 'Ruby1.9.3-Approval',
       'Ruby-Cucumber'      => 'Ruby1.9.3-Cucumber',
       'Ruby-TestUnit'      => 'Ruby1.9.3-TestUnit',
