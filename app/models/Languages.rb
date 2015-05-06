@@ -133,13 +133,13 @@ end
 # By then the latest Ruby version was 2.1.3 
 #    Ruby2.1.3/MiniTest
 #
-# I didn't want to have to upgrade the existing for Ruby test-frameworks
-# to Ruby2.1.3. This meant on the create page I wanted these different
+# I didn't want to have to upgrade the existing Ruby1.9.3 test-frameworks
+# to Ruby2.1.3. On the create page I wanted all the different
 # Ruby test-frameworks (from two different versions of Ruby) to appear
 # under the *same* language name in the language? column. 
 # This is why a language/test's  manifest.json file has a display_name entry.
 # It is the display_name that governs the language/test's names as they appear
-# on the create page.
+# on the create page. Not the folder names. Not the docker container image_name.
 #
 # Many people will have built their own cyber-dojo servers and might not want
 # or need to upgrade their servers to use the latest docker containers for
@@ -154,9 +154,16 @@ end
 # And when you do such a fork you want the new kata to use the new version. 
 # So what is stored in the kata's manifest is *not* the docker container's
 # image_name but the display_name.
+#
 # The renamed() function above maps the display_name
 # into a name in the form "Language-Test" which corresponds to its
 # Language/Test folder which in turn contains its manifest.json file.
+#
+# It's a bit fiddly because historically the language-&-test 
+# were *not* separated into distinct nestes folders. 
+# You can still see the remnants of this in the language/test/manifest.json's 
+# display_name which contains the display name of the *both* the language 
+# *and* the test-framework (separated by a comma)
 #
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # Some languages/ sub-folders have been renamed.
