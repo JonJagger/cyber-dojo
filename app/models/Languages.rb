@@ -86,7 +86,15 @@ private
       'C++-GoogleTest' => 'g++4.8.1-GoogleTest',
       'C++-Igloo'      => 'g++4.8.1-Igloo',
       'C++-GoogleMock' => 'g++4.9-GoogleMock',
-            
+
+      'C++ (g++)-assert'     => 'g++4.8.1-assert',
+      'C++ (g++)-Boost.Test' => 'g++4.8.1-Boost.Test',
+      'C++ (g++)-Catch'      => 'g++4.8.1-Catch',
+      'C++ (g++)-CppUTest'   => 'g++4.8.1-CppUTest',
+      'C++ (g++)-GoogleTest' => 'g++4.8.1-GoogleTest',
+      'C++ (g++)-Igloo'      => 'g++4.8.1-Igloo',
+      'C++ (g++)-GoogleMock' => 'g++4.9-GoogleMock',
+                  
       'Ruby-Approval'      => 'Ruby1.9.3-Approval',
       'Ruby-Cucumber'      => 'Ruby1.9.3-Cucumber',
       'Ruby-TestUnit'      => 'Ruby1.9.3-TestUnit',
