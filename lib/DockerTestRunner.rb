@@ -63,9 +63,9 @@ private
   include Cleaner
 
   def timeout(command,after)
-    # I put a timeout on the outer docker-run command and not on the
-    # inner bash -c command. The reason for this is security. If it 
-    # was on the inner bash -c command a determined attacker might
+    # I put a timeout on the outer docker-run command and not on 
+    # the inner bash -c command. This is for security. If it was
+    # on the inner bash -c command then a determined attacker might
     # kill the timeout but not the timed-task and thus acquire 
     # unlimited time to run any command.
     "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
@@ -108,8 +108,8 @@ end
 #    " -u www-data" +
 #    " --net=#{quoted('none')}" +
 #    " --cidfile=#{quoted(cidfile)}" +
-#    " -v #{sandbox.path}:/sandbox:#{read_write}" +
-#    " -v #{language.path}:#{language.path}:#{read_only}" +
+#    " -v #{quoted(language_volume)}" +
+#    " -v #{quoted(sandbox_volume)}" +
 #    " -w /sandbox" +
 #    " #{language.image_name}" +
 #    " /bin/bash -c" +
@@ -130,18 +130,18 @@ end
 #   that the docker container is always killed, even if the
 #   timeout occurs.
 #
-# -v #{sandbox.path}:/sandbox:#{read_write}
-#   Volume mount the animal's sandbox to /sandbox inside the container
-#   as a read-write folder. This provides isolation.
-#
-# -v #{language.path}:#{language.path}:#{read_only}
-#   Volume mount the language's folder to the same folder path+name
-#   inside the container. Intermediate folders are created as necessary
+# -v #{quoted(language_volume)}
+#   Volume mount the language's folder to the same folder inside
+#   the docker container. Intermediate folders are created as necessary
 #   (like mkdir -p). This provides access to supporting files which
 #   were sym-linked from the animal's sandbox when the animal started.
 #   Not all languages have symlinks but it's simpler to just do it anyway.
 #   Mounted as a read-only volume since these support files are shared
 #   by all animals in all katas that choose that language.
+#
+# -v #{quoted(sandbox_volume)}
+#   Volume mount the animal's sandbox to /sandbox inside the docker 
+#   container as a read-write folder. This provides isolation.
 #
 # -w /sandbox
 #   Working directory when the command is run is /sandbox
