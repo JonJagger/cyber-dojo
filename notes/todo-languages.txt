@@ -1,8 +1,6 @@
 
 install clang (C,C++,Objective-C)  
   sudo apt-get install clang-3.6
-install Rust?
-  curl -s https://static.rust-lang.org/rustup.sh | sudo sh
 install Visual.BASIC? Chris Oldwood?
   sudo apt-get install -y mono-vbnc
 install RPG for Chris Oldwood.
@@ -55,20 +53,3 @@ Ada            gnat           gnatmake qr.adb && ./qr > QR.als
 Algol68        algol68g       a68g QR.a68 > QR.ante
 
 
-
-Languages that use support_filenames (and hence rely on sym-linking)
-"Bash, shunit2"
-"C#, NUnit"
-"C#, SpecFlow"
-"Clojure, .test"
-"F#, NUnit"
-"C++, Catch"
-"Groovy, JUnit"
-"Groovy, Spock"
-"Java, Approval"
-"Java, Cucumber"
-"Java, JMock"
-"Java, JUnit"
-"Java, Mockito"
-"Java, PowerMockito"
-"Scala, scalatest"

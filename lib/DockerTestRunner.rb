@@ -139,7 +139,7 @@ end
 #   Mounted as a read-only volume since these support files are shared
 #   by all animals in all katas that choose that language.
 #   Important to quote the volume incase any paths contain spaces
-#   eg languages/C++ (clang++)
+#   eg languages/C++ (clang++)/
 #
 # -v #{quoted(sandbox_volume)}
 #   Volume mount the animal's sandbox to /sandbox inside the docker 
