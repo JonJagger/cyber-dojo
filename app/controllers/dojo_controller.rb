@@ -12,7 +12,7 @@ class DojoController < ApplicationController
 
   def enter
     avatar = kata.start_avatar    
-    ChildProcess.exec { one_self.started(avatar) }    
+    #ChildProcess.exec { one_self.started(avatar) }    
     full = avatar.nil?
     render json: {
       avatar_name: !full ? avatar.name : nil,
