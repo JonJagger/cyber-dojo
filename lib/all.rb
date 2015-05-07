@@ -10,6 +10,5 @@
   UniqueId
   IdSplitter
   LanguagesDisplayNamesSplitter
-  ChildProcess
   OneSelf  
 }.each { |sourcefile| require_relative './' + sourcefile }

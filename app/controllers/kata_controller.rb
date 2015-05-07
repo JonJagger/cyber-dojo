@@ -26,7 +26,7 @@ class KataController < ApplicationController
     
     tag = @traffic_lights.length
     colour = @traffic_lights[0]['colour']
-    #ChildProcess.exec { one_self.tested(@avatar,tag,colour) }
+    one_self.tested(@avatar,tag,colour)
       
     @output = visible_files['output']
     respond_to do |format|

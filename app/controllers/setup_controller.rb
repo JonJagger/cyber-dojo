@@ -16,7 +16,7 @@ class SetupController < ApplicationController
     language = languages[params['language'] + '-' + params['test']]
     exercise = exercises[params['exercise']]
     kata = katas.create_kata(language, exercise)
-    #ChildProcess.exec { one_self.created(kata.id, latitude, longtitude) }
+    one_self.created(kata.id, latitude, longtitude)
     render json: { id: kata.id.to_s }
   end
 
