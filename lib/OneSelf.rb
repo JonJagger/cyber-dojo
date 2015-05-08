@@ -59,12 +59,13 @@ class OneSelf
       'actionTags' => [ 'test-run' ],
       'dateTime' => Time.mktime(*now).utc.iso8601.to_s,
       'properties' => {
+        'dojo-id' => avatar.kata.id,
+        'avatar' => avatar.name,
+        'tag' => tag,
         'color' => css(colour),
         'added-line-count' => added_line_count,
         'deleted-line-count' => deleted_line_count,
         'seconds-since-last-test' => secs.to_i,
-        'dojo-id' => avatar.kata.id,
-        'avatar' => avatar.name
       }
     }
     one_self = JSON.parse(@disk[avatar.path].read(one_self_manifest_filename))    

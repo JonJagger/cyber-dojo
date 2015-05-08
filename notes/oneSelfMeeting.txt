@@ -24,14 +24,15 @@ This allows me to request a visualization where the
 height of the y axis bar (on the histogram) is the
 number of seconds since the previous traffic light.
 
+-----------------------------------------------------
 
 OneSelf.rb
 how to get seconds since last 'event'
 tag==1 is the first test event
 so if Tag.rb had time in the same way Light.rb has I could
-s0 = avatar.tags[tag-1].time
-s1 = avatar.tags[tag].time
-(s1 - s0)
+s_new = avatar.tags[tag].time
+s_old = avatar.tags[tag-1].time
+(s_new - s_old)
 ...
 class Avatar
   def tags
