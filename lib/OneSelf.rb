@@ -40,7 +40,7 @@ class OneSelf
       :read_token => body['readToken'],
       :write_token => body['writeToken']
     }
-    @disk[avatar.path].write(one_self_manifest_filename, one_self)     
+    @disk[avatar.path].write(one_self_manifest_filename, one_self)
   end
   
   # - - - - - - - - - - - - - - - - - - - - - -

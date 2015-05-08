@@ -13,7 +13,6 @@ class DojoController < ApplicationController
   def enter
     avatar = kata.start_avatar    
     full = avatar.nil?
-    one_self.started(avatar) if !full
     render json: {
       avatar_name: !full ? avatar.name : nil,
       full: full,

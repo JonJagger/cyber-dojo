@@ -24,6 +24,7 @@ class Kata
     if free_names != [ ]
       avatar = Avatar.new(self,free_names[0])
       avatar.start
+      one_self.started(avatar)
     end
     avatar
   end
