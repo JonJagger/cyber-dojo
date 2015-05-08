@@ -52,7 +52,7 @@ class OneSelf
       'actionTags' => [ 'test-run' ],
       'dateTime' => Time.mktime(*now).utc.iso8601.to_s,
       'properties' => {
-        'color' => colour,
+        'color' => css(colour),
         'added-line-count' => added_line_count,
         'deleted-line-count' => deleted_line_count,
         'dojo-id' => avatar.kata.id,
@@ -68,6 +68,13 @@ class OneSelf
   end
   
 private
+  
+  def css(colour)
+    return '#F00' if colour === 'red'
+    return '#FF0' if colour === 'amber'
+    return '#0F0' if colour === 'green'
+    return '#C0C0C0' # timed__out -> 'gray'
+  end
   
   # copy-pasted from app/helpers/tip_helper.rb
   def line_counts(diffed_files)

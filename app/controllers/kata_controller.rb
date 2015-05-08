@@ -25,7 +25,7 @@ class KataController < ApplicationController
     @traffic_lights,@new_files,@filenames_to_delete =
       @avatar.test(delta, visible_files, now, time_limit)
     tag = @traffic_lights.length
-    colour = @traffic_lights[0]['colour']
+    colour = @traffic_lights[-1]['colour']
     one_self.tested(@avatar,tag,colour,now)
       
     @output = visible_files['output']
