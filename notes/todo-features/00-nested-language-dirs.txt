@@ -1,4 +1,36 @@
 
+
+languages folder/test names can be anything. 
+they bear no relation to 
+o) display-names (as they appear in setup page)
+o) image-names (of docker container)
+
+languages are collected (for setup display)
+by iterating through the language/test folders.
+their appearance in setup display is governed
+by display_name values in the manifest.json files.
+
+When a dojo is create created the display_name
+is what is stored in its manifest.json file.
+The idea is the display_name
+o) is decoupled from physical language folder names
+   (eg have test frameworks for different versions of language)
+o) is decoupled from image-name
+   to allow transparent image-name upgrade (eg when forking)
+
+
+This means I needto map display-name (from dojo's manifest) to folder-name
+eg when re-entering.
+Hmmm. Is this true. Could I map to new display-name
+and search for that display-name in all the known languages?
+Then I'd just get the image-name from that...
+
+   
+
+
+
+
+
 -----------
 Plan
 -----------
@@ -12,17 +44,16 @@ Plan
    the test-name. Or maybe each test should decide both
    the language display name and the test display name
    
-3. in setup_controller.rb
+3. Split off new domain class, Language[name] -> Language -> Tests[name] -> Test
+   dojo.languages['C++'].tests['assert'].path
+   create kata from (exercise,test) pair (not exercise,language) pair
+   Can always get back to language from test.
+   
+4. in setup_controller.rb
    maybe...
     language = dojo.languages[params['language'] + '-' + params['test']]
    ...becomes...
     language = dojo.languages[params['language'], params['test']]
-   
-4. 
-   Split off new domain class, Language[name] -> Language -> Tests[name] -> Test
-   dojo.languages['C++'].tests['assert'].path
-   create kata from (exercise,test) pair (not exercise,language pair)
-   Can always get back to language from test.
    
 5. Give each language folder its own manifest to control
    its display name?
@@ -53,12 +84,14 @@ dedicated class off to the side.
 >>>>>>It means I don't have to worry about resuming old dojos.
 >>>>>>I only need to make sure forking works.
 
-There's another key point.
-What about when there are 2+ versions of a language?
-Do I want to show both of them?
-If I do they have to have different display names.
-Remember what is displayed is based on what folders exist
-that have their docker container installed.
+
+When docker container is updated don't overwrite the old one.
+Create a new one with a new (fake) version number if necessary.
+Means I don't have to worry about writing a script to
+detect if docker container has been updated and do a
+docker pull all as part of pull.sh - that could slow down pull.sh
+quite a lot.
+
 
 
 
