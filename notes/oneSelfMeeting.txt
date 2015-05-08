@@ -1,0 +1,53 @@
+
+when dojo is created I need to send 
+language & test-framework names
+to 1self
+
+for each test event send the 
+'dateTime' => 
+in format format iso 1601
+This is in camelCase format because it is outside of properties
+The properties are "my" event-data.
+
+currently for each test event I send
+'color' => colour,
+but I need to send
+'color' => CSS  (several forms)
+
+'diff-count' => diff_line_count,
+needs to be split into
+'diff-added' =>
+'diff-deleted' =>
+and also add
+'seconds-since-last-traffic-light' => ...
+This allows me to request a visualization where the
+height of the y axis bar (on the histogram) is the
+number of seconds since the previous traffic light.
+
+
+OneSelf.rb
+how to get seconds since last 'event'
+tag==1 is the first test event
+so if Tag.rb had time in the same way Light.rb has I could
+s0 = avatar.tags[tag-1].time
+s1 = avatar.tags[tag].time
+(s1 - s0)
+...
+class Avatar
+  def tags
+    @tags ||= JSON.parse(dir.read('increments.json'))    
+  end
+  def lights
+    tags.select{...}
+  end
+end
+...and...
+when avatar starts, put an entry into increments.json with the
+current time...
+   {
+     'event' => 'created',
+     'time' => [2014, 2, 15, 8, 54, 6],
+     'number' => 0
+   },
+   
+

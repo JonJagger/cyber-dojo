@@ -55,6 +55,7 @@ class OneSelf
         'color' => css(colour),
         'added-line-count' => added_line_count,
         'deleted-line-count' => deleted_line_count,
+        #'seconds-since-last-test' => 
         'dojo-id' => avatar.kata.id,
         'avatar' => avatar.name
       }
