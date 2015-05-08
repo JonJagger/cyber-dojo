@@ -35,15 +35,15 @@ s1 = avatar.tags[tag].time
 ...
 class Avatar
   def tags
-    @tags ||= JSON.parse(dir.read('increments.json'))    
+    Tags.new(self)
   end
   def lights
-    tags.select{...}
+    tags.select{ |tag| tag.has-field 'colour' }
   end
 end
 ...and...
 when avatar starts, put an entry into increments.json with the
-current time...
+current time which is the avatar's start time
    {
      'event' => 'created',
      'time' => [2014, 2, 15, 8, 54, 6],

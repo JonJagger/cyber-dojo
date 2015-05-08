@@ -47,6 +47,13 @@ class OneSelf
   
   def tested(avatar,tag,colour,now)
     added_line_count,deleted_line_count = line_counts(avatar.diff(tag-1,tag))
+
+    if tag === 1
+      secs = Time.mktime(*now) - avatar.kata.created
+    else
+      secs = avatar.lights[tag-1].time - avatar.lights[tag-2].time
+    end
+
     data = {
       'objectTags' => [ 'cyber-dojo' ],
       'actionTags' => [ 'test-run' ],
@@ -55,7 +62,7 @@ class OneSelf
         'color' => css(colour),
         'added-line-count' => added_line_count,
         'deleted-line-count' => deleted_line_count,
-        #'seconds-since-last-test' => 
+        'seconds-since-last-test' => secs.to_i,
         'dojo-id' => avatar.kata.id,
         'avatar' => avatar.name
       }
