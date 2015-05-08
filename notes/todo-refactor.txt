@@ -63,15 +63,6 @@ textarea no longer resizable?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Reinstate the re-enter button...
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-I think its quite likely I'll have two C++ compilers at
-some point - one for g++ and one for clang. 
-I can name the folders whatever I like, since the display_name
-is what actually appears on the setup page. So have 
-/gpp/  and  /clang/  folders
-and perhaps also have display names as
-  C++ (g++)
-  C++ (clang)
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

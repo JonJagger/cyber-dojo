@@ -18,13 +18,13 @@ Plan
    ...becomes...
     language = dojo.languages[params['language'], params['test']]
    
-3. 
+4. 
    Split off new domain class, Language[name] -> Language -> Tests[name] -> Test
    dojo.languages['C++'].tests['assert'].path
    create kata from (exercise,test) pair (not exercise,language pair)
    Can always get back to language from test.
    
-3. Give each language folder its own manifest to control
+5. Give each language folder its own manifest to control
    its display name?
 
 
@@ -33,16 +33,25 @@ Then think about versioning, auto-builds, dojo-time-limits.
 Ideally they are separate issues.
 
 
-Starting to think that the version number 
-of each language should be part of its folder name.
+Could the version number 
+of each language should be part of its folder name?
 That way I could have automated builds from the cyberdojo index.
-And display names could *choose* whether to show version or nor.
+And display names could *choose* whether to show version or not.
 That's the key point - to make the display name non-dependent.
 Whatever the display-name of a language, a dojo's manifest.json
-file has 'language':folder-name
-Making the dojos have a time-limit of 1 day is a key decision.
-It means I don't have to worry about resuming old dojos.
-I only need to make sure forking works.
+file has 'language':language.name
+and Language.rb name() is 
+    display_name.split(',').map{ |s| s.strip }.join('-')
+A dojo's manifest will ultimately need two entries
+    'language':language.name,
+    'test':test.name
+Make it simpler and put the renaming-mapping into a 
+dedicated class off to the side.
+
+
+>>>>>>Making the dojos have a time-limit of 1 day is a key decision.
+>>>>>>It means I don't have to worry about resuming old dojos.
+>>>>>>I only need to make sure forking works.
 
 There's another key point.
 What about when there are 2+ versions of a language?
