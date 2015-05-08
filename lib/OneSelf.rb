@@ -9,12 +9,17 @@ class OneSelf
     @disk = disk
   end
   
-  def created(dojo_id,latitude,longtitude)
+  def created(kata,latitude,longtitude)
+    language_name,test_name = kata.language.display_name.split(',').map{|s| s.strip }
     data = {
       'objectTags' => [ 'cyber-dojo' ],
       'actionTags' => [ 'create' ],
       'location' => { 'lat' => latitude, 'long' => longtitude },
-      'properties' => { 'dojoId' => dojo_id }
+      'properties' => {
+        'dojo-id' => kata.id,
+        'language_name' => language_name,
+        'test_name' => test_name
+      }
     }
     url = URI.parse("#{streams_url}/#{stream_id}/events")
     request = Net::HTTP::Post.new(url.path, json_header(write_token))
@@ -42,14 +47,15 @@ class OneSelf
   
   def tested(avatar,tag,colour)  
     added_line_count,deleted_line_count = line_counts(avatar.diff(tag-1,tag))
-    diff_line_count = added_line_count + deleted_line_count
     data = {
       'objectTags' => [ 'cyber-dojo' ],
       'actionTags' => [ 'test-run' ],
+      'dateTime' => 'iso...',
       'properties' => {
         'color' => colour,
-        'diffCount' => diff_line_count,
-        'dojoId' => avatar.kata.id,
+        'added-line-count' => added_line_count,
+        'deleted-line-count' => deleted_line_count,
+        'dojo-id' => avatar.kata.id,
         'avatar' => avatar.name
       }
     }
