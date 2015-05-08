@@ -17,8 +17,8 @@ class OneSelf
       'location' => { 'lat' => latitude, 'long' => longtitude },
       'properties' => {
         'dojo-id' => kata.id,
-        'language_name' => language_name,
-        'test_name' => test_name
+        'language-name' => language_name,
+        'test-name' => test_name
       }
     }
     url = URI.parse("#{streams_url}/#{stream_id}/events")
