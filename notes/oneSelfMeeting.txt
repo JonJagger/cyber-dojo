@@ -50,5 +50,87 @@ current time which is the avatar's start time
      'time' => [2014, 2, 15, 8, 54, 6],
      'number' => 0
    },
+However... I could do this in the method itself!
+I don't need to store that on the disk...
+
+class Avatar
+  # return a hash here?
+  def tags
+    @tags ||= increments.inject(Hash.new([])) {|i,h| i[h['number']] = Tag.new(self,h);i}    
+  end
+  def lights
+    tags.select{ |tag| tag.light? }.values
+  end  
+private
+  def increments
+    @increments ||= zeroth << JSON.parse(read(increments_filename))
+  end
+  def zeroth
+    [
+       'event' => 'created',
+       'time' => time_now(avatar.kata.created),
+       'number' => '0'
+    ]
+  end
+end
+
+and this allows...
+
+class Tag
+  include ExternalParentChain
+  
+  def initialize(avatar,hash)
+    @parent,@hash = avatar,hash
+  end  
+  
+  def avatar
+    @parent
+  end
+
+  def visible_files
+    @manifest ||= JSON.parse(git.show(path, "#{number}:manifest.json"))
+  end
+
+  def output
+    visible_files['output'] || ''
+  end
+
+  def time
+    Time.mktime(*hash['time'])
+  end
+
+  def light?
+    hash.include?('colour') || hash.include?('outcome')
+  end
+  
+  def colour
+    # if this is called on tag that is not a light? it will
+    # raise a NoMethodError
+    (hash['colour'] || hash['outcome']).to_sym
+  end
+
+  def to_json
+    {
+      'colour' => colour,
+      'time'   => time,
+      'number' => number
+    }
+  end
+
+  def number
+    # badly named but can't rename
+    # could it be made private?
+    hash['number']
+  end
+  
+private
+
+  attr_reader :hash
+        
+  def path
+    @parent.path
+  end
+  
+end
    
 
