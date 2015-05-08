@@ -45,12 +45,12 @@ class OneSelf
   
   # - - - - - - - - - - - - - - - - - - - - - -
   
-  def tested(avatar,tag,colour)  
+  def tested(avatar,tag,colour,now)
     added_line_count,deleted_line_count = line_counts(avatar.diff(tag-1,tag))
     data = {
       'objectTags' => [ 'cyber-dojo' ],
       'actionTags' => [ 'test-run' ],
-      'dateTime' => 'iso...',
+      'dateTime' => Time.mktime(*now).utc.iso8601.to_s,
       'properties' => {
         'color' => colour,
         'added-line-count' => added_line_count,

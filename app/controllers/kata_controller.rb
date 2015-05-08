@@ -20,13 +20,13 @@ class KataController < ApplicationController
     outgoing = params[:file_hashes_outgoing]
     delta = FileDeltaMaker.make_delta(incoming, outgoing)
     visible_files = received_files
+    now = time_now #TODO: time needs to come from browser not server.
     time_limit = 15
     @traffic_lights,@new_files,@filenames_to_delete =
-      @avatar.test(delta, visible_files, time_now, time_limit)
-    
+      @avatar.test(delta, visible_files, now, time_limit)
     tag = @traffic_lights.length
     colour = @traffic_lights[0]['colour']
-    one_self.tested(@avatar,tag,colour)
+    one_self.tested(@avatar,tag,colour,now)
       
     @output = visible_files['output']
     respond_to do |format|
