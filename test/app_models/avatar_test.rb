@@ -35,7 +35,7 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'avatar is not active? when it has zero traffic-lights' do
-    kata = make_kata #katas[unique_id]
+    kata = make_kata
     lion = kata.start_avatar(['lion'])
     assert_equal 0, lion.lights.length 
     assert !lion.active?
@@ -44,7 +44,7 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'avatar is active? when it has one traffic-light' do
-    kata = make_kata #katas[unique_id]
+    kata = make_kata
     lion = kata.start_avatar(['lion'])
     stub_test(lion,1)
     assert_equal 1, lion.lights.length
