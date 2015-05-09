@@ -1,0 +1,17 @@
+.F
+ 
+Failures:
+ 
+  1) hiker the first point make 15-O
+     Failure/Error: expect(score(1,0)).to eq "15-0"
+     ArgumentError:
+       wrong number of arguments (2 for 0)
+     # ./hiker.rb:2:in `score'
+     # ./hiker_spec.rb:10:in `block (2 levels) in <top (required)>'
+ 
+Finished in 0.00922 seconds
+2 examples, 1 failure
+ 
+Failed examples:
+ 
+rspec ./hiker_spec.rb:9 # hiker the first point make 15-O

@@ -1,0 +1,26 @@
+FF
+ 
+Failures:
+ 
+  1) hiker starts at O-O
+     Failure/Error: expect(score(0,0)).to eq "0-0"
+     NoMethodError:
+       undefined method `elif' for #<RSpec::Core::ExampleGroup::Nested_1:0x000000023d17b8>
+     # ./hiker.rb:9:in `single_score'
+     # ./hiker.rb:3:in `score'
+     # ./hiker_spec.rb:6:in `block (2 levels) in <top (required)>'
+ 
+  2) hiker the first point make 15-O
+     Failure/Error: expect(score(1,0)).to eq "15-0"
+     NoMethodError:
+       undefined method `+' for nil:NilClass
+     # ./hiker.rb:3:in `score'
+     # ./hiker_spec.rb:10:in `block (2 levels) in <top (required)>'
+ 
+Finished in 0.00093 seconds
+2 examples, 2 failures
+ 
+Failed examples:
+ 
+rspec ./hiker_spec.rb:5 # hiker starts at O-O
+rspec ./hiker_spec.rb:9 # hiker the first point make 15-O
