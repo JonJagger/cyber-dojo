@@ -62,16 +62,16 @@ class LightTests < ModelTestBase
     lights = lion.lights
     assert_equal 3, lights.length
     assert_equal :red  , lights[0].colour
-    assert_not_equal '', lights[0].tag.output
+    assert_not_equal '', lights[0].output
     assert_equal :amber, lights[1].colour
-    assert_not_equal '', lights[1].tag.output
+    assert_not_equal '', lights[1].output
     assert_equal :green, lights[2].colour
-    assert_not_equal '', lights[2].tag.output    
+    assert_not_equal '', lights[2].output
   end
   
   # - - - - - - - - - - - - - - - - - - - - - - -
   
-  def make_light(rgb,time,n, key='colour')
+  def make_light(rgb, time, n, key = 'colour')
     Light.new(dummy_avatar, {
       key => rgb.to_sym,
       'time' => time,

@@ -58,7 +58,7 @@ class LightsTests < ModelTestBase
 
     eh = lights.entries
     assert_equal 'Array', eh.class.name
-    assert_equal 'Light', eh[0].class.name
+    assert_equal 'Tag', eh[0].class.name
 
   end
 

@@ -43,20 +43,20 @@ I don't need to store that on the disk...
 class Avatar
   # return a hash here?
   def tags
-    @tags ||= increments.inject(Hash.new([])) {|i,h| i[h['number']] = Tag.new(self,h);i}    
+    increments.inject(Hash.new([])) {|i,h| i[h['number']] = Tag.new(self,h);i}    
   end
   def lights
-    tags.select{ |tag| tag.light? }.values
+    tags.values.select{ |tag| tag.light? }
   end  
 private
   def increments
-    @increments ||= zeroth << JSON.parse(read(increments_filename))
+    zeroth + JSON.parse(read(increments_filename))
   end
   def zeroth
     [
        'event' => 'created',
        'time' => time_now(avatar.kata.created),
-       'number' => '0'
+       'number' => 0
     ]
   end
 end

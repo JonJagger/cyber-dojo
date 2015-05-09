@@ -62,6 +62,7 @@ module TestHelpers # mixin
   end
         
   def stub_test(avatar,param)
+    set_runner_class_name('StubTestRunner')
     stub_test_colours(avatar,param) if param.class.name == 'Array'
     stub_test_n(avatar,param) if param.class.name == 'Fixnum'
   end

@@ -38,11 +38,11 @@ class Avatar
   end
 
   def tags
-    Tags.new(self)
+    (zeroth + increments).map{ |h| Tag.new(self,h) }
   end
 
   def lights
-    increments.map { |inc| Light.new(self,inc) }
+    tags.select{ |tag| tag.light? }
   end
 
   def visible_files
@@ -53,11 +53,11 @@ class Avatar
     new_files,filenames_to_delete = sandbox.run_tests(delta,files,time_limit)    
     colour = kata.language.colour(files['output'])
     rags = increments
-    rag = { 'colour' => colour, 'time' => now, 'number' => rags.length + 1 }
+    tag = rags.length + 1
+    rag = { 'colour' => colour, 'time' => now, 'number' => tag }
     rags << rag
     write_increments(rags)
     write_manifest(files)
-    tag = rags.length
     git_commit(tag)
     [rags,new_files,filenames_to_delete]
   end
@@ -107,7 +107,15 @@ private
   end
   
   def increments
-    @increments ||= JSON.parse(read(increments_filename))
+    JSON.parse(read(increments_filename))
+  end
+  
+  def zeroth
+    [
+      'event' => 'created',
+      'time' => time_now(kata.created),
+      'number' => 0
+    ]
   end
 
   def manifest_filename
@@ -115,6 +123,7 @@ private
   end
     
   def increments_filename
+    # stores cache of key-info for each git commit tag
     'increments.json'
   end
 
