@@ -17,14 +17,6 @@ o)
 
 
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-timed-out katas
-  the more I think about it the more I realize that having
-  dojos non-resumable after 2 hours from the first traffic-light
-  is a good idea. It also ties in with the idea of making a
-  second read-only server. It may help to solve language
-  rename awkwardness a little too.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 o) add buttons on cyber-dojo to publish a dojo to the hub with tags
    on the sending server check format of dojo

@@ -1,30 +1,17 @@
 
-when dojo is created I need to send 
-language & test-framework names
-to 1self
-
-for each test event send the 
-'dateTime' => 
-in format format iso 1601
-This is in camelCase format because it is outside of properties
-The properties are "my" event-data.
-
-currently for each test event I send
-'color' => colour,
-but I need to send
-'color' => CSS  (several forms)
-
-'diff-count' => diff_line_count,
-needs to be split into
 'diff-added' =>
 'diff-deleted' =>
-and also add
 'seconds-since-last-traffic-light' => ...
-This allows me to request a visualization where the
-height of the y axis bar (on the histogram) is the
-number of seconds since the previous traffic light.
 
+Idea is to visualize 3 simple histograms
+Each test event creates a bar. Bar is coloured
+red/amber/green to match its test outcome.
+Height of bar is value of 
+1. diff-added (1st histogram)
+2. diff-deleted (2nd histogram)
+3. seconds-since-last-traffic-light (3rd histogram)
 -----------------------------------------------------
+
 
 OneSelf.rb
 how to get seconds since last 'event'
@@ -96,6 +83,8 @@ class Tag
   end
 
   def time
+    # todo: times need to come from browser
+    #       and use iso8601
     Time.mktime(*hash['time'])
   end
 
@@ -104,11 +93,12 @@ class Tag
   end
   
   def colour
-    # if this is called on tag that is not a light? it will
-    # raise a NoMethodError
+    # todo: if this is called on tag that is not a light
+    # it will raise a NoMethodError
     (hash['colour'] || hash['outcome']).to_sym
   end
 
+  # This is used in differ_controller.rb
   def to_json
     {
       'colour' => colour,
@@ -120,6 +110,7 @@ class Tag
   def number
     # badly named but can't rename
     # could it be made private?
+    # Is it still needed if Tag and Light merge?
     hash['number']
   end
   

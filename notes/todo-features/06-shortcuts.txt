@@ -1,3 +1,6 @@
 
 [shorcuts] button opens a dialog page
 showing you the shortcuts.
+
+Have Alt-I as shortcut to open the instructions file.
+

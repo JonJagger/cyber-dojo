@@ -19,16 +19,12 @@ o) is decoupled from image-name
    to allow transparent image-name upgrade (eg when forking)
 
 
-This means I needto map display-name (from dojo's manifest) to folder-name
-eg when re-entering.
-Hmmm. Is this true. Could I map to new display-name
-and search for that display-name in all the known languages?
+I'm currently rename mapping from display-name (from dojo's manifest) to folder-name
+eg when re-entering. There is a better way.
+I could map to new display-name and then search for that display-name
+in all the known languages (harvested directly from the folder iteration).
+This is better because if there is no match I know there is an error.
 Then I'd just get the image-name from that...
-
-   
-
-
-
 
 
 -----------
