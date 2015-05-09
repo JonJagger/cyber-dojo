@@ -1,6 +1,7 @@
 
 
 Cut from http://blog.cyber-dojo.org/2014/09/adding-new-language-and-unit-test-to-cyber-dojo.html
+./check_one_language.rb has not been refactored yet...
 <br>
 <br>
 <h2>check your output parse function</h2>
@@ -17,6 +18,18 @@ You want output like this:
 
 
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If there is an error in the colour.of(output) then the error
+is set into the increments.json file and even if it is 
+corrected the correction is not seen in finished dojos
+traffic lights (on test and dashboard and history)
+Eg http://cyber-dojo.org/dashboard/show/952426
+An alternative is to save the output in the increments.json
+file and to calculate the colour each time.
+This would allow corrections to be seen in existing dojos.
+The downside is that if the test output format changes
+then the dynamic colour.of(output) could return the wrong
+colour!?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 When I support 100 avatars in a cyber-dojo determining which
 avatars have started, and hence which are left, when starting
