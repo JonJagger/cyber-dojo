@@ -1,3 +1,4 @@
+# See comments at end of file
 
 require 'net/http'
 require 'uri'
@@ -132,3 +133,23 @@ private
   end
   
 end
+
+#------------------------------------------------
+# tags belonging to 1self are camelCase
+# tags belonging to me (in properties) are dash-separated
+#
+# data = {
+#   'objectTags' => [ 'cyber-dojo' ],
+#   'actionTags' => [ 'test-run' ],
+#   'dateTime' => Time.mktime(*now).utc.iso8601.to_s,
+#   'properties' => {
+#     'dojo-id' => avatar.kata.id,
+#     'avatar' => avatar.name,
+#     'tag' => tag,
+#     'color' => css(colour),
+#     'added-line-count' => added_line_count,
+#     'deleted-line-count' => deleted_line_count,
+#     'seconds-since-last-test' => secs.to_i,
+#   }
+# }
+#------------------------------------------------

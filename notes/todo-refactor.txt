@@ -30,6 +30,11 @@ This would allow corrections to be seen in existing dojos.
 The downside is that if the test output format changes
 then the dynamic colour.of(output) could return the wrong
 colour!?
+If examples of output are from different test framework
+versions are retained and tested against this is not a problem.
+Further, every [test] event in katas/ could be processed
+to ensure the colour.of(output) matches the colour stored
+in the increments.json file.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 When I support 100 avatars in a cyber-dojo determining which
 avatars have started, and hence which are left, when starting
