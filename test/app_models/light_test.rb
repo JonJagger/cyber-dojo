@@ -72,7 +72,7 @@ class LightTests < ModelTestBase
   # - - - - - - - - - - - - - - - - - - - - - - -
   
   def make_light(rgb, time, n, key = 'colour')
-    Light.new(dummy_avatar, {
+    Tag.new(dummy_avatar, {
       key => rgb.to_sym,
       'time' => time,
       'number' => n
