@@ -1,4 +1,4 @@
-# comments at end of file
+# See comments at end of file
 
 class Avatar
   include ExternalParentChain
@@ -34,11 +34,16 @@ class Avatar
   end
 
   def active?
+    # o) Players sometimes start an extra avatar solely to read the
+    #    instructions. I don't want these avatars appearing on the
+    #    dashboard.
+    # o) When forking a new kata you can enter as one animal
+    #    to sanity check it is ok (but not press [test])
     exists? && lights.count > 0
   end
 
   def tags
-    (zeroth + increments).map{ |h| Tag.new(self,h) }
+    (tag0 + increments).map{ |h| Tag.new(self,h) }
   end
 
   def lights
@@ -46,6 +51,8 @@ class Avatar
   end
 
   def visible_files
+    # Equivalent to tags[-1].visible_files but
+    # faking files is easier than faking git.
     JSON.parse(read(manifest_filename))
   end
 
@@ -90,6 +97,14 @@ private
     git.tag(path, "-m '#{tag}' #{tag} HEAD")
   end
 
+  def tag0
+    @zeroth ||= [
+      'event' => 'created',
+      'time' => time_now(kata.created),
+      'number' => 0
+    ]
+  end
+
   def write_manifest(files)
     write(manifest_filename, files)
   end
@@ -110,14 +125,6 @@ private
     JSON.parse(read(increments_filename))
   end
   
-  def zeroth
-    [
-      'event' => 'created',
-      'time' => time_now(kata.created),
-      'number' => 0
-    ]
-  end
-
   def manifest_filename
     'manifest.json'
   end
@@ -141,24 +148,60 @@ private
 
 end
 
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# tags vs lights
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# When a new avatar enters a dojo, kata.start_avatar()
+# will do a 'git commit' + 'git tag' for tag 0 (Zero).
+# This initial tag is *not* recorded in the
+# increments.json file which starts as [ ]
+# It probably should be but isn't for existing dojos
+# and so for backwards compatibility it stays that way
+# and tags() inserts the zeroth tag.
+#
+# All subsequent 'git commit' + 'git tag' commands
+# correspond to a gui action and store an entry in
+# the increments.json file.
+# eg
+# [
+#   {
+#     'colour' => 'red',
+#     'time' => [2014, 2, 15, 8, 54, 6],
+#     'number' => 1
+#   },
+# ]
+#
+# At the moment the only gui action that creates an
+# increments.json file entry is a [test] event.
+#
+# However, I may create finer grained tags than
+# just [test] events...
+#    o) creating a new file
+#    o) renaming a file
+#    o) deleting a file
+#    o) editing a file (and opening a different file)
+#
+# If this happens the difference between tags and lights
+# will be more pronounced.
+# ------------------------------------------------------
+# Invariants
+#
+# If the latest tag is N then
+#   o) increments.length == N
+#   o) tags.length == N+1
+#
+# The inclusive upper bound for n in avatar.tags[n] is
+# always the current length of increments.json (even if
+# that is zero) which is also the latest tag number.
+#
+# The inclusive lower bound for n in avatar.tags[n] is
+# zero. When an animal does a diff of [1] what is run is
+#   avatar.diff(0,1)
+# which is a diff between
+#   avatar.tags[0] and avatar.tags[1]
+#
+#------------------------------------------
 
-#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# visible_files
-#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# equivalent to tags[-1].visible_files but much easier
-# to test (faking files is easier than faking git)
-#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# active?
-#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# o) Players sometimes start an extra avatar solely to read the
-#    instructions. I don't want these avatars appearing on the
-#    dashboard.
-# o) When forking a new kata you can enter as one animal
-#    to sanity check it is ok (but not press [test])
-#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 
