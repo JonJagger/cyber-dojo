@@ -48,13 +48,7 @@ class OneSelf
   
   def tested(avatar,tag,colour,now)
     added_line_count,deleted_line_count = line_counts(avatar.diff(tag-1,tag))
-
-    if tag === 1
-      secs = Time.mktime(*now) - avatar.kata.created
-    else
-      secs = avatar.lights[tag-1].time - avatar.lights[tag-2].time
-    end
-
+    secs = avatar.tags[tag].time - avatar.tags[tag-1].time    
     data = {
       'objectTags' => [ 'cyber-dojo' ],
       'actionTags' => [ 'test-run' ],
