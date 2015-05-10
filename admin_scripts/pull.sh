@@ -6,7 +6,7 @@ cd $cyberDojoHome
 
 # get latest source from https://github.com/JonJagger/cyber-dojo
 # if it asks for a password just hit return
-echo "git pullling from https://github.com/JonJagger/cyber-dojo"
+echo "git pulling from https://github.com/JonJagger/cyber-dojo"
 git pull --no-edit origin master
 ret=$?
 if [ $ret -ne 0 ]; then
