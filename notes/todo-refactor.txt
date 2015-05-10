@@ -6,11 +6,10 @@ git pull happens
 pull.sh stores timestamp of itself (on disk) into $after variable
 at end of script check if $before != $after and issue warning...
 
-eval $(stat -s $0)
-BEFORE=$st_mtime
+eval $(stat -s $0) && BEFORE=$st_mtime
 ....
-eval $(stat -s $0)
-AFTER=$st_mtime
+eval $(stat -s $0) && AFTER=$st_mtime
+
 if [ $BEFORE -ne $AFTER ]; then
   echo "WARNING: pull.sh updated pull.sh!!!"
   echo "         please pull.sh again"
