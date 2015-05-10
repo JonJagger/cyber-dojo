@@ -29,4 +29,38 @@ the installed languages and check for updates
 by (re)pulling their docker containers.
 And then add that to pull.sh DONE
 
+- - - - - - - - - - - - - - - - - - - -
+Languages that have support files
+- - - - - - - - - - - - - - - - - - - -
+"/var/www/cyber-dojo/languages/Bash/shunit2/manifest.json"
+"/var/www/cyber-dojo/languages/C#/NUnit/manifest.json"
+"/var/www/cyber-dojo/languages/C#/SpecFlow/manifest.json"
+"/var/www/cyber-dojo/languages/F#/NUnit/manifest.json"
+"/var/www/cyber-dojo/languages/g++4.8.1/Catch/manifest.json"
+"/var/www/cyber-dojo/languages/Groovy/JUnit/manifest.json"
+"/var/www/cyber-dojo/languages/Groovy/Spock/manifest.json"
+"/var/www/cyber-dojo/languages/Java/Approval/manifest.json"
+"/var/www/cyber-dojo/languages/Java/Cucumber/manifest.json"
+"/var/www/cyber-dojo/languages/Java/JMock/manifest.json"
+"/var/www/cyber-dojo/languages/Java/JUnit/manifest.json"
+"/var/www/cyber-dojo/languages/Java/Mockito/manifest.json"
+"/var/www/cyber-dojo/languages/Java/PowerMockito/manifest.json"
+"/var/www/cyber-dojo/languages/Scala/scalatest/manifest.json"
+
+
+Listed using the following script
+#!/usr/bin/env ruby
+require 'json'
+CYBER_DOJO_ROOT_DIR = '/var/www/cyber-dojo'
+Dir.glob("#{CYBER_DOJO_ROOT_DIR}/languages/*/*/manifest.json") do |file|
+  json = JSON.parse(IO.read(file))
+  support_filenames = json['support_filenames']
+  if !support_filenames.nil?
+    p "#{file}"
+  end
+end
+
+
+
+
 
