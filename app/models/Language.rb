@@ -1,4 +1,4 @@
-# comments at end of file
+# See comments at end of file
 
 class Language
   include ExternalParentChain

@@ -1,5 +1,5 @@
 
-# comments at end of file
+# See comments at end of file
 # See cyber-dojo-model.pdf
 
 class Dojo
