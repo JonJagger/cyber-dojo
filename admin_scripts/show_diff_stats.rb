@@ -1,40 +1,6 @@
 #!/usr/bin/env ruby
 
 # A ruby script to display stats on light->light transitions.
-#
-# Running this on cyber-dojo.org 12th July 2014
-# gave the following
-#
-# 500 katas
-# 5385 lights
-# 10.77 lights/kata
-#
-#   3.94  amber-> green 	    447  (1)
-#   4.65  amber->   red 	    379  (1)
-#   4.67  amber-> amber 	   1462  (2)
-#   5.39    red-> green 	    607  (3)
-#   6.01    red->   red 	    604  (3)
-#   7.52  green->   red 	    420  (3)
-#  13.65  green-> amber 	    436  (3)
-#  17.67    red-> amber 	    432  (3)
-#  22.18  green-> green 	    598  (4)
-#
-# Where the top line means...
-# the average number of edited lines for an
-# amber->green transition was 3.94 and there
-# were 447 such transitions in the 500 katas analyzed.
-#
-# Possible interpretations
-#
-# (1) if you're at amber and you want to get off it
-#     you're better off making a small change.
-# (2) if you're at amber and you make a small change
-#     it's still quite likely you'll stay at amber.
-#     Notice the spike (1462 amber->amber)
-# (3) if you're at red or green the larger the change
-#     the more likely you are to get an amber.
-# (4) ???? interesting. Gather examples...
-#
 
 require_relative 'lib_domain'
 
@@ -123,6 +89,7 @@ def show_diff_stats(n)
   printf("%7.2f lights/kata\n", lights_per_kata)
 end
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 puts
 $dot_count = 0
@@ -145,3 +112,40 @@ puts
 
 show_diff_stats($stop_at)
 mention($exceptions)
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - -
+#
+# Running this on cyber-dojo.org 12th July 2014
+# gave the following
+#
+# 500 katas
+# 5385 lights
+# 10.77 lights/kata
+#
+#   3.94  amber-> green 	    447  (1)
+#   4.65  amber->   red 	    379  (1)
+#   4.67  amber-> amber 	   1462  (2)
+#   5.39    red-> green 	    607  (3)
+#   6.01    red->   red 	    604  (3)
+#   7.52  green->   red 	    420  (3)
+#  13.65  green-> amber 	    436  (3)
+#  17.67    red-> amber 	    432  (3)
+#  22.18  green-> green 	    598  (4)
+#
+# Where the top line means...
+# the average number of edited lines for an
+# amber->green transition was 3.94 and there
+# were 447 such transitions in the 500 katas analyzed.
+#
+# Possible interpretations
+#
+# (1) if you're at amber and you want to get off it
+#     you're better off making a small change.
+# (2) if you're at amber and you make a small change
+#     it's still quite likely you'll stay at amber.
+#     Notice the spike (1462 amber->amber)
+# (3) if you're at red or green the larger the change
+#     the more likely you are to get an amber.
+# (4) ???? interesting. Gather examples...
+#
+

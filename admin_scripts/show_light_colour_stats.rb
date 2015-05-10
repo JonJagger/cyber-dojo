@@ -50,6 +50,8 @@ def show_light_stats
   end
 end
 
+# - - - - - - - - - - - - - - - - - - - - - - - - -
+
 puts
 $dot_count = 0
 $exceptions = [ ]

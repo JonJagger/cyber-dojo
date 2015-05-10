@@ -18,11 +18,6 @@ def explain_output
   lines.each{|line| puts '# ' + line}
 end
 
-if ARGV[0] == 'help'
-  explain_output
-  exit
-end
-
 $stats = { }
 
 def collect_light_stats(kata)
@@ -41,6 +36,12 @@ def show_light_stats
   end
 end
 
+# - - - - - - - - - - - - - - - - - - - -
+
+if ARGV[0] == 'help'
+  explain_output
+  exit
+end
 
 puts
 dot_count = 0
