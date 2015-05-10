@@ -30,8 +30,6 @@ if ARGV[0] == "help"
   exit
 end
 
-dojo = create_dojo
-
 puts
 totals = { }
 dot_count = 0

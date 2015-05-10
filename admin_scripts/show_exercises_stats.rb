@@ -2,8 +2,6 @@
 
 require_relative 'lib_domain'
 
-dojo = create_dojo
-
 exercises_names = dojo.exercises.collect {|exercise| exercise.name}
 
 puts
@@ -30,6 +28,7 @@ end
 puts
 puts
 
+# - - - - - - - - - - - - - - - - - - - - - -
 print "Renamed\n"
 count = 0
 renamed.keys.sort.each do |name|
@@ -51,6 +50,7 @@ print number(count,5)
 puts
 puts
 
+# - - - - - - - - - - - - - - - - - - - - - -
 print "Rest\n"
 count = 0
 rest.keys.sort.each do |name|
@@ -68,6 +68,7 @@ print number(count,5)
 puts
 puts
 
+# - - - - - - - - - - - - - - - - - - - - - -
 print "Totals\n"
 totals.sort_by{|k,v| v}.reverse.each do |name,count|
   dots = '.' * (32 - name.length)

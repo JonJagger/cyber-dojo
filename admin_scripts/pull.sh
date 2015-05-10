@@ -45,11 +45,14 @@ chown -R www-data:www-data $cyberDojoHome/tmp
 echo "deleting the rails cache"
 rm -rf $cyberDojoHome/tmp/*
 
-echo "refreshing the exercises/ cache"
-$cyberDojoHome/exercises/cache.rb
+echo "checking for docker container updates"
+$cyberDojoHome/admin_scripts/docker_update_all.sh
 
 echo "refreshing the languages/ cache"
 $cyberDojoHome/languages/cache.rb
+
+echo "refreshing the exercises/ cache"
+$cyberDojoHome/exercises/cache.rb
 
 echo "poking rails"
 bundle install

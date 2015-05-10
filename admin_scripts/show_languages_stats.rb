@@ -98,7 +98,6 @@ end
 
 #- - - - - - - - - - - - - - - - - - - - - - - -
 
-dojo = create_dojo
 renamed,rest,totals,exceptions = gather_stats(dojo)
 show_renamed(renamed,dojo)
 show_rest(rest,dojo)

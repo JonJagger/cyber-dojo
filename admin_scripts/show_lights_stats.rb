@@ -45,7 +45,6 @@ end
 puts
 dot_count = 0
 exceptions = [ ]
-dojo = create_dojo
 dojo.katas.each do |kata|
   begin
     collect_light_stats(kata)

@@ -131,7 +131,6 @@ $exceptions = [ ]
 
 
 $stop_at = 500
-dojo = create_dojo
 dojo.katas.each do |kata|
   begin
     $dot_count += 1

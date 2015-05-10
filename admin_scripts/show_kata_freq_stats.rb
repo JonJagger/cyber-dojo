@@ -11,8 +11,6 @@ require_relative 'lib_domain'
 
 show_ids = (ARGV[0] || "false")
 
-dojo = create_dojo
-
 puts
 days,weekdays,languages,exercises = { },{ },{ },{ }
 dot_count = 0

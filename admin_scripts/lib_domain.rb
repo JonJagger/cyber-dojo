@@ -16,7 +16,7 @@ ENV['CYBER_DOJO_RUNNER_CLASS_NAME'] ||= 'DockerTestRunner'
 ENV['CYBER_DOJO_DISK_CLASS_NAME']   ||= 'Disk'
 ENV['CYBER_DOJO_GIT_CLASS_NAME']    ||= 'Git'
 
-def create_dojo
+def dojo
   Dojo.new
 end
 
