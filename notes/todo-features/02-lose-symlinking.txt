@@ -27,6 +27,6 @@ But pulls the new image if it has changed.
 So I need to create a script to iterate through
 the installed languages and check for updates
 by (re)pulling their docker containers.
-And then add that to pull.sh
+And then add that to pull.sh DONE
 
 

@@ -1,4 +1,13 @@
 
+admin_scripts/pull.sh sometimes has an update.
+It should check for this...
+pull.sh stores timestamp of itself (on disk) into $before variable
+git pull happens
+pull.sh stores timestamp of itself (on disk) into $after variable
+at end of script check if $before != $after and issue warning...
+
+
+
 
 Cut from http://blog.cyber-dojo.org/2014/09/adding-new-language-and-unit-test-to-cyber-dojo.html
 ./check_one_language.rb has not been refactored yet...
