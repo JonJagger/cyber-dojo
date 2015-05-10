@@ -76,20 +76,6 @@ Make it simpler and put the renaming-mapping into a
 dedicated class off to the side.
 
 
->>>>>>Making the dojos have a time-limit of 1 day is a key decision.
->>>>>>It means I don't have to worry about resuming old dojos.
->>>>>>I only need to make sure forking works.
-
-
-When docker container is updated don't overwrite the old one.
-Create a new one with a new (fake) version number if necessary.
-Means I don't have to worry about writing a script to
-detect if docker container has been updated and do a
-docker pull all as part of pull.sh - that could slow down pull.sh
-quite a lot.
-
-
-
 
 --------------
 Not Auto-build (but were)
@@ -167,23 +153,6 @@ N cyberdojo/ruby-2.1.3_mini_test
 N cyberdojo/scala-2.9.2
 N cyberdojo/scala-2.9.2_scalatest
 
-
-- - - - - - - - - - - - - - - - - - - -
-sym-linking...
-- - - - - - - - - - - - - - - - - - - -
-Renaming/restructuring the language folders.
-One effect of this will be that existing
-dojos for languages that have sym-linked 
-support files will no longer be resumable.
-Or rather, they will be re-enterable, and
-you will be able to fork, but you will 
-not be able to [test]
-This suggests that dojos should have a
-max duration. Say one day.
-Maybe work to rework languages that have sym-links
-so their symlinked files are inside the docker 
-container, and then remove sym-linking completely.
-- - - - - - - - - - - - - - - - - - - -
 
 
 

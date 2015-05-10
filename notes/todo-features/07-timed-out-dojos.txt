@@ -6,3 +6,11 @@ how about measuring the time from the last test-event.
 If there has been no activity for 28 days (say) then
 the dojo is automatically 'finished' and becomes readonly.
 Also have [finished] button which also makes the dojo readonly.  
+
+
+>>>>>>Making the dojos have a time-limit of 1 day is a key decision.
+>>>>>>It means I don't have to worry about resuming old dojos.
+>>>>>>I only need to make sure forking works.
+
+
+

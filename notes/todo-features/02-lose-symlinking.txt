@@ -1,0 +1,32 @@
+
+- - - - - - - - - - - - - - - - - - - -
+sym-linking...
+- - - - - - - - - - - - - - - - - - - -
+Renaming/restructuring the language folders.
+One effect of this will be that existing
+dojos for languages that have sym-linked 
+support files will no longer be resumable.
+Or rather, they will be re-enterable, and
+you will be able to fork, but you will 
+not be able to [test]
+This suggests that dojos should have a
+max duration. Say one day.
+See 07-timed-out-dojos.txt
+
+Maybe work to rework languages that have sym-links
+so their symlinked files are inside the docker 
+container, and then remove sym-linking completely.
+
+This will update the docker container images.
+They will have the same name of course.
+This means I will need to check for updates.
+$ docker pull NAME
+does nothing quite fast if there is no change.
+But pulls the new image if it has changed.
+
+So I need to create a script to iterate through
+the installed languages and check for updates
+by (re)pulling their docker containers.
+And then add that to pull.sh
+
+
