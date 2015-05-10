@@ -7,7 +7,7 @@ class TagsTest < ModelTestBase
   test 'tag zero exists after avatar is started ' +
        'and before first [test] is run ' +
        'and contains all visible files' do
-    kata = make_kata
+    kata = make_kata(unique_id,'C-assert','Fizz_Buzz')
     avatar = kata.start_avatar
     tags = avatar.tags
     assert_equal 1, tags.length
@@ -19,17 +19,17 @@ class TagsTest < ModelTestBase
     filenames.each { |filename| assert visible_files.keys.include?(filename), filename }
     assert_equal '', tags[0].output
   end
-
+  
   #- - - - - - - - - - - - - - - - - - -
 
   test 'each [test]-event creates a new tag' do
     set_runner_class_name('StubTestRunner')            
     kata = make_kata
     lion = kata.start_avatar(['lion'])
-    stub_test(lion, test_count=3)
-    tags = lion.tags
-    assert_equal test_count+1, tags.length
-    (0..tags.length).each { |i| assert_equal i, tags[i].number }
+    assert_equal 1, lion.tags.length
+    stub_test(lion, 3)
+    assert_equal 4, lion.tags.length
+    lion.tags.each_with_index{|tag,i| assert_equal i, tag.number }
   end
   
   #- - - - - - - - - - - - - - - - - - -

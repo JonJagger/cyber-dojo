@@ -3,35 +3,61 @@
 
 class Tag
   include ExternalParentChain
-
-  def initialize(avatar,n)
-    @parent,@n = avatar,n
+  
+  def initialize(avatar,hash)
+    @parent,@hash = avatar,hash
+  end  
+  
+  def avatar
+    @parent
   end
 
   def visible_files
-    @manifest ||= JSON.parse(git.show(path, "#{@n}:manifest.json"))
+    @manifest ||= JSON.parse(git.show(path, "#{number}:manifest.json"))
   end
 
   def output
+    # Very early dojos didn't store output in initial commit
     visible_files['output'] || ''
   end
 
-  def number
-    @n
+  def time
+    # todo: times need to come from browser and use iso8601
+    Time.mktime(*hash['time'])
+  end
+
+  def light?
+    hash.include?('colour') || hash.include?('outcome')
   end
   
+  def colour
+    # todo: if this is called on tag that is not a light
+    # it will raise a NoMethodError
+    (hash['colour'] || hash['outcome']).to_sym
+  end
+
+  def to_json
+    # Used only in differ_controller.rb
+    {
+      'colour' => colour,
+      'time'   => time,
+      'number' => number
+    }
+  end
+
+  def number
+    # badly named but dojos on disk have stored
+    # hash with 'number' as the key - make private?
+    hash['number']
+  end
+
 private
 
+  attr_reader :hash      
+  
   def path
     @parent.path
   end
-
+  
 end
-
-#------------------------------------------
-# output
-#------------------------------------------
-# In very early dojos katas.create_kata()
-# did not save 'output' in visible_files
-#------------------------------------------
 

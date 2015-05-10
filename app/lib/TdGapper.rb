@@ -1,5 +1,5 @@
 
-# See test/app-lib/test_td_gapper.rb
+# See comments at end of file
 
 class TdGapper
 
@@ -77,6 +77,7 @@ class TdGapper
 
 end
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # I want the horizontal spacing between dashboard traffic lights
 # to be proportional to the time difference between them.
 #
@@ -86,7 +87,7 @@ end
 # These two requirements are somewhat in tension with each other.
 # The best solution I can think of is to split each avatar's traffic light tr
 # into the same number of td's by making each td represent a period of time,
-# say 15 seconds.
+# say 60 seconds.
 #
 # The start time will be the start time of the dojo.
 # The end time will be the current time.

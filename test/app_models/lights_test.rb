@@ -42,9 +42,9 @@ class LightsTests < ModelTestBase
     lights = avatar.lights
     assert_equal 3, lights.count
 
-    assert_equal_light(Light.new(avatar,red  ), lights[0])
-    assert_equal_light(Light.new(avatar,amber), lights[1])
-    assert_equal_light(Light.new(avatar,green), lights[2])
+    assert_equal_light(Tag.new(avatar,red  ), lights[0])
+    assert_equal_light(Tag.new(avatar,amber), lights[1])
+    assert_equal_light(Tag.new(avatar,green), lights[2])
 
     n = 0
     lights.each { |light|
@@ -58,7 +58,7 @@ class LightsTests < ModelTestBase
 
     eh = lights.entries
     assert_equal 'Array', eh.class.name
-    assert_equal 'Light', eh[0].class.name
+    assert_equal 'Tag', eh[0].class.name
 
   end
 

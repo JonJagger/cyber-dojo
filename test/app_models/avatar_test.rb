@@ -35,24 +35,19 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'avatar is not active? when it has zero traffic-lights' do
-    kata = katas[unique_id]
-    lion = kata.avatars['lion']
-    lion.dir.write('increments.json', [])
+    kata = make_kata
+    lion = kata.start_avatar(['lion'])
+    assert_equal 0, lion.lights.length 
     assert !lion.active?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'avatar is active? when it has one traffic-light' do
-    kata = katas[unique_id]
-    lion = kata.avatars['lion']
-    lion.dir.write('increments.json', [
-      {
-        'colour' => 'red',
-        'time' => [2015, 2, 15, 8, 54, 6],
-        'number' => 1
-      }
-    ])
+    kata = make_kata
+    lion = kata.start_avatar(['lion'])
+    stub_test(lion,1)
+    assert_equal 1, lion.lights.length
     assert lion.active?
   end
 
