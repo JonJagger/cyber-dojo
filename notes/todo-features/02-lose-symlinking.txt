@@ -39,7 +39,7 @@ Languages that have support files
 "/var/www/cyber-dojo/languages/g++4.8.1/Catch/manifest.json"
 "/var/www/cyber-dojo/languages/Groovy/JUnit/manifest.json"
 "/var/www/cyber-dojo/languages/Groovy/Spock/manifest.json"
-"/var/www/cyber-dojo/languages/Java/Approval/manifest.json"
+"/var/www/cyber-dojo/languages/Java/Approval/manifest.json"  
 "/var/www/cyber-dojo/languages/Java/Cucumber/manifest.json"
 "/var/www/cyber-dojo/languages/Java/JMock/manifest.json"
 "/var/www/cyber-dojo/languages/Java/JUnit/manifest.json"
@@ -48,7 +48,7 @@ Languages that have support files
 "/var/www/cyber-dojo/languages/Scala/scalatest/manifest.json"
 
 
-Listed using the following script
+The above was listed using the following ruby script
 #!/usr/bin/env ruby
 require 'json'
 CYBER_DOJO_ROOT_DIR = '/var/www/cyber-dojo'
@@ -59,6 +59,68 @@ Dir.glob("#{CYBER_DOJO_ROOT_DIR}/languages/*/*/manifest.json") do |file|
     p "#{file}"
   end
 end
+
+
+- - - - - - - - - - - - - - - - - - - -
+So I need to append an ADD command to each Dockerfile
+that has support files. For example
+
+Java/Cucumber   add these lines
+#- - - - - - - - - - - - - - 
+ADD cucumber-core-1.1.6.jar /sandbox
+ADD cucumber-html-0.2.3.jar /sandbox
+ADD cucumber-java-1.1.6.jar /sandbox
+ADD cucumber-junit-1.1.6.jar /sandbox
+ADD cucumber-jvm-deps-1.0.3.jar /sandbox
+ADD cucumber-picocontainer-1.1.6.jar /sandbox
+ADD gherkin-2.12.2.jar /sandbox
+ADD hamcrest-core-1.3.jar /sandbox
+ADD junit-4.11.jar /sandbox
+ADD picocontainer-2.14.2.jar /sandbox
+#- - - - - - - - - - - - - - 
+
+The support_filenames still need to present in
+manifest.json so that you cannot accidentally
+create files with the same name.
+
+Then lose the sym-linking
+...
+app/models/Sandbox.rb
+class Sandbox
+  def start
+    avatar.visible_files.each { |filename,content| 
+      git_add(filename,content) 
+    }
+    #language.support_filenames.each { |filename|
+    #  disk.symlink(language.path + filename, path + filename)
+    #}
+  end
+end
+...
+lib/Disk.rb
+class Disk
+  #def symlink(old_name, new_name)
+  # File.symlink(old_name, new_name)
+  #end
+end
+...
+test/lib/DiskFake.rb
+class DiskFake
+  #def symlink(old_name, new_name)
+  #  symlink_log << ['symlink', old_name, new_name]
+  #end
+end
+Some tests will need updating too.
+
+
+
+
+
+Java/JUnit add this line
+#- - - - - - - - - - - - - - 
+ADD junit-4.11.jar /sandbox
+
+
 
 
 
