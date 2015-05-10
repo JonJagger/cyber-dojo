@@ -3,7 +3,7 @@
 require_relative '../admin_scripts/lib_domain'
 
 cache = { }
-create_dojo.exercises.each do |exercise|
+dojo.exercises.each do |exercise|
   cache[exercise.name] = exercise.instructions
 end
 
