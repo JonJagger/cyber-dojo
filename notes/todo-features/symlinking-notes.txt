@@ -129,7 +129,26 @@ http://unix.stackexchange.com/questions/123062/user-permissions-inside-and-outsi
 There is an issue of uid being the same inside and outside the container.
 
 
+Summary
+-------
+sym-linking advantages
+o) works for DockerTestRunner and HostTestRunner
 
+sym-linking disadvantages
+o) takes extra space in katas/ folder since sym-link has to be copied for every animal.
+o) slower avatar start
+o) more coupling - would be nice if user-code was in browser and
+   other code was in docker container. For example, if I want to 
+   upgrade a language&test container I cannot remove the sym-linked
+   files if I want to allow katas that used it to be re-enterable.
+   This is a reason to make katas readonly if they have been inactive
+   for a period of time.
+o) removing sym-linking on docker (currently) is tricky and involves
+   ensuring uids/guids match outside/inside the docker container.
+   
+
+
+For now I've decided to leave the sym-linking in place.
 
 
 
