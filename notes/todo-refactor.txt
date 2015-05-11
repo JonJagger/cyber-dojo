@@ -1,4 +1,11 @@
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Drop pie-chart animation. 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+
 Cut from http://blog.cyber-dojo.org/2014/09/adding-new-language-and-unit-test-to-cyber-dojo.html
 ./check_one_language.rb has not been refactored yet...
 <br>
