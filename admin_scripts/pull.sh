@@ -1,5 +1,11 @@
 #!/bin/bash
-# Use to install the latest cyber-dojo git repo onto a cyber-dojo server
+
+# Installs the latest cyber-dojo.
+# Does *not* install docker containers. 
+# For that use
+#   $ /var/www/cyber-dojo/admin_scripts/docker_pull_all.sh
+# or
+#   $ /var/www/cyber-dojo/admin_scripts/docker_update_all.sh
 
 cyberDojoHome=/var/www/cyber-dojo
 cd $cyberDojoHome
