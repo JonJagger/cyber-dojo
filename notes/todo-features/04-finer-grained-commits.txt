@@ -2,7 +2,12 @@
 
 Finer-grained commits
 =====================
-Will allow interesting analysis/data on how much churn there is 
+If someone is practising on cyber-dojo and they refresh the browser
+page they will lose all work they did since the last [test]
+Finer-grained commits will help alleviate that problem a
+little so they lose less work if they do this.
+
+Will also allow interesting analysis/data on how much churn there is 
 between test events. Viz, does a file get a few lines added
 and then they are removed, and then they are added back in
 a slightly different form, etc. All of which is hidden at the
