@@ -11,7 +11,7 @@ cyberDojoHome=/var/www/cyber-dojo
 cd $cyberDojoHome
 
 # store the time-stamp of this file before doing git-pull
-BEFORE=`stat -c %y $0 | cut -d' ' -f2`
+MY_TIME_STAMP_BEFORE=`stat -c %y $0`
 
 # get latest source from https://github.com/JonJagger/cyber-dojo
 # if it asks for a password just hit return
@@ -23,7 +23,7 @@ if [ $ret -ne 0 ]; then
 fi
 
 # store the time-stamp of this file before after a git-pull
-AFTER=`stat -c %y $0 | cut -d' ' -f2`
+MY_TIME_STAMP_AFTER=`stat -c %y $0`
 
 apt-get install -y acl
 
@@ -70,7 +70,7 @@ bundle install
 echo "restarting apache"
 service apache2 restart
 
-if [ "$BEFORE" != "$AFTER" ]; then
+if [ "$MY_TIME_STAMP_BEFORE" != "$MY_TIME_STAMP_AFTER" ]; then
   echo ">>>>>>>>> ALERT <<<<<<<<<"
   echo "$0 updated itself!!!"
   echo "consider running it again"
