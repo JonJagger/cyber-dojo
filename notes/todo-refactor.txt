@@ -17,6 +17,21 @@ You want output like this:
     </div>
 
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+filenames appear in the file-knave in alphabetic order
+(more or less).
+The ordering could be changed so the string is ordered
+by itself in reverse! The result would be
+o) files with the same extension would be next to each other
+o) files with common suffixes would appear next to each other
+   eg   Shape.java
+        GroupedShape.java
+   and if they were right aligned it would appear as
+   eg          Shape.java
+        GroupedShape.java
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      
+
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 If there is an error in the colour.of(output) then the error
