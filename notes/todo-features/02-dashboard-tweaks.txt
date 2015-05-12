@@ -1,0 +1,140 @@
+
+===================
+avatar total lights
+===================
+hovering over gives popup tip
+  if number of timed_out lights is zero don't show timed_out
+  from
+  deer has 11 traffic lights
+     2 reds
+     2 ambers
+     4 greens
+     0 timeouts
+  becomes
+  deer has 11 traffic lights
+     2 reds
+     2 ambers
+     4 greens
+       currently at green
+  or
+      2 reds [reds in red]
+    + 2 ambers [ambers in amber]
+    + 4 greens [greens in green]
+    = 8 (deer is currently red)  [8 in red]
+  or
+     drop word traffic-lights. Use word |tests|tested|
+  also drop leading bullets
+    |deer has tested 11 times|   [11] in red?
+    |  2 red tests           |   [red] in red
+    |  5 amber tests         |   [amber] in amber
+    |  4 green tests         |   [green] in green
+    |currently at red        |   [red] in red
+  maybe
+    |deer has tested 11 times|   [11] not in red
+    |and is currently red    |   [red] in red
+    |  2 red tests           |   [red] in red
+    |  5 amber tests         |   [amber] in amber
+    |  4 green tests         |   [green] in green
+  could also add time since last test of that colour
+  so
+    |deer has tested 11 times     |   [11] in red
+    |deer is currently red        |   [red] in red
+    |  2 tests red (~3 mins ago)  |   [red] in red
+    |  5 tests amber              |   [amber] in amber
+    |  4 tests green (~4 mins ago)|   [green] in green
+  
+  
+  
+  
+======================
+traffic-light tool-tip
+======================
+ currently
+   |Click to review raccoon's 7 <-> 8 diff|
+   |   1 added line                       |
+   |   2 deleted lines                    |
+ change to
+   |raccoon 7 <-> 8  |   [7] in green [8] in red
+   |  1 added line   |   [added] in light green
+   |  2 deleted lines|   [deleted] in light red
+   |click to review  |
+ change to
+   |raccoon 7 <-> 8  |   [7] in green [8] in red
+   |  1 line added   |   [added] in light green
+   |  2 lines deleted|   [deleted] in light red
+   |click to review  |
+   
+  
+  
+  
+========
+duration
+========
+currently
+  |   days: 02|
+  |  hours: 14|
+  |minutes: 59|
+  |seconds: 23|
+switch to
+    age: 02:03:15:22   tool-tip is        
+                          |latest test: date-time  |
+                          |  - started: date-time  |                                  
+                          |         ==: ~2 days    |
+                          |(64 days -> auto finish)|
+                                                                
+                        and == only shows most significant value
+                                
+  last test: 00:00:00:34 ago    tool-tip is   
+                                |time now: date-time        |
+                                |~30 seconds since last test|
+                                |(32 days -> auto-finish)   |
+
+                                and == only shows most significant value
+                                and rounds seconds display to nearest 10 seconds
+                                    eg ~30 seconds
+                                    or ~2 minutes
+                                    or ~3 hours
+                                    or ~1 day
+                                    
+                                no need to write [time now:]
+                                so
+                                | date-time-now              |
+                                | ~30 seconds since last test|
+                                | (32 days -> auto-finish)   |
+                                date-time-now part of main display
+                                so
+                                | ~30 seconds since last test|
+                                | (32 days -> auto-finish)   |
+                                    
+                                    
+
+better - have them next to each other, without labels, but with tool-tips
+
+    [ 03:15:22 | 00:00:34 ]
+or
+    03:15:22 
+    00:00:34 
+    
+or
+    date-time-now
+    03:15:22 
+    00:00:34 
+
+
+    23rd Feb 2015
+        tool-tip==
+            |cyber-dojo ED349A started 23rd Feb 2015 14:00:02 GMT|
+            
+    03:15:22 
+        tool-tip==
+            |latest test: date-time  |
+            |  - started: date-time  |   ??? don't need this now date-time-now shows              
+            |         ==: ~2 days    |
+            |(64 days -> auto finish)|
+        
+    00:00:30
+        tool-tip==
+            | ~30 seconds since latest test|
+            | (32 days -> auto-finish)     |
+
+   
