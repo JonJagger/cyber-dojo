@@ -29,6 +29,16 @@ o) files with common suffixes would appear next to each other
    and if they were right aligned it would appear as
    eg          Shape.java
         GroupedShape.java
+        
+my_sort = function(array) {
+  return array.sort(function(lhs,rhs) {
+    return reverse(lhs).localeCompare(reverse(rhs));
+  });
+};
+
+reverse = function(s) {
+  return s.split('').reverse().join('');
+};        
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       
 
