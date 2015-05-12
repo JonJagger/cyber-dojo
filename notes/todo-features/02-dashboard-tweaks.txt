@@ -75,6 +75,7 @@ currently
   |  hours: 14|
   |minutes: 59|
   |seconds: 23|
+  
 switch to
     age: 02:03:15:22   tool-tip is        
                           |latest test: date-time  |
@@ -106,35 +107,19 @@ switch to
                                 | ~30 seconds since last test|
                                 | (32 days -> auto-finish)   |
                                     
-                                    
-
-better - have them next to each other, without labels, but with tool-tips
-
-    [ 03:15:22 | 00:00:34 ]
-or
-    03:15:22 
-    00:00:34 
-    
-or
-    date-time-now
-    03:15:22 
-    00:00:34 
-
+-------------------------------------------------------------------------------------------
 
     23rd Feb 2015
-        tool-tip==
-            |cyber-dojo ED349A started 23rd Feb 2015 14:00:02 GMT|
-            
-    03:15:22 
-        tool-tip==
-            |latest test: date-time  |
-            |  - started: date-time  |   ??? don't need this now date-time-now shows              
-            |         ==: ~2 days    |
-            |(64 days -> auto finish)|
-        
-    00:00:30
-        tool-tip==
-            | ~30 seconds since latest test|
-            | (32 days -> auto-finish)     |
+                          |created 23rd Feb 2015 15:22:23 GMT|
+                          |closes in ~19 days time           |
 
-   
+    03:15:22 
+                          |   newest test: date-time  |
+                          | - oldest test: date-time  |                                  
+                          | = ~3 hours                |
+    00:00:30 
+                          |latest test ~30 seconds old|
+                          | (32 days -> closes)       |
+    
+
+
