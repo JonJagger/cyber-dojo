@@ -1,0 +1,36 @@
+
+The diff dialog shows files with their diff counts
+
+   2 4  Wibble.java
+   1 5  WibbleTest.java
+   
+how about differentiating between diffs to the code and diffs to the tests.
+This could allow a histogram like graph where changes to code are shown
+as histograms below zero, and changes to the tests are shown as
+changes to the code above zero. And time on the x axis.
+
+This would allow a visualization of whether test first is being
+practiced. It would allow you to see times when code and tests
+are being edited at the same time.
+
+Of course I can already see this since I have a diff count for
+each file. But the code and test files are listed in the same
+file knave. Perhaps list the code and tests in two knaves?
+Maybe have three knaves and put the helper files in the
+third one (cyber-dojo.sh makefile).
+instructions would go in the test knave.
+where would the output go? 
+in none of them I think.
+the output file is the one that closes the feedback loop.
+maybe rename output to feedback!?
+
+new/rename/delete
+When I made a new file I might have to specify
+which knave it was to go in.
+Rename too.
+Delete would be ok.
+
+At the least output could go in its own knave
+both in the diff dialog and the test page.
+
+Should makefile be non-deletable/renamable?
