@@ -1,4 +1,8 @@
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Have separate tests? list for each language on setup page.
+Swap in the chosen one by manipulating the dom when the language is chosen.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 Cut from http://blog.cyber-dojo.org/2014/09/adding-new-language-and-unit-test-to-cyber-dojo.html
 ./check_one_language.rb has not been refactored yet...
