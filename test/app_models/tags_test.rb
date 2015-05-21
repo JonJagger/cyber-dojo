@@ -9,7 +9,7 @@ class TagsTest < ModelTestBase
        'and contains all visible files' do
     language = languages['C-assert']
     exercise = exercises['Fizz_Buzz']
-    kata = make_kata(unique_id, language.name, 'Fizz_Buzz')
+    kata = make_kata(unique_id, language.name, exercise.name)
     avatar = kata.start_avatar
     tags = avatar.tags
     assert_equal 1, tags.length
@@ -35,7 +35,6 @@ class TagsTest < ModelTestBase
   #- - - - - - - - - - - - - - - - - - -
 
   test 'each [test]-event creates a new tag' do
-    set_runner_class_name('StubTestRunner')            
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     assert_equal 1, lion.tags.length
@@ -47,7 +46,6 @@ class TagsTest < ModelTestBase
   #- - - - - - - - - - - - - - - - - - -
 
   test 'tags[-n] duplicates Array[-n] behaviour' do
-    set_runner_class_name('StubTestRunner')            
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     stub_test(lion, test_count=3)

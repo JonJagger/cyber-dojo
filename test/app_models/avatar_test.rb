@@ -86,9 +86,7 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'after test() output-file is saved in sandbox ' +
-       'and output is inserted into the visible_files argument' do
-         
-    set_runner_class_name('StubTestRunner')         
+       'and output is inserted into the visible_files argument' do         
     kata = make_kata
     avatar = kata.start_avatar
     code_filename = 'hiker.c'
@@ -118,7 +116,6 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'save():delta[:changed] files are saved' do
-    set_runner_class_name('StubTestRunner')        
     kata = make_kata
     language = kata.language
     avatar = kata.start_avatar
@@ -152,7 +149,6 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'save():delta[:unchanged] files are not saved' do
-    set_runner_class_name('StubTestRunner')        
     kata = make_kata
     language = kata.language  
     avatar = kata.start_avatar
@@ -182,7 +178,6 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'save():delta[:new] files are saved and git added' do
-    set_runner_class_name('StubTestRunner')            
     kata = make_kata
     avatar = kata.start_avatar
     language = kata.language

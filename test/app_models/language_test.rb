@@ -255,8 +255,7 @@ class LanguageTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'language can be asked if it is runnable' do
-    set_runner_class_name('StubTestRunner')
-    dojo.runner.stub_runnable(true)
+    runner.stub_runnable(true)
     assert languages['Ruby'].runnable?
   end
 
@@ -312,8 +311,7 @@ class LanguageTests < ModelTestBase
 
   test 'TestRunner.runnable?(language) is false ' +
        'when language does not have image_name set in manifest' do
-    set_runner_class_name('StubTestRunner')
-    dojo.runner.stub_runnable(false)
+    runner.stub_runnable(false)
     ruby = dojo.languages['Ruby-TestUnit']
     ruby.dir.write(manifest_filename, { })
     assert !ruby.runnable?

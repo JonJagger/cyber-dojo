@@ -55,8 +55,6 @@ class LightTests < ModelTestBase
   # - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'each test creates a new light' do
-    set_runner_class_name('StubTestRunner')
-    set_git_class_name('GitSpy')        
     kata = make_kata
     lion = kata.start_avatar(['lion'])    
     stub_test(lion, [:red,:amber,:green])
