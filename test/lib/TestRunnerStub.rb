@@ -1,5 +1,5 @@
 
-class StubTestRunner
+class TestRunnerStub
 
   def initialize(dojo=nil)
   end

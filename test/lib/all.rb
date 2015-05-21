@@ -4,7 +4,7 @@
   DiskFake
   DirFake
   GitSpy
-  StubTestRunner
-  DummyTestRunner
+  TestRunnerStub
+  TestRunnerDummy
   OneSelfDummy
 }.each {|sourcefile| require_relative './' + sourcefile }

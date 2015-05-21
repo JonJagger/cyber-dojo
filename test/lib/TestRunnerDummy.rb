@@ -1,6 +1,6 @@
 # Runner that does nothing.
 
-class DummyTestRunner
+class TestRunnerDummy
   include TestRunner
 
   def initialize(dojo=nil)

@@ -67,7 +67,7 @@ module TestHelpers # mixin
   end
         
   def stub_test(avatar,param)
-    set_runner_class_name('StubTestRunner')
+    assert_equal 'TestRunnerStub', get_runner_class_name
     stub_test_colours(avatar,param) if param.class.name == 'Array'
     stub_test_n(avatar,param) if param.class.name == 'Fixnum'
   end
@@ -75,7 +75,6 @@ module TestHelpers # mixin
 private
   
   def stub_test_colours(avatar,colours)
-    disk = dojo.disk
     root = File.expand_path(File.dirname(__FILE__)) + '/app_lib/test_output'    
     colours.each do |colour|    
       path = "#{root}/#{avatar.kata.language.unit_test_framework}/#{colour}"

@@ -9,7 +9,7 @@ class ModelTestBase < TestBase
 
   def setup
     super    
-    set_runner_class_name   'StubTestRunner'
+    set_runner_class_name   'TestRunnerStub'
     set_disk_class_name     'DiskStub'
     set_git_class_name      'GitSpy'
     set_one_self_class_name 'OneSelfDummy'
