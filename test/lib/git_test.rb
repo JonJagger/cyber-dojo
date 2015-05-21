@@ -34,7 +34,7 @@ class GitTests < LibTestBase
   end
 
   test 'all git commands raise exception if path names a dir that does not exist' do
-    set_path 'bad_dir'
+    set_path 'dir_that_does_not_exist'
     [:init,:config,:add,:rm,:commit,:gc,:tag,:show,:diff].each do |cmd|
       error = assert_raises(Errno::ENOENT) { 
         args = ''
@@ -73,7 +73,7 @@ class GitTests < LibTestBase
     assert log.include?('fatal: pathspec'), log
     assert log.include?("$?.exitstatus=128"), log
   end
-    
+
   test '[git add] succeeds silently' do
     ok { git.init(path, '') }
     write_file
