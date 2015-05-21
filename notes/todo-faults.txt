@@ -1,14 +1,6 @@
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Fred Flintstone!
-I've added a pre-commit hook to detect this.
-Find which test is causing it and look into a proper fix.
-One idea is to make sure the CYBER_DOJO_KATAS_ROOT
-env variable is set to a folder that does *not* have
-/var/www/cyber-dojo as a parent folder. Probably a 
-good idea regardless of the cause.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EDIT PAGE
   very long filename: scroll right, missing part of filename appears
   delete a different file.
