@@ -12,16 +12,17 @@ module TestHelpers # mixin
   end
     
   # - - - - - - - - - - - - - - - - - - -
-  # call the setters at the start of tests *before* accessing dojo
   
   def set_languages_root(value); cd_set(languages_key,value); end
   def set_exercises_root(value); cd_set(exercises_key,value); end
   def set_katas_root(value);     cd_set(    katas_key,value); end
   
-  def set_runner_class_name(value);   cd_set(runner_key,value); end  
-  def set_disk_class_name(value);     cd_set(  disk_key,value); end
-  def set_git_class_name(value);      cd_set(   git_key,value); end
-  def set_one_self_class_name(value); cd_set(   one_self_key,value); end
+  def set_runner_class_name(value);   cd_set(  runner_key,value); end  
+  def set_disk_class_name(value);     cd_set(    disk_key,value); end
+  def set_git_class_name(value);      cd_set(     git_key,value); end
+  def set_one_self_class_name(value); cd_set(one_self_key,value); end
+  
+  # - - - - - - - - - - - - - - - - - - -
   
   def get_languages_root; cd_get(languages_key); end  
   def get_exercises_root; cd_get(exercises_key); end
@@ -40,11 +41,11 @@ module TestHelpers # mixin
 
   def languages; dojo.languages; end
   def exercises; dojo.exercises; end  
-  def katas; dojo.katas; end  
-  def disk; dojo.disk; end  
-  def runner; dojo.runner; end
-  def git; dojo.git; end
-  def one_self; dojo.one_self; end
+  def katas;     dojo.katas;     end  
+  def disk;      dojo.disk;      end  
+  def runner;    dojo.runner;    end
+  def git;       dojo.git;       end
+  def one_self;  dojo.one_self;  end
 
   # - - - - - - - - - - - - - - - - - - -
     
@@ -100,18 +101,22 @@ private
   def exercises_key; root('EXERCISES'); end
   def     katas_key; root(    'KATAS'); end   
   
+  def root(key)
+    cd(key + '_ROOT')
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def     disk_key; class_name('DISK'); end
   def   runner_key; class_name('RUNNER'); end
   def      git_key; class_name('GIT'); end
   def one_self_key; class_name('ONE_SELF'); end
 
-  def root(key)
-    cd(key + '_ROOT')
-  end
-
   def class_name(key)
     cd(key + '_CLASS_NAME')
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def cd(key)
     'CYBER_DOJO_' + key
