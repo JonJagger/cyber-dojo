@@ -7,13 +7,25 @@ class TagsTest < ModelTestBase
   test 'tag zero exists after avatar is started ' +
        'and before first [test] is run ' +
        'and contains all visible files' do
-    kata = make_kata(unique_id,'C-assert','Fizz_Buzz')
+    language = languages['C-assert']
+    exercise = exercises['Fizz_Buzz']
+    kata = make_kata(unique_id, language.name, 'Fizz_Buzz')
     avatar = kata.start_avatar
     tags = avatar.tags
     assert_equal 1, tags.length
     n = 0
     tags.each { n += 1 }
     assert_equal 1, n
+    
+    stub_manifest = {
+      'output' => '',
+      'instructions' => exercise.instructions
+    }
+    language.visible_files.each do |filename,content| 
+      stub_manifest[filename] = content
+    end        
+    git.spy(avatar.path, 'show', '0:manifest.json', JSON.unparse(stub_manifest))
+    
     visible_files = tags[0].visible_files
     filenames = ['hiker.h', 'hiker.c', 'instructions','cyber-dojo.sh','makefile','output']
     filenames.each { |filename| assert visible_files.keys.include?(filename), filename }

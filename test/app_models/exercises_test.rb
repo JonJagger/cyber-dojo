@@ -4,11 +4,6 @@ require_relative 'model_test_base'
 
 class ExercisesTests < ModelTestBase
 
-  def setup
-    super
-    assert_equal get_disk_class_name, 'Disk'
-  end
-  
   test 'path is set from ENV' do
     path = 'end_with_slash/'
     set_exercises_root(path)

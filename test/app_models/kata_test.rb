@@ -4,15 +4,6 @@ require_relative 'model_test_base'
 
 class KataTests < ModelTestBase
 
-  def setup
-    super
-    set_disk_class_name     'DiskStub'
-    set_git_class_name      'GitSpy'
-    set_one_self_class_name 'OneSelfDummy'
-  end
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
   test 'attempting to create a Kata with an invalid id raises a RuntimeError' do
     bad_ids = [
       nil,          # not string

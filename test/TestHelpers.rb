@@ -79,9 +79,9 @@ private
     root = File.expand_path(File.dirname(__FILE__)) + '/app_lib/test_output'    
     colours.each do |colour|    
       path = "#{root}/#{avatar.kata.language.unit_test_framework}/#{colour}"
-      all_outputs = disk[path].each_file.collect{|filename| filename}
+      all_outputs = Dir.glob(path + '/*')      
       filename = all_outputs.shuffle[0]
-      output = disk[path].read(filename)
+      output = File.read(filename)
       dojo.runner.stub_output(output)      
       delta = { :changed => [], :new => [], :deleted => [] }
       files = { }

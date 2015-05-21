@@ -9,9 +9,7 @@ o) use test_wrapper.sh shebang
 But ./run_all.sh from this folder /var/www/cyber-dojo/test does not,
 there is some unintended interaction between tests in different folders.
 See
-admin_scripts/make_mac_os_ram_disk.sh
-admin_scripts/make_mac_os_ram_dirs.sh
-admin_scripts/make_env_vars.sh
+admin_scripts/setup_env_vars.sh
 
 
 ------------------------------

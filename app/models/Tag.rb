@@ -22,7 +22,7 @@ class Tag
   end
 
   def time
-    # todo: times need to come from browser and use iso8601
+    # todo: times ?need? to come from browser and use iso8601
     Time.mktime(*hash['time'])
   end
 
@@ -31,7 +31,7 @@ class Tag
   end
   
   def colour
-    # todo: if this is called on tag that is not a light
+    # if this is called on tag that is not a light
     # it will raise a NoMethodError
     (hash['colour'] || hash['outcome']).to_sym
   end

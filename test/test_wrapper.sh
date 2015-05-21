@@ -28,11 +28,11 @@ rm -rf ../../coverage/.resultset.json
 # In the diagnostic filename will be wrong and line-number
 # will be off by one. 
 
-cat ${*:2} | tail -n +2 > log.tmp
-ruby log.tmp 2>&1 
+cat ${*:2} | tail -n +2 > all_tests.tmp
+ruby all_tests.tmp 2>&1 | tee log.tmp
 
 cp -R ../../coverage/* .
-ruby ../print_coverage_percent.rb index.html $1 
+ruby ../print_coverage_percent.rb index.html $1 | tee -a log.tmp
 
 GIT_USER_NAME_AFTER=`git config user.name`
 

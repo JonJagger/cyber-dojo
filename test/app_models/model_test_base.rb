@@ -9,10 +9,10 @@ class ModelTestBase < TestBase
 
   def setup
     super    
-    set_runner_class_name('DummyTestRunner')        
-    if get_disk_class_name === 'Disk'
-      `rm -rf #{get_katas_root}*`
-    end
+    set_runner_class_name   'DummyTestRunner'
+    set_disk_class_name     'DiskStub'
+    set_git_class_name      'GitSpy'
+    set_one_self_class_name 'OneSelfDummy'
   end
 
   def teardown

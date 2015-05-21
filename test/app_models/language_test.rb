@@ -5,11 +5,6 @@ require 'tempfile'
 
 class LanguageTests < ModelTestBase
 
-  def setup
-    super
-    set_disk_class_name('DiskFake')
-  end
-  
   test 'path(language) has correct format' do
     language_dir,test_dir = 'C#','NUnit'    
     language = languages[language_dir + '-' + test_dir]
@@ -36,6 +31,7 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+=begin
   test 'exists? is true only when dir and manifest exist' do
     @language = languages['Erlang']
     assert !@language.exists?, '1'
@@ -44,7 +40,8 @@ class LanguageTests < ModelTestBase
     spy_manifest({})
     assert @language.exists?, '3'
   end
-
+=end
+  
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'when :visible_filenames is not in manifest ' +

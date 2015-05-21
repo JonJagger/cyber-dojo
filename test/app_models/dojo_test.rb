@@ -29,13 +29,13 @@ class DojoTests < ModelTestBase
   end
   
   test 'disk' do
-    name = 'Disk'
+    name = 'DiskStub'
     set_disk_class_name(name)
     assert_equal name, dojo.disk.class.name
   end
     
   test 'git' do
-    name = 'Git'
+    name = 'GitSpy'
     set_git_class_name(name)
     assert_equal name, dojo.git.class.name
   end

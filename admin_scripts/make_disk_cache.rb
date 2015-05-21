@@ -20,7 +20,7 @@ dojo.languages.each do |language|
   end  
 end
 
-File.write('/var/www/cyber-dojo/test/disk_cache.json', JSON.unparse($cache))
+File.write('/var/www/cyber-dojo/test/lib/disk_cache.json', JSON.unparse($cache))
 
 
 

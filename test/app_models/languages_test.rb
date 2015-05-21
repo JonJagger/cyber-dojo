@@ -4,11 +4,6 @@ require_relative 'model_test_base'
 
 class LanguagesTests < ModelTestBase
 
-  def setup
-    super
-    assert_equal 'Disk', get_disk_class_name
-  end
-  
   test 'path is set from ENV' do
     path = 'end_with_slash/'
     set_languages_root(path)  
