@@ -3,6 +3,9 @@
 class DummyTestRunner
   include TestRunner
 
+  def initialize(dojo=nil)
+  end
+  
   def runnable?(language)
     false
   end

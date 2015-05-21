@@ -17,16 +17,20 @@ module TestHelpers # mixin
   def set_languages_root(value); cd_set(languages_key,value); end
   def set_exercises_root(value); cd_set(exercises_key,value); end
   def set_katas_root(value);     cd_set(    katas_key,value); end
-  def set_runner_class_name(value); cd_set(runner_key,value); end  
-  def set_disk_class_name(value);   cd_set(  disk_key,value); end
-  def set_git_class_name(value);    cd_set(   git_key,value); end
+  
+  def set_runner_class_name(value);   cd_set(runner_key,value); end  
+  def set_disk_class_name(value);     cd_set(  disk_key,value); end
+  def set_git_class_name(value);      cd_set(   git_key,value); end
+  def set_one_self_class_name(value); cd_set(   one_self_key,value); end
   
   def get_languages_root; cd_get(languages_key); end  
   def get_exercises_root; cd_get(exercises_key); end
   def get_katas_root;     cd_get(    katas_key); end  
-  def get_runner_class_name; cd_get(runner_key); end  
-  def get_disk_class_name;   cd_get(  disk_key); end  
-  def get_git_class_name;    cd_get(   git_key); end
+  
+  def get_runner_class_name;   cd_get(  runner_key); end  
+  def get_disk_class_name;     cd_get(    disk_key); end  
+  def get_git_class_name;      cd_get(     git_key); end
+  def get_one_self_class_name; cd_get(one_self_key); end
     
   # - - - - - - - - - - - - - - - - - - -
   
@@ -40,6 +44,7 @@ module TestHelpers # mixin
   def disk; dojo.disk; end  
   def runner; dojo.runner; end
   def git; dojo.git; end
+  def one_self; dojo.one_self; end
 
   # - - - - - - - - - - - - - - - - - - -
     
@@ -96,9 +101,10 @@ private
   def exercises_key; root('EXERCISES'); end
   def     katas_key; root(    'KATAS'); end   
   
-  def   disk_key; class_name('DISK'); end
-  def runner_key; class_name('RUNNER'); end
-  def    git_key; class_name('GIT'); end
+  def     disk_key; class_name('DISK'); end
+  def   runner_key; class_name('RUNNER'); end
+  def      git_key; class_name('GIT'); end
+  def one_self_key; class_name('ONE_SELF'); end
 
   def root(key)
     cd(key + '_ROOT')
@@ -113,7 +119,7 @@ private
   end
   
   def env_vars
-    [languages_key,exercises_key,katas_key,disk_key,runner_key,git_key]
+    [languages_key,exercises_key,katas_key,disk_key,runner_key,git_key,one_self_key]
   end
     
   # - - - - - - - - - - - - - - - - - - - - - - - - -

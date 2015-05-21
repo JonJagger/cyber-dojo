@@ -29,7 +29,7 @@ class Dojo
   end
 
   def one_self
-    @one_self ||= OneSelf.new(disk)
+    @one_self ||= external_obj
   end
   
 private
@@ -39,7 +39,7 @@ private
   end
   
   def external_obj
-    Object.const_get(external(name_of(caller) + '_CLASS_NAME')).new
+    Object.const_get(external(name_of(caller) + '_CLASS_NAME')).new(self)
   end
   
   def external(key)
@@ -63,8 +63,8 @@ end
 # For example, I can run controller tests by setting the
 # environment variables, then run the test which issue 
 # a GET/POST, let the call work its way through the rails stack, 
-# eventually reaching Dojo.rb where it creates Disk/Runner/Git
-# objects as named in the ENV[]
+# eventually reaching Dojo.rb where it creates
+# Disk/Runner/Git/OneSelf objects as named in the ENV[]
 # I cannot see how how I do this using Parameterize-From-Above
 # since I know of no way to 'tunnel' the parameters 'through'
 # the rails stack.

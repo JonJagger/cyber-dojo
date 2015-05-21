@@ -1,6 +1,9 @@
 
 class DiskFake
 
+  def initialize(dojo=nil)
+  end
+    
   def dirs
     @dirs ||= { }
   end

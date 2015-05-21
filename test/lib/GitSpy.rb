@@ -1,7 +1,7 @@
 
 class GitSpy
 
-  def initialize
+  def initialize(dojo=nil)
     @log = { }
     @stubs = { }
   end

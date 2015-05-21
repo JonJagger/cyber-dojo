@@ -6,8 +6,12 @@ class KataTests < ModelTestBase
 
   def setup
     super
-    assert_equal 'Disk', get_disk_class_name
+    set_disk_class_name     'DiskStub'
+    set_git_class_name      'GitSpy'
+    set_one_self_class_name 'OneSelfDummy'
   end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test 'attempting to create a Kata with an invalid id raises a RuntimeError' do
     bad_ids = [
@@ -208,14 +212,12 @@ class KataTests < ModelTestBase
     avatars_names = kata.avatars.map {|avatar| avatar.name}
     assert_equal names.sort, avatars_names.sort
   end
-
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test 'start_avatar succeeds once for each avatar name then fails' do
-    # using DiskFake/DirFake here would be good...
     kata = make_kata
     created = [ ]
-    Avatars.names.length.times do |n|
+    Avatars.names.length.times do |n|      
       avatar = kata.start_avatar
       assert_not_nil avatar
       created << avatar

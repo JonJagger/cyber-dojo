@@ -6,8 +6,8 @@ require 'json'
 
 class OneSelf
     
-  def initialize(disk)
-    @disk = disk
+  def initialize(dojo)
+    @disk = dojo.disk
   end
   
   def created(kata,latitude,longtitude)

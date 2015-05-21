@@ -9,7 +9,7 @@ require 'tempfile' # Dir::Tmpname
 class DockerTestRunner
     include TestRunner
 
-  def initialize
+  def initialize(dojo)
     raise RuntimeError.new("Docker not installed") if !installed?    
     command = stderr2stdout('docker images')
     @image_names = DockerTestRunner.image_names(`#{command}`)

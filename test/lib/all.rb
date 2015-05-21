@@ -1,8 +1,10 @@
 
 %w{
+  DiskStub
   DiskFake
   DirFake
   GitSpy
   StubTestRunner
-  DummyTestRunner  
+  DummyTestRunner
+  OneSelfDummy
 }.each {|sourcefile| require_relative './' + sourcefile }

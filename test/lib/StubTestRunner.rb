@@ -1,6 +1,9 @@
 
 class StubTestRunner
 
+  def initialize(dojo=nil)
+  end
+    
   def stub_output(stub)
     @output = stub
   end
