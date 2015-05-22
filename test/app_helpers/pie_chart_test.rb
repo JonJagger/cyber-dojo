@@ -7,8 +7,8 @@ class PieChartTests < AppHelpersTestBase
   include PieChartHelper
 
   test 'pie-chart from avatar.lights' do
-    set_runner_class_name('DummyTestRunner')
-    kata = katas['123456789A']
+    set_disk_class_name('DiskStub')
+    kata = make_kata
     lion = kata.avatars['lion']
     lion.dir.write('increments.json', [
       {
@@ -43,7 +43,7 @@ class PieChartTests < AppHelpersTestBase
   
   #- - - - - - - - - - - - - - - - - - - -
 
-  test 'pie-chart from traffic-lights' do
+  test 'pie-chart from lights' do
     lights = [
       red_light,
       red_light,
@@ -94,9 +94,9 @@ class PieChartTests < AppHelpersTestBase
 
   #- - - - - - - - - - - - - - - - - - - -
 
-  def   red_light; Light.new(nil,{'colour'=> :red  }); end
-  def amber_light; Light.new(nil,{'colour'=> :amber}); end
-  def green_light; Light.new(nil,{'colour'=> :green}); end
-  def timed_out_light; Light.new(nil,{'colour'=> :timed_out}); end
+  def   red_light; Tag.new(nil,{'colour'=> :red  }); end
+  def amber_light; Tag.new(nil,{'colour'=> :amber}); end
+  def green_light; Tag.new(nil,{'colour'=> :green}); end
+  def timed_out_light; Tag.new(nil,{'colour'=> :timed_out}); end
 
 end

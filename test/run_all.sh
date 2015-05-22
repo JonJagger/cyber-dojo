@@ -1,7 +1,7 @@
 
 modules=( 
   lib 
-  # app_helpers 
+  app_helpers 
   # app_lib 
   app_models 
   # languages

@@ -92,7 +92,7 @@ class TrafficLightTests < AppHelpersTestBase
     def avatar.lights; [1]*7; end
     tag = 3
     color = 'red'
-    light = Light.new(avatar, {
+    light = Tag.new(avatar, {
       'number' => tag,
       'colour' => color
     })

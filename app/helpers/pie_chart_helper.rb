@@ -1,15 +1,15 @@
 
 module PieChartHelper
 
-  def pie_chart(traffic_lights, key)
+  def pie_chart(lights, key)
      # key is often the traffic-light's avatar's name
      # but is 'zoo' for the collective-pie-chart of
      # all the animals
      pie_chart_from_counts({
-        :red   => count(traffic_lights, :red),
-        :amber => count(traffic_lights, :amber),
-        :green => count(traffic_lights, :green),
-        :timed_out => count(traffic_lights, :timed_out)
+        :red   => count(lights, :red),
+        :amber => count(lights, :amber),
+        :green => count(lights, :green),
+        :timed_out => count(lights, :timed_out)
      }, 30, key)
   end
 
@@ -28,8 +28,8 @@ module PieChartHelper
 
 private
 
-  def count(traffic_lights, colour)
-     traffic_lights.entries.count{|light| light.colour === colour }
+  def count(lights, colour)
+     lights.entries.count{|light| light.colour === colour }
   end
 
 end

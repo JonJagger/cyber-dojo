@@ -34,7 +34,7 @@ end
 
 def modules
   [ 
-     #app_helpers 
+     'app_helpers',
      #app_lib 
      'app_models',
      'lib'
