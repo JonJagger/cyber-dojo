@@ -5,19 +5,13 @@ require_relative '../TestHelpers'
 class OneLanguageChecker
 
   include TestHelpers
-  
-  def initialize(root_path, verbose)
-    @root_path = root_path
-    @root_path += '/' if !root_path.end_with?('/')
+
+  def initialize(verbose)
     @verbose = verbose
   end
-
-  def check(name,test)
+  
+  def check(name,test,verbose=false)
     language_name = [name,test].join('-')
-    # if running on a Docker server
-    #    return [red,amber,green] state
-    # else
-    #    return nil
     @language = languages[language_name]
     if true #@language.runnable?
       vputs "  #{language_name} " + ('.' * (35-language_name.to_s.length))
@@ -50,8 +44,8 @@ private
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
   def language_test(colour)
-    exercise = dojo.exercises['Fizz_Buzz']
-    kata = dojo.katas.create_kata(@language, exercise)
+    exercise = exercises['Fizz_Buzz']
+    kata = katas.create_kata(@language, exercise)
     avatar = kata.start_avatar
 
     pattern = pattern_6times9

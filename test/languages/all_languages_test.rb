@@ -6,8 +6,7 @@ require_relative 'one_language_checker'
 class AllLanguagesTests < LanguagesTestBase
 
   test 'red-amber-green initial 6*9 state' do
-    verbose = false
-    checker = OneLanguageChecker.new(root_path,verbose)
+    checker = OneLanguageChecker.new(verbose=false)
     results = {}
     dirs = Dir.glob("#{root_path}languages/*/*/manifest.json")
     languages = dirs.map { |file|
@@ -20,10 +19,6 @@ class AllLanguagesTests < LanguagesTestBase
     expected = ['red','amber','green']
     fails  = results.select{|language,rag| rag != expected }
     assert fails == {}, fails.inspect
-  end
-
-  def root_path
-    File.absolute_path(File.dirname(__FILE__) + '/../../') + '/'
   end
 
 end
