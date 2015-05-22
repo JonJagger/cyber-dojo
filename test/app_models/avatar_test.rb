@@ -530,16 +530,6 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 =begin
-  test "avatar.test() initial output" do
-    avatar = @kata.start_avatar
-    output = avatar.test(@max_duration)
-    assert output.include?('java.lang.AssertionError: expected:<54> but was:<42>')
-  end
-=end
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
-
-=begin
   def kata_manifest_spy_read(manifest)
     @paas.dir(@kata).spy_read('manifest.json', JSON.unparse(manifest))
   end

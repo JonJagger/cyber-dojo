@@ -36,8 +36,8 @@ def modules
   [ 
      #app_helpers 
      #app_lib 
-     'app_models'
-     #lib 
+     'app_models',
+     'lib'
      #languages 
      #integration 
      #app_controllers

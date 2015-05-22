@@ -48,7 +48,7 @@ class FakeDirTests < LibTestBase
   test 'read(filename) raises if no file exists' do
     filename = 'wibble.rb'
     error = assert_raises(RuntimeError) { @dir.read(filename) }
-    assert_equal "FakeDir['#{@path}'].read('#{filename}') no file", error.message
+    assert_equal "DirFake['#{@path}'].read('#{filename}') no file", error.message
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -66,7 +66,7 @@ class FakeDirTests < LibTestBase
     @dir.write('wibble.h', '#include <stdio.h>')
     filename = 'wibble.cpp'
     error = assert_raises(RuntimeError) { @dir.read(filename) }
-    assert_equal "FakeDir['#{@path}'].read('#{filename}') no file", error.message
+    assert_equal "DirFake['#{@path}'].read('#{filename}') no file", error.message
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -

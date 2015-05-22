@@ -1,12 +1,12 @@
 
 modules=( 
   lib 
-  app_helpers 
-  app_lib 
+  # app_helpers 
+  # app_lib 
   app_models 
   # languages
   # integration 
-  app_controllers 
+  # app_controllers 
 )
 
 echo
@@ -21,3 +21,4 @@ done
 echo
 echo
 
+./print_coverage_summary.rb
