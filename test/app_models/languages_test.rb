@@ -72,7 +72,7 @@ class LanguagesTests < ModelTestBase
     #
     # katas/../......../manifest.json  language: entry
     # count of occurences on cyber-dojo.org
-    # ID on one occurrence on cyber-dojo.org
+    # ID of one occurrence on cyber-dojo.org
     [
       "Asm-assert 25 010E66019D",  
       "BCPL 3 DF9A083C0F",
@@ -144,7 +144,7 @@ class LanguagesTests < ModelTestBase
   end
 
   def exists?(lang,test)
-    File.directory?("#{get_languages_root}/#{lang}/#{test}")    
+    File.directory?("#{get_languages_root}/#{lang}/#{test}")
   end
 
 end

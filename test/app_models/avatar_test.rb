@@ -104,7 +104,7 @@ class AvatarTests < ModelTestBase
       :deleted => [ ],
       :new => [ ]
     }
-    dojo.runner.stub_output('hello')
+    runner.stub_output('hello')
     assert !visible_files.keys.include?('output')    
     avatar.test(delta, visible_files)
     assert visible_files.keys.include?('output')
@@ -139,7 +139,7 @@ class AvatarTests < ModelTestBase
       assert_equal language.visible_files[filename], sandbox.dir.read(filename)
       assert_not_equal language.visible_files[filename], visible_files[filename]
     end
-    dojo.runner.stub_output('')
+    runner.stub_output('')
     avatar.test(delta, visible_files)    
     delta[:changed].each do |filename|
       assert_equal visible_files[filename], sandbox.dir.read(filename)
@@ -168,7 +168,7 @@ class AvatarTests < ModelTestBase
       :deleted => [ ],
       :new => [ ]
     }  
-    dojo.runner.stub_output('')
+    runner.stub_output('')
     avatar.test(delta, visible_files)
     delta[:unchanged].each do |filename|
       assert !sandbox.dir.exists?(filename)
@@ -198,7 +198,7 @@ class AvatarTests < ModelTestBase
       assert !sandbox.dir.exists?(filename)
     end           
     
-    dojo.runner.stub_output('')
+    runner.stub_output('')
     avatar.test(delta, visible_files)
     
     assert git_log_include?(avatar.sandbox.path, ['add', "#{new_filename}"])    
@@ -210,11 +210,9 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-=begin
   test "save():delta[:deleted] files are git rm'd" do
-    kata = @dojo.katas['45ED23A2F1']
-    avatar = kata.avatars['hippo']
-    sandbox = avatar.sandbox
+    kata = make_kata
+    avatar = kata.start_avatar
     visible_files = {
       'untitled.cs' => 'content for code file',
       'untitled.test.cs' => 'content for test file',
@@ -227,27 +225,16 @@ class AvatarTests < ModelTestBase
       :new => [ ]
     }
 
-    language = @dojo.languages['C-assert']
-    language.dir.write('manifest.json', {
-      :display_name => 'C, assert',
-      :unit_test_framework => 'cassert'
-    })
-    kata.dir.write('manifest.json', {
-      :id => @id,
-      :visible_files => visible_files,
-      :language => language.name,
-    })
-    avatar.dir.write('increments.json', [])
+    runner.stub_output('')    
+    avatar.test(delta, visible_files)
 
-    time_limit = 15
-    avatar.test(delta, visible_files, time_limit, time_now)
-
-    git_log = git.log[sandbox.path]
+    git_log = git.log[avatar.sandbox.path]
     assert git_log.include?([ 'rm', 'wibble.cs' ]), git_log.inspect
   end
-
+  
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
+=begin
   test 'visible_files' do
     kata = make_kata
     visible_files = kata.start_avatar(['lion']).visible_files
@@ -256,9 +243,11 @@ class AvatarTests < ModelTestBase
     assert visible_files['instructions'].start_with?('Note: The initial code')
     assert_equal '', visible_files['output']
   end
+=end
+  
+    #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
-
+=begin
   test 'tag.diff' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
@@ -342,7 +331,7 @@ class AvatarTests < ModelTestBase
 =begin
 
   test "avatar (json) creation sets up initial git repo of visible files " +
-        "but not support_files are not in git repo" do
+        "but support_files are not in git repo" do
     @dojo = Dojo.new('spied/','json')
     @kata = @dojo[@id]
     visible_files = {
@@ -748,7 +737,7 @@ class AvatarTests < ModelTestBase
 =end
 
   def git_log_include?(path,find)
-    dojo.git.log[path].any?{|entry| entry == find}    
+    git.log[path].any?{|entry| entry == find}    
   end  
 
 end

@@ -31,8 +31,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-=begin
   test 'exists? is true only when dir and manifest exist' do
+    set_disk_class_name('DiskFake')
     @language = languages['Erlang']
     assert !@language.exists?, '1'
     @language.dir.make
@@ -40,7 +40,6 @@ class LanguageTests < ModelTestBase
     spy_manifest({})
     assert @language.exists?, '3'
   end
-=end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -312,8 +311,8 @@ class LanguageTests < ModelTestBase
   test 'TestRunner.runnable?(language) is false ' +
        'when language does not have image_name set in manifest' do
     runner.stub_runnable(false)
-    ruby = dojo.languages['Ruby-TestUnit']
-    ruby.dir.write(manifest_filename, { })
+    ruby = languages['Ruby-TestUnit']
+    ruby.dir.write(manifest_filename, { }) # this line has no effect
     assert !ruby.runnable?
   end
 
