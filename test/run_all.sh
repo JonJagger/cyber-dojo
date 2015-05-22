@@ -2,7 +2,7 @@
 modules=( 
   lib 
   app_helpers 
-  # app_lib 
+  app_lib 
   app_models 
   # languages
   # integration 
