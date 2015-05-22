@@ -25,6 +25,25 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "avatar returns kata it was created with" do
+    kata = make_kata
+    avatar = kata.start_avatar
+    assert_equal kata, avatar.kata
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "after avatar is created its sandbox contains each visible_file" do
+    kata = make_kata
+    avatar = kata.start_avatar
+    kata.language.visible_files.each do |filename,content|
+      assert_equal content, avatar.sandbox.dir.read(filename)
+    end
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
   test 'avatar is not active? when it does not exist' do
     kata = katas[unique_id]
     lion = kata.avatars['lion']
@@ -37,7 +56,7 @@ class AvatarTests < ModelTestBase
   test 'avatar is not active? when it has zero traffic-lights' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
-    assert_equal 0, lion.lights.length 
+    assert_equal [ ], lion.lights
     assert !lion.active?
   end
 
@@ -61,6 +80,25 @@ class AvatarTests < ModelTestBase
     assert lion.exists?
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'after avatar is started its visible_files are ' +
+       ' the language visible_files,' +
+       ' the exercse instructions,' +
+       ' and empty output' do
+    kata = make_kata
+    language = kata.language
+    avatar = kata.start_avatar
+    language.visible_files.each do |filename,content|
+      assert avatar.visible_files.keys.include?(filename)
+      assert_equal avatar.visible_files[filename], content
+    end
+    assert avatar.visible_files.keys.include? 'instructions'
+    assert avatar.visible_files['instructions'].include? kata.exercise.instructions
+    assert avatar.visible_files.keys.include? 'output'
+    assert_equal '',avatar.visible_files['output']
+  end
+  
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'avatar creation saves' +
@@ -234,20 +272,6 @@ class AvatarTests < ModelTestBase
   
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-=begin
-  test 'visible_files' do
-    kata = make_kata
-    visible_files = kata.start_avatar(['lion']).visible_files
-    assert visible_files['wibble.hpp'].start_with?('#include <iostream>')
-    assert visible_files['wibble.cpp'].start_with?('#include "wibble.hpp"')
-    assert visible_files['instructions'].start_with?('Note: The initial code')
-    assert_equal '', visible_files['output']
-  end
-=end
-  
-    #- - - - - - - - - - - - - - - - - - - - - - - - -
-
-=begin
   test 'tag.diff' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
@@ -322,14 +346,25 @@ class AvatarTests < ModelTestBase
     ]
     avatar.dir.write('increments.json', incs)
   end
-=end
   
   #- - - - - - - - - - - - - - - - - - -
   #- - - - - - - - - - - - - - - - - - -
   #- - - - - - - - - - - - - - - - - - -
 
 =begin
+  test 'visible_files' do
+    kata = make_kata
+    visible_files = kata.start_avatar(['lion']).visible_files
+    assert visible_files['wibble.hpp'].start_with?('#include <iostream>')
+    assert visible_files['wibble.cpp'].start_with?('#include "wibble.hpp"')
+    assert visible_files['instructions'].start_with?('Note: The initial code')
+    assert_equal '', visible_files['output']
+  end
+=end
+  
+    #- - - - - - - - - - - - - - - - - - - - - - - - -
 
+=begin
   test "avatar (json) creation sets up initial git repo of visible files " +
         "but support_files are not in git repo" do
     @dojo = Dojo.new('spied/','json')
@@ -373,51 +408,11 @@ class AvatarTests < ModelTestBase
     assert kata.dir.log.include?([ 'write','manifest.json', JSON.unparse(manifest)]), kata.dir.log.inspect
     assert kata.dir.log.include?([ 'read','manifest.json', JSON.unparse(manifest)]), kata.dir.log.inspect
   end
-
+=end
+  
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "avatar has no traffic-lights before first test-run" do
-    @dojo = Dojo.new('spied/','json')
-    @kata = @dojo[@id]
-    visible_files = {
-      'name' => 'content for name'
-    }
-    language = @dojo.language('C')
-    manifest = {
-      :id => @id,
-      :visible_files => visible_files,
-      :language => language.name
-    }
-    kata_manifest_spy_read(manifest)
-    language.dir.spy_read('manifest.json', JSON.unparse({ }))
-    kata = @dojo.create_kata(manifest)
-    avatar = kata.start_avatar
-    assert_equal [ ], avatar.traffic_lights
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "avatar returns kata it was created with" do
-    @dojo = Dojo.new('spied/','json')
-    @kata = @dojo[@id]
-    visible_files = {
-      'name' => 'content for name'
-    }
-    language = @dojo.language('C')
-    manifest = {
-      :id => @id,
-      :visible_files => visible_files,
-      :language => language.name
-    }
-    kata_manifest_spy_read(manifest)
-    language.dir.spy_read('manifest.json', JSON.unparse({ }))
-    kata = @dojo.create_kata(manifest)
-    avatar = kata.start_avatar
-    assert_equal kata, avatar.kata
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+=begin
   test "avatar's tag 0 repo contains an empty output file only when kata-manifest does" do
     @dojo = Dojo.new('spied/','json')
     @kata = @dojo[@id]
@@ -440,81 +435,11 @@ class AvatarTests < ModelTestBase
           "visible_files.keys.include?('output')"
     assert_equal "", visible_files['output']
   end
-
+=end
+  
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "after avatar is created sandbox contains separate visible_files" do
-    @dojo = Dojo.new('spied/','json')
-    @kata = @dojo[@id]
-    visible_files = {
-      'name' => 'content for name',
-      'output' => ''
-    }
-    language = @dojo.language('C')
-    manifest = {
-      :id => @id,
-      :visible_files => visible_files,
-      :language => language.name
-    }
-    kata_manifest_spy_read(manifest)
-    language.dir.spy_read('manifest.json', JSON.unparse({ }))
-    kata = @dojo.create_kata(manifest)
-    avatar = kata.start_avatar
-    visible_files.each do |filename,content|
-      assert_equal content, avatar.sandbox.dir.read(filename)
-    end
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "after avatar is created avatar dir contains all visible_files in manifest" do
-    @dojo = Dojo.new('spied/','json')
-    @kata = @dojo[@id]
-    visible_files = {
-      'name' => 'content for name',
-      'output' => ''
-    }
-    language = @dojo.language('C')
-    manifest = {
-      :id => @id,
-      :visible_files => visible_files,
-      :language => language.name
-    }
-    kata_manifest_spy_read(manifest)
-    language.dir.spy_read('manifest.json', JSON.unparse({ }))
-    kata = @dojo.create_kata(manifest)
-    avatar = kata.start_avatar
-    avatar.visible_files.each do |filename,content|
-      assert visible_files.keys.include?(filename)
-      assert_equal visible_files[filename], content
-    end
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "after avatar is created sandbox contains cyber-dojo.sh" do
-    @dojo = Dojo.new('spied/','json')
-    @kata = @dojo[@id]
-    visible_files = {
-      'name' => 'content for name',
-      'cyber-dojo.sh' => 'make'
-    }
-    language = @dojo.language('C')
-    manifest = {
-      :id => @id,
-      :visible_files => visible_files,
-      :language => language.name
-    }
-    kata_manifest_spy_read(manifest)
-    language.dir.spy_read('manifest.json', JSON.unparse({ }))
-    kata = @dojo.create_kata(manifest)
-    avatar = kata.start_avatar
-    sandbox = avatar.sandbox
-    assert_equal visible_files['cyber-dojo.sh'], sandbox.dir.read('cyber-dojo.sh')
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+=begin
   test "after first test() traffic_lights contains one traffic-light " +
         "which does not contain output" do
     @dojo = Dojo.new('spied/', 'json')
@@ -555,9 +480,11 @@ class AvatarTests < ModelTestBase
     assert_nil traffic_lights.last[:run_tests_output]
     assert_nil traffic_lights.last[:output]
   end
-
+=end
+  
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+=begin
   test "one more traffic light each test() call" do
     @dojo = Dojo.new('spied/', 'json')
     @kata = @dojo[@id]
@@ -582,23 +509,11 @@ class AvatarTests < ModelTestBase
     traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
     assert_equal 2, traffic_lights.length
   end
-
+=end
+  
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "diff_lines" do
-    @dojo = Dojo.new('spied/', 'json')
-    @kata = @dojo[@id]
-    avatar = @kata['lion']
-    output = avatar.diff_lines(was_tag=3,now_tag=4)
-    assert @git.log[avatar.path].include?(
-      [
-       'diff',
-       '--ignore-space-at-eol --find-copies-harder 3 4 sandbox'
-      ])
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+=begin
   test "locked_read with tag" do
     @dojo = Dojo.new('spied/', 'json')
     @kata = @dojo[@id]
@@ -610,130 +525,24 @@ class AvatarTests < ModelTestBase
        '4:manifest.rb'
       ])
   end
-
+=end
+  
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+=begin
   test "avatar.test() initial output" do
     avatar = @kata.start_avatar
     output = avatar.test(@max_duration)
     assert output.include?('java.lang.AssertionError: expected:<54> but was:<42>')
   end
-
+=end
+  
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "avatar.save(:changed).test().save_traffic_light().commit().traffic_lights().diff_lines()" do
-    avatar = @kata.start_avatar
-    visible_files = avatar.visible_files
-    assert_equal visible_files, avatar.visible_files(tag=0)
-    assert_equal [ ], avatar.traffic_lights
-    assert_equal [ ], avatar.traffic_lights(tag=0)
-
-    filename = 'UntitledTest.java'
-    test_code = visible_files[filename];
-    assert test_code.include?('6 * 9')
-    test_code.sub!('6 * 9', '6 * 7')
-    visible_files[filename] = test_code
-    delta = {
-      :deleted => [ ],
-      :changed => [ filename ],
-      :new => [ ],
-      :unchanged => visible_files.keys - [ filename ]
-    }
-    visible_files.delete('output')
-    avatar.save(delta, visible_files)
-    output = avatar.test(@max_duration)
-    assert output.include?('OK (1 test)')
-
-    avatar.sandbox.write('output',output)
-    visible_files['output'] = output
-    avatar.save_manifest(visible_files)
-    traffic_light = { 'colour' => 'green' }
-    traffic_lights = avatar.save_traffic_light(traffic_light, now)
-
-    assert_equal traffic_lights, avatar.traffic_lights
-    assert_not_nil traffic_lights
-    assert_equal 1, traffic_lights.length
-
-    avatar.commit(traffic_lights.length)
-    assert_equal traffic_lights, avatar.traffic_lights
-    assert_equal traffic_lights, avatar.traffic_lights(tag=1)
-
-    diff = avatar.diff_lines(was_tag=0, now_tag=1)
-    assert diff.include?("diff --git a/sandbox/#{filename} b/sandbox/#{filename}"), diff
-    assert diff.include?('-        int expected = 6 * 9;'), diff
-    assert diff.include?('+        int expected = 6 * 7;'), diff
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "avatar.save(:deleted).test().save_traffic_light().commit().traffic_lights().diff_lines()" do
-    avatar = @kata.start_avatar
-    visible_files = avatar.visible_files
-    filename = 'Untitled.java'
-    visible_files.keys.delete(filename)
-    delta = {
-      :deleted => [ filename ],
-      :changed => [ ],
-      :new => [ ],
-      :unchanged => visible_files.keys - [ filename ]
-    }
-    visible_files.delete('output')
-    avatar.save(delta, visible_files)
-    output = avatar.test(@max_duration)
-    assert output.include?('UntitledTest.java:9: cannot find symbol')
-
-    avatar.sandbox.write('output',output)
-    visible_files['output'] = output
-    avatar.save_manifest(visible_files)
-    traffic_light = { 'colour' => 'amber' }
-    traffic_lights = avatar.save_traffic_light(traffic_light, now)
-    assert_equal traffic_lights, avatar.traffic_lights
-    assert_not_nil traffic_lights
-    assert_equal 1, traffic_lights.length
-    avatar.commit(traffic_lights.length)
-    diff = avatar.diff_lines(was_tag=0, now_tag=1)
-    assert diff.include?('--- a/sandbox/Untitled.java'), diff
-    assert diff.include?('+++ /dev/null'), diff
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "avatar.save(:new).test().save_traffic_light().commit().traffic_lights().diff_lines()" do
-    avatar = @kata.start_avatar
-    visible_files = avatar.visible_files
-    filename = 'Wibble.java'
-    visible_files[filename] = 'public class Wibble {}'
-    delta = {
-      :deleted => [ ],
-      :changed => [ ],
-      :new => [ filename ],
-      :unchanged => visible_files.keys - [ filename ]
-    }
-    visible_files.delete('output')
-    avatar.save(delta, visible_files)
-    output = avatar.test(@max_duration)
-    assert output.include?('java.lang.AssertionError: expected:<54> but was:<42>')
-
-    avatar.sandbox.write('output',output)
-    visible_files['output'] = output
-    avatar.save_manifest(visible_files)
-    traffic_light = { 'colour' => 'red' }
-    traffic_lights = avatar.save_traffic_light(traffic_light, now)
-    assert_equal traffic_lights, avatar.traffic_lights
-    assert_not_nil traffic_lights
-    assert_equal 1, traffic_lights.length
-    avatar.commit(traffic_lights.length)
-    diff = avatar.diff_lines(was_tag=0, now_tag=1)
-    assert diff.include?('--- /dev/null'), diff
-    assert diff.include?('+++ b/sandbox/Wibble.java'), diff
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
-
+=begin
   def kata_manifest_spy_read(manifest)
     @paas.dir(@kata).spy_read('manifest.json', JSON.unparse(manifest))
   end
-
 =end
 
   def git_log_include?(path,find)
