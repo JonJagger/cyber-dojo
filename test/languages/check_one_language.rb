@@ -16,7 +16,7 @@ end
 root_path = File.absolute_path(File.dirname(__FILE__) + '/../../')
 name = ARGV[0]
 test = ARGV[1]
-verbose = ARGV[2] === 'verbose'
+verbose = (ARGV[2] === 'verbose')
 
 if name.nil? or test.nil?
   show_use

@@ -1,5 +1,19 @@
 #!/usr/bin/env ruby
 
+def modules
+  %w( 
+     app_helpers
+     app_lib
+     app_models
+     lib
+  )
+     #languages 
+     #integration 
+     #app_controllers
+end
+
+#- - - - - - - - - - - - - - - - - - - - -
+
 def f2(s)
   result = ("%.2f" % s).to_s
   result += '0' if result.end_with?('.0')
@@ -28,20 +42,6 @@ end
 
 def print_line
   puts '- ' * ((line_width+1)/2)
-end
-
-#- - - - - - - - - - - - - - - - - - - - -
-
-def modules
-  [ 
-     'app_helpers',
-     'app_lib',
-     'app_models',
-     'lib'
-     #languages 
-     #integration 
-     #app_controllers
-   ]
 end
 
 #- - - - - - - - - - - - - - - - - - - - -

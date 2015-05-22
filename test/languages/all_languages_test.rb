@@ -5,12 +5,7 @@ require_relative 'one_language_checker'
 
 class AllLanguagesTests < LanguagesTestBase
 
-  def root_path
-    File.absolute_path(File.dirname(__FILE__) + '/../../') + '/'
-  end
-
   test 'red-amber-green initial 6*9 state' do
-    return if !Docker.installed?
     verbose = false
     checker = OneLanguageChecker.new(root_path,verbose)
     results = {}
@@ -25,6 +20,10 @@ class AllLanguagesTests < LanguagesTestBase
     expected = ['red','amber','green']
     fails  = results.select{|language,rag| rag != expected }
     assert fails == {}, fails.inspect
+  end
+
+  def root_path
+    File.absolute_path(File.dirname(__FILE__) + '/../../') + '/'
   end
 
 end

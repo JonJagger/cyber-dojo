@@ -4,22 +4,6 @@ require_relative 'languages_test_base'
 
 class LanguagesManifestsTests < LanguagesTestBase
 
-  include ExternalSetter
-
-  def setup
-    @root_path = root_path
-    reset_external(:disk, Disk.new)
-    reset_external(:git, Git.new)
-    reset_external(:runner, HostTestRunner.new)
-    reset_external(:exercises_path, root_path + 'exercises/')
-    reset_external(:languages_path, root_path + 'languages/')
-    reset_external(:katas_path, root_path + 'test/cyber-dojo/katas/')    
-  end
-
-  def root_path
-    File.expand_path('../..', File.dirname(__FILE__)) + '/'
-  end
-
   test 'manifests of all languages' do
     dirs = Dir.glob("#{root_path}languages/*/*/manifest.json").each do |file|
       folders = File.dirname(file).split('/')[-2..-1]
@@ -114,10 +98,9 @@ class LanguagesManifestsTests < LanguagesTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def created_kata_manifests_language_entry_round_trips?
-    dojo = Dojo.new    
-    language = dojo.languages[@language]
-    exercise = dojo.exercises['Print_Diamond']
-    kata = dojo.katas.create_kata(language, exercise)
+    language = languages[@language]
+    exercise = exercises['Print_Diamond']
+    kata = katas.create_kata(language, exercise)
     manifest = JSON.parse(kata.dir.read('manifest.json'))
     lang = manifest['language']
     if lang.count('-') != 1
@@ -129,7 +112,7 @@ class LanguagesManifestsTests < LanguagesTestBase
         return false
     end
     print '.'
-    round_tripped = dojo.languages[lang]
+    round_tripped = languages[lang]
     if !File.directory? round_tripped.path
       message = 
         alert +
@@ -139,7 +122,7 @@ class LanguagesManifestsTests < LanguagesTestBase
         return false
     end
     print '.'
-    if lang.each_char.any?{|ch| "0123456789".include?(ch)}
+    if lang != 'Bash-shunit2' && lang.each_char.any?{|ch| "0123456789".include?(ch)}
       message =
         alert +
         " #{kata.id}'s 'language' entry is #{lang}" +
@@ -326,7 +309,7 @@ class LanguagesManifestsTests < LanguagesTestBase
   def colour_method_for_unit_test_framework_output_exists?
     has_parse_method = true
     begin
-      OutputParser::colour(unit_test_framework, "xx")
+      OutputColour::of(unit_test_framework, "xx")
     rescue
       has_parse_method = false
     end
@@ -480,11 +463,15 @@ private
   end
 
   def language_dir
-    @root_path + '/languages/' + language
+    root_path + '/languages/' + language
   end
   
   def language
     @language.split('-').join('/')
+  end
+
+  def root_path
+    File.expand_path('../..', File.dirname(__FILE__)) + '/'
   end
 
   def alert

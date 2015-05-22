@@ -1,3 +1,3 @@
 #!/bin/bash
 
-../run_one.sh languages
+../test_wrapper.sh languages *_test.rb

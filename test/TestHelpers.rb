@@ -127,7 +127,6 @@ private
   end
     
   # - - - - - - - - - - - - - - - - - - - - - - - - -
-  # - - - - - - - - - - - - - - - - - - - - - - - - -
     
   def check_external_setup
     env_vars.each { |var| 
@@ -143,10 +142,11 @@ private
   end
 
   def restore_external_setup
+    raise "store_external_setup not called" if @test_env.nil?
     env_vars.each { |var| 
       ENV[var] = @test_env[var]
     }    
-    @test_env = {}       
+    @test_env = {}    
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - -
