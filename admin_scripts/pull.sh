@@ -16,7 +16,7 @@ MY_TIME_STAMP_BEFORE=`stat -c %y $0`
 # get latest source from https://github.com/JonJagger/cyber-dojo
 # if it asks for a password just hit return
 echo "git pulling from https://github.com/JonJagger/cyber-dojo"
-git pull --no-edit origin master
+git pull --no-edit origin
 ret=$?
 if [ $ret -ne 0 ]; then
   exit
