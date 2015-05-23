@@ -4,7 +4,6 @@
 # comments at end of file
 
 require_relative 'TestRunner'
-require 'tempfile' # Dir::Tmpname
 
 class DockerTestRunner
     include TestRunner
@@ -24,8 +23,7 @@ class DockerTestRunner
   end
 
   def inner_run(sandbox, command, max_seconds)
-    cidfile = Dir::Tmpname.create(['cidfile', '.txt']) {}
-
+    cidfile = sandbox.avatar.path + 'cidfile.txt'    
     language = sandbox.avatar.kata.language
     language_volume = "#{language.path}:#{language.path}:#{read_only}"
     sandbox_volume = "#{sandbox.path}:/sandbox:#{read_write}"
@@ -33,7 +31,7 @@ class DockerTestRunner
     docker_command =
       "docker run" +
         " -u www-data" +
-        " --net=#{quoted('none')}" +
+        " --net=#{quoted(none)}" +
         " --cidfile=#{quoted(cidfile)}" +
         " -v #{quoted(language_volume)}" +
         " -v #{quoted(sandbox_volume)}" +
@@ -42,6 +40,7 @@ class DockerTestRunner
         " /bin/bash -c" +
         " #{quoted(command)}"
         
+    `rm -f #{cidfile}`
     outer_command = timeout(docker_command,max_seconds+5)
     output = `#{outer_command}`
     exit_status = $?.exitstatus
@@ -63,11 +62,6 @@ private
   include Cleaner
 
   def timeout(command,after)
-    # I put a timeout on the outer docker-run command and not on 
-    # the inner bash -c command. This is for security. If it was
-    # on the inner bash -c command then a determined attacker might
-    # kill the timeout but not the timed-task and thus acquire 
-    # unlimited time to run any command.
     "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
   end
 
@@ -91,6 +85,10 @@ private
     'ro'
   end
 
+  def none
+    'none'
+  end
+  
   def installed?
     command = stderr2stdout('docker info > /dev/null')
     `#{command}`
@@ -123,12 +121,15 @@ end
 #   Turn off all networking inside the container.
 #
 # --cidfile=#{quoted(cidfile)}
-#   I do not use the --rm command. Instead I specify the name
-#   of a unique cidfile (which must not exist before the docker
-#   command is run) from which I retrieve the docker container's
-#   pid and then stop and kill the container. This ensures
-#   that the docker container is always killed, even if the
-#   timeout occurs.
+#   I use a cidfile in the avatars folder (and not its sandbox folder)
+#   to avoid  potential clash with a visible_file with the same name.
+#   The cidfile must not exist before the docker command is run.
+#   Thus I rm the cidfile *before* the docker run. 
+#   After the docker run I retrieve the docker container's pid 
+#   from the cidfile and stop and kill the container.
+#   Explicitly specifying the cidfile like this (and not using the
+#   docker --rm option) ensures the docker container is always killed,
+#   even if the timeout occurs.
 #
 # -v #{quoted(language_volume)}
 #   Volume mount the language's folder to the same folder inside
@@ -157,4 +158,9 @@ end
 # /bin/bash -c #{quoted(command)}
 #   The command that is run as the docker container's "main" is always
 #   './cyber-dojo.sh' which is run via bash inside a timeout.
-#
+#   I put a timeout on the outer docker-run command and not on 
+#   the inner bash -c command. This is for security. If it was
+#   on the inner bash -c command then a determined attacker might
+#   kill the timeout but not the timed-task and thus acquire 
+#   unlimited time to run any command.
+
