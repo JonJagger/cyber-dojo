@@ -1,5 +1,6 @@
 
 %w{
+  BashStub
   DiskStub
   DiskFake
   DirFake

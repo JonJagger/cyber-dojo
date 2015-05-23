@@ -2,36 +2,18 @@
 
 require_relative 'lib_test_base'
 
-class BashStub
-  
-  def initialize
-    @stubbed,@spied = [],[]
-    @index = 0
-  end
-
-  attr_reader :spied
-
-  def stub(output,exit_status)
-    @stubbed << [output,exit_status]
-  end
-  
-  def exec(command)
-    @spied << command
-    stub = @stubbed[@index]
-    @index += 1
-    return *stub
-  end
-  
-end
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 class DockerTestRunnerTests < LibTestBase
 
   def setup
     super
     @bash = BashStub.new    
+    set_disk_class_name 'DiskStub'    
+    set_git_class_name  'GitSpy'        
+    kata = make_kata
+    @lion = kata.start_avatar(['lion'])    
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'when docker is not installed constructor raises' do    
     @bash.stub('',any_non_zero=42)
@@ -44,23 +26,20 @@ class DockerTestRunnerTests < LibTestBase
   test 'when docker is installed, image_names determines runnability' do
     @bash.stub(docker_info_output, success)
     @bash.stub(docker_images_output, success)
-    docker = DockerTestRunner.new(@bash)
-    
-    assert @bash.spied[0].start_with?('docker info'), @bash.spied
-    assert @bash.spied[1].start_with?('docker images'), @bash.spied
-    
+    docker = DockerTestRunner.new(@bash)    
     expected_image_names =
     [
       "cyberdojo/python-3.3.5_pytest",
       "cyberdojo/rust-1.0.0_test"
     ]
-    assert_equal expected_image_names, docker.image_names
-    
-    set_disk_class_name 'DiskStub'    
-    python_py_test = languages['Python-py.test']
-    assert docker.runnable?(python_py_test);
     c_assert = languages['C-assert']
+    python_py_test = languages['Python-py.test']
+
+    assert @bash.spied[0].start_with?('docker info'), @bash.spied
+    assert @bash.spied[1].start_with?('docker images'), @bash.spied    
+    assert_equal expected_image_names, docker.image_names        
     refute docker.runnable?(c_assert);
+    assert docker.runnable?(python_py_test);
   end
     
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -69,36 +48,19 @@ class DockerTestRunnerTests < LibTestBase
     @bash.stub(docker_info_output, success)   # 0
     @bash.stub(docker_images_output, success) # 1
     docker = DockerTestRunner.new(@bash)
-    
-    set_disk_class_name 'DiskStub'    
-    set_git_class_name  'GitSpy'    
-    
-    kata = make_kata
-    lion = kata.start_avatar(['lion'])
-    
     begin
       @bash.stub('',success)        # 2 rm cidfile.txt
       @bash.stub('blah',success)    # 3 timeout ... docker run ...
       pid = '921'
       @bash.stub(pid,success)       # 4 cat ... cidfile.txt
-      @bash.stub('',success)        # 5 docker stop pid ; docker rm pid
-      
+      @bash.stub('',success)        # 5 docker stop pid ; docker rm pid      
       cmd = 'cyber-dojo.sh'
-      output = docker.run(lion.sandbox, cmd, max_seconds=5)
-      
-      assert_equal 'blah',output
-      cidfile = lion.path + "cidfile.txt"
-      assert_equal "rm -f #{cidfile}", @bash.spied[2]
-      docker_run = @bash.spied[3]
-      assert docker_run.start_with? "timeout --signal=#{kill} #{max_seconds+5}s"
-      assert docker_run.include? "docker run"
-      assert docker_run.include? "--cidfile=#{quoted(cidfile)}"
-      assert docker_run.include? "timeout --signal=#{kill} #{max_seconds}s #{cmd}"
-      assert_equal "cat #{cidfile}",                        @bash.spied[4]
-      assert_equal "docker stop #{pid} ; docker rm #{pid}", @bash.spied[5]
-      
-    rescue
-      @bash.spied.each_with_index {|line,i| print "\n#{i}:" + line + "\n"}
+      output = docker.run(@lion.sandbox, cmd, max_seconds=5)      
+      assert_equal 'blah',output, 'output'      
+      assert_spied(max_seconds, cmd, pid)
+    rescue Exception => e  
+      p e.message
+      @bash.dump
       assert false
     end
   end    
@@ -106,9 +68,40 @@ class DockerTestRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'docker run <-> bash interaction when cyber-dojo.sh times out' do
-    #TODO
+    @bash.stub(docker_info_output, success)   # 0
+    @bash.stub(docker_images_output, success) # 1
+    docker = DockerTestRunner.new(@bash)
+    begin
+      @bash.stub('',success)               # 2 rm cidfile.txt
+      @bash.stub('blah',fatal_error(kill)) # 3 timeout ... docker run ...
+      pid = '921'
+      @bash.stub(pid,success)              # 4 cat ... cidfile.txt
+      @bash.stub('',success)               # 5 docker stop pid ; docker rm pid      
+      cmd = 'cyber-dojo.sh'
+      output = docker.run(@lion.sandbox, cmd, max_seconds=5)      
+      assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds."), 'Unable'      
+      assert_spied(max_seconds, cmd, pid)
+    rescue Exception => e
+      p e.message
+      @bash.dump    
+      assert false
+    end
   end
     
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  def assert_spied(max_seconds, cmd, pid)
+    cidfile = @lion.path + "cidfile.txt"
+    assert_equal "rm -f #{cidfile}", @bash.spied[2], 'rm -f'
+    run_cmd = @bash.spied[3]
+    assert run_cmd.start_with?("timeout --signal=#{kill} #{max_seconds+5}s"), 'timeout (outer)'
+    assert run_cmd.include?("docker run"), 'docker run'
+    assert run_cmd.include?("--cidfile=#{quoted(cidfile)}"), 'cidfile'
+    assert run_cmd.include?("timeout --signal=#{kill} #{max_seconds}s #{cmd}"), 'timeout (inner)'
+    assert_equal "cat #{cidfile}",                        @bash.spied[4], 'cat cidfile'
+    assert_equal "docker stop #{pid} ; docker rm #{pid}", @bash.spied[5], 'docker stop+rm'    
+  end
+  
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
   def docker_info_output
@@ -145,6 +138,10 @@ class DockerTestRunnerTests < LibTestBase
   
   def kill
     9
+  end
+  
+  def fatal_error(signal)
+    128 + signal
   end
   
   def quoted(s)
