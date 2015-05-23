@@ -11,6 +11,7 @@ class OneSelf
   end
   
   def created(kata,latitude,longtitude)
+    # TODO: pass in language_name, test_name
     language_name,test_name = kata.language.display_name.split(',').map{|s| s.strip }
     data = {
       'objectTags' => [ 'cyber-dojo' ],
@@ -46,6 +47,7 @@ class OneSelf
   # - - - - - - - - - - - - - - - - - - - - - -
   
   def tested(avatar,tag,colour,now)
+    # TODO: pass in added_line_count, deleted_line_count
     added_line_count,deleted_line_count = line_counts(avatar.diff(tag-1,tag))
     secs = avatar.tags[tag].time - avatar.tags[tag-1].time    
     data = {
