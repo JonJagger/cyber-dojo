@@ -8,10 +8,10 @@ require_relative 'TestRunner'
 class DockerTestRunner
     include TestRunner
 
-  def initialize(dojo)
+  def initialize(dojo, bash=Bash.new)
     raise RuntimeError.new("Docker not installed") if !installed?    
-    command = stderr2stdout('docker images')
-    @image_names = DockerTestRunner.image_names(`#{command}`)
+    output,_ = bash.exec(stderr2stdout('docker images'))
+    @image_names = DockerTestRunner.image_names(output)
   end
 
   def runnable?(language)
@@ -40,13 +40,12 @@ class DockerTestRunner
         " /bin/bash -c" +
         " #{quoted(command)}"
         
-    `rm -f #{cidfile}`
     outer_command = timeout(docker_command,max_seconds+5)
-    output = `#{outer_command}`
-    exit_status = $?.exitstatus
 
-    pid = `cat #{cidfile}`
-    `docker stop #{pid} ; docker rm #{pid}`
+    bash.exec("rm -f #{cidfile}")
+    output,exit_status = bash.exec("#{outer_command}")
+    pid,_ = bash.exec("cat #{cidfile}")
+    bash.exec("docker stop #{pid} ; docker rm #{pid}")
 
     exit_status != fatal_error(kill) ?
         limited(clean(output),50*1024) :
@@ -90,9 +89,8 @@ private
   end
   
   def installed?
-    command = stderr2stdout('docker info > /dev/null')
-    `#{command}`
-    $?.exitstatus === 0
+    _,exit_status = bash.exec(stderr2stdout('docker info > /dev/null'))
+    exit_status === 0
   end
 
   def stderr2stdout(cmd)

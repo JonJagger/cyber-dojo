@@ -1,5 +1,6 @@
 
 %w{
+  Bash
   Cleaner
   TestRunner
     DockerTestRunner
