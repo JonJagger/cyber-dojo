@@ -69,6 +69,8 @@ class OneSelf
     http_response(url.host, request)
   end
   
+  # - - - - - - - - - - - - - - - - - - - - - -
+  
   def manifest_filename
     '1self_manifest.json'    
   end
@@ -77,8 +79,6 @@ private
   
   def http_response(url_host, req)
     @requester.request(url_host, req)
-    #http = Net::HTTP.new(url.host)
-    #http.request(request) 
   end  
   
   def css(colour)
