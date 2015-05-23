@@ -3,9 +3,9 @@
 # via Docker containers https://www.docker.io/
 # comments at end of file
 
-require_relative 'TestRunner'
+require_relative 'Runner'
 
-class DockerTestRunner
+class DockerRunner
 
   def initialize(bash = Bash.new)
     @bash = bash
@@ -51,7 +51,7 @@ class DockerTestRunner
 
 private
   
-  include TestRunner  
+  include Runner  
   include Stderr2Stdout
    
   def bash(command)

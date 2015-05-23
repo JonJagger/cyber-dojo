@@ -2,9 +2,9 @@
 
 require_relative 'lib_test_base'
 
-class TestRunnerTests < LibTestBase
+class RunnerTests < LibTestBase
 
-  include TestRunner
+  include Runner
 
   test 'limited(output) unaffected when output < max_output_length' do
     less = 'x' * (max_output_length - 1)

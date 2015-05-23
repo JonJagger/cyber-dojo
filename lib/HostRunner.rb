@@ -1,11 +1,11 @@
 
 # Deprecated test runner that runs directly on the host server
 # No isolation/protection/security, nothing.
-# See DockerTestRunner.rb
+# See DockerRunner.rb
 
-require_relative 'TestRunner'
+require_relative 'Runner'
 
-class HostTestRunner
+class HostRunner
 
   def runnable?(language)
     true
@@ -33,7 +33,7 @@ class HostTestRunner
 
 private
 
-  include TestRunner
+  include Runner
   include Stderr2Stdout
 
   def kill(pids)

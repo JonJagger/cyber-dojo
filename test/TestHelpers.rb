@@ -68,7 +68,7 @@ module TestHelpers # mixin
   end
         
   def stub_test(avatar,param)
-    assert_equal 'TestRunnerStub', get_runner_class_name
+    assert_equal 'RunnerStub', get_runner_class_name
     stub_test_colours(avatar,param) if param.class.name == 'Array'
     stub_test_n(avatar,param) if param.class.name == 'Fixnum'
   end

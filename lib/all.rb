@@ -3,9 +3,9 @@
   Stderr2Stdout
   Cleaner  
   Bash
-  TestRunner
-    DockerTestRunner
-    HostTestRunner
+  Runner
+    DockerRunner
+    HostRunner
   Git
   Disk  Dir
   TimeNow
