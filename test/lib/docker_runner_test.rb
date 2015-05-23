@@ -7,8 +7,9 @@ class DockerRunnerTests < LibTestBase
   def setup
     super
     @bash = BashStub.new    
-    set_disk_class_name 'DiskStub'    
-    set_git_class_name  'GitSpy'        
+    set_disk_class_name     'DiskStub'    
+    set_git_class_name      'GitSpy'   
+    set_one_self_class_name 'OneSelfDummy'     
     kata = make_kata
     @lion = kata.start_avatar(['lion'])    
   end

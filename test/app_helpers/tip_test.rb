@@ -8,8 +8,10 @@ class TipTests < AppHelpersTestBase
 
   def setup
     super
-    set_runner_class_name('DummyTestRunner')
+    set_one_self_class_name 'OneSelfDummy'
   end
+  
+  #- - - - - - - - - - - - - - - - - -
   
   test 'traffic light count tip' do
     params = {
@@ -55,7 +57,6 @@ class TipTests < AppHelpersTestBase
       ]
     )
 
-    #git = GitSpy.new
     options =
       "--ignore-space-at-eol " +
       "--find-copies-harder " +
@@ -89,7 +90,7 @@ class TipTests < AppHelpersTestBase
         ].join("\n")
     })
 
-    git.spy(lion.path,'show',"#{now_tag}:manifest.json",stub_manifest)
+    git.spy(lion.path,'show',"#{now_tag}:manifest.json", stub_manifest)
 
     expected =
       "Click to review lion's " +

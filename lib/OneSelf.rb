@@ -6,8 +6,8 @@ require 'json'
 
 class OneSelf
     
-  def initialize(disk)
-    @disk = disk
+  def initialize(disk, requester = HttpRequester.new)
+    @disk,@requester = disk,requester
   end
   
   def created(kata,latitude,longtitude)
@@ -22,11 +22,10 @@ class OneSelf
         'test-name' => test_name
       }
     }
-    url = URI.parse("#{streams_url}/#{stream_id}/events")
+    url = URI.parse("#{streams_url}/#{stream_id}/events")    
     request = Net::HTTP::Post.new(url.path, json_header(write_token))
     request.body = data.to_json
-    http = Net::HTTP.new(url.host)
-    response = http.request(request) 
+    http_response(url.host, request)    
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -34,14 +33,14 @@ class OneSelf
   def started(avatar)
     url = URI.parse(streams_url)
     request = Net::HTTP::Post.new(url.path, json_header("#{app_key}:#{app_secret}"))
-    http = Net::HTTP.new(url.host)
-    body =  JSON.parse(http.request(request).body)
+    response = http_response(url.host, request)    
+    body =  JSON.parse(response.body)
     one_self = {
       :stream_id => body['streamid'],
       :read_token => body['readToken'],
       :write_token => body['writeToken']
     }
-    @disk[avatar.path].write(one_self_manifest_filename, one_self)
+    @disk[avatar.path].write(manifest_filename, one_self)
   end
   
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -63,15 +62,24 @@ class OneSelf
         'seconds-since-last-test' => secs.to_i,
       }
     }
-    one_self = JSON.parse(@disk[avatar.path].read(one_self_manifest_filename))    
+    one_self = JSON.parse(@disk[avatar.path].read(manifest_filename))    
     url = URI.parse("#{streams_url}/#{one_self['stream_id']}/events")
-    http = Net::HTTP.new(url.host)
     request = Net::HTTP::Post.new(url.path, json_header("#{one_self['write_token']}"))
     request.body = data.to_json
-    response = http.request(request)
+    http_response(url.host, request)
+  end
+  
+  def manifest_filename
+    '1self_manifest.json'    
   end
   
 private
+  
+  def http_response(url_host, req)
+    @requester.request(url_host, req)
+    #http = Net::HTTP.new(url.host)
+    #http.request(request) 
+  end  
   
   def css(colour)
     return '#F00' if colour === 'red'
@@ -94,10 +102,6 @@ private
 
   def streams_url
     'https://api.1self.co/v1/streams'
-  end
-
-  def one_self_manifest_filename
-    '1self_manifest.json'    
   end
 
   def json_header(authorization)

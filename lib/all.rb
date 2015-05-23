@@ -3,6 +3,7 @@
   Stderr2Stdout
   Cleaner  
   Bash
+  HttpRequester
   Runner
     DockerRunner
     HostRunner
