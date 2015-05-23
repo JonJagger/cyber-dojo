@@ -67,6 +67,9 @@ $cyberDojoHome/exercises/cache.rb
 echo "poking rails"
 bundle install
 
+echo "setting environment variables"
+. $cyberDojoHome/admin_scripts/setup_env_vars.sh
+
 echo "restarting apache"
 service apache2 restart
 
