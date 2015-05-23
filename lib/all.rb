@@ -1,7 +1,8 @@
 
 %w{
+  Stderr2Stdout
+  Cleaner  
   Bash
-  Cleaner
   TestRunner
     DockerTestRunner
     HostTestRunner

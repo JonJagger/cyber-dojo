@@ -8,10 +8,10 @@ require_relative 'TestRunner'
 class DockerTestRunner
     include TestRunner
 
-  def initialize(bash=Bash.new)
+  def initialize(bash = Bash.new)
     @bash = bash
     raise RuntimeError.new("Docker not installed") if !installed?
-    output,_ = bash(stderr2stdout('docker images'))
+    output,_ = bash('docker images')
     lines = output.split("\n").select{|line| line.start_with?('cyberdojo')}
     @image_names = lines.collect{|line| line.split[0]}.sort
   end
@@ -47,15 +47,13 @@ class DockerTestRunner
     pid,_ = bash("cat #{cidfile}")
     bash("docker stop #{pid} ; docker rm #{pid}")
 
-    exit_status != fatal_error(kill) ?
-        limited(clean(output),50*1024) :
-        didnt_complete(max_seconds)
+    exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
   end
 
 private
   
-  include Cleaner
-
+  include Stderr2Stdout
+   
   def bash(command)
     @bash.exec(command)
   end

@@ -8,6 +8,10 @@ require_relative 'TestRunner'
 class HostTestRunner
   include TestRunner
 
+  def runnable?(language)
+    true
+  end
+
   def run(sandbox, command, max_seconds)
     command = "cd '#{sandbox.path}';" + stderr2stdout(command)
     pipe = IO::popen(command)
@@ -25,16 +29,12 @@ class HostTestRunner
     if timed_out
       output += didnt_complete(max_seconds)
     end
-    limited(clean(output),50*1024)
-  end
-
-  def runnable?(language)
-    true
+    limited(output)
   end
 
 private
 
-  include Cleaner
+  include Stderr2Stdout
 
   def kill(pids)
     return if pids == [ ]
