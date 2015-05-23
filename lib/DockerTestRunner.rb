@@ -23,10 +23,6 @@ class DockerTestRunner
   end
 
   def run(sandbox, command, max_seconds)
-    inner_run(sandbox, timeout(command,max_seconds), max_seconds)
-  end
-
-  def inner_run(sandbox, command, max_seconds)
     cidfile = sandbox.avatar.path + 'cidfile.txt'
     language = sandbox.avatar.kata.language
     language_volume = "#{language.path}:#{language.path}:#{read_only}"
@@ -42,7 +38,7 @@ class DockerTestRunner
         " -w /sandbox" +
         " #{language.image_name}" +
         " /bin/bash -c" +
-        " #{quoted(command)}"
+        " #{quoted(timeout(command,max_seconds))}"
 
     outer_command = timeout(docker_command,max_seconds+5)
 
@@ -57,7 +53,7 @@ class DockerTestRunner
   end
 
 private
-
+  
   include Cleaner
 
   def bash(command)
@@ -100,7 +96,9 @@ private
 end
 
 
-# docker run
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# "docker run" +
 #    " -u www-data" +
 #    " --net=#{quoted('none')}" +
 #    " --cidfile=#{quoted(cidfile)}" +
@@ -109,16 +107,25 @@ end
 #    " -w /sandbox" +
 #    " #{language.image_name}" +
 #    " /bin/bash -c" +
-#    " #{quoted(command)}"
+#    " #{quoted(timeout(command,max_seconds))}"
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 # -u www-data
+#
 #   The user which runs the inner_command *inside* the docker container.
 #   See comments in languages/C#-NUnit/Dockerfile
 #
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
 # --net="none"
+#
 #   Turn off all networking inside the container.
 #
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
 # --cidfile=#{quoted(cidfile)}
+#
 #   I use a cidfile in the avatars folder (and not its sandbox folder)
 #   to avoid  potential clash with a visible_file with the same name.
 #   The cidfile must not exist before the docker command is run.
@@ -129,7 +136,10 @@ end
 #   docker --rm option) ensures the docker container is always killed,
 #   even if the timeout occurs.
 #
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
 # -v #{quoted(language_volume)}
+#
 #   Volume mount the language's folder to the same folder inside
 #   the docker container. Intermediate folders are created as necessary
 #   (like mkdir -p). This provides access to supporting files which
@@ -140,25 +150,37 @@ end
 #   Important to quote the volume incase any paths contain spaces
 #   eg languages/C++ (clang++)/
 #
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
 # -v #{quoted(sandbox_volume)}
+#
 #   Volume mount the animal's sandbox to /sandbox inside the docker
 #   container as a read-write folder. This provides isolation.
 #   Important to quote the volume incase any paths contain spaces
 #
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
 # -w /sandbox
+#
 #   Working directory when the command is run is /sandbox
 #   (as volume mounted in the first -v option)
 #
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
 # #{language.image_name}
+#
 #   The name of the docker image to run the inner-command inside.
 #   specified in the language's manifest as its image_name.
 #
-# /bin/bash -c #{quoted(command)}
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# /bin/bash -c #{quoted(timeout(command,max_seconds))}"
+#
 #   The command that is run as the docker container's "main" is always
 #   './cyber-dojo.sh' which is run via bash inside a timeout.
-#   I put a timeout on the outer docker-run command and not on
-#   the inner bash -c command. This is for security. If it was
-#   on the inner bash -c command then a determined attacker might
-#   kill the timeout but not the timed-task and thus acquire
-#   unlimited time to run any command.
+#   I *also* put a timeout on the outer docker-run command.
+#   This is for security - a determined attacker might somehow kill
+#   the inner timeout and thus acquire  unlimited time to run any command.
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
