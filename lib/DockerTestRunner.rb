@@ -9,8 +9,9 @@ class DockerTestRunner
     include TestRunner
 
   def initialize(dojo, bash=Bash.new)
+    @bash = bash
     raise RuntimeError.new("Docker not installed") if !installed?    
-    output,_ = bash.exec(stderr2stdout('docker images'))
+    output,_ = bash(stderr2stdout('docker images'))
     @image_names = DockerTestRunner.image_names(output)
   end
 
@@ -42,10 +43,10 @@ class DockerTestRunner
         
     outer_command = timeout(docker_command,max_seconds+5)
 
-    bash.exec("rm -f #{cidfile}")
-    output,exit_status = bash.exec("#{outer_command}")
-    pid,_ = bash.exec("cat #{cidfile}")
-    bash.exec("docker stop #{pid} ; docker rm #{pid}")
+    bash("rm -f #{cidfile}")
+    output,exit_status = bash("#{outer_command}")
+    pid,_ = bash("cat #{cidfile}")
+    bash("docker stop #{pid} ; docker rm #{pid}")
 
     exit_status != fatal_error(kill) ?
         limited(clean(output),50*1024) :
@@ -60,6 +61,15 @@ private
 
   include Cleaner
 
+  def bash(command)
+    @bash.exec(command)
+  end
+
+  def installed?
+    _,exit_status = bash(stderr2stdout('docker info > /dev/null'))
+    exit_status === 0
+  end
+  
   def timeout(command,after)
     "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
   end
@@ -88,15 +98,6 @@ private
     'none'
   end
   
-  def installed?
-    _,exit_status = bash.exec(stderr2stdout('docker info > /dev/null'))
-    exit_status === 0
-  end
-
-  def stderr2stdout(cmd)
-    cmd + ' 2>&1'
-  end
-
 end
 
 
