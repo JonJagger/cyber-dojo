@@ -3,7 +3,7 @@ class Bash
   
   def exec(command)
     output = `#{command}`
-    output, $?.exitstatus    
+    return output, $?.exitstatus    
   end
   
 end
