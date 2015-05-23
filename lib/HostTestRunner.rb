@@ -6,7 +6,6 @@
 require_relative 'TestRunner'
 
 class HostTestRunner
-  include TestRunner
 
   def runnable?(language)
     true
@@ -34,6 +33,7 @@ class HostTestRunner
 
 private
 
+  include TestRunner
   include Stderr2Stdout
 
   def kill(pids)

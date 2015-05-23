@@ -6,7 +6,6 @@
 require_relative 'TestRunner'
 
 class DockerTestRunner
-    include TestRunner
 
   def initialize(bash = Bash.new)
     @bash = bash
@@ -52,6 +51,7 @@ class DockerTestRunner
 
 private
   
+  include TestRunner  
   include Stderr2Stdout
    
   def bash(command)
