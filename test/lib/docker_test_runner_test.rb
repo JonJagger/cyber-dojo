@@ -64,6 +64,46 @@ class DockerTestRunnerTests < LibTestBase
   end
     
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'docker run <-> bash interaction' do
+    @bash.stub(docker_info_output, success)   # 0
+    @bash.stub(docker_images_output, success) # 1
+    docker = DockerTestRunner.new(@bash)
+    
+    set_disk_class_name 'DiskStub'    
+    set_git_class_name  'GitSpy'    
+    
+    kata = make_kata
+    lion = kata.start_avatar(['lion'])
+    
+    begin
+      @bash.stub('',success)        # 2 rm cidfile.txt
+      @bash.stub('blah',success)    # 3 timeout ... docker run ...
+      pid = '921'
+      @bash.stub(pid,success)       # 4 cat ... cidfile.txt
+      @bash.stub('',success)        # 5 docker stop pid ; docker rm pid
+      
+      cmd = 'cyber-dojo.sh'
+      output = docker.run(lion.sandbox, cmd, max_seconds=5)
+      
+      assert_equal 'blah',output
+      cidfile = lion.path + "cidfile.txt"
+      assert_equal "rm -f #{cidfile}", @bash.spied[2]
+      docker_run = @bash.spied[3]
+      assert docker_run.start_with? "timeout --signal=#{kill} #{max_seconds+5}s"
+      assert docker_run.include? "docker run"
+      assert docker_run.include? "--cidfile=#{quoted(cidfile)}"
+      assert docker_run.include? "timeout --signal=#{kill} #{max_seconds}s #{cmd}"
+      assert_equal "cat #{cidfile}",                        @bash.spied[4]
+      assert_equal "docker stop #{pid} ; docker rm #{pid}", @bash.spied[5]
+      
+    rescue
+      @bash.spied.each_with_index {|line,i| print "\n#{i}:" + line + "\n"}
+      assert false
+    end
+  end    
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
   def docker_info_output
     [
@@ -81,6 +121,8 @@ class DockerTestRunnerTests < LibTestBase
     ].join("\n")
   end
   
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   def docker_images_output
     [
       "REPOSITORY                              TAG                 IMAGE ID            CREATED             VIRTUAL SIZE",
@@ -93,6 +135,14 @@ class DockerTestRunnerTests < LibTestBase
   
   def success
     0
+  end
+  
+  def kill
+    9
+  end
+  
+  def quoted(s)
+    '"' + s + '"'
   end
   
 end
