@@ -8,7 +8,7 @@ require_relative 'TestRunner'
 class DockerTestRunner
     include TestRunner
 
-  def initialize(dojo, bash=Bash.new)
+  def initialize(bash=Bash.new)
     @bash = bash
     raise RuntimeError.new("Docker not installed") if !installed?    
     output,_ = bash(stderr2stdout('docker images'))

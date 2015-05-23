@@ -31,8 +31,7 @@ class HostTestRunnerTests < LibTestBase
   end
 
   def host_test_runner
-    dojo = nil
-    HostTestRunner.new(dojo)
+    HostTestRunner.new
   end
   
   class SandboxStub

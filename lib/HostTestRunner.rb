@@ -8,9 +8,6 @@ require_relative 'TestRunner'
 class HostTestRunner
   include TestRunner
 
-  def initialize(dojo)
-  end
-  
   def run(sandbox, command, max_seconds)
     command = "cd '#{sandbox.path}';" + stderr2stdout(command)
     pipe = IO::popen(command)

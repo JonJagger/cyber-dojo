@@ -1,9 +1,6 @@
 
 class Disk
 
-  def initialize(dojo=nil)
-  end
-    
   def dir_separator
     File::SEPARATOR
   end

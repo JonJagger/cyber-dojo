@@ -1,9 +1,6 @@
 
 class Git
 
-  def initialize(dojo=nil)
-  end
-  
   def method_missing(cmd,*args)
     path,options = args[0],args[1]
     options = quoted(options) if ['add','rm'].include?(cmd.to_s)

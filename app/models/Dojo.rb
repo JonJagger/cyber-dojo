@@ -29,7 +29,7 @@ class Dojo
   end
 
   def one_self
-    @one_self ||= external_obj
+    @one_self ||= external_obj_pass_disk
   end
   
 private
@@ -39,7 +39,11 @@ private
   end
   
   def external_obj
-    Object.const_get(external(name_of(caller) + '_CLASS_NAME')).new(self)
+    Object.const_get(external(name_of(caller) + '_CLASS_NAME')).new
+  end
+
+  def external_obj_pass_disk
+    Object.const_get(external(name_of(caller) + '_CLASS_NAME')).new(disk)
   end
   
   def external(key)

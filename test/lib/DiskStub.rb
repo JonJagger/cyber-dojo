@@ -1,7 +1,7 @@
 
 class DiskStub
 
-  def initialize(dojo=nil)
+  def initialize
     @stub = DiskFake.new
     cache = JSON.parse(File.read("#{File.dirname(__FILE__)}/disk_cache.json"))
     cache.each do |path,content| 

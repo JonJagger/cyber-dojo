@@ -1,9 +1,9 @@
 
 class OneSelfDummy
 
-  def initialize(dojo=nil)
+  def initialize(_)
   end
-
+  
   def method_missing(sym, *args, &block)
   end
   
