@@ -55,13 +55,12 @@ class DockerTestRunnerTests < LibTestBase
       "cyberdojo/rust-1.0.0_test"
     ]
     assert_equal expected_image_names, docker.image_names
-    #
-    #
-    #python_py_test = languages['Python, py.test']
-    #assert docker.runnable?(python_py_test);
-    #
-    #c_assert = languages['C, assert']
-    #assert !docker.runnable?(c_assert);
+    
+    set_disk_class_name 'DiskStub'    
+    python_py_test = languages['Python-py.test']
+    assert docker.runnable?(python_py_test);
+    c_assert = languages['C-assert']
+    refute docker.runnable?(c_assert);
   end
     
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
