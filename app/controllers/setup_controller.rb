@@ -13,8 +13,8 @@ class SetupController < ApplicationController
   end
 
   def save
-    language = languages[language_name] + '-' + test_name]
-    exercise = exercises[exercise]
+    language = languages[language_name + '-' + test_name]
+    exercise = exercises[exercise_name]
     kata = katas.create_kata(language, exercise)
     hash = {
       :kata_id => kata.id,
