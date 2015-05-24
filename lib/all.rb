@@ -1,4 +1,6 @@
 
+# this list has order dependencies
+
 %w{
   Stderr2Stdout
   Cleaner  

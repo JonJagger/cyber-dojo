@@ -56,7 +56,7 @@ class OneSelfTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - 
   
-  test 'created' do
+  test 'kata created' do
     http_requester = OneSelfHttpRequesterStub.new
     one_self = OneSelf.new(disk, http_requester)
     kata = make_kata  
@@ -75,7 +75,7 @@ class OneSelfTests < LibTestBase
   
   # - - - - - - - - - - - - - - - - - 
 
-  test 'started' do
+  test 'avatar started' do
     kata = make_kata        
     lion = kata.start_avatar(['lion'])
     http_requester = OneSelfHttpRequesterStub.new
@@ -93,7 +93,16 @@ class OneSelfTests < LibTestBase
   
   # - - - - - - - - - - - - - - - - - 
 
-  test 'tested' do
+  test 'tests run' do
+    light_colour('red',  '#F00')
+    light_colour('amber','#FF0')
+    light_colour('green','#0F0')
+    light_colour('timed_out','#C0C0C0')
+  end
+  
+  # - - - - - - - - - - - - - - - - - 
+
+  def light_colour(colour,css)
     kata = make_kata        
     lion = kata.start_avatar(['lion'])
     http_requester = OneSelfHttpRequesterStub.new    
@@ -102,7 +111,7 @@ class OneSelfTests < LibTestBase
     disk[lion.path].write(one_self.manifest_filename, started_manifest)        
     hash = {     
       :tag => 1,
-      :colour => 'red',
+      :colour => colour,
       :now => Time.now,
       :added_line_count => 2,
       :deleted_line_count => 6,
@@ -117,7 +126,7 @@ class OneSelfTests < LibTestBase
     assert_equal kata.id, properties['dojo-id']
     assert_equal 'lion', properties['avatar']
     assert_equal hash[:tag], properties['tag']
-    assert_equal '#F00', properties['color']
+    assert_equal css, properties['color']
     assert_equal hash[:added_line_count], properties['added-line-count']
     assert_equal hash[:deleted_line_count], properties['deleted-line-count']
     assert_equal hash[:seconds_since_last_test], properties['seconds-since-last-test']

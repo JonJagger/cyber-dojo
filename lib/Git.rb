@@ -3,7 +3,7 @@ class Git
 
   def method_missing(cmd,*args)
     path,options = args[0],args[1]
-    options = quoted(options) if ['add','rm'].include?(cmd.to_s)
+    options = single_quoted(options) if ['add','rm'].include?(cmd.to_s)
     Dir.chdir(path) do
       git_cmd = stderr2stdout("git #{cmd} #{options}")
       log << git_cmd
@@ -22,17 +22,14 @@ class Git
 private
 
   include Cleaner
-
-  def stderr2stdout(cmd)
-    cmd + ' ' + '2>&1'
-  end
+  include Stderr2Stdout
 
   def success
     0
   end
 
-  def quoted(args)
-    "'" + args + "'"
+  def single_quoted(s)
+    "'" + s + "'"
   end
-
+  
 end
