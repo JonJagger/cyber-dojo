@@ -8,7 +8,7 @@ class AllLanguagesTests < LanguagesTestBase
   test 'red-amber-green initial 6*9 state' do
     checker = OneLanguageChecker.new(verbose=false)
     results = {}
-    dirs = Dir.glob("#{root_path}languages/*/*/manifest.json")
+    dirs = Dir.glob("#{languages.path}*/*/manifest.json")
     languages = dirs.map { |file|
       File.dirname(file).split('/')[-2..-1]
     }
