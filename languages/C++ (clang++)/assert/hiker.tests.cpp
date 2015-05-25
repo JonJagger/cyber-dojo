@@ -2,13 +2,18 @@
 #include <cassert>
 #include <iostream>
 
-static void life_the_universe_and_everthing()
+namespace {
+ 
+void life_the_universe_and_everthing()
 {
     assert(answer() == 42);
 }
 
+} // namespace
+
 int main()
 {
     life_the_universe_and_everthing();
+    // green-traffic light pattern...    
     std::cout << "All tests passed";
 }
