@@ -21,4 +21,4 @@ done
 echo
 echo
 
-./print_coverage_summary.rb
+./print_coverage_summary.rb | tee test-summary.txt

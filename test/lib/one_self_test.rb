@@ -56,21 +56,44 @@ class OneSelfTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - 
   
+  test 'http requester' do
+    requester = HttpRequester.new
+    url = URI.parse('http://www.google.co.uk')
+    req = Net::HTTP::Get.new('#q=cyber-dojo')
+    response = requester.request(url.host, req)
+    assert response.to_s.start_with? '#<Net::HTTPFound'
+  end
+    
+  # - - - - - - - - - - - - - - - - - 
+  
   test 'kata created' do
     http_requester = OneSelfHttpRequesterStub.new
     one_self = OneSelf.new(disk, http_requester)
     kata = make_kata  
+    exercise_name = kata.exercise.name
     language_name,test_name = kata.language.display_name.split(',').map{|s| s.strip }      
     hash = {
       :kata_id => kata.id,
+      :exercise_name => exercise_name,
       :language_name => language_name,
-      :test_name => test_name,
-      :latitude => '51.0190',
+      :test_name     => test_name,
+      :latitude   => '51.0190',
       :longtitude => '3.1000'
     }
     one_self.created(hash)
     
-    assert_equal 'api.1self.co', http_requester.spied_url_hosts[0]
+    assert_equal 'api.1self.co', http_requester.spied_url_hosts[0]    
+    body = JSON.parse(http_requester.spied_requests[0].body)
+    assert_equal ['cyber-dojo'], body['objectTags']
+    assert_equal ['create'], body['actionTags']
+    location = body['location']
+    assert_equal hash[:latitude], location['lat']
+    assert_equal hash[:longtitude], location['long']
+    properties = body['properties']
+    assert_equal kata.id, properties['dojo-id']
+    assert_equal language_name, properties['language-name']
+    assert_equal test_name, properties['test-name']
+    assert_equal kata.exercise.name, properties['exercise-name']
   end
   
   # - - - - - - - - - - - - - - - - - 

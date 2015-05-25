@@ -18,6 +18,7 @@ class SetupController < ApplicationController
     kata = katas.create_kata(language, exercise)
     hash = {
       :kata_id => kata.id,
+      :exercise_name => exercise_name,
       :language_name => language_name,
       :test_name => test_name,
       :latitude => latitude,

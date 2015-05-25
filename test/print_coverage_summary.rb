@@ -112,6 +112,7 @@ end
 #- - - - - - - - - - - - - - - - - - - - -
 
 def print_heading
+  print "test-summary\n"
   print_left(indent, '')
   column_names.each { |name| print_right(columns[name][0], columns[name][1]) }
   print "\n"

@@ -15,13 +15,14 @@ class OneSelf
       'objectTags' => [ 'cyber-dojo' ],
       'actionTags' => [ 'create' ],
       'location' => { 
-        'lat' => hash[:latitude], 
+        'lat'  => hash[:latitude], 
         'long' => hash[:longtitude] 
       },
       'properties' => {
         'dojo-id' => hash[:kata_id],
+        'exercise-name' => hash[:exercise_name],
         'language-name' => hash[:language_name],
-        'test-name' => hash[:test_name]
+        'test-name'     => hash[:test_name]
       }
     }
     url = URI.parse("#{streams_url}/#{stream_id}/events")    
@@ -38,8 +39,8 @@ class OneSelf
     response = http_response(url.host, request)    
     body =  JSON.parse(response.body)
     one_self = {
-      :stream_id => body['streamid'],
-      :read_token => body['readToken'],
+      :stream_id   => body['streamid'],
+      :read_token  => body['readToken'],
       :write_token => body['writeToken']
     }
     @disk[avatar.path].write(manifest_filename, one_self)
