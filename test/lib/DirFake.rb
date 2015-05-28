@@ -78,7 +78,7 @@ private
   end
 
   def assert(truth, message)
-    raise "FakeDir['#{@dir}'].#{message}" if !truth
+    raise "DirFake['#{@dir}'].#{message}" if !truth
   end
 
 end

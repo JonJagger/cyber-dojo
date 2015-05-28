@@ -121,5 +121,16 @@ switch to
                           |latest test ~30 seconds old|
                           | (32 days -> closes)       |
     
+-------------------------------------------------------------------------------------------
+
+When a cyberdojo has been marked as finished....
+How does the display change?
+I think there is some scope for not showing ... elided-time-column from last traffic-light
+to time-it-finished.
+
+I think I've seen a sequence of columns which are mix of
+... elided and plain empty but no actual traffic-lights.
+Surely such a sequence should collapse into a single ...
+
 
 

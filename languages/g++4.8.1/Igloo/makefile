@@ -6,7 +6,7 @@ CPP_FILES = $(wildcard *.cpp)
 
 .PHONY: test.output
 test.output: test makefile
-	./$<
+	@./$<
 
 test: makefile $(CPP_FILES) $(COMPILED_HPP_FILES)
 	@$(CXX) $(CXXFLAGS) -O $(CPP_FILES) -o $@

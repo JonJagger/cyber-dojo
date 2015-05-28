@@ -6,27 +6,29 @@ require 'json'
 
 class OneSelf
     
-  def initialize(disk)
-    @disk = disk
+  def initialize(disk, requester = HttpRequester.new)
+    @disk,@requester = disk,requester
   end
   
-  def created(kata,latitude,longtitude)
-    language_name,test_name = kata.language.display_name.split(',').map{|s| s.strip }
+  def created(hash)
     data = {
       'objectTags' => [ 'cyber-dojo' ],
       'actionTags' => [ 'create' ],
-      'location' => { 'lat' => latitude, 'long' => longtitude },
+      'location' => { 
+        'lat'  => hash[:latitude], 
+        'long' => hash[:longtitude] 
+      },
       'properties' => {
-        'dojo-id' => kata.id,
-        'language-name' => language_name,
-        'test-name' => test_name
+        'dojo-id' => hash[:kata_id],
+        'exercise-name' => hash[:exercise_name],
+        'language-name' => hash[:language_name],
+        'test-name'     => hash[:test_name]
       }
     }
-    url = URI.parse("#{streams_url}/#{stream_id}/events")
+    url = URI.parse("#{streams_url}/#{stream_id}/events")    
     request = Net::HTTP::Post.new(url.path, json_header(write_token))
     request.body = data.to_json
-    http = Net::HTTP.new(url.host)
-    response = http.request(request) 
+    http_response(url.host, request)    
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -34,44 +36,53 @@ class OneSelf
   def started(avatar)
     url = URI.parse(streams_url)
     request = Net::HTTP::Post.new(url.path, json_header("#{app_key}:#{app_secret}"))
-    http = Net::HTTP.new(url.host)
-    body =  JSON.parse(http.request(request).body)
+    response = http_response(url.host, request)    
+    body =  JSON.parse(response.body)
     one_self = {
-      :stream_id => body['streamid'],
-      :read_token => body['readToken'],
+      :stream_id   => body['streamid'],
+      :read_token  => body['readToken'],
       :write_token => body['writeToken']
     }
-    @disk[avatar.path].write(one_self_manifest_filename, one_self)
+    @disk[avatar.path].write(manifest_filename, one_self)
   end
   
   # - - - - - - - - - - - - - - - - - - - - - -
   
-  def tested(avatar,tag,colour,now)
-    added_line_count,deleted_line_count = line_counts(avatar.diff(tag-1,tag))
-    secs = avatar.tags[tag].time - avatar.tags[tag-1].time    
+  def tested(avatar,hash)
+    # tags belonging to 1self are camelCase
+    # tags belonging to me (in properties) are dash-separated    
     data = {
       'objectTags' => [ 'cyber-dojo' ],
       'actionTags' => [ 'test-run' ],
-      'dateTime' => Time.mktime(*now).utc.iso8601.to_s,
+      'dateTime' => Time.mktime(*hash[:now]).utc.iso8601.to_s,
       'properties' => {
         'dojo-id' => avatar.kata.id,
         'avatar' => avatar.name,
-        'tag' => tag,
-        'color' => css(colour),
-        'added-line-count' => added_line_count,
-        'deleted-line-count' => deleted_line_count,
-        'seconds-since-last-test' => secs.to_i,
+        'tag' => hash[:tag],
+        'color' => css(hash[:colour]),
+        'added-line-count' => hash[:added_line_count],
+        'deleted-line-count' => hash[:deleted_line_count],
+        'seconds-since-last-test' => hash[:seconds_since_last_test],
       }
     }
-    one_self = JSON.parse(@disk[avatar.path].read(one_self_manifest_filename))    
+    one_self = JSON.parse(@disk[avatar.path].read(manifest_filename))    
     url = URI.parse("#{streams_url}/#{one_self['stream_id']}/events")
-    http = Net::HTTP.new(url.host)
     request = Net::HTTP::Post.new(url.path, json_header("#{one_self['write_token']}"))
     request.body = data.to_json
-    response = http.request(request)
+    http_response(url.host, request)
+  end
+  
+  # - - - - - - - - - - - - - - - - - - - - - -
+  
+  def manifest_filename
+    '1self_manifest.json'    
   end
   
 private
+  
+  def http_response(url_host, req)
+    @requester.request(url_host, req)
+  end  
   
   def css(colour)
     return '#F00' if colour === 'red'
@@ -80,24 +91,8 @@ private
     return '#C0C0C0' # timed__out -> 'gray'
   end
   
-  # copy-pasted from app/helpers/tip_helper.rb
-  def line_counts(diffed_files)
-    added_count,deleted_count = 0,0
-    diffed_files.each do |filename,diff|
-      if filename != 'output'
-        added_count   += diff.count { |line| line[:type] == :added   }
-        deleted_count += diff.count { |line| line[:type] == :deleted }
-      end
-    end
-    [added_count,deleted_count]
-  end
-
   def streams_url
     'https://api.1self.co/v1/streams'
-  end
-
-  def one_self_manifest_filename
-    '1self_manifest.json'    
   end
 
   def json_header(authorization)
@@ -118,32 +113,12 @@ private
     'GSYZNQSYANLMWEEH'
   end
   
-  def read_token
-    '474f621260b2f9e5b6f6025cd5eea836b362b0bf1bfa'
-  end
+  #def read_token
+  #  '474f621260b2f9e5b6f6025cd5eea836b362b0bf1bfa'
+  #end
   
   def write_token
     'ddbc8384eaf4b6f0e70d66b606ccbf7ad4bb22bfe113'
   end
   
 end
-
-#------------------------------------------------
-# tags belonging to 1self are camelCase
-# tags belonging to me (in properties) are dash-separated
-#
-# data = {
-#   'objectTags' => [ 'cyber-dojo' ],
-#   'actionTags' => [ 'test-run' ],
-#   'dateTime' => Time.mktime(*now).utc.iso8601.to_s,
-#   'properties' => {
-#     'dojo-id' => avatar.kata.id,
-#     'avatar' => avatar.name,
-#     'tag' => tag,
-#     'color' => css(colour),
-#     'added-line-count' => added_line_count,
-#     'deleted-line-count' => deleted_line_count,
-#     'seconds-since-last-test' => secs.to_i,
-#   }
-# }
-#------------------------------------------------

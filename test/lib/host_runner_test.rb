@@ -3,17 +3,17 @@
 require_relative 'lib_test_base'
 require 'tempfile'
 
-class HostTestRunnerTests < LibTestBase
+class HostRunnerTests < LibTestBase
 
   test 'runnable? is true' do
-    assert HostTestRunner.new.runnable?('kermit-the-frog')
+    assert host_runner.runnable?('kermit-the-frog')
   end
 
   test 'command executes within timeout and returns command output' do
     sandbox = SandboxStub.new
     command = 'echo "Hello"'
     max_duration = 2 # seconds
-    assert_equal "Hello\n", HostTestRunner.new.run(sandbox, command, max_duration)
+    assert_equal "Hello\n", host_runner.run(sandbox, command, max_duration)
   end
 
   test 'when command times-out output includes unable-to-complete message' do
@@ -22,7 +22,7 @@ class HostTestRunnerTests < LibTestBase
     max_duration = 1 # second
     output = nil
     capture_all do
-      output = HostTestRunner.new.run(sandbox, command, max_duration)
+      output = host_runner.run(sandbox, command, max_duration)
     end
     assert_match /Unable to complete the tests in 1 seconds/, output
     assert_match /Is there an accidental infinite loop?/, output
@@ -30,6 +30,10 @@ class HostTestRunnerTests < LibTestBase
     assert_match /Please try again/, output
   end
 
+  def host_runner
+    HostRunner.new
+  end
+  
   class SandboxStub
     def path
       '.'

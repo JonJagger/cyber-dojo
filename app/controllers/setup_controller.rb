@@ -13,16 +13,36 @@ class SetupController < ApplicationController
   end
 
   def save
-    language = languages[params['language'] + '-' + params['test']]
-    exercise = exercises[params['exercise']]
+    language = languages[language_name + '-' + test_name]
+    exercise = exercises[exercise_name]
     kata = katas.create_kata(language, exercise)
-    one_self.created(kata, latitude, longtitude)
+    hash = {
+      :kata_id => kata.id,
+      :exercise_name => exercise_name,
+      :language_name => language_name,
+      :test_name => test_name,
+      :latitude => latitude,
+      :longtitude => longtitude
+    }
+    one_self.created(hash)
     render json: { id: kata.id.to_s }
   end
 
 private
 
   include SetupWorker
+
+  def language_name
+    params['language']
+  end
+  
+  def test_name
+    params['test']
+  end
+  
+  def exercise_name
+    params['exercise']
+  end
   
   def latitude
     Float(params['latitude'].to_s) rescue ''

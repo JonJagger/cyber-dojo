@@ -4,32 +4,35 @@ require File.dirname(__FILE__) + '/one_language_checker'
 
 def show_use(message = "")
   puts
-  puts 'USE: check_one_language.rb [<languageDir>] [<testDir>] [verbose]'
+  puts 'USE: check_one_language.rb <languageDir> <testDir> [verbose]'
   puts 
   puts '   E.g.  check_one_language.rb C assert verbose'
-  puts '         will check cyber-dojo/languages/C/assert'
+  puts '         will check cyber-dojo/languages/C/assert/'
   puts
   puts "   ERROR: #{message}" if message != ''
   puts
 end
 
-root_path = File.absolute_path(File.dirname(__FILE__) + '/../../')
-name = ARGV[0]
-test = ARGV[1]
-verbose = ARGV[2] === 'verbose'
+def root_path
+  File.absolute_path(File.dirname(__FILE__) + '/../../')
+end
 
-if name.nil? or test.nil?
+language = ARGV[0]
+test     = ARGV[1]
+verbose  = (ARGV[2] === 'verbose')
+
+if language.nil? or test.nil?
   show_use
   exit
 end
 
-if !File.directory?(root_path + '/languages/' + name + '/' + test)
-  show_use "#{root_path}/languages/#{name}/#{test} not found"
+if !File.directory?(root_path + '/languages/' + language + '/' + test)
+  show_use "#{root_path}/languages/#{language}/#{test}/ not found"
   exit
 end
 
-rag = OneLanguageChecker.new(root_path,verbose).check(name,test)
+rag = OneLanguageChecker.new(verbose).check(language,test)
 expected = ['red','amber','green']
 outcome = (rag === expected) ? 'PASS' : 'FAIL'
-puts "#{name}/#{test} --> #{rag} ==> #{outcome}"
+puts "#{language}/#{test} --> #{rag} ==> #{outcome}"
 

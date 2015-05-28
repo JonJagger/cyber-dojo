@@ -26,7 +26,7 @@ class GitTests < LibTestBase
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+ 
   test '[git] with no arguments returns ' +
        'externally the set :git object ' +
        'which can be Stub object' do
@@ -34,7 +34,7 @@ class GitTests < LibTestBase
   end
 
   test 'all git commands raise exception if path names a dir that does not exist' do
-    set_path 'bad_dir'
+    set_path 'dir_that_does_not_exist'
     [:init,:config,:add,:rm,:commit,:gc,:tag,:show,:diff].each do |cmd|
       error = assert_raises(Errno::ENOENT) { 
         args = ''
@@ -51,10 +51,19 @@ class GitTests < LibTestBase
     assert uk_git_init_message || us_git_init_message
     assert message.end_with?("empty Git repository in #{path}.git/\n")
   end
-
+  
   test '[git config] succeeds silently' do
     ok { git.init(path, '') }
     silent_ok { git.config(path, 'user.name "Fred Flintsone"') }
+    # sometimes the above git.config command somehow has the 
+    # following effect on .git/config on the main cyber-dojo repo?!
+    #
+    # [user]
+	  #         name = Jon Jagger
+    #         name = Fred
+    #
+    fred = `grep Fred /var/www/cyber-dojo/.git/config`
+    assert fred==='', "Fred is back in /var/www/cyber-dojo/.git/config"
   end
 
   test 'git command with bad options returns log of command+message+status' do
@@ -64,7 +73,7 @@ class GitTests < LibTestBase
     assert log.include?('fatal: pathspec'), log
     assert log.include?("$?.exitstatus=128"), log
   end
-    
+
   test '[git add] succeeds silently' do
     ok { git.init(path, '') }
     write_file

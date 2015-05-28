@@ -35,5 +35,18 @@ specify its maximum duration. And don't allow a maximum
 duration over 28 days (say), with a default of 1 day.
 
 Also needs all date/times to come from the browser and not
-the server.
+the server. Or do I?
+Ask Ed for more details about that.
+If it comes from the browser then I could get some browsers
+in a single dojo that have incorrect date-times and this
+would skew the display, potentially a lot.
+Perhaps store both times in the increments file.
+The server time aligns all traffic-lights into the same
+minute columns. But their actual time can be retrieved
+if needed and that comes from the browser.
+
+
+
+
+
 

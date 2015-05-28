@@ -1,20 +1,9 @@
 
 The tests are being refactored.
-Tests named test_*.rb are not refactored yet 
-(test/languages/* test/integration/* some of test/app_controllers/*)
-Tests named *_test.rb have been refactored and 
-o) use new externals set via ENV[]
-o) use test_wrapper.sh shebang
-./run_all.sh from each test/* folder works.
-But ./run_all.sh from this folder /var/www/cyber-dojo/test does not,
-there is some unintended interaction between tests in different folders.
-See
-admin_scripts/make_mac_os_ram_disk.sh
-admin_scripts/make_mac_os_ram_dirs.sh
-admin_scripts/make_env_vars.sh
-
+test/app_controllers/ has not been done yet.
 
 ------------------------------
+Note
 On the live server everything runs through Rails as the www-data user.
 
 During development the user I am logged in as is not www-data.

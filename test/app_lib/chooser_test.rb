@@ -6,13 +6,6 @@ class ChooseTests < AppLibTestBase
 
   include Chooser
 
-  def setup
-    super
-    set_runner_class_name('DummyTestRunner')
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - -
-
   test 'when no id is given then' +
        ' choose random known language and' +
        ' choose random known exercise' do
@@ -57,17 +50,17 @@ class ChooseTests < AppLibTestBase
       assert_is_randomly_chosen_exercise(exercises, kata.id, katas)
     end
   end
-
+  
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test "when id is given and katas[id].exists? and kata's language is known" +
        ' then choose that language' do
-    commad = test_languages_names.map{ |name| name.split('-').join(', ') }
+    cmd = test_languages_names.map{ |name| name.split('-').join(', ') }
     test_languages_names.each_with_index do |language,n|
       kata = make_kata(unique_id, language, test_exercises_names.shuffle[0])
       assert kata.exists?
       (1..42).each do
-        assert_equal n, choose_language(commad, kata.id, katas), language
+        assert_equal n, choose_language(cmd, kata.id, katas), language
       end
     end
   end
@@ -75,7 +68,7 @@ class ChooseTests < AppLibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test "when id is given and katas[id].exists? and kata's exercise is known" +
-       ' then choose that exercise' do
+       ' then choose that exercise' do         
     test_exercises_names.each_with_index do |exercise,n|
       kata = make_kata(unique_id, test_languages_names.shuffle[0], exercise)
       assert kata.exists?
@@ -119,10 +112,11 @@ class ChooseTests < AppLibTestBase
 
   def test_languages_names
     [ 'C#-NUnit',
-      'C++-GoogleTest',
+      'C++ (g++)-GoogleTest',
       'Ruby-Test::Unit',
       'Java-JUnit'
     ].sort
+    
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -

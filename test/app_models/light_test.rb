@@ -3,7 +3,7 @@
 require_relative 'model_test_base'
 
 class LightTests < ModelTestBase
-  
+
   test 'colour is converted to a symbol' do
     light = make_light(:red,[2015,2,15,8,54,6],1)
     assert_equal :red, light.colour
@@ -22,12 +22,12 @@ class LightTests < ModelTestBase
     year,month,day,hh,mm,ss = 2015,2,15,8,54,6
     light = make_light(:red,[year,month,day,hh,mm,ss],1)
     time = light.time
-    assert_equal year, time.year, 'year'
+    assert_equal year,  time.year,  'year'
     assert_equal month, time.month, 'month'
-    assert_equal day, time.day, 'day'
-    assert_equal hh, time.hour, 'hour'
-    assert_equal mm, time.min, 'min'
-    assert_equal ss, time.sec, 'sec'
+    assert_equal day,   time.day,   'day'
+    assert_equal hh,    time.hour,  'hour'
+    assert_equal mm,    time.min,   'min'
+    assert_equal ss,    time.sec,   'sec'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - -
@@ -55,18 +55,14 @@ class LightTests < ModelTestBase
   # - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'each test creates a new light' do
-    set_runner_class_name('StubTestRunner')        
     kata = make_kata
     lion = kata.start_avatar(['lion'])    
     stub_test(lion, [:red,:amber,:green])
     lights = lion.lights
     assert_equal 3, lights.length
-    assert_equal :red  , lights[0].colour
-    assert_not_equal '', lights[0].output
-    assert_equal :amber, lights[1].colour
-    assert_not_equal '', lights[1].output
-    assert_equal :green, lights[2].colour
-    assert_not_equal '', lights[2].output
+    assert_equal :red  , lights[0].colour    
+    assert_equal :amber, lights[1].colour    
+    assert_equal :green, lights[2].colour    
   end
   
   # - - - - - - - - - - - - - - - - - - - - - - -

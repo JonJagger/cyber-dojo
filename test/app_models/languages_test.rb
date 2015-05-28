@@ -4,11 +4,6 @@ require_relative 'model_test_base'
 
 class LanguagesTests < ModelTestBase
 
-  def setup
-    super
-    assert_equal 'Disk', get_disk_class_name
-  end
-  
   test 'path is set from ENV' do
     path = 'end_with_slash/'
     set_languages_root(path)  
@@ -30,14 +25,14 @@ class LanguagesTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - -
 
   test 'each() empty' do
+    runner.stub_runnable(false)
     assert_equal [], languages.each.map {|language| language.name}
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
   test 'each() not empty' do
-    set_runner_class_name('StubTestRunner')
-    dojo.runner.stub_runnable(true)
+    runner.stub_runnable(true)
     languages_names = languages.each.map {|language| language.name }
     ['C#-NUnit','Ruby-Test::Unit'].each do |name|
       assert languages_names.include? name
@@ -47,8 +42,7 @@ class LanguagesTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - -
   
   test 'is Enumerable, eg each() not needed if doing a map' do
-    set_runner_class_name('StubTestRunner')
-    dojo.runner.stub_runnable(true)
+    runner.stub_runnable(true)
     languages_names = languages.map {|language| language.name}
     ['C#-NUnit','Ruby-Test::Unit'].each do |name|
       assert languages_names.include? name
@@ -78,7 +72,7 @@ class LanguagesTests < ModelTestBase
     #
     # katas/../......../manifest.json  language: entry
     # count of occurences on cyber-dojo.org
-    # ID on one occurrence on cyber-dojo.org
+    # ID of one occurrence on cyber-dojo.org
     [
       "Asm-assert 25 010E66019D",  
       "BCPL 3 DF9A083C0F",
@@ -150,7 +144,7 @@ class LanguagesTests < ModelTestBase
   end
 
   def exists?(lang,test)
-    File.directory?("#{get_languages_root}/#{lang}/#{test}")    
+    File.directory?("#{get_languages_root}/#{lang}/#{test}")
   end
 
 end

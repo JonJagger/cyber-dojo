@@ -170,7 +170,7 @@ class TdGapperTests < AppLibTestBase
   end
 
   def make_light(min,sec)
-    Light.new(avatar=nil, { 'time' => [year,month,day,hour,min,sec] })
+    Tag.new(avatar=nil, { 'time' => [year,month,day,hour,min,sec] })
   end
 
 end

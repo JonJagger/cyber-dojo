@@ -1,5 +1,5 @@
 
-class StubTestRunner
+class RunnerStub
 
   def stub_output(stub)
     @output = stub
@@ -11,14 +11,14 @@ class StubTestRunner
   
   def run(sandbox, command, max_duration)
     if @output.nil?
-      raise RuntimeError.new("StubTestRunner.run()) called unexpectedly")
+      raise RuntimeError.new("RunnerStub.run()) called unexpectedly")
     end
     @output
   end
 
   def runnable?(language)
     if @runnable.nil?      
-      raise RuntimeError.new("StubTestRunner.runnable? called unexpectedly")
+      raise RuntimeError.new("RunnerStub.runnable? called unexpectedly")
     end
     @runnable
   end

@@ -1,12 +1,15 @@
 
 # Deprecated test runner that runs directly on the host server
 # No isolation/protection/security, nothing.
-# See DockerTestRunner.rb
+# See DockerRunner.rb
 
-require_relative 'TestRunner'
+require_relative 'Runner'
 
-class HostTestRunner
-  include TestRunner
+class HostRunner
+
+  def runnable?(language)
+    true
+  end
 
   def run(sandbox, command, max_seconds)
     command = "cd '#{sandbox.path}';" + stderr2stdout(command)
@@ -25,16 +28,13 @@ class HostTestRunner
     if timed_out
       output += didnt_complete(max_seconds)
     end
-    limited(clean(output),50*1024)
-  end
-
-  def runnable?(language)
-    true
+    limited(output)
   end
 
 private
 
-  include Cleaner
+  include Runner
+  include Stderr2Stdout
 
   def kill(pids)
     return if pids == [ ]

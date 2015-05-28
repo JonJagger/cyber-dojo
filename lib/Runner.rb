@@ -1,9 +1,5 @@
 
-module TestRunner # mixin
-
-  def stderr2stdout(cmd)
-    cmd + ' 2>&1'
-  end
+module Runner # mixin
 
   def didnt_complete(max_seconds)
     "Unable to complete the tests in #{max_seconds} seconds.\n" +
@@ -12,15 +8,24 @@ module TestRunner # mixin
     "Please try again."
   end
 
-  def limited(output,max_length)
+  def max_output_length
+    50*1024
+  end
+  
+  def limited(output)
+    output = clean(output)
     # for example, a C++ source file that #includes
     # itself can generate 7MB of output...
-    if output.length > max_length
-      output = output.slice(0, max_length)
+    if output.length > max_output_length
+      output = output.slice(0, max_output_length)
       output += "\n"
       output += "output truncated by cyber-dojo server"
     end
     output
   end
+
+private
+
+  include Cleaner  
 
 end

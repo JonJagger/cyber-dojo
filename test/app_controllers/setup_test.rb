@@ -4,6 +4,22 @@ require_relative 'controller_test_base'
 
 class SetupControllerTest < ControllerTestBase
 
+  test 'setup uses cached exercises if present' do    
+    set_disk_class_name('Disk')
+    set_exercises_root(Dir.mktmpdir + '/')
+    exercises.dir.write('cache.json', {
+      'fake-Print-Diamond'  => 'fake-Print-Diamond instructions',
+      'fake-Roman-Numerals' => 'fake-Roman-Numerals instructions'
+    })    
+    get 'setup/show'    
+    FileUtils.remove_entry get_exercises_root    
+    assert_response :success
+    assert /data-exercise\=\"fake-Print-Diamond/.match(html), "fake-Print-Diamond"
+    assert /data-exercise\=\"fake-Roman-Numerals/.match(html), "fake-Roman-Numerals"    
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
   test 'setup uses cached languages if present' do    
     set_disk_class_name('Disk')
     set_languages_root(Dir.mktmpdir + '/')    
@@ -19,22 +35,6 @@ class SetupControllerTest < ControllerTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'setup uses cached exercises if present' do    
-    set_disk_class_name('Disk')
-    set_exercises_root(Dir.mktmpdir + '/')
-    exercises.dir.write('cache.json', {
-      'fake-Print-Diamond'  => 'fake-Print-Diamond instructions',
-      'fake-Roman-Numerals' => 'fake-Roman-Numerals instructions'
-    })    
-    get 'setup/show'    
-    FileUtils.remove_entry get_exercises_root    
-    assert_response :success
-    assert /data-exercise\=\"fake-Print-Diamond/.match(html), "fake-Print-Diamond"
-    assert /data-exercise\=\"fake-Roman-Numerals/.match(html), "fake-Roman-Numerals"    
-  end
-  
-  # - - - - - - - - - - - - - - - - - - - - - -
-  
   test 'setup/show chooses language and exercise of kata ' +
        'whose 10-char id is passed in URL ' +
        '(to encourage repetition)' do

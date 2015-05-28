@@ -1,9 +1,14 @@
 
+# this list has order dependencies
+
 %w{
-  Cleaner
-  TestRunner
-    DockerTestRunner
-    HostTestRunner
+  Stderr2Stdout
+  Cleaner  
+  Bash
+  HttpRequester
+  Runner
+    DockerRunner
+    HostRunner
   Git
   Disk  Dir
   TimeNow
