@@ -5,11 +5,11 @@ The diff dialog shows files with their diff counts
    1 5  WibbleTest.java
    
 how about differentiating between diffs to the code and diffs to the tests.
-This could allow a histogram like graph where changes to code are shown
+This could allow a histogram-like graph where changes to code are shown
 as histograms below zero, and changes to the tests are shown as
 changes to the code above zero. And time on the x axis.
 
-This would allow a visualization of whether test first is being
+This might allow some kind of visualization of whether test first is being
 practiced. It would allow you to see times when code and tests
 are being edited at the same time.
 
