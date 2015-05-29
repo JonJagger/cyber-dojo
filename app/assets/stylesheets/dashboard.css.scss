@@ -36,11 +36,11 @@
     .row      td { padding: 0px; }
     .row.odd  td { background: lighten($darker-color, 3%); }
     .row.even td { background: lighten($darker-color, 6%); }
-    td.time-period-marker { border-left: dotted lighten(black,60%) 1px; }
+    td.time-period-marker { border-left: dotted lighten(black,70%) 1px; }
     .collapsed-multi-gap {
       display: inline-block;
       font-size: 0.1em;
-      color: lighten(black, 30%);
+      color: lighten(black, 70%);
       &:after { content: '...'; }
       margin-left: 1px;
       margin-right: 1px;

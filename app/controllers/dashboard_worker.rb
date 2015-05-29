@@ -21,7 +21,7 @@ module DashboardWorker # mixin
     all_lights = Hash[
       @kata.avatars.active.each.collect{|avatar| [avatar.name, avatar.lights]}
     ]
-    max_seconds_uncollapsed = seconds_per_column * 2
+    max_seconds_uncollapsed = seconds_per_column * 5
     gapper = TdGapper.new(@kata.created, seconds_per_column, max_seconds_uncollapsed)
     @gapped = gapper.fully_gapped(all_lights, time_now)
     @progress = @kata.language.progress_regexs != [ ]
