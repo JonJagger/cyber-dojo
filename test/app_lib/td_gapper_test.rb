@@ -4,6 +4,15 @@ require_relative './app_lib_test_base'
 
 class TdGapperTests < AppLibTestBase
 
+  def setup
+    super
+    @gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)    
+  end
+
+  attr_reader :gapper
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "number" do
     # 0 : 2:30:00 - 2:30:20
     # 1 : 2:30:20 - 2:30:40
@@ -11,7 +20,6 @@ class TdGapperTests < AppLibTestBase
     # 3 : 2:31:00 - 2:31:20
     # 4 : 2:31:20 - 2:31:40
     # 5 : 2:31:40 - 2:32:00
-    gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
 
     assert_equal 0, gapper.number(make_light(30,19))
     assert_equal 1, gapper.number(make_light(30,22))
@@ -53,7 +61,6 @@ class TdGapperTests < AppLibTestBase
       },
       :td_nos => [0,1,4,5,7]
     }
-    gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
     now = [year,month,day,hour,32,23] #td 7
     assert_equal expected, gapper.stats(all_lights, now)
   end
@@ -79,7 +86,6 @@ class TdGapperTests < AppLibTestBase
       'lion'  => { 0 => [ ], 1 => [ t3 ], 4 => [ t4,t5 ], 5 => [    ], 7 => [ ] },
       'panda' => { 0 => [ ], 1 => [    ], 4 => [       ], 5 => [ t6 ], 7 => [ ] }
     }
-    gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
     now = [year,month,day,hour,32,23] #td 7
     s = gapper.stats(all_lights, now)
     gapper.vertical_bleed(s)
@@ -97,7 +103,6 @@ class TdGapperTests < AppLibTestBase
       1 => [ :dont_collapse, 2 ],
       4 => [ :dont_collapse, 0 ]
     }
-    gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
     actual = gapper.collapsed_table(td_nos)
     assert_equal expected, actual
 
@@ -115,7 +120,6 @@ class TdGapperTests < AppLibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "fully gapped no traffic_lights yet" do
-    gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
     all_lights = { }
     now = [year,month,day+1,hour,32,23] #td 4327
     actual = gapper.fully_gapped(all_lights, now)
@@ -144,7 +148,6 @@ class TdGapperTests < AppLibTestBase
       'lion'  => { 0 => [ ], 1 => [ t3 ], 2 => [ ], 3 => [ ], 4 => [ t4,t5 ], 5 => [    ], 6 => { :collapsed => 4321 }, 4327 => [ ] },
       'panda' => { 0 => [ ], 1 => [    ], 2 => [ ], 3 => [ ], 4 => [       ], 5 => [ t6 ], 6 => { :collapsed => 4321 }, 4327 => [ ] }
     }
-    gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
     now = [year,month,day+1,hour,32,23] #td 4327
     actual = gapper.fully_gapped(all_lights, now)
     assert_equal expected, actual
