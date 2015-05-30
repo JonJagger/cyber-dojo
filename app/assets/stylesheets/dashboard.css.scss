@@ -34,14 +34,13 @@
     width: 1000px;
     overflow-x: scroll;
     overflow-y: auto;
-    .row      td { padding: 0px; }
-    .row.odd  td { background: lighten($darker-color, 3%); }
-    .row.even td { background: lighten($darker-color, 6%); }
+    td.col      { padding: 0px; }
+    td.col.odd  { background: lighten($darker-color, 3%); }
+    td.col.even { background: lighten($darker-color, 6%); }
     td.time-period-marker { border-left: dotted lighten(black,70%) 1px; }
     .collapsed-multi-gap {
       display: inline-block;
       font-size: 0.1em;
-      color: lighten(black, 70%);
       &:after { content: '...'; }
       margin-left: 1px;
       margin-right: 1px;
@@ -50,7 +49,6 @@
     .gap {
       font-size: 0.5em;
       &:after { content: $thin-space; }
-      color: lighten(black,40%);
       text-align: center;
     }
     .traffic-light-count { cursor: pointer; }
