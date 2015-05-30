@@ -24,23 +24,6 @@ $(function() {
 //--></script>
 
 <table>
-  <% if @avatar_names.length != 0 %>
-  <tr>
-	  <% td_map = @gapped[@avatar_names[0]] %>
-	  <% td_map.keys.sort.each do |td_no| %>
-		  <% td = td_map[td_no] %>    
-      <td class="time-period-marker">
-      </td>
-      <th>
-		  <% if td.class == Hash %>
-		    <span class="collapsed-multi-gap" data-mins-collapsed="<%= td[:collapsed] %>"></span>
-      <% end %>
-      </th>
-    <% end %>
-    <td class="time-period-marker">
-    </td>
-  </tr>
-  <% end %>
   
   <% @avatar_names.each_with_index do |name,index| %>
 	<tr class="<%= parity(index) %> row">
