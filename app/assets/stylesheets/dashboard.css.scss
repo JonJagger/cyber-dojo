@@ -3,10 +3,11 @@
 
   margin: 25px;
 
-  #age-container, #auto-refresh-container, #minute-columns-container, #team-bulb-counts-container {
+  #auto-refresh-container, #minute-columns-container, #age-container, #team-bulb-counts-container {
     @include edged-panel();
     @include right-align(15px);
     margin-bottom: 5px;
+    display: block;
   }
 
   #team-bulb-counts-container .traffic-light-count { font-size: 1.5em; }
@@ -37,17 +38,17 @@
     td.col      { padding: 0px; }
     td.col.odd  { background: lighten($darker-color, 3%); }
     td.col.even { background: lighten($darker-color, 6%); }
-    td.time-period-marker { border-left: dotted lighten(black,70%) 1px; }
     .collapsed-multi-gap {
       display: inline-block;
       font-size: 0.1em;
+      color: lighten(black, 60%);
       &:after { content: '...'; }
       margin-left: 1px;
       margin-right: 1px;
       margin-bottom: 10px;
     }
     .gap {
-      font-size: 0.5em;
+      font-size: 0.7em;
       &:after { content: $thin-space; }
       text-align: center;
     }
