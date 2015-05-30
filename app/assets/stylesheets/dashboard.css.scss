@@ -12,13 +12,6 @@
 
   #team-bulb-counts-container .traffic-light-count { font-size: 1.5em; }
 
-  #age-container {
-    #days, #hours, #minutes, #seconds {
-      position: relative;
-      top: +1px;
-    }
-  }
-
   #progress-button-container, #download-button-container {
     @include right-align(15px);
     text-align: right;
@@ -35,13 +28,13 @@
     width: 1000px;
     overflow-x: scroll;
     overflow-y: auto;
-    td.col      { padding: 0px; }
-    td.col.odd  { background: lighten($darker-color, 3%); }
-    td.col.even { background: lighten($darker-color, 6%); }
+    td.col      { padding: 0px; border-bottom: dotted lighten(black,40%) 1px; }
+    td.col.odd  { background: lighten($darker-color,3%); }
+    td.col.even { background: lighten($darker-color,6%); }
     .collapsed-multi-gap {
       display: inline-block;
       font-size: 0.1em;
-      color: lighten(black, 60%);
+      color: lighten(black,60%);
       &:after { content: '...'; }
       margin-left: 1px;
       margin-right: 1px;
@@ -59,8 +52,8 @@
 
 #progress-dialog {
   padding-top: 0px;
-  .animal.odd  { background: lighten($darker-color, 3%); }
-  .animal.even { background: lighten($darker-color, 6%); }
+  .animal.odd  { background: lighten($darker-color,3%); }
+  .animal.even { background: lighten($darker-color,6%); }
   .progress {
     white-space: nowrap;
     padding: { left: 5px; right: 5px; }
