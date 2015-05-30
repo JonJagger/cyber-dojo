@@ -3,9 +3,10 @@
 
   margin: 25px;
 
-  #age-container, #controls-container, #team-bulb-counts-container {
+  #age-container, #auto-refresh-container, #minute-columns-container, #team-bulb-counts-container {
     @include edged-panel();
     @include right-align(15px);
+    margin-bottom: 5px;
   }
 
   #team-bulb-counts-container .traffic-light-count { font-size: 1.5em; }
@@ -30,7 +31,7 @@
   }
 
   #traffic-lights {
-    width: 950px;
+    width: 1000px;
     overflow-x: scroll;
     overflow-y: auto;
     .row      td { padding: 0px; }
