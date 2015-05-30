@@ -23,7 +23,31 @@ class TdGapper
         end
       end
     end
-    s[:avatars]
+    strip(s[:avatars])
+  end
+
+  def strip(gapped)
+    return gapped if gapped == {}
+    animal = gapped.keys[0]
+    gapped[animal].keys.sort.reverse.each do |td|
+      if gapped.all?{|_,h| h[td] == []}
+        gapped.each {|_,h| h.delete(td)}
+      elsif gapped.all?{|_,h| h[td].class == Hash}
+        gapped.each {|_,h| h.delete(td)}
+      else
+        break
+      end
+    end
+    gapped[animal].keys.sort.each do |td|
+      if gapped.all?{|_,h| h[td] == []}
+        gapped.each {|_,h| h.delete(td)}
+      elsif gapped.all?{|_,h| h[td].class == Hash}
+        gapped.each {|_,h| h.delete(td)}
+      else
+        break
+      end
+    end    
+    gapped
   end
 
   def stats(all_lights, now)

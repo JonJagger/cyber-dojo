@@ -13,7 +13,7 @@ class TdGapperTests < AppLibTestBase
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "number" do
+  test 'number' do
     # 0 : 2:30:00 - 2:30:20
     # 1 : 2:30:20 - 2:30:40
     # 2 : 2:30:40 - 2:31:00
@@ -29,7 +29,7 @@ class TdGapperTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "stats" do
+  test 'stats' do
     # 0 : 2:30:00 - 2:30:20
     # 1 : 2:30:20 - 2:30:40
     # 2 : 2:30:40 - 2:31:00
@@ -67,7 +67,7 @@ class TdGapperTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "vertical bleed" do
+  test 'vertical bleed' do
     all_lights =
     {
       'hippo' => [ t1=make_light(30,21), # 1
@@ -94,7 +94,7 @@ class TdGapperTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "collapsed table" do
+  test 'collapsed table' do
     # 30 mins = 30 x 3 x 20 secs = 90 tds
     td_nos = [0,1,4,5]
     expected =
@@ -119,7 +119,31 @@ class TdGapperTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "fully gapped no traffic_lights yet" do
+  test 'strip removes lightless tds from both ends' do
+    t1=make_light(30,21) # 1
+    t2=make_light(31,33) # 4
+    t3=make_light(30,25) # 1
+    t4=make_light(31,37) # 4
+    t5=make_light(31,39) # 4
+    t6=make_light(31,42) # 5    
+    unstripped =
+    {
+      'hippo' => { 0 => [ ], 1 => [ t1 ], 2 => [ ], 3 => [ ], 4 => [ t2    ], 5 => [    ], 6 => { :collapsed => 4321 }, 4327 => [ ] },
+      'lion'  => { 0 => [ ], 1 => [ t3 ], 2 => [ ], 3 => [ ], 4 => [ t4,t5 ], 5 => [    ], 6 => { :collapsed => 4321 }, 4327 => [ ] },
+      'panda' => { 0 => [ ], 1 => [    ], 2 => [ ], 3 => [ ], 4 => [       ], 5 => [ t6 ], 6 => { :collapsed => 4321 }, 4327 => [ ] }
+    }
+    stripped =
+    {
+      'hippo' => { 1 => [ t1 ], 2 => [ ], 3 => [ ], 4 => [ t2    ], 5 => [    ] },
+      'lion'  => { 1 => [ t3 ], 2 => [ ], 3 => [ ], 4 => [ t4,t5 ], 5 => [    ] },
+      'panda' => { 1 => [    ], 2 => [ ], 3 => [ ], 4 => [       ], 5 => [ t6 ] }
+    }
+    assert_equal stripped, gapper.strip(unstripped)
+  end
+    
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'fully gapped no traffic_lights yet' do
     all_lights = { }
     now = [year,month,day+1,hour,32,23] #td 4327
     actual = gapper.fully_gapped(all_lights, now)
@@ -129,7 +153,7 @@ class TdGapperTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "fully gapped" do
+  test 'fully gapped' do
     all_lights =
     {
       'hippo' => [ t1=make_light(30,21), # 1
@@ -144,9 +168,9 @@ class TdGapperTests < AppLibTestBase
     }
     expected =
     {
-      'hippo' => { 0 => [ ], 1 => [ t1 ], 2 => [ ], 3 => [ ], 4 => [ t2    ], 5 => [    ], 6 => { :collapsed => 4321 }, 4327 => [ ] },
-      'lion'  => { 0 => [ ], 1 => [ t3 ], 2 => [ ], 3 => [ ], 4 => [ t4,t5 ], 5 => [    ], 6 => { :collapsed => 4321 }, 4327 => [ ] },
-      'panda' => { 0 => [ ], 1 => [    ], 2 => [ ], 3 => [ ], 4 => [       ], 5 => [ t6 ], 6 => { :collapsed => 4321 }, 4327 => [ ] }
+      'hippo' => { 1 => [ t1 ], 2 => [ ], 3 => [ ], 4 => [ t2    ], 5 => [    ] },
+      'lion'  => { 1 => [ t3 ], 2 => [ ], 3 => [ ], 4 => [ t4,t5 ], 5 => [    ] },
+      'panda' => { 1 => [    ], 2 => [ ], 3 => [ ], 4 => [       ], 5 => [ t6 ] }
     }
     now = [year,month,day+1,hour,32,23] #td 4327
     actual = gapper.fully_gapped(all_lights, now)
