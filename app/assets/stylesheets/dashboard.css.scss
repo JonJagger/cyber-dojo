@@ -3,14 +3,12 @@
 
   margin: 25px;
 
-  #auto-refresh-container, #minute-columns-container, #age-container, #team-bulb-counts-container {
+  #auto-refresh-container, #minute-columns-container, #age-container {
     @include edged-panel();
     @include right-align(15px);
     margin-bottom: 5px;
     display: block;
   }
-
-  #team-bulb-counts-container .traffic-light-count { font-size: 1.5em; }
 
   #progress-button-container, #download-button-container {
     @include right-align(15px);
