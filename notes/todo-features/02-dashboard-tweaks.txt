@@ -22,27 +22,17 @@ hovering over gives popup tip
     + 4 greens [greens in green]
     = 8 (deer is currently red)  [8 in red]
   or
-     drop word traffic-lights. Use word |tests|tested|
+     drop word traffic-lights. 
   also drop leading bullets
-    |deer has tested 11 times|   [11] in red?
+    |deer                    |   [11] in red?
     |  2 red tests           |   [red] in red
-    |  5 amber tests         |   [amber] in amber
-    |  4 green tests         |   [green] in green
-    |currently at red        |   [red] in red
-  maybe
-    |deer has tested 11 times|   [11] not in red
-    |and is currently red    |   [red] in red
-    |  2 red tests           |   [red] in red
-    |  5 amber tests         |   [amber] in amber
-    |  4 green tests         |   [green] in green
-  could also add time since last test of that colour
-  so
-    |deer has tested 11 times     |   [11] in red
-    |deer is currently red        |   [red] in red
-    |  2 tests red (~3 mins ago)  |   [red] in red
-    |  5 tests amber              |   [amber] in amber
-    |  4 tests green (~4 mins ago)|   [green] in green
-  
+    |+ 5 amber tests         |   [amber] in amber
+    |+ 4 green tests         |   [green] in green
+    |=11 (currently red)     |   [red] in red
+    |click to review         |
+
+  is there any way I could show time an animal 
+  has been stuck on amber?
   
   
   
@@ -58,11 +48,21 @@ traffic-light tool-tip
    |  1 added line   |   [added] in light green
    |  2 deleted lines|   [deleted] in light red
    |click to review  |
- change to
-   |raccoon 7 <-> 8  |   [7] in green [8] in red
-   |  1 line added   |   [added] in light green
-   |  2 lines deleted|   [deleted] in light red
-   |click to review  |
+
+Also, somehow show time since previous traffic-light
+viz time from 7 -> 8
+perhaps
+   |raccoon 
+   |7 <-(time_delta)-> 8  |   [7] in green [8] in red
+   |  1 added line       |   [added] in light green
+   |  2 deleted lines    |   [deleted] in light red
+   |click to review      |
+eg
+   |raccoon 
+   |7 <-(34 seconds)-> 8 |   [7] in green [8] in red
+   |  1 added line       |   [added] in light green
+   |  2 deleted lines    |   [deleted] in light red
+   |click to review      |
    
   
   
@@ -118,8 +118,8 @@ switch to
                           | - oldest test: date-time  |                                  
                           | = ~3 hours                |
     00:00:30 
-                          |latest test ~30 seconds old|
-                          | (32 days -> closes)       |
+                          |latest test ~30 seconds ago|
+                          |32 days -> closes          |
     
 -------------------------------------------------------------------------------------------
 
@@ -127,10 +127,6 @@ When a cyberdojo has been marked as finished....
 How does the display change?
 I think there is some scope for not showing ... elided-time-column from last traffic-light
 to time-it-finished.
-
-I think I've seen a sequence of columns which are mix of
-... elided and plain empty but no actual traffic-lights.
-Surely such a sequence should collapse into a single ...
 
 
 
