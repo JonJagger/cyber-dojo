@@ -28,9 +28,9 @@
     width: 1000px;
     overflow-x: scroll;
     overflow-y: auto;
-    td.col      { padding: 0px; border-bottom: dotted lighten(black,40%) 1px; }
-    td.col.odd  { background: lighten($darker-color,3%); }
-    td.col.even { background: lighten($darker-color,6%); }
+    td.column      { padding: 0px; border-bottom: dotted lighten(black,40%) 1px; }
+    td.column.odd  { background: lighten($darker-color,3%); }
+    td.column.even { background: lighten($darker-color,6%); }
     .collapsed-multi-gap {
       display: inline-block;
       font-size: 0.1em;
