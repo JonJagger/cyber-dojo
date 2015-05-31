@@ -3,33 +3,14 @@
 avatar total lights
 ===================
 hovering over gives popup tip
-  if number of timed_out lights is zero don't show timed_out
-  from
-  deer has 11 traffic lights
-     2 reds
-     2 ambers
-     4 greens
-     0 timeouts
-  becomes
-  deer has 11 traffic lights
-     2 reds
-     2 ambers
-     4 greens
-       currently at green
-  or
-      2 reds [reds in red]
-    + 2 ambers [ambers in amber]
-    + 4 greens [greens in green]
-    = 8 (deer is currently red)  [8 in red]
-  or
-     drop word traffic-lights. 
-  also drop leading bullets
-    |deer                    |   [11] in red?
-    |  2 red tests           |   [red] in red
-    |+ 5 amber tests         |   [amber] in amber
-    |+ 4 green tests         |   [green] in green
-    |=11 (currently red)     |   [red] in red
-    |click to review         |
+
+  don't show zeros. The text is a summary of the pie-chart
+  and zeros don't show in the pie chart. 
+
+    |deer is currently red |   [red] in red
+    |  6 = 2 + 4           |   [2] in red, [4] in green
+    |click to review       |
+
 
   is there any way I could show time an animal 
   has been stuck on amber?
@@ -43,21 +24,8 @@ traffic-light tool-tip
    |Click to review raccoon's 7 <-> 8 diff|
    |   1 added line                       |
    |   2 deleted lines                    |
- change to
-   |raccoon 7 <-> 8  |   [7] in green [8] in red
-   |  1 added line   |   [added] in light green
-   |  2 deleted lines|   [deleted] in light red
-   |click to review  |
 
-Also, somehow show time since previous traffic-light
-viz time from 7 -> 8
-perhaps
-   |raccoon 
-   |7 <-(time_delta)-> 8  |   [7] in green [8] in red
-   |  1 added line       |   [added] in light green
-   |  2 deleted lines    |   [deleted] in light red
-   |click to review      |
-eg
+ change to 
    |raccoon 
    |7 <-(34 seconds)-> 8 |   [7] in green [8] in red
    |  1 added line       |   [added] in light green
