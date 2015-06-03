@@ -23,7 +23,7 @@ class PieChartTests < AppHelpersTestBase
       }
       ])
 
-    size = 30
+    size = 27
     expected = "" +
       "<canvas" +
       " class='pie'" +
@@ -52,7 +52,7 @@ class PieChartTests < AppHelpersTestBase
       green_light,
       timed_out_light,
     ]
-    size = 30
+    size = 27
     expected = "" +
       "<canvas" +
       " class='pie'" +

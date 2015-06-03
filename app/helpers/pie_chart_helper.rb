@@ -10,7 +10,7 @@ module PieChartHelper
         :amber => count(lights, :amber),
         :green => count(lights, :green),
         :timed_out => count(lights, :timed_out)
-     }, 30, key)
+     }, 27, key)
   end
 
   def pie_chart_from_counts(counts, size, key)

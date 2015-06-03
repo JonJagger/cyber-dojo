@@ -76,16 +76,11 @@ a:link, a:visited
   }
 }
 
-.avatar-image img { width: 25px; height: 25px; }
+.avatar-image img { width: 20px; height: 20px; }
 
 .traffic-light-count {
-  font-size: 23px;
-  padding: { left: 3px; bottom: 3px; }
-  text-align: center;
+  font-size: 18px;
+  padding: { left: 4px; bottom: 0px; }
 }
-
-.bulb-count { font-size: 1em; padding-left: 0.3em; }
-
-.pie { margin-right: 3px; }
 
 .avatar_name, #id { @include font-size-tiny(); text-align: right; }
