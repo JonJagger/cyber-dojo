@@ -26,17 +26,20 @@
     width: 1000px;
     overflow-x: scroll;
     overflow-y: auto;
-    td.column      { padding: 0px; border-bottom: dotted lighten(black,40%) 1px; }
-    td.column.odd  { background: lighten($darker-color,3%); }
-    td.column.even { background: lighten($darker-color,6%); }
+    .column      { 
+      padding: 0px; 
+      border-bottom: dotted lighten(black,40%) 1px; 
+      &.odd  { background: lighten($darker-color,3%); }
+      &.even { background: lighten($darker-color,6%); }
+    }
     .collapsed-multi-gap {
       display: inline-block;
       font-size: 0.1em;
       color: lighten(black,60%);
-      &:after { content: '...'; }
       margin-left: 1px;
       margin-right: 1px;
       margin-bottom: 10px;
+      &:after { content: '...'; }
     }
     .gap {
       font-size: 0.7em;
