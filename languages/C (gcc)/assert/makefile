@@ -9,7 +9,7 @@ C_FILES = $(wildcard *.c)
 
 .PHONY: test.output
 test.output: test makefile
-	./$<
+	@./$<
 
 test: makefile $(C_FILES) $(COMPILED_H_FILES)
 	@gcc $(CFLAGS) $(C_FILES) -o $@
