@@ -78,6 +78,11 @@ private
       # replaced
       'R-stopifnot' => 'R-RUnit',
       
+      # rename to distinguish from [C (clang)]
+      'C-assert'   => 'C (gcc)-assert',
+      'C-Unity'    => 'C (gcc)-Unity',
+      'C-CppUTest' => 'C (gcc)-CppUTest',
+      
       # rename to distinguish from [C++ (clang++)]
       'C++-assert'     => 'C++ (g++)-assert',
       'C++-Boost.Test' => 'C++ (g++)-Boost.Test',

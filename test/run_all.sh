@@ -9,6 +9,8 @@ modules=(
   # app_controllers 
 )
 
+./../admin_scripts/make_disk_cache.rb
+
 echo
 for module in ${modules[@]}
 do

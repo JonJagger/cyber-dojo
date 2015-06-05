@@ -52,7 +52,7 @@ class LanguagesTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - -
   
   test 'languages[X] is language named X' do
-    ['C-assert','C#-NUnit'].each do |name|
+    ['C (gcc)-assert','C#-NUnit'].each do |name|
       assert_equal name, languages[name].name
     end
   end

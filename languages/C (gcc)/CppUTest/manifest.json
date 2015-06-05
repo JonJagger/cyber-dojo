@@ -14,7 +14,7 @@
     ],
     "filename_extension" : ".c",
     "unit_test_framework":  "cpputest",
-    "display_name": "C, CppUTest",
+    "display_name": "C (gcc), CppUTest",
     "progress_regexs" : [ "Errors \(.* ms\)", "OK \(.* ms\)" ],
     "image_name": "cyberdojo/gcc-4.8.1_cpputest"
 }
