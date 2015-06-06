@@ -27,6 +27,7 @@ class Tag
   end
 
   def light?
+    # Very early dojos used outcome
     hash.include?('colour') || hash.include?('outcome')
   end
   

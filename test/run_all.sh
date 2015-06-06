@@ -1,4 +1,10 @@
 
+./../admin_scripts/make_disk_cache.rb
+
+.  ./../admin_scripts/setup_env_vars.sh
+
+# - - - - - - - - - - - - - - - - - - - - - - - -
+
 modules=( 
   app_helpers 
   app_lib 
@@ -8,8 +14,6 @@ modules=(
   # integration 
   # app_controllers 
 )
-
-./../admin_scripts/make_disk_cache.rb
 
 echo
 for module in ${modules[@]}

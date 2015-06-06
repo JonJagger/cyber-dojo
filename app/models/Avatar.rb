@@ -179,7 +179,8 @@ end
 #    o) creating a new file
 #    o) renaming a file
 #    o) deleting a file
-#    o) editing a file (and opening a different file)
+#    o) opening a different file
+#    o) editing a file 
 #
 # If this happens the difference between tags and lights
 # will be more pronounced.
