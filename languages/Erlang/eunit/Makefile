@@ -7,7 +7,7 @@ TESTS=tests
 all : clean $(OBJECTS) test
 
 clean :
-	@rm *.beam
+	@rm -f *.beam
 
 %.beam : %.erl $(HEADERS)
 	@erlc $<
