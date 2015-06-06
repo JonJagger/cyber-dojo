@@ -1,4 +1,9 @@
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+renaming a file in Erlang does not work.
+The reason is that the old .erl file is still in the sandbox
+and so gets converted to a .beam file which is still run as
+a test. The rename needs to happen properly in the sandbox.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EDIT PAGE
