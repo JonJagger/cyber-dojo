@@ -18,7 +18,6 @@ class KataController < ApplicationController
     @avatar = avatar
     incoming = params[:file_hashes_incoming]
     outgoing = params[:file_hashes_outgoing]
-    
     delta = FileDeltaMaker.make_delta(incoming, outgoing)
     visible_files = received_files
     now = time_now
