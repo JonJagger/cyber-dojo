@@ -1,8 +1,6 @@
 
 install clang (C,C++,Objective-C)  
   sudo apt-get install clang-3.6
-install Visual.BASIC? Chris Oldwood?
-  sudo apt-get install -y mono-vbnc
 install RPG for Chris Oldwood.
 install C++14 + boost
 install TypeScript?
@@ -48,7 +46,6 @@ OCaml          ocaml          ocaml QR.ml > QR.octave
 Pascal         fp-compiler    fpc QR.pas && ./QR > QR.pl
 Scheme         gauche         gosh QR.scm > QR.sci
 Smalltalk      gnu-smalltalk  gst QR.st > QR.spl
-Visual Basic   mono-vbnc      vbnc QR.vb && mono ./QR.exe > QR.ws
 Ada            gnat           gnatmake qr.adb && ./qr > QR.als
 Algol68        algol68g       a68g QR.a68 > QR.ante
 
