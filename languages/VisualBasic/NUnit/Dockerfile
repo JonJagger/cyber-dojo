@@ -1,7 +1,7 @@
 FROM       cyberdojo/visual_basic-0.5943
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-RUN apt-get install -y monodevelop-nunit
+#RUN apt-get install -y monodevelop-nunit
 RUN apt-get install -y nunit-console
 
 # After much searching I came across this
