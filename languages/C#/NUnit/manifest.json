@@ -5,9 +5,6 @@
     "Hiker.cs",
     "cyber-dojo.sh"
   ],
-  "support_filenames": [
-    "nunit.framework.dll"
-  ],
   "filename_extension" : ".cs",
   "display_name": "C#, NUnit",
   "unit_test_framework": "nunit",
