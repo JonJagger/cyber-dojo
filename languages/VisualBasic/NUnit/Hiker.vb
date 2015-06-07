@@ -1,8 +1,10 @@
 
-public class Hiker
-{
-    public static int Answer
-    {
-        get { return 6 * 9; }
-    }
-}
+Public Class Hiker
+
+    Public Shared Readonly Property Answer() As Integer
+        Get
+            Return 6 * 7
+        End Get
+    End Property
+
+End Class

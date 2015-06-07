@@ -1,13 +1,13 @@
 
-using NUnit.Framework;
+Imports NUnit.Framework
 
-[TestFixture]
-public class HikerTest
-{
-    [Test]
-    public void life_the_universe_and_everything()
-    {
-        // a simple example to start you off
-        Assert.AreEqual(42, Hiker.Answer);
-    }
-}
+<TestFixture()> _
+Public Class HikerTest
+
+    <Test()>
+    Public Sub life_the_universe_and_everything()
+        Rem a simple example to start you off
+        Assert.AreEqual(42, Hiker.Answer)
+    End Sub
+
+End Class
