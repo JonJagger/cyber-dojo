@@ -24,7 +24,6 @@ re-appear in the next test run!
 Languages that use support_filenames (and hence rely on sym-linking)
 are
 "Bash, shunit2"
-"C#, NUnit"
 "C#, SpecFlow"
 "Clojure, .test"
 "F#, NUnit"
