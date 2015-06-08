@@ -1,4 +1,4 @@
-CFLAGS += -I. -Wall -Wextra -Werror
+CFLAGS += -I. -Wall -Wextra -Werror -Wmissing-noreturn
 CFLAGS += -fsanitize=undefined -fno-sanitize-recover=undefined
 CFLAGS += -fsanitize=address -fno-omit-frame-pointer
 
