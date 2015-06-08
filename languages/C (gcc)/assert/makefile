@@ -1,6 +1,6 @@
-CFLAGS += -I. -std=c99 -Wall -Wextra -Werror \
-	-Wstrict-prototypes -Wmissing-prototypes \
-	-Wshadow -Wfloat-equal -O
+CFLAGS += -I. -Wall -Wextra -Werror -std=c11 
+CFLAGS +=	-Wstrict-prototypes -Wmissing-prototypes
+CFLAGS +=	-Wshadow -Wfloat-equal -O
 
 H_FILES = $(wildcard *.h)
 COMPILED_H_FILES = $(patsubst %.h,%.compiled_h,$(H_FILES))

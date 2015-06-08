@@ -1,4 +1,6 @@
-CFLAGS += -I. -Wall -Wextra -Werror -Wmissing-noreturn
+CFLAGS += -I. -Wall -Wextra -x c -std=c11
+CFLAGS += -Wmissing-noreturn -Wunreachable-code
+CFLAGS += -Wmissing-prototypes -Wstrict-prototypes
 CFLAGS += -fsanitize=undefined -fno-sanitize-recover=undefined
 CFLAGS += -fsanitize=address -fno-omit-frame-pointer
 
