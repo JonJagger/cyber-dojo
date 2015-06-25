@@ -17,6 +17,7 @@ class SetupController < ApplicationController
     exercise = exercises[exercise_name]
     kata = katas.create_kata(language, exercise)
     hash = {
+      :now => time_now,      
       :kata_id => kata.id,
       :exercise_name => exercise_name,
       :language_name => language_name,
@@ -31,6 +32,7 @@ class SetupController < ApplicationController
 private
 
   include SetupWorker
+  include TimeNow  
 
   def language_name
     params['language']

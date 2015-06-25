@@ -14,6 +14,7 @@ class OneSelf
     data = {
       'objectTags' => [ 'cyber-dojo' ],
       'actionTags' => [ 'create' ],
+      'dateTime' => server_time(hash[:now]),      
       'location' => { 
         'lat'  => hash[:latitude], 
         'long' => hash[:longtitude] 
@@ -54,7 +55,7 @@ class OneSelf
     data = {
       'objectTags' => [ 'cyber-dojo' ],
       'actionTags' => [ 'test-run' ],
-      'dateTime' => Time.mktime(*hash[:now]).utc.iso8601.to_s,
+      'dateTime' => server_time(hash[:now]),
       'properties' => {
         'dojo-id' => avatar.kata.id,
         'avatar' => avatar.name,
@@ -79,6 +80,14 @@ class OneSelf
   end
   
 private
+  
+  def server_time(now)
+    s = Time.mktime(*now).utc.iso8601.to_s
+    # eg 2015-06-25T09:11:15Z
+    # the offset to local time is now known (yet)
+    # this is represented by removing the Z and adding -00:00
+    s[0..-2] + "-00:00"
+  end
   
   def http_response(url_host, req)
     @requester.request(url_host, req)

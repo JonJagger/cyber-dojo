@@ -54,6 +54,8 @@ class OneSelfTests < LibTestBase
     # creating a new kata calls dojo.one_self.created
   end
 
+  include TimeNow
+  
   # - - - - - - - - - - - - - - - - - 
   
   test 'http requester' do
@@ -73,6 +75,7 @@ class OneSelfTests < LibTestBase
     exercise_name = kata.exercise.name
     language_name,test_name = kata.language.display_name.split(',').map{|s| s.strip }      
     hash = {
+      :now => time_now,
       :kata_id => kata.id,
       :exercise_name => exercise_name,
       :language_name => language_name,
