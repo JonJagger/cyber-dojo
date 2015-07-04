@@ -45,7 +45,7 @@ module DashboardWorker # mixin
     non_amber = avatar.lights.reverse.find{ |light|
       [:red,:green].include?(light.colour)
     }    
-    output = (non_amber != nil) ? non_amber.tag.output : ''
+    output = (non_amber != nil) ? non_amber.output : ''
     matches = regexs.map{|regex| Regexp.new(regex).match(output)}
     return {
       text: matches.join,
