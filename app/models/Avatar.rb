@@ -152,16 +152,15 @@ end
 # tags vs lights
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # When a new avatar enters a dojo, kata.start_avatar()
-# will do a 'git commit' + 'git tag' for tag 0 (Zero).
+# will do a 'git commit' + 'git tag' for tag 0 (zero).
 # This initial tag is *not* recorded in the
 # increments.json file which starts as [ ]
 # It probably should be but isn't for existing dojos
-# and so for backwards compatibility it stays that way
-# and tags() inserts the zeroth tag.
+# and so for backwards compatibility it stays that way.
 #
 # All subsequent 'git commit' + 'git tag' commands
-# correspond to a gui action and store an entry in
-# the increments.json file.
+# correspond to a gui action and store an entry in the
+# increments.json file.
 # eg
 # [
 #   {
@@ -201,7 +200,7 @@ end
 # which is a diff between
 #   avatar.tags[0] and avatar.tags[1]
 #
-#------------------------------------------
+# ------------------------------------------------------
 
 
 
