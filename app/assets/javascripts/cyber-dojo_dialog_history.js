@@ -14,13 +14,13 @@ var cyberDojo = (function(cd, $) {
   // An alternative would be to do a post for the animal
   // and then get the server to push a notification to the
   // animal or get the animl to poll an update from the server.
-  // The test post does not know the tag number of the test
-  // so this might be doable.
-
+  // But I currently don't have any server -> browser
+  // interaction and I'm not sure I want any.
+  
   cd.td = function(html) {
 	  return '<td>' + html + '</td>';
   };
-
+                                            // eg
   cd.dialog_history = function(id,          // 'D936E1EB3F'
                                avatarName,  // 'lion'
                                wasTagParam, // 8   (1-based)
@@ -372,6 +372,7 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
     var buildDiffFilenameHandlers = function(diffs) {
+
       // Builds the diff filename click handlers for a given
       // [ kata-id, animal-name, was-tag, now-tag] tuple.
       //
