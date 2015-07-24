@@ -4,7 +4,11 @@
 # cyber-dojo server with a specific IP address to the calling
 # server (which is assumed to also be a cyber-dojo server)
 #
-# xfer.rb cyber-dojo.org 572F35
+# eg to transfer the cyber-dojo with id 
+# 572F35 on cisco.cyber-dojo.org to cyber-dojo.org
+#
+# ssh root@cyber-dojo.org
+# xfer.rb cisco.cyber-dojo.org 572F35
 #
 
 ip_address = ARGV[0]
@@ -23,5 +27,5 @@ ids.each do |id|
 end
 
 
-#if wget is not installed you can use curl instead
-#curl http://#{ip_address}/downloader/download/#{id} -o #{id}.tar.gz"
+# if wget is not installed you can use curl instead
+# curl http://#{ip_address}/downloader/download/#{id} -o #{id}.tar.gz"
