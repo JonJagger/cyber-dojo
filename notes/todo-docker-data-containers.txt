@@ -220,20 +220,6 @@ and setting environment variables appropriately?
 Katas.each hard codes the fact that the cyber-dojo ID is split into
 two folders. 10->2/8
 
-So I need to reverse those dependencies...
-
-katas.complete(id)
-  dir.complete_kata(id)
-    # I hope [docker ls] can have filter, or this will be slow
-
-katas.each
-  dir.each_kata |id|
-    yield self[id]
-  end
-  # will I have to get all the data container names in one command?
-  # ideally I could get them one at a time and yield as I go.
-end
-
 I think I can create new classes for 
 DockerDataContainerDisk DockerDataContainerDir
 (rename existing Disk,Dir to HostDisk,HostDir)
@@ -259,14 +245,55 @@ a meta ENV var which determines which of the two sets are used.
 
 However, when DockerDataContainerDisk,DockerDataContainerDir
 will still need to use host access when reading from
-/languages and exercises/
+languages/ and exercises/
+I can fix that by simple making Languages.rb and Exercises.rb
+have their own HostDisk object and no ExternalParentChain
+
 
 Also, unless all the existing cyber-dojos (eg 03454345ED) 
 on the host disk are ported to docker data-containers, then
 then katas.complete(id) will need to look in both locations
 to determine which set of classes to us.
+Perhaps set the seam classes used by looking at ID in params?
 
+Really need to move to linux development laptop.
+Or maybe not. Perhaps having VirtualBox makes it easier to
+simulate multiple docker nodes in a swarm.
 
+Should I drop support for Host-Running.
+Would remove need for ENV variables for DISK,GIT,RUNNER
+
+---------------------------------------------------
+
+ACTION ITEM: Give Languages.rb its own Disk object
+             and remove ExternalParentChain
+
+ACTION ITEM: Give Exercises.rb its own Disk object
+             and remove ExternalParentChain
+
+ACTION ITEM: Reverse these two dependencies and put implementations
+             into Disk,Dir
+
+katas.complete(id)
+  dir.complete_kata(id)
+    # I hope [docker ls] can have filter, or this will be slow
+
+katas.each
+  dir.each_kata |id|
+    yield self[id]
+  end
+  # will I have to get all the data container names in one command?
+  # ideally I could get them one at a time and yield as I go.
+  # Or maybe chunked, eg filter with 2 hex chars to split into 256.
+end
+
+ACTION ITEM: Rename Disk to HostDisk
+             Rename Dir to HostDir
+             Rename Git to HostGit
+             Refactor ENV variables in config/application.rb
+             Refactor ENV variables in admin_scripts/*
+  
+ACTION ITEM: Upgrade VirtualBox.
 
 
 
