@@ -1,0 +1,273 @@
+
+Should probabl restore all the controller tests before
+starting this work.
+
+Each cyber-dojo will have its own dedicated data container
+whose name is the ID of the cyber-dojo.
+Eg  1A03C65461
+
+This is the simplest option in terms of an upgrade path
+from what currently exists.
+Does this option mean that a lion (say) could (in cyber-dojo.sh)
+write bash commands to navigate to another animals folder 
+(eg panda) and cause mischief. Need to avoid that. Can't
+currently do that.
+
+Basic idea is that all commands that all the git commands 
+and file system interactions will be refactored to be
+commands run inside this data container.
+What language will the docker commands use?
+Eg suppose a [test] event bundles all the relevant state
+(names of added/changed/deleted files, added/changed files)
+into a json file and interpolates that directly on the
+command line. Should I use a ruby script (inside the
+docker container) to get the json and perform all the
+necessary commands?
+
+At the moment any support files (eg Java jar files)
+are linked to the originals in the /languages folder. 
+Refactor this.
+Simplest is to give each avatar its own physical copy
+of the support file. Another possibility is to store
+a physical copy in the base folder of the cyber-dojo
+and each avatar links to this file.
+Investigate what happens when you zip a folder structure
+containing linked files. Does the unzip retain the
+linking?
+
+Using docker data containers means that the basic file system
+will be abstracted. So I don't think I'll be able to
+run a cyber-dojo on my macbook pro unless the macbook has
+docker installed. 
+Should I switch to developing on a Linux image inside VirtualBox.
+I think so.
+
+
+What are the actual interactions with file system and git?
+
+1. Listing the available languages/test frameworks.
+2. Creating a cyber-dojo with an allocated ID
+3. Participant enters valid ID and enter button is enabled
+4. Entering an avatar
+5. Test event from an avatar
+This would be minimum viable
+6. Display dashboard
+7. Display history-diff
+This would be minimum lovable
+8. Fork from a specific traffic-light
+9. Revert an avatar back to a specific traffic-light
+10. Download zip of whole dojo.
+This would be parity with existing system
+
+
+---------------------------------------------------
+1. Listing the available languages/test frameworks.
+---------------------------------------------------
+This does not actually impact docker data containers.
+Unless perhaps languages/ and exercises/ are dedicated
+data-containers themselves. See below.
+This would be looked at in the next step using docker swarm.
+
+
+---------------------------------------------------
+2. Creating a cyber-dojo with an allocated ID
+---------------------------------------------------
+The rails server receives an incoming request with the
+chosen language,tests,exercise selection.
+SetupController uses domain model languages/exercises
+object to create object for language and object for exercise.
+    this does not cause external interaction
+    --> language = languages[language_name + '-' + test_name]
+    --> exercise = exercises[exercise_name]     
+    --> katas.create_kata(language, exercise) # is called.
+This creates the cyber-dojo's manifest by reading info from 
+languages/ and exercises/ folders.
+    kata.dir.write('manifest.json', manifest)  #is called.
+      FileUtils.mkdir_p(File.dirname(pathed_filename)) # creates sub folders
+      File.open(pathed_filename, 'w') { |file|   
+        file.write(JSON.unparse(object))               # writes json file
+      }
+---> ideally these three lines would be refactored into a 
+single call in the model. 
+ 
+
+
+---------------------------------------------------
+3. Participant enters valid ID and enter button is enabled
+---------------------------------------------------
+DojoController
+  def check
+    render json: { exists: dojo_exists }
+  end
+  dojo_exists
+---> katas.exists?(id)
+       valid?(id) && self[id].exists?
+         dir.exists?  # in Kata.rb
+           return File.directory?(path) if filename.nil?
+           return File.exists?(path + filename)
+      
+  dir comes from ExternalParentChain.rb
+    def dir
+      disk[path]
+    end
+    def Disk.[](name)
+      Dir.new(self, name)
+    end
+---> single line call in the model
+Note that katas works in the DojoController because
+ApplicationController has several helpers. But these
+are all based on Dojo.rb which is part of the model.
+  def dojo; @dojo ||= Dojo.new; end
+Quick look at Dojo.rb
+Yes. External access is all via ENV variables.
+ApplicationController.rb
+  def katas; dojo.katas; end  
+  def disk; dojo.disk; end
+  def kata; katas[id]; end
+  def id; @id ||= katas.complete(params[:id]); end
+So katas.complete(...) could be a problem.
+
+
+
+---------------------------------------------------
+4. Entering an avatar
+---------------------------------------------------
+DojoController 
+  kata.start_avatar    # called
+This accesses sub folders of the dojo to see which animals
+have started. Picks one at random. Optimization here
+could be that shuffle is done when dojo is created and is
+stored in the dojos manifest. 
+
+avatar.start  # called
+    dir.make
+      FileUtils.mkdir_p(path)
+    git_setup
+      git.init(path, '--quiet')
+        `#{git_cmd}`       
+      git.config(path, 'user.name ' + user_name)
+        `#{git_cmd}`       
+      git.config(path, 'user.email ' + user_email)    
+        `#{git_cmd}`       
+    write_manifest(kata.visible_files)
+      write(manifest_filename, files)
+        dir.write(filename,content)    
+    git.add(path,manifest_filename)
+      `#{git_cmd}`                  
+    write_increments([ ])
+      write(increments_filename, increments)    
+        dir.write(filename,content)    
+    git.add(path,increments_filename)  
+      `#{git_cmd}`              
+    sandbox.start
+      avatar.visible_files.each { |filename,content| 
+        git_add(filename,content) 
+          write(filename,content)
+            dir.write(filename, content)          
+          git.add(path,filename)
+            `#{git_cmd}`                          
+      }
+      language.support_filenames.each { |filename|
+        disk.symlink(language.path + filename, path + filename)
+          File.symlink(old_name, new_name)        
+      }    
+    git_commit(0)    
+      git.commit(path, "-a -m '#{tag}' --quiet")
+        `#{git_cmd}`              
+      git.gc(path, '--auto --quiet')
+        `#{git_cmd}`              
+      git.tag(path, "-m '#{tag}' #{tag} HEAD")
+        `#{git_cmd}`              
+    
+---------------------------------------------------
+---------------------------------------------------
+---------------------------------------------------
+    
+Ok. Thought in my mind is that the simplest migration path
+(if it works out) is to make the data-containers be based 
+on a container that has Ruby and the cyber-dojo domain model 
+classes in it. 
+When commands are issued to these data containers I will
+also need to bind in data containers for 
+languages/ and exercises/
+Best would obviously be if this happened dynamically and
+did not cause a full copy.
+And the Rails domain model needs to be dynamically linked
+in too and not a full copy. 
+The container has to access the domain model ruby files
+as a data-container. There needs to be one container for the 
+Ruby installation (to process on).
+Make two separate data containers 
+one for languages/ and one for exercises/ ?
+
+Try this initially using a language that does not use sym-linking.
+
+This could allow rapid progress but there is a further
+consideration. What about the admin_scipts that allow
+you to write ruby to iterate through all the cyber-dojos?
+How can I keep that ability?
+
+And I am not entirely clear how it would actually work.
+Perhaps I can create a shim-adapter and the controller
+calls into that. Create two shim-adapters. One native
+(as current) and one that makes calls to create 
+docker data-containers.
+
+Two functions exemplify the dependency on needing to know 
+all the cyber-dojo IDs
+
+katas.complete()  for ID completion
+def katas.each
+  disk[path].each_dir do |outer_dir|
+    disk[path + outer_dir].each_dir do |inner_dir|
+      yield self[outer_dir + inner_dir]
+    end
+  end
+end
+
+dir.each_dir()
+dir.each_file()
+
+But this is looking promising.
+Dir comes from Disk.
+And Disk is set as an external object.
+Would is simply be a matter of creating a new Disk/Dir pair
+for interacting with the docker data-containers (one per cyber-dojo)
+and setting an environment variable?
+The only wart is that Katas.each hard codes the fact that
+the cyber-dojo ID is split into two folders. 10->2/8
+
+So I need to reverse those dependencies...
+
+katas.complete(id)
+  dir.complete_kata(id)
+
+katas.each
+  dir.each_kata |id|
+    yield self[id]
+  end
+end
+
+Ok. So I think with this approach I don't need to "tunnel" ruby 
+inside the linked data container.
+I think I can create new classes for 
+DockerDataContainerDisk DockerDataContainerDir
+(rename existing Disk,Dir to HostDisk,HostDir)
+(rename existing Git to HostGit)
+(rename existing DockerRunner to DockerHostDiskRunner)
+new class DockerDataContainerDiskRunner
+and set environment variable for DISK,GIT,RUNNER
+
+This will cause all interactions to reach different implementations.
+
+I think there are some classes that use Bash commands.
+Do I need to seam those?
+o) lib/Uuidgen.rb   Nope.
+o) lib/DockerRunner.rb  Nope.
+o) lib/TimeNow.rb  Nope. That will be ok too. Always on the server :-)
+
+
+
+
+
+
