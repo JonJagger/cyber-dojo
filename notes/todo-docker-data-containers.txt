@@ -77,18 +77,21 @@ chosen language,tests,exercise selection.
 SetupController uses domain model languages/exercises
 object to create object for language and object for exercise.
     this does not cause external interaction
-    --> language = languages[language_name + '-' + test_name]
-    --> exercise = exercises[exercise_name]     
-    --> katas.create_kata(language, exercise) # is called.
+      language = languages[language_name + '-' + test_name]
+      exercise = exercises[exercise_name]     
+      katas.create_kata(language, exercise) # is called.
 This creates the cyber-dojo's manifest by reading info from 
 languages/ and exercises/ folders.
     kata.dir.write('manifest.json', manifest)  #is called.
+    Dir.rb
       FileUtils.mkdir_p(File.dirname(pathed_filename)) # creates sub folders
       File.open(pathed_filename, 'w') { |file|   
-        file.write(JSON.unparse(object))               # writes json file
+         file.write(JSON.unparse(object))               # writes json file
       }
----> ideally these three lines would be refactored into a 
-single call in the model. 
+Interesting how this reveals the assumption that the disk already
+exists. For a docker data-container it will not already exist.
+Simplest solution is to add setup(id) method on Disk class and make 
+it do nothing for host-disk.
  
 
 
@@ -100,9 +103,10 @@ DojoController
     render json: { exists: dojo_exists }
   end
   dojo_exists
----> katas.exists?(id)
+    katas.exists?(id)
        valid?(id) && self[id].exists?
          dir.exists?  # in Kata.rb
+         Dir.rb
            return File.directory?(path) if filename.nil?
            return File.exists?(path + filename)
       
@@ -113,7 +117,7 @@ DojoController
     def Disk.[](name)
       Dir.new(self, name)
     end
----> single line call in the model
+
 Note that katas works in the DojoController because
 ApplicationController has several helpers. But these
 are all based on Dojo.rb which is part of the model.
@@ -125,7 +129,6 @@ ApplicationController.rb
   def disk; dojo.disk; end
   def kata; katas[id]; end
   def id; @id ||= katas.complete(params[:id]); end
-So katas.complete(...) could be a problem.
 
 
 
@@ -183,20 +186,6 @@ avatar.start  # called
 ---------------------------------------------------
 ---------------------------------------------------
     
-Ok. Thought in my mind is that the simplest migration path
-(if it works out) is to make the data-containers be based 
-on a container that has Ruby and the cyber-dojo domain model 
-classes in it. 
-When commands are issued to these data containers I will
-also need to bind in data containers for 
-languages/ and exercises/
-Best would obviously be if this happened dynamically and
-did not cause a full copy.
-And the Rails domain model needs to be dynamically linked
-in too and not a full copy. 
-The container has to access the domain model ruby files
-as a data-container. There needs to be one container for the 
-Ruby installation (to process on).
 Make two separate data containers 
 one for languages/ and one for exercises/ ?
 
@@ -206,12 +195,6 @@ This could allow rapid progress but there is a further
 consideration. What about the admin_scipts that allow
 you to write ruby to iterate through all the cyber-dojos?
 How can I keep that ability?
-
-And I am not entirely clear how it would actually work.
-Perhaps I can create a shim-adapter and the controller
-calls into that. Create two shim-adapters. One native
-(as current) and one that makes calls to create 
-docker data-containers.
 
 Two functions exemplify the dependency on needing to know 
 all the cyber-dojo IDs
@@ -231,25 +214,26 @@ dir.each_file()
 But this is looking promising.
 Dir comes from Disk.
 And Disk is set as an external object.
-Would is simply be a matter of creating a new Disk/Dir pair
+Should simply be a matter of creating a new Disk/Dir pair
 for interacting with the docker data-containers (one per cyber-dojo)
-and setting an environment variable?
-The only wart is that Katas.each hard codes the fact that
-the cyber-dojo ID is split into two folders. 10->2/8
+and setting environment variables appropriately?
+Katas.each hard codes the fact that the cyber-dojo ID is split into
+two folders. 10->2/8
 
 So I need to reverse those dependencies...
 
 katas.complete(id)
   dir.complete_kata(id)
+    # I hope [docker ls] can have filter, or this will be slow
 
 katas.each
   dir.each_kata |id|
     yield self[id]
   end
+  # will I have to get all the data container names in one command?
+  # ideally I could get them one at a time and yield as I go.
 end
 
-Ok. So I think with this approach I don't need to "tunnel" ruby 
-inside the linked data container.
 I think I can create new classes for 
 DockerDataContainerDisk DockerDataContainerDir
 (rename existing Disk,Dir to HostDisk,HostDir)
@@ -265,6 +249,23 @@ Do I need to seam those?
 o) lib/Uuidgen.rb   Nope.
 o) lib/DockerRunner.rb  Nope.
 o) lib/TimeNow.rb  Nope. That will be ok too. Always on the server :-)
+
+
+So three externals are
+RUNNER,DISK,GIT
+When I have two sets of these I can simply create
+a meta ENV var which determines which of the two sets are used.
+
+
+However, when DockerDataContainerDisk,DockerDataContainerDir
+will still need to use host access when reading from
+/languages and exercises/
+
+Also, unless all the existing cyber-dojos (eg 03454345ED) 
+on the host disk are ported to docker data-containers, then
+then katas.complete(id) will need to look in both locations
+to determine which set of classes to us.
+
 
 
 
