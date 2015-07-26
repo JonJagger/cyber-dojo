@@ -348,7 +348,7 @@ class HostDiskTests < LibTestBase
     assert_equal [id], dir.each_kata_id.entries
   end
 
-  test 'each_kata_id yields the katas ids when there are many' do
+  test 'each_kata_id yields the katas ids when there are many katas' do
     ids = [ ]
     10.times do 
       id = unique_id
