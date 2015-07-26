@@ -57,7 +57,17 @@ class HostDir
     clean(IO.read(path + filename))
   end
 
-  def complete(id)
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  def each_kata_id
+    @disk[path].each_dir do |outer_dir|
+      @disk[path + outer_dir].each_dir do |inner_dir|
+        yield outer_dir + inner_dir
+      end
+    end    
+  end
+
+  def complete_kata_id(id)
     if !id.nil? && id.length >= 4
       id.upcase!
       inner_dir = @disk[path + id[0..1]]
@@ -71,13 +81,7 @@ class HostDir
     id || ''
   end
 
-  def each_kata_id
-    @disk[path].each_dir do |outer_dir|
-      @disk[path + outer_dir].each_dir do |inner_dir|
-        yield outer_dir + inner_dir
-      end
-    end    
-  end
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def lock(&block)
     # io locking uses blocking call.
