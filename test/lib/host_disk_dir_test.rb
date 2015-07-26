@@ -317,7 +317,7 @@ class HostDiskTests < LibTestBase
   
   test 'complete(id) does complete when 4+ chars and 1 match' do
     id = unique_id
-    disk[path + split(id)].make
+    make_dir_with_split_id(id)
     assert_equal id, disk[path].complete_kata_id(id[0..3])
   end
   
@@ -332,6 +332,30 @@ class HostDiskTests < LibTestBase
     disk[match_1].make   # .../temp/45/6E94442D
     disk[match_2].make   # .../temp/45/6E7433ED
     assert_equal id[0..3], disk[path].complete_kata_id(id[0..3])
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # each kata id 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test 'each_kata_id yields nothing when there are no katas' do
+    assert_equal [], dir.each_kata_id.entries
+  end
+
+  test 'each_kata_id yields the kata id when there is one kata' do
+    id = unique_id
+    make_dir_with_split_id(id)    
+    assert_equal [id], dir.each_kata_id.entries
+  end
+
+  test 'each_kata_id yields the katas ids when there are many' do
+    ids = [ ]
+    10.times do 
+      id = unique_id
+      ids << id 
+      make_dir_with_split_id(id)          
+    end      
+    assert_equal ids.sort, dir.each_kata_id.entries.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -350,6 +374,10 @@ class HostDiskTests < LibTestBase
 
   def split(id)
     id[0..1] + '/' + id[2..-1]
+  end
+
+  def make_dir_with_split_id(id)
+    disk[path + split(id)].make
   end
   
 end
