@@ -1,5 +1,5 @@
 
-class Disk
+class HostDisk
 
   def dir_separator
     File::SEPARATOR
@@ -10,7 +10,7 @@ class Disk
   end
 
   def [](name)
-    Dir.new(self, name)
+    HostDir.new(self, name)
   end
 
   def symlink(old_name, new_name)

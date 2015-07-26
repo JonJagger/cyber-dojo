@@ -13,8 +13,8 @@ ENV['CYBER_DOJO_LANGUAGES_ROOT'] ||= "#{cyberdojo_root}/languages/"
 ENV['CYBER_DOJO_KATAS_ROOT']     ||= "#{cyberdojo_root}/katas/"
 
 ENV['CYBER_DOJO_RUNNER_CLASS_NAME'] ||= 'DockerRunner'
-ENV['CYBER_DOJO_DISK_CLASS_NAME']   ||= 'Disk'
-ENV['CYBER_DOJO_GIT_CLASS_NAME']    ||= 'Git'
+ENV['CYBER_DOJO_DISK_CLASS_NAME']   ||= 'HostDisk'
+ENV['CYBER_DOJO_GIT_CLASS_NAME']    ||= 'HostGit'
 
 def dojo
   Dojo.new

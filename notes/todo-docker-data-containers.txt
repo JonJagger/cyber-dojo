@@ -82,11 +82,11 @@ object to create object for language and object for exercise.
       katas.create_kata(language, exercise) # is called.
 This creates the cyber-dojo's manifest by reading info from 
 languages/ and exercises/ folders.
-    kata.dir.write('manifest.json', manifest)  #is called.
+    kata.dir.write('manifest.json', manifest)  # is called.
     Dir.rb
       FileUtils.mkdir_p(File.dirname(pathed_filename)) # creates sub folders
       File.open(pathed_filename, 'w') { |file|   
-         file.write(JSON.unparse(object))               # writes json file
+         file.write(JSON.unparse(object))              # writes json file
       }
 Interesting how this reveals the assumption that the disk already
 exists. For a docker data-container it will not already exist.
@@ -287,13 +287,7 @@ katas.each
   # Or maybe chunked, eg filter with 2 hex chars to split into 256.
 end
 
-ACTION ITEM: Rename Disk to HostDisk
-             Rename Dir to HostDir
-             Rename Git to HostGit
-             Refactor ENV variables in config/application.rb
-             Refactor ENV variables in admin_scripts/*
   
-ACTION ITEM: Upgrade VirtualBox.
 
 
 

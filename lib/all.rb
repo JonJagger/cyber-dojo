@@ -9,8 +9,9 @@
   Runner
     DockerRunner
     HostRunner
-  Git
-  Disk  Dir
+  HostDisk  
+  HostDir
+  HostGit
   TimeNow
   UniqueId
   IdSplitter

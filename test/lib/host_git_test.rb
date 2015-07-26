@@ -2,13 +2,13 @@
 
 require_relative 'lib_test_base'
 
-class GitTests < LibTestBase
+class HostGitTests < LibTestBase
 
   include ExternalParentChain
   
   class StubDojo
     def git(*args)
-      @git ||= Git.new
+      @git ||= HostGit.new
     end
   end
   
@@ -30,7 +30,7 @@ class GitTests < LibTestBase
   test '[git] with no arguments returns ' +
        'externally the set :git object ' +
        'which can be Stub object' do
-    assert_equal 'Git', git.class.name
+    assert_equal 'HostGit', git.class.name
   end
 
   test 'all git commands raise exception if path names a dir that does not exist' do
