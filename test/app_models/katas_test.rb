@@ -51,55 +51,6 @@ class KatasTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  test 'complete(id=nil) is ""' do
-    assert_equal "", katas.complete(nil)
-  end
-
-  #- - - - - - - - - - - - - - - -
-
-  test 'complete(id="") is ""' do
-    assert_equal '', katas.complete('')
-  end
-
-  #- - - - - - - - - - - - - - - -
-
-  test 'complete(id): unchanged when no candidates' do
-    assert_equal '23', katas.complete('23')
-  end
-
-  #- - - - - - - - - - - - - - - -
-
-  test 'complete(id): id unchanged when id is less than 4 chars in length ' +
-       'because trying to complete from a short id will waste time going through ' +
-       'lots of candidates with the likely outcome of no unique result' do
-    id = make_kata.id[0..2]
-    assert_equal 3, id.length
-    assert_equal id, katas.complete(id)
-  end
-
-  #- - - - - - - - - - - - - - - -
-
-  test 'complete(id): id unchanged when 4 chars long' do
-    id = make_kata.id
-    assert_equal id, katas.complete(id[0..3])
-  end
-
-  #- - - - - - - - - - - - - - - -
-
-  test 'complete(id): id unchanged when 2+ matches' do
-    prefix = unique_id[0..-2]
-    assert_equal 10-1, prefix.length
-    id1 = prefix + 'B'
-    kata1 = make_kata(id1)
-    assert_equal id1, kata1.id
-    id2 = prefix + 'C'
-    kata2 = make_kata(id2)
-    assert_equal id2, kata2.id
-    assert_equal prefix, katas.complete(prefix)
-  end
-
-  #- - - - - - - - - - - - - - - -
-
   test 'valid?(id) and exists?(id) is false when id not a string' do
     not_string = Object.new
     assert !katas.valid?(not_string)
