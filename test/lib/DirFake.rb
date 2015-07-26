@@ -23,6 +23,15 @@ class DirFake
     end
   end
 
+  def each_kata_id
+    return enum_for(:each_kata_id) unless block_given?
+    @disk[path].each_dir do |outer_dir|
+      @disk[path + outer_dir].each_dir do |inner_dir|
+        yield outer_dir + inner_dir
+      end
+    end    
+  end
+
   def make
     @repo ||= { }
   end
