@@ -282,17 +282,17 @@ class HostDiskTests < LibTestBase
   
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # id completion
+  # kata id completion
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test 'complete(id=nil) is ""' do
-    assert_equal "", dir.complete(nil)
+    assert_equal "", dir.complete_kata_id(nil)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'complete(id="") is ""' do
-    assert_equal '', dir.complete('')
+    assert_equal '', dir.complete_kata_id('')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -302,7 +302,7 @@ class HostDiskTests < LibTestBase
        'lots of candidates with the likely outcome of no unique result' do
     id = unique_id[0..2]
     assert_equal 3, id.length
-    assert_equal id, dir.complete(id)
+    assert_equal id, dir.complete_kata_id(id)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -310,7 +310,7 @@ class HostDiskTests < LibTestBase
   test 'complete(id): id unchanged when 4+ chars long and no matches' do
     id = unique_id[0..3]
     assert_equal 4, id.length
-    assert_equal id, dir.complete(id)
+    assert_equal id, dir.complete_kata_id(id)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -318,7 +318,7 @@ class HostDiskTests < LibTestBase
   test 'complete(id) does complete when 4+ chars and 1 match' do
     id = unique_id
     disk[path + split(id)].make
-    assert_equal id, disk[path].complete(id[0..3])
+    assert_equal id, disk[path].complete_kata_id(id[0..3])
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -331,7 +331,7 @@ class HostDiskTests < LibTestBase
     assert_not_equal match_1,match_2
     disk[match_1].make   # .../temp/45/6E94442D
     disk[match_2].make   # .../temp/45/6E7433ED
-    assert_equal id[0..3], disk[path].complete(id[0..3])
+    assert_equal id[0..3], disk[path].complete_kata_id(id[0..3])
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
