@@ -324,12 +324,13 @@ class HostDiskTests < LibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'complete(id): id unchanged when 4+ chars long and 2+ matches' do
-    id = unique_id                              # 012345ABCDE
-    match_1 = path + split(id[0..3]) + unique_id[4..-1]
-    match_2 = path + split(id[0..3]) + unique_id[4..-1]
+    id = unique_id     
+    common = path + split(id[0..3])                        
+    match_1 = common + unique_id[4..-1]
+    match_2 = common + unique_id[4..-1]
     assert_not_equal match_1,match_2
-    disk[path + match_1].make
-    disk[path + match_2].make
+    disk[match_1].make   # .../temp/45/6E94442D
+    disk[match_2].make   # .../temp/45/6E7433ED
     assert_equal id[0..3], disk[path].complete(id[0..3])
   end
 
