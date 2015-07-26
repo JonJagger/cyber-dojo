@@ -2,7 +2,7 @@
 
 require_relative 'lib_test_base'
 
-class DiskTests < LibTestBase
+class HostDiskTests < LibTestBase
 
   def setup
     super
@@ -11,7 +11,7 @@ class DiskTests < LibTestBase
   end
 
   def disk
-    @disk ||= Disk.new
+    @disk ||= HostDisk.new
   end
   
   def path

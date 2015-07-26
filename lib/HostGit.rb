@@ -1,5 +1,5 @@
 
-class Git
+class HostGit
 
   def method_missing(cmd,*args)
     path,options = args[0],args[1]

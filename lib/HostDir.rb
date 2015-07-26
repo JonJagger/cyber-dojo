@@ -1,6 +1,6 @@
 require 'fileutils'
 
-class Dir
+class HostDir
 
   def initialize(disk,path)
     @disk,@path = disk,path
