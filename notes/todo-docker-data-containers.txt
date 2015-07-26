@@ -1,10 +1,7 @@
 
-Should probabl restore all the controller tests before
-starting this work.
-
-Each cyber-dojo will have its own dedicated data container
-whose name is the ID of the cyber-dojo.
-Eg  1A03C65461
+Basic idea is that each cyber-dojo will have its own 
+dedicated data container whose name is the ID of the 
+cyber-dojo. Eg  1A03C65461
 
 This is the simplest option in terms of an upgrade path
 from what currently exists.
@@ -17,31 +14,7 @@ Basic idea is that all commands that all the git commands
 and file system interactions will be refactored to be
 commands run inside this data container.
 What language will the docker commands use?
-Eg suppose a [test] event bundles all the relevant state
-(names of added/changed/deleted files, added/changed files)
-into a json file and interpolates that directly on the
-command line. Should I use a ruby script (inside the
-docker container) to get the json and perform all the
-necessary commands?
-
-At the moment any support files (eg Java jar files)
-are linked to the originals in the /languages folder. 
-Refactor this.
-Simplest is to give each avatar its own physical copy
-of the support file. Another possibility is to store
-a physical copy in the base folder of the cyber-dojo
-and each avatar links to this file.
-Investigate what happens when you zip a folder structure
-containing linked files. Does the unzip retain the
-linking?
-
-Using docker data containers means that the basic file system
-will be abstracted. So I don't think I'll be able to
-run a cyber-dojo on my macbook pro unless the macbook has
-docker installed. 
-Should I switch to developing on a Linux image inside VirtualBox.
-I think so.
-
+Bash commands would be simplest.
 
 What are the actual interactions with file system and git?
 
@@ -191,39 +164,16 @@ one for languages/ and one for exercises/ ?
 
 Try this initially using a language that does not use sym-linking.
 
-This could allow rapid progress but there is a further
-consideration. What about the admin_scipts that allow
-you to write ruby to iterate through all the cyber-dojos?
-How can I keep that ability?
+Ensure the admin_scipts that allow
+you to write ruby to iterate through all the cyber-dojos
+from both strorage mediums (disk and docker-data-container)
 
-Two functions exemplify the dependency on needing to know 
-all the cyber-dojo IDs
-
-katas.complete()  for ID completion
-def katas.each
-  disk[path].each_dir do |outer_dir|
-    disk[path + outer_dir].each_dir do |inner_dir|
-      yield self[outer_dir + inner_dir]
-    end
-  end
-end
-
-dir.each_dir()
-dir.each_file()
-
-But this is looking promising.
-Dir comes from Disk.
-And Disk is set as an external object.
-Should simply be a matter of creating a new Disk/Dir pair
+Should 'simply' be a matter of creating a new Disk/Dir pair
 for interacting with the docker data-containers (one per cyber-dojo)
 and setting environment variables appropriately?
-Katas.each hard codes the fact that the cyber-dojo ID is split into
-two folders. 10->2/8
 
 I think I can create new classes for 
 DockerDataContainerDisk DockerDataContainerDir
-(rename existing Disk,Dir to HostDisk,HostDir)
-(rename existing Git to HostGit)
 (rename existing DockerRunner to DockerHostDiskRunner)
 new class DockerDataContainerDiskRunner
 and set environment variable for DISK,GIT,RUNNER
@@ -240,7 +190,8 @@ o) lib/TimeNow.rb  Nope. That will be ok too. Always on the server :-)
 So three externals are
 RUNNER,DISK,GIT
 When I have two sets of these I can simply create
-a meta ENV var which determines which of the two sets are used.
+a meta ENV var which determines which holder object is
+created and this hard-wires the externals.
 
 
 However, when DockerDataContainerDisk,DockerDataContainerDir
@@ -252,9 +203,10 @@ have their own HostDisk object and no ExternalParentChain
 
 Also, unless all the existing cyber-dojos (eg 03454345ED) 
 on the host disk are ported to docker data-containers, then
-then katas.complete(id) will need to look in both locations
-to determine which set of classes to us.
-Perhaps set the seam classes used by looking at ID in params?
+then SomeDir.complete_kata_id(id) will need to look in *both* 
+locations to determine which set of classes to use. Proxy.
+
+Perhaps set the external/seam classes used by looking params[id]
 
 Really need to move to linux development laptop.
 Or maybe not. Perhaps having VirtualBox makes it easier to
@@ -263,13 +215,33 @@ simulate multiple docker nodes in a swarm.
 Should I drop support for Host-Running.
 Would remove need for ENV variables for DISK,GIT,RUNNER
 
+
 ---------------------------------------------------
+
+ACTION ITEM: Restore all the controller tests.
 
 ACTION ITEM: Give Languages.rb its own Disk object
              and remove ExternalParentChain
 
 ACTION ITEM: Give Exercises.rb its own Disk object
              and remove ExternalParentChain
+
+ACTION ITEM: Move to single external holder which
+             hard wires the externals. Make
+             languages/ and exercises/  Dir object
+             come from this holder too.
+            
+ACTION ITEM: Investigate what happens when you download a folder structure
+             containing sym-linked support file(s). 
+             Does the zip get a copy of the linked support file(s)?
+             
+ACTION ITEM: Refactor sym-linking so each kata has its own
+             physical copy of the support file.
+             Each avatars sandbox then links to that.
+             
+ACTION ITEM: Once sym-linking refactor above is done check
+             that you can fork from katas using the old sym-link origin
+             and the new sym-link origin.
 
 
 
