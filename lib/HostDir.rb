@@ -71,6 +71,14 @@ class HostDir
     id || ''
   end
 
+  def each_kata_id
+    @disk[path].each_dir do |outer_dir|
+      @disk[path + outer_dir].each_dir do |inner_dir|
+        yield outer_dir + inner_dir
+      end
+    end    
+  end
+
   def lock(&block)
     # io locking uses blocking call.
     # For example, when a player starts-coding then

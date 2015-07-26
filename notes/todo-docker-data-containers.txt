@@ -271,21 +271,7 @@ ACTION ITEM: Give Languages.rb its own Disk object
 ACTION ITEM: Give Exercises.rb its own Disk object
              and remove ExternalParentChain
 
-ACTION ITEM: Reverse these two dependencies and put implementations
-             into Disk,Dir
 
-katas.complete(id)
-  dir.complete_kata(id)
-    # I hope [docker ls] can have filter, or this will be slow
-
-katas.each
-  dir.each_kata |id|
-    yield self[id]
-  end
-  # will I have to get all the data container names in one command?
-  # ideally I could get them one at a time and yield as I go.
-  # Or maybe chunked, eg filter with 2 hex chars to split into 256.
-end
 
   
 
