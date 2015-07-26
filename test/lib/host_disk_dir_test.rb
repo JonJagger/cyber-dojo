@@ -219,7 +219,7 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'Dir.each_dir' do
+  test 'dir.each_dir' do
     cwd = `pwd`.strip + '/../'
     dirs = disk[cwd].each_dir.entries
     %w( app_helpers app_lib ).each { |dir_name|
@@ -280,6 +280,59 @@ class HostDiskTests < LibTestBase
     assert_equal ['c.txt','d.txt'], matches.sort
   end
   
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # id completion
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test 'complete(id=nil) is ""' do
+    assert_equal "", dir.complete(nil)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'complete(id="") is ""' do
+    assert_equal '', dir.complete('')
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'complete(id): id unchanged when id is less than 4 chars in length ' +
+       'because trying to complete from a short id will waste time going through ' +
+       'lots of candidates with the likely outcome of no unique result' do
+    id = unique_id[0..2]
+    assert_equal 3, id.length
+    assert_equal id, dir.complete(id)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'complete(id): id unchanged when 4+ chars long and no matches' do
+    id = unique_id[0..3]
+    assert_equal 4, id.length
+    assert_equal id, dir.complete(id)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test 'complete(id) does complete when 4+ chars and 1 match' do
+    id = unique_id
+    disk[path + split(id)].make
+    assert_equal id, disk[path].complete(id[0..3])
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'complete(id): id unchanged when 4+ chars long and 2+ matches' do
+    id = unique_id                              # 012345ABCDE
+    match_1 = path + split(id[0..3]) + unique_id[4..-1]
+    match_2 = path + split(id[0..3]) + unique_id[4..-1]
+    assert_not_equal match_1,match_2
+    disk[path + match_1].make
+    disk[path + match_2].make
+    assert_equal id[0..3], disk[path].complete(id[0..3])
+  end
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def check_save_file(filename, content, expected_content, executable = false)
@@ -292,4 +345,10 @@ class HostDiskTests < LibTestBase
                             'File.executable?(pathed_filename)'
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def split(id)
+    id[0..1] + '/' + id[2..-1]
+  end
+  
 end
