@@ -282,7 +282,7 @@ class HostDiskTests < LibTestBase
   
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # kata id completion
+  # complete_kata_id
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test 'complete(id=nil) is ""' do
