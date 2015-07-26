@@ -1,7 +1,18 @@
 FROM phusion/passenger-ruby22
 MAINTAINER Mike Long <mike@praqma.com>
 
-
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Commands to build and run cyber-dojo server (tested from OSX using boot2docker)
+#     $ docker build -t 'mike/cyberdojo:latest' .
+#     $ docker run --rm -P -p 80:80 -p 443:443 -it 'mike/cyberdojo:latest' bash -l
+#
+# From the bash prompt
+#     $ service apache2 start
+#
+# From terminal determine the IP address to put into the browser
+#     $ boot2docker ip
+#
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RUN echo gem: --no-rdoc --no-ri > ~/.gemrc
 RUN apt-get update
@@ -9,12 +20,10 @@ RUN apt-get update
 RUN apt-get install -y apache2 curl git build-essential zlibc zlib1g-dev zlib1g libcurl4-openssl-dev libssl-dev apache2-prefork-dev libapr1-dev libaprutil1-dev libreadline6 libreadline6-dev
 RUN apt-get install -y build-essential libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion
 
-#RUN apt-get install ruby
 
 RUN gem update --system
 RUN gem install rails --version 4.0.3
 RUN gem install passenger --version 4.0.53 --pre
-
 
 
 RUN echo #cyber-dojo >> /etc/apache2/apache2.conf
@@ -44,22 +53,25 @@ RUN echo PassengerDefaultUser www-data >> /etc/apache2/mods-available/passenger.
 RUN echo PassengerDefaultGroup www-data >> /etc/apache2/mods-available/passenger.conf
 
 
-
 RUN cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/cyber-dojo.conf
 RUN sed 's/www.html/www\/cyber-dojo\/public/' < /etc/apache2/sites-available/000-default.conf > /etc/apache2/sites-available/cyber-dojo.conf
 RUN cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/cyber-dojo-ssl.conf
 RUN sed 's/www.html/www\/cyber-dojo\/public/' < /etc/apache2/sites-available/default-ssl.conf > /etc/apache2/sites-available/cyber-dojo-ssl.conf
 
-ADD . /var/www/cyber-dojo
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Install cyber-dojo
+
+RUN mkdir -p /var/www/
+WORKDIR /var/www
+RUN git clone https://JonJagger@github.com/JonJagger/cyber-dojo
 
 RUN mkdir -p /var/www/cyber-dojo
 RUN chmod g+s /var/www/cyber-dojo/katas
 RUN rm /var/www/cyber-dojo/Gemfile.lock
 RUN cd /var/www/cyber-dojo && bundle install
-#cd ..
 RUN cd /var/www/ && chown -R www-data cyber-dojo
 RUN cd /var/www/ && chgrp -R www-data cyber-dojo
-#RUN cd /var/www/ && gpasswd -a www-data docker
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RUN sed -i '/Mutex file/d' /etc/apache2/apache2.conf
 RUN passenger-install-apache2-module --auto
@@ -67,4 +79,7 @@ RUN passenger-install-apache2-module --auto
 RUN a2enmod passenger
 RUN a2ensite cyber-dojo
 RUN a2dissite 000-default
-RUN service apache2 restart
+
+# service apache2 start
+
+

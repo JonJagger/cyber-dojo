@@ -244,6 +244,64 @@ ACTION ITEM: Once sym-linking refactor above is done check
              and the new sym-link origin.
 
 
+---------------------------------------------------
+
+# Create a base image with git installed
+$ cat Dockerfile
+FROM debian:jessie
+RUN apt-get update
+RUN apt-get install -y git
+
+$ docker build git-base .
+
+# Create a data-container called cd_ABCDE12345
+$ docker run -v /AB/CDE12345 --name="cd_ABCDE12345" git-base true
+
+# Create a folder in the data container...
+$ docker run --volumes-from=cd_ABCDE12345 git-base sh -c 'mkdir -p /AB/CDE12345/lion/sandbox'
+
+# Git init a repo for an animal
+$ docker run --volumes-from=cd_ABCDE12345 git-base sh -c 'cd /AB/CDE12345/lion && git init'
+
+# Read a filename from the data container...
+$ docker run --volumes-from=cd_ABCDE12345 git-base sh -c 'cat /AB/CDE12345/lion/greet.txt'
+
+# Write a file with given content into the data container
+$ docker run --volumes-from=cd_ABCDE12345 git-base sh -c 'echo "Hello" > /AB/CDE12345/lion/greet.txt'
+
+
+# File exists?
+
+
+
+# Hmmmm should all these be done singly one at a time?
+# I'm guessing that might be quite slow.
+# But it's the simplest way to get started.
+# Could use the host dir to hold the content that is copied from.
+
+# Perhaps an alternative is to save all the files
+# to the local folder, then volume mount that folder
+# with the sole purpose of copying from it into the 
+# data container in a single operation.
+# How to issue the git commands as well? Without issuing a second docker command?
+
+1. create an extra secret .sh file with the correct git commands?
+  and copy all files across to the data volume and run this secret sh file.
+  Or simpler just cat the commands and use && connectors.
+
+3. then need to run docker command that actually runs the cyber-dojo.sh file
+   in the designated language+test image_name
+   
+4. then need to save output file back to the data-container
+5. then need to run git commit command in the data-container
+
+  
+
+
+
+
+
+
 
   
 
