@@ -58,7 +58,11 @@ class SetupControllerTest < ControllerTestBase
     # exercises/ and languages/ folders and the caches used
     # in Exercises.rb and Languages.rb whose caches do *not*
     # use the disk cache but iterate through their respective
-    # folders on disk.    
+    # folders on disk. 
+    #
+    # Note further that different Runners may have a different
+    # opinion on what languages exist (are supported). Should
+    # there be a languages/ cache file per Runner class?
     
     set_runner_class_name('RunnerStub')
     runner.stub_runnable(true)
