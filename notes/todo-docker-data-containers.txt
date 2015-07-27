@@ -220,30 +220,33 @@ Would remove need for ENV variables for DISK,GIT,RUNNER
 
 ACTION ITEM: Restore all the controller tests.
 
-ACTION ITEM: Give Languages.rb its own Disk object
-             and remove ExternalParentChain
-
-ACTION ITEM: Give Exercises.rb its own Disk object
-             and remove ExternalParentChain
+ACTION ITEM: Give Languages.rb and Exercises.rb their own Disk object
+             and remove ExternalParentChains. They can use an adapter
+             since they only need read access.
 
 ACTION ITEM: Move to single external holder which
              hard wires the externals. Make
              languages/ and exercises/  Dir object
-             come from this holder too.
+             come from this holder too (consider testing)
             
 ACTION ITEM: Investigate what happens when you download a folder structure
              containing sym-linked support file(s). 
              Does the zip get a copy of the linked support file(s)?
+             Think about design that allows individual avatar downloads.
              
-ACTION ITEM: Refactor sym-linking so each kata has its own
-             physical copy of the support file.
-             Each avatars sandbox then links to that.
+ACTION ITEM: If necessary refactor sym-linking so each dojo/kata has its own
+             physical copy of the support file. 
              
 ACTION ITEM: Once sym-linking refactor above is done check
              that you can fork from katas using the old sym-link origin
              and the new sym-link origin.
 
+ACTION ITEM: Think about create page. It relies on docker being installed
+             to see which language+test container images are installed
+             locally. How about just showing all of them.
 
+---------------------------------------------------
+Learning about docker data-only containers
 ---------------------------------------------------
 
 # Create a base image with git installed
@@ -254,8 +257,26 @@ RUN apt-get install -y git
 
 $ docker build git-base .
 
-# Create a data-container called cd_ABCDE12345
+# Create two data-container called cd_ABCDE12345 and cd_ABCDE12346
 $ docker run -v /AB/CDE12345 --name="cd_ABCDE12345" git-base true
+$ docker run -v /AB/CDE12346 --name="cd_ABCDE12346" git-base true
+
+# Find info on a data-container; filter allows wildcards
+$ docker ps -a --filter name=cd_ABCDE1234*
+
+Output is
+CONTAINER ID  IMAGE     COMMAND CREATED        STATUS                    PORTS NAMES
+5fb9f77d29e6  git-base  "true"  57 seconds ago Exited (0) 13 seconds ago       cd_ABCDE12346       
+d2b536ca7231  git-base  "true"  11 minutes ago Exited (0) 11 minutes ago       cd_ABCDE12345   
+
+# Only list the ids
+$ docker ps -aq --filter name=cd_ABCDE1234*
+5fb9f77d29e6
+d2b536ca7231
+
+# NOTE: that [docker rm $(docker ps -aq)] cannot be used as a general clean up 
+# command when data-containers are present.
+
 
 # Create a folder in the data container...
 $ docker run --volumes-from=cd_ABCDE12345 git-base sh -c 'mkdir -p /AB/CDE12345/lion/sandbox'
