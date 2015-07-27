@@ -64,6 +64,7 @@ private
   end
 
   def timeout(command,after)
+    # timeout does not exist on OSX :-(
     "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
   end
 
