@@ -4,6 +4,7 @@ require_relative 'controller_test_base'
 
 class SetupControllerTest < ControllerTestBase
 
+
   test 'setup uses cached exercises when present' do    
     set_disk_class_name('HostDisk')
     set_exercises_root(Dir.mktmpdir + '/')
@@ -17,20 +18,33 @@ class SetupControllerTest < ControllerTestBase
     assert /data-exercise\=\"fake-Print-Diamond/.match(html), "fake-Print-Diamond"
     assert /data-exercise\=\"fake-Roman-Numerals/.match(html), "fake-Roman-Numerals"    
   end
-
+  
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'setup uses cached languages when present' do    
+  test 'setup uses languages/cache.json' do    
+    # TODO: switch to 'DiskFake', needs working DirFake.complete_kata_id
     set_disk_class_name('HostDisk')
     set_languages_root(Dir.mktmpdir + '/')    
-    languages.dir.write('cache.json', [ 'C++, catch', 'Java, JMock' ])    
+    
+    cache = {
+      'Asm, assert' => {
+        :dir_name => 'Asm', 
+        :test_dir_name => 'assert'
+      },
+      'C++ (g++), assert' => {
+        :dir_name => 'g++4.8.1', 
+        :test_dir_name => 'assert'        
+      }
+    }
+    
+    languages.dir.write('cache.json', cache)
+    
     get 'setup/show'    
     FileUtils.remove_entry get_languages_root    
     assert_response :success
-    assert /data-language\=\"C++/.match(html), "C++"
-    assert /data-language\=\"Java/.match(html), "Java"
-    assert /data-test\=\"catch/.match(html), "catch"
-    assert /data-test\=\"JMock/.match(html), "JMock"
+    assert /data-language\=\"C++/.match(html), 'C++'
+    assert /data-language\=\"Asm/.match(html), 'Asm'
+    assert !/data-language\=\"Java/.match(html), 'Java'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -48,7 +62,7 @@ class SetupControllerTest < ControllerTestBase
        '(to encourage repetition) by using completion' do
     setup_show(6)    
   end
-
+  
   # - - - - - - - - - - - - - - - - - - - - - -
   
   def setup_show(n)
@@ -79,8 +93,7 @@ class SetupControllerTest < ControllerTestBase
     # cache can then simply delete cache.json file and use the domain model
     # to recreate it.
     
-    set_runner_class_name('RunnerStub')
-    runner.stub_runnable(true)
+    set_runner_class_name('RunnerStubTrue')
     
     languages_names = languages.each.map{|language| language.display_name}.sort
     exercises_names = exercises.each.map{|exercise| exercise.name}.sort    
