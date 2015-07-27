@@ -21,36 +21,61 @@ class LanguagesTests < ModelTestBase
     assert path_ends_in_slash?(languages)
     assert path_has_no_adjacent_separators?(languages)    
   end
+  
+  #- - - - - - - - - - - - - - - - - - - - -
+
+  test 'refresh_cache requires manifest.json for each file to read display_name from' do
+    set_disk_class_name('DiskFake')
+    runey = languages['R-runey']
+    runey.dir.write('manifest.json',
+      {
+        'display_name' => 'R,Rooney'
+      }
+    )
+    languages.refresh_cache
+    languages_names = languages.map {|language| language.name }.sort
+    assert_equal ['R-Rooney'], languages_names
+    assert_equal 'R',        runey.dir_name
+    assert_equal 'runey',    runey.test_dir_name
+    assert_equal 'R,Rooney', runey.display_name
+  end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
   test 'each() empty' do
-    runner.stub_runnable(false)
+    languages.dir.write('cache.json', cache={})
     assert_equal [], languages.each.map {|language| language.name}
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test 'each() not empty' do
-    runner.stub_runnable(true)
-    languages_names = languages.each.map {|language| language.name }
-    ['C#-NUnit','Ruby-Test::Unit'].each do |name|
-      assert languages_names.include? name
-    end        
+  test 'each() not empty (also checks languages.map works directly viz you dont need languages.each.map)' do
+    cache = {
+      'Asm, assert' => {
+        :dir_name => 'Asm', 
+        :test_dir_name => 'assert'
+      },
+      'C++ (g++), assert' => {
+        :dir_name => 'g++4.8.1', 
+        :test_dir_name => 'assert'        
+      }
+    }
+    languages.dir.write('cache.json', cache)
+    languages_names = languages.map {|language| language.name }.sort
+
+    assert_equal ['Asm-assert', 'C++ (g++)-assert'], languages_names
+
+    assert_equal 'Asm, assert', languages['Asm-assert'].display_name
+    assert_equal 'Asm',         languages['Asm-assert'].dir_name
+    assert_equal 'assert',      languages['Asm-assert'].test_dir_name
+    
+    assert_equal 'C++ (g++), assert', languages['C++ (g++)-assert'].display_name
+    assert_equal 'g++4.8.1',          languages['C++ (g++)-assert'].dir_name
+    assert_equal 'assert',            languages['C++ (g++)-assert'].test_dir_name    
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
-  
-  test 'is Enumerable, eg each() not needed if doing a map' do
-    runner.stub_runnable(true)
-    languages_names = languages.map {|language| language.name}
-    ['C#-NUnit','Ruby-Test::Unit'].each do |name|
-      assert languages_names.include? name
-    end        
-  end
-  
-  #- - - - - - - - - - - - - - - - - - - - -
-  
+
   test 'languages[X] is language named X' do
     ['C (gcc)-assert','C#-NUnit'].each do |name|
       assert_equal name, languages[name].name
@@ -65,6 +90,8 @@ class LanguagesTests < ModelTestBase
       assert exists?(*new_name), old_name
     end    
   end
+
+  #- - - - - - - - - - - - - - - - - - - - -
   
   def all_language_manifest_entries
     # these names harvested from cyber-dojo.org using

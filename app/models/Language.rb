@@ -3,12 +3,14 @@
 class Language
   include ExternalParentChain
 
-  def initialize(languages,name,test_name)
-    @parent,@name,@test_name = languages,name,test_name
+  def initialize(languages,dir_name,test_dir_name,display_name=nil)
+    @parent,@dir_name,@test_dir_name,@display_name = languages,dir_name,test_dir_name,display_name
   end
 
+  attr_reader :dir_name, :test_dir_name
+
   def path
-    @parent.path + @name + '/' + @test_name + '/'
+    @parent.path + dir_name + '/' + test_dir_name + '/'
   end
 
   def name    
@@ -16,7 +18,7 @@ class Language
   end
 
   def display_name
-    manifest_property
+    @display_name ||= manifest_property
   end
 
   def exists?
