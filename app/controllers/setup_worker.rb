@@ -12,13 +12,15 @@ module SetupWorker # mixin
   end
 
   def read_exercises
-    exercises_names = exercises.map{ |exercise|
-      exercise.name
-    }.sort
-    instructions = Hash[exercises_names.collect{ |name|
-      [name, exercises[name].instructions]
-    }]
-    [exercises_names,instructions]
+    # avoid doing exercises[name].instructions as that 
+    # currently bypasses the exercises cache
+    exercises_names = []
+    instructions_hash =  {}
+    exercises.each do |exercise|
+      exercises_names << exercise.name
+      instructions_hash[exercise.name] = exercise.instructions
+    end
+    [exercises_names,instructions_hash]    
   end
 
   def cache_filename
