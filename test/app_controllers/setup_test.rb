@@ -5,7 +5,7 @@ require_relative 'controller_test_base'
 class SetupControllerTest < ControllerTestBase
 
   test 'setup uses cached exercises if present' do    
-    set_disk_class_name('Disk')
+    set_disk_class_name('HostDisk')
     set_exercises_root(Dir.mktmpdir + '/')
     exercises.dir.write('cache.json', {
       'fake-Print-Diamond'  => 'fake-Print-Diamond instructions',
@@ -21,7 +21,7 @@ class SetupControllerTest < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'setup uses cached languages if present' do    
-    set_disk_class_name('Disk')
+    set_disk_class_name('HostDisk')
     set_languages_root(Dir.mktmpdir + '/')    
     languages.dir.write('cache.json', [ 'C++, catch', 'Java, JMock' ])    
     get 'setup/show'    
@@ -52,7 +52,7 @@ class SetupControllerTest < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
   
   def setup_show(n)
-    set_runner_class_name('StubTestRunner')
+    set_runner_class_name('RunnerStub')
     runner.stub_runnable(true)
     languages_names = languages.each.map{|language| language.display_name}.sort
     exercises_names = exercises.each.map{|exercise| exercise.name}.sort    
