@@ -44,7 +44,7 @@ class LanguagesTests < ModelTestBase
 
   test 'each() empty' do
     languages.dir.write('cache.json', cache={})
-    assert_equal [], languages.each.map {|language| language.name}
+    assert_equal [], languages.each.entries
   end
 
   #- - - - - - - - - - - - - - - - - - - - -

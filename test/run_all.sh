@@ -1,7 +1,7 @@
 
 ./../admin_scripts/make_disk_cache.rb
 
-.  ./../admin_scripts/setup_env_vars.sh
+.  ./../admin_scripts/setup_host_runner_env_vars.sh
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 

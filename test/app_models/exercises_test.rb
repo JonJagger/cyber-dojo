@@ -26,41 +26,43 @@ class ExercisesTests < ModelTestBase
   
   test 'each() empty' do
     set_disk_class_name('DiskFake')
-    assert_equal [], exercises_names
+    exercises.dir.write('cache.json', cache={})    
+    assert_equal [], exercises.each.entries
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'each() gives all exercises which exist' do
-    sample_exercises_names.each do |name|
-      assert exercises_names.include? name
-    end    
+  test 'refresh_cache' do
+    set_disk_class_name('DiskFake')
+    disk[exercises.path + '100 doors'].write('instructions', 'imagine there are 100 doors...')    
+    exercises.refresh_cache
+    exercises_names = exercises.map {|exercise| exercise.name }.sort
+    assert_equal ['100 doors'], exercises_names
+    assert_equal 'imagine there are 100 doors...', exercises['100 doors'].instructions
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'is Enumerable, eg each() not needed if doing a map' do
-    sample_exercises_names.each do |name|
-      assert exercises_names.include? name
-    end    
-  end
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  test 'each() not empty (also checks exercises.map works directly viz you dont need exercises.each.map)' do
+    cache = {
+      '100 doors' => {
+        :instructions => 'go here'
+      },
+      'Bowling Game' => {
+        :instructions => 'are here' 
+      }
+    }
+    exercises.dir.write('cache.json', cache)
+    exercises_names = exercises.map {|exercise| exercise.name }.sort
 
-  test 'exercises[X] is exercise named X' do
-    sample_exercises_names.each do |name|
-      assert_equal name, exercises[name].name
-    end
+    assert_equal ['100 doors', 'Bowling Game'], exercises_names, 'names'
+    
+    # exercises[name] does not use cache
+    exercises['100 doors'].dir.write('instructions', 'XXX')
+    exercises['Bowling Game'].dir.write('instructions', 'YYY')
+    
+    assert_equal 'XXX',       exercises['100 doors'].instructions, '100 doors'    
+    assert_equal 'YYY', exercises['Bowling Game'].instructions, 'Bowling Game'
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def exercises_names
-    exercises.map {|exercise| exercise.name }
-  end
-
-  def sample_exercises_names
-    %w( Unsplice Verbal Fizz_Buzz )
-  end
-  
+    
 end

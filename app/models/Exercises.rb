@@ -1,5 +1,7 @@
+# See comments at end of file
 
 class Exercises
+
   include ExternalParentChain
   include Enumerable
   
@@ -19,23 +21,45 @@ class Exercises
     make_exercise(name)
   end
 
+  def refresh_cache
+    cache = { }
+    dir.each_dir do |sub_dir|
+      exercise = make_exercise(sub_dir)
+      cache[exercise.name] = {
+        :instructions => exercise.instructions
+      }
+    end
+    dir.write(cache_filename,cache)        
+  end
+  
 private
 
   def exercises
-    @exercises ||= make_cache
+    @exercises ||= read_cache
   end
 
-  def make_cache
+  def read_cache
     cache = [ ]
-    dir.each_dir do |sub_dir|
-      exercise = make_exercise(sub_dir)
-      cache << exercise if exercise.exists?
+    JSON.parse(dir.read(cache_filename)).each do |name,exercise|
+      cache << make_exercise(name,exercise['instructions'])
     end
     cache
   end
 
-  def make_exercise(name)
-    Exercise.new(self,name)
+  def make_exercise(name,instructions=nil)
+    Exercise.new(self,name,instructions)
+  end
+
+  def cache_filename
+    'cache.json'
   end
 
 end
+
+# - - - - - - - - - - - - - - - - - - - - - - - -
+# I'd like to refactor [name] to this
+#    exercises.find {|exercise| exercise.name == name}
+# But I can't because too many tests would break
+# because they use DirFake without an exercises cache.
+# - - - - - - - - - - - - - - - - - - - - - - - -
+ 

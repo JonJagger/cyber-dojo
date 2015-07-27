@@ -4,7 +4,6 @@ require_relative 'controller_test_base'
 
 class SetupControllerTest < ControllerTestBase
 
-
   test 'setup uses cached exercises when present' do    
     set_disk_class_name('HostDisk')
     set_exercises_root(Dir.mktmpdir + '/')
@@ -66,33 +65,6 @@ class SetupControllerTest < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
   
   def setup_show(n)
-    # exercises/cache.json was out of date and this test failed.
-    # Some code uses cache.json and some code does not. 
-    # There is a disconnect between the cache.json files in the
-    # exercises/ and languages/ folders (for dojo setup) and the 
-    # caches used in Exercises.rb and Languages.rb whose caches do *not*
-    # use the disk cache but iterate through their respective
-    # folders on disk. 
-    #
-    # Note further that different Runners may have a different
-    # opinion on what languages exist (are supported). Should
-    # there be a languages/ cache.json file per Runner class?
-    # Or just one cache.json file and the client filters. Yes.
-    #
-    #
-    # languages/cache.json is a cache of language.display_name values.
-    # [ "Asm, assert", "C (gcc), assert", ...]
-    # It is used by app/controllers/setup_worker.rb
-    #
-    # The cache used by Languages.rb is different. It is a cache
-    # of Language objects and needs to know the language/test folder names.
-    # Seems like there is obvious scope for merging these two caches
-    # into one. However some care is needed. The script the *creates*
-    # the cache uses the domain model. So if there is no cache there
-    # needs to be a backup which actually iterates. Script to create
-    # cache can then simply delete cache.json file and use the domain model
-    # to recreate it.
-    
     set_runner_class_name('RunnerStubTrue')
     
     languages_names = languages.each.map{|language| language.display_name}.sort

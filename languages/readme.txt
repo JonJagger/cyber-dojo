@@ -2,7 +2,7 @@
 I structure the docker-containers so that each language
 has its own folder with its own base container, and each
 language/test sub-folder has its own derived
-docker-container. Often a language/test Dockerfile
+docker-container. Sometimes a language/test Dockerfile
 will contain nothing except a FROM command. Viz, I could use
 the language's base docker-container. But I do it anyway for
 regularity.
@@ -21,8 +21,8 @@ They could thus be deleted from cyber-dojo.sh but they would magically
 re-appear in the next test run!
 
 
-Languages that use support_filenames (and hence rely on sym-linking)
-are
+Languages that use support_filenames (and hence rely on sym-linking) are
+
 "Bash, shunit2"
 "C#, SpecFlow"
 "Clojure, .test"

@@ -308,7 +308,7 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'TestRunner.runnable?(language) is false ' +
+  test 'RunnerStub.runnable?(language) is false ' +
        'when language does not have image_name set in manifest' do
     runner.stub_runnable(false)
     ruby = languages['Ruby-TestUnit']

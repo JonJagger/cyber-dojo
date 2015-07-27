@@ -2,8 +2,8 @@
 class Exercise
   include ExternalParentChain
   
-  def initialize(exercises,name)
-    @parent,@name = exercises,name
+  def initialize(exercises,name,instructions=nil)
+    @parent,@name,@instructions = exercises,name,instructions
   end
 
   attr_reader :name
@@ -17,7 +17,7 @@ class Exercise
   end
 
   def instructions
-    dir.read(instructions_filename)
+    @instructions || dir.read(instructions_filename)
   end
 
 private
