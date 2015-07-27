@@ -4,7 +4,7 @@ require_relative 'controller_test_base'
 
 class SetupControllerTest < ControllerTestBase
 
-  test 'setup uses cached exercises if present' do    
+  test 'setup uses cached exercises when present' do    
     set_disk_class_name('HostDisk')
     set_exercises_root(Dir.mktmpdir + '/')
     exercises.dir.write('cache.json', {
@@ -20,7 +20,7 @@ class SetupControllerTest < ControllerTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'setup uses cached languages if present' do    
+  test 'setup uses cached languages when present' do    
     set_disk_class_name('HostDisk')
     set_languages_root(Dir.mktmpdir + '/')    
     languages.dir.write('cache.json', [ 'C++, catch', 'Java, JMock' ])    
@@ -52,8 +52,17 @@ class SetupControllerTest < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
   
   def setup_show(n)
+    # exercises/cache.json was out of date and this test failed.
+    # Some code uses cache.json and some code does not. 
+    # There is a disconnect between the cache.json files in the
+    # exercises/ and languages/ folders and the caches used
+    # in Exercises.rb and Languages.rb whose caches do *not*
+    # use the disk cache but iterate through their respective
+    # folders on disk.    
+    
     set_runner_class_name('RunnerStub')
     runner.stub_runnable(true)
+    
     languages_names = languages.each.map{|language| language.display_name}.sort
     exercises_names = exercises.each.map{|exercise| exercise.name}.sort    
     language_name = languages_names.shuffle[0]
@@ -64,17 +73,13 @@ class SetupControllerTest < ControllerTestBase
     
     assert_response :success
     md = /var selectedExercise = \$\('#exercise_' \+ (\d+)/.match(html)
-    selected_exercise = exercises_names[md[1].to_i]
+    selected_exercise = exercises_names[md[1].to_i]    
     assert_equal exercise_name, selected_exercise, 'exercise'
-    md = /var selectedLanguage = \$\('#language_' \+ (\d+)/.match(html)
     
     # next bit is trickier than it should be because language.display_name 
     # contains the name of the test framework too.
-    
-    just_languages_names = languages_names.each.map {|name| 
-      name.split(',')[0].strip
-    }.uniq.sort    
-        
+    md = /var selectedLanguage = \$\('#language_' \+ (\d+)/.match(html)
+    just_languages_names = languages_names.each.map {|name| name.split(',')[0].strip }.uniq.sort            
     selected_language = just_languages_names[md[1].to_i]
     assert_equal language_name.split(',')[0].strip, selected_language, 'language'
   end
