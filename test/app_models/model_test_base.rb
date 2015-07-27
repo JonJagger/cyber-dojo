@@ -10,8 +10,8 @@ class ModelTestBase < TestBase
   def setup
     super    
     set_runner_class_name   'RunnerStub'
-    set_disk_class_name     'DiskStub' # TODO?: DiskFake would be faster...
-    set_git_class_name      'GitSpy'
+    set_disk_class_name     'DiskStub'      # DiskFake would be faster but lots of tests
+    set_git_class_name      'GitSpy'        # fail because they don't Stub specific files.
     set_one_self_class_name 'OneSelfDummy'
   end
 

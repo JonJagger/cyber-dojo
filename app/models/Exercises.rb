@@ -18,7 +18,7 @@ class Exercises
   end
 
   def [](name)
-    make_exercise(name) # comment below
+    make_exercise(name) # See comment below
   end
 
   def refresh_cache
@@ -57,16 +57,13 @@ private
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
-# I'd like to refactor [name] to...
+# Refactoring [name] to...
 #
 #    exercises.find {|exercise| exercise.name == name}
 #
-# But I can't because too many tests would break
-# because they use DirFake without an exercises cache.
-#
-# Hmmm. But maybe that's because they were using a
-# stale DiskStub image which only gets updated
-# at the start of test/run_all.sh
-# Check another time.
+# would be nice since it would make use of the cache in
+#    exercises[name].instructions
+# but breaks lots of tests because they use DirFake
+# without an exercises cache.
 # - - - - - - - - - - - - - - - - - - - - - - - -
  
