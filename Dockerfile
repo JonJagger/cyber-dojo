@@ -2,14 +2,19 @@ FROM phusion/passenger-ruby22
 MAINTAINER Mike Long <mike@praqma.com>
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# WORK IN PROGRESS
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# Need to determine how a dockerized cyber-dojo server will itself have
+# access to docker to be able to process the [test] events.
+#
 # Commands to build and run cyber-dojo server (tested from OSX using boot2docker)
 #     $ docker build -t 'mike/cyberdojo:latest' .
 #     $ docker run --rm -P -p 80:80 -p 443:443 -it 'mike/cyberdojo:latest' bash -l
 #
-# From the bash prompt
+# In the resulting interactive bash prompt
 #     $ service apache2 start
 #
-# From terminal determine the IP address to put into the browser
+# From plain terminal determine the IP address to put into the browser
 #     $ boot2docker ip
 #
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
