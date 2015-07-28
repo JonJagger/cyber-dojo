@@ -2,17 +2,34 @@
 
 require_relative 'controller_test_base'
 
+# Ensures multiple threads all use the same DiskFake
+class DiskFakeAdapter
+
+  def method_missing(sym, *args, &block)
+    @@disk ||= DiskFake.new
+    @@disk.send(sym, *args, &block)
+  end
+
+  def self.reset
+    @@disk = nil
+  end
+
+end
+
 class SetupControllerTest < ControllerTestBase
 
-  test 'setup uses cached exercises when present' do    
-    set_disk_class_name('HostDisk')
-    set_exercises_root(Dir.mktmpdir + '/')
-    exercises.dir.write('cache.json', {
-      'fake-Print-Diamond'  => 'fake-Print-Diamond instructions',
-      'fake-Roman-Numerals' => 'fake-Roman-Numerals instructions'
-    })    
-    get 'setup/show'    
-    FileUtils.remove_entry get_exercises_root    
+  def teardown
+    super
+    DiskFakeAdapter.reset
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'setup/create page uses cached exercises' do
+    set_disk_class_name('DiskFakeAdapter')
+    setup_exercises_cache
+    setup_languages_cache
+    get 'setup/show'
     assert_response :success
     assert /data-exercise\=\"fake-Print-Diamond/.match(html), "fake-Print-Diamond"
     assert /data-exercise\=\"fake-Roman-Numerals/.match(html), "fake-Roman-Numerals"    
@@ -20,26 +37,11 @@ class SetupControllerTest < ControllerTestBase
   
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'setup uses languages/cache.json' do    
-    # TODO: switch to 'DiskFake', needs working DirFake.complete_kata_id
-    set_disk_class_name('HostDisk')
-    set_languages_root(Dir.mktmpdir + '/')    
-    
-    cache = {
-      'Asm, assert' => {
-        :dir_name => 'Asm', 
-        :test_dir_name => 'assert'
-      },
-      'C++ (g++), assert' => {
-        :dir_name => 'g++4.8.1', 
-        :test_dir_name => 'assert'        
-      }
-    }
-    
-    languages.dir.write('cache.json', cache)
-    
-    get 'setup/show'    
-    FileUtils.remove_entry get_languages_root    
+  test 'setup/create page uses cached languages' do
+    set_disk_class_name('DiskFakeAdapter')
+    setup_exercises_cache
+    setup_languages_cache
+    get 'setup/show'
     assert_response :success
     assert /data-language\=\"C++/.match(html), 'C++'
     assert /data-language\=\"Asm/.match(html), 'Asm'
@@ -65,6 +67,7 @@ class SetupControllerTest < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
   
   def setup_show(n)
+    set_disk_class_name('HostDisk')
     set_runner_class_name('RunnerStubTrue')
     
     languages_names = languages.each.map{|language| language.display_name}.sort
@@ -86,6 +89,31 @@ class SetupControllerTest < ControllerTestBase
     just_languages_names = languages_names.each.map {|name| name.split(',')[0].strip }.uniq.sort            
     selected_language = just_languages_names[md[1].to_i]
     assert_equal language_name.split(',')[0].strip, selected_language, 'language'
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  def setup_languages_cache
+    languages_cache = {
+      'Asm, assert' => {
+        :dir_name => 'Asm',
+        :test_dir_name => 'assert'
+      },
+      'C++ (g++), assert' => {
+        :dir_name => 'g++4.8.1',
+        :test_dir_name => 'assert'
+      }
+    }
+    languages.dir.write('cache.json', languages_cache)
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  def setup_exercises_cache
+    exercises.dir.write('cache.json', {
+      'fake-Print-Diamond'  => 'fake-Print-Diamond instructions',
+      'fake-Roman-Numerals' => 'fake-Roman-Numerals instructions'
+    })
   end
 
 end
