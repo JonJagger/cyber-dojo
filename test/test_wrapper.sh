@@ -1,17 +1,22 @@
 
 # ExecuteAround test-runner which...
+#
 # 1. checks if tests alter the current git user!
 #     we don't want any confusion between the git repo created
 #     in a test (for an animal) and the main git repo of cyber-dojo!
+#
 # 2. collect and processes coverage stats
 # 
 # Programmed for three cases...
+#
 # 1. running a single test (you must in the test's folder)
 #    $ cd /var/www/cyber-dojo/test/lib
 #    $ ./git_test.rb
+#
 # 2. running all the tests in one folder (you must be in that folder)
 #   $ cd /var/www/cyber-dojo/test/lib
 #   $ ./run_all.sh
+#
 # 3. running all the tests in all the folders (you must be in test folder)
 #   $ cd /var/www/cyber-dojo/test
 #   $ ./run_all.sh
@@ -24,11 +29,13 @@ rm -rf ../../coverage/.resultset.json
  
 # Ok. Something odd here. Ruby (on my mac book) is *not* ignoring
 # the first shebang line in test/*.rb files.
-# So I'm stripping the first shebang line using tail. Yeuch!
-# In the diagnostic filename will be wrong and line-number
-# will be off by one. 
+# So I'm creating a temp file by stripping the first shebang line.
+# Yeuch! This makes the line-number in any diagnostic off by one.
+# So I fix that by putting an extra blank line at the top of the temp file.
+# The filename is still wrong.
 
-cat ${*:2} | tail -n +2 > all_tests.tmp
+echo '' > all_tests.tmp
+cat ${*:2} | tail -n +2 >> all_tests.tmp
 ruby all_tests.tmp 2>&1 | tee log.tmp
 
 cp -R ../../coverage/* .
