@@ -6,10 +6,10 @@ def modules
      app_lib
      app_models
      lib
+     app_controllers
   )
      #languages 
      #integration 
-     #app_controllers
 end
 
 #- - - - - - - - - - - - - - - - - - - - -

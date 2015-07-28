@@ -23,7 +23,7 @@ GIT_USER_NAME_BEFORE=`git config user.name`
 rm -rf ../../coverage/.resultset.json
  
 # Ok. Something odd here. Ruby (on my mac book) is *not* ignoring
-# the first shebang line in test/*_test.rb files.
+# the first shebang line in test/*.rb files.
 # So I'm stripping the first shebang line using tail. Yeuch!
 # In the diagnostic filename will be wrong and line-number
 # will be off by one. 

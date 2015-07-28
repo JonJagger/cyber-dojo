@@ -12,8 +12,9 @@ module SetupWorker # mixin
   end
 
   def read_exercises
-    # avoid doing exercises[name].instructions as that 
-    # currently bypasses the exercises cache
+    # I avoid doing
+    #     exercises[name].instructions 
+    # as that currently bypasses the exercises cache
     exercises_names = []
     instructions_hash =  {}
     exercises.each do |exercise|
@@ -21,10 +22,6 @@ module SetupWorker # mixin
       instructions_hash[exercise.name] = exercise.instructions
     end
     [exercises_names,instructions_hash]    
-  end
-
-  def cache_filename
-    'cache.json'
   end
 
 end

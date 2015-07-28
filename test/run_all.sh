@@ -12,7 +12,7 @@ modules=(
   lib 
   # languages
   # integration 
-  # app_controllers 
+  app_controllers 
 )
 
 echo
