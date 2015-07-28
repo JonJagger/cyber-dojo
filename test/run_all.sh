@@ -5,6 +5,7 @@
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 
+# This list is duplicated in test/print_coverage_summary.rb
 modules=( 
   app_helpers 
   app_lib 

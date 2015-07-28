@@ -1,15 +1,16 @@
 #!/usr/bin/env ruby
 
 def modules
-  %w( 
-     app_helpers
-     app_lib
-     app_models
-     lib
-     app_controllers
+  # This list is duplicated in test/run_all.sh
+  [ 
+     'app_helpers',
+     'app_lib',
+     'app_models',
+     'lib',
+     # languages 
+     # integration 
+     'app_controllers'
   )
-     #languages 
-     #integration 
 end
 
 #- - - - - - - - - - - - - - - - - - - - -
