@@ -3,7 +3,7 @@ MAINTAINER Mike Long <mike@praqma.com>
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # WORK IN PROGRESS
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Need to determine how a dockerized cyber-dojo server will itself have
 # access to docker to be able to process the [test] events.
 #
@@ -85,6 +85,4 @@ RUN a2enmod passenger
 RUN a2ensite cyber-dojo
 RUN a2dissite 000-default
 
-# service apache2 start
-
-
+CMD /usr/sbin/apache2ctl -DFOREGROUND
