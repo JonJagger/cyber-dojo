@@ -167,14 +167,14 @@ end
 #    Ruby2.1.3/MiniTest
 #
 # I didn't want to have to upgrade the existing Ruby1.9.3 test-frameworks
-# to Ruby2.1.3. On the create page I wanted all the different
+# to Ruby2.1.3. But... on the create page I wanted all the different
 # Ruby test-frameworks (from two different versions of Ruby) to appear
 # under the *same* language name in the language? column. 
 # This is why a language/test's  manifest.json file has a display_name entry.
 # It is the display_name that governs the language/test's names as they appear
 # on the create page. Not the folder names. Not the docker container image_name.
 #
-# Many people will have built their own cyber-dojo servers and might not want
+# Many people will have built their own cyber-dojo servers and might *not* want
 # or need to upgrade their servers to use the latest docker containers for
 # the latest language/test even if it exists.
 # This means the cyberdojo docker index needs to keep old versions of
@@ -193,10 +193,10 @@ end
 # Language/Test folder which in turn contains its manifest.json file.
 #
 # It's a bit fiddly because historically the language-&-test 
-# were *not* separated into distinct nestes folders. 
+# were *not* separated into distinct nested folders. 
 # You can still see the remnants of this in the language/test/manifest.json's 
 # display_name which contains the display name of the *both* the language 
-# *and* the test-framework (separated by a comma)
+# *and* the test-framework (separated by a comma).
 #
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # Some languages/ sub-folders have been renamed.

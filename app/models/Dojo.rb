@@ -1,4 +1,3 @@
-
 # See comments at end of file
 # See cyber-dojo-model.pdf
 
@@ -60,7 +59,6 @@ end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # External paths/class-names are set via environment variables.
-# See config/initializers/cyber_dojo.rb
 # See config/application.rb (config.before_configuration)
 #
 # The main reason for this arrangement is testability.

@@ -1,4 +1,3 @@
-
 # See comments at end of file
 
 class Kata

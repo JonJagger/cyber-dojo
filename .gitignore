@@ -17,6 +17,7 @@ katas_rb
 zipped_dojos.zip
 cyberDojo.db
 *.tmp
+*.WRAPPED
 
 test/cyber-dojo/katas/*
 test/cyber-dojo/languages

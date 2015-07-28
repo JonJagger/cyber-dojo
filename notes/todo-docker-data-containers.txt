@@ -218,7 +218,7 @@ Would remove need for ENV variables for DISK,GIT,RUNNER
 
 ---------------------------------------------------
 
-ACTION ITEM: Restore all the controller tests.
+ACTION ITEM: Make controller tests faster by using DiskStub/DiskFake/DirFake
 
 ACTION ITEM: Give Languages.rb and Exercises.rb their own Disk object
              and remove ExternalParentChains. They can use an adapter

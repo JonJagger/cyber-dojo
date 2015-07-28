@@ -1,22 +1,19 @@
-
-test-summary
-                    t      a  f  e  s  time      t/s       a/s      cov
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-app_helpers        14     32  0  0  0  0.02   573.39   1310.62   100.00
-app_lib           112   4871  0  0  0  0.63   176.73   7686.15   100.00
-app_models        112    374  0  0  0  0.57   197.07    658.07   100.00
-lib                87    537  0  0  0  4.09    21.29    131.39   100.00
-app_controllers    33    135  0  0  0 52.50     0.63      2.57   100.00
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-total             358   5949  0  0  0 57.81     6.19    102.91
-
 t == number of tests
 a == number of assertions
 f == number of failures
 e == number of errors
-s == number of skips
-time == time in seconds
-t/s == tests per second
-a/s == assertions per second
+secs == time in seconds
+t/sec == tests per second
+a/sec == assertions per second
 cov == coverage %
+
+                    t      a  f  e  secs    t/sec     a/sec      cov
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+app_helpers        14     32  0  0  0.02   562.57   1285.86   100.00
+app_lib           112   4871  0  0  0.74   151.41   6584.90   100.00
+app_models        112    374  0  0  0.59   190.28    635.39   100.00
+lib                87    537  0  0  4.02    21.66    133.72   100.00
+app_controllers    33    135  0  0 37.84     0.87      3.57   100.00
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+total             358   5949  0  0 43.21     8.29    137.68
 
