@@ -10,30 +10,30 @@ class AvatarsTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'avatar names all begin with a different letter' do
+  test 'avatars names all begin with a different letter' do
     first_letters = Avatars.names.collect{|name| name[0]}.uniq
     assert_equal first_letters.length, Avatars.names.length
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'kata.avatars.each when empty' do
+  test 'avatars.each is [] when empty' do
     kata = make_kata
-    assert_equal [], kata.avatars.each.map{|avatar| avatar.name}.sort    
+    assert_equal [], kata.avatars.each.entries
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'kata.avatars returns all avatars started in the kata' do
+  test 'avatars returns all avatars started in the kata' do
     kata = make_kata
     kata.start_avatar([cheetah])
     kata.start_avatar([lion])
-    assert_equal [cheetah,lion], kata.avatars.each.map{|avatar| avatar.name}.sort
+    assert_equal [cheetah,lion], kata.avatars.map{|avatar| avatar.name}.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test 'is Enumerabe, eg each not needed if doing a map' do
+  test 'avatars.each.map works' do
     kata = make_kata
     kata.start_avatar([cheetah])
     kata.start_avatar([lion])
@@ -54,7 +54,7 @@ class AvatarsTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'katas[id].avatars[name] finds avatar with given name' do
+  test 'katas[id].avatars[panda] finds the panda' do
     kata = make_kata
     kata.start_avatar([panda])
     assert_equal [panda], kata.avatars.map{|avatar| avatar.name}
