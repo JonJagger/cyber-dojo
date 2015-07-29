@@ -31,8 +31,8 @@ class SetupControllerTest < ControllerTestBase
     setup_languages_cache
     get 'setup/show'
     assert_response :success
-    assert /data-exercise\=\"fake-Print-Diamond/.match(html), "fake-Print-Diamond"
-    assert /data-exercise\=\"fake-Roman-Numerals/.match(html), "fake-Roman-Numerals"    
+    assert /data-exercise\=\"Print_Diamond/.match(html), 'Print_Diamond'
+    assert /data-exercise\=\"Roman_Numerals/.match(html), 'Roman_Numerals'
   end
   
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -67,7 +67,9 @@ class SetupControllerTest < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
   
   def setup_show(n)
-    set_disk_class_name('HostDisk')
+    set_disk_class_name('DiskFakeAdapter')
+    setup_exercises_cache
+    setup_languages_cache
     set_runner_class_name('RunnerStubTrue')
     
     languages_names = languages.map{|language| language.display_name}.sort
@@ -105,15 +107,19 @@ class SetupControllerTest < ControllerTestBase
       }
     }
     languages.dir.write('cache.json', languages_cache)
+    languages['Asm-assert'].dir.write('manifest.json', { :display_name => 'Asm, assert'})
+    languages['g++4.8.1-assert'].dir.write('manifest.json', { :display_name => 'C++ (g++), assert'})
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def setup_exercises_cache
     exercises.dir.write('cache.json', {
-      'fake-Print-Diamond'  => 'fake-Print-Diamond instructions',
-      'fake-Roman-Numerals' => 'fake-Roman-Numerals instructions'
+      'Print_Diamond'  => 'Print-Diamond instructions',
+      'Roman_Numerals' => 'Roman-Numerals instructions'
     })
+    exercises['Print_Diamond'].dir.write('instructions', 'aaa')
+    exercises['Roman_Numerals'].dir.write('instructions', 'bbb')
   end
 
 end

@@ -57,7 +57,7 @@ private
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
-# Refactoring [name] to...
+# Refactoring [](name) to...
 #
 #    exercises.find {|exercise| exercise.name == name}
 #
