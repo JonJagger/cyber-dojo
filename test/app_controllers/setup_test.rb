@@ -70,8 +70,8 @@ class SetupControllerTest < ControllerTestBase
     set_disk_class_name('HostDisk')
     set_runner_class_name('RunnerStubTrue')
     
-    languages_names = languages.each.map{|language| language.display_name}.sort
-    exercises_names = exercises.each.map{|exercise| exercise.name}.sort    
+    languages_names = languages.map{|language| language.display_name}.sort
+    exercises_names = exercises.map{|exercise| exercise.name}.sort    
     language_name = languages_names.shuffle[0]
     exercise_name = exercises_names.shuffle[0]
     id = create_kata(language_name,exercise_name)
@@ -86,7 +86,7 @@ class SetupControllerTest < ControllerTestBase
     # next bit is trickier than it should be because language.display_name 
     # contains the name of the test framework too.
     md = /var selectedLanguage = \$\('#language_' \+ (\d+)/.match(html)
-    just_languages_names = languages_names.each.map {|name| name.split(',')[0].strip }.uniq.sort            
+    just_languages_names = languages_names.map {|name| name.split(',')[0].strip }.uniq.sort            
     selected_language = just_languages_names[md[1].to_i]
     assert_equal language_name.split(',')[0].strip, selected_language, 'language'
   end

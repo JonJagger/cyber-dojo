@@ -24,14 +24,6 @@ class ExercisesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test 'each() empty' do
-    set_disk_class_name('DiskFake')
-    exercises.dir.write('cache.json', cache={})    
-    assert_equal [], exercises.each.entries
-  end
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'refresh_cache' do
     set_disk_class_name('DiskFake')
     disk[exercises.path + '100 doors'].write('instructions', 'imagine there are 100 doors...')    
@@ -43,7 +35,15 @@ class ExercisesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'each() not empty (also checks exercises.map works directly viz you dont need exercises.each.map)' do
+  test 'no exercises when cache is empty' do
+    set_disk_class_name('DiskFake')
+    exercises.dir.write('cache.json', cache={})    
+    assert_equal [], exercises.to_a
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'execises from cache when cache is not empty' do
     cache = {
       '100 doors' => {
         :instructions => 'go here'

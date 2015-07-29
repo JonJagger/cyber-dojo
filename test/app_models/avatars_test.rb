@@ -19,7 +19,7 @@ class AvatarsTests < ModelTestBase
 
   test 'avatars.each is [] when empty' do
     kata = make_kata
-    assert_equal [], kata.avatars.each.entries
+    assert_equal [], kata.avatars.to_a
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -33,12 +33,12 @@ class AvatarsTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test 'avatars.each.map works' do
+  test 'avatars.map works' do
     kata = make_kata
     kata.start_avatar([cheetah])
     kata.start_avatar([lion])
     assert_equal [cheetah,lion], kata.avatars.map{|avatar| avatar.name}.sort    
-    assert_equal 2, kata.avatars.entries.length
+    assert_equal 2, kata.avatars.to_a.length
   end
     
   #- - - - - - - - - - - - - - - - - - - - - - - - -

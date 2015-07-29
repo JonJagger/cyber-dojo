@@ -42,14 +42,14 @@ class LanguagesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test 'each() empty' do
+  test 'no languages when cache is empty' do
     languages.dir.write('cache.json', cache={})
-    assert_equal [], languages.each.entries
+    assert_equal [], languages.to_a
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test 'each() not empty (also checks languages.map works directly viz you dont need languages.each.map)' do
+  test 'languages from cache when cache is not empty' do
     cache = {
       'Asm, assert' => {
         :dir_name => 'Asm', 
@@ -85,7 +85,7 @@ class LanguagesTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - -
 
   test 'name is translated when katas manifest.json language entry has been renamed' do  
-    all_language_manifest_entries do |old_name|
+    historical_language_names do |old_name|
       new_name = languages.renamed(old_name)
       assert exists?(*new_name), old_name
     end    
@@ -93,13 +93,13 @@ class LanguagesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
   
-  def all_language_manifest_entries
+  def historical_language_names
     # these names harvested from cyber-dojo.org using
     # admin_scripts/show_kata_language_names.rb
     #
-    # katas/../......../manifest.json  language: entry
-    # count of occurences on cyber-dojo.org
-    # ID of one occurrence on cyber-dojo.org
+    # katas/../......../manifest.json { language: X }
+    # Also listed are count of occurences on cyber-dojo.org
+    # and ID of one occurrence on cyber-dojo.org
     [
       "Asm-assert 25 010E66019D",  
       "BCPL 3 DF9A083C0F",

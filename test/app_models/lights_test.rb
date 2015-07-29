@@ -7,8 +7,7 @@ class LightsTests < ModelTestBase
   test 'lights initially empty' do
     kata = make_kata
     lights = kata.start_avatar.lights
-    assert_equal [ ], lights.entries
-    assert_equal [ ], lights.each.entries
+    assert_equal [ ], lights.to_a
     assert_equal 0, lights.count
     n = 0
     lights.each { n += 1 }
@@ -53,12 +52,11 @@ class LightsTests < ModelTestBase
     }
     assert_equal 3, n
 
-    assert_equal 3, lights.entries.length
-    assert_equal 3, lights.each.entries.length
+    assert_equal 3, lights.to_a.length
 
-    eh = lights.entries
-    assert_equal 'Array', eh.class.name
-    assert_equal 'Tag', eh[0].class.name
+    a = lights.to_a
+    assert_equal 'Array', a.class.name
+    assert_equal 'Tag', a[0].class.name
 
   end
 
