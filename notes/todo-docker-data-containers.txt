@@ -248,18 +248,17 @@ ACTION ITEM: Think about create page. It relies on docker being installed
 ---------------------------------------------------
 Learning about docker data-only containers
 ---------------------------------------------------
+Note: I've a lot to learn about docker. Much of what follows is probably not correct.
 
-# Create a base image with git installed
+# Use a base image for data-containers with nothing installed (eg no git)
 $ cat Dockerfile
-FROM debian:jessie
-RUN apt-get update
-RUN apt-get install -y git
+FROM scratch
 
-$ docker build git-base .
+$ docker build -t base .
 
 # Create two data-container called cd_ABCDE12345 and cd_ABCDE12346
-$ docker run -v /AB/CDE12345 --name="cd_ABCDE12345" git-base true
-$ docker run -v /AB/CDE12346 --name="cd_ABCDE12346" git-base true
+$ docker run -v /AB/CDE12345 --name="cd_ABCDE12345" base true
+$ docker run -v /AB/CDE12346 --name="cd_ABCDE12346" base true
 
 # Find info on a data-container; filter allows wildcards
 $ docker ps -a --filter name=cd_ABCDE1234*
@@ -279,17 +278,29 @@ d2b536ca7231
 
 
 # Create a folder in the data container...
-$ docker run --volumes-from=cd_ABCDE12345 git-base sh -c 'mkdir -p /AB/CDE12345/lion/sandbox'
+$ docker run --volumes-from=cd_ABCDE12345 base sh -c 'mkdir -p /AB/CDE12345/lion/sandbox'
 
 # Git init a repo for an animal
+# This needs to be run using a process-container which has git installed. 
+# $ cat Dockerfile
+# FROM base
+# RUN apt-get update
+# RUN apt-get install -y git
+#
+$ docker build -t git-base .
 $ docker run --volumes-from=cd_ABCDE12345 git-base sh -c 'cd /AB/CDE12345/lion && git init'
 
-# Read a filename from the data container...
-$ docker run --volumes-from=cd_ABCDE12345 git-base sh -c 'cat /AB/CDE12345/lion/greet.txt'
+# Read a filename from a data container...
+$ docker run --volumes-from=cd_ABCDE12345 base sh -c 'cat /AB/CDE12345/lion/manifest.json'
 
-# Write a file with given content into the data container
-$ docker run --volumes-from=cd_ABCDE12345 git-base sh -c 'echo "Hello" > /AB/CDE12345/lion/greet.txt'
+# Create a file in a data-container with a given filename and content
+$ docker run --volumes-from=cd_ABCDE12345 git-base sh -c 'echo "Hello" > /AB/CDE12345/lion/sandbox/greet.txt'
 
+# Copy a named file (on the host) into a data-container
+$ docker run --volumes-from=cd_ABCDE12345 base sh -c 'cat > /AB/CDE12345/lion/sandbox/FILE' < FILE
+
+# Run a git diff command in a data-container
+$ docker run --volumes-from=cd_ABCDE12345 git-base sh -c 'cd /AB/CDE12345/lion && git diff 4 5 sandbox'
 
 # File exists?
 
@@ -315,8 +326,6 @@ $ docker run --volumes-from=cd_ABCDE12345 git-base sh -c 'echo "Hello" > /AB/CDE
    
 4. then need to save output file back to the data-container
 5. then need to run git commit command in the data-container
-
-  
 
 
 
