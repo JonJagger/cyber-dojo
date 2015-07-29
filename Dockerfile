@@ -8,11 +8,8 @@ MAINTAINER Mike Long <mike@praqma.com>
 # access to docker to be able to process the [test] events.
 #
 # Commands to build and run cyber-dojo server (tested from OSX using boot2docker)
-#     $ docker build -t 'mike/cyberdojo:latest' .
-#     $ docker run --rm -P -p 80:80 -p 443:443 -it 'mike/cyberdojo:latest' bash -l
-#
-# In the resulting interactive bash prompt
-#     $ service apache2 start
+#     $ docker build -t mike/cyberdojo:latest .
+#     $ docker run -d -P -p 80:80 -p 443:443 mike/cyberdojo:latest
 #
 # From plain terminal determine the IP address to put into the browser
 #     $ boot2docker ip
@@ -85,4 +82,4 @@ RUN a2enmod passenger
 RUN a2ensite cyber-dojo
 RUN a2dissite 000-default
 
-CMD /usr/sbin/apache2ctl -DFOREGROUND
+CMD [ "/usr/sbin/apache2ctl", "-DFOREGROUND" ]

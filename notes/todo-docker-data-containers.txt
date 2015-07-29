@@ -258,8 +258,8 @@ FROM scratch
 $ docker build -t base .
 
 # Create two data-container called cd_ABCDE12345 and cd_ABCDE12346
-$ docker run -v /AB/CDE12345 --name="cd_ABCDE12345" base true
-$ docker run -v /AB/CDE12346 --name="cd_ABCDE12346" base true
+$ docker create -v /AB/CDE12345 --name="cd_ABCDE12345" base true
+$ docker create -v /AB/CDE12346 --name="cd_ABCDE12346" base true
 
 # Find info on a data-container; filter allows wildcards
 $ docker ps -a --filter name=cd_ABCDE1234*
