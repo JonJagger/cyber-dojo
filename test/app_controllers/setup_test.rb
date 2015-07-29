@@ -73,9 +73,7 @@ class SetupControllerTest < ControllerTestBase
   def setup_show(n)
     set_runner_class_name('RunnerStubTrue')
     
-    languages_display_names = languages.map {|language| language.display_name}.sort
-    
-    languages_names = languages_display_names.map {|name| get_language_from(name) }.uniq.sort     
+    languages_display_names = languages.map {|language| language.display_name}.sort    
     language_display_name = languages_display_names.shuffle[0]
     
     exercises_names = exercises.map {|exercise| exercise.name}.sort        
@@ -94,6 +92,7 @@ class SetupControllerTest < ControllerTestBase
     # next bit is trickier than it should be because language.display_name 
     # contains the name of the test framework too.
     md = /var selectedLanguage = \$\('#language_' \+ (\d+)/.match(html)
+    languages_names = languages_display_names.map {|name| get_language_from(name) }.uniq.sort     
     selected_language = languages_names[md[1].to_i]
     assert_equal get_language_from(language_display_name), selected_language, 'language'    
   end
