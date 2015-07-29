@@ -1,20 +1,15 @@
 
-Basic idea is that each cyber-dojo will have its own 
-dedicated data container whose name is the ID of the 
-cyber-dojo. Eg  1A03C65461
+Each cyber-dojo will have its own dedicated data container 
+whose name is the ID of the cyber-dojo. 
+Eg  1A03C65461
+Or maybe better to have a prefix for filtering
+Eg  cd_1A03C65461
 
 This is the simplest option in terms of an upgrade path
 from what currently exists.
-Does this option mean that a lion (say) could (in cyber-dojo.sh)
-write bash commands to navigate to another animals folder 
-(eg panda) and cause mischief. Need to avoid that. Can't
-currently do that.
 
-Basic idea is that all commands that all the git commands 
-and file system interactions will be refactored to be
-commands run inside this data container.
-What language will the docker commands use?
-Bash commands would be simplest.
+Idea is that all the git commands and file system interactions
+will be refactored into commands running inside the data container.
 
 What are the actual interactions with file system and git?
 
@@ -39,16 +34,17 @@ This would be parity with existing system
 This does not actually impact docker data containers.
 Unless perhaps languages/ and exercises/ are dedicated
 data-containers themselves. See below.
-This would be looked at in the next step using docker swarm.
+Can this be looked at in the next step using docker swarm?
 
 
 ---------------------------------------------------
 2. Creating a cyber-dojo with an allocated ID
 ---------------------------------------------------
 The rails server receives an incoming request with the
-chosen language,tests,exercise selection.
+chosen [language,tests,exercise] selection.
 SetupController uses domain model languages/exercises
-object to create object for language and object for exercise.
+to create an object for the language (includes the test) 
+and an object for the exercise.
     this does not cause external interaction
       language = languages[language_name + '-' + test_name]
       exercise = exercises[exercise_name]     
@@ -101,9 +97,14 @@ ApplicationController.rb
   def katas; dojo.katas; end  
   def disk; dojo.disk; end
   def kata; katas[id]; end
-  def id; @id ||= katas.complete(params[:id]); end
+  def id; @id ||= katas.dir.complete_kata_id(params[:id]); end
 
 
+katas.dir.complete_kata_id(s) 
+  will need to work in data-container
+  $ docker ps -a --filter name=#{s}*
+  See below
+  
 
 ---------------------------------------------------
 4. Entering an avatar
