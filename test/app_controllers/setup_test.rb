@@ -3,6 +3,7 @@
 require_relative 'controller_test_base'
 
 # Ensures multiple threads all use the same DiskFake
+# Is there a way to force rails to use a single thread?
 class DiskFakeAdapter
 
   def method_missing(sym, *args, &block)
@@ -16,7 +17,16 @@ class DiskFakeAdapter
 
 end
 
+# - - - - - - - - - - - - - - - - - - - - - -
+
 class SetupControllerTest < ControllerTestBase
+
+  def setup
+    super
+    set_disk_class_name('DiskFakeAdapter')
+    setup_exercises_cache
+    setup_languages_cache
+  end
 
   def teardown
     super
@@ -25,22 +35,16 @@ class SetupControllerTest < ControllerTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'setup/create page uses cached exercises' do
-    set_disk_class_name('DiskFakeAdapter')
-    setup_exercises_cache
-    setup_languages_cache
+  test 'setup page uses cached exercises' do
     get 'setup/show'
     assert_response :success
-    assert /data-exercise\=\"Print_Diamond/.match(html), 'Print_Diamond'
-    assert /data-exercise\=\"Roman_Numerals/.match(html), 'Roman_Numerals'
+    assert /data-exercise\=\"#{print_diamond}/.match(html), print_diamond
+    assert /data-exercise\=\"#{roman_numerals}/.match(html), roman_numerals
   end
   
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'setup/create page uses cached languages' do
-    set_disk_class_name('DiskFakeAdapter')
-    setup_exercises_cache
-    setup_languages_cache
+  test 'setup page uses cached languages' do
     get 'setup/show'
     assert_response :success
     assert /data-language\=\"C++/.match(html), 'C++'
@@ -67,20 +71,22 @@ class SetupControllerTest < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
   
   def setup_show(n)
-    set_disk_class_name('DiskFakeAdapter')
-    setup_exercises_cache
-    setup_languages_cache
     set_runner_class_name('RunnerStubTrue')
     
-    languages_names = languages.map{|language| language.display_name}.sort
-    exercises_names = exercises.map{|exercise| exercise.name}.sort    
-    language_name = languages_names.shuffle[0]
-    exercise_name = exercises_names.shuffle[0]
-    id = create_kata(language_name,exercise_name)
+    languages_display_names = languages.map {|language| language.display_name}.sort
     
+    languages_names = languages_display_names.map {|name| get_language_from(name) }.uniq.sort     
+    language_display_name = languages_display_names.shuffle[0]
+    
+    exercises_names = exercises.map {|exercise| exercise.name}.sort        
+    exercise_name = exercises_names.shuffle[0]
+    
+    id = create_kata(language_display_name,exercise_name)
+        
     get 'setup/show', :id => id[0...n]
     
     assert_response :success
+    
     md = /var selectedExercise = \$\('#exercise_' \+ (\d+)/.match(html)
     selected_exercise = exercises_names[md[1].to_i]    
     assert_equal exercise_name, selected_exercise, 'exercise'
@@ -88,9 +94,8 @@ class SetupControllerTest < ControllerTestBase
     # next bit is trickier than it should be because language.display_name 
     # contains the name of the test framework too.
     md = /var selectedLanguage = \$\('#language_' \+ (\d+)/.match(html)
-    just_languages_names = languages_names.map {|name| name.split(',')[0].strip }.uniq.sort            
-    selected_language = just_languages_names[md[1].to_i]
-    assert_equal language_name.split(',')[0].strip, selected_language, 'language'
+    selected_language = languages_names[md[1].to_i]
+    assert_equal get_language_from(language_display_name), selected_language, 'language'    
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -107,19 +112,32 @@ class SetupControllerTest < ControllerTestBase
       }
     }
     languages.dir.write('cache.json', languages_cache)
-    languages['Asm-assert'].dir.write('manifest.json', { :display_name => 'Asm, assert'})
-    languages['g++4.8.1-assert'].dir.write('manifest.json', { :display_name => 'C++ (g++), assert'})
+    languages_cache.each do |display_name,language|
+      key = get_language_from(display_name) + '-' + get_test_from(display_name)
+      languages[key].dir.write('manifest.json', { :display_name => display_name})      
+    end    
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def setup_exercises_cache
     exercises.dir.write('cache.json', {
-      'Print_Diamond'  => 'Print-Diamond instructions',
-      'Roman_Numerals' => 'Roman-Numerals instructions'
+      print_diamond  => 'print diamond instructions',
+      roman_numerals => 'roman numerals instructions'
     })
-    exercises['Print_Diamond'].dir.write('instructions', 'aaa')
-    exercises['Roman_Numerals'].dir.write('instructions', 'bbb')
+    exercises[print_diamond].dir.write('instructions', 'aaa')
+    exercises[roman_numerals].dir.write('instructions', 'bbb')
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - -
+  
+  def commad(s); s.split(','); end
+  def get_language_from(name); commad(name)[0].strip; end
+  def get_test_from(name); commad(name)[1].strip; end
+  
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  def print_diamond; 'Print_Diamond'; end
+  def roman_numerals; 'Roman_Numerals'; end
+  
 end
