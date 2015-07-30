@@ -1,6 +1,7 @@
 # See comments at end of file
 
 class Avatar
+
   include ExternalParentChain
 
   def initialize(kata,name)

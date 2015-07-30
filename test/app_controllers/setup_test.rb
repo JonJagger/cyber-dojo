@@ -2,8 +2,9 @@
 
 require_relative 'controller_test_base'
 
-# Ensures multiple threads all use the same DiskFake
+# DiskFakeAdapter ensures multiple threads all use the same DiskFake object.
 # Is there a way to force rails to use a single thread?
+
 class DiskFakeAdapter
 
   def method_missing(sym, *args, &block)

@@ -1,5 +1,6 @@
 
 class Exercise
+
   include ExternalParentChain
   
   def initialize(exercises,name,instructions=nil)

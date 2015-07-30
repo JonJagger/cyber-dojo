@@ -1,5 +1,6 @@
 
 class Sandbox
+
   include ExternalParentChain
   
   def initialize(avatar)

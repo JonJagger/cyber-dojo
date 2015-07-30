@@ -1,6 +1,7 @@
 # See comments at end of file
 
 class Kata
+
   include ExternalParentChain
   
   def initialize(katas,id)

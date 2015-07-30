@@ -2,6 +2,7 @@
 # See comment at bottom of Avatar.rb
 
 class Tag
+
   include ExternalParentChain
   
   def initialize(avatar,hash)
