@@ -1,5 +1,5 @@
 
-Each cyber-dojo will have its own dedicated data container 
+Each cyber-dojo could have its own dedicated data container 
 whose name is the ID of the cyber-dojo. 
 Eg  1A03C65461
 Or maybe better to have a prefix for filtering
@@ -7,6 +7,13 @@ Eg  cd_1A03C65461
 
 This is the simplest option in terms of an upgrade path
 from what currently exists.
+
+===================================================
+However, since data-containers are not implicitly "portable"
+this approach doesn't sound right for a cyber-dojo with a
+large number of avatars which is an important use case.
+===================================================
+
 
 Idea is that all the git commands and file system interactions
 will be refactored into commands running inside the data container.
@@ -250,6 +257,8 @@ ACTION ITEM: Think about create page. It relies on docker being installed
 Learning about docker data-only containers
 ---------------------------------------------------
 Note: I've a lot to learn about docker. Much of what follows is probably not correct.
+And it's based on a docker data-container being for a single cyber-dojo rather than
+for a single avatar within a cyber-dojo (which is doubtful).
 
 # Use a base image for data-containers with nothing installed (eg no git)
 $ cat Dockerfile
