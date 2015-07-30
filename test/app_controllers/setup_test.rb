@@ -112,7 +112,7 @@ class SetupControllerTest < ControllerTestBase
       }
     }
     languages.dir.write('cache.json', languages_cache)
-    languages_cache.each do |display_name,language|
+    languages_cache.keys.each do |display_name|
       key = get_language_from(display_name) + '-' + get_test_from(display_name)
       languages[key].dir.write('manifest.json', { :display_name => display_name})      
     end    
