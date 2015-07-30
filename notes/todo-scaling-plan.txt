@@ -25,21 +25,73 @@ o) git-commit and git-tag
 And will then perform one extra step
 o) git-push to the cyber-dojo-git-server
 
+Sym-linking
+One issue with this approach is how it works with languages that have support 
+files. Eg Java/C#. (Full list in notes/todo-features/symlinking-notes.txt)
+This is because those languages sym-link
+these support files from languages/ to the animals sandbox folder.
+I'm not sure if sym-linked files would actully get pushed to the
+cyber-dojo-git-server but even if they would its not a good design 
+because support files are typically large and not textual.
+For example, this approach simply won't work for Java-Cucumber which
+has *mountains* of .jar files.
+So initially, the new DockerGitServerRunner will need to implement
+its runnable?(language) method to only return true if the language
+has no support files. 
+However, there is considerable appeal to a future feature of 
+allowing an animal to add a file (such as a .jar file) to their
+session when practising. Perhaps this would fit more naturally
+when data-containers have been introduced?
 
 
 Step 2. Dashboard works in new design.
+This should be relatively easy. The source of the increments.json 
+files will be the cyber-dojo-git-server rather than the local
+hard disk.
 
-Step 3. Sym-linking is abandoned for all newly created cyber-dojos.
+Step 3. Swarm on multiple nodes is now possible.
+(Without forking or reverting).
 
-Step 4. Swarm on multiple nodes
+Step 4. Add forking.
 
-Step 5. Add docker data-containers.
+Step 5. Adding reverting.
+
+Step 6.
+Refactor language/test containers which have sym-linked support
+files so the support files are present in the container itself.
+
+
+Step 7. Add docker data-containers.
 Means the git-clone in step i) above can change to a git-pull.
 
 
-Still to be considered...
-o) Forking
-o) Reverting
+Also to consider. 
 
-o) Old cyber-dojos (not on the cyber-dojo-git-server) still work as before...?
+Upgrading old cyber-dojos. How does the server know that its ID 
+corresponds to a cyber-dojo that needs to be accessed differently?
+
+Obvious answer is dojos with old IDs are git pushed to new 
+cyber-dojo-git-server and then removed from the hard-disk.
+But ID being present on the hard disk could be an indicator
+allowing dynamic configuration.
+Suggests that it when doing Step 1 the files are saved to a 
+temp folder. Hmmm that would work for test events but how
+would it work when someone entered - how would the server
+know what language/test/exercise corresponded to the 
+cyber-dojo with the given ID, or even that the given ID was 
+valid. Have to keep that basic info on the local hard disk.
+But it would be quite easy to detect whether a given ID
+was present on the local disk and *also* present on the
+cyber-dojo-git-server. Or would it? Not if only avatars
+are stored on the cyber-dojo-git-server.
+Perhaps have two kinds of repos on the git-server.
+One for dojos. Stores language/test/exercise selection
+against a given ID. One one for animals.
+
+
+
+Further point is that people building their own servers have
+to know that the default is they push all the codes to
+the cental git-server. The URL of the central git-server needs
+to be configurable.
 
