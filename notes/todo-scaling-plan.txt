@@ -1,0 +1,38 @@
+
+Brief notes from meeting with Jan and Mike 30th July 2015
+
+Step 1: Test works 
+Incoming files (for specific animal in specific dojo) are saved 
+(can be into a temp folder, but )
+A local git-commit happens.
+The local git-repo is pushed to a central cyber-dojo git-server 
+into a git-repo specific to the dojo and the animal. 
+Initially this git-server can be on the same machine as the rails server.
+Then we issue the magic incantation to spin up a docker process container.
+The command this docker process runs will not volume mount anything. It will somehow
+
+i) git-clone the files from the cyber-dojo git-server into a new local git repo (in a temp folder)
+ii) build and test (cyber-dojo.sh)
+iii) save output file 
+iv) git-commit and git-tag
+v) git-push to the cyber-dojo-git-server
+
+Note that currently the docker process run command only has to do ii).
+
+
+Step 2. Dashboard works in new design.
+
+Step 3. Sym-linking is abandoned for all newly created cyber-dojos.
+
+Step 4. Swarm on multiple nodes
+
+Step 5. Add docker data-containers.
+Means the git-clone in step i) above can change to a git-pull.
+
+
+Still to be considered...
+o) Forking
+o) Reverting
+
+o) Old cyber-dojos (not on the cyber-dojo-git-server) still work as before...?
+
