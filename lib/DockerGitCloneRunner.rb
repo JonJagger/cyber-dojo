@@ -20,7 +20,14 @@ class DockerGitCloneRunner
   def run(sandbox, command, max_seconds)
     # git commit local changes
     # git push to git server
-    # docker run ‘git clone git@IP:/opt/git/ID_lion.git && cd ID_lion && ./cyber-dojo.sh’
+    # 
+    # ip = "...."
+    # id = avatar.kata.id.to_s
+    # avatar = avatar.name
+    # cmd = "git clone git@#{ip}:/opt/git/#{id}_#{avatar}.git"
+    # cmd += "&& cd #{avatar}"
+    # cmd += "&& ./cyber-dojo.sh"
+    # docker run #{cmd}
     #
     # Note: the git-server sees the git repo of the animal which is at the
     # folder level of the animal and not sandbox.
