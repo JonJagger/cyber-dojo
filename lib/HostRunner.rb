@@ -1,7 +1,7 @@
 
 # Deprecated test runner that runs directly on the host server
 # No isolation/protection/security, nothing.
-# See DockerRunner.rb
+# See DockerVolumeMountRunner.rb
 
 require_relative 'Runner'
 

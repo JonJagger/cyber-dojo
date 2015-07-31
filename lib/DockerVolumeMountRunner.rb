@@ -1,11 +1,14 @@
 
 # test runner providing isolation/protection/security
 # via Docker containers https://www.docker.io/
-# comments at end of file
+# and relying on volume mounts on local hard disk to
+# give state access to docker process containers.
+#
+# Comments at end of file
 
 require_relative 'Runner'
 
-class DockerRunner
+class DockerVolumeMountRunner
 
   def initialize(bash = Bash.new)
     @bash = bash

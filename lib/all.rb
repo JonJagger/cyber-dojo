@@ -7,7 +7,7 @@
   Bash
   HttpRequester
   Runner
-    DockerRunner
+    DockerVolumeMountRunner
     HostRunner
   HostDisk  
   HostDir
