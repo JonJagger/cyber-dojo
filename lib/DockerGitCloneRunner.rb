@@ -24,12 +24,13 @@ class DockerGitCloneRunner
     #
     # Note: the git-server sees the git repo of the animal which is at the
     # folder level of the animal and not sandbox.
-    # It would be best if the docker process container was somehow
-    # restricted and could not [cd ..] to gain access to the
-    # animal folder and potentially cause mischief. Viz it would
-    # see the sandbox folder as its root (like DockerVolumeMountRunner)
+    # But this is ok. Even if the cyber-dojo.sh tries to [cd ..]
+    # and cause mischief any problems are localized since only
+    # the output comes back to the rails server.
     #
-    # Should run(sandbox,...) be run(avatar,...)?  I think so.
+    # Note: Should run(sandbox,...) be run(avatar,...)?  I think so.
+    #
+    # Note: command being passed in allows extra testing options.
     #
     # Pull model code into Runner classes.
     # Capture commonality in Runner classes in included Runner.rb
