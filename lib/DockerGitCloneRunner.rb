@@ -18,14 +18,13 @@ class DockerGitCloneRunner
   end
 
   def run(sandbox, command, max_seconds)
-    # git commit local changes
-    # git push to git server
+    # git.commit(avatar.path, "-a -m 'pre-push' --quiet")
+    # git.push(avatar.path, "origin master")
     # 
     # ip = "...."
     # id = avatar.kata.id.to_s
-    # avatar = avatar.name
-    # cmd = "git clone git@#{ip}:/opt/git/#{id}_#{avatar}.git"
-    # cmd += "&& cd #{avatar}"
+    # cmd = "git clone git@#{ip}:/opt/git/#{id}_#{avatar.name}.git"
+    # cmd += "&& cd #{avatar.name}"
     # cmd += "&& ./cyber-dojo.sh"
     # docker run #{cmd}
     #
