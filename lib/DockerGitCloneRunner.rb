@@ -38,6 +38,9 @@ class DockerGitCloneRunner
     #
     # Note: command being passed in allows extra testing options.
     #
+    # Note: will be worth extracting DockkerRunner that just does run()
+    #       into dedicted class.
+    #
     # Pull model code into Runner classes.
     # Capture commonality in Runner classes in included Runner.rb
   end
