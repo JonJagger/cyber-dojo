@@ -13,6 +13,11 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
 
   include TestHelpers
   
+  def setup
+    super
+    set_one_self_class_name('OneSelfDummy')
+  end
+  
   def create_kata(language_name = random_language, exercise_name = random_exercise)
     parts = language_name.split(',')
     params = { 
