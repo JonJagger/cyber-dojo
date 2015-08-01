@@ -66,3 +66,7 @@ cyber-dojo_ABCDE12345_lion
 
 
 
+Did not change the login-shell for the git user to /usr/bin/git-shell
+since that would prevent the scp I need (as each avatar enters) on 53
+
+
