@@ -24,10 +24,13 @@ class Sandbox
     }
   end
   
-  def run_tests(delta, files, time_limit)
+  def save_files(delta, files)
     delta[:changed].each { |filename| write(filename, files[filename]) }
     delta[:new].each     { |filename| git_add(filename, files[filename]) }
     delta[:deleted].each { |filename| git.rm(path,filename) }
+  end
+
+  def run_tests(files, time_limit)
     output = runner.run(self, './cyber-dojo.sh', time_limit)
     write('output', output) # so output is committed
     files['output'] = output    

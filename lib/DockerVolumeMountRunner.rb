@@ -25,6 +25,10 @@ class DockerVolumeMountRunner
       !language.display_name.end_with?('Approval')
   end
 
+  def started(avatar); end
+  def pre_test(avatar); end
+  def post_commit_tag(avatar); end
+
   def run(sandbox, command, max_seconds)
     cidfile = sandbox.avatar.path + 'cidfile.txt'
     language = sandbox.avatar.kata.language

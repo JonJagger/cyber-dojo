@@ -42,27 +42,27 @@ $ chmod 600 authorized_keys
 
 Now back on host push bare repo to git server.
 This will happen once only when the animal enters the dojo.
-$ mkdir cyber-dojo_ABCDE12345_lion
-$ cd cyber-dojo_ABCDE12345_lion
+$ mkdir AB/CDE12345/lion
+$ cd AB/CDE12345/lion
 $ git init
 $ cat Hello > greet.txt
 $ git add greet.txt
 $ git commit -am "initial commit"
-$ cd ..
-$ git clone --bare cyber-dojo_ABCDE12345_lion cyber-dojo_ABCDE12345_lion.git
-$ scp -r cyber-dojo_ABCDE12345_lion.git git@192.168.59.104:/opt/git
+$ cd ../../..
+$ git clone --bare AB/CDE12345/lion ABCDE12345_lion.git
+$ scp -r ABCDE12345_lion.git git@192.168.59.104:/opt/git
 
 
 Back in guest OS check its there
 $ cd /opt/git
 $ ls
-cyber-dojo_ABCDE12345_lion.git
+ABCDE12345_lion.git
 
 
 Back in host OS check I can clone from it
-$ git clone git@192.168.59.104:/opt/git/cyber-dojo_ABCDE12345_lion.git
+$ git clone git@192.168.59.104:/opt/git/ABCDE12345_lion.git
 $ ls
-cyber-dojo_ABCDE12345_lion
+ABCDE12345_lion
 
 
 

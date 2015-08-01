@@ -28,6 +28,7 @@ class Avatar
     git.add(path,increments_filename)     
     sandbox.start
     git_commit(0)    
+    runner.started(self)
   end
   
   def path
@@ -57,8 +58,10 @@ class Avatar
     JSON.parse(read(manifest_filename))
   end
 
-  def test(delta, files, now = time_now, time_limit = 15)        
-    output = sandbox.run_tests(delta, files, time_limit)    
+  def test(delta, files, now = time_now, time_limit = 15)
+    sandbox.save_files(delta,files)
+    runner.pre_test(self)
+    output = sandbox.run_tests(files, time_limit)
     colour = kata.language.colour(output)
     rags = increments
     tag = rags.length + 1
@@ -67,6 +70,7 @@ class Avatar
     write_increments(rags)
     write_manifest(files)    
     git_commit(tag)    
+    runner.post_commit_tag(self)
     [rags,output]    
   end
 
