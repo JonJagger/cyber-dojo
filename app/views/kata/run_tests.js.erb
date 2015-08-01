@@ -4,13 +4,3 @@ $("#traffic-lights")
 
 $("#output")
   .html("<%= js_partial('output') %>");
-
-<% @filenames_to_delete.each do |filename| %>
-  to_remove = document.getElementById("<%= filename %>_div");
-  if (to_remove) {
-    to_remove.parentNode.removeChild(to_remove);
-  }
-<% end %>
-
-$("#visible-files-container")
-  .append("<%= js_partial('new_files') %>");

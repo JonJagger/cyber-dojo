@@ -2,7 +2,7 @@
 
 require_relative 'lib_test_base'
 
-class DockerRunnerTests < LibTestBase
+class DockerVolumeMountRunnerTests < LibTestBase
 
   def setup
     super
@@ -18,7 +18,7 @@ class DockerRunnerTests < LibTestBase
 
   test 'when docker is not installed constructor raises' do    
     @bash.stub('',any_non_zero=42)
-    assert_raises(RuntimeError) { DockerRunner.new(@bash) }
+    assert_raises(RuntimeError) { DockerVolumeMountRunner.new(@bash) }
     assert @bash.spied[0].start_with? 'docker info'
   end
 
@@ -27,7 +27,7 @@ class DockerRunnerTests < LibTestBase
   test 'when docker is installed, image_names determines runnability' do
     @bash.stub(docker_info_output, success)
     @bash.stub(docker_images_output, success)
-    docker = DockerRunner.new(@bash)    
+    docker = DockerVolumeMountRunner.new(@bash)    
     expected_image_names =
     [
       "cyberdojo/python-3.3.5_pytest",
@@ -48,7 +48,7 @@ class DockerRunnerTests < LibTestBase
   test 'docker run <-> bash interaction when cyber-dojo.sh completes in time' do
     @bash.stub(docker_info_output, success)   # 0
     @bash.stub(docker_images_output, success) # 1
-    docker = DockerRunner.new(@bash)
+    docker = DockerVolumeMountRunner.new(@bash)
     begin
       @bash.stub('',success)        # 2 rm cidfile.txt
       @bash.stub('blah',success)    # 3 timeout ... docker run ...
@@ -71,7 +71,7 @@ class DockerRunnerTests < LibTestBase
   test 'docker run <-> bash interaction when cyber-dojo.sh times out' do
     @bash.stub(docker_info_output, success)   # 0
     @bash.stub(docker_images_output, success) # 1
-    docker = DockerRunner.new(@bash)
+    docker = DockerVolumeMountRunner.new(@bash)
     begin
       @bash.stub('',success)               # 2 rm cidfile.txt
       @bash.stub('blah',fatal_error(kill)) # 3 timeout ... docker run ...

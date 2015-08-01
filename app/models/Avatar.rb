@@ -58,16 +58,16 @@ class Avatar
   end
 
   def test(delta, files, now = time_now, time_limit = 15)        
-    new_files,filenames_to_delete = sandbox.run_tests(delta,files,time_limit)    
-    colour = kata.language.colour(files['output'])
+    output = sandbox.run_tests(delta, files, time_limit)    
+    colour = kata.language.colour(output)
     rags = increments
     tag = rags.length + 1
     rag = { 'colour' => colour, 'time' => now, 'number' => tag }
     rags << rag
     write_increments(rags)
-    write_manifest(files)
-    git_commit(tag)
-    [rags,new_files,filenames_to_delete]
+    write_manifest(files)    
+    git_commit(tag)    
+    [rags,output]    
   end
 
   def diff(n,m)

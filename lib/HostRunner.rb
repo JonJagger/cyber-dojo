@@ -8,7 +8,7 @@ require_relative 'Runner'
 class HostRunner
 
   def runnable?(language)
-    true
+    !language.display_name.end_with? 'Approval'
   end
 
   def run(sandbox, command, max_seconds)

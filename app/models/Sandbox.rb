@@ -24,31 +24,18 @@ class Sandbox
     }
   end
   
-  def run_tests(delta, visible_files, time_limit)
-    visible_filenames = visible_files.keys    
-    before_test(delta, visible_files)    
+  def run_tests(delta, files, time_limit)
+    delta[:changed].each { |filename| write(filename, files[filename]) }
+    delta[:new].each     { |filename| git_add(filename, files[filename]) }
+    delta[:deleted].each { |filename| git.rm(path,filename) }
     output = runner.run(self, './cyber-dojo.sh', time_limit)
     write('output', output) # so output is committed
-    visible_files['output'] = output    
-    after_test(visible_files, visible_filenames)    
+    files['output'] = output    
+    output
   end
   
 private
 
-  def before_test(delta, files)
-    delta[:changed].each { |filename| write(filename, files[filename]) }
-    delta[:new].each     { |filename| git_add(filename, files[filename]) }
-    delta[:deleted].each { |filename| git.rm(path,filename) }
-  end
-  
-  def after_test(files, pre_test_filenames)    
-    language.after_test(dir, files)
-    new_files = files.select { |filename| !pre_test_filenames.include?(filename) }
-    new_files.keys.each { |filename| git.add(path, filename) }
-    filenames_to_delete = pre_test_filenames.select { |filename| !files.keys.include?(filename) }    
-    [new_files,filenames_to_delete]
-  end
-  
   def git_add(filename, content)
     write(filename,content)
     git.add(path,filename)

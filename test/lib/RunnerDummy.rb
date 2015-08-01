@@ -9,8 +9,8 @@ class RunnerDummy
 
   def run(sandbox, command, max_seconds)
     "dummy-test-runner\n" +
-    "to use DockerRunner\n" +
-    "$ export CYBERDOJO_RUNNER_CLASS_NAME=DockerRunner\n" +
+    "to use DockerVolumeMountRunner\n" +
+    "$ export CYBERDOJO_RUNNER_CLASS_NAME=DockerVolumeMountRunner\n" +
     "to use HostRunner\n" +
     "$ export CYBERDOJO_RUNNER_CLASS_NAME=HostRunner"
   end

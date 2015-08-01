@@ -22,8 +22,7 @@ class KataController < ApplicationController
     visible_files = received_files
     now = time_now
     time_limit = 15
-    @traffic_lights,@new_files,@filenames_to_delete =
-      @avatar.test(delta, visible_files, now, time_limit)
+    @traffic_lights,@output = @avatar.test(delta, visible_files, now, time_limit)
       
     tag = @traffic_lights.length
     diffed_files = avatar.diff(tag-1,tag)
@@ -37,7 +36,6 @@ class KataController < ApplicationController
     }
     one_self.tested(@avatar,hash)
       
-    @output = visible_files['output']
     respond_to do |format|
       format.js { render layout: false }
     end

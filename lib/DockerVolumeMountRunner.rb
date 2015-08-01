@@ -21,7 +21,8 @@ class DockerVolumeMountRunner
   attr_reader :image_names
 
   def runnable?(language)
-    image_names.include?(language.image_name)
+    image_names.include?(language.image_name) &&
+      !language.display_name.end_with?('Approval')
   end
 
   def run(sandbox, command, max_seconds)
