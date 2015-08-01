@@ -92,6 +92,7 @@ def gather_stats
   modules.each do |module_name|
         
     log = `cat #{module_name}/#{wrapper_test_log}`
+    `rm #{module_name}/#{wrapper_test_log}`
     h = stats[module_name] = { }
 
     finished_pattern = "Finished in #{number}s, #{number} runs/s, #{number} assertions/s"

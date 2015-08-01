@@ -53,6 +53,7 @@ echo '' > $wrapped_filename
 cat ${*:2} | tail -n +2 >> $wrapped_filename
 rm -rf ../../coverage/.resultset.json
 ruby $wrapped_filename 2>&1 | tee $wrapper_test_log
+rm $wrapped_filename
 cp -R ../../coverage/* .
 ruby ../print_coverage_percent.rb index.html $module | tee -a $wrapper_test_log
 
