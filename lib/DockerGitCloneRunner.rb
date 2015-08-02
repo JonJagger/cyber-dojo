@@ -19,15 +19,26 @@ class DockerGitCloneRunner
   end
 
   def git_server
-    "192.168.59.104"
+    "git@192.168.59.104"
+  end
+
+  def kata_path(kata)
+    id = kata.id.to_s
+    outer = id[0..1]
+    inner = id[2..-1]
+    "/opt/git/#{outer}}/#{inner}"
   end
   
   def started(avatar)
-    # remote = "#{avatar.kata.id}_#{avatar.name}.git"
-    # NOTE: bare remote needs to go to Temp folder
-    # git clone --bare "#{avatar.path}" "#{remote}"
-    # scp -r #{remote} git@#{git_server}:/opt/git
-    # NOTE: bare remote in Temp folder needs deleting
+    # kata = avatar.kata    
+    # cmd = "cd #{kata.path}"
+    # cmd += "&& git clone --bare #{avatar.name} #{avatar.name}.git"
+    # cmd += "&& ssh #{git_server} "mkdir -p "#{kata_path(kata)}"
+    # cmd += "&& scp -r #{avatar.name}.git {git_server}:#{kata_path(kata)}"
+    # cmd += "&& rm -rf #{avatar.name}.git"
+    # cmd += "&& cd #{avatar.path}"
+    # cmd += "&& git remote add master #{git_server}:#{kata_path(kata)}/#{avatar.name}.git"
+    # cmd += "&& git push --set-upstream master master"    
   end
   
   def pre_test(avatar)
@@ -40,10 +51,10 @@ class DockerGitCloneRunner
   end
 
   def run(sandbox, command, max_seconds)
-    # 
-    # ip = "...."
-    # id = avatar.kata.id.to_s
-    # cmd = "git clone git@#{git_server}:/opt/git/#{id}_#{avatar.name}.git"
+    avatar = sandbox.avatar
+    kata = avatar.kata
+    # cmd = ""
+    # cmd += "git clone #{git_server}:#{kata_path(kata)}/#{avatar.name}.git"
     # cmd += "&& cd #{avatar.name}"
     # cmd += "&& ./cyber-dojo.sh"
     # docker run #{cmd}

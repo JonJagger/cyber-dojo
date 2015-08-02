@@ -1,9 +1,11 @@
 
+Creating and setting up a GitServer
+===================================
 
 Downloaded Linux Server iso image
 http://www.ubuntu.com/download/server
 
-Created new Guest in VirtualBox, called Linux Server, type=Linux, accepted settings
+Created new Guest in VirtualBox, called Linux GitServer, type=Linux, accepted settings
 Clicked it to start and it asked for the image
 Pointed it to the iso image I downloaded.
 Responded to all the questions to setup the server.
@@ -30,67 +32,73 @@ $ sudo chown git git
 $ sudo chgrp git git
 
 
-Now back on host OSX, add my ssh credentials into the guest os git user
+In host OS, scp my ssh credentials to the GitServer
 $ scp id_rsa.pub git@192.168.59.104:/home/git/.ssh
 
-Now in guest OS add that to authorized_keys
+In GitServer add that to authorized_keys
 $ su git
 $ cd /home/git/.ssh
 $ cat id_rsa.pub > authorized_keys
 $ chmod 600 authorized_keys
 
 
-Now back on host push bare repo to git server.
-This will happen once only when the animal enters the dojo.
-$ mkdir AB/CDE12345/lion
+In host OS this is what happens when avatar enters a cyber-dojo
+$ mkdir -p AB/CDE12345/lion
 $ cd AB/CDE12345/lion
 $ git init
-$ cat Hello > greet.txt
+$ echo Hello > greet.txt
 $ git add greet.txt
 $ git commit -am "initial commit"
-$ cd ../../..
-$ git clone --bare AB/CDE12345/lion ABCDE12345_lion.git
-$ scp -r ABCDE12345_lion.git git@192.168.59.104:/opt/git
-$ cd AB/CDE12345/lion
-$ git remote add master git@192.168.59.104:/opt/git/ABCDE12345_lion.git
+
+
+
+In host OS need to push bare repo to GitServer (when avatar enters)
+
+$ mkdir -p AB/CDE12345
+$ ssh git@192.168.59.104 "mkdir -p /opt/git/AB/CDE12345"
+$ git clone --bare lion lion.git
+$ scp -r lion.git git@192.168.59.104:/opt/git/AB/CDE12345
+$ rm -rf lion.git
+$ cd lion
+$ git remote add master git@192.168.59.104:/opt/git/AB/CDE12345/lion.git
 $ git push --set-upstream master master
 
 
-Back in guest OS check its there
-$ cd /opt/git
+In GitServer check the repo is there
+$ cd /opt/git/AB/CDE12345
 $ ls
-ABCDE12345_lion.git
-$ cd ABCDE12345_lion.git
+lion.git
+$ cd lion.git
 $ git log
 initial commit
 
 
-Back in host OS check if I commit and push it ends up in master
+In host OS check if I commit and push it ends up in master in GitServer
 $ cat Bye > farewell.txt
 $ git add farewell.txt
 $ git commit -am "second commit"
 $ git push
 
 
-Back in guest OS check its pushed
+In GitServer check its pushed
 $ git log
 second commit
 initial commit
 
 
-Back in host OS check I can clone from it
-$ git clone git@192.168.59.104:/opt/git/ABCDE12345_lion.git
+In host check I can clone from GitServer
+$ git clone git@192.168.59.104:/opt/git/AB/CDE12345/lion.git
 $ ls
-ABCDE12345_lion
-$ cd ABCDE12345_lion
+lion
+$ cd lion
 $ git log
 second commit
 initial commit
 
 
 
-Did not change the login-shell for the git user to /usr/bin/git-shell
-since that would prevent the scp I need (as each avatar enters) on 53
+Did not change the GitServer login-shell for the git user to /usr/bin/git-shell
+since that would prevent the scp I need (as each avatar enters)
 
 
 
