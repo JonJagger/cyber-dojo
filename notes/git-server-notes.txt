@@ -51,22 +51,46 @@ $ git commit -am "initial commit"
 $ cd ../../..
 $ git clone --bare AB/CDE12345/lion ABCDE12345_lion.git
 $ scp -r ABCDE12345_lion.git git@192.168.59.104:/opt/git
+$ cd AB/CDE12345/lion
+$ git remote add master git@192.168.59.104:/opt/git/ABCDE12345_lion.git
+$ git push --set-upstream master master
 
 
 Back in guest OS check its there
 $ cd /opt/git
 $ ls
 ABCDE12345_lion.git
+$ cd ABCDE12345_lion.git
+$ git log
+initial commit
+
+
+Back in host OS check if I commit and push it ends up in master
+$ cat Bye > farewell.txt
+$ git add farewell.txt
+$ git commit -am "second commit"
+$ git push
+
+
+Back in guest OS check its pushed
+$ git log
+second commit
+initial commit
 
 
 Back in host OS check I can clone from it
 $ git clone git@192.168.59.104:/opt/git/ABCDE12345_lion.git
 $ ls
 ABCDE12345_lion
+$ cd ABCDE12345_lion
+$ git log
+second commit
+initial commit
 
 
 
 Did not change the login-shell for the git user to /usr/bin/git-shell
 since that would prevent the scp I need (as each avatar enters) on 53
+
 
 
