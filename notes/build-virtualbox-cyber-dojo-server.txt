@@ -1,0 +1,120 @@
+
+Creating cyber-dojo server inside VirtualBox.
+
+Started from Linux Server iso image
+http://www.ubuntu.com/download/server
+
+Created new Guest in VirtualBox, called cyber-dojo server, type=Linux, accepted settings
+Clicked it to start and it asked for the image
+Pointed it to the iso image I downloaded.
+Responded to all the questions to setup the server.
+Created a user called jon with usual password (sudoer)
+
+Kept network settings as NAT (to enable downloads)   //to Host-only-adapter.
+
+First fixed keyboard
+sudo dpkg-reconfigure keyboard-configuration
+
+
+Followed instructions at
+https://docs.docker.com/installation/ubuntulinux/
+
+$ wget -qO- https://get.docker.com/ | sh
+
+Recommended adding non root user to docker group as follows
+sudo usermod -aG docker jon
+
+Is www-data a user?
+$ grep www-data /etc/passwd
+Yes
+
+$ sudo usermod -aG docker www-data
+
+Checking docker install
+$ sudo docker run hello-world
+
+Yes it worked.
+Now simplest is to setup ssh so I can scp
+Fails.
+Shut it down.
+Set Network to host-only-adapter
+Restarted
+Worked this time.
+Think I may have failed first time because I put docker's IP address in by accident.
+On guest
+$ cd ~
+$ mkdir .ssh
+$ chmod 700 .ssh
+
+Copy across credentials
+$ cd ~/.ssh
+$ scp id_rsa.pub jon@192.168.59.104:/home/jon/.ssh/authorized_keys
+
+Now I can copy across the build-script
+$ cd admin_scripts
+$ scp setup_digital_ocean_server.sh jon@192.168.59.104:/home/jon
+
+Now put Network back to NAT and git clone
+
+$ cd var
+$ mkdir www
+$ cd www
+$ git clone https://JonJagger@github.com/JonJagger/cyber-dojo
+
+Now realize scp was not necessary
+
+$ cd /var/www/cyber-dojo
+$ cd admin_scripts
+$ ./setup_digital_ocean_server.sh
+
+ifconfig says 192.168.59.104
+into browser and we have a home page
+
+
+<aside>
+Going to be painful having to switch network to NAT to git push
+and then back to Host-only-adapter to run from browser.
+
+$ git branch -r
+origin/git-server-and-docker-swarm
+is listed
+
+$ sudo git checkout origin/git-server-and-docker-swarm
+works
+
+$ git status
+fails because st is not a shortcut
+$ sudo git config --global alias.st status
+</aside>
+
+
+create page fails.
+This is because I have not run admin_scripts/pull.sh
+No cache.json file languages and exercises
+Recreated those manually to check
+$ cd languages
+$ sudo ./cache.rb
+$ sudo chown www-data cache.json
+$ sudo chgrp www-data cache.json
+Same for exercises
+Still create page wont load. 
+Think it is still rights.
+Still need to run pull.sh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
