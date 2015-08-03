@@ -11,7 +11,7 @@ cyberDojoHome=/var/www/cyber-dojo
 cd $cyberDojoHome
 
 # store the time-stamp of this file before doing git-pull
-MY_TIME_STAMP_BEFORE=`stat -c %y $0`
+MY_TIME_STAMP_BEFORE=`stat -c %y $cyberDojoHome/admin_scripts/pull.sh`
 
 # get latest source from https://github.com/JonJagger/cyber-dojo
 # if it asks for a password just hit return
@@ -23,7 +23,7 @@ if [ $ret -ne 0 ]; then
 fi
 
 # store the time-stamp of this file before after a git-pull
-MY_TIME_STAMP_AFTER=`stat -c %y $0`
+MY_TIME_STAMP_AFTER=`stat -c %y $cyberdojoHome/admin_scripts/pull.sh`
 
 apt-get install -y acl
 
