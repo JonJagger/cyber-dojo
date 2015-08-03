@@ -136,7 +136,7 @@ I can now do a dojo in C/assert.
 
 Summary
 =======
-o) build scripts need updating on master  to fix the 
+o) build scripts need updating on master to fix the 
    location of pull.sh but basically works
    
 o) build script should be a single script?
@@ -161,8 +161,32 @@ o) Create new cyber-dojo blog page on setting up a server
    from the 14.04.2 Linux Server image.
 
 
+VirtualBox Note
+===============
+To get the git-server and the cyber-dojo server both
+running with host-only-adapter and not have the same IP
+address I had to tweak one of them so its apparent mac address
+was different to the other one. I cloned one server from the other.
 
 
+Notes
+=====
+www-data having to scp the bare git repo to the git server?
+www-data doing this does not feel right.
+www-data does not have a login shell.
+Thinking I should create a cyber-dojo user on the server
+and get apache2 to run the cyber-dojo rails app as the
+cyber-dojo user rather than the www-data user.
+Then give cyber-dojo its own home folder.
+Which could be /var/www/cyber-dojo !?
+Can I do this?
+setup_digital_ocean_server.sh has these lines
+  echo PassengerDefaultUser www-data >> /etc/apache2/mods-available/passenger.conf
+  echo PassengerDefaultGroup www-data >> /etc/apache2/mods-available/passenger.conf
+which suggests I can.
+But... this will affect some of the language containers.
+Eg C# which assumes the www-data user
+Yes. See C#/NUnit/Dockerfile
 
 
 
