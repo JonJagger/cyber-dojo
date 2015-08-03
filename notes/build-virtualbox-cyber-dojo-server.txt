@@ -23,11 +23,11 @@ https://docs.docker.com/installation/ubuntulinux/
 $ wget -qO- https://get.docker.com/ | sh
 
 Recommended adding non root user to docker group as follows
-sudo usermod -aG docker jon
+$ sudo usermod -aG docker jon
 
 Is www-data a user?
 $ grep www-data /etc/passwd
-Yes
+Yes. So I did this
 
 $ sudo usermod -aG docker www-data
 
@@ -35,19 +35,13 @@ Checking docker install
 $ sudo docker run hello-world
 
 Yes it worked.
-Now simplest is to setup ssh so I can scp
-Fails.
-Shut it down.
-Set Network to host-only-adapter
-Restarted
-Worked this time.
-Think I may have failed first time because I put docker's IP address in by accident.
-On guest
+Now simplest is to setup ssh. I will need to scp the bare repo 
+at some point. On git-server
 $ cd ~
 $ mkdir .ssh
 $ chmod 700 .ssh
 
-Copy across credentials
+Copy across credentials to git-server
 $ cd ~/.ssh
 $ scp id_rsa.pub jon@192.168.59.104:/home/jon/.ssh/authorized_keys
 
@@ -62,7 +56,6 @@ $ mkdir www
 $ cd www
 $ git clone https://JonJagger@github.com/JonJagger/cyber-dojo
 
-Now realize scp was not necessary
 
 $ cd /var/www/cyber-dojo
 $ cd admin_scripts
@@ -126,10 +119,10 @@ Obviously a missing test somewhere.
 If there are no languages installed the create 
 setup page should simply show no languages!
 
-Can't create dojo though. Think that is because one-self is 
-not connecting.
+Can't create dojo though. 
+Think that is because one-self is not connecting.
+Still on Host-only adpater. Not good.
 
-Yes.
 $ cd /var/www/cyber-dojo/test/lib
 $ sudo cp OneSelfDummy.rb ../../lib
 $ cd /var/www/cyber-dojo/lib
@@ -137,7 +130,8 @@ $ sudo chown www-data OneSelfDummy.rb
 $ sudo chgrp www-data OneSelfDummy.rb
 and edit all.rb so it names OneSelfDummy.rb
 
-And we are up. I can do a dojo in C/assert.
+And we are up. It was OneSelf.
+I can now do a dojo in C/assert.
 
 
 Summary
