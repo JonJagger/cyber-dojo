@@ -101,7 +101,28 @@ Still create page wont load.
 Think it is still rights.
 Still need to run pull.sh
 
+Switched back to NAT
+ran pull.sh
+Trying Bridges-adapter
+Didn't seem to work.
+Switching back to Host-only-adapter
 
+Looked at log
+Problem in LanguagesDisplayNameSplitter.rb
+   no conversion from nil to Integer (for  [])
+   
+I think this is because there are no languages.
+Switch back to NAT
+$ cd /var/www/cyber-dojo/admin_scripts
+$ sudo docker pull cyberdojo/gcc-4.8.1_assert
+
+Switch back to Host-adapter
+[create] and yes, I see only one language [C (gcc)], 
+one test [assert]
+
+Obviously a missing test somewhere.
+If there are no languages installed the create 
+setup page should simply show no languages!
 
 
 
