@@ -124,6 +124,22 @@ Obviously a missing test somewhere.
 If there are no languages installed the create 
 setup page should simply show no languages!
 
+Can't create dojo though. Think that is because one-self is 
+not connecting.
+
+Yes.
+$ cd /var/www/cyber-dojo/test/lib
+$ sudo cp OneSelfDummy.rb ../../lib
+$ cd /var/www/cyber-dojo/lib
+$ sudo chown www-data OneSelfDummy.rb
+$ sudo chgrp www-data OneSelfDummy.rb
+and edit all.rb so it names OneSelfDummy.rb
+
+And we are up. I can do a dojo in C/assert.
+
+
+
+
 
 
 
