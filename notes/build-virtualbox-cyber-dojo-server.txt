@@ -13,8 +13,9 @@ Created a user called jon with usual password (sudoer)
 Kept network settings as NAT (to enable downloads)   //to Host-only-adapter.
 
 First fixed keyboard
-sudo dpkg-reconfigure keyboard-configuration
-
+$ sudo dpkg-reconfigure keyboard-configuration
+On 1st step look for Apple option in list but then
+*also* look for apple option in subsequent list.
 
 Followed instructions at
 https://docs.docker.com/installation/ubuntulinux/
@@ -68,7 +69,7 @@ $ cd admin_scripts
 $ ./setup_digital_ocean_server.sh
 
 ifconfig says 192.168.59.104
-into browser and we have a home page
+into browser and we have a home page :-)
 
 
 <aside>
@@ -88,7 +89,7 @@ $ sudo git config --global alias.st status
 </aside>
 
 
-create page fails.
+Create/Setup page fails.
 This is because I have not run admin_scripts/pull.sh
 No cache.json file languages and exercises
 Recreated those manually to check
@@ -112,12 +113,13 @@ Problem in LanguagesDisplayNameSplitter.rb
    no conversion from nil to Integer (for  [])
    
 I think this is because there are no languages.
-Switch back to NAT
+Switched back to NAT
 $ cd /var/www/cyber-dojo/admin_scripts
 $ sudo docker pull cyberdojo/gcc-4.8.1_assert
 
 Switch back to Host-adapter
-[create] and yes, I see only one language [C (gcc)], 
+[create] and yes, I see 
+one language [C (gcc)]
 one test [assert]
 
 Obviously a missing test somewhere.
@@ -137,6 +139,32 @@ and edit all.rb so it names OneSelfDummy.rb
 
 And we are up. I can do a dojo in C/assert.
 
+
+Summary
+=======
+o) build scripts need updating on master  to fix the 
+   location of pull.sh but basically works
+   
+o) build script should be a single script?
+   instead of cloning first perhaps
+   wget the script and then run it.
+   
+o) build script works when building from Ubuntu 14.04.2 server
+   as long as you install docker first.
+   $ sudo wget -qO- https://get.docker.com/ | sh   
+   Perhaps I could add that command anyway.
+   Is it a no-op if docker is already installed?   
+
+o) OneSelfDummy.rb needs to be moved into lib
+
+o) When running on a local laptop with no internet connectivity
+   (Host-only-adapter) OneSelf not being visible means you
+   can't do local dojos. FIX THIS.
+   
+o) Add test for LanguagesDisplayNameSplitter when there are no languages.
+
+o) Create new cyber-dojo blog page on setting up a server
+   from the 14.04.2 Linux Server image.
 
 
 
