@@ -17,4 +17,5 @@
   IdSplitter
   LanguagesDisplayNamesSplitter
   OneSelf  
+  OneSelfDummy
 }.each { |sourcefile| require_relative './' + sourcefile }
