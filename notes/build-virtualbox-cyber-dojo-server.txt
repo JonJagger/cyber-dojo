@@ -189,6 +189,71 @@ Eg C# which assumes the www-data user
 Yes. See C#/NUnit/Dockerfile
 
 
+Using www-data as a first try to see if it works even
+though www-data has no login shell etc.
+
+$ cd /var/www
+$ sudo mkdir .ssh
+
+temporarily set access to .ssh
+$ sudo chmod 777 .ssh
+$ sudo chown www-data .ssh
+$ sudo chgrp www-data .ssh
+
+now make ssh keys
+$ ssh-keygen -t rsa
+This copies them to /root
+$ pwd
+/var/www/.ssh
+$ sudo mv /root/.ssh/id_rsa .
+$ sudo mv /root/.ssh/id_rsa.pub .
+$ sudo rm -rf /root/.ssh
+
+Now scp them to git server
+$ pwd
+/var/www/.ssh
+$ scp id_rsa.pub git@192.168.59.103:/home/git/.ssh/id_rsa.pub.www-data
+Could have used ssh-copy-id
+
+Should add this to apache2 config
+<Directory /var/www/.ssh>
+  Order Deny,Allow
+  Deny from all
+</Directory>
+
+
+On the git server
+$ pwd
+/home/git/.ssh
+$ cat id_rsa.pub.www-data >> authorized_keys
+
+then set permissions back on cyber-dojo server
+$ cd /var/www
+$ sudo chmod 600 .ssh
+
+Ok. Now I need to test it. How?
+Can I su as www-data?
+$ su - www-data -c 'pwd'
+It asks for a password.
+Is this something to do with sudoers?
+
+Or do I have to set the server to use DockerGitCloneRunner
+and make a command that tests the ssh. eg
+as jon
+$ ssh git@192.168.59.103 "mkdir -p "/home/git/a/b/c "
+This asked for git password.
+ssh fouled up on git server?
+
+Works from macbook pro terminal.
+This is the wrong approach.
+Don't want to muck up the www-data user.
+Need to use new user cyber-dojo.
+That way I can set the cyber-dojo user to have or not have a password
+(eg for testing)
+
+
+
+
 
 
 
