@@ -251,6 +251,58 @@ Need to use new user cyber-dojo.
 That way I can set the cyber-dojo user to have or not have a password
 (eg for testing)
 
+sudo adduser cyber-dojo
+s/www-data/cyber-dojo/  in /etc/apache2/mods-available/passenger.conf
+cd /var/www
+sudo chown -R cyber-dojo cyber-dojo
+sudo chgrp -R cyber-dojo cyber-dojo
+
+And cyber-dojo server starts and opens create/setup page.
+Creating a dojo fails though.
+
+cyber-dojo/config/application.rb needs to use OneSelfDummy
+
+Can now create a dojo.
+editing cyber-dojo sh file to do
+$ whoami
+says
+$ www-data
+Is this because of the docker run command?
+Yes. DockerVolumeMountRunner.rb has this
+    docker_command = "docker run -u www-data" + ...
+So edited that s/www-data/cyber-dojo/
+Ok. Now I get error
+
+Error response from daemon: Cannot start 
+container 5257a15351a3bf122180d4fa4a5bc021a838cb8e3cdb2734f8233cfea23f8b64:
+[8] System error: Unable to find user cyber-dojo
+
+Googling reveals this
+https://github.com/docker/docker/issues/12514
+
+This says the user has to exist *inside* the docker container.
+Of course.
+And of course means that the docker container
+needs network access to the git server.
+
+So I will need to have a cyber-dojo user *inside*
+the docker containers and use that for the docker-run command.
+
+And I will need to recreate all the docker containers to use
+USER cyber-dojo
+
+Don't think this will be too bad.
+Eg C/assert will need to append this to its Dockerfile
+
+RUN adduser cyber-dojo --disabled-password
+USER cyber-dojo
+
+and the documentation [man adduser] suggests that
+disabled-password will not allow password login but
+will allow access via ssh rsa keys. Ok.
+
+
+
 
 
 
