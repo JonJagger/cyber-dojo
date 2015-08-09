@@ -14,7 +14,7 @@ class DockerGitCloneRunner
   end
 
   def runnable?(language)    
-    language.support_filenames != [] &&
+    language.support_filenames == [] &&
       !language.display_name.end_with?('Approval')
   end
 
@@ -35,27 +35,33 @@ class DockerGitCloneRunner
     cmds = [
       "cd #{kata.path}",
       "git clone --bare #{avatar.name} #{avatar.name}.git",
+      # scp -r says it makes directories as needed but it doesn't seem to
+      # which is why I'm preceding the scp with the mkdir -p
       "sudo -u cyber-dojo ssh #{git_server} 'mkdir -p #{kata_path(kata)}'",
       "sudo -u cyber-dojo scp -r #{avatar.name}.git #{git_server}:#{kata_path(kata)}",
       "rm -rf #{avatar.name}.git",
       "cd #{avatar.path}",
       "git remote add master #{git_server}:#{kata_path(kata)}/#{avatar.name}.git",
       "sudo -u cyber-dojo git push --set-upstream master master"
-    ]
-    o,es = bash(cmds.join(';'))
+    ].join(';')
+    o,es = bash(cmds)
   end
   
   def pre_test(avatar)
-    # git.commit(avatar.path, "-a -m 'pre-push' --quiet")
-    # git push has to be done with
-    #    sudo -u cyber-dojo ...
-    # git.push(avatar.path)
+    # if no visible files have changed this will be a no-op
+    cmds = [
+      "cd #{avatar.path}",
+      "sudo -u cyber-dojo git commit -am 'pre-test-push' --quiet"
+      "sudo -u cyber-dojo git push master"
+    ].join(';')
+    o,es = bash(cmds)
   end
   
   def post_commit_tag(avatar)
-    # git push has to be done with 
-    #    sudo -u cyber-dojo ...
-    # git.push(avatar.path)
+    cmd = [
+      "sudo -u cyber-dojo git push master"
+    ]
+    o,es = bash(cmd)
   end
 
   def run(sandbox, command, max_seconds)

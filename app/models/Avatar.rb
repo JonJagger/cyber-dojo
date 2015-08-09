@@ -94,6 +94,7 @@ private
     git.init(path, '--quiet')
     git.config(path, 'user.name ' + user_name)
     git.config(path, 'user.email ' + user_email)
+    git.config(path, '--global push.default simple')
   end
 
   def git_commit(tag)

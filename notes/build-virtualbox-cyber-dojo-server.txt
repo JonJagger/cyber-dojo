@@ -432,6 +432,36 @@ post_test(avatar)
 run(...)
 
 
+pre_test(avatar)
+ Trying from command line
+ $ cd katas/02/3456EDED/deer
+ $ sudo -u cyber-dojo git commit -a -m 'pre-pull' --quiet
+ Fails with
+ .../deer/.git/index.lock permission denied.
+ 
+Think I need to create a group and make both www-data and cyber-dojo
+members of the group so cyber-dojo can read/write files.
+
+Added cyber-dojo to www-data's group
+$ sudo usermod -a -G www-data cyber-dojo
+
+Ok. Now I can create a new dojo
+Enter it
+Make a change
+Hit test
+
+And the change is visible on the git server.
+Although 
+$ git diff HEAD HEAD^1
+shows
+- and + lines that are the same except for ^M
+Eg
+-int answer(void)
++int answer(void)^M
+
+Which is not right.
+Excellent.
+
 
 
 
