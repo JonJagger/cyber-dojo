@@ -2,4 +2,4 @@
 
 # Don't use this if there are data-only containers.
 
-docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)
+docker stop $(docker ps -aq) && docker rm $(docker ps -aq)

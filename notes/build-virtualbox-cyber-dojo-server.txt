@@ -408,7 +408,9 @@ to push/scp to the git server.
 http://askubuntu.com/questions/402832/how-do-i-allow-only-one-user-to-su-to-another-account
 
 
-Added this line to /etc/sudoers.d/custom  (new file)
+>>>>>
+>>>>>Added this line to /etc/sudoers.d/custom  (new file)
+>>>>>to allow www-data to sudo -u cyber-dojo
 www-data ALL=(cyber-dojo:cyber-dojo) NOPASSWD:ALL
 
 which should allow www-data to do this...
@@ -418,7 +420,9 @@ It looks like the command (bash) can be entered just as is unquoted.
 But if there are cd and redirections then a subshell is needed
 $ sudo -u cyber-dojo -c "cd blah ; cat abc > Hello.txt"
 
-Logged in as cyber-dojo, entered password
+>>>>>
+>>>>>Logged in as cyber-dojo, entered password, setup ssh from cyber-dojo to git server
+>>>>>
 $ cd ~/.ssh
 $ ssh-keygen -t rsa
 $ ssh-copy-id git@192.168.59.103
@@ -442,7 +446,9 @@ pre_test(avatar)
 Think I need to create a group and make both www-data and cyber-dojo
 members of the group so cyber-dojo can read/write files.
 
-Added cyber-dojo to www-data's group
+>>>>>>
+>>>>>>Added cyber-dojo to www-data's group
+>>>>>>
 $ sudo usermod -a -G www-data cyber-dojo
 
 Ok. Now I can create a new dojo
@@ -462,11 +468,49 @@ Eg
 Which is not right.
 Excellent.
 
+Trying docker run command directly from terminal
+$ cd katas/F9/BD34609D/moose
+$ sudo docker run 
+    -u www-data
+    --cidfile='cidfile.txt'
+    -w /sandbox
+    cyberdojo/gcc-4.8.1_assert
+    /bin/bash -c 
+       'git clone git@192.168.59.103:/opt/git/F9/BD34609D/moose.git;
+        cd moose;
+        ./cyber-dojo.sh'
+        
+        
+And it responds with
+fatal: could not create work tree dir 'moose'.: Permission denied
 
+That makes sense.
+Need to have an area where I can actually create files.
 
+Ok. Tried it interactively...
 
+$docker run
+    -u www-data
+    --cidfile='cidfile.txt'
+    -it
+    cyberdojo/gcc-4.8.1_assert
+    /bin/bash 
 
+www-data@5e6d74: cd /tmp
+www-data@5e6d74: git clone git@192.168.59.103:/opt/git/F9/BD34609D/moose.git
+This says 'are you sure you want to continue'
+I say yes
+Then asks for git user password
+Clone then works. Then 
 
+www-data@5e6d74: cd moose
+www-data@5e6d74: cd sandbox
+www-data@5e6d74: ./cyber-dojo.sh
+All tests passed
+
+So cloning requires ssh access. 
+
+   
 
 
 

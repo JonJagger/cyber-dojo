@@ -67,10 +67,32 @@ class DockerGitCloneRunner
   def run(sandbox, command, max_seconds)
     avatar = sandbox.avatar
     kata = avatar.kata
-    # cmd = ""
-    # cmd += "git clone #{git_server}:#{kata_path(kata)}/#{avatar.name}.git"
-    # cmd += "&& cd #{avatar.name}"
-    # cmd += "&& ./cyber-dojo.sh"
+    cidfile = avatar.path + 'cidfile.txt'
+    language = kata.language
+
+    cmds = [
+      "git clone #{git_server}:#{kata_path(kata)}/#{avatar.name}.git",
+      "cd #{avatar.name}/sandbox",
+      "#{command}"
+    ].join(';')
+    
+    docker_cmd = 
+      "docker run" +
+      " -u www-data" +
+      " --cidfile=#{quoted(cidfile)}" +
+      " #{language.image_name}" +
+      " /bin/bash -c" +
+      " #{quoted(timeout(cmd,max_seconds))}"
+      
+    outer_command = timeout(docker_command,max_seconds+5)
+
+    bash("rm -f #{cidfile}")
+    output,exit_status = bash("#{outer_command}")
+    pid,_ = bash("cat #{cidfile}")
+    bash("docker stop #{pid} ; docker rm #{pid}")
+
+    exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
+      
     # docker run #{cmd}
     #
     # Note: the git-server sees the git repo of the animal which is at the
