@@ -294,15 +294,142 @@ USER cyber-dojo
 Don't think this will be too bad.
 Eg C/assert will need to append this to its Dockerfile
 
-RUN adduser cyber-dojo --disabled-password
-USER cyber-dojo
+RUN adduser cyber-dojo --gecos "First Last,Room,WorkPhone,HomePhone" --disabled-password
 
 and the documentation [man adduser] suggests that
 disabled-password will not allow password login but
 will allow access via ssh rsa keys. Ok.
 
+Ok. whoami in cyber-dojo.sh says cyber-dojo.
+Now need to make sure files saved in katas/
+folder are owned by cyber-dojo user.
+
+No --disabled-password is not what I need. I need no password.
+
+RUN sudo adduser cyber-dojo -uid 1002 
+RUN sudo passwd -d cyber-dojo
+
+And now
+$ sudo - cyber-dojo -c 'pwd'
+/home/cyber-dojo 
+Works without needing a password.
+
+Next thing. Inside the container 
+$ cat /etc/passwd
+cyber-dojo:x:1000:1000
+But in the cyber-dojo server
+$ cat /etc/passwd
+cyber-dojo:x:1002:1002
+
+whereas www-data is 33 in both.
+I think they need to be the same.
+
+Add this to Dockerfile
+
+RUN sudo adduser cyber-dojo -uid 1002
+RUN sudo passwd -d cyber-dojo
+
+And now docker -i -t verifies that cyber-dojo inside the container has a uid of 1002
+
+But, oddly, from cyber-dojo.sh 
+cat /etc/passwd
+Says the gid of cyber-dojo is back to 1000
+
+Looking at...
+http://www.yegor256.com/2014/08/29/docker-non-root.html
+
+#!/bin/bash
+adduser --disabled-password --gecos '' r
+adduser r sudo
+echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+su -m r -c /home/r/script.sh
+
+Ok. Woke up this morning realizing that the rails server 
+needs to push to the git server. So *it* needs ssh.
+But the docker container only ever clones/pulls from
+the git server. So the docker container does not need
+ssh. 
+
+I think my scp is failing because when I do
+ssh-keygen I'm logged in as jon and so the id_rsa
+file does not go into www-data's home dir.
+So when asked I specified /var/www/.ssh
+
+$ pwd
+/var/www/.ssh
+$ ssh-copy-id -i ./id_rsa git@192.168.59.103 
+
+manually verified id_rsa file is on the git server.
+
+Still not working.
+Looking at id_rsa.pub file I see jon@server at the end.
+Needs to be www-data. Is there an option to specify
+the user in ssh-keygen?
+No. man ssh-keygen says the user@host is a comment.
+
+Ok. Think www-data needs a valid login shell.
+Think I've had this before.
+Going round in circles?
+
+$ usermod -s /bin/bash www-data
+
+Still no joy.
+hostname is same on both machines.
+Does that matter?
+Changed it.
+Still failing.
+
+Added -v option to ssh/scp command.
+says read_passphrase: can't open /dev/tty
+Progress...
+This looks like it. Says www-data does not have a tty
+http://serverfault.com/questions/372211/cant-ssh-as-tty-less-user
+
+No. Seems the tty is a red herring.
+It's a ssh key issue.
+Maybe give www-data a password.
+Then log in as www-data and ssh-keygen
+Then set www-data back to no password.
 
 
+========================================================
+========================================================
+========================================================
+========================================================
+========================================================
+========================================================
+========================================================
+========================================================
+========================================================
+
+
+Or maybe create a cyber-dojo user and use that just
+to push/scp to the git server.
+http://askubuntu.com/questions/402832/how-do-i-allow-only-one-user-to-su-to-another-account
+
+
+Added this line to /etc/sudoers.d/custom  (new file)
+www-data ALL=(cyber-dojo:cyber-dojo) NOPASSWD:ALL
+
+which should allow www-data to do this...
+$ sudo -u cyber-dojo bash
+
+It looks like the command (bash) can be entered just as is unquoted.
+But if there are cd and redirections then a subshell is needed
+$ sudo -u cyber-dojo -c "cd blah ; cat abc > Hello.txt"
+
+Logged in as cyber-dojo, entered password
+$ cd ~/.ssh
+$ ssh-keygen -t rsa
+$ ssh-copy-id git@192.168.59.103
+entered git password
+$ ssh git@192.168.59.103
+and verified its ok.
+
+Yes. started(avatar) is now working :-)  Just these left...
+pre_test(avatar)
+post_test(avatar)
+run(...)
 
 
 

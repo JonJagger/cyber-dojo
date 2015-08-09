@@ -19,34 +19,42 @@ class DockerGitCloneRunner
   end
 
   def git_server
-    "git@192.168.59.104"
+    "git@192.168.59.103"
   end
 
   def kata_path(kata)
     id = kata.id.to_s
     outer = id[0..1]
     inner = id[2..-1]
-    "/opt/git/#{outer}}/#{inner}"
+    "/opt/git/#{outer}/#{inner}"
   end
   
   def started(avatar)
-    # kata = avatar.kata    
-    # cmd = "cd #{kata.path}"
-    # cmd += "&& git clone --bare #{avatar.name} #{avatar.name}.git"
-    # cmd += "&& ssh #{git_server} "mkdir -p "#{kata_path(kata)}"
-    # cmd += "&& scp -r #{avatar.name}.git {git_server}:#{kata_path(kata)}"
-    # cmd += "&& rm -rf #{avatar.name}.git"
-    # cmd += "&& cd #{avatar.path}"
-    # cmd += "&& git remote add master #{git_server}:#{kata_path(kata)}/#{avatar.name}.git"
-    # cmd += "&& git push --set-upstream master master"    
+    kata = avatar.kata
+  
+    cmds = [
+      "cd #{kata.path}",
+      "git clone --bare #{avatar.name} #{avatar.name}.git",
+      "sudo -u cyber-dojo ssh #{git_server} 'mkdir -p #{kata_path(kata)}'",
+      "sudo -u cyber-dojo scp -r #{avatar.name}.git #{git_server}:#{kata_path(kata)}",
+      "rm -rf #{avatar.name}.git",
+      "cd #{avatar.path}",
+      "git remote add master #{git_server}:#{kata_path(kata)}/#{avatar.name}.git",
+      "sudo -u cyber-dojo git push --set-upstream master master"
+    ]
+    o,es = bash(cmds.join(';'))
   end
   
   def pre_test(avatar)
     # git.commit(avatar.path, "-a -m 'pre-push' --quiet")
+    # git push has to be done with
+    #    sudo -u cyber-dojo ...
     # git.push(avatar.path)
   end
   
   def post_commit_tag(avatar)
+    # git push has to be done with 
+    #    sudo -u cyber-dojo ...
     # git.push(avatar.path)
   end
 
