@@ -136,9 +136,6 @@ I can now do a dojo in C/assert.
 
 Summary
 =======
-o) build scripts need updating on master to fix the 
-   location of pull.sh but basically works
-   
 o) build script should be a single script?
    instead of cloning first perhaps
    wget the script and then run it.
@@ -510,11 +507,26 @@ All tests passed
 
 So cloning requires ssh access. 
 
-   
+Want to avoid that.
+Use git daemon on git server
+https://git-scm.com/book/en/v1/Git-on-the-Server-Git-Daemon
+
+Think this is out of date
+file is called local-git-daemon.conf
+and it lives in /etc/init.d/
+Checked with
+$ sudo init-checkconf -d /etc/init.d/local-git-daemon.conf
 
 
+To specify the git daemon can serve each .git repo I need to
+$ cd opt/git/F9/BD34609D/moose.git
+$ touch git-daemon-export-ok
 
+Need to open port 9418
 
+One potential issue with having a password-less, ssh-less git-server
+giving git clone read-access is that it could become the bottleneck
+instead of the docker container...
 
 
 

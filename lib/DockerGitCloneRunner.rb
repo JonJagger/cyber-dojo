@@ -39,6 +39,8 @@ class DockerGitCloneRunner
       # which is why I'm preceding the scp with the mkdir -p
       "sudo -u cyber-dojo ssh #{git_server} 'mkdir -p #{kata_path(kata)}'",
       "sudo -u cyber-dojo scp -r #{avatar.name}.git #{git_server}:#{kata_path(kata)}",
+      # allow git-daemon to serve it
+      "sudo -u cyber-dojo ssh #{git_server} 'touch #{kata_path(kata)}/#{avatar.name}.git/git-daemon-export-ok'",
       "rm -rf #{avatar.name}.git",
       "cd #{avatar.path}",
       "git remote add master #{git_server}:#{kata_path(kata)}/#{avatar.name}.git",
@@ -70,12 +72,18 @@ class DockerGitCloneRunner
     cidfile = avatar.path + 'cidfile.txt'
     language = kata.language
 
+    # Unless the docker container has ssh credentials
+    # this will require entering the git password.
+    # Better option I think is to set up a git daemon on 
+    # the git server.
     cmds = [
       "git clone #{git_server}:#{kata_path(kata)}/#{avatar.name}.git",
       "cd #{avatar.name}/sandbox",
       "#{command}"
     ].join(';')
     
+    # network defaults to bridged. Would prefer it
+    # if I could restrict it soley to the git server.
     docker_cmd = 
       "docker run" +
       " -u www-data" +
