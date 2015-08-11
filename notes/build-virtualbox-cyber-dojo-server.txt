@@ -535,7 +535,7 @@ Cloing into 'moose'...
 fatal: remote error: access denied or repository not exported 
    /opt/git/F9/BD34609D/moose.git
 
-Is this a file/folder rights issue.
+Is this a file/folder rights issue?
 
 After apt-get install git-daemon-run
 cat /etc/passwd
@@ -615,6 +615,45 @@ And yes. Now it fails with
 fatal: could not create work tree dir 'koala'.: Permission denied
 which is correct because www-data has no rights at / inside
 the container.
+
+
+Now the git clone is failing?!
+$ tail -100 /var/log/git-daemon/current
+Ah. It's because /opt/git is the base I need to change
+$ git clone git://192.168.59.103/opt/git/F9/BD34609D/moose.git
+to
+$ git clone git://192.168.59.103/F9/BD34609D/moose.git
+
+
+Getting near now. Now the problem is that cd is
+a built-in command and you can't give a built-in
+to timeout.
+$ info coreutils 'timeout invocation'
+
+Hmmm. Doesn't seem to be a way around that.
+How to work around it?
+Echo the commands into a script and then run that?
+It seems not. If the docker run command echoes into a file then
+that file does not appear when I ls inside the container.
+
+Ok. There is an option on git clone to specify
+the folder you want to clone into.
+
+But I don't think the git clone is working from inside
+the docker container.
+Nope its not.
+I think the problem might be that I haven't opened a port.
+9418 and 22
+docker run  -p 9418:9418 
+did not help
+
+Trying with --net=host
+option which is not secure
+
+
+Aside: command being passed is "./cyber-dojo.sh"
+Better to pass it as "cyber-dojo.sh"
+and let the runner decide the folder.
 
 ========================================================
 ========================================================
