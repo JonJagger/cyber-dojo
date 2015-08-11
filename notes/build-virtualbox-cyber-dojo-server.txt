@@ -572,6 +572,54 @@ AND YEEEES. git clone works.
 $ git clone git://192.168.59.103/F9/BD34609D/moose.git
 
 
+Ok. But now the ssh does not work. Adding -v reveals port 22
+does not appear to be open.
+
+$ sudo ufw allow 22
+$ sudo ufw enable
+
+Ok. Now ssh from command line works.
+
+Ok. Can now enter. And repo is created on git server.
+Hitting test for first time with docker run.
+Nothing comes back.
+Checking the rails log.
+Undefined local variable cidfile.
+Yup. Missing. language local variable too.
+Added those.
+Now it says quoted method is undefined.
+Various other typos.
+
+And YEEEES. I'm running a command inside the container
+and getting the response.
+First response is
+fatal: repository 'git@192.168.59.103/opt/git/BF/26F665FE/deer.git' does not exist
+
+Adding -v option to the git clone.
+No help.
+Run the container interactively.
+$ docker run -u www-data -it cyberdojo/gcc-4.8.1_assert /bin/bash
+$ ping 192.168.59.103
+fine
+$ git clone git@192.168.59.103/opt/git/BF/26F665FE/deer.git
+fatal: repostitory does not exist.
+Try from cyber-dojo server. Same.
+Does git user have to be logged in?
+Did opening port 22 close 9418?
+No. Log in as jon
+$ sudo ufw status
+9418 and 22 are listed as ALLOW Anywhere.
+git@... is not right. should be be git:...
+Fixed that.
+And yes. Now it fails with
+fatal: could not create work tree dir 'koala'.: Permission denied
+which is correct because www-data has no rights at / inside
+the container.
+
+========================================================
+========================================================
+========================================================
+
 One potential issue with having a password-less, ssh-less git-server
 giving git clone read-access is that it could become the bottleneck
 instead of the docker container...

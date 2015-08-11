@@ -50,7 +50,7 @@ class DockerVolumeMountRunner
     outer_command = timeout(docker_command,max_seconds+5)
 
     bash("rm -f #{cidfile}")
-    output,exit_status = bash("#{outer_command}")
+    output,exit_status = bash(outer_command)
     pid,_ = bash("cat #{cidfile}")
     bash("docker stop #{pid} ; docker rm #{pid}")
 

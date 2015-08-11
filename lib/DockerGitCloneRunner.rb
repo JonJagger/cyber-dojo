@@ -19,7 +19,7 @@ class DockerGitCloneRunner
   end
 
   def git_server
-    "git@192.168.59.103"
+    "192.168.59.103"
   end
 
   def kata_path(kata)
@@ -37,13 +37,13 @@ class DockerGitCloneRunner
       "git clone --bare #{avatar.name} #{avatar.name}.git",
       # scp -r says it makes directories as needed but it doesn't seem to
       # which is why I'm preceding the scp with the mkdir -p
-      "sudo -u cyber-dojo ssh #{git_server} 'mkdir -p #{kata_path(kata)}'",
-      "sudo -u cyber-dojo scp -r #{avatar.name}.git #{git_server}:#{kata_path(kata)}",
+      "sudo -u cyber-dojo ssh git@#{git_server} 'mkdir -p #{kata_path(kata)}'",
+      "sudo -u cyber-dojo scp -r #{avatar.name}.git git@#{git_server}:#{kata_path(kata)}",
       # allow git-daemon to serve it
-      "sudo -u cyber-dojo ssh #{git_server} 'touch #{kata_path(kata)}/#{avatar.name}.git/git-daemon-export-ok'",
+      "sudo -u cyber-dojo ssh git@#{git_server} 'touch #{kata_path(kata)}/#{avatar.name}.git/git-daemon-export-ok'",
       "rm -rf #{avatar.name}.git",
       "cd #{avatar.path}",
-      "git remote add master #{git_server}:#{kata_path(kata)}/#{avatar.name}.git",
+      "git remote add master git@#{git_server}:#{kata_path(kata)}/#{avatar.name}.git",
       "sudo -u cyber-dojo git push --set-upstream master master"
     ].join(';')
     o,es = bash(cmds)
@@ -74,7 +74,7 @@ class DockerGitCloneRunner
     # Better option I think is to set up a git daemon on 
     # the git server.
     cmds = [
-      "git clone #{git_server}/#{kata_path(kata)}/#{avatar.name}.git",
+      "git clone git:#{git_server}/#{kata_path(kata)}/#{avatar.name}.git",
       "cd #{avatar.name}/sandbox",
       "#{command}"
     ].join(';')
@@ -87,29 +87,19 @@ class DockerGitCloneRunner
       " --cidfile=#{quoted(cidfile)}" +
       " #{language.image_name}" +
       " /bin/bash -c" +
-      " #{quoted(timeout(cmd,max_seconds))}"
+      " #{quoted(timeout(cmds,max_seconds))}"
       
     outer_command = timeout(docker_command,max_seconds+5)
 
     bash("rm -f #{cidfile}")
-    output,exit_status = bash("#{outer_command}")
+    output,exit_status = bash(outer_command)
     pid,_ = bash("cat #{cidfile}")
     bash("docker stop #{pid} ; docker rm #{pid}")
 
     exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
       
-    # docker run #{cmd}
-    #
-    # Note: the git-server sees the git repo of the animal which is at the
-    # folder level of the animal and not sandbox.
-    # But this is ok. Even if the cyber-dojo.sh tries to [cd ..]
-    # and cause mischief any problems are localized since only
-    # the output comes back to the rails server.
-    #
     # Note: Should run(sandbox,...) be run(avatar,...)?  I think so.
-    #
     # Note: command being passed in allows extra testing options.
-    #
     # Note: will be worth extracting DockerRunner that just does run()
     #       into dedicated class.
   end
@@ -126,6 +116,23 @@ private
   def installed?
     _,exit_status = bash(stderr2stdout('docker info > /dev/null'))
     exit_status === 0
+  end
+
+  def timeout(command,after)
+    # timeout does not exist on OSX :-(
+    "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
+  end
+
+  def quoted(arg)
+    '"' + arg + '"'
+  end
+
+  def fatal_error(signal)
+    128 + signal
+  end
+
+  def kill
+    9
   end
 
 end
