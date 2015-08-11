@@ -60,10 +60,7 @@ class DockerGitCloneRunner
   end
   
   def post_commit_tag(avatar)
-    cmd = [
-      "sudo -u cyber-dojo git push master"
-    ]
-    o,es = bash(cmd)
+    o,es = bash('sudo -u cyber-dojo git push master')
   end
 
   def run(sandbox, command, max_seconds)
@@ -77,7 +74,7 @@ class DockerGitCloneRunner
     # Better option I think is to set up a git daemon on 
     # the git server.
     cmds = [
-      "git clone #{git_server}:#{kata_path(kata)}/#{avatar.name}.git",
+      "git clone #{git_server}/#{kata_path(kata)}/#{avatar.name}.git",
       "cd #{avatar.name}/sandbox",
       "#{command}"
     ].join(';')

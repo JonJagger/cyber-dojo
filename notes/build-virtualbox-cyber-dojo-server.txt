@@ -523,6 +523,54 @@ $ cd opt/git/F9/BD34609D/moose.git
 $ touch git-daemon-export-ok
 
 Need to open port 9418
+$ sudo ufw allow 9418
+$ sudo ufw enable
+
+$ sudo apt-get install git-daemon-run
+
+Getting closer now. From cyber-dojo server
+$ git clone git://192.168.59.103/opt/git/F9/BD34609D/moose.git
+And it says
+Cloing into 'moose'...
+fatal: remote error: access denied or repository not exported 
+   /opt/git/F9/BD34609D/moose.git
+
+Is this a file/folder rights issue.
+
+After apt-get install git-daemon-run
+cat /etc/passwd
+has a new user gitdaemon
+No that's not it.
+cd /var/log/gitdaemon
+tail -100 current
+/var/lib/opt/git/F9/BD34609D/moose.git does not appear to be a git repo
+
+Where is the /var/lib coming from...?
+
+
+>>>>>>Added gitdaemon to git's group
+>>>>>>
+$ sudo usermod -a -G git gitdaemon
+
+
+This helped.
+ftp://www.kernel.org/pub/software/scm/git/docs/git-daemon.html
+
+Removed /etc/init.d/local-git-daemon.conf
+
+Edited
+/etc/service/git-damon/run 
+#!/bin/sh
+exec 2>&1
+echo 'git-daemon starting'
+exec chpst -ugitdaemon \
+   "$(git --exec-path)"/git-daemon \
+   --reuseaddr --base-path=/opt/git /opt/git
+
+
+AND YEEEES. git clone works.
+$ git clone git://192.168.59.103/F9/BD34609D/moose.git
+
 
 One potential issue with having a password-less, ssh-less git-server
 giving git clone read-access is that it could become the bottleneck
