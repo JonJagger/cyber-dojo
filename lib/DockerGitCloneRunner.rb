@@ -26,26 +26,6 @@ class DockerGitCloneRunner
       !language.display_name.end_with?('Approval')
   end
 
-  def git_server
-    # Assumes:
-    # 1. user called git that cyber-dojo user can ssh into.
-    # 2. git-daemon running to publically serve repos
-    #    with a --base-path=/opt/git
-    # 3. port 9418 is open
-    '192.168.59.103'
-  end
-
-  def opt_git_kata_path(kata)
-    '/opt/git' + kata_path(kata)
-  end
-  
-  def kata_path(kata)
-    id = kata.id.to_s
-    outer = id[0..1]
-    inner = id[2..-1]
-    "/#{outer}/#{inner}"
-  end
-  
   def started(avatar)
     kata = avatar.kata
   
@@ -116,10 +96,9 @@ class DockerGitCloneRunner
 
     exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
       
+    # Note: extract DockerRunner that just does run() into dedicated class.
     # Note: Should run(sandbox,...) be run(avatar,...)?  I think so.
     # Note: command being passed in allows extra testing options.
-    # Note: will be worth extracting DockerRunner that just does run()
-    #       into dedicated class.
   end
 
 private
@@ -135,6 +114,28 @@ private
     _,exit_status = bash(stderr2stdout('docker info > /dev/null'))
     exit_status === 0
   end
+  
+  def git_server
+    # Assumes:
+    # 1. user called git that cyber-dojo user can ssh into.
+    # 2. www-data can sudo -u cyber-dojo
+    # 3. git-daemon running to publically serve repos
+    #    with a --base-path=/opt/git
+    # 4. port 9418 is open
+    '192.168.59.103'
+  end
+
+  def opt_git_kata_path(kata)
+    '/opt/git' + kata_path(kata)
+  end
+  
+  def kata_path(kata)
+    id = kata.id.to_s
+    outer = id[0..1]
+    inner = id[2..-1]
+    "/#{outer}/#{inner}"
+  end
+  
 
   def timeout(command,after)
     # timeout does not exist on OSX :-(

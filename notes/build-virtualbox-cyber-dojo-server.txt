@@ -650,10 +650,14 @@ did not help
 Trying with --net=host
 option which is not secure
 
+And YYYYEEESSS. First git-cloning docker-container not using
+volume mounting is working. Woohoo.
 
-Aside: command being passed is "./cyber-dojo.sh"
-Better to pass it as "cyber-dojo.sh"
-and let the runner decide the folder.
+Next step to remove --net=host
+Try running git clone in interactive client with debugging
+switched on. See this document...
+https://confluence.atlassian.com/display/STASH/Stash+debug+logging#Stashdebuglogging-DebugloggingforGitoperationsontheclient
+
 
 ========================================================
 ========================================================
