@@ -84,7 +84,7 @@ class DockerGitCloneRunner < DockerRunner
       ' --net=host' +
       " #{language.image_name}"
       
-    docker_run(cmds, options, max_seconds)      
+    docker_run(options, cmds, max_seconds)      
     # Note: Should run(sandbox,...) be run(avatar,...)?  I think so.
     # Note: command being passed in allows extra testing options.
   end

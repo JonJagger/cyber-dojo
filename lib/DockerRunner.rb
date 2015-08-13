@@ -14,7 +14,7 @@ class DockerRunner
     raise RuntimeError.new("Docker not installed") if !installed?        
   end
   
-  def docker_run(cmd, options, max_seconds)
+  def docker_run(options, cmd, max_seconds)
     cidfile = Tempfile.new('cyber-dojo').path
     outer_command = timeout(
       'docker run' +
