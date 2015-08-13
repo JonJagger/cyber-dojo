@@ -8,18 +8,22 @@ require_relative 'Stderr2Stdout'
 
 class DockerRunner
 
-  def initialize(bash = Bash.new
+  def initialize(bash = Bash.new)
     @bash = bash
     raise RuntimeError.new("Docker not installed") if !installed?        
   end
   
-  def run(cidfile, docker_command, max_seconds)
-    outer_command = timeout(docker_command,max_seconds+5)
+  def docker_run(cidfile, docker_options, max_seconds)
+    outer_command = timeout('docker run ' + docker_options, max_seconds+5)
     bash("rm -f #{cidfile}")
     output,exit_status = bash(outer_command)
     pid,_ = bash("cat #{cidfile}")
     bash("docker stop #{pid} ; docker rm #{pid}")
     exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
+  end
+
+  def bash(command)
+    @bash.exec(command)
   end
 
 private
@@ -32,10 +36,6 @@ private
     exit_status === 0
   end
    
-  def bash(command)
-    @bash.exec(command)
-  end
-
   def timeout(command,after)
     # timeout does not exist on OSX :-(
     "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
