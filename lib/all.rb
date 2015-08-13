@@ -7,6 +7,7 @@
   Bash
   HttpRequester
   Runner
+    DockerGitCloneRunner
     DockerVolumeMountRunner
     HostRunner
   HostDisk  

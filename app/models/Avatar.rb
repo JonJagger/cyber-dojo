@@ -137,7 +137,6 @@ private
     
   def increments_filename
     # stores cache of key-info for each git commit tag
-    # helps optimize the dashboard    
     'increments.json'
   end
 
@@ -155,10 +154,6 @@ private
 
 end
 
-#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# An avatar's source files are held in its sandbox folder.
-# The top level folder holds config info such as manifests
-# and caches.
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # tags vs lights
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

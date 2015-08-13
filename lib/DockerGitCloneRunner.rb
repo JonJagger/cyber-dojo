@@ -14,18 +14,40 @@ class DockerGitCloneRunner
   end
 
   def runnable?(language)    
-    # - - - - - - -
+    # - - - - - - - - - - - - - -
     # sym-linked support-files cannot be supported because
-    # a docker swarm solution cannot volume mount.
-    # - - - - - - -
+    # a docker swarm cannot volume mount.
+    # - - - - - - - - - - - - - -
     # Approval style tests are disabled because their
-    # post-run .txt file retrieval is not trivial on
-    # docker swarm solution.
-    # - - - - - - -
+    # post run .txt file processing is not trivial on
+    # a docker swarm solution.
+    # - - - - - - - - - - - - - - 
     language.support_filenames == [] &&
       !language.display_name.end_with?('Approval')
   end
 
+  def git_server
+    # Assumes...
+    # 1. user called git on git server
+    # 2. user called cyber-dojo on cyber-dojo server
+    # 3. www-data can sudo -u cyber-dojo
+    # 4. git-daemon running on git server to publically
+    #    serve git repos with --base-path=/opt/git
+    # 5. git-server has port 9418 open
+    "192.168.59.103"
+  end
+
+  def opt_git_kata_path(kata)
+    '/opt/git' + kata_path(kata)
+  end
+
+  def kata_path(kata)
+    id = kata.id.to_s
+    outer = id[0..1]
+    inner = id[2..-1]
+    "/#{outer}/#{inner}"
+  end
+  
   def started(avatar)
     kata = avatar.kata
   
@@ -33,10 +55,10 @@ class DockerGitCloneRunner
       "cd #{kata.path}",
       "git clone --bare #{avatar.name} #{avatar.name}.git",
       # scp -r says it makes directories as needed but it doesn't seem to
-      # which is why I'm preceding the scp with the mkdir -p
+      # so I'm preceeding the scp with the mkdir -p
       "sudo -u cyber-dojo ssh git@#{git_server} 'mkdir -p #{opt_git_kata_path(kata)}'",
       "sudo -u cyber-dojo scp -r #{avatar.name}.git git@#{git_server}:#{opt_git_kata_path(kata)}",
-      # allow git-daemon to serve it
+      # allow git-daemon to server the repo
       "sudo -u cyber-dojo ssh git@#{git_server} 'touch #{opt_git_kata_path(kata)}/#{avatar.name}.git/git-daemon-export-ok'",
       "rm -rf #{avatar.name}.git",
       "cd #{avatar.path}",
@@ -44,22 +66,24 @@ class DockerGitCloneRunner
       "sudo -u cyber-dojo git push --set-upstream master master"
     ].join(';')
     o,es = bash(cmds)
+    #raise cmds + "\n\n" + "output=\n" + o.to_s + "error_status=\n" + es.to_s
   end
   
   def pre_test(avatar)
-    # if no visible files have changed this will be a safe no-op
+    # if no visible files have changed this is a safe no-op
     cmds = [
       "cd #{avatar.path}",
-      "sudo -u cyber-dojo git commit -am 'pre-test-push' --quiet"
+      "sudo -u cyber-dojo git commit -am 'pre-test-pull' --quiet",
       "sudo -u cyber-dojo git push master"
     ].join(';')
     o,es = bash(cmds)
+    #alert(cmds,o,es)
   end
   
   def post_commit_tag(avatar)
     cmds = [
       "cd #{avatar.path}",
-      'sudo -u cyber-dojo git push master'
+      "sudo -u cyber-dojo git push master"
     ].join(';')
     o,es = bash(cmds)
   end
@@ -69,36 +93,36 @@ class DockerGitCloneRunner
     kata = avatar.kata
     cidfile = avatar.path + 'cidfile.txt'
     language = kata.language
-
-    # Assumes git daemon on the git server.    
+    
+    # Assumes git-daemon on the git server
     cmds = [
       "git clone git://#{git_server}#{kata_path(kata)}/#{avatar.name}.git /tmp/#{avatar.name} 2>&1 > /dev/null",
       "cd /tmp/#{avatar.name}/sandbox && #{command}"
     ].join(';')
-    
-    # Using --net=host just to get something working. This is insecure.
+
+    # Using --net=host to get something working. This is not secure.
     # Would prefer to restrict it to just accessing the git server.
-    docker_cmd = 
+    docker_command = 
       "docker run" +
       " -u www-data" +
-      " --net=host"
+      " --net=host" +
       " --cidfile=#{quoted(cidfile)}" +
       " #{language.image_name}" +
       " /bin/bash -c" +
       " #{quoted(timeout(cmds,max_seconds))}"
-      
-    outer_command = timeout(docker_command,max_seconds+5)
 
+    outer_command = timeout(docker_command,max_seconds+5)
+   
     bash("rm -f #{cidfile}")
     output,exit_status = bash(outer_command)
     pid,_ = bash("cat #{cidfile}")
     bash("docker stop #{pid} ; docker rm #{pid}")
 
     exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
-      
-    # Note: extract DockerRunner that just does run() into dedicated class.
+
     # Note: Should run(sandbox,...) be run(avatar,...)?  I think so.
     # Note: command being passed in allows extra testing options.
+    # Note: extracting DockerRunner that just does run() into dedicated class.
   end
 
 private
@@ -114,31 +138,8 @@ private
     _,exit_status = bash(stderr2stdout('docker info > /dev/null'))
     exit_status === 0
   end
-  
-  def git_server
-    # Assumes:
-    # 1. user called git that cyber-dojo user can ssh into.
-    # 2. www-data can sudo -u cyber-dojo
-    # 3. git-daemon running to publically serve repos
-    #    with a --base-path=/opt/git
-    # 4. port 9418 is open
-    '192.168.59.103'
-  end
-
-  def opt_git_kata_path(kata)
-    '/opt/git' + kata_path(kata)
-  end
-  
-  def kata_path(kata)
-    id = kata.id.to_s
-    outer = id[0..1]
-    inner = id[2..-1]
-    "/#{outer}/#{inner}"
-  end
-  
 
   def timeout(command,after)
-    # timeout does not exist on OSX :-(
     "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
   end
 
