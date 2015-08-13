@@ -63,10 +63,10 @@ module CyberDojo
       ENV['CYBER_DOJO_LANGUAGES_ROOT'] ||= '/var/www/cyber-dojo/languages'
       ENV['CYBER_DOJO_EXERCISES_ROOT'] ||= '/var/www/cyber-dojo/exercises'
       ENV['CYBER_DOJO_KATAS_ROOT']     ||= '/var/www/cyber-dojo/katas'
-      ENV['CYBER_DOJO_RUNNER_CLASS_NAME']   ||= 'DockerGitCloneRunner'
+      ENV['CYBER_DOJO_RUNNER_CLASS_NAME']   ||= 'DockerVolumeMountRunner'
       ENV['CYBER_DOJO_DISK_CLASS_NAME']     ||= 'HostDisk'
       ENV['CYBER_DOJO_GIT_CLASS_NAME']      ||= 'HostGit'
-      ENV['CYBER_DOJO_ONE_SELF_CLASS_NAME'] ||= 'OneSelfDummy'
+      ENV['CYBER_DOJO_ONE_SELF_CLASS_NAME'] ||= 'OneSelf'
     end
     
     config.colorize_logging = true
