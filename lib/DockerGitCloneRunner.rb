@@ -14,7 +14,7 @@ class DockerGitCloneRunner < DockerRunner
 
   def runnable?(language)    
     # - - - - - - -
-    # sym-linked support-files cannot be supported because
+    # Sym-linked support-files cannot be supported because
     # a docker swarm solution cannot volume mount.
     # - - - - - - -
     # Approval style tests are disabled because their
@@ -26,18 +26,23 @@ class DockerGitCloneRunner < DockerRunner
   end
 
   def started(avatar)
+    # Setup git repo on git-server for avatar
     kata = avatar.kata
   
     cmds = [
+      # Clone the avatar's repo into a bare repo ready for the git-server
       "cd #{kata.path}",
       "git clone --bare #{avatar.name} #{avatar.name}.git",
+      # Copy the bare repo to the git-server.
       # scp -r says it makes directories as needed but it doesn't seem to
       # which is why I'm preceding the scp with the mkdir -p
       "sudo -u cyber-dojo ssh git@#{git_server} 'mkdir -p #{opt_git_kata_path(kata)}'",
       "sudo -u cyber-dojo scp -r #{avatar.name}.git git@#{git_server}:#{opt_git_kata_path(kata)}",
-      # allow git-daemon to serve it
+      # Allow git-daemon to serve it
       "sudo -u cyber-dojo ssh git@#{git_server} 'touch #{opt_git_kata_path(kata)}/#{avatar.name}.git/git-daemon-export-ok'",
+      # Remove bare repo from cyber-dojo server now its on the git-server
       "rm -rf #{avatar.name}.git",
+      # Prepare avatar's repo to push to git-server
       "cd #{avatar.path}",
       "git remote add master git@#{git_server}:#{opt_git_kata_path(kata)}/#{avatar.name}.git",
       "sudo -u cyber-dojo git push --set-upstream master master"
@@ -46,7 +51,9 @@ class DockerGitCloneRunner < DockerRunner
   end
   
   def pre_test(avatar)
-    # if no visible files have changed this will be a safe no-op
+    # Changes from browser have been reflected in avatar's sandbox.
+    # Push them to the git-server so docker container can git clone them.
+    # If no visible files have changed this will be a safe no-op
     cmds = [
       "cd #{avatar.path}",
       "sudo -u cyber-dojo git commit -am 'pre-test-push' --quiet",
@@ -56,6 +63,8 @@ class DockerGitCloneRunner < DockerRunner
   end
   
   def post_commit_tag(avatar)
+    # Tests have run and avatar's local git repo state is up to date.
+    # Push changes to git-server.
     cmds = [
       "cd #{avatar.path}",
       'sudo -u cyber-dojo git push master'
@@ -69,9 +78,9 @@ class DockerGitCloneRunner < DockerRunner
     language = kata.language
 
     # Assumes git daemon on the git server.
-    # Pipes all output from git clone to dev/null because otherwise
-    # the output of git clone would be part of the output visible
-    # in the browser and could affect the traffic-light colouring.
+    # Pipes all output from git clone to dev/null to stop
+    # the output of git clone becoming part of the output visible
+    # in the browser and affecting the traffic-light colouring.
     cmds = [
       "git clone git://#{git_server}#{kata_path(kata)}/#{avatar.name}.git /tmp/#{avatar.name} 2>&1 > /dev/null",
       "cd /tmp/#{avatar.name}/sandbox && #{command}"
@@ -79,12 +88,9 @@ class DockerGitCloneRunner < DockerRunner
     
     # Using --net=host just to get something working. This is insecure.
     # Would prefer to restrict it to just accessing the git server.
-    options = 
-      ' -u www-data' +
-      ' --net=host' +
-      " #{language.image_name}"
       
-    docker_run(options, cmds, max_seconds)      
+    docker_run('--net=host', language.image_name, cmds, max_seconds)
+
     # Note: Should run(sandbox,...) be run(avatar,...)?  I think so.
     # Note: command being passed in allows extra testing options.
   end

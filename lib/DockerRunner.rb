@@ -1,7 +1,5 @@
 
-# docker runner 
-# Assumes docker run command does not have --rm option
-# and does have --cidfile=quoted(cidfile) option
+# Commonailty from DockerGitCloneRunner and DockerVolumeMountRunner 
 
 require_relative 'Runner'
 require_relative 'Stderr2Stdout'
@@ -11,18 +9,23 @@ class DockerRunner
 
   def initialize(bash = Bash.new)
     @bash = bash
-    raise RuntimeError.new("Docker not installed") if !installed?        
+    raise RuntimeError.new('Docker not installed') if !installed?        
   end
   
-  def docker_run(options, cmd, max_seconds)
+  def docker_run(options, image_name, cmd, max_seconds)
     cidfile = Tempfile.new('cyber-dojo').path
+
+    bash("rm -f #{cidfile}")
+
     outer_command = timeout(
       'docker run' +
+      ' --user=www-data' +
       " --cidfile=#{quoted(cidfile)} " + 
-      options +
+      ' ' + options +
+      ' ' + image_name +
       " /bin/bash -c #{quoted(timeout(cmd,max_seconds))}", 
       max_seconds+5)
-    bash("rm -f #{cidfile}")
+
     output,exit_status = bash(outer_command)
     pid,_ = bash("cat #{cidfile}")
     bash("docker stop #{pid} ; docker rm #{pid}")
