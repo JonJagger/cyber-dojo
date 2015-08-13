@@ -49,7 +49,7 @@ class DockerGitCloneRunner < DockerRunner
     # if no visible files have changed this will be a safe no-op
     cmds = [
       "cd #{avatar.path}",
-      "sudo -u cyber-dojo git commit -am 'pre-test-push' --quiet"
+      "sudo -u cyber-dojo git commit -am 'pre-test-push' --quiet",
       "sudo -u cyber-dojo git push master"
     ].join(';')
     o,es = bash(cmds)
@@ -82,7 +82,7 @@ class DockerGitCloneRunner < DockerRunner
     # Would prefer to restrict it to just accessing the git server.
     docker_options = 
       " -u www-data" +
-      " --net=host"
+      " --net=host" +
       " --cidfile=#{quoted(cidfile)}" +
       " #{language.image_name}" +
       " /bin/bash -c" +
