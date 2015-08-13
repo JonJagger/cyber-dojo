@@ -79,14 +79,12 @@ class DockerGitCloneRunner < DockerRunner
     
     # Using --net=host just to get something working. This is insecure.
     # Would prefer to restrict it to just accessing the git server.
-    docker_options = 
-      " -u www-data" +
-      " --net=host" +
-      " #{language.image_name}" +
-      " /bin/bash -c" +
-      " #{quoted(timeout(cmds,max_seconds))}"
+    options = 
+      ' -u www-data' +
+      ' --net=host' +
+      " #{language.image_name}"
       
-    docker_run(docker_options, max_seconds)      
+    docker_run(cmds, options, max_seconds)      
     # Note: Should run(sandbox,...) be run(avatar,...)?  I think so.
     # Note: command being passed in allows extra testing options.
   end
