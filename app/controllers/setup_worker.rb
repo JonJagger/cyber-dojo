@@ -21,7 +21,7 @@ module SetupWorker # mixin
       exercises_names << exercise.name
       instructions_hash[exercise.name] = exercise.instructions
     end
-    [exercises_names,instructions_hash]    
+    [exercises_names.sort,instructions_hash]
   end
 
 end
