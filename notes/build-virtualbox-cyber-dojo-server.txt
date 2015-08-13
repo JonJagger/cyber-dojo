@@ -658,6 +658,7 @@ Try running git clone in interactive client with debugging
 switched on. See this document...
 https://confluence.atlassian.com/display/STASH/Stash+debug+logging#Stashdebuglogging-DebugloggingforGitoperationsontheclient
 
+Nope that did not help.
 
 ========================================================
 ========================================================

@@ -82,6 +82,8 @@ class Avatar
   end
 
   def sandbox
+    # An avatar's source files are held in its sandbox sub-folder.
+    # The avatar's folder itself holds config (manifests/caches/etc)    
     Sandbox.new(self)
   end
 
@@ -94,6 +96,7 @@ private
     git.init(path, '--quiet')
     git.config(path, 'user.name ' + user_name)
     git.config(path, 'user.email ' + user_email)
+    # next line needed for DockerGitCloneRunner.rb
     git.config(path, '--global push.default simple')
   end
 
@@ -137,6 +140,7 @@ private
     
   def increments_filename
     # stores cache of key-info for each git commit tag
+    # helps optimize the dashboard
     'increments.json'
   end
 
@@ -207,7 +211,6 @@ end
 #   avatar.tags[0] and avatar.tags[1]
 #
 # ------------------------------------------------------
-
 
 
 
