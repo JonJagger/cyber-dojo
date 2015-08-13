@@ -66,7 +66,6 @@ class DockerGitCloneRunner < DockerRunner
   def run(sandbox, command, max_seconds)
     avatar = sandbox.avatar
     kata = avatar.kata
-    cidfile = avatar.path + 'cidfile.txt'
     language = kata.language
 
     # Assumes git daemon on the git server.
@@ -83,12 +82,11 @@ class DockerGitCloneRunner < DockerRunner
     docker_options = 
       " -u www-data" +
       " --net=host" +
-      " --cidfile=#{quoted(cidfile)}" +
       " #{language.image_name}" +
       " /bin/bash -c" +
       " #{quoted(timeout(cmds,max_seconds))}"
       
-    docker_run(cidfile, docker_options, max_seconds)      
+    docker_run(docker_options, max_seconds)      
     # Note: Should run(sandbox,...) be run(avatar,...)?  I think so.
     # Note: command being passed in allows extra testing options.
   end
