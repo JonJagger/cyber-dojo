@@ -551,6 +551,7 @@ Where is the /var/lib coming from...?
 >>>>>>Added gitdaemon to git's group
 >>>>>>
 $ sudo usermod -a -G git gitdaemon
+Don't think this was anything to do with it.
 
 
 This helped.
@@ -568,66 +569,32 @@ exec chpst -ugitdaemon \
    --reuseaddr --base-path=/opt/git /opt/git
 
 
-AND YEEEES. git clone works.
+Now git clone works :-)
 $ git clone git://192.168.59.103/F9/BD34609D/moose.git
 
-
-Ok. But now the ssh does not work. Adding -v reveals port 22
+But now the ssh does not work. Adding -v reveals port 22
 does not appear to be open.
-
 $ sudo ufw allow 22
 $ sudo ufw enable
+Now ssh from command line works.
 
-Ok. Now ssh from command line works.
-
-Ok. Can now enter. And repo is created on git server.
+Can now enter. And repo is created on git server.
 Hitting test for first time with docker run.
 Nothing comes back.
 Checking the rails log.
 Undefined local variable cidfile.
 Yup. Missing. language local variable too.
-Added those.
-Now it says quoted method is undefined.
-Various other typos.
+Added those. Now it says quoted method is undefined.
+Fixed various other typos.
 
-And YEEEES. I'm running a command inside the container
-and getting the response.
+And YEEEES. I'm running a command inside the container and getting the response.
 First response is
-fatal: repository 'git@192.168.59.103/opt/git/BF/26F665FE/deer.git' does not exist
-
-Adding -v option to the git clone.
-No help.
-Run the container interactively.
-$ docker run -u www-data -it cyberdojo/gcc-4.8.1_assert /bin/bash
-$ ping 192.168.59.103
-fine
-$ git clone git@192.168.59.103/opt/git/BF/26F665FE/deer.git
-fatal: repostitory does not exist.
-Try from cyber-dojo server. Same.
-Does git user have to be logged in?
-Did opening port 22 close 9418?
-No. Log in as jon
-$ sudo ufw status
-9418 and 22 are listed as ALLOW Anywhere.
-git@... is not right. should be be git:...
-Fixed that.
-And yes. Now it fails with
 fatal: could not create work tree dir 'koala'.: Permission denied
-which is correct because www-data has no rights at / inside
-the container.
-
-
-Now the git clone is failing?!
-$ tail -100 /var/log/git-daemon/current
-Ah. It's because /opt/git is the base I need to change
-$ git clone git://192.168.59.103/opt/git/F9/BD34609D/moose.git
-to
-$ git clone git://192.168.59.103/F9/BD34609D/moose.git
-
+which is correct because www-data has no rights at / inside the container.
 
 Getting near now. Now the problem is that cd is
 a built-in command and you can't give a built-in
-to timeout.
+to timeout. See
 $ info coreutils 'timeout invocation'
 
 Hmmm. Doesn't seem to be a way around that.
@@ -647,18 +614,12 @@ I think the problem might be that I haven't opened a port.
 docker run  -p 9418:9418 
 did not help
 
-Trying with --net=host
-option which is not secure
+Trying with --net=host option which is not secure
 
 And YYYYEEESSS. First git-cloning docker-container not using
 volume mounting is working. Woohoo.
 
 Next step to remove --net=host
-Try running git clone in interactive client with debugging
-switched on. See this document...
-https://confluence.atlassian.com/display/STASH/Stash+debug+logging#Stashdebuglogging-DebugloggingforGitoperationsontheclient
-
-Nope that did not help.
 
 ========================================================
 ========================================================
