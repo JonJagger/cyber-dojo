@@ -59,16 +59,6 @@ class DockerGitCloneRunner < DockerRunner
     o,es = bash(cmds)
   end
   
-  def post_commit_tag(avatar)
-    # Tests have run and avatar's local git repo state is up to date.
-    # Push changes to git-server.
-    cmds = [
-      "cd #{avatar.path}",
-      'sudo -u cyber-dojo git push master'
-    ].join(';')
-    o,es = bash(cmds)
-  end
-
   def run(sandbox, command, max_seconds)
     avatar = sandbox.avatar
     kata = avatar.kata
@@ -89,8 +79,6 @@ class DockerGitCloneRunner < DockerRunner
 
 private
   
-  include Runner  
-  include Stderr2Stdout
   include IdSplitter
 
   def git_server
@@ -116,4 +104,3 @@ private
   end
 
 end
-

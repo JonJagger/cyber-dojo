@@ -70,7 +70,6 @@ class Avatar
     write_increments(rags)
     write_manifest(files)    
     git_commit(tag)    
-    runner.post_commit_tag(self)
     [rags,output]    
   end
 

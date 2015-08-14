@@ -29,7 +29,6 @@ class DockerRunner
 
   def started(avatar); end
   def pre_test(avatar); end
-  def post_commit_tag(avatar); end
 
   def docker_run(options, image_name, cmd, max_seconds)
     cidfile = Tempfile.new('cyber-dojo').path
