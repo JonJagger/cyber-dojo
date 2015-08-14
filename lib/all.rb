@@ -2,6 +2,7 @@
 # this list has order dependencies
 
 %w{
+  IdSplitter
   Stderr2Stdout
   Cleaner  
   Bash
@@ -15,7 +16,6 @@
   HostGit
   TimeNow
   UniqueId
-  IdSplitter
   LanguagesDisplayNamesSplitter
   OneSelf  
   OneSelfDummy

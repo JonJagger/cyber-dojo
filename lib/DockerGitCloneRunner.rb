@@ -13,14 +13,11 @@ class DockerGitCloneRunner < DockerRunner
   end
 
   def runnable?(language)    
-    # - - - - - - -
     # Sym-linked support-files cannot be supported because
     # a docker swarm solution cannot volume mount.
-    # - - - - - - -
     # Approval style tests are disabled because their
     # post-run .txt file retrieval is not trivial on
     # docker swarm solution.
-    # - - - - - - -
     image_pulled?(language) &&
       !sym_linked?(language) &&
         !approval_test?(language)
@@ -28,8 +25,7 @@ class DockerGitCloneRunner < DockerRunner
 
   def started(avatar)
     # Setup git repo on git-server for avatar
-    kata = avatar.kata
-  
+    kata = avatar.kata  
     cmds = [
       # Clone the avatar's repo into a bare repo ready for the git-server
       "cd #{kata.path}",
@@ -77,7 +73,6 @@ class DockerGitCloneRunner < DockerRunner
     avatar = sandbox.avatar
     kata = avatar.kata
     language = kata.language
-
     # Assumes git daemon on the git server.
     # Pipes all output from git clone to dev/null to stop
     # the output of git clone becoming part of the output visible
@@ -89,7 +84,6 @@ class DockerGitCloneRunner < DockerRunner
     
     # Using --net=host just to get something working. This is insecure.
     # Would prefer to restrict it to just accessing the git server.
-      
     docker_run('--net=host', language.image_name, cmds, max_seconds)
 
     # Note: Should run(sandbox,...) be run(avatar,...)?  I think so.
@@ -100,7 +94,8 @@ private
   
   include Runner  
   include Stderr2Stdout
-   
+  include IdSplitter
+
   def git_server
     # Assumes:
     # 0. there is a user called cyber-dojo on the cyber-dojo server.
@@ -119,10 +114,7 @@ private
   
   def kata_path(kata)
     id = kata.id.to_s
-    # TODO: below duplicates IdSplitter.rb
-    outer = id[0..1]
-    inner = id[2..-1]
-    "/#{outer}/#{inner}"
+    "/#{outer(id)}/#{inner(id)}"
   end
 
 end
