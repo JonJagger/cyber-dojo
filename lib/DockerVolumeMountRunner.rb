@@ -6,96 +6,37 @@
 #
 # Comments at end of file
 
-require_relative 'Runner'
+require_relative 'DockerRunner'
 
-class DockerVolumeMountRunner
+class DockerVolumeMountRunner < DockerRunner
 
   def initialize(bash = Bash.new)
-    @bash = bash
-    raise RuntimeError.new("Docker not installed") if !installed?
-    output,_ = bash('docker images')
-    lines = output.split("\n").select{|line| line.start_with?('cyberdojo')}
-    @image_names = lines.collect{|line| line.split[0]}.sort
+    super(bash)
   end
-
-  attr_reader :image_names
 
   def runnable?(language)
-    image_names.include?(language.image_name) &&
-      !language.display_name.end_with?('Approval')
+    image_pulled?(language) &&
+      !approval_test?(language)
   end
 
-  def started(avatar); end
-  def pre_test(avatar); end
-  def post_commit_tag(avatar); end
-
   def run(sandbox, command, max_seconds)
-    cidfile = sandbox.avatar.path + 'cidfile.txt'
     language = sandbox.avatar.kata.language
+    read_only = 'ro'
     language_volume = "#{language.path}:#{language.path}:#{read_only}"
+    read_write = 'rw'
     sandbox_volume = "#{sandbox.path}:/sandbox:#{read_write}"
 
-    docker_command =
-      "docker run" +
-        " -u www-data" +
+    options =
         " --net=#{quoted(none)}" +
-        " --cidfile=#{quoted(cidfile)}" +
         " -v #{quoted(language_volume)}" +
         " -v #{quoted(sandbox_volume)}" +
-        " -w /sandbox" +
-        " #{language.image_name}" +
-        " /bin/bash -c" +
-        " #{quoted(timeout(command,max_seconds))}"
+        ' -w /sandbox'
 
-    outer_command = timeout(docker_command,max_seconds+5)
-
-    bash("rm -f #{cidfile}")
-    output,exit_status = bash(outer_command)
-    pid,_ = bash("cat #{cidfile}")
-    bash("docker stop #{pid} ; docker rm #{pid}")
-
-    exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
+    docker_run(options, language.image_name, command, max_seconds)
   end
 
 private
   
-  include Runner  
-  include Stderr2Stdout
-   
-  def bash(command)
-    @bash.exec(command)
-  end
-
-  def installed?
-    _,exit_status = bash(stderr2stdout('docker info > /dev/null'))
-    exit_status === 0
-  end
-
-  def timeout(command,after)
-    # timeout does not exist on OSX :-(
-    "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
-  end
-
-  def quoted(arg)
-    '"' + arg + '"'
-  end
-
-  def fatal_error(signal)
-    128 + signal
-  end
-
-  def kill
-    9
-  end
-
-  def read_write
-    'rw'
-  end
-
-  def read_only
-    'ro'
-  end
-
   def none
     'none'
   end

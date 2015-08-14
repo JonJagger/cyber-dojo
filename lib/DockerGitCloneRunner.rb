@@ -21,8 +21,9 @@ class DockerGitCloneRunner < DockerRunner
     # post-run .txt file retrieval is not trivial on
     # docker swarm solution.
     # - - - - - - -
-    language.support_filenames == [] &&
-      !language.display_name.end_with?('Approval')
+    image_pulled?(language) &&
+      !sym_linked?(language) &&
+        !approval_test?(language)
   end
 
   def started(avatar)
@@ -122,10 +123,6 @@ private
     outer = id[0..1]
     inner = id[2..-1]
     "/#{outer}/#{inner}"
-  end
-  
-  def quoted(arg)
-    '"' + arg + '"'
   end
 
 end

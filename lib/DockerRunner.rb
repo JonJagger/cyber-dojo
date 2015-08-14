@@ -9,9 +9,28 @@ class DockerRunner
 
   def initialize(bash = Bash.new)
     @bash = bash
-    raise RuntimeError.new('Docker not installed') if !installed?        
+    raise RuntimeError.new('Docker not installed') if !installed?
+    output,_ = bash('docker images')
+    lines = output.split("\n").select{|line| line.start_with?('cyberdojo')}
+    @image_names = lines.collect{|line| line.split[0]}.sort
   end
   
+  def image_pulled?(language)
+    @image_names.include?(language.image_name)
+  end
+
+  def approval_test?(language)
+    language.display_name.end_with?('Approval')
+  end
+
+  def sym_linked?(language)
+    language.support_filenames != []
+  end
+
+  def started(avatar); end
+  def pre_test(avatar); end
+  def post_commit_tag(avatar); end
+
   def docker_run(options, image_name, cmd, max_seconds)
     cidfile = Tempfile.new('cyber-dojo').path
 
@@ -34,6 +53,10 @@ class DockerRunner
 
   def bash(command)
     @bash.exec(command)
+  end
+
+  def quoted(arg)
+    '"' + arg + '"'
   end
 
 private
