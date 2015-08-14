@@ -84,3 +84,50 @@ private
 
 end
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# "docker run" +
+#    " -u www-data" +
+#    " --cidfile=#{quoted(cidfile)}" +
+#    ...
+#    " /bin/bash -c #{quoted(timeout(command,max_seconds))}"
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# -u www-data
+#
+#   The user which runs the inner_command *inside* the docker container.
+#   See comments in languages/C#-NUnit/Dockerfile
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# --cidfile=#{quoted(cidfile)}
+#
+#   The cidfile must *not* exist before the docker command is run.
+#   Thus I rm the cidfile *before* the docker run.
+#   After the docker run I retrieve the docker container's pid
+#   from the cidfile and stop and kill the container.
+#   Explicitly specifying the cidfile like this (and not using the
+#   docker --rm option) ensures the docker container is always killed,
+#   even if the timeout occurs.
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# image_name
+#
+#   The name of the docker image to run the inner-command inside.
+#   specified in the language's manifest as its image_name.
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# /bin/bash -c #{quoted(timeout(command,max_seconds))}"
+#
+#   The command that is run as the docker container's "main" is
+#   run via bash inside a timeout.
+#   I *also* put a timeout on the outer docker-run command.
+#   This is for security - a determined attacker might somehow kill
+#   the inner timeout and thus acquire unlimited time to run any command.
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+

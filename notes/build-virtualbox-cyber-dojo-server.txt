@@ -625,6 +625,9 @@ Next step to remove --net=host
 ========================================================
 ========================================================
 
+Create a new branch and check it out.
+$ git checkout -b iss53
+
 One potential issue with having a password-less, ssh-less git-server
 giving git clone read-access is that it could become the bottleneck
 instead of the docker container...
