@@ -1,8 +1,8 @@
 
 # test runner providing isolation/protection/security
 # via Docker containers https://www.docker.io/
-# and relying on git clone from git-server to give state
-# access to docker process containers.
+# and relying on git clone from git-server running
+# git-daemon to give state access to docker process containers.
 
 require_relative 'DockerRunner'
 
@@ -85,9 +85,6 @@ class DockerGitCloneRunner < DockerRunner
     # Using --net=host just to get something working. This is insecure.
     # Would prefer to restrict it to just accessing the git server.
     docker_run('--net=host', language.image_name, cmds, max_seconds)
-
-    # Note: Should run(sandbox,...) be run(avatar,...)?  I think so.
-    # Note: command being passed in allows extra testing options.
   end
 
 private
@@ -99,12 +96,13 @@ private
   def git_server
     # Assumes:
     # 0. there is a user called cyber-dojo on the cyber-dojo server.
-    # 1. www-data can sudo -u cyber-dojo on cyber-dojo server
+    # 1. www-data can sudo -u cyber-dojo on the cyber-dojo server
     # 2. there is a user called git on the git server.
-    # 3. cyber-dojo can ssh into git server
+    # 3. cyber-dojo can ssh into the git server as user git
     # 4. git server has git-daemon running to publically serve repos
     #    with a --base-path=/opt/git
     # 5. port 9418 is open on the git server
+    # TODO: this will need to be set from external ENV[] setting
     '192.168.59.103'
   end
 

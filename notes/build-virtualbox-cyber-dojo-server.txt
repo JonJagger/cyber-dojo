@@ -624,6 +624,9 @@ Next step to remove --net=host
 ========================================================
 ========================================================
 ========================================================
+Misc notes
+
+Should DockerRunner run(sandbox,...) be run(avatar,...)?
 
 Create a new branch and check it out.
 $ git checkout -b iss53
