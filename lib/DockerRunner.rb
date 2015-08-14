@@ -1,5 +1,5 @@
 
-# Commonailty from DockerGitCloneRunner and DockerVolumeMountRunner 
+# Commonality from DockerGitCloneRunner and DockerVolumeMountRunner 
 
 require_relative 'Runner'
 require_relative 'Stderr2Stdout'
