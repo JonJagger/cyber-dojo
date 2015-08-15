@@ -1,3 +1,4 @@
+#!/bin/bash
 
 ./../admin_scripts/make_disk_cache.rb
 
