@@ -23,7 +23,7 @@ if [ $ret -ne 0 ]; then
 fi
 
 # store the time-stamp of this file before after a git-pull
-MY_TIME_STAMP_AFTER=`stat -c %y $cyberdojoHome/admin_scripts/pull.sh`
+MY_TIME_STAMP_AFTER=`stat -c %y $cyberDojoHome/admin_scripts/pull.sh`
 
 apt-get install -y acl
 
