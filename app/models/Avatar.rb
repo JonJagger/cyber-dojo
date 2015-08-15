@@ -95,8 +95,8 @@ private
     git.init(path, '--quiet')
     git.config(path, 'user.name ' + user_name)
     git.config(path, 'user.email ' + user_email)
-    # next line needed for DockerGitCloneRunner.rb
-    git.config(path, '--global push.default simple')
+    # Next line needed for DockerGitCloneRunner.rb
+    git.config(path, 'push.default current')
   end
 
   def git_commit(tag)
