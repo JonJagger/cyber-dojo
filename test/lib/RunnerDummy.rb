@@ -15,4 +15,7 @@ class RunnerDummy
     "$ export CYBER_DOJO_RUNNER_CLASS_NAME=HostRunner"
   end
 
+  def started(avatar); end
+  def pre_test(avatar); end
+
 end
