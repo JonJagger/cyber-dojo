@@ -15,6 +15,8 @@ class DockerRunner
     @image_names = lines.collect{|line| line.split[0]}.sort
   end
   
+  attr_reader :image_names
+
   def image_pulled?(language)
     @image_names.include?(language.image_name)
   end

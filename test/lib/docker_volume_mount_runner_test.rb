@@ -65,7 +65,7 @@ class DockerVolumeMountRunnerTests < LibTestBase
       assert false
     end
   end    
-
+  
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'docker run <-> bash interaction when cyber-dojo.sh times out' do
@@ -92,14 +92,14 @@ class DockerVolumeMountRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   def assert_spied(max_seconds, cmd, pid)
-    cidfile = @lion.path + "cidfile.txt"
-    assert_equal "rm -f #{cidfile}", @bash.spied[2], 'rm -f'
     run_cmd = @bash.spied[3]
-    assert run_cmd.start_with?("timeout --signal=#{kill} #{max_seconds+5}s"), 'timeout (outer)'
+    expected = "timeout --signal=#{kill} #{max_seconds+5}s"
+    assert run_cmd.start_with?(expected), 'timeout(outer)'
+    expected = "timeout --signal=#{kill} #{max_seconds}s cyber-dojo.sh"
+    assert run_cmd.include?(expected), 'timeout(inner)'    
+    
     assert run_cmd.include?("docker run"), 'docker run'
-    assert run_cmd.include?("--cidfile=#{quoted(cidfile)}"), 'cidfile'
-    assert run_cmd.include?("timeout --signal=#{kill} #{max_seconds}s #{cmd}"), 'timeout (inner)'
-    assert_equal "cat #{cidfile}",                        @bash.spied[4], 'cat cidfile'
+    assert run_cmd.include?("--cidfile="), 'cidfile'
     assert_equal "docker stop #{pid} ; docker rm #{pid}", @bash.spied[5], 'docker stop+rm'    
   end
   
