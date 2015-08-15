@@ -45,6 +45,37 @@ class DockerGitCloneRunnerTests < LibTestBase
     
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'started(avatar) is a not a no-op' do
+    @bash.stub(docker_info_output, success)
+    @bash.stub(docker_images_output, success)
+    docker = make_docker_runner
+    assert_equal 2, @bash.spied.size, 'before'
+    docker.started(@lion)
+    assert_equal 3, @bash.spied.size, 'after'    
+    bash_cmd = @bash.spied[2]
+    assert bash_cmd.include?('git clone --bare lion'), 'creates bare repo'
+    assert bash_cmd.include?('sudo -u cyber-dojo scp -r lion.git'), 'copies it to git server'
+    assert bash_cmd.include?('git-daemon-export-ok'), 'sets git-daemon-export-ok'
+    assert bash_cmd.include?('git remote add master'), 'sets up git remote master 1'
+    assert bash_cmd.include?('sudo -u cyber-dojo git push --set-upstream master master'), 'sets up git remote master 1'    
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'pre_test(avatar) is a not a no-op' do
+    @bash.stub(docker_info_output, success)
+    @bash.stub(docker_images_output, success)
+    docker = make_docker_runner
+    assert_equal 2, @bash.spied.size, 'before'
+    docker.pre_test(@lion)
+    assert_equal 3, @bash.spied.size, 'after'
+    bash_cmd = @bash.spied[2]
+    assert bash_cmd.include?('sudo -u cyber-dojo git commit'), 'git commit'
+    assert bash_cmd.include?('sudo -u cyber-dojo git push'), 'git push'
+  end
+    
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'docker run <-> bash interaction when cyber-dojo.sh completes in time' do
     @bash.stub(docker_info_output, success)   # 0
     @bash.stub(docker_images_output, success) # 1

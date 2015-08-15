@@ -45,6 +45,28 @@ class DockerVolumeMountRunnerTests < LibTestBase
     
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'started(avatar) is a no-op' do
+    @bash.stub(docker_info_output, success)
+    @bash.stub(docker_images_output, success)
+    docker = make_docker_runner
+    assert_equal 2, @bash.spied.size, 'before'
+    docker.started(nil)
+    assert_equal 2, @bash.spied.size, 'after'
+  end
+    
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'pre_test(avatar) is a no-op' do
+    @bash.stub(docker_info_output, success)
+    @bash.stub(docker_images_output, success)
+    docker = make_docker_runner
+    assert_equal 2, @bash.spied.size, 'before'
+    docker.pre_test(nil)
+    assert_equal 2, @bash.spied.size, 'after'
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'docker run <-> bash interaction when cyber-dojo.sh completes in time' do
     @bash.stub(docker_info_output, success)   # 0
     @bash.stub(docker_images_output, success) # 1
