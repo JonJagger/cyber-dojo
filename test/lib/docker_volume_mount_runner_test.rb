@@ -120,7 +120,7 @@ class DockerVolumeMountRunnerTests < LibTestBase
     expected = "timeout --signal=#{kill} #{max_seconds}s cyber-dojo.sh"
     assert run_cmd.include?(expected), 'timeout(inner)'    
     
-    assert run_cmd.include?("docker run"), 'docker run'
+    assert run_cmd.include?('docker run'), 'docker run'
     assert run_cmd.include?('--user=www-data'), 'user inside docker container is www-data'
     assert run_cmd.include?("--cidfile="), 'explicit cidfile'
     refute run_cmd.include?('--rm'), 'rm is *not* specified'
@@ -134,20 +134,22 @@ class DockerVolumeMountRunnerTests < LibTestBase
   def make_docker_runner
     DockerVolumeMountRunner.new(@bash)
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
   def docker_info_output
     [
-      "Containers: 6",
-      "Images: 440",
-      "Storage Driver: aufs",
-      "Root Dir: /var/lib/docker/aufs",
-      "Dirs: 452",
-      "Execution Driver: native-0.2",
-      "Kernel Version: 3.2.0-4-amd64",
-      "Username: cyberdojo",
-      "Registry: [https://index.docker.io/v1/]",
-      "WARNING: No memory limit support",
-      "WARNING: No swap limit support"
+      'Containers: 6',
+      'Images: 440',
+      'Storage Driver: aufs',
+      'Root Dir: /var/lib/docker/aufs',
+      'Dirs: 452',
+      'Execution Driver: native-0.2',
+      'Kernel Version: 3.2.0-4-amd64',
+      'Username: cyberdojo',
+      'Registry: [https://index.docker.io/v1/]',
+      'WARNING: No memory limit support',
+      'WARNING: No swap limit support'
     ].join("\n")
   end
   
@@ -155,11 +157,11 @@ class DockerVolumeMountRunnerTests < LibTestBase
   
   def docker_images_output
     [
-      "REPOSITORY                       TAG     IMAGE ID      CREATED        VIRTUAL SIZE",
-      "<none>                           <none>  b7253690a1dd  2 weeks ago    1.266 GB",
-      "cyberdojo/python-3.3.5_pytest    latest  d9603e342b22  13 months ago  692.9 MB",
-      "cyberdojo/rust-1.0.0_test        latest  a8e2d9d728dc  2 weeks ago    750.3 MB",
-      "<none>                           <none>  0ebf80aa0a8a  2 weeks ago    569.8 MB"
+      'REPOSITORY                       TAG     IMAGE ID      CREATED        VIRTUAL SIZE',
+      '<none>                           <none>  b7253690a1dd  2 weeks ago    1.266 GB',
+      'cyberdojo/python-3.3.5_pytest    latest  d9603e342b22  13 months ago  692.9 MB',
+      'cyberdojo/rust-1.0.0_test        latest  a8e2d9d728dc  2 weeks ago    750.3 MB',
+      '<none>                           <none>  0ebf80aa0a8a  2 weeks ago    569.8 MB'
     ].join("\n")  
   end
   
