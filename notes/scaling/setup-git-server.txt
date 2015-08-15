@@ -28,12 +28,10 @@ $ sudo chgrp git git
 
 Set up git-daemon
 =================
-Cloning requires ssh access. 
-Want to avoid that.
-Using git daemon on git server
+Cloning requires ssh access. Want to avoid that.
+So using git daemon on git server
 This helped.
 ftp://www.kernel.org/pub/software/scm/git/docs/git-daemon.html
-
 
 $ sudo apt-get install git-daemon-run
 
@@ -41,6 +39,8 @@ Removed /etc/init.d/local-git-daemon.conf
 
 Edited
 /etc/service/git-damon/run 
+as follows
+
 #!/bin/sh
 exec 2>&1
 echo 'git-daemon starting'
