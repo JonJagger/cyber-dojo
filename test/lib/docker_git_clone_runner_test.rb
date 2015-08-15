@@ -2,14 +2,14 @@
 
 require_relative 'lib_test_base'
 
-class DockerVolumeMountRunnerTests < LibTestBase
+class DockerGitCloneRunnerTests < LibTestBase
 
   def setup
     super
     @bash = BashStub.new    
     set_disk_class_name     'DiskStub'    
     set_git_class_name      'GitSpy'   
-    set_one_self_class_name 'OneSelfDummy'     
+    set_one_self_class_name 'OneSelfDummy'
     kata = make_kata
     @lion = kata.start_avatar(['lion'])    
   end
@@ -88,30 +88,26 @@ class DockerVolumeMountRunnerTests < LibTestBase
       assert false
     end
   end
-    
+  
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   def assert_spied(max_seconds, cmd, pid)
     run_cmd = @bash.spied[3]
     expected = "timeout --signal=#{kill} #{max_seconds+5}s"
     assert run_cmd.start_with?(expected), 'timeout(outer)'
-    expected = "timeout --signal=#{kill} #{max_seconds}s cyber-dojo.sh"
+    expected = "timeout --signal=#{kill} #{max_seconds}s git clone"
     assert run_cmd.include?(expected), 'timeout(inner)'    
     
     assert run_cmd.include?("docker run"), 'docker run'
     assert run_cmd.include?('--user=www-data'), 'user inside docker container is www-data'
     assert run_cmd.include?("--cidfile="), 'explicit cidfile'
     refute run_cmd.include?('--rm'), 'rm is *not* specified'
-    assert run_cmd.include?('-v "/var/www/cyber-dojo/languages'), 'volume mount languages/'
-    assert run_cmd.include?('-v "/var/www/cyber-dojo/katas'), 'volume mount katas/'
+    refute run_cmd.include?('-v "/var/www/cyber-dojo/languages'), 'volume mount languages/'
+    refute run_cmd.include?('-v "/var/www/cyber-dojo/katas'), 'volume mount katas/'
     assert_equal "docker stop #{pid} ; docker rm #{pid}", @bash.spied[5], 'docker stop+rm'    
   end
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    
-  def make_docker_runner
-    DockerVolumeMountRunner.new(@bash)
-  end
     
   def docker_info_output
     [
@@ -130,6 +126,10 @@ class DockerVolumeMountRunnerTests < LibTestBase
   end
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  def make_docker_runner
+    DockerGitCloneRunner.new(@bash)
+  end
   
   def docker_images_output
     [
