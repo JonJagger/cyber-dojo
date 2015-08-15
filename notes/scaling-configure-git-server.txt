@@ -2,9 +2,28 @@
 Create a normal user called git
 ===============================
 $ sudo adduser git
+$ whoami
+git
+$ cd ~
+$ pwd
 /home/git
-Needs to have 
-/home/git/.ssh 
+
+prepare for ssh access files from host OS
+$ mkdir /home/git/.ssh
+$ chmod 700 .ssh
+
+
+Install git
+===========
+$ sudo apt-get install git
+
+
+Now create /opt/git ready for repos
+===================================
+$ cd /opt
+$ sudo mkdir git
+$ sudo chown git git
+$ sudo chgrp git git
 
 
 Set up git-daemon
@@ -30,18 +49,8 @@ exec chpst -ugitdaemon \
    --reuseaddr --base-path=/opt/git /opt/git
 
 
-I also added gitdaemon to git's group
-$ sudo usermod -a -G git gitdaemon
-but I don't think this was anything to do with it.
-git-daemon logging is in /var/log/gitdaemon
-
-Now git clone from the cyber-dojo server works :-)
-$ git clone git://192.168.59.103/F9/BD34609D/moose.git
-
-To specify the git daemon can serve each .git repo I need to
-$ cd opt/git/F9/BD34609D/moose.git
-$ touch git-daemon-export-ok
-This is done from the cyber-dojo server.
+Open ports
+==========
 
 git-daemon uses 9418
 $ sudo ufw allow 9418
@@ -51,6 +60,22 @@ ssh uses port 22
 $ sudo ufw allow 22
 $ sudo ufw enable
 
+
+Notes
+==========
+
+I also added gitdaemon to git's group
+$ sudo usermod -a -G git gitdaemon
+but I don't think this was anything to do with it.
+git-daemon logging is in /var/log/gitdaemon
+
+git clone works from the cyber-dojo server this like...
+$ git clone git://192.168.59.103/F9/BD34609D/moose.git
+
+To specify the git daemon can serve each .git repo I need to
+$ cd opt/git/F9/BD34609D/moose.git
+$ touch git-daemon-export-ok
+This is done from the cyber-dojo server.
 
 There is an option on git clone to specify the folder you want to clone into.
 Using that in cyber-dojo servers docker run command 
@@ -65,3 +90,6 @@ Next step to remove --net=host
 One potential issue with having a password-less, ssh-less git-server
 giving git clone read-access is that it could become the bottleneck
 instead of the docker container...
+
+Did not change the GitServer login-shell for the git user to /usr/bin/git-shell
+since that would prevent the scp I need (as each avatar enters)
