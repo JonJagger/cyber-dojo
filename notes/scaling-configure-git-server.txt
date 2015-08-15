@@ -1,0 +1,67 @@
+
+Create a normal user called git
+===============================
+$ sudo adduser git
+/home/git
+Needs to have 
+/home/git/.ssh 
+
+
+Set up git-daemon
+=================
+Cloning requires ssh access. 
+Want to avoid that.
+Using git daemon on git server
+This helped.
+ftp://www.kernel.org/pub/software/scm/git/docs/git-daemon.html
+
+
+$ sudo apt-get install git-daemon-run
+
+Removed /etc/init.d/local-git-daemon.conf
+
+Edited
+/etc/service/git-damon/run 
+#!/bin/sh
+exec 2>&1
+echo 'git-daemon starting'
+exec chpst -ugitdaemon \
+   "$(git --exec-path)"/git-daemon \
+   --reuseaddr --base-path=/opt/git /opt/git
+
+
+I also added gitdaemon to git's group
+$ sudo usermod -a -G git gitdaemon
+but I don't think this was anything to do with it.
+git-daemon logging is in /var/log/gitdaemon
+
+Now git clone from the cyber-dojo server works :-)
+$ git clone git://192.168.59.103/F9/BD34609D/moose.git
+
+To specify the git daemon can serve each .git repo I need to
+$ cd opt/git/F9/BD34609D/moose.git
+$ touch git-daemon-export-ok
+This is done from the cyber-dojo server.
+
+git-daemon uses 9418
+$ sudo ufw allow 9418
+$ sudo ufw enable
+
+ssh uses port 22
+$ sudo ufw allow 22
+$ sudo ufw enable
+
+
+There is an option on git clone to specify the folder you want to clone into.
+Using that in cyber-dojo servers docker run command 
+
+Note: timeout cannot be given 'cd' as its command.
+See $ info coreutils 'timeout invocation'
+
+Using --net=host docker run option which is not secure
+but it gets something working.
+Next step to remove --net=host
+
+One potential issue with having a password-less, ssh-less git-server
+giving git clone read-access is that it could become the bottleneck
+instead of the docker container...

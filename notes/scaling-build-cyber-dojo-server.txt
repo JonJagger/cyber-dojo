@@ -1,0 +1,140 @@
+
+Started from Linux Server iso image
+http://www.ubuntu.com/download/server
+
+Created new Guest in VirtualBox, called cyber-dojo server, type=Linux, accepted settings
+Clicked it to start and it asked for the image
+Pointed it to the iso image I downloaded.
+Responded to all the questions to setup the server.
+Created a user called jon with usual password (sudoer)
+
+Kept network settings as NAT (to enable downloads)   
+//need Host-only-adapter for local network.
+
+First fixed keyboard
+$ sudo dpkg-reconfigure keyboard-configuration
+On 1st step look for Apple option in list but then
+*also* look for apple option in subsequent list.
+
+
+Followed instructions at
+https://docs.docker.com/installation/ubuntulinux/
+
+$ wget -qO- https://get.docker.com/ | sh
+
+Recommended adding non root user to docker group as follows
+$ sudo usermod -aG docker jon
+
+Is www-data a user?
+$ grep www-data /etc/passwd
+Yes. So I did this
+
+$ sudo usermod -aG docker www-data
+
+Checking docker install
+$ sudo docker run hello-world
+
+Yes it worked.
+Now simplest is to setup ssh. I will need to scp the bare repo 
+at some point. On git-server
+$ cd ~
+$ mkdir .ssh
+$ chmod 700 .ssh
+
+Copy across credentials to git-server
+$ cd ~/.ssh
+$ scp id_rsa.pub jon@192.168.59.104:/home/jon/.ssh/authorized_keys
+
+Now I can copy across the build-script
+$ cd admin_scripts
+$ scp setup_digital_ocean_server.sh jon@192.168.59.104:/home/jon
+
+Now put Network back to NAT and git clone
+
+$ cd var
+$ mkdir www
+$ cd www
+$ git clone https://JonJagger@github.com/JonJagger/cyber-dojo
+
+
+$ cd /var/www/cyber-dojo
+$ cd admin_scripts
+$ ./setup_digital_ocean_server.sh
+
+ifconfig says 192.168.59.104
+into browser and we have a home page :-)
+
+Create/Setup page fails.
+This is because I have not run admin_scripts/pull.sh
+No cache.json file languages and exercises
+Recreated those manually to check
+$ cd languages
+$ sudo ./cache.rb
+$ sudo chown www-data cache.json
+$ sudo chgrp www-data cache.json
+Same for exercises
+Still create page wont load. 
+Think it is still rights.
+Still need to run pull.sh
+
+Switched back to NAT
+ran pull.sh
+Trying Bridges-adapter
+Didn't seem to work.
+Switching back to Host-only-adapter
+
+Looked at log
+Problem in LanguagesDisplayNameSplitter.rb
+   no conversion from nil to Integer (for  [])
+   
+I think this is because there are no languages.
+Switched back to NAT
+$ cd /var/www/cyber-dojo/admin_scripts
+$ sudo docker pull cyberdojo/gcc-4.8.1_assert
+
+Switch back to Host-adapter
+[create] and yes, I see 
+one language [C (gcc)]
+one test [assert]
+
+Obviously a missing test somewhere.
+If there are no languages installed the create 
+setup page should simply show no languages!
+
+Can't create dojo though. 
+Think that is because one-self is not connecting.
+Still on Host-only adpater. Not good.
+
+$ cd /var/www/cyber-dojo/test/lib
+$ sudo cp OneSelfDummy.rb ../../lib
+$ cd /var/www/cyber-dojo/lib
+$ sudo chown www-data OneSelfDummy.rb
+$ sudo chgrp www-data OneSelfDummy.rb
+and edit all.rb so it names OneSelfDummy.rb
+
+And we are up. It was OneSelf.
+I can now do a dojo in C/assert.
+
+
+Summary
+=======
+o) build script should be a single script?
+   instead of cloning first perhaps
+   wget the script and then run it.
+   
+o) build script works when building from Ubuntu 14.04.2 server
+   as long as you install docker first.
+   $ sudo wget -qO- https://get.docker.com/ | sh   
+   Perhaps I could add that command anyway.
+   Is it a no-op if docker is already installed?   
+
+o) When running on a local laptop with no internet connectivity
+   (Host-only-adapter) OneSelf not being visible means you
+   can't do local dojos. FIX THIS.
+   
+o) Add test for LanguagesDisplayNameSplitter when there are no languages.
+
+o) Create new cyber-dojo blog page on setting up a server
+   from the 14.04.2 Linux Server image.
+
+
