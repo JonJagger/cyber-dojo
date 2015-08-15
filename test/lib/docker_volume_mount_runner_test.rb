@@ -99,7 +99,11 @@ class DockerVolumeMountRunnerTests < LibTestBase
     assert run_cmd.include?(expected), 'timeout(inner)'    
     
     assert run_cmd.include?("docker run"), 'docker run'
-    assert run_cmd.include?("--cidfile="), 'cidfile'
+    assert run_cmd.include?('--user=www-data'), 'user inside docker container is www-data'
+    assert run_cmd.include?("--cidfile="), 'explicit cidfile'
+    refute run_cmd.include?('--rm'), 'rm is *not* specified'
+    assert run_cmd.include?('-v "/var/www/cyber-dojo/languages'), 'volume mount languages/'
+    assert run_cmd.include?('-v "/var/www/cyber-dojo/katas'), 'volume mount katas/'
     assert_equal "docker stop #{pid} ; docker rm #{pid}", @bash.spied[5], 'docker stop+rm'    
   end
   
