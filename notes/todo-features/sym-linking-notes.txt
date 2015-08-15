@@ -1,40 +1,7 @@
 
-- - - - - - - - - - - - - - - - - - - -
-sym-linking...
-- - - - - - - - - - - - - - - - - - - -
-Renaming/restructuring the language folders.
-One effect of this will be that existing
-dojos for languages that have sym-linked 
-support files will no longer be resumable.
-Or rather, they will be re-enterable, and
-you will be able to fork, but you will 
-not be able to [test]
-This suggests that dojos should have a
-max duration. Say one day.
-See 07-timed-out-dojos.txt - it's better to
-timeout a dojo if there is no activity for a 
-certain period).
-
-Maybe rework languages that have sym-links
-so their symlinked files are inside the docker 
-container, and then remove sym-linking completely.
-
-This will update the docker container images.
-They will have the same name of course.
-This means I will need to check for updates.
-$ docker pull NAME
-does nothing quite fast if there is no change.
-But pulls the new image if it has changed.
-DONE.
-
-So I need to create a script to iterate through
-the installed languages and check for updates
-by (re)pulling their docker containers.
-And then add that to pull.sh DONE
-
-- - - - - - - - - - - - - - - - - - - -
-Languages that have support files
-- - - - - - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - - - - - - - - -
+Languages that have sym-linked support files
+- - - - - - - - - - - - - - - - - - - - - - -
 "/var/www/cyber-dojo/languages/Bash/shunit2/manifest.json"
 "/var/www/cyber-dojo/languages/C#/NUnit/manifest.json"
 "/var/www/cyber-dojo/languages/C#/SpecFlow/manifest.json"
@@ -68,7 +35,7 @@ end
 So I need to append an ADD command to each Dockerfile
 that has support files. For example
 
-Java/Cucumber   add these lines
+Java/Cucumber   ...add these lines
 #- - - - - - - - - - - - - - 
 ADD cucumber-core-1.1.6.jar /sandbox
 ADD cucumber-html-0.2.3.jar /sandbox
@@ -123,12 +90,47 @@ Java/JUnit add this line
 #- - - - - - - - - - - - - - 
 ADD junit-4.11.jar /sandbox/
 
-
-
 However it is not quite that easy.
 Who owns/sees this new file once /sandbox has been volume mounted?
 http://unix.stackexchange.com/questions/123062/user-permissions-inside-and-outside-of-lxc-containers
 There is an issue of uid being the same inside and outside the container.
+Remember that inside the docker container the user is www-data
+so added files need to be visible for that user.
+
+
+- - - - - - - - - - - - - - - - - - - -
+sym-linking...
+- - - - - - - - - - - - - - - - - - - -
+Renaming/restructuring the language folders.
+One effect of this will be that existing
+dojos for languages that have sym-linked 
+support files will no longer be resumable.
+Or rather, they will be re-enterable, and
+you will be able to fork, but you will 
+not be able to [test]
+This suggests that dojos should have a
+max duration. Say one day.
+See 07-timed-out-dojos.txt - it's better to
+timeout a dojo if there is no activity for a 
+certain period).
+
+Maybe rework languages that have sym-links
+so their symlinked files are inside the docker 
+container, and then remove sym-linking completely.
+
+This will update the docker container images.
+They will have the same name of course.
+This means I will need to check for updates.
+$ docker pull NAME
+does nothing quite fast if there is no change.
+But pulls the new image if it has changed.
+DONE.
+
+So I need to create a script to iterate through
+the installed languages and check for updates
+by (re)pulling their docker containers.
+And then add that to pull.sh DONE
+
 
 
 Summary
