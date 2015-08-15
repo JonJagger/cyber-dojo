@@ -2,6 +2,7 @@
 log/*
 db/*.sqlite3
 tmp
+temp
 coverage
 katas_rb
 
