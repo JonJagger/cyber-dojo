@@ -30,6 +30,7 @@ class DockerRunner
   end
 
   def started(avatar); end
+
   def pre_test(avatar); end
 
   def docker_run(options, image_name, cmd, max_seconds)
