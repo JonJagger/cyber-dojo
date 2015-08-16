@@ -7,9 +7,6 @@
     "makefile",
     "cyber-dojo.sh"
   ],
-  "support_filenames": [
-    "catch.hpp"
-  ],
   "filename_extension" : ".cpp",
   "display_name": "C++ (g++), Catch",
   "unit_test_framework": "catch",
