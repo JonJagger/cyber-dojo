@@ -2,10 +2,18 @@
 Create a cyber-dojo user on the server.
 =======================================
 
+Digital Ocean server created using instructions here
+http://blog.cyber-dojo.org/2015/01/setting-up-your-own-digital-ocean-cyber.html
+
+Now steps needed to run DockerGitCloneRunner
+
+Create cyber-dojo user
+======================
 $ adduser cyber-dojo
 
-now make ssh keys
 
+Setup up cyber-dojo user's ssh keys
+===================================
 $ whoami
 cyber-dojo
 $ mkdir .ssh
@@ -14,24 +22,40 @@ $ chmod 700 .ssh
 $ cd .ssh
 $ ssh-keygen -t rsa
 $ ssh-copy-id git@192.168.59.103
-entered git password
+need to enter git password
 
 
+Allow www-data to sudo -u cyber-dojo
+====================================
 Added this line to /etc/sudoers.d/custom  (new file)
-to allow www-data to sudo -u cyber-dojo
 
 www-data ALL=(cyber-dojo:cyber-dojo) NOPASSWD:ALL
 
-allows www-data to do this...
-$ sudo -u cyber-dojo bash
 
+Permissions
+===========
 Need to create a group and make both www-data and cyber-dojo
 members of the group so cyber-dojo can read/write (only read) 
-files under katas/
+files under katas/ when it issues git commands.
 
 $ usermod -a -G www-data cyber-dojo
+$ cd /var/www/cyber-dojo
+$ chmod g+rwsx $cyberDojoHome/katas
+$ apt-get install -y acl
+$ setfacl -d -m group:www-data:rwx $cyberDojoHome/katas
+$ setfacl -m group:www-data:rwx $cyberDojoHome/katas
 
 
+>>>>>>
+>>>>>>Next step to remove --net=host
+>>>>>>
+Using --net=host docker run option which is not secure
+but it gets something working.
+
+
+
+>>>>>Should make cyber-dojo user password-less if possible
+>>>>>Should make cyber-dojo user login shell-less if possible
 
 
 

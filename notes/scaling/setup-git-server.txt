@@ -1,4 +1,9 @@
 
+Started from digit-ocean droplet
+Size: $10/month 
+Image: Distributions Ubuntu 14.04 x64
+
+
 Create a normal user called git
 ===============================
 $ adduser git
@@ -79,12 +84,8 @@ This is done from the cyber-dojo server.
 There is an option on git clone to specify the folder you want to clone into.
 Using that in cyber-dojo servers docker run command 
 
-Note: timeout cannot be given 'cd' as its command.
-See $ info coreutils 'timeout invocation'
-
-Using --net=host docker run option which is not secure
-but it gets something working.
-Next step to remove --net=host
+Note: timeout cannot be given 'cd' as its command. See 
+$ info coreutils 'timeout invocation'
 
 One potential issue with having a password-less, ssh-less git-server
 giving git clone read-access is that it could become the bottleneck
