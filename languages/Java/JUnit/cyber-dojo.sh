@@ -1,5 +1,5 @@
 rm -f *.class
-CLASSES=.:`ls *.jar | tr '\n' ':'`
+CLASSES=.:`ls /junit/*.jar | tr '\n' ':'`
 javac -Xlint:unchecked -Xlint:deprecation -cp $CLASSES  *.java
 if [ $? -eq 0 ]; then
   # run test classes even if they are inner classes
