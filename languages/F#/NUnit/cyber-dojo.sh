@@ -1,7 +1,7 @@
 
 fsharpc --nologo \
         --target:library \
-        -r:/nunit/nunit.framework.dll \
+        -r:/Packages/NUnit.Runners/tools/nunit.framework.dll \
         -o RunTests.dll *.fs
 
 if [ $? -eq 0 ]; then

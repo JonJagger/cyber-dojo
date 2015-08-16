@@ -3,8 +3,5 @@ MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 RUN mono nuget.exe install NUnit.Runners -o Packages -ExcludeVersion
 
-RUN mkdir /nunit
-ADD nunit.framework.dll /nunit/
-#ENV MONO_PATH=/nunit/
-RUN gacutil -i /nunit/nunit.framework.dll -package nunit
+RUN gacutil -i /Packages/NUnit.Runners/tools/nunit.framework.dll -package nunit
 
