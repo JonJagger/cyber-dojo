@@ -2,18 +2,19 @@
 Create a cyber-dojo user on the server.
 =======================================
 
-$ sudo adduser cyber-dojo
+$ adduser cyber-dojo
 
 now make ssh keys
 
 $ whoami
 cyber-dojo
-$ cd ~/.ssh
+$ mkdir .ssh
+$ chown cyber-dojo:cyber-dojo .ssh
+$ chmod 700 .ssh
+$ cd .ssh
 $ ssh-keygen -t rsa
 $ ssh-copy-id git@192.168.59.103
 entered git password
-$ ssh git@192.168.59.103
-and verified its ok.
 
 
 Added this line to /etc/sudoers.d/custom  (new file)
@@ -24,12 +25,11 @@ www-data ALL=(cyber-dojo:cyber-dojo) NOPASSWD:ALL
 allows www-data to do this...
 $ sudo -u cyber-dojo bash
 
-
 Need to create a group and make both www-data and cyber-dojo
 members of the group so cyber-dojo can read/write (only read) 
 files under katas/
 
-$ sudo usermod -a -G www-data cyber-dojo
+$ usermod -a -G www-data cyber-dojo
 
 
 

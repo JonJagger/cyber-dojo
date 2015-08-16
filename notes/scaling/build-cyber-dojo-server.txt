@@ -70,8 +70,7 @@ No cache.json file languages and exercises
 Recreated those manually to check
 $ cd languages
 $ sudo ./cache.rb
-$ sudo chown www-data cache.json
-$ sudo chgrp www-data cache.json
+$ sudo chown www-data:www-data cache.json
 Same for exercises
 Still create page wont load. 
 Think it is still rights.
@@ -105,15 +104,7 @@ Can't create dojo though.
 Think that is because one-self is not connecting.
 Still on Host-only adpater. Not good.
 
-$ cd /var/www/cyber-dojo/test/lib
-$ sudo cp OneSelfDummy.rb ../../lib
-$ cd /var/www/cyber-dojo/lib
-$ sudo chown www-data OneSelfDummy.rb
-$ sudo chgrp www-data OneSelfDummy.rb
-and edit all.rb so it names OneSelfDummy.rb
-
-And we are up. It was OneSelf.
-I can now do a dojo in C/assert.
+And we are up. 
 
 
 Summary

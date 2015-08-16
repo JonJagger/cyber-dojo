@@ -1,41 +1,36 @@
 
 Create a normal user called git
 ===============================
-$ sudo adduser git
+$ adduser git
 $ whoami
 git
 $ cd ~
 $ pwd
 /home/git
 
-prepare for ssh access files from host OS
+Prepare for ssh access files from host OS
+=========================================
 $ mkdir /home/git/.ssh
+$ chown git:git .ssh
 $ chmod 700 .ssh
 
 
 Install git
 ===========
-$ sudo apt-get install git
+$ apt-get update
+$ apt-get install git
 
 
-Now create /opt/git ready for repos
-===================================
+Create /opt/git ready for repos
+===============================
 $ cd /opt
-$ sudo mkdir git
-$ sudo chown git git
-$ sudo chgrp git git
+$ mkdir git
+$ chown git:git git
 
 
 Set up git-daemon
 =================
-Cloning requires ssh access. Want to avoid that.
-So using git daemon on git server
-This helped.
-ftp://www.kernel.org/pub/software/scm/git/docs/git-daemon.html
-
-$ sudo apt-get install git-daemon-run
-
-Removed /etc/init.d/local-git-daemon.conf
+$ apt-get install git-daemon-run
 
 Edited
 /etc/service/git-damon/run 
@@ -48,24 +43,28 @@ exec chpst -ugitdaemon \
    "$(git --exec-path)"/git-daemon \
    --reuseaddr --base-path=/opt/git /opt/git
 
+restart the git-daemon
+$ reboot
+
 
 Open ports
 ==========
 
 git-daemon uses 9418
-$ sudo ufw allow 9418
-$ sudo ufw enable
-
 ssh uses port 22
-$ sudo ufw allow 22
-$ sudo ufw enable
+$ ufw allow 9418
+$ ufw allow 22
+$ ufw enable
+
+check it
+$ ufw status
 
 
 Notes
-==========
+=====
 
 I also added gitdaemon to git's group
-$ sudo usermod -a -G git gitdaemon
+$ usermod -a -G git gitdaemon
 but I don't think this was anything to do with it.
 git-daemon logging is in /var/log/gitdaemon
 
