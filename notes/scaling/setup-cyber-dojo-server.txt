@@ -21,7 +21,7 @@ $ chown cyber-dojo:cyber-dojo .ssh
 $ chmod 700 .ssh
 $ cd .ssh
 $ ssh-keygen -t rsa
-$ ssh-copy-id git@192.168.59.103
+$ ssh-copy-id git@GIT_SERVER_IP_ADDRESS
 need to enter git password
 
 
@@ -40,10 +40,10 @@ files under katas/ when it issues git commands.
 
 $ usermod -a -G www-data cyber-dojo
 $ cd /var/www/cyber-dojo
-$ chmod g+rwsx $cyberDojoHome/katas
+$ chmod g+rwsx katas
 $ apt-get install -y acl
-$ setfacl -d -m group:www-data:rwx $cyberDojoHome/katas
-$ setfacl -m group:www-data:rwx $cyberDojoHome/katas
+$ setfacl -d -m group:www-data:rwx katas
+$ setfacl -m group:www-data:rwx katas
 
 
 >>>>>>
