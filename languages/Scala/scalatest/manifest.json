@@ -1,7 +1,6 @@
 
 {
   "visible_filenames": [ "hiker.scala", "hiker_tests.scala", "cyber-dojo.sh" ],
-  "support_filenames": [ "scalatest_2.9.0-1.8.jar" ],
   "unit_test_framework": "scala_test",
 
   "filename_extension" : ".scala",
