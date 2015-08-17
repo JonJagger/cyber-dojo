@@ -5,11 +5,7 @@
     "Hiker.cs",
     "HikerSteps.cs",
     "HikerSpec.feature",
-    "cyber-dojo.sh"
-  ],
-  "support_filenames": [
-    "nunit.framework.dll",
-    "specflow.exe",
+    "cyber-dojo.sh",
     "RunTests.dll.config"
   ],
   "filename_extension" : ".cs",

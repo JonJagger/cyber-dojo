@@ -23,7 +23,7 @@ echo "  </ItemGroup>" >> $CSPROJ
 echo "</Project>" >> $CSPROJ
 
 #generate 'code behind'
-mono ./specflow.exe generateall RunTests.csproj
+mono /specflow/specflow.exe generateall RunTests.csproj
 
 dmcs -t:library -r:/usr/lib/mono/SpecFlow/TechTalk.SpecFlow.dll -r:/usr/lib/cli/nunit.framework-2.6/nunit.framework.dll -out:RunTests.dll *.cs
 if [ $? -eq 0 ]; then
