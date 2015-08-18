@@ -6,7 +6,7 @@
     "Hiker.java",
     "cyber-dojo.sh"
   ],
- "filename_extension" : ".java",
+  "filename_extension" : ".java",
   "display_name": "Java, PowerMockito",
   "unit_test_framework": "junit",
   "image_name": "cyberdojo/java-1.8_powermockito"
