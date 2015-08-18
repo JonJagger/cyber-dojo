@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/bcpl-all_tests_passed .
+docker build -t cyberdojofoundation/bcpl-all_tests_passed .
