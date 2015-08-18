@@ -1,4 +1,4 @@
-FROM       cyberdojo/clang-3.6.0
+FROM       cyberdojofoundation/clang-3.6.0
 MAINTAINER Byran Wills-Heath <byran@adgico.co.uk>
 
 RUN apt-get install -y libgtest-dev
