@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/bash .
+docker build -t cyberdojofoundation/bash .

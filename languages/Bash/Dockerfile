@@ -1,3 +1,3 @@
-FROM       cyberdojo/build-essential
+FROM       cyberdojofoundation/build-essential
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
