@@ -10,5 +10,5 @@
   "filename_extension" : ".cpp",
   "display_name": "C++ (clang++), assert",
   "unit_test_framework": "cassert",
-  "image_name": "cyberdojo/clang-3.6.0_assert"
+  "image_name": "cyberdojofoundation/clang-3.6.0_assert"
 }
