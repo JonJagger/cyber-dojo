@@ -9,5 +9,5 @@
   "filename_extension" : ".sh",
   "display_name": "Bash, shunit2",
   "unit_test_framework": "bash_shunit2",
-  "image_name": "cyberdojo/bash_shunit2"
+  "image_name": "cyberdojofoundation/bash_shunit2"
 }
