@@ -9,5 +9,5 @@
   "filename_extension" : ".java",
   "display_name": "Java, Approval",
   "unit_test_framework": "junit",
-  "image_name": "cyberdojo/java-1.8_approval"
+  "image_name": "cyberdojofoundation/java-1.8_approval"
 }
