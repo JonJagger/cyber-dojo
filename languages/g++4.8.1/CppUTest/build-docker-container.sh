@@ -1,3 +1,4 @@
 #!/bin/bash
 
-docker build -t cyberdojo/gpp-4.8.1_cpputest .
+docker build -t cyberdojofoundation/gpp-4.8.1_cpputest .
+
