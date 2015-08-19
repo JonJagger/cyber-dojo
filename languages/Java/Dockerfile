@@ -1,5 +1,5 @@
 
-FROM       ubuntu:13.10
+FROM       cyberdojofoundation/build-essential
 MAINTAINER Luca B <blmlcu [at] gmail {dot} org>
 
 RUN apt-get -y --force-yes -qq install wget
