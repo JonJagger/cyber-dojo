@@ -8,6 +8,6 @@
   "filename_extension" : ".coffee",
   "display_name": "CoffeeScript, jasmine",
   "unit_test_framework": "jasmine",
-  "image_name": "cyberdojo/coffeescript-1.14.3_jasmine",
+  "image_name": "cyberdojofoundation/coffeescript-1.14.3_jasmine",
   "tab_size": 2
 }
