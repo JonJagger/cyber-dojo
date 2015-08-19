@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/coffeescript-1.14.3  .
+docker build -t cyberdojofoundation/coffeescript-1.14.3  .
