@@ -11,5 +11,5 @@
   "filename_extension" : ".cpp",
   "display_name": "C++ (g++), Igloo",
   "unit_test_framework": "cppigloo",
-  "image_name": "cyberdojo/gpp-4.8.1_igloo"
+  "image_name": "cyberdojofoundation/gpp-4.8.1_igloo"
 }
