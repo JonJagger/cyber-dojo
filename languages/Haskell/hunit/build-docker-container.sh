@@ -1,3 +1,4 @@
 #!/bin/bash
 
-docker build -t cyberdojo/haskell-7.6.3_hunit .
+docker build -t cyberdojofoundation/haskell-7.6.3_hunit .
+
