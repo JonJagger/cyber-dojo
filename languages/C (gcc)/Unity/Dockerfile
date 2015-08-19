@@ -1,9 +1,8 @@
-FROM       cyberdojo/gcc-4.8.1
+FROM       cyberdojofoundation/gcc-4.8.1
 MAINTAINER Byran Wills-Heath <byran@adgico.co.uk>
 
 # Ruby is needed for the script that builds the main function
 
-RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get upgrade -y
 
