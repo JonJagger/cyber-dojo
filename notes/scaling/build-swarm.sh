@@ -10,6 +10,8 @@ fi
 swarmToken=`docker run --rm swarm create`
 echo swarm-token $swarmToken created
 
+# - - - - - - - - - - - - - - - - - - - - - - -
+
 docker-machine create \
    --driver digitalocean \
    --digitalocean-access-token=$digitalOceanAccessToken \
@@ -27,6 +29,8 @@ else
   echo "OK:$ docker-machine create ... cyber-dojo-docker-swarm-master"
 fi
 
+# - - - - - - - - - - - - - - - - - - - - - - -
+
 docker-machine create \
    --driver digitalocean \
    --digitalocean-access-token=$digitalOceanAccessToken \
@@ -38,11 +42,13 @@ docker-machine create \
 
 if [ $? -ne 0 ]; then
   echo "FAILED:$ docker-machine create ... cyber-dojo-docker-swarm-node-00"
+  docker-machine rm -f cyber-dojo-docker-swarm-node-00
   exit 3
 else
   echo "OK:$ docker-machine create ... cyber-dojo-docker-swarm-node-00"
 fi
 
+# - - - - - - - - - - - - - - - - - - - - - - -
 
 docker-machine create \
    --driver digitalocean \
@@ -55,11 +61,13 @@ docker-machine create \
 
 if [ $? -ne 0 ]; then
   echo "FAILED:$ docker-machine create ... cyber-dojo-docker-swarm-node-01"
+  docker-machine rm -f cyber-dojo-docker-swarm-node-01 
   exit 4
 else
   echo "OK:$ docker-machine create ... cyber-dojo-docker-swarm-node-01"
 fi
 
+# - - - - - - - - - - - - - - - - - - - - - - -
 
 docker-machine ssh cyber-dojo-docker-swarm-node-00 'docker pull cyberdojo/gcc-4.8.1_assert'
 docker-machine ssh cyber-dojo-docker-swarm-node-01 'docker pull cyberdojo/gcc-4.8.1_assert'

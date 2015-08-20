@@ -303,6 +303,36 @@ So it looks like I need to run all the docker-machine
 commands as the user that will actually run the
 docker run command, viz cyber-dojo
 
+$ whoami
+root
+$ gpasswd -a cyber-dojo docker
+$ su cyber-dojo
+$ cd ~
+$ rm -rf .docker
+$ unset DOCKER_TLS_VERIFY
+$ unset DOCKER_HOST
+$ unset DOCKER_CERT_PATH
+$ unset DOCKER_MACHINE_NAME
+$ ./scale.sh DIGIT_OCEAN_ACCESS_TOKEN
 
+$ docker-machine env --swarm swarm-master
+Now add env-var settings to cyber-dojo's /home/cyber-dojo/.profile file
 
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://178.62.20.144:2376"
+export DOCKER_CERT_PATH="/home/cyber-dojo/.docker/machine/machines/cyber-dojo-docker-swarm-master"
+export DOCKER_MACHINE_NAME="cyber-dojo-docker-swarm-master"
+
+Then run "sudo -u cyber-dojo -i export"
+To confirm env variables are set.
+
+Then run "sudo -u cyber-dojo -i docker run ..."
+
+And this appears to work but it isn't.
+It's using the container on the server itself and not the cluster.
+
+Try simpler docker run command...
+Error response from daemon: Cannot start container b9dd826d1a2b6f39cf9e02ed73a9d65568df5ee1e8c5ee35f6a8993d5283c1bd: [8] System error: exec: "git clone git://46.101.57.179/2C/98AA8256/wolf.git /tmp/wolf 2>&1 > /dev/null;cd /tmp/wolf/sandbox && ./cyber-dojo.sh": stat git clone git://46.101.57.179/2C/98AA8256/wolf.git /tmp/wolf 2>&1 > /dev/null;cd /tmp/wolf/sandbox && ./cyber-dojo.sh: no such file or directory
+
+Reboot server in morning
 
