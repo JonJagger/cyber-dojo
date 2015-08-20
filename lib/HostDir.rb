@@ -38,10 +38,9 @@ class HostDir
   def write(filename, object)
     pathed_filename = path + filename
     FileUtils.mkdir_p(File.dirname(pathed_filename))
-    # The filename could be pathed, eg abc/def.hpp
-    # if I allow pathed filenames to be entered from
-    # the browser (or via language manifests?).
-    # Not currently working though...
+    # The filename could be pathed, eg a/b/c/def.hpp if I
+    # allowed pathed filenames to be entered from the browser
+    # (or via language manifests) which I currently don't.
     if object.is_a? String
       File.open(pathed_filename, 'w') { |fd| fd.write(object) }
       execute = 0755

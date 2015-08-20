@@ -55,7 +55,7 @@ class KataTests < ModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test 'when kata does not exist' +
        ' then it is not active' +
        ' and it has not finished' +
@@ -83,6 +83,42 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
+  test 'start_avatar puts started avatars name into katas started_avatars.json file' do
+    kata = make_kata
+    kata.start_avatar(['hippo'])
+    started = JSON.parse(kata.dir.read('started_avatars.json'))
+    assert_equal ['hippo'], started
+    kata.start_avatar(['lion'])
+    started = JSON.parse(kata.dir.read('started_avatars.json'))
+    assert_equal ['hippo','lion'], started.sort
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'start_avatar on old dojo that as no started_avatars.json file' +
+       ' reverts to doing dir.exists? for each avatar' do
+   kata = make_kata
+   animals = ['lion','hippo','cheetah'].sort
+   3.times { kata.start_avatar(animals) }
+   filename = 'started_avatars.json'
+   started = JSON.parse(kata.dir.read(filename))
+   assert_equal animals, started.sort
+   # now delete started_avatars.json to simulate old dojo
+   # with started avatars and no started_avatars.json file
+   kata.dir.delete(filename)
+   refute kata.dir.exists?(filename)
+   (Avatars.names.size - 3).times do
+     avatar = kata.start_avatar
+     assert_not_nil avatar
+     refute kata.dir.exists?(filename)
+   end
+   avatar = kata.start_avatar
+   assert_nil avatar
+   refute kata.dir.exists?(filename)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'when kata exists but all its avatars have 0 traffic-lights' +
        ' then it is not active ' +
        ' and it has not finished' +
@@ -178,13 +214,23 @@ class KataTests < ModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  test 'start_avatar with specific avatar-name ' +
-       '(useful for testing)' do
+
+  test 'start_avatar with specific avatar-name' +
+       ' (useful for testing) succeeds if avatar has not yet started' do
     kata = make_kata
     hippo = kata.start_avatar(['hippo'])
     assert_equal 'hippo', hippo.name
     assert_equal ['hippo'], kata.avatars.map {|avatar| avatar.name}
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'start_avatar with specific avatar-name' +
+       ' (useful for testing) fails if avatar has already started' do
+    kata = make_kata
+    hippo = kata.start_avatar(['hippo'])
+    avatar = kata.start_avatar(['hippo'])
+    assert_equal nil, avatar
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

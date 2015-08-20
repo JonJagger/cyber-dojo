@@ -22,6 +22,8 @@ class Avatars
 
   def each
     return enum_for(:each) unless block_given?
+    # Could do kata.dir.exists?('started_avatars.json')
+    # and use that if it exists
     Avatars.names.each do |name|
       avatar = self[name]
       yield avatar if avatar.exists?
