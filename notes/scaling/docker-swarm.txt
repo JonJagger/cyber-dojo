@@ -257,41 +257,51 @@ Will need to ponder that.
 
 $ docker-machine ssh swarm-node-00 'docker pull cyberdojo/gcc-4.8.1_assert'
 That works.
+$ docker-machine ssh swarm-node-00 'docker images'
+That works.
 
 
+$ docker-machine env --swarm swarm-master
+is
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://178.62.84.64:3376"
+export DOCKER_CERT_PATH="/root/.docker/machine/machines/cyber-dojo-docker-swarm-master"
+export DOCKER_MACHINE_NAME="cyber-dojo-docker-swarm-master"
 
+How to set these in rails-server?
+Could edit /etc/profile
+Could edit /etc/apache2/apache2conf
+<VirtualHost *:80>
+      ...
+      SetEnv DOCKER_TLS_VERIFY 1
+</VirtualHost>      
+Could set them for cyber-dojo user by appending
+them to the end of /home/cyber-dojo/.bashrc
 
+Also DOCKER_CERT_PATH won't be readable as its in /root/
 
+Should the docker-machine commands be run as cyber-dojo user
+and the docker-run command also run as cyber-dojo user
+$ sudo -u cyber-dojo docker run ...
 
+On cyber-dojo server
+$ su cyber-dojo
+$ $ docker-machine create \
+    --driver digitalocean \
+    --digitalocean-access-token=... \
+    --digitalocean-region=lon1 \
+    --digitalocean-size=1gb \
+    user-cd-swarm-master
+    
+$ docker-machine env user-cd-swarm-master
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://46.101.43.7:2376"
+export DOCKER_CERT_PATH="/home/cyber-dojo/.docker/machine/machines/user-cd-swarm-master"
+export DOCKER_MACHINE_NAME="user-cd-swarm-master"
 
-
-
-
-
-
-==============================Misc===============================
-
-http://devopscube.com/how-to-setup-and-configure-docker-swarm-cluster/
-
-Started from digital-ocean 
-$10/month
-Ubunt 14.04 Docker 1.8.1
-
-
-https://docs.docker.com/articles/networking/
-docker -H ...
-Finally told me what -H means
--H SOCKET... or --host=SOCKET... 
-— This might sound like it would affect container networking, but it actually faces in the other direction: tells the Docker server over what channels it should be willing to receive commands like “run container” and “stop container.”
-
-docker-swarm-master  IP=178.62.26.102
-docker-agent-01      IP=178.62.90.203
-docker-agent-02      IP=178.62.
-
-
-
-
-
+So it looks like I need to run all the docker-machine
+commands as the user that will actually run the
+docker run command, viz cyber-dojo
 
 
 
