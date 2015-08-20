@@ -46,6 +46,17 @@ $ setfacl -d -m group:www-data:rwx katas
 $ setfacl -m group:www-data:rwx katas
 
 
+Installed docker-machine
+========================
+http://docs.docker.com/machine/install-machine/
+$ curl -L https://github.com/docker/machine/releases/download/v0.4.0/docker-machine_linux-amd64 > /usr/local/bin/docker-machine
+$ chmod +x /usr/local/bin/docker-machine
+
+
+http://devopscube.com/how-to-setup-and-configure-docker-swarm-cluster/
+
+
+
 >>>>>>
 >>>>>>Next step to remove --net=host
 >>>>>>
