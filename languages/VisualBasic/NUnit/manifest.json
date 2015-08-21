@@ -8,5 +8,5 @@
   "filename_extension" : ".vb",
   "display_name": "VisualBasic, NUnit",
   "unit_test_framework": "nunit",
-  "image_name": "cyberdojo/visual_basic-0.5943_nunit"
+  "image_name": "cyberdojofoundation/visual_basic-0.5943_nunit"
 }

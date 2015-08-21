@@ -1,4 +1,4 @@
-FROM       cyberdojo/visual_basic-0.5943
+FROM       cyberdojofoundation/visual_basic-0.5943
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 RUN apt-get install -y nunit-console
