@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker build -t cyberdojo/javascript-mocha .
+docker build -t cyberdojofoundation/javascript-mocha .
 
 # I tried calling this
 #               cyberdojo/javascript-0.10.15_mocha_chai_sinon
