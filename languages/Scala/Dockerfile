@@ -1,7 +1,6 @@
-FROM       cyberdojo/java-1.7
+FROM       cyberdojofoundation/java-1.8
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get upgrade -y
 
