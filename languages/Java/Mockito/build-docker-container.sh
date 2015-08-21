@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/java-1.8_mockito .
+docker build -t cyberdojofoundation/java-1.8_mockito .
