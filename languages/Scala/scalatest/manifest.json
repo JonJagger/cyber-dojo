@@ -5,6 +5,6 @@
 
   "filename_extension" : ".scala",
   "display_name": "Scala, scalatest",
-  "image_name": "cyberdojo/scala-2.9.2_scalatest",
+  "image_name": "cyberdojofoundation/scala-2.9.2_scalatest",
   "tab_size": 4
 }
