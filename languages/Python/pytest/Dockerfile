@@ -1,4 +1,4 @@
-FROM       cyberdojo/python-3.3.5
+FROM       cyberdojofoundation/python-3.3.5
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 RUN apt-get install -y python-pip
