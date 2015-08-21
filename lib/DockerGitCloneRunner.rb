@@ -63,13 +63,12 @@ class DockerGitCloneRunner < DockerRunner
     avatar = sandbox.avatar
     kata = avatar.kata
     language = kata.language
-    # Assumes git daemon on the git server.
-    # Pipes all output from git clone to dev/null to stop
-    # the output of git clone becoming part of the output visible
-    # in the browser and affecting the traffic-light colouring.
+    # Assumes git daemon on the git server. Pipes all output from git clone
+    # to dev/null to stop it becoming part of the output visible in the
+    # browser and affecting the traffic-light colouring.
     cmds = [
       "git clone git://#{git_server}#{kata_path(kata)}/#{avatar.name}.git /tmp/#{avatar.name} 2>&1 > /dev/null",
-      "cd /tmp/#{avatar.name}/sandbox && #{command}"
+      "cd /tmp/#{avatar.name}/sandbox && #{timeout(command,max_seconds)}"
     ].join(';')
     
     # Using --net=host just to get something working. This is insecure.
@@ -91,7 +90,7 @@ private
     #    with a --base-path=/opt/git
     # 5. port 9418 is open on the git server
     # TODO: this will need to be set from external ENV[] setting
-    '192.168.59.103'
+    '46.101.57.179'
   end
 
   def opt_git_kata_path(kata)

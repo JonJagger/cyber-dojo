@@ -35,6 +35,8 @@ Created the file /home/cyber-dojo/setup_docker_machine_env_vars.sh
 with this one line.
 eval "$(docker-machine env --swarm cyber-dojo-docker-swarm-master)"
 
+Which assumes the docker-swarm has been built as per
+build-swarm.txt notes.
 
 
 Setup up cyber-dojo user's ssh keys

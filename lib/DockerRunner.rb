@@ -40,12 +40,40 @@ class DockerRunner
 
     bash("rm -f #{cidfile}")
 
-    # In a docker-swarm this too needs a prefix of
-    # sudo -u cyber-dojo -i
+    # In a docker-swarm this needs to be as follows
+    #
+    # Note: outer timeout goes on docker run and not on sudo
+    # Note: there is *no* timeout(cmd) because cmd is comprised
+    #       of two ; separated commands and only (part of) the
+    #       the last one needs the timeout wrapper
+    # Note: the cyber-dojo user is assumed to have their
+    #       docker-machine environment variables setup
+    #       See notes/scaling/setup-cyber-dojo-user.txt
+    #
+=begin
+    outer_command =
+      'sudo -u cyber-dojo -i' +
+      ' ' + timeout(
+              ' docker run' +
+              ' --user=www-data' +
+              " --cidfile=#{quoted(cidfile)}" +
+              ' ' + options +
+              ' ' + image_name +
+              " /bin/bash -c #{quoted(cmd)}",
+              max_seconds+5)
+
+    output,exit_status = bash(outer_command)
+    pid,_ = bash("cat #{cidfile}")
+    bash("sudo -u cyber-dojo -i docker stop #{pid}")
+    bash("sudo -u cyber-dojo -i docker rm   #{pid}")
+    # I can't figure out why the stop/rm have to split but they do
+    exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
+=end
+
     outer_command = timeout(
       'docker run' +
       ' --user=www-data' +
-      " --cidfile=#{quoted(cidfile)} " + 
+      " --cidfile=#{quoted(cidfile)} " +
       ' ' + options +
       ' ' + image_name +
       " /bin/bash -c #{quoted(timeout(cmd,max_seconds))}", 
@@ -53,13 +81,7 @@ class DockerRunner
 
     output,exit_status = bash(outer_command)
     pid,_ = bash("cat #{cidfile}")
-    # In a docker-swarm the following command 
     bash("docker stop #{pid} ; docker rm #{pid}")
-    # Needs to be these two
-    #   bash("sudo -u cyber-dojo -i docker stop #{pid}")
-    #   bash("sudo -u cyber-dojo -i docker rm   #{pid}")
-    # I can't figure out why the stop/rm have to split but they do
-
     exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
   end
 

@@ -434,8 +434,8 @@ $ command
 [sudo -u cyber-dojo -i docker run ....]
 is working.
 
-Need to fix.
-1) cidfile stop and rm
+Need to...
+1) fix cidfile [stop and rm]
 
 2) put timeouts back
 
