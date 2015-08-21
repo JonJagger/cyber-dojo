@@ -1,4 +1,4 @@
-FROM       cyberdojo/java-1.8
+FROM       cyberdojofoundation/java-1.8
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 ADD cglib-nodep-2.2.2.jar /powermockito/
