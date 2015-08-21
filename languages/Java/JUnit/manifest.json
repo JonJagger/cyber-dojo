@@ -14,5 +14,5 @@
   "filename_extension": ".java",
   "display_name": "Java, JUnit",
   "unit_test_framework": "junit",
-  "image_name": "cyberdojo/java-1.8_junit"
+  "image_name": "cyberdojofoundation/java-1.8_junit"
 }
