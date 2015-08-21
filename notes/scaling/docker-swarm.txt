@@ -278,61 +278,129 @@ Could edit /etc/apache2/apache2conf
 Could set them for cyber-dojo user by appending
 them to the end of /home/cyber-dojo/.bashrc
 
-Also DOCKER_CERT_PATH won't be readable as its in /root/
+Now DOCKER_CERT_PATH won't be readable as its in /root/
 
-Should the docker-machine commands be run as cyber-dojo user
-and the docker-run command also run as cyber-dojo user
-$ sudo -u cyber-dojo docker run ...
+The docker-machine commands need to be run as cyber-dojo user
+Recreate the cluster. Eg start with...
 
 On cyber-dojo server
+$ gpasswd -a cyber-dojo docker
 $ su cyber-dojo
-$ $ docker-machine create \
+$ build-swarm.sh DIGIT_OCEAN_ACCESS_TOKEN
+
+Runs...
+$ docker-machine create \
     --driver digitalocean \
     --digitalocean-access-token=... \
     --digitalocean-region=lon1 \
     --digitalocean-size=1gb \
-    user-cd-swarm-master
+    cyber-dojo-docker-swarm-master
     
-$ docker-machine env user-cd-swarm-master
+Now
+$ docker-machine env cyber-dojo-docker-swarm-master
+
 export DOCKER_TLS_VERIFY="1"
 export DOCKER_HOST="tcp://46.101.43.7:2376"
-export DOCKER_CERT_PATH="/home/cyber-dojo/.docker/machine/machines/user-cd-swarm-master"
-export DOCKER_MACHINE_NAME="user-cd-swarm-master"
+export DOCKER_CERT_PATH="/home/cyber-dojo/.docker/machine/machines/cyber-dojo-docker-swarm-master"
+export DOCKER_MACHINE_NAME="cyber-dojo-docker-swarm-master"
 
-So it looks like I need to run all the docker-machine
-commands as the user that will actually run the
-docker run command, viz cyber-dojo
 
-$ whoami
-root
-$ gpasswd -a cyber-dojo docker
+Now to ensure these env vars are set when www-data su/sudo as cyber-dojo
+to issue bash [docker run] command.
+
 $ su cyber-dojo
 $ cd ~
-$ rm -rf .docker
-$ unset DOCKER_TLS_VERIFY
-$ unset DOCKER_HOST
-$ unset DOCKER_CERT_PATH
-$ unset DOCKER_MACHINE_NAME
-$ ./scale.sh DIGIT_OCEAN_ACCESS_TOKEN
+$ export
+reveals that the env settings are *not* in place.
+Edited .bashrc which is run when [su cyber-dojo] occurs
+It's last line is now
+. ~/setup_docker_machine_env_vars.sh
 
-$ docker-machine env --swarm swarm-master
-Now add env-var settings to cyber-dojo's /home/cyber-dojo/.profile file
-
+And that file contains the following four lines
 export DOCKER_TLS_VERIFY="1"
 export DOCKER_HOST="tcp://178.62.20.144:2376"
 export DOCKER_CERT_PATH="/home/cyber-dojo/.docker/machine/machines/cyber-dojo-docker-swarm-master"
 export DOCKER_MACHINE_NAME="cyber-dojo-docker-swarm-master"
 
-Then run "sudo -u cyber-dojo -i export"
-To confirm env variables are set.
+Can now do
+$ su cyber-dojo
+$ docker-machine ls
 
-Then run "sudo -u cyber-dojo -i docker run ..."
+What about
+$ sudo -u cyber-dojo pwd
+That does *not* load run .bashrc or .profile
+$ sudo -u cyber-dojo -i pwd
+Does run the .profile
 
-And this appears to work but it isn't.
-It's using the container on the server itself and not the cluster.
+Edited .profile so it's last line is also
+. ~/setup_docker_machine_env_vars.sh
 
-Try simpler docker run command...
-Error response from daemon: Cannot start container b9dd826d1a2b6f39cf9e02ed73a9d65568df5ee1e8c5ee35f6a8993d5283c1bd: [8] System error: exec: "git clone git://46.101.57.179/2C/98AA8256/wolf.git /tmp/wolf 2>&1 > /dev/null;cd /tmp/wolf/sandbox && ./cyber-dojo.sh": stat git clone git://46.101.57.179/2C/98AA8256/wolf.git /tmp/wolf 2>&1 > /dev/null;cd /tmp/wolf/sandbox && ./cyber-dojo.sh: no such file or directory
 
-Reboot server in morning
+
+$ sudo -u cyber-dojo -i export
+Does list the DOCKER_ machine env vars.
+$ sudo -u cyber-dojo -i docker-machine ls
+Ok
+
+So now from the terminal
+$ sudo -u cyber-dojo -i docker run --user=www-data --net=host cyberdojo/gcc-4.8.1_assert /bin/bash -c "git clone git://46.101.57.179/2C/98AA8256/buffalo.git /tmp/buffalo;cd /tmp/buffalo/sandbox && ./cyber-dojo.sh"
+
+That works.
+Ok. On server, as root, no DOCKER_ machine env vars.
+$ docker images
+Confirms no cyberdojo/xxx images
+
+lib/DockerRunner.rb initialize now doing
+"sudo -u cyber-dojo -i docker images"
+Does see the cyberdojo/xxx image on the two swarm-nodes and does appear on create page.
+
+Added [sudo -u cyber-dojo -i] prefix to docker_run() outer_command string.
+
+That seems to be working.
+Verify.
+Check if cyberdojo/xxxx image has been pulled. On server as root. No DOCKER_ machine env vars.
+$ docker images
+It hasn't.
+$ docker ps -a
+Lists only one container - the swarm agent.
+
+Ok.
+Now trying to add outer timeout back.
+Running directly from terminal
+
+$ timeout --signal=9 20s sudo -u cyber-dojo -i docker run --user=www-data --cidfile="/tmp/cyber-dojo20150821-21329-1u8tmpt" --net=host cyberdojo/gcc-4.8.1_assert /bin/bash -c "git clone git://46.101.57.179/2C/98AA8256/buffalo.git /tmp/buffalo 2>&1 > /dev/null;cd /tmp/buffalo/sandbox && ./cyber-dojo.sh" 2>&1
+
+Error: Host does not exist: swarm-master
+
+And that seemed to pull cyberdojo/xxx container.
+docker rmi and docker rm to clean up.
+
+Take timeout out.
+Take docker stop'rm command out so I can
+see container still visible to absolutely verify
+container was run on swarm-node
+Nope. Not working.
+
+
+$ su cyber-dojo
+$ docker info
+
+Now reports only one node in the swarm (the master)
+Think I accidentally stopped and rm'd something I shouldn't.
+Hmm. That's not good.
+Do I need to rebuild the cluster.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

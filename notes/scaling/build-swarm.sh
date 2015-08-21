@@ -5,15 +5,16 @@
 # Important this is run as the user who will run the
 # docker run command, probably cyber-dojo
 
-if [ $# -eq 0 ]; then
+if [ $# -ne 2 ]; then
   echo "use: scale [digital-ocean-access-token]"
   exit 1
 else
-  digitalOceanAccessToken=$1
+  digitalOceanAccessToken=$2
 fi
 
 swarmToken=`docker run --rm swarm create`
 echo swarm-token $swarmToken created
+echo $swarmToken > docker-swarm.token
 
 # - - - - - - - - - - - - - - - - - - - - - - -
 
