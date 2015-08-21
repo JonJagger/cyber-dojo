@@ -59,7 +59,6 @@
     }
   }
   .each {
-    text-decoration: underline;
     font-style: italic;
   }
   .number {
@@ -92,7 +91,8 @@
     position: relative;
     right: -1px;
   }
-  #create-button, #enter-button, #reenter-button,  #review-button, #donate-button {
+  #create-button, #enter-button, #reenter-button,  #review-button, 
+  #charity-button, #donate-button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     color: $darker-color;
     @include font-size-largest();
@@ -103,14 +103,22 @@
   }
   #review-button { margin-top: 4px; }
 
-  #donate-container, #jon-jagger-container, #accu-container {
+  #charity-container, #donate-container, #jon-jagger-container, #accu-container {
     font-size: 1em;
     font-size: 0.8em;    
     @include edged-panel();
     margin: 10px;    
     width: 280px;
-    text-align: right;
-    
+    text-align: right;    
+  }
+
+  #charity-container {
+    #charity-button { 
+      width: 95px;
+      font-size: 1.30em;
+      padding: 6px;
+      padding-right: 7px;
+    }    
   }
 
   #donate-container {
