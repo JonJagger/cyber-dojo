@@ -9,5 +9,5 @@
   "display_name": "Ruby, Test::Unit",
   "unit_test_framework": "ruby_test_unit",
   "tab_size": 2,
-  "image_name": "cyberdojo/ruby-1.9.3_test_unit"
+  "image_name": "cyberdojofoundation/ruby-1.9.3_test_unit"
 }
