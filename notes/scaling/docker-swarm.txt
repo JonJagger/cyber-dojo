@@ -1,6 +1,8 @@
 
+yak-hair yak-hair yak-hair yak-hair yak-hair yak-hair yak-hair yak-hair
 
-Show down VirtualBox servers.
+
+Shut down VirtualBox servers.
 Quit VirtualBox.
 
 Installed Docker Toolbox 
@@ -19,6 +21,7 @@ http://docs.docker.com/machine/drivers/digital-ocean/
 
 From digital-ocean control panel - API - generated a new PersonalAccessToken
 name=cyberdojo
+It wasn't this one
 6787ffcd0180ef79b384ec10cb887204c827e4472b139db85af944ff8d33edfc
 
 
@@ -388,7 +391,60 @@ $ docker info
 Now reports only one node in the swarm (the master)
 Think I accidentally stopped and rm'd something I shouldn't.
 Hmm. That's not good.
-Do I need to rebuild the cluster.
+Do I need to rebuild the cluster?!
+Later found
+$ docker-machine NAME restart
+Which might have fixed it.
+Rebuilt it.
+cyber-dojo user info in setup-cyber-dojo-server.txt
+Script to rebuild is build-swarm.sh
+
+Crucial that you don't forget the --swarm option in the following
+
+$ su cyber-dojo
+$ eval "$(docker-machine env --swarm cyber-dojo-docker-swarm-master)"
+$ docker info
+Shows the swarm with its nodes
+
+Ok Back.
+Now to set lib/DockerRunner.rb as before
+Make sure to set git-servers IP address back
+
+$ su cyber-dojo
+Show swarm cluster
+$ docker info
+
+Show swarm-cluster including IP addresses
+$ docker-machine ls
+
+Show ip address of node
+$ docker-machine ip cyber-dojo-docker-swarm-00
+
+Show images on all cluster nodes
+$ docker images
+
+Show initial running containers that keep the swarm together
+$ docker ps -a
+
+Show output of command run on a node
+$ docker-machine ssh cyber-dojo-docker-swarm-00 
+$ command
+
+
+[sudo -u cyber-dojo -i docker run ....]
+is working.
+
+Need to fix.
+1) cidfile stop and rm
+
+2) put timeouts back
+
+
+
+
+
+
+
 
 
 

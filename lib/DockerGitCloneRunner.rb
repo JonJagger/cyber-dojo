@@ -73,7 +73,7 @@ class DockerGitCloneRunner < DockerRunner
     ].join(';')
     
     # Using --net=host just to get something working. This is insecure.
-    # Would prefer to restrict it to just accessing the git server.
+    # TODO: restrict it to just accessing the git server.
     docker_run('--net=host', language.image_name, cmds, max_seconds)
   end
 

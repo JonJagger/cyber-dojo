@@ -10,9 +10,11 @@ class DockerRunner
   def initialize(bash = Bash.new)
     @bash = bash
     raise RuntimeError.new('Docker not installed') if !installed?
+    # In a docker-swarm this needs a prefix of [sudo -u cyber-dojo -i]
     output,_ = bash('docker images')
     lines = output.split("\n").select{|line| line.start_with?('cyberdojo')}
-    @image_names = lines.collect{|line| line.split[0]}.sort
+    # In a docker-swarm an image on N nodes appears N times hence uniq
+    @image_names = lines.collect{|line| line.split[0]}.uniq.sort
   end
   
   attr_reader :image_names
@@ -38,6 +40,8 @@ class DockerRunner
 
     bash("rm -f #{cidfile}")
 
+    # In a docker-swarm this too needs a prefix of
+    # sudo -u cyber-dojo -i
     outer_command = timeout(
       'docker run' +
       ' --user=www-data' +
@@ -49,7 +53,13 @@ class DockerRunner
 
     output,exit_status = bash(outer_command)
     pid,_ = bash("cat #{cidfile}")
+    # In a docker-swarm the following command 
     bash("docker stop #{pid} ; docker rm #{pid}")
+    # Needs to be these two
+    #   bash("sudo -u cyber-dojo -i docker stop #{pid}")
+    #   bash("sudo -u cyber-dojo -i docker rm   #{pid}")
+    # I can't figure out why the stop/rm have to split but they do
+
     exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
   end
 
@@ -67,10 +77,13 @@ private
   include Stderr2Stdout
    
   def installed?
+    # In a docker-swarm the following command
     _,exit_status = bash(stderr2stdout('docker info > /dev/null'))
+    # Needs to be this
+    #_,exit_status = bash(stderr2stdout('sudo -u cyber-dojo -i docker info > /dev/null'))
     exit_status === 0
   end
-   
+
   def timeout(command,after)
     # timeout does not exist on OSX :-(
     "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"

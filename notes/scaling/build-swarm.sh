@@ -5,18 +5,26 @@
 # Important this is run as the user who will run the
 # docker run command, probably cyber-dojo
 
-if [ $# -ne 2 ]; then
+if [ $# -eq 0 ]; then
   echo "use: scale [digital-ocean-access-token]"
   exit 1
 else
-  digitalOceanAccessToken=$2
+  digitalOceanAccessToken=$1
 fi
 
 swarmToken=`docker run --rm swarm create`
 echo swarm-token $swarmToken created
-echo $swarmToken > docker-swarm.token
+echo $swarmToken > ~/docker-swarm.token
 
 # - - - - - - - - - - - - - - - - - - - - - - -
+# Clear out nodes if they already exist
+
+docker-machine rm -f cyber-dojo-docker-swarm-master  2>&1 > /dev/null
+docker-machine rm -f cyber-dojo-docker-swarm-node-00 2>&1 > /dev/null
+docker-machine rm -f cyber-dojo-docker-swarm-node-01 2>&1 > /dev/null
+
+# - - - - - - - - - - - - - - - - - - - - - - -
+# Create the swarm-master
 
 docker-machine create \
    --driver digitalocean \
@@ -36,6 +44,7 @@ else
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - -
+# Create the first swarm-node
 
 docker-machine create \
    --driver digitalocean \
@@ -55,6 +64,7 @@ else
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - -
+# Create the second swarm-node
 
 docker-machine create \
    --driver digitalocean \
@@ -74,6 +84,9 @@ else
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - -
+# Put some images onto both swarm-nodes
+# So create page lists some laguages
+# and test [docker run] command does need to do a [docker pull]
 
 docker-machine ssh cyber-dojo-docker-swarm-node-00 'docker pull cyberdojo/gcc-4.8.1_assert'
 docker-machine ssh cyber-dojo-docker-swarm-node-01 'docker pull cyberdojo/gcc-4.8.1_assert'

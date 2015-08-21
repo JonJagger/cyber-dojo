@@ -9,27 +9,49 @@ Now steps needed to run DockerGitCloneRunner
 
 Create cyber-dojo user
 ======================
+$ userdel -r cyber-dojo
 $ adduser cyber-dojo
+
+
+Allow www-data/root to sudo -u cyber-dojo
+=========================================
+Added this line to /etc/sudoers.d/custom  (new file)
+
+www-data ALL=(cyber-dojo:cyber-dojo) NOPASSWD:ALL
+
+
+
+Ensure cyber-dojo has docker-machine env vars setup
+===================================================
+Added this line to the end of /home/cyber-dojo/.bashrc
+This handles [su cyber-dojo]
+. ~/setup_docker_machine_env_vars.sh
+
+Added this line to the end of /home/cyber-dojo/.profile
+This handles [sudo -u cyber-dojo -i COMMAND]
+. ~/setup_docker_machine_env_vars.sh
+
+Created the file /home/cyber-dojo/setup_docker_machine_env_vars.sh
+with this one line.
+eval "$(docker-machine env --swarm cyber-dojo-docker-swarm-master)"
+
 
 
 Setup up cyber-dojo user's ssh keys
 ===================================
 $ whoami
 cyber-dojo
+$ cd ~
 $ mkdir .ssh
 $ chown cyber-dojo:cyber-dojo .ssh
 $ chmod 700 .ssh
 $ cd .ssh
 $ ssh-keygen -t rsa
+Hit enter neter enter
 $ ssh-copy-id git@GIT_SERVER_IP_ADDRESS
 need to enter git password
 
 
-Allow www-data to sudo -u cyber-dojo
-====================================
-Added this line to /etc/sudoers.d/custom  (new file)
-
-www-data ALL=(cyber-dojo:cyber-dojo) NOPASSWD:ALL
 
 
 Permissions
@@ -38,7 +60,10 @@ Need to create a group and make both www-data and cyber-dojo
 members of the group so cyber-dojo can read/write (only read) 
 files under katas/ when it issues git commands.
 
+$ whoami
+root
 $ usermod -a -G www-data cyber-dojo
+$ gpasswd -a cyber-dojo docker
 $ cd /var/www/cyber-dojo
 $ chmod g+rwsx katas
 $ apt-get install -y acl
@@ -46,27 +71,28 @@ $ setfacl -d -m group:www-data:rwx katas
 $ setfacl -m group:www-data:rwx katas
 
 
-Installed docker-machine
-========================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Installing docker-machine
+=========================
 http://docs.docker.com/machine/install-machine/
+
 $ curl -L https://github.com/docker/machine/releases/download/v0.4.0/docker-machine_linux-amd64 > /usr/local/bin/docker-machine
+
 $ chmod +x /usr/local/bin/docker-machine
 
 
-http://devopscube.com/how-to-setup-and-configure-docker-swarm-cluster/
+Misc Notes
+==========
+Would like to lose --net=host in
+docker run --net=host
 
 
+>>>>>Make cyber-dojo user password-less if possible?
+>>>>>Make cyber-dojo user login shell-less if possible?
 
->>>>>>
->>>>>>Next step to remove --net=host
->>>>>>
-Using --net=host docker run option which is not secure
-but it gets something working.
-
-
-
->>>>>Should make cyber-dojo user password-less if possible
->>>>>Should make cyber-dojo user login shell-less if possible
 
 
 
