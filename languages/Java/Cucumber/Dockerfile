@@ -1,4 +1,4 @@
-FROM       cyberdojo/java-1.8
+FROM       cyberdojofoundation/java-1.8
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 ADD cucumber-core-1.1.6.jar /cucumber/
