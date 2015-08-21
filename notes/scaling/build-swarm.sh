@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Script used in early investigation of using docker-swarm
+# to scale cyber-dojo.
+# Important this is run as the user who will run the
+# docker run command, probably cyber-dojo
+
 if [ $# -eq 0 ]; then
   echo "use: scale [digital-ocean-access-token]"
   exit 1
