@@ -3,17 +3,15 @@
 
 require_relative 'Runner'
 require_relative 'Stderr2Stdout'
-require 'tempfile'
 
 class DockerRunner
 
-  def initialize(bash = Bash.new)
-    @bash = bash
+  def initialize(bash, cid_filename)
+    @bash,@cid_filename = bash,cid_filename
     raise RuntimeError.new('Docker not installed') if !installed?
     output,_ = bash(sudoi('docker images'))
     lines = output.split("\n").select{|line| line.start_with?('cyberdojo')}
-    # In a docker-swarm an image on N nodes appears N times hence uniq
-    @image_names = lines.collect{|line| line.split[0]}.uniq.sort
+    @image_names = lines.collect{|line| line.split[0]}
   end
   
   attr_reader :image_names
@@ -31,9 +29,8 @@ class DockerRunner
   end
 
   def docker_run(options, image_name, cmd, max_seconds)
-    cidfile = Tempfile.new('cyber-dojo').path
 
-    bash("rm -f #{cidfile}")
+    bash("rm -f #{@cid_filename}")
 
     # In a docker-swarm this needs to be as follows
     #
@@ -68,14 +65,14 @@ class DockerRunner
     outer_command = timeout(
       'docker run' +
       ' --user=www-data' +
-      " --cidfile=#{quoted(cidfile)} " +
+      " --cidfile=#{quoted(@cid_filename)} " +
       ' ' + options +
       ' ' + image_name +
       " /bin/bash -c #{quoted(timeout(cmd,max_seconds))}", 
       max_seconds+5)
 
     output,exit_status = bash(outer_command)
-    pid,_ = bash("cat #{cidfile}")
+    pid,_ = bash("cat #{@cid_filename}")
     bash("docker stop #{pid} ; docker rm #{pid}")
     exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
   end
@@ -99,7 +96,6 @@ private
   end
 
   def timeout(command,after)
-    # timeout does not exist on OSX :-(
     "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
   end
 

@@ -6,17 +6,18 @@ class DockerGitCloneRunnerTests < LibTestBase
 
   def setup
     super
-    @bash = BashStub.new    
-    set_disk_class_name     'DiskStub'    
-    set_git_class_name      'GitSpy'   
+    @bash = BashStub.new
+    @cid_filename = 'stub.cid'
+    set_disk_class_name     'DiskStub'
+    set_git_class_name      'GitSpy'
     set_one_self_class_name 'OneSelfDummy'
     kata = make_kata
-    @lion = kata.start_avatar(['lion'])    
+    @lion = kata.start_avatar(['lion'])
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when docker is not installed constructor raises' do    
+  test 'when docker is not installed constructor raises' do
     @bash.stub('',any_non_zero=42)
     assert_raises(RuntimeError) { make_docker_runner }
   end
@@ -26,7 +27,7 @@ class DockerGitCloneRunnerTests < LibTestBase
   test 'bash commands run inside initialize() use sudo' do
     @bash.stub(docker_info_output, success)
     @bash.stub(docker_images_output, success)
-    make_docker_runner    
+    make_docker_runner
     assert @bash.spied[0].start_with?(sudoi('docker info')), 'docker info'
     assert @bash.spied[1].start_with?(sudoi('docker images')), 'docker images'
   end
@@ -36,7 +37,7 @@ class DockerGitCloneRunnerTests < LibTestBase
   test 'when docker is installed, image_names determines runnability' do
     @bash.stub(docker_info_output, success)
     @bash.stub(docker_images_output, success)
-    docker = make_docker_runner    
+    docker = make_docker_runner
     expected_image_names =
     [
       "cyberdojo/python-3.3.5_pytest",
@@ -148,7 +149,7 @@ class DockerGitCloneRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   def make_docker_runner
-    DockerGitCloneRunner.new(@bash)
+    DockerGitCloneRunner.new(@bash,@cid_filename)
   end
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -7,16 +7,16 @@
 # Comments at end of file
 
 require_relative 'DockerRunner'
+require 'tempfile'
 
 class DockerVolumeMountRunner < DockerRunner
 
-  def initialize(bash = Bash.new)
-    super(bash)
+  def initialize(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
+    super(bash,cid_filename)
   end
 
   def runnable?(language)
-    image_pulled?(language) &&
-      !approval_test?(language)
+    image_pulled?(language) && !approval_test?(language)
   end
 
   def started(avatar); end

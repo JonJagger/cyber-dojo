@@ -6,17 +6,18 @@ class DockerVolumeMountRunnerTests < LibTestBase
 
   def setup
     super
-    @bash = BashStub.new    
-    set_disk_class_name     'DiskStub'    
-    set_git_class_name      'GitSpy'   
-    set_one_self_class_name 'OneSelfDummy'     
+    @bash = BashStub.new
+    @cid_filename = 'stub.cid'
+    set_disk_class_name     'DiskStub'
+    set_git_class_name      'GitSpy'
+    set_one_self_class_name 'OneSelfDummy'
     kata = make_kata
-    @lion = kata.start_avatar(['lion'])    
+    @lion = kata.start_avatar(['lion'])
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when docker is not installed constructor raises' do    
+  test 'when docker is not installed constructor raises' do
     @bash.stub('',any_non_zero=42)
     assert_raises(RuntimeError) { make_docker_runner }
   end
@@ -70,6 +71,20 @@ class DockerVolumeMountRunnerTests < LibTestBase
     assert_equal 2, @bash.spied.size, 'before'
     docker.pre_test(nil)
     assert_equal 2, @bash.spied.size, 'after'
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'docker run exact bash interaction to refactor against' do
+    @bash.stub(docker_info_output, success)
+    @bash.stub(docker_images_output, success)
+    docker = make_docker_runner
+    @bash.stub('',success)        # 2 rm cidfile.txt
+    @bash.stub('blah',success)    # 3 timeout ... docker run ...
+    @bash.stub(pid='921',success) # 4 cat ... cidfile.txt
+    @bash.stub('',success)        # 5 docker stop pid ; docker rm pid
+    cmd = 'cyber-dojo.sh'
+    output = docker.run(@lion.sandbox, cmd, max_seconds=5)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -139,7 +154,7 @@ class DockerVolumeMountRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
   def make_docker_runner
-    DockerVolumeMountRunner.new(@bash)
+    DockerVolumeMountRunner.new(@bash,@cid_filename)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

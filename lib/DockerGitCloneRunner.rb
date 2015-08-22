@@ -5,11 +5,12 @@
 # git-daemon to give state access to docker process containers.
 
 require_relative 'DockerRunner'
+require 'tempfile'
 
 class DockerGitCloneRunner < DockerRunner
 
-  def initialize(bash = Bash.new)
-    super(bash)
+  def initialize(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
+    super(bash,cid_filename)
   end
 
   def runnable?(language)    
