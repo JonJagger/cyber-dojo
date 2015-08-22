@@ -31,7 +31,7 @@ class DockerVolumeMountRunner < DockerRunner
     sandbox_volume = "#{sandbox.path}:/sandbox:#{read_write}"
 
     options =
-        " --net=#{quoted('none')}" +
+        ' --net=none' +
         " -v #{quoted(language_volume)}" +
         " -v #{quoted(sandbox_volume)}" +
         ' -w /sandbox'
