@@ -19,15 +19,14 @@ class DockerVolumeMountRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'when docker is not installed constructor raises' do
-    @bash.stub('',any_non_zero=42)
+    stub_docker_not_installed
     assert_raises(RuntimeError) { make_docker_runner }
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'bash commands run in initialize() do not sudo' do
-    @bash.stub(docker_info_output, success)
-    @bash.stub(docker_images_output, success)
+    stub_docker_installed
     make_docker_runner
     assert @bash.spied[0].start_with?('docker info'), 'docker info'
     assert @bash.spied[1].start_with?('docker images'), 'docker images'
@@ -36,8 +35,7 @@ class DockerVolumeMountRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'when docker is installed, image_names determines runnability' do
-    @bash.stub(docker_info_output, success)
-    @bash.stub(docker_images_output, success)
+    stub_docker_installed
     docker = make_docker_runner    
     expected_image_names =
     [
@@ -55,8 +53,7 @@ class DockerVolumeMountRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'started(avatar) is a no-op' do
-    @bash.stub(docker_info_output, success)
-    @bash.stub(docker_images_output, success)
+    stub_docker_installed
     docker = make_docker_runner
     assert_equal 2, @bash.spied.size, 'before'
     docker.started(nil)
@@ -66,8 +63,7 @@ class DockerVolumeMountRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'pre_test(avatar) is a no-op' do
-    @bash.stub(docker_info_output, success)
-    @bash.stub(docker_images_output, success)
+    stub_docker_installed
     docker = make_docker_runner
     assert_equal 2, @bash.spied.size, 'before'
     docker.pre_test(nil)
@@ -77,13 +73,9 @@ class DockerVolumeMountRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'docker run exact bash interaction to refactor against' do
-    @bash.stub(docker_info_output, success)
-    @bash.stub(docker_images_output, success)
+    stub_docker_installed
     docker = make_docker_runner
-    @bash.stub('',success)        # 2 rm cidfile.txt
-    @bash.stub('blah',success)    # 3 timeout ... docker run ...
-    @bash.stub(pid='921',success) # 4 cat ... cidfile.txt
-    @bash.stub('',success)        # 5 docker stop pid ; docker rm pid
+    stub_docker_run(completes)
     cmd = 'cyber-dojo.sh'
     output = docker.run(@lion.sandbox, cmd, max_seconds=5)
 
@@ -113,15 +105,10 @@ class DockerVolumeMountRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'docker run <-> bash interaction when cyber-dojo.sh completes in time' do
-    @bash.stub(docker_info_output, success)   # 0
-    @bash.stub(docker_images_output, success) # 1
+    stub_docker_installed
     docker = make_docker_runner
     begin
-      @bash.stub('',success)        # 2 rm cidfile.txt
-      @bash.stub('blah',success)    # 3 timeout ... docker run ...
-      pid = '921'
-      @bash.stub(pid,success)       # 4 cat ... cidfile.txt
-      @bash.stub('',success)        # 5 docker stop pid ; docker rm pid      
+      stub_docker_run(completes)
       cmd = 'cyber-dojo.sh'
       output = docker.run(@lion.sandbox, cmd, max_seconds=5)      
       assert_equal 'blah',output, 'output'      
@@ -136,15 +123,10 @@ class DockerVolumeMountRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'docker run <-> bash interaction when cyber-dojo.sh times out' do
-    @bash.stub(docker_info_output, success)   # 0
-    @bash.stub(docker_images_output, success) # 1
+    stub_docker_installed
     docker = make_docker_runner
     begin
-      @bash.stub('',success)               # 2 rm cidfile.txt
-      @bash.stub('blah',fatal_error(kill)) # 3 timeout ... docker run ...
-      pid = '921'
-      @bash.stub(pid,success)              # 4 cat ... cidfile.txt
-      @bash.stub('',success)               # 5 docker stop pid ; docker rm pid      
+      stub_docker_run(fatal_error(kill))
       cmd = 'cyber-dojo.sh'
       output = docker.run(@lion.sandbox, cmd, max_seconds=5)      
       assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds."), 'Unable'      
@@ -180,50 +162,4 @@ class DockerVolumeMountRunnerTests < LibTestBase
     DockerVolumeMountRunner.new(@bash,@cid_filename)
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    
-  def docker_info_output
-    [
-      'Containers: 6',
-      'Images: 440',
-      'Storage Driver: aufs',
-      'Root Dir: /var/lib/docker/aufs',
-      'Dirs: 452',
-      'Execution Driver: native-0.2',
-      'Kernel Version: 3.2.0-4-amd64',
-      'Username: cyberdojo',
-      'Registry: [https://index.docker.io/v1/]',
-      'WARNING: No memory limit support',
-      'WARNING: No swap limit support'
-    ].join("\n")
-  end
-  
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  def docker_images_output
-    [
-      'REPOSITORY                       TAG     IMAGE ID      CREATED        VIRTUAL SIZE',
-      '<none>                           <none>  b7253690a1dd  2 weeks ago    1.266 GB',
-      'cyberdojo/python-3.3.5_pytest    latest  d9603e342b22  13 months ago  692.9 MB',
-      'cyberdojo/rust-1.0.0_test        latest  a8e2d9d728dc  2 weeks ago    750.3 MB',
-      '<none>                           <none>  0ebf80aa0a8a  2 weeks ago    569.8 MB'
-    ].join("\n")  
-  end
-  
-  def success
-    0
-  end
-  
-  def kill
-    9
-  end
-  
-  def fatal_error(signal)
-    128 + signal
-  end
-  
-  def quoted(s)
-    '"' + s + '"'
-  end
-  
 end
