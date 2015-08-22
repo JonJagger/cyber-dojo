@@ -1,4 +1,4 @@
-FROM       cyberdojo/groovy-2.2.0
+FROM       cyberdojofoundation/groovy-2.4.4
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 ADD junit-4.11.jar /groovy/
