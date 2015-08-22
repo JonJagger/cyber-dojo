@@ -12,6 +12,9 @@ Create cyber-dojo user
 $ userdel -r cyber-dojo
 $ adduser cyber-dojo
 
+Important to give it a strong password to revent
+the server being hijacked and used to attack from.
+
 
 Allow www-data/root to sudo -u cyber-dojo
 =========================================

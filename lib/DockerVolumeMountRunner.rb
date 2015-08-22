@@ -19,6 +19,10 @@ class DockerVolumeMountRunner < DockerRunner
       !approval_test?(language)
   end
 
+  def started(avatar); end
+
+  def pre_test(avatar); end
+
   def run(sandbox, command, max_seconds)
     language = sandbox.avatar.kata.language
     read_only = 'ro'
@@ -33,6 +37,12 @@ class DockerVolumeMountRunner < DockerRunner
         ' -w /sandbox'
 
     docker_run(options, language.image_name, command, max_seconds)
+  end
+
+private
+
+  def sudoi(s)
+    s
   end
 
 end

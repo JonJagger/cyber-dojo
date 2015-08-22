@@ -19,7 +19,16 @@ class DockerVolumeMountRunnerTests < LibTestBase
   test 'when docker is not installed constructor raises' do    
     @bash.stub('',any_non_zero=42)
     assert_raises(RuntimeError) { make_docker_runner }
-    assert @bash.spied[0].start_with? 'docker info'
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'bash commands run in initialize() do not sudo' do
+    @bash.stub(docker_info_output, success)
+    @bash.stub(docker_images_output, success)
+    make_docker_runner
+    assert @bash.spied[0].start_with?('docker info'), 'docker info'
+    assert @bash.spied[1].start_with?('docker images'), 'docker images'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -36,8 +45,6 @@ class DockerVolumeMountRunnerTests < LibTestBase
     c_assert = languages['C-assert']
     python_py_test = languages['Python-py.test']
 
-    assert @bash.spied[0].start_with?('docker info'), @bash.spied
-    assert @bash.spied[1].start_with?('docker images'), @bash.spied    
     assert_equal expected_image_names, docker.image_names        
     refute docker.runnable?(c_assert);
     assert docker.runnable?(python_py_test);

@@ -108,4 +108,8 @@ private
     "/#{outer(id)}/#{inner(id)}"
   end
 
+  def sudoi(s)
+    'sudo -u cyber-dojo -i ' + s.strip
+  end
+
 end

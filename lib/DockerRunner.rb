@@ -10,8 +10,7 @@ class DockerRunner
   def initialize(bash = Bash.new)
     @bash = bash
     raise RuntimeError.new('Docker not installed') if !installed?
-    # In a docker-swarm this needs a prefix of [sudo -u cyber-dojo -i]
-    output,_ = bash('docker images')
+    output,_ = bash(sudoi('docker images'))
     lines = output.split("\n").select{|line| line.start_with?('cyberdojo')}
     # In a docker-swarm an image on N nodes appears N times hence uniq
     @image_names = lines.collect{|line| line.split[0]}.uniq.sort
@@ -30,10 +29,6 @@ class DockerRunner
   def sym_linked?(language)
     language.support_filenames != []
   end
-
-  def started(avatar); end
-
-  def pre_test(avatar); end
 
   def docker_run(options, image_name, cmd, max_seconds)
     cidfile = Tempfile.new('cyber-dojo').path
@@ -99,10 +94,7 @@ private
   include Stderr2Stdout
    
   def installed?
-    # In a docker-swarm the following command
-    _,exit_status = bash(stderr2stdout('docker info > /dev/null'))
-    # Needs to be this
-    #_,exit_status = bash(stderr2stdout('sudo -u cyber-dojo -i docker info > /dev/null'))
+    _,exit_status = bash(sudoi('docker info > /dev/null'))
     exit_status === 0
   end
 

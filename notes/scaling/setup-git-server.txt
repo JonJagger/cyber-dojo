@@ -7,6 +7,10 @@ Image: Distributions Ubuntu 14.04 x64
 Create a normal user called git
 ===============================
 $ adduser git
+
+Important to give it a strong password to revent
+the server being hijacked and used to attack from.
+
 $ whoami
 git
 $ cd ~
