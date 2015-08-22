@@ -73,9 +73,12 @@ class DockerRunner
 
     output,exit_status = bash(outer_command)
     pid,_ = bash("cat #{@cid_filename}")
-    bash("docker stop #{pid} ; docker rm #{pid}")
+    bash("docker stop #{pid}")
+    bash("docker rm #{pid}")
     exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
   end
+
+protected
 
   def bash(command)
     @bash.exec(command)
@@ -83,6 +86,10 @@ class DockerRunner
 
   def quoted(arg)
     '"' + arg + '"'
+  end
+
+  def timeout(command,secs)
+    "timeout --signal=#{kill} #{secs}s #{stderr2stdout(command)}"
   end
 
 private
@@ -93,10 +100,6 @@ private
   def installed?
     _,exit_status = bash(sudoi('docker info > /dev/null'))
     exit_status === 0
-  end
-
-  def timeout(command,after)
-    "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
   end
 
   def fatal_error(signal)

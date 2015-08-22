@@ -72,22 +72,21 @@ class DockerVolumeMountRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'docker run exact bash interaction to refactor against' do
+  test 'exact docker run command to refactor against' do
     stub_docker_installed
     docker = make_docker_runner
     stub_docker_run(completes)
     cmd = 'cyber-dojo.sh'
-    output = docker.run(@lion.sandbox, cmd, max_seconds=5)
+    docker.run(@lion.sandbox, cmd, max_seconds=5)
 
     language = @lion.kata.language
     language_path = language.path
-    none = 'none'
     language_volume_mount = language_path + ':' + language_path + ":ro"
     kata_volume_mount = @lion.sandbox.path + ":/sandbox:rw"
 
-    cmd = "timeout --signal=9 5s cyber-dojo.sh 2>&1"
+    command = "timeout --signal=#{kill} 5s #{cmd} 2>&1"
     expected =
-      'timeout --signal=9 10s' +
+      "timeout --signal=#{kill} 10s" +
         ' docker run' +
           ' --user=www-data' +
           " --cidfile=#{quoted(@cid_filename)}" +
@@ -96,7 +95,7 @@ class DockerVolumeMountRunnerTests < LibTestBase
           " -v #{quoted(kata_volume_mount)}" +
           ' -w /sandbox' +
           " #{language.image_name}" +
-          " /bin/bash -c #{quoted(cmd)} 2>&1"
+          " /bin/bash -c #{quoted(command)} 2>&1"
 
     actual = @bash.spied[3]
     assert_equal expected, actual
@@ -153,7 +152,8 @@ class DockerVolumeMountRunnerTests < LibTestBase
     refute run_cmd.include?('--rm'), 'rm is *not* specified'
     assert run_cmd.include?('-v "/var/www/cyber-dojo/languages'), 'volume mount languages/'
     assert run_cmd.include?('-v "/var/www/cyber-dojo/katas'), 'volume mount katas/'
-    assert_equal "docker stop #{pid} ; docker rm #{pid}", @bash.spied[5], 'docker stop+rm'    
+    assert_equal "docker stop #{pid}", @bash.spied[5], 'docker stop'
+    assert_equal "docker rm #{pid}",   @bash.spied[6], 'docker rm'
   end
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

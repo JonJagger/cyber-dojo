@@ -81,30 +81,27 @@ class DockerGitCloneRunnerTests < LibTestBase
     
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'docker run exact bash interaction to refactor against' do
+  include IdSplitter
+
+  test 'exact docker run command to refactor against' do
     stub_docker_installed
     docker = make_docker_runner
     stub_docker_run(completes)
     cmd = 'cyber-dojo.sh'
-    output = docker.run(@lion.sandbox, cmd, max_seconds=5)
+    docker.run(@lion.sandbox, cmd, max_seconds=5)
 
-    language = @lion.kata.language
-    language_path = language.path
-    outer_id = @id[0..1]
-    inner_id = @id[2..-1]
-
-    clone_and_cmd =
-      "git clone git://46.101.57.179/#{outer_id}/#{inner_id}/lion.git /tmp/lion 2>&1 > /dev/null;" +
-      "cd /tmp/lion/sandbox && timeout --signal=9 5s #{cmd} 2>&1"
+    clone_and_timeout_cmd =
+      "git clone git://#{docker.git_server_ip}/#{outer(@id)}/#{inner(@id)}/lion.git /tmp/lion 2>&1 > /dev/null;" +
+      "cd /tmp/lion/sandbox && timeout --signal=#{kill} 5s #{cmd} 2>&1"
 
     expected =
-      'timeout --signal=9 10s' +
+      "timeout --signal=#{kill} 10s" +
         ' docker run' +
           ' --user=www-data' +
           " --cidfile=#{quoted(@cid_filename)}" +
           ' --net=host' +
-          " #{language.image_name}" +
-          " /bin/bash -c #{quoted(clone_and_cmd)} 2>&1"
+          " #{@lion.kata.language.image_name}" +
+          " /bin/bash -c #{quoted(clone_and_timeout_cmd)} 2>&1"
 
     actual = @bash.spied[3]
     assert_equal expected, actual
@@ -163,7 +160,8 @@ class DockerGitCloneRunnerTests < LibTestBase
     refute run_cmd.include?('--rm'), 'rm is *not* specified'
     refute run_cmd.include?('-v "/var/www/cyber-dojo/languages'), 'volume mount languages/'
     refute run_cmd.include?('-v "/var/www/cyber-dojo/katas'), 'volume mount katas/'
-    assert_equal "docker stop #{pid} ; docker rm #{pid}", @bash.spied[5], 'docker stop+rm'    
+    assert_equal "docker stop #{pid}", @bash.spied[5], 'docker stop'
+    assert_equal "docker rm #{pid}",   @bash.spied[6], 'docker rm'
   end
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -171,5 +169,9 @@ class DockerGitCloneRunnerTests < LibTestBase
   def make_docker_runner
     DockerGitCloneRunner.new(@bash,@cid_filename)
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def sudoi(s); 'sudo -u cyber-dojo -i ' + s; end
   
 end

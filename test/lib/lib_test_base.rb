@@ -22,15 +22,17 @@ class LibTestBase < TestBase
     stub_rm_cidfile       # 2
     stub_timeout(outcome) # 3
     stub_cat_cidfile      # 4
-    stub_docker_stop_rm   # 5
+    stub_docker_stop      # 5
+    stub_docker_rm        # 6
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def stub_rm_cidfile;     @bash.stub('',success);  end
-  def stub_timeout(n);     @bash.stub('blah',n);    end
-  def stub_cat_cidfile;    @bash.stub(pid,success); end
-  def stub_docker_stop_rm; @bash.stub('',success);  end
+  def stub_rm_cidfile;  @bash.stub('',success);  end
+  def stub_timeout(n);  @bash.stub('blah',n);    end
+  def stub_cat_cidfile; @bash.stub(pid,success); end
+  def stub_docker_stop; @bash.stub('',success);  end
+  def stub_docker_rm;   @bash.stub('',success);  end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -63,8 +65,6 @@ class LibTestBase < TestBase
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def sudoi(s); 'sudo -u cyber-dojo -i ' + s; end
 
   def pid; '921'; end
 

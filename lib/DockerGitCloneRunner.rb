@@ -40,15 +40,15 @@ class DockerGitCloneRunner < DockerRunner
       # Copy the bare repo to the git-server.
       # scp -r says it makes directories as needed but it doesn't seem to
       # which is why I'm preceding the scp with the mkdir -p
-      "sudo -u cyber-dojo ssh git@#{git_server} 'mkdir -p #{opt_git_kata_path(kata)}'",
-      "sudo -u cyber-dojo scp -r #{avatar.name}.git git@#{git_server}:#{opt_git_kata_path(kata)}",
+      "sudo -u cyber-dojo ssh git@#{git_server_ip} 'mkdir -p #{opt_git_kata_path(kata)}'",
+      "sudo -u cyber-dojo scp -r #{avatar.name}.git git@#{git_server_ip}:#{opt_git_kata_path(kata)}",
       # Allow git-daemon to serve it
-      "sudo -u cyber-dojo ssh git@#{git_server} 'touch #{opt_git_kata_path(kata)}/#{avatar.name}.git/git-daemon-export-ok'",
+      "sudo -u cyber-dojo ssh git@#{git_server_ip} 'touch #{opt_git_kata_path(kata)}/#{avatar.name}.git/git-daemon-export-ok'",
       # Remove bare repo from cyber-dojo server now its on the git-server
       "rm -rf #{avatar.name}.git",
       # Prepare avatar's repo to push to git-server
       "cd #{avatar.path}",
-      "git remote add master git@#{git_server}:#{opt_git_kata_path(kata)}/#{avatar.name}.git",
+      "git remote add master git@#{git_server_ip}:#{opt_git_kata_path(kata)}/#{avatar.name}.git",
       "sudo -u cyber-dojo git push --set-upstream master master"
     ].join(';')
     o,es = bash(cmds)
@@ -74,7 +74,7 @@ class DockerGitCloneRunner < DockerRunner
     # to dev/null to stop it becoming part of the output visible in the
     # browser which could affect traffic-light colour.
     cmds = [
-      "git clone git://#{git_server}#{kata_path(kata)}/#{avatar.name}.git /tmp/#{avatar.name} 2>&1 > /dev/null",
+      "git clone git://#{git_server_ip}#{kata_path(kata)}/#{avatar.name}.git /tmp/#{avatar.name} 2>&1 > /dev/null",
       "cd /tmp/#{avatar.name}/sandbox && #{timeout(command,max_seconds)}"
     ].join(';')
     
@@ -83,11 +83,7 @@ class DockerGitCloneRunner < DockerRunner
     docker_run('--net=host', language.image_name, cmds, max_seconds)
   end
 
-private
-  
-  include IdSplitter
-
-  def git_server
+  def git_server_ip
     # Assumes:
     # 0. there is a user called cyber-dojo on the cyber-dojo server.
     # 1. www-data can sudo -u cyber-dojo on the cyber-dojo server
@@ -99,6 +95,10 @@ private
     # TODO: this will need to be set from external ENV[] setting
     '46.101.57.179'
   end
+
+private
+
+  include IdSplitter
 
   def opt_git_kata_path(kata)
     '/opt/git' + kata_path(kata)
