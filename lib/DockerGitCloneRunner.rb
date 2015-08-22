@@ -25,6 +25,12 @@ class DockerGitCloneRunner < DockerRunner
 
   def started(avatar)
     # Setup git repo on git-server for avatar
+
+    # TODO: Suppose there is an avatar created *before* the move to docker-swarm
+    #       I want to be able to re-enter it and then continue. But I don't
+    #       think that will work unless the already existing avatars folder
+    #       has the following commands run on it so it can push to the git server.
+
     kata = avatar.kata  
     cmds = [
       # Clone the avatar's repo into a bare repo ready for the git-server
@@ -48,7 +54,7 @@ class DockerGitCloneRunner < DockerRunner
   end
   
   def pre_test(avatar)
-    # Changes from browser have been reflected in avatar's sandbox.
+    # Changes from browser have already been reflected in avatar's sandbox.
     # Push them to the git-server so docker container can git clone them.
     # If no visible files have changed this will be a safe no-op
     cmds = [
@@ -65,7 +71,7 @@ class DockerGitCloneRunner < DockerRunner
     language = kata.language
     # Assumes git daemon on the git server. Pipes all output from git clone
     # to dev/null to stop it becoming part of the output visible in the
-    # browser and affecting the traffic-light colouring.
+    # browser which could affect traffic-light colour.
     cmds = [
       "git clone git://#{git_server}#{kata_path(kata)}/#{avatar.name}.git /tmp/#{avatar.name} 2>&1 > /dev/null",
       "cd /tmp/#{avatar.name}/sandbox && #{timeout(command,max_seconds)}"

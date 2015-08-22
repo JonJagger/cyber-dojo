@@ -1,9 +1,13 @@
 #!/bin/bash
 
 # Script used in early investigation of using docker-swarm
-# to scale cyber-dojo.
+# to scale cyber-dojo. Currently hard-wires the number
+# of nodes (2) and the node-region (London) and the node-size (2gb)
+# It will make sense to spread the nodes across the world.
+
 # Important this is run as the user who will run the
-# docker run command, probably cyber-dojo
+# [docker run] command in lib/DockerGitCloneRunner.rb
+# which is cyber-dojo
 
 if [ $# -eq 0 ]; then
   echo "use: scale [digital-ocean-access-token]"
@@ -38,6 +42,7 @@ docker-machine create \
 
 if [ $? -ne 0 ]; then
   echo "FAILED:$ docker-machine create ... cyber-dojo-docker-swarm-master"
+  docker-machine rm -f cyber-dojo-docker-swarm-master 2>&1 > /dev/null
   exit 2
 else
   echo "OK:$ docker-machine create ... cyber-dojo-docker-swarm-master"
@@ -57,7 +62,8 @@ docker-machine create \
 
 if [ $? -ne 0 ]; then
   echo "FAILED:$ docker-machine create ... cyber-dojo-docker-swarm-node-00"
-  docker-machine rm -f cyber-dojo-docker-swarm-node-00
+  docker-machine rm -f cyber-dojo-docker-swarm-master  2>&1 > /dev/null
+  docker-machine rm -f cyber-dojo-docker-swarm-node-00 2>&1 > /dev/null
   exit 3
 else
   echo "OK:$ docker-machine create ... cyber-dojo-docker-swarm-node-00"
@@ -77,7 +83,9 @@ docker-machine create \
 
 if [ $? -ne 0 ]; then
   echo "FAILED:$ docker-machine create ... cyber-dojo-docker-swarm-node-01"
-  docker-machine rm -f cyber-dojo-docker-swarm-node-01 
+  docker-machine rm -f cyber-dojo-docker-swarm-master  2>&1 > /dev/null
+  docker-machine rm -f cyber-dojo-docker-swarm-node-00 2>&1 > /dev/null
+  docker-machine rm -f cyber-dojo-docker-swarm-node-01 2>&1 > /dev/null
   exit 4
 else
   echo "OK:$ docker-machine create ... cyber-dojo-docker-swarm-node-01"

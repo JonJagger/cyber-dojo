@@ -25,14 +25,14 @@ Ensure cyber-dojo has docker-machine env vars setup
 ===================================================
 Added this line to the end of /home/cyber-dojo/.bashrc
 This handles [su cyber-dojo]
-. ~/setup_docker_machine_env_vars.sh
+. ~/setup_docker_swarm_env_vars.sh
 
 Added this line to the end of /home/cyber-dojo/.profile
 This handles [sudo -u cyber-dojo -i COMMAND]
-. ~/setup_docker_machine_env_vars.sh
+. ~/setup_docker_swarm_env_vars.sh
 
-Created the file /home/cyber-dojo/setup_docker_machine_env_vars.sh
-with this one line.
+Created the file /home/cyber-dojo/setup_docker_swarm_env_vars.sh
+to contain this one line.
 eval "$(docker-machine env --swarm cyber-dojo-docker-swarm-master)"
 
 Which assumes the docker-swarm has been built as per
@@ -49,7 +49,7 @@ $ chown cyber-dojo:cyber-dojo .ssh
 $ chmod 700 .ssh
 $ cd .ssh
 $ ssh-keygen -t rsa
-Hit enter neter enter
+Hit enter enter enter
 $ ssh-copy-id git@GIT_SERVER_IP_ADDRESS
 need to enter git password
 
@@ -58,8 +58,8 @@ need to enter git password
 
 Permissions
 ===========
-Need to create a group and make both www-data and cyber-dojo
-members of the group so cyber-dojo can read/write (only read) 
+Create a group and make both www-data and cyber-dojo
+members of the group so cyber-dojo can read/write (only needs read)
 files under katas/ when it issues git commands.
 
 $ whoami
@@ -88,10 +88,7 @@ $ chmod +x /usr/local/bin/docker-machine
 
 Misc Notes
 ==========
-Would like to lose --net=host in
-docker run --net=host
-
-
+>>>>>Would like to lose --net=host in [docker run --net=host]
 >>>>>Make cyber-dojo user password-less if possible?
 >>>>>Make cyber-dojo user login shell-less if possible?
 
