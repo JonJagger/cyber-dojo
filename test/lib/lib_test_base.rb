@@ -66,6 +66,14 @@ class LibTestBase < TestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #def id; '12345ABCDE'; end
+
+  def cid_filename; 'stub.cid'; end
+
+  def cyber_dojo_cmd; 'cyber-dojo.sh'; end
+
+  def max_seconds; 5; end
+
   def pid; '921'; end
 
   def completes; 0; end

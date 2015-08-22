@@ -6,26 +6,23 @@ class DockerGitCloneRunnerTests < LibTestBase
 
   def setup
     super
-    @bash = BashStub.new
-    @cid_filename = 'stub.cid'
     set_disk_class_name     'DiskStub'
     set_git_class_name      'GitSpy'
     set_one_self_class_name 'OneSelfDummy'
-    @id = '12345ABCDE'
-    kata = make_kata(@id)
-    @lion = kata.start_avatar(['lion'])
+    @lion = make_kata.start_avatar(['lion'])
+    @bash = BashStub.new
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when docker is not installed constructor raises' do
+  test 'when docker is not installed, initialize() raises RuntimeError' do
     stub_docker_not_installed
     assert_raises(RuntimeError) { make_docker_runner }
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'bash commands run inside initialize() use sudo' do
+  test 'when docker is installed, bash commands run inside initialize() use sudo' do
     stub_docker_installed
     make_docker_runner
     assert @bash.spied[0].start_with?(sudoi('docker info')), 'docker info'
@@ -81,42 +78,58 @@ class DockerGitCloneRunnerTests < LibTestBase
     
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'docker run does not timeout' do
+  test 'run() completes and does not timeout' do
     stub_docker_installed
     make_docker_runner
     stub_docker_run(completes)
-    cmd = 'cyber-dojo.sh'
-    output = @runner.run(@lion.sandbox, cmd, max_seconds=5)
+    output = @runner.run(@lion.sandbox, cyber_dojo_cmd, max_seconds)
     assert_equal 'blah',output, 'output'
-    assert_spied(max_seconds, cmd, pid)
+    assert_bash_commands_spied
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'docker run times out' do
+  test 'run() times out' do
     stub_docker_installed
     make_docker_runner
     stub_docker_run(times_out)
-    cmd = 'cyber-dojo.sh'
-    output = @runner.run(@lion.sandbox, cmd, max_seconds=5)
+    output = @runner.run(@lion.sandbox, cyber_dojo_cmd, max_seconds)
     assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds."), 'Unable'
-    assert_spied(max_seconds, cmd, pid)
+    assert_bash_commands_spied
   end
   
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def make_docker_runner
+    @runner = DockerGitCloneRunner.new(@bash,cid_filename)
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def assert_bash_commands_spied
+    spied = @bash.spied
+    assert_equal "rm -f #{cid_filename}", spied[2], 'remove cidfile'
+    assert_equal exact_docker_run_cmd,    spied[3], 'main docker run command'
+    assert_equal "cat #{cid_filename}",   spied[4], 'get pid from cidfile'
+    assert_equal "docker stop #{pid}",    spied[5], 'docker stop pid'
+    assert_equal "docker rm #{pid}",      spied[6], 'docker rm pid'
+  end
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   include IdSplitter
 
   def exact_docker_run_cmd
-    repo = "git://#{@runner.git_server_ip}/#{outer(@id)}/#{inner(@id)}/lion.git"
+    id = @lion.kata.id
+    repo = "git://#{@runner.git_server_ip}/#{outer(id)}/#{inner(id)}/lion.git"
     clone_and_timeout_cmd =
       "git clone #{repo} /tmp/lion 2>&1 > /dev/null;" +
-      "cd /tmp/lion/sandbox && timeout --signal=#{kill} 5s cyber-dojo.sh 2>&1"
+      "cd /tmp/lion/sandbox && timeout --signal=#{kill} #{max_seconds}s #{cyber_dojo_cmd} 2>&1"
 
-    "timeout --signal=#{kill} 10s" +
+    "timeout --signal=#{kill} #{max_seconds+5}s" +
       ' docker run' +
         ' --user=www-data' +
-        " --cidfile=#{quoted(@cid_filename)}" +
+        " --cidfile=#{quoted(cid_filename)}" +
         ' --net=host' +
         " #{@lion.kata.language.image_name}" +
         " /bin/bash -c #{quoted(clone_and_timeout_cmd)} 2>&1"
@@ -124,23 +137,6 @@ class DockerGitCloneRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  def assert_spied(max_seconds, cmd, pid)
-    spied = @bash.spied
-    assert_equal "rm -f #{@cid_filename}", spied[2], 'remove cidfile'
-    assert_equal exact_docker_run_cmd,     spied[3], 'main docker run command'
-    assert_equal "cat #{@cid_filename}",   spied[4], 'get pid from cidfile'
-    assert_equal "docker stop #{pid}",     spied[5], 'docker stop'
-    assert_equal "docker rm #{pid}",       spied[6], 'docker rm'
-  end
-  
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  def make_docker_runner
-    @runner = DockerGitCloneRunner.new(@bash,@cid_filename)
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   def sudoi(s); 'sudo -u cyber-dojo -i ' + s; end
   
 end

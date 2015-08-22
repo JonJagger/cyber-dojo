@@ -6,26 +6,22 @@ class DockerVolumeMountRunnerTests < LibTestBase
 
   def setup
     super
-    @bash = BashStub.new
-    @cid_filename = 'stub.cid'
     set_disk_class_name     'DiskStub'
     set_git_class_name      'GitSpy'
     set_one_self_class_name 'OneSelfDummy'
-    @id = '12345ABCDE'
-    kata = make_kata(@id)
-    @lion = kata.start_avatar(['lion'])
+    @bash = BashStub.new
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when docker is not installed constructor raises' do
+  test 'when docker is not installed, initialize() raises RuntimeError' do
     stub_docker_not_installed
     assert_raises(RuntimeError) { make_docker_runner }
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'bash commands run in initialize() do not sudo' do
+  test 'when docker is installed, bash commands run in initialize() do not sudo' do
     stub_docker_installed
     make_docker_runner
     assert @bash.spied[0].start_with?('docker info'), 'docker info'
@@ -55,9 +51,10 @@ class DockerVolumeMountRunnerTests < LibTestBase
   test 'started(avatar) is a no-op' do
     stub_docker_installed
     docker = make_docker_runner
-    assert_equal 2, @bash.spied.size, 'before'
+    before = @bash.spied.clone
     docker.started(nil)
-    assert_equal 2, @bash.spied.size, 'after'
+    after = @bash.spied.clone
+    assert_equal before, after
   end
     
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -65,101 +62,73 @@ class DockerVolumeMountRunnerTests < LibTestBase
   test 'pre_test(avatar) is a no-op' do
     stub_docker_installed
     docker = make_docker_runner
-    assert_equal 2, @bash.spied.size, 'before'
+    before = @bash.spied.clone
     docker.pre_test(nil)
-    assert_equal 2, @bash.spied.size, 'after'
+    after = @bash.spied.clone
+    assert_equal before,after
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'exact docker run command to refactor against' do
+  test 'run() completes and does not timeout' do
     stub_docker_installed
     docker = make_docker_runner
+    @lion = make_kata.start_avatar(['lion'])
     stub_docker_run(completes)
-    cmd = 'cyber-dojo.sh'
-    docker.run(@lion.sandbox, cmd, max_seconds=5)
+    output = docker.run(@lion.sandbox, cyber_dojo_cmd, max_seconds)
+    assert_equal 'blah',output, 'output'
+    assert_bash_commands_spied
+  end    
+  
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'run() times out' do
+    stub_docker_installed
+    docker = make_docker_runner
+    @lion = make_kata.start_avatar(['lion'])
+    stub_docker_run(fatal_error(kill))
+    output = docker.run(@lion.sandbox, cyber_dojo_cmd, max_seconds)
+    assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds."), 'Unable'
+    assert_bash_commands_spied
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def make_docker_runner
+    DockerVolumeMountRunner.new(@bash,cid_filename)
+  end
+  
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    
+  def assert_bash_commands_spied
+    spied = @bash.spied
+    assert_equal "rm -f #{cid_filename}", spied[2], 'remove cidfile'
+    assert_equal exact_docker_run_cmd,    spied[3], 'main docker run command'
+    assert_equal "cat #{cid_filename}",   spied[4], 'get pid from cidfile'
+    assert_equal "docker stop #{pid}",    spied[5], 'docker stop pid'
+    assert_equal "docker rm #{pid}",      spied[6], 'docker rm pid'
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def exact_docker_run_cmd
     language = @lion.kata.language
     language_path = language.path
     language_volume_mount = language_path + ':' + language_path + ":ro"
     kata_volume_mount = @lion.sandbox.path + ":/sandbox:rw"
 
-    command = "timeout --signal=#{kill} 5s #{cmd} 2>&1"
-    expected =
-      "timeout --signal=#{kill} 10s" +
-        ' docker run' +
-          ' --user=www-data' +
-          " --cidfile=#{quoted(@cid_filename)}" +
-          ' --net=none' +
-          " -v #{quoted(language_volume_mount)}" +
-          " -v #{quoted(kata_volume_mount)}" +
-          ' -w /sandbox' +
-          " #{language.image_name}" +
-          " /bin/bash -c #{quoted(command)} 2>&1"
+    command = "timeout --signal=#{kill} #{max_seconds}s #{cyber_dojo_cmd} 2>&1"
 
-    actual = @bash.spied[3]
-    assert_equal expected, actual
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'docker run <-> bash interaction when cyber-dojo.sh completes in time' do
-    stub_docker_installed
-    docker = make_docker_runner
-    begin
-      stub_docker_run(completes)
-      cmd = 'cyber-dojo.sh'
-      output = docker.run(@lion.sandbox, cmd, max_seconds=5)      
-      assert_equal 'blah',output, 'output'      
-      assert_spied(max_seconds, cmd, pid)
-    rescue Exception => e  
-      p e.message
-      @bash.dump
-      assert false
-    end
-  end    
-  
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'docker run <-> bash interaction when cyber-dojo.sh times out' do
-    stub_docker_installed
-    docker = make_docker_runner
-    begin
-      stub_docker_run(fatal_error(kill))
-      cmd = 'cyber-dojo.sh'
-      output = docker.run(@lion.sandbox, cmd, max_seconds=5)      
-      assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds."), 'Unable'      
-      assert_spied(max_seconds, cmd, pid)
-    rescue Exception => e
-      p e.message
-      @bash.dump    
-      assert false
-    end
-  end
-    
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  def assert_spied(max_seconds, cmd, pid)
-    run_cmd = @bash.spied[3]
-    expected = "timeout --signal=#{kill} #{max_seconds+5}s"
-    assert run_cmd.start_with?(expected), 'timeout(outer)'
-    expected = "timeout --signal=#{kill} #{max_seconds}s cyber-dojo.sh"
-    assert run_cmd.include?(expected), 'timeout(inner)'    
-    
-    assert run_cmd.include?('docker run'), 'docker run'
-    assert run_cmd.include?('--user=www-data'), 'user inside docker container is www-data'
-    assert run_cmd.include?("--cidfile="), 'explicit cidfile'
-    refute run_cmd.include?('--rm'), 'rm is *not* specified'
-    assert run_cmd.include?('-v "/var/www/cyber-dojo/languages'), 'volume mount languages/'
-    assert run_cmd.include?('-v "/var/www/cyber-dojo/katas'), 'volume mount katas/'
-    assert_equal "docker stop #{pid}", @bash.spied[5], 'docker stop'
-    assert_equal "docker rm #{pid}",   @bash.spied[6], 'docker rm'
-  end
-  
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    
-  def make_docker_runner
-    DockerVolumeMountRunner.new(@bash,@cid_filename)
+    "timeout --signal=#{kill} #{max_seconds+5}s" +
+      ' docker run' +
+        ' --user=www-data' +
+        " --cidfile=#{quoted(cid_filename)}" +
+        ' --net=none' +
+        " -v #{quoted(language_volume_mount)}" +
+        " -v #{quoted(kata_volume_mount)}" +
+        ' -w /sandbox' +
+        " #{language.image_name}" +
+        " /bin/bash -c #{quoted(command)} 2>&1"
   end
 
 end
