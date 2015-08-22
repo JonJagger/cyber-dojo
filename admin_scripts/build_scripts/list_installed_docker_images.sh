@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker images | grep -oe "cyberdojofoundation\/[\_a-z0-9\.\-]*"
+docker images | grep "cyberdojofoundation/" | awk "{print \$1}"
 
