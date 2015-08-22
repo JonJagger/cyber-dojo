@@ -16,6 +16,8 @@ RUN apt-get install -y unzip
 # Download and extract Unity, there is no version labelling on the ThrowTheSwitch/Unity GitHub
 # repository so download from my fork that has version tags espically for cyberdojo
 
+WORKDIR /
+
 RUN wget https://github.com/byran/Unity/archive/CyberDojo_Release_1.zip
 RUN unzip CyberDojo_Release_1.zip
 RUN mv Unity-CyberDojo_Release_1 unity
