@@ -12,7 +12,7 @@ class OneLanguageChecker
   
   def check(name,test,verbose=false)
     language_name = [name,test].join('-')
-    print language_name + "\n"
+    print "\n" + language_name
     @language = languages[language_name]
     if true #@language.runnable?
       vputs "  #{language_name} " + ('.' * (35-language_name.to_s.length))
