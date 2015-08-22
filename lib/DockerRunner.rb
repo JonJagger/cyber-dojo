@@ -68,7 +68,7 @@ class DockerRunner
       " --cidfile=#{quoted(@cid_filename)} " +
       ' ' + options +
       ' ' + image_name +
-      " /bin/bash -c #{quoted(timeout(cmd,max_seconds))}", 
+      " /bin/bash -c #{quoted(cmd)}",
       max_seconds+5)
 
     output,exit_status = bash(outer_command)

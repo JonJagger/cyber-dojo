@@ -36,7 +36,8 @@ class DockerVolumeMountRunner < DockerRunner
         " -v #{quoted(sandbox_volume)}" +
         ' -w /sandbox'
 
-    docker_run(options, language.image_name, command, max_seconds)
+    cmd = timeout(command,max_seconds)
+    docker_run(options, language.image_name, cmd, max_seconds)
   end
 
 private
