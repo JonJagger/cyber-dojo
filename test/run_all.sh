@@ -2,19 +2,19 @@
 
 ./../admin_scripts/make_disk_cache.rb
 
-.  ./../admin_scripts/setup_host_runner_env_vars.sh
+.  ./../admin_scripts/setup_docker_volume_mount_runner_env_vars.sh
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 
 # This list is duplicated in test/print_coverage_summary.rb
 modules=( 
-  app_helpers 
-  app_lib 
-  app_models 
-  lib 
-  # languages
+  # app_helpers 
+  # app_lib 
+  # app_models 
+  # lib 
+  languages
   # integration 
-  app_controllers 
+  # app_controllers 
 )
 
 echo
