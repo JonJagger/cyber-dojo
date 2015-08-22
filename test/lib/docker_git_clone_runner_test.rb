@@ -126,17 +126,19 @@ class DockerGitCloneRunnerTests < LibTestBase
       "git clone #{repo} /tmp/lion 2>&1 > /dev/null;" +
       "cd /tmp/lion/sandbox && timeout --signal=#{kill} #{max_seconds}s #{cyber_dojo_cmd} 2>&1"
 
-    "timeout --signal=#{kill} #{max_seconds+5}s" +
-      ' docker run' +
-        ' --user=www-data' +
-        " --cidfile=#{quoted(cid_filename)}" +
-        ' --net=host' +
-        " #{@lion.kata.language.image_name}" +
-        " /bin/bash -c #{quoted(clone_and_timeout_cmd)} 2>&1"
+    docker_run_cmd =
+      "timeout --signal=#{kill} #{max_seconds+5}s" +
+        ' docker run' +
+          ' --user=www-data' +
+          " --cidfile=#{quoted(cid_filename)}" +
+          ' --net=host' +
+          " #{@lion.kata.language.image_name}" +
+          " /bin/bash -c #{quoted(clone_and_timeout_cmd)} 2>&1"
+    sudoi(docker_run_cmd)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  def sudoi(s); 'sudo -u cyber-dojo -i ' + s; end
+  def sudoi(s); 'sudo -u cyber-dojo -i' + ' ' + s; end
   
 end

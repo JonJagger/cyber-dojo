@@ -3,11 +3,23 @@
 # via Docker containers https://www.docker.io/
 # and relying on git clone from git-server running
 # git-daemon to give state access to docker process containers.
+#
+# The bash commands are run as a user called cyber-dojo.
+# The cyber-dojo user may or may not have docker-swarm setup.
+#
+# Assumes:
+# 1. there is a user called cyber-dojo on the cyber-dojo server.
+# 2. www-data can sudo -u cyber-dojo on the cyber-dojo server
+# 3. there is a user called git on the git server.
+# 4. cyber-dojo can ssh into the git server as user git
+# 5. git server has git-daemon running to publically serve repos
+#    with a --base-path=/opt/git
+# 6. port 9418 is open on the git server
 
-require_relative 'DockerRunner'
+require_relative 'DockerTimesOutRunner'
 require 'tempfile'
 
-class DockerGitCloneRunner < DockerRunner
+class DockerGitCloneRunner < DockerTimesOutRunner
 
   def initialize(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
     super(bash,cid_filename)
@@ -19,10 +31,10 @@ class DockerGitCloneRunner < DockerRunner
     # Approval style tests are disabled because their
     # post-run .txt file retrieval is not trivial on
     # docker swarm solution.
-    image_pulled?(language) &&
-      !sym_linked?(language) &&
-        !approval_test?(language)
+    image_pulled?(language) && !sym_linked?(language) && !approval_test?(language)
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def started(avatar)
     # Setup git repo on git-server for avatar
@@ -54,6 +66,8 @@ class DockerGitCloneRunner < DockerRunner
     o,es = bash(cmds)
   end
   
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def pre_test(avatar)
     # Changes from browser have already been reflected in avatar's sandbox.
     # Push them to the git-server so docker container can git clone them.
@@ -66,6 +80,8 @@ class DockerGitCloneRunner < DockerRunner
     o,es = bash(cmds)
   end
   
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def run(sandbox, command, max_seconds)
     avatar = sandbox.avatar
     kata = avatar.kata
@@ -80,18 +96,12 @@ class DockerGitCloneRunner < DockerRunner
     
     # Using --net=host just to get something working. This is insecure.
     # TODO: restrict it to just accessing the git server.
-    docker_run('--net=host', language.image_name, cmds, max_seconds)
+    times_out_run('--net=host', language.image_name, cmds, max_seconds)
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def git_server_ip
-    # Assumes:
-    # 0. there is a user called cyber-dojo on the cyber-dojo server.
-    # 1. www-data can sudo -u cyber-dojo on the cyber-dojo server
-    # 2. there is a user called git on the git server.
-    # 3. cyber-dojo can ssh into the git server as user git
-    # 4. git server has git-daemon running to publically serve repos
-    #    with a --base-path=/opt/git
-    # 5. port 9418 is open on the git server
     # TODO: this will need to be set from external ENV[] setting
     '46.101.57.179'
   end
@@ -110,7 +120,10 @@ private
   end
 
   def sudoi(s)
-    'sudo -u cyber-dojo -i ' + s.strip
+    # The cyber-dojo user is assumed to have their
+    # docker-machine environment variables setup
+    # See notes/scaling/setup-cyber-dojo-user.txt
+    'sudo -u cyber-dojo -i' + ' ' + s.strip
   end
 
 end

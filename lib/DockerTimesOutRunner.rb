@@ -1,10 +1,10 @@
 
-# Commonality from DockerGitCloneRunner and DockerVolumeMountRunner 
+# DockerGitCloneRunner/DockerVolumeMountRunner base class
 
 require_relative 'Runner'
 require_relative 'Stderr2Stdout'
 
-class DockerRunner
+class DockerTimesOutRunner # abstract
 
   def initialize(bash, cid_filename)
     @bash,@cid_filename = bash,cid_filename
@@ -28,40 +28,8 @@ class DockerRunner
     language.support_filenames != []
   end
 
-  def docker_run(options, image_name, cmd, max_seconds)
-
+  def times_out_run(options, image_name, cmd, max_seconds)
     bash("rm -f #{@cid_filename}")
-
-    # In a docker-swarm this needs to be as follows
-    #
-    # Note: outer timeout goes on docker run and not on sudo
-    # Note: there is *no* timeout(cmd) because cmd is comprised
-    #       of two ; separated commands and only (part of) the
-    #       the last one needs the timeout wrapper
-    # Note: the cyber-dojo user is assumed to have their
-    #       docker-machine environment variables setup
-    #       See notes/scaling/setup-cyber-dojo-user.txt
-    #
-=begin
-    outer_command =
-      'sudo -u cyber-dojo -i' +
-      ' ' + timeout(
-              ' docker run' +
-              ' --user=www-data' +
-              " --cidfile=#{quoted(cidfile)}" +
-              ' ' + options +
-              ' ' + image_name +
-              " /bin/bash -c #{quoted(cmd)}",
-              max_seconds+5)
-
-    output,exit_status = bash(outer_command)
-    pid,_ = bash("cat #{cidfile}")
-    bash("sudo -u cyber-dojo -i docker stop #{pid}")
-    bash("sudo -u cyber-dojo -i docker rm   #{pid}")
-    # I can't figure out why the stop/rm have to split but they do
-    exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
-=end
-
     outer_command = timeout(
       'docker run' +
       ' --user=www-data' +
@@ -71,7 +39,7 @@ class DockerRunner
       " /bin/bash -c #{quoted(cmd)}",
       max_seconds+5)
 
-    output,exit_status = bash(outer_command)
+    output,exit_status = bash(sudoi(outer_command))
     pid,_ = bash("cat #{@cid_filename}")
     bash("docker stop #{pid}")
     bash("docker rm #{pid}")
@@ -118,7 +86,7 @@ end
 #    " -u www-data" +
 #    " --cidfile=#{quoted(cidfile)}" +
 #    ...
-#    " /bin/bash -c #{quoted(timeout(command,max_seconds))}"
+#    " /bin/bash -c #{quoted(cmd)}"
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
@@ -129,7 +97,7 @@ end
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# --cidfile=#{quoted(cidfile)}
+# --cidfile=#{quoted(@cidfile)}
 #
 #   The cidfile must *not* exist before the docker command is run.
 #   Thus I rm the cidfile *before* the docker run.
@@ -148,12 +116,13 @@ end
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# /bin/bash -c #{quoted(timeout(command,max_seconds))}"
+# /bin/bash -c #{quoted(cmd)}"
 #
 #   The command that is run as the docker container's "main" is
-#   run via bash inside a timeout.
-#   I *also* put a timeout on the outer docker-run command.
-#   This is for security - a determined attacker might somehow kill
+#   run via bash. If the caller wants this to have a timeout
+#   they must write the timeout.
+#   Regardless, the outer docker-run command always has a timeout.
+#   This is for extra security - a determined attacker might somehow kill
 #   the inner timeout and thus acquire unlimited time to run any command.
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -6,10 +6,10 @@
 #
 # Comments at end of file
 
-require_relative 'DockerRunner'
+require_relative 'DockerTimesOutRunner'
 require 'tempfile'
 
-class DockerVolumeMountRunner < DockerRunner
+class DockerVolumeMountRunner < DockerTimesOutRunner
 
   def initialize(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
     super(bash,cid_filename)
@@ -37,7 +37,7 @@ class DockerVolumeMountRunner < DockerRunner
         ' -w /sandbox'
 
     cmd = timeout(command,max_seconds)
-    docker_run(options, language.image_name, cmd, max_seconds)
+    times_out_run(options, language.image_name, cmd, max_seconds)
   end
 
 private
@@ -52,14 +52,14 @@ end
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 # "docker run" +
-#    " --net=#{quoted('none')}" +
+#    ' --net=none' +
 #    " -v #{quoted(language_volume)}" +
 #    " -v #{quoted(sandbox_volume)}" +
 #    " -w /sandbox" +
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# --net="none"
+# --net=none
 #
 #   Turn off all networking inside the container.
 #
