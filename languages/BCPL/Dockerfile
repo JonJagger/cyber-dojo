@@ -11,3 +11,6 @@ WORKDIR BCPL/cintcode
 RUN . os/linux/setbcplenv
 RUN make clean
 RUN make -f MakefileRaspi sys
+
+ENV HOME=/
+
