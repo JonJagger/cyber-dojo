@@ -11,7 +11,8 @@ class DockerGitCloneRunnerTests < LibTestBase
     set_disk_class_name     'DiskStub'
     set_git_class_name      'GitSpy'
     set_one_self_class_name 'OneSelfDummy'
-    kata = make_kata
+    @id = '12345ABCDE'
+    kata = make_kata(@id)
     @lion = kata.start_avatar(['lion'])
   end
 
@@ -82,6 +83,45 @@ class DockerGitCloneRunnerTests < LibTestBase
     assert bash_cmd.include?('sudo -u cyber-dojo git push'), 'git push'
   end
     
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'docker run exact bash interaction to refactor against' do
+    @bash.stub(docker_info_output, success)
+    @bash.stub(docker_images_output, success)
+    docker = make_docker_runner
+    @bash.stub('',success)        # 2 rm cidfile.txt
+    @bash.stub('blah',success)    # 3 timeout ... docker run ...
+    @bash.stub(pid='921',success) # 4 cat ... cidfile.txt
+    @bash.stub('',success)        # 5 docker stop pid ; docker rm pid
+    cmd = 'cyber-dojo.sh'
+    output = docker.run(@lion.sandbox, cmd, max_seconds=5)
+
+    language = @lion.kata.language
+    language_path = language.path
+    host = 'host'
+
+    outer_id = @id[0..1]
+    inner_id = @id[2..-1]
+    cmd = "git clone git://46.101.57.179/#{outer_id}/#{inner_id}/lion.git /tmp/lion 2>&1 > dev/null;" +
+          "cd /tmp/lion/sandbox && timeout --signal=9 5s cyber-dojo.sh 2>&1 2>&1\""
+
+    expected =
+      'timeout --signal=9 10s' +
+        ' docker run' +
+          ' --user=www-data' +
+          " --cidfile=#{quoted(@cid_filename)}" +
+   '  ' + ' --net=host' +
+          " #{language.image_name}" +
+          " /bin/bash -c #{quoted(cmd)} 2>&1"
+
+    actual = @bash.spied[3]
+
+    #p expected
+    #p actual
+    #assert actual.start_with?(expected), 'start_with'
+    #assert_equal expected, actual, 'equal'
+  end
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'docker run <-> bash interaction when cyber-dojo.sh completes in time' do

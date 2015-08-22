@@ -11,7 +11,8 @@ class DockerVolumeMountRunnerTests < LibTestBase
     set_disk_class_name     'DiskStub'
     set_git_class_name      'GitSpy'
     set_one_self_class_name 'OneSelfDummy'
-    kata = make_kata
+    @id = '12345ABCDE'
+    kata = make_kata(@id)
     @lion = kata.start_avatar(['lion'])
   end
 
@@ -85,6 +86,29 @@ class DockerVolumeMountRunnerTests < LibTestBase
     @bash.stub('',success)        # 5 docker stop pid ; docker rm pid
     cmd = 'cyber-dojo.sh'
     output = docker.run(@lion.sandbox, cmd, max_seconds=5)
+
+    language = @lion.kata.language
+    language_path = language.path
+    none = 'none'
+    language_volume_mount = language_path + ':' + language_path + ":ro"
+    kata_volume_mount = @lion.sandbox.path + ":/sandbox:rw"
+
+    cmd = "timeout --signal=9 5s cyber-dojo.sh 2>&1"
+    expected =
+      'timeout --signal=9 10s' +
+        ' docker run' +
+          ' --user=www-data' +
+          " --cidfile=#{quoted(@cid_filename)}" +
+   '  ' + " --net=#{quoted(none)}" +
+          " -v #{quoted(language_volume_mount)}" +
+          " -v #{quoted(kata_volume_mount)}" +
+          ' -w /sandbox' +
+          " #{language.image_name}" +
+          " /bin/bash -c #{quoted(cmd)} 2>&1"
+
+    actual = @bash.spied[3]
+    assert actual.start_with?(expected), 'start_with'
+    assert_equal expected, actual, 'equal'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
