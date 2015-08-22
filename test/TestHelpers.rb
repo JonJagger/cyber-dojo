@@ -1,3 +1,4 @@
+gem "minitest"
 require 'minitest/autorun'
 
 module TestHelpers # mixin

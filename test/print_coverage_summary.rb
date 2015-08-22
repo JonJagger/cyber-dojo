@@ -3,13 +3,13 @@
 def modules
   # This list is duplicated in test/run_all.sh
   [ 
-     'app_helpers',
-     'app_lib',
-     'app_models',
-     'lib',
-     # languages 
-     # integration 
-     'app_controllers'
+     # 'app_helpers',
+     # 'app_lib',
+     # 'app_models',
+     # 'lib',
+     'languages' 
+     # 'integration' 
+     # 'app_controllers'
    ]
 end
 
