@@ -99,7 +99,7 @@ class DockerVolumeMountRunnerTests < LibTestBase
         ' docker run' +
           ' --user=www-data' +
           " --cidfile=#{quoted(@cid_filename)}" +
-   '  ' + ' --net=none' +
+          ' --net=none' +
           " -v #{quoted(language_volume_mount)}" +
           " -v #{quoted(kata_volume_mount)}" +
           ' -w /sandbox' +
@@ -107,7 +107,6 @@ class DockerVolumeMountRunnerTests < LibTestBase
           " /bin/bash -c #{quoted(cmd)} 2>&1"
 
     actual = @bash.spied[3]
-    #assert actual.start_with?(expected), 'start_with'
     assert_equal expected, actual
   end
 

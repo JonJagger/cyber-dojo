@@ -65,8 +65,8 @@ class DockerRunner
     outer_command = timeout(
       'docker run' +
       ' --user=www-data' +
-      " --cidfile=#{quoted(@cid_filename)} " +
-      ' ' + options +
+      " --cidfile=#{quoted(@cid_filename)}" +
+      ' ' + options.strip +
       ' ' + image_name +
       " /bin/bash -c #{quoted(cmd)}",
       max_seconds+5)

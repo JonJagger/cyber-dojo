@@ -102,24 +102,20 @@ class DockerGitCloneRunnerTests < LibTestBase
 
     outer_id = @id[0..1]
     inner_id = @id[2..-1]
-    cmd = "git clone git://46.101.57.179/#{outer_id}/#{inner_id}/lion.git /tmp/lion 2>&1 > dev/null;" +
-          "cd /tmp/lion/sandbox && timeout --signal=9 5s cyber-dojo.sh 2>&1 2>&1\""
+    cmd = "git clone git://46.101.57.179/#{outer_id}/#{inner_id}/lion.git /tmp/lion 2>&1 > /dev/null;" +
+          "cd /tmp/lion/sandbox && timeout --signal=9 5s cyber-dojo.sh 2>&1"
 
     expected =
       'timeout --signal=9 10s' +
         ' docker run' +
           ' --user=www-data' +
           " --cidfile=#{quoted(@cid_filename)}" +
-   '  ' + ' --net=host' +
+          ' --net=host' +
           " #{language.image_name}" +
           " /bin/bash -c #{quoted(cmd)} 2>&1"
 
     actual = @bash.spied[3]
-
-    #p expected
-    #p actual
-    #assert actual.start_with?(expected), 'start_with'
-    #assert_equal expected, actual, 'equal'
+    assert_equal expected, actual
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -174,7 +170,9 @@ class DockerGitCloneRunnerTests < LibTestBase
     run_cmd = @bash.spied[3]
     expected = "timeout --signal=#{kill} #{max_seconds+5}s"
     assert run_cmd.start_with?(expected), 'timeout(outer)'
-    expected = "timeout --signal=#{kill} #{max_seconds}s git clone"
+    expected = 'git clone'
+    assert run_cmd.include?(expected), 'git clone'
+    expected = "timeout --signal=#{kill} #{max_seconds}s cyber-dojo.sh"
     assert run_cmd.include?(expected), 'timeout(inner)'    
     
     assert run_cmd.include?('docker run'), 'docker run'
