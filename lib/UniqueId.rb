@@ -1,6 +1,8 @@
 
 module UniqueId # mixin
 
+  module_function
+
   def unique_id
     `uuidgen`.strip.delete('-')[0...10].upcase
   end

@@ -1,6 +1,8 @@
 
 module Cleaner # mixin
 
+  module_function
+
   def clean(s)
     # force an encoding change - if encoding is already utf-8
     # then encoding to utf-8 is a no-op and invalid byte

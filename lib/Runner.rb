@@ -1,6 +1,10 @@
 
 module Runner # mixin
 
+  module_function
+
+  include Cleaner
+
   def didnt_complete(max_seconds)
     "Unable to complete the tests in #{max_seconds} seconds.\n" +
     "Is there an accidental infinite loop?\n" +
@@ -23,9 +27,5 @@ module Runner # mixin
     end
     output
   end
-
-private
-
-  include Cleaner  
 
 end
