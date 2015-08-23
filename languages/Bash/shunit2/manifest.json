@@ -6,9 +6,6 @@
      "hiker.inc",
      "cyber-dojo.sh"
   ],
-  "support_filenames": [
-    "shunit2"
-  ],
   "filename_extension" : ".sh",
   "display_name": "Bash, shunit2",
   "unit_test_framework": "bash_shunit2",

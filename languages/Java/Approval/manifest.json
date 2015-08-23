@@ -6,10 +6,6 @@
     "cyber-dojo.sh",
     "HikerTest.life_the_universe_and_everything.approved.txt"
   ],
-  "support_filenames": [
-    "junit-4.11.jar",
-    "ApprovalTests.012.jar"
-  ],
   "filename_extension" : ".java",
   "display_name": "Java, Approval",
   "unit_test_framework": "junit",

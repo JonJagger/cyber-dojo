@@ -5,9 +5,6 @@
     "Hiker.fs",
     "cyber-dojo.sh"
   ],
-  "support_filenames": [
-    "nunit.framework.dll"
-  ],
   "filename_extension" : ".fs",
   "display_name": "F#, NUnit",
   "unit_test_framework": "nunit",

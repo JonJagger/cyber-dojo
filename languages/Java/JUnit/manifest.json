@@ -6,10 +6,6 @@
     "cyber-dojo.sh"
   ],
 
-  "support_filenames": [
-    "junit-4.11.jar"
-  ],
-
   "progress_regexs": [
     "Tests run\\: (\\d)+,(\\s)+Failures\\: (\\d)+",
     "OK \\((\\d)+ test(s)?\\)"
