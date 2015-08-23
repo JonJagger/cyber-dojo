@@ -60,12 +60,58 @@ Open ports
 
 git-daemon uses 9418
 ssh uses port 22
-$ ufw allow 9418
-$ ufw allow 22
-$ ufw enable
+$ ufw allow 9418     TOO OPEN SEE BELOW
+$ ufw allow 22       TOO OPEN SEE BELOW
+$ ufw enable         TOO OPEN SEE BELOW
 
 check it
 $ ufw status
+
+Got a port-scanner attack report from digital-ocean
+More learning...
+http://www.techworld.com/security/defending-yourself-against-port-scanners-490/
+$ ssh root@git-server-ip
+$ iptables -nL
+Shows...
+Chain ufw-user-input (1 references)
+target     prot opt source               destination         
+ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:9418
+ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:9418
+ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:22
+
+So it seems
+1. I need to block port 22 (ssh) except from the cyber-dojo server's IP
+$ iptables -A INPUT -p tcp -s <CYBER_DOJO_IP> --dport 22 -j ACCEPT
+$ iptables -A INPUT -p tcp -s 0.0.0.0/0 --dport 22 -j DROP
+
+2. I should also restrict port 9418 (git-daemon) to the swarm-nodes
+$ iptables -A INPUT -p tcp -s <SWARM_NODE_IP> --dport 9418 -j ACCEPT
+$ iptables -A INPUT -p tcp -s <SWARM_NODE_IP> --dport 9418 -j ACCEPT
+$ iptables -A INPUT -p tcp -s 0.0.0.0/0 --dport 9418 -j DROP
+
+
+$ iptables -nL
+...Now shows
+ACCEPT     tcp  --  CYBER_DOJO_IP        0.0.0.0/0            tcp dpt:22
+DROP       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+ACCEPT     tcp  --  SWARM_NODE_IP        0.0.0.0/0            tcp dpt:9418
+ACCEPT     tcp  --  SWARM_NODE_IP        0.0.0.0/0            tcp dpt:9418
+DROP       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:9418
+
+....and towards the end of the file
+Chain ufw-user-input (1 references)
+target     prot opt source               destination         
+ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:9418
+ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:9418
+ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:22
+
+https://help.ubuntu.com/community/IptablesHowTo
+Once a decision is made to accept a packet, no more rules affect it. As our rules allowing ssh and web traffic come first, as long as our rule to block all traffic comes after them, we can still accept the traffic we want. All we need to do is put the rule to block all traffic at the end.
+
+
+
 
 
 Notes
