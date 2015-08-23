@@ -21,8 +21,6 @@ class DockerVolumeMountRunner < DockerTimesOutRunner
 
   def started(avatar); end
 
-  def pre_test(avatar); end
-
   def run(sandbox, command, max_seconds)
     language = sandbox.avatar.kata.language
     read_only = 'ro'

@@ -60,7 +60,6 @@ class Avatar
 
   def test(delta, files, now = time_now, time_limit = 15)
     sandbox.save_files(delta,files)
-    runner.pre_test(self)
     output = sandbox.run_tests(files, time_limit)
     colour = kata.language.colour(output)
     rags = increments
@@ -95,7 +94,7 @@ private
     git.init(path, '--quiet')
     git.config(path, 'user.name ' + user_name)
     git.config(path, 'user.email ' + user_email)
-    # Next line needed for DockerGitCloneRunner.rb
+    # Next line needed if runner=DockerGitCloneRunner
     git.config(path, 'push.default current')
   end
 

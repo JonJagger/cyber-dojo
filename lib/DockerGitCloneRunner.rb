@@ -1,11 +1,10 @@
 
 # test runner providing isolation/protection/security
-# via Docker containers https://www.docker.io/
-# and relying on git clone from git-server running
+# via Docker containers https://www.docker.io/ optionally
+# in a docker-swarm and relying on git clone from git-server running
 # git-daemon to give state access to docker process containers.
 #
 # The bash commands are run as a user called cyber-dojo.
-# The cyber-dojo user may or may not have docker-swarm setup.
 #
 # Assumes:
 # 1. there is a user called cyber-dojo on the cyber-dojo server.
@@ -30,7 +29,7 @@ class DockerGitCloneRunner < DockerTimesOutRunner
     # a docker swarm solution cannot volume mount.
     # Approval style tests are disabled because their
     # post-run .txt file retrieval is not trivial on
-    # docker swarm solution.
+    # a docker swarm solution.
     image_pulled?(language) && !sym_linked?(language) && !approval_test?(language)
   end
 
@@ -43,6 +42,16 @@ class DockerGitCloneRunner < DockerTimesOutRunner
     #       I want to be able to re-enter it and then continue. But I don't
     #       think that will work unless the already existing avatars folder
     #       has the following commands run on it so it can push to the git server.
+    #
+    #       One way to resolve this might be to move this inside the run() command
+    #       and only run it once by detecting if the avatar's repo already has a remote.
+    #
+    #       This is a nice solution in that it also removes the need for this
+    #       "special" method which is a no-op in DockerVolumeMountRunner.rb
+    #
+    #       This might also be a better place to do the
+    #           git.config(path, 'push.default current')
+    #       currently in Avatar.git_setup()
 
     kata = avatar.kata  
     cmds = [
@@ -68,7 +77,11 @@ class DockerGitCloneRunner < DockerTimesOutRunner
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def pre_test(avatar)
+  def run(sandbox, command, max_seconds)
+    avatar = sandbox.avatar
+    kata = avatar.kata
+    language = kata.language
+
     # Changes from browser have already been reflected in avatar's sandbox.
     # Push them to the git-server so docker container can git clone them.
     # If no visible files have changed this will be a safe no-op
@@ -78,14 +91,7 @@ class DockerGitCloneRunner < DockerTimesOutRunner
       "sudo -u cyber-dojo git push master"
     ].join(';')
     o,es = bash(cmds)
-  end
-  
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def run(sandbox, command, max_seconds)
-    avatar = sandbox.avatar
-    kata = avatar.kata
-    language = kata.language
     # Assumes git daemon on the git server. Pipes all output from git clone
     # to dev/null to stop it becoming part of the output visible in the
     # browser which could affect traffic-light colour.
@@ -120,8 +126,8 @@ private
   end
 
   def sudoi(s)
-    # The cyber-dojo user is assumed to have their
-    # docker-machine environment variables setup
+    # If docker-swarm is being used the cyber-dojo user is assumed
+    # to have their docker-machine environment variables setup
     # See notes/scaling/setup-cyber-dojo-user.txt
     'sudo -u cyber-dojo -i' + ' ' + s.strip
   end

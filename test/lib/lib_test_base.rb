@@ -18,16 +18,7 @@ class LibTestBase < TestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def stub_docker_run(outcome)
-    stub_rm_cidfile       # 2
-    stub_timeout(outcome) # 3
-    stub_cat_cidfile      # 4
-    stub_docker_stop      # 5
-    stub_docker_rm        # 6
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  def stub_git_push;    @bash.stub('',success);  end
   def stub_rm_cidfile;  @bash.stub('',success);  end
   def stub_timeout(n);  @bash.stub('blah',n);    end
   def stub_cat_cidfile; @bash.stub(pid,success); end

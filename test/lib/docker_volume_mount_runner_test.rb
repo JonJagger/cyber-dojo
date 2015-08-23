@@ -59,17 +59,6 @@ class DockerVolumeMountRunnerTests < LibTestBase
     
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'pre_test(avatar) is a no-op' do
-    stub_docker_installed
-    docker = make_docker_runner
-    before = @bash.spied.clone
-    docker.pre_test(nil)
-    after = @bash.spied.clone
-    assert_equal before,after
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'run() completes and does not timeout' do
     stub_docker_installed
     docker = make_docker_runner
@@ -129,6 +118,16 @@ class DockerVolumeMountRunnerTests < LibTestBase
         ' -w /sandbox' +
         " #{language.image_name}" +
         " /bin/bash -c #{quoted(command)} 2>&1"
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def stub_docker_run(outcome)
+    stub_rm_cidfile       # 2
+    stub_timeout(outcome) # 3
+    stub_cat_cidfile      # 4
+    stub_docker_stop      # 5
+    stub_docker_rm        # 6
   end
 
 end
