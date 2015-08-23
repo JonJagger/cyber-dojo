@@ -1,8 +1,11 @@
 #!/usr/bin/env ../test_wrapper.sh lib
 
 require_relative 'lib_test_base'
+require_relative 'DockerTestHelpers'
 
 class DockerVolumeMountRunnerTests < LibTestBase
+
+  include DockerTestHelpers
 
   def setup
     super
