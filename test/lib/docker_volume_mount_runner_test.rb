@@ -14,23 +14,22 @@ class DockerVolumeMountRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when docker is not installed, initialize() raises RuntimeError' do
+  test 'initialize() raises RuntimeError when docker is not installed' do
     stub_docker_not_installed
     assert_raises(RuntimeError) { make_docker_runner }
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when docker is installed, bash commands run in initialize() do not sudo' do
+  test 'initialize() uses [docker info] not run as sudo' do
     stub_docker_installed
     make_docker_runner
     assert @bash.spied[0].start_with?('docker info'), 'docker info'
-    assert @bash.spied[1].start_with?('docker images'), 'docker images'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when docker is installed, image_names determines runnability' do
+  test 'runnable?() uses [docker images] not run as sudo' do
     stub_docker_installed
     docker = make_docker_runner    
     expected_image_names =
@@ -41,8 +40,10 @@ class DockerVolumeMountRunnerTests < LibTestBase
     c_assert = languages['C-assert']
     python_py_test = languages['Python-py.test']
 
+    stub_docker_images
     refute docker.runnable?(c_assert);
     assert docker.runnable?(python_py_test);
+    assert @bash.spied[1].start_with?('docker images'), 'docker images'
   end
     
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -58,7 +59,7 @@ class DockerVolumeMountRunnerTests < LibTestBase
     
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'run() completes and does not timeout' do
+  test 'run() completes and does not timeout - exact bash cmd interaction' do
     stub_docker_installed
     docker = make_docker_runner
     @lion = make_kata.start_avatar(['lion'])
@@ -70,7 +71,7 @@ class DockerVolumeMountRunnerTests < LibTestBase
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'run() times out' do
+  test 'run() times out - exact base cmd interaction' do
     stub_docker_installed
     docker = make_docker_runner
     @lion = make_kata.start_avatar(['lion'])
@@ -90,11 +91,12 @@ class DockerVolumeMountRunnerTests < LibTestBase
     
   def assert_bash_commands_spied
     spied = @bash.spied
-    assert_equal "rm -f #{cid_filename}", spied[2], 'remove cidfile'
-    assert_equal exact_docker_run_cmd,    spied[3], 'main docker run command'
-    assert_equal "cat #{cid_filename}",   spied[4], 'get pid from cidfile'
-    assert_equal "docker stop #{pid}",    spied[5], 'docker stop pid'
-    assert_equal "docker rm #{pid}",      spied[6], 'docker rm pid'
+    # 0 docker info from initialize()
+    assert_equal "rm -f #{cid_filename}", spied[1], 'remove cidfile'
+    assert_equal exact_docker_run_cmd,    spied[2], 'main docker run command'
+    assert_equal "cat #{cid_filename}",   spied[3], 'get pid from cidfile'
+    assert_equal "docker stop #{pid}",    spied[4], 'docker stop pid'
+    assert_equal "docker rm #{pid}",      spied[5], 'docker rm pid'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -122,11 +124,11 @@ class DockerVolumeMountRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def stub_docker_run(outcome)
-    stub_rm_cidfile       # 2
-    stub_timeout(outcome) # 3
-    stub_cat_cidfile      # 4
-    stub_docker_stop      # 5
-    stub_docker_rm        # 6
+    stub_rm_cidfile
+    stub_timeout(outcome)
+    stub_cat_cidfile
+    stub_docker_stop
+    stub_docker_rm
   end
 
 end

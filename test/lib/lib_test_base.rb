@@ -6,14 +6,19 @@ require_relative '../test_base'
 class LibTestBase < TestBase
 
   def stub_docker_installed
-    @bash.stub(docker_info_output, success)   # 0
-    @bash.stub(docker_images_output, success) # 1
+    @bash.stub(docker_info_output, success)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def stub_docker_not_installed
     @bash.stub('',any_non_zero=42)
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def stub_docker_images
+    @bash.stub(docker_images_output, success)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

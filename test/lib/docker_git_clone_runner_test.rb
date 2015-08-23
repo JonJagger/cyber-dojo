@@ -15,23 +15,22 @@ class DockerGitCloneRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when docker is not installed, initialize() raises RuntimeError' do
+  test 'initialize() raises RuntimeError when docker is not installed' do
     stub_docker_not_installed
     assert_raises(RuntimeError) { make_docker_runner }
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when docker is installed, bash commands run inside initialize() use sudo' do
+  test 'initialize() uses [docker info] run as sudo' do
     stub_docker_installed
     make_docker_runner
     assert @bash.spied[0].start_with?(sudoi('docker info')), 'docker info'
-    assert @bash.spied[1].start_with?(sudoi('docker images')), 'docker images'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when docker is installed, image_names determines runnability' do
+  test 'runnable?() uses [docker images] run as sudo' do
     stub_docker_installed
     docker = make_docker_runner
     expected_image_names =
@@ -42,8 +41,10 @@ class DockerGitCloneRunnerTests < LibTestBase
     c_assert = languages['C-assert']
     python_py_test = languages['Python-py.test']
 
+    stub_docker_images
     refute docker.runnable?(c_assert), 'c_assert'
     assert docker.runnable?(python_py_test), 'python_py_test'
+    assert @bash.spied[1].start_with?(sudoi('docker images')), 'docker images'
   end
     
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -51,10 +52,10 @@ class DockerGitCloneRunnerTests < LibTestBase
   test 'started(avatar) clones avatar repo and pushes it to git server' do
     stub_docker_installed
     docker = make_docker_runner
-    assert_equal 2, @bash.spied.size, 'before'
+    assert_equal 1, @bash.spied.size, 'before'
     docker.started(@lion)
-    assert_equal 3, @bash.spied.size, 'after'    
-    bash_cmd = @bash.spied[2]
+    assert_equal 2, @bash.spied.size, 'after'
+    bash_cmd = @bash.spied[1]
     assert bash_cmd.include?('git clone --bare lion'), 'creates bare repo'
     assert bash_cmd.include?('sudo -u cyber-dojo scp -r lion.git'), 'copies it to git server'
     assert bash_cmd.include?('git-daemon-export-ok'), 'sets git-daemon-export-ok'
@@ -64,7 +65,7 @@ class DockerGitCloneRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'run() completes and does not timeout' do
+  test 'run() completes and does not timeout - exact bash cmd interaction' do
     stub_docker_installed
     make_docker_runner
     stub_docker_run(completes)
@@ -75,7 +76,7 @@ class DockerGitCloneRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'run() times out' do
+  test 'run() times out - exact bash cmd interaction' do
     stub_docker_installed
     make_docker_runner
     stub_docker_run(times_out)
@@ -94,14 +95,13 @@ class DockerGitCloneRunnerTests < LibTestBase
 
   def assert_bash_commands_spied
     spied = @bash.spied
-    # 0 docker info
-    # 1 docker images
-    assert_equal exact_git_push_cmd,      spied[2], 'git push'
-    assert_equal "rm -f #{cid_filename}", spied[3], 'remove cidfile'
-    assert_equal exact_docker_run_cmd,    spied[4], 'main docker run command'
-    assert_equal "cat #{cid_filename}",   spied[5], 'get pid from cidfile'
-    assert_equal "docker stop #{pid}",    spied[6], 'docker stop pid'
-    assert_equal "docker rm #{pid}",      spied[7], 'docker rm pid'
+    # 0 docker info from initialize()
+    assert_equal exact_git_push_cmd,      spied[1], 'git push'
+    assert_equal "rm -f #{cid_filename}", spied[2], 'remove cidfile'
+    assert_equal exact_docker_run_cmd,    spied[3], 'main docker run command'
+    assert_equal "cat #{cid_filename}",   spied[4], 'get pid from cidfile'
+    assert_equal "docker stop #{pid}",    spied[5], 'docker stop pid'
+    assert_equal "docker rm #{pid}",      spied[6], 'docker rm pid'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -139,12 +139,12 @@ class DockerGitCloneRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def stub_docker_run(outcome)
-    stub_git_push         # 2
-    stub_rm_cidfile       # 3
-    stub_timeout(outcome) # 4
-    stub_cat_cidfile      # 5
-    stub_docker_stop      # 6
-    stub_docker_rm        # 7
+    stub_git_push
+    stub_rm_cidfile
+    stub_timeout(outcome)
+    stub_cat_cidfile
+    stub_docker_stop
+    stub_docker_rm
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -14,7 +14,6 @@ class DockerGitCloneRunner
   def initialize(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
     @bash,@cid_filename = bash,cid_filename
     raise_if_docker_not_installed
-    read_image_names
   end
 
   def runnable?(language)    
@@ -73,18 +72,8 @@ class DockerGitCloneRunner
   def run(sandbox, command, max_seconds)
     avatar = sandbox.avatar
     kata = avatar.kata
-    language = kata.language
 
-    # Changes from browser have already been reflected in avatar's sandbox.
-    # Push them to the git-server so docker container can git clone them.
-    # If no visible files have changed this will be a safe no-op
-    cmds = [
-      "cd #{avatar.path}",
-      "sudo -u cyber-dojo git commit -am 'pre-test-push' --quiet",
-      "sudo -u cyber-dojo git push master"
-    ].join(';')
-    o,es = bash(cmds)
-
+    git_push(avatar)
     # Assumes git daemon on the git server. Pipes all output from git clone
     # to dev/null to stop it becoming part of the output visible in the
     # browser which could affect traffic-light colour.
@@ -95,7 +84,7 @@ class DockerGitCloneRunner
     
     # Using --net=host just to get something working. This is insecure.
     # TODO: restrict it to just accessing the git server.
-    times_out_run('--net=host', language.image_name, cmds, max_seconds)
+    times_out_run('--net=host', kata.language.image_name, cmds, max_seconds)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -110,6 +99,18 @@ private
   include DockerTimesOutRunner
   include IdSplitter
 
+  def git_push(avatar)
+    # Changes from browser have already been reflected in avatar's sandbox.
+    # Push them to the git-server so docker container can git clone them.
+    # If no visible files have changed this will be a safe no-op
+    cmds = [
+      "cd #{avatar.path}",
+      "sudo -u cyber-dojo git commit -am 'pre-test-push' --quiet",
+      "sudo -u cyber-dojo git push master"
+    ].join(';')
+    o,es = bash(cmds)    
+  end
+
   def opt_git_kata_path(kata)
     '/opt/git' + kata_path(kata)
   end
@@ -119,11 +120,11 @@ private
     "/#{outer(id)}/#{inner(id)}"
   end
 
-  def sudoi(s)
+  def sudoi(cmd)
     # If docker-swarm is being used the cyber-dojo user is assumed
     # to have their docker-machine environment variables setup
     # See notes/scaling/setup-cyber-dojo-user.txt
-    'sudo -u cyber-dojo -i' + ' ' + s.strip
+    'sudo -u cyber-dojo -i' + ' ' + cmd.strip
   end
 
 end

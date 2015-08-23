@@ -14,7 +14,6 @@ class DockerVolumeMountRunner
   def initialize(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
     @bash,@cid_filename = bash,cid_filename
     raise_if_docker_not_installed
-    read_image_names
   end
 
   def runnable?(language)
@@ -44,8 +43,8 @@ private
 
   include DockerTimesOutRunner
 
-  def sudoi(s)
-    s
+  def sudoi(cmd)
+    cmd
   end
 
 end

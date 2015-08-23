@@ -20,14 +20,14 @@ module DockerTimesOutRunner
     exit_status === 0
   end
 
+  def image_names
+    @image_names ||= read_image_names
+  end
+
   def read_image_names
     output,_ = bash(sudoi('docker images'))
     lines = output.split("\n").select{|line| line.start_with?('cyberdojo')}
-    @image_names = lines.collect{|line| line.split[0]}
-  end
-
-  def image_names
-    @image_names
+    image_names = lines.collect{|line| line.split[0]}
   end
 
   def image_pulled?(language)
