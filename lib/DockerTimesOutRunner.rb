@@ -1,23 +1,37 @@
 
-# DockerGitCloneRunner/DockerVolumeMountRunner base class
+# DockerGitCloneRunner/DockerVolumeMountRunner mix-in
 
 require_relative 'Runner'
 require_relative 'Stderr2Stdout'
 
-class DockerTimesOutRunner # abstract
+module DockerTimesOutRunner
 
-  def initialize(bash, cid_filename)
-    @bash,@cid_filename = bash,cid_filename
+  module_function
+
+  include Runner
+  include Stderr2Stdout
+
+  def raise_if_docker_not_installed
     raise RuntimeError.new('Docker not installed') if !installed?
+  end
+
+  def installed?
+    _,exit_status = bash(sudoi('docker info > /dev/null'))
+    exit_status === 0
+  end
+
+  def read_image_names
     output,_ = bash(sudoi('docker images'))
     lines = output.split("\n").select{|line| line.start_with?('cyberdojo')}
     @image_names = lines.collect{|line| line.split[0]}
   end
-  
-  attr_reader :image_names
+
+  def image_names
+    @image_names
+  end
 
   def image_pulled?(language)
-    @image_names.include?(language.image_name)
+    image_names.include?(language.image_name)
   end
 
   def approval_test?(language)
@@ -46,8 +60,6 @@ class DockerTimesOutRunner # abstract
     exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
   end
 
-protected
-
   def bash(command)
     @bash.exec(command)
   end
@@ -58,16 +70,6 @@ protected
 
   def timeout(command,secs)
     "timeout --signal=#{kill} #{secs}s #{stderr2stdout(command)}"
-  end
-
-private
-  
-  include Runner  
-  include Stderr2Stdout
-   
-  def installed?
-    _,exit_status = bash(sudoi('docker info > /dev/null'))
-    exit_status === 0
   end
 
   def fatal_error(signal)

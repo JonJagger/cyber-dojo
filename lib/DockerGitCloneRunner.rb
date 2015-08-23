@@ -18,10 +18,12 @@
 require_relative 'DockerTimesOutRunner'
 require 'tempfile'
 
-class DockerGitCloneRunner < DockerTimesOutRunner
+class DockerGitCloneRunner
 
   def initialize(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
-    super(bash,cid_filename)
+    @bash,@cid_filename = bash,cid_filename
+    raise_if_docker_not_installed
+    read_image_names
   end
 
   def runnable?(language)    
@@ -114,6 +116,7 @@ class DockerGitCloneRunner < DockerTimesOutRunner
 
 private
 
+  include DockerTimesOutRunner
   include IdSplitter
 
   def opt_git_kata_path(kata)

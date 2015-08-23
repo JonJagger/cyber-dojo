@@ -41,7 +41,6 @@ class DockerVolumeMountRunnerTests < LibTestBase
     c_assert = languages['C-assert']
     python_py_test = languages['Python-py.test']
 
-    assert_equal expected_image_names, docker.image_names        
     refute docker.runnable?(c_assert);
     assert docker.runnable?(python_py_test);
   end
