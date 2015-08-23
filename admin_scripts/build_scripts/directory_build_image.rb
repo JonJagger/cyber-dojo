@@ -5,11 +5,11 @@ def build_images(path)
     Dir.chdir(File.dirname(file))
     exec = File.basename(file)
 
-#    p File.dirname(file)
-#    `./#{exec}`
+    p File.dirname(file)
+    `./#{exec}`
 
-    print "cd " + Shellwords.shellescape(File.dirname(file)) + "\n"
-    print "./" + Shellwords.shellescape(exec) + "\n"
+#    print "cd " + Shellwords.shellescape(File.dirname(file)) + "\n"
+#    print "./" + Shellwords.shellescape(exec) + "\n"
   end
 end
 
