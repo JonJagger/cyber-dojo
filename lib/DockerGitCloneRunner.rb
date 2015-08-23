@@ -4,16 +4,7 @@
 # in a docker-swarm and relying on git clone from git-server running
 # git-daemon to give state access to docker process containers.
 #
-# The bash commands are run as a user called cyber-dojo.
-#
-# Assumes:
-# 1. there is a user called cyber-dojo on the cyber-dojo server.
-# 2. www-data can sudo -u cyber-dojo on the cyber-dojo server
-# 3. there is a user called git on the git server.
-# 4. cyber-dojo can ssh into the git server as user git
-# 5. git server has git-daemon running to publically serve repos
-#    with a --base-path=/opt/git
-# 6. port 9418 is open on the git server
+# Comments at end of file
 
 require_relative 'DockerTimesOutRunner'
 require 'tempfile'
@@ -136,3 +127,23 @@ private
   end
 
 end
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# The bash commands are run as a user called cyber-dojo.
+#
+# Assumptions:
+#
+# 1. git push from cyber-dojo server to git-server
+#
+# o) www-data (apache user) can sudo -u cyber-dojo on the cyber-dojo server
+# o) there is a user called cyber-dojo on the cyber-dojo server!
+# o) there is a user called git on the git server.
+# o) user cyber-dojo can ssh onto the git server as user git
+# o) the git-server ssh port (22) is open (only) for cyber-dojo server
+#
+# 2. git-clone from git-server onto a docker-swarm-node
+#
+# o) git server has git-daemon running to publically serve repos with a --base-path=/opt/git
+# o) on the git server git-daemons' port (9418) is open to (only) the docker swarm nodes.
+
