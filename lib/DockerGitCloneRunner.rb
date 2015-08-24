@@ -17,7 +17,7 @@ class DockerGitCloneRunner
   end
 
   def runnable?(language)    
-    # Sym-linked support-files cannot be supported because
+    # Can't have sym-linked support-files because
     # a docker swarm solution cannot volume mount.
     # Approval style tests are disabled because their
     # post-run .txt file retrieval is not trivial on
@@ -73,17 +73,17 @@ class DockerGitCloneRunner
     avatar = sandbox.avatar
     kata = avatar.kata
 
+    # Assumes git daemon on the git server. 
     git_push(avatar)
-    # Assumes git daemon on the git server. Pipes all output from git clone
-    # to dev/null to stop it becoming part of the output visible in the
-    # browser which could affect traffic-light colour.
+    # Pipes all output from git clone to dev/null to stop it becoming part
+    # of the output visible in the browser which could affect traffic-light colour.
     cmds = [
       "git clone git://#{git_server_ip}#{kata_path(kata)}/#{avatar.name}.git /tmp/#{avatar.name} 2>&1 > /dev/null",
       "cd /tmp/#{avatar.name}/sandbox && #{timeout(command,max_seconds)}"
     ].join(';')
     
     # Using --net=host just to get something working. This is insecure.
-    # TODO: restrict it to just accessing the git server.
+    # TODO: restrict it to just accessing the git server, port 9418
     times_out_run('--net=host', kata.language.image_name, cmds, max_seconds)
   end
 

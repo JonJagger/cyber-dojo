@@ -1,5 +1,5 @@
 
-module TimeNow # mixin
+module TimeNow # mix-in
 
   module_function
 

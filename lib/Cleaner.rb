@@ -1,5 +1,5 @@
 
-module Cleaner # mixin
+module Cleaner # mix-in
 
   module_function
 

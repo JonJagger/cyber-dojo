@@ -1,5 +1,5 @@
 
-module Runner # mixin
+module Runner # mix-in
 
   module_function
 

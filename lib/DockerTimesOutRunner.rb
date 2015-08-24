@@ -1,10 +1,8 @@
 
-# DockerGitCloneRunner/DockerVolumeMountRunner mix-in
-
 require_relative 'Runner'
 require_relative 'Stderr2Stdout'
 
-module DockerTimesOutRunner
+module DockerTimesOutRunner # mix-in
 
   module_function
 

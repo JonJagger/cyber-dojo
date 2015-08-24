@@ -1,5 +1,5 @@
 
-module Stderr2Stdout # mixin
+module Stderr2Stdout # mix-in
 
   module_function
 

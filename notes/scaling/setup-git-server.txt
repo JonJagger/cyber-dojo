@@ -67,6 +67,17 @@ $ ufw enable         TOO OPEN SEE BELOW
 check it
 $ ufw status
 
+Got an abuse-compliant from digital-ocean
+git user on git-server had been cracked. Password was too weak. Fixed.
+How can I generate a random secure password usable inside a bash script?
+There are web sites that generate passwords.
+Used https://strongpasswordgenerator.com/
+Is that in itself safe? How do I know that site is not remembering its passwords?!
+http://www.howtogeek.com/howto/30184/10-ways-to-generate-a-random-password-from-the-command-line/
+Suggested
+< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;
+
+
 Got a port-scanner attack report from digital-ocean
 More learning...
 http://www.techworld.com/security/defending-yourself-against-port-scanners-490/
@@ -133,7 +144,7 @@ This is done from the cyber-dojo server.
 There is an option on git clone to specify the folder you want to clone into.
 Using that in cyber-dojo servers docker run command 
 
-Note: timeout cannot be given 'cd' as its command. See 
+timeout cannot be given 'cd' as its command. See 
 $ info coreutils 'timeout invocation'
 
 One potential issue with having a password-less, ssh-less git-server
@@ -170,6 +181,6 @@ Don' use git-daemon-export-all
 Stick to git-daemon-export-ok per repo.
 This is because on a rails-git shared server I want
 to ensure the repo for cyber-dojo itself is not
-available to clone from the cyber-dojo server! u
+available to clone from the cyber-dojo server!
 
 

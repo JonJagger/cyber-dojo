@@ -113,7 +113,9 @@ class DockerGitCloneRunnerTests < LibTestBase
 
   def exact_docker_run_cmd
     id = @lion.kata.id
+
     repo = "git://#{@runner.git_server_ip}/#{outer(id)}/#{inner(id)}/lion.git"
+
     clone_and_timeout_cmd =
       "git clone #{repo} /tmp/lion 2>&1 > /dev/null;" +
       "cd /tmp/lion/sandbox && timeout --signal=#{kill} #{max_seconds}s #{cyber_dojo_cmd} 2>&1"
@@ -126,6 +128,7 @@ class DockerGitCloneRunnerTests < LibTestBase
           ' --net=host' +
           " #{@lion.kata.language.image_name}" +
           " /bin/bash -c #{quoted(clone_and_timeout_cmd)} 2>&1"
+
     sudoi(docker_run_cmd)
   end
 

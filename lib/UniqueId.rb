@@ -1,5 +1,5 @@
 
-module UniqueId # mixin
+module UniqueId # mix-in
 
   module_function
 
