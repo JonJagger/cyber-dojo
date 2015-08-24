@@ -1,0 +1,12 @@
+
+1. swarm-master node should not itself be part of the swarm.
+   failure on a swarm-node should not be able to bring down whole site
+   
+2. --net=host needs paring down
+
+3. scripts to install new swarm-node...
+   needs to be provided with docker-access-token, region, size
+   needs to use stored cluster-id
+   needs to add new nodes IP address to git-servers iptables for port 9418
+ 
+
