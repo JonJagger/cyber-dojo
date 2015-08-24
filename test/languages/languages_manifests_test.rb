@@ -1,4 +1,5 @@
-#!/usr/bin/env ruby
+#!/bin/sh
+"exec" "../test_wrapper.sh" "languages" "$0"
 
 require_relative 'languages_test_base'
 
@@ -19,14 +20,12 @@ class LanguagesManifestsTests < LanguagesTestBase
     assert required_keys_exist?
     assert !unknown_keys_exist?
     assert !duplicate_visible_filenames?
-    assert !duplicate_support_filenames?
     assert progress_regexs_valid?
     assert display_name_valid?
     assert !filename_extension_starts_with_dot?
     assert cyberdojo_sh_exists?
     assert cyberdojo_sh_has_execute_permission?
     assert all_visible_files_exist?
-    assert all_support_files_exist?
     assert highlight_filenames_are_subset_of_visible_filenames?
     assert colour_method_for_unit_test_framework_output_exists?
     assert !any_files_owner_is_root?
@@ -73,7 +72,6 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   def unknown_keys_exist?
     known = [ 'visible_filenames',
-              'support_filenames',
               'progress_regexs',
               'filename_extension',
               'highlight_filenames',
@@ -153,23 +151,6 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def duplicate_support_filenames?
-    support_filenames.each do |filename|
-      if support_filenames.count(filename) > 1
-        message =
-          alert +
-          " #{manifest_filename}'s 'support_filenames' contains" +
-          " #{filename} more than once"
-        puts message
-        return true
-      end
-    end
-    print '.'
-    false
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   def progress_regexs_valid?
     if progress_regexs.class.name != "Array"
         message =
@@ -234,12 +215,6 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def all_support_files_exist?
-    all_files_exist?(:support_filenames)
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   def all_files_exist?(symbol)
     (manifest[symbol] || [ ]).each do |filename|
       if !File.exists?(language_dir + '/' + filename)
@@ -277,12 +252,11 @@ class LanguagesManifestsTests < LanguagesTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def cyberdojo_sh_exists?
-    filenames = visible_filenames + support_filenames
-    if filenames.select{ |filename| filename == "cyber-dojo.sh" } == [ ]
+    if visible_filenames.select{ |filename| filename == "cyber-dojo.sh" } == [ ]
       message =
         alert +
         "  #{manifest_filename} must contain ['cyber-dojo.sh'] in \n" +
-        "  'visible_filenames' or 'support_filenames'"
+        "  'visible_filenames'"
       puts message
       return false
     end
@@ -329,7 +303,7 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   def any_files_owner_is_root?
     # for HostTestRunner
-    (visible_filenames + support_filenames + ['manifest.json']).each do |filename|
+    (visible_filenames + ['manifest.json']).each do |filename|
       uid = File.stat(language_dir + '/' + filename).uid
       owner = Etc.getpwuid(uid).name
       if owner == 'root'
@@ -348,7 +322,7 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   def any_files_group_is_root?
     # for HostTestRunner
-    (visible_filenames + support_filenames + ['manifest.json']).each do |filename|
+    (visible_filenames + ['manifest.json']).each do |filename|
       gid = File.stat(language_dir + '/' + filename).gid
       owner = Etc.getgrgid(gid).name
       if owner == 'root'
@@ -366,7 +340,7 @@ class LanguagesManifestsTests < LanguagesTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def any_file_is_unreadable?
-    (visible_filenames + support_filenames + ['manifest.json']).each do |filename|
+    (visible_filenames + ['manifest.json']).each do |filename|
       if !File.stat(language_dir + '/' + filename).world_readable?
         message =
           alert +
@@ -430,10 +404,6 @@ private
   end
   
   def visible_filenames
-    manifest_property || [ ]
-  end
-
-  def support_filenames
     manifest_property || [ ]
   end
 

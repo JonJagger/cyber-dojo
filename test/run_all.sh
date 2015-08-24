@@ -8,13 +8,13 @@
 
 # This list is duplicated in test/print_coverage_summary.rb
 modules=( 
-  # app_helpers 
+  app_helpers 
   app_lib 
-  # app_models 
-  # lib 
-  languages
-  # integration 
-  # app_controllers 
+  app_models 
+  lib 
+#  languages
+#  integration 
+#  app_controllers 
 )
 
 echo
