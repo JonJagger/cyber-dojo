@@ -2,6 +2,12 @@
 require_relative 'Runner'
 require_relative 'Stderr2Stdout'
 
+# Assumes:
+#   @bash
+#   @cid_filename
+#   sudoi()
+
+
 module DockerTimesOutRunner # mix-in
 
   module_function

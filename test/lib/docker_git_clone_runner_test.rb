@@ -117,8 +117,10 @@ class DockerGitCloneRunnerTests < LibTestBase
     repo = "git://#{@runner.git_server_ip}/#{outer(id)}/#{inner(id)}/lion.git"
 
     clone_and_timeout_cmd =
-      "git clone #{repo} /tmp/lion 2>&1 > /dev/null;" +
-      "cd /tmp/lion/sandbox && timeout --signal=#{kill} #{max_seconds}s #{cyber_dojo_cmd} 2>&1"
+      [
+        "git clone #{repo} /tmp/lion 2>&1 > /dev/null",
+        "cd /tmp/lion/sandbox && timeout --signal=#{kill} #{max_seconds}s #{cyber_dojo_cmd} 2>&1"
+      ].join(';')
 
     docker_run_cmd =
       "timeout --signal=#{kill} #{max_seconds+5}s" +
