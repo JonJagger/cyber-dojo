@@ -25,29 +25,21 @@ class DockerGitCloneRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'initialize() uses [docker info] run as sudo' do
+  test 'initialize() uses [docker info] run as [sudo -u cyber-dojo]' do
     stub_docker_installed
     make_docker_runner
-    assert @bash.spied[0].start_with?(sudoi('docker info')), 'docker info'
+    assert_equal sudoi('docker info'), @bash.spied[0]
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'runnable?() uses [docker images] run as sudo' do
+  test 'runnable?(language) uses [docker images] run as [sudo -u cyber-dojo]' do
     stub_docker_installed
     docker = make_docker_runner
-    expected_image_names =
-    [
-      "cyberdojo/python-3.3.5_pytest",
-      "cyberdojo/rust-1.0.0_test"
-    ]
-    c_assert = languages['C-assert']
-    python_py_test = languages['Python-py.test']
-
-    stub_docker_images
-    refute docker.runnable?(c_assert), 'c_assert'
-    assert docker.runnable?(python_py_test), 'python_py_test'
-    assert @bash.spied[1].start_with?(sudoi('docker images')), 'docker images'
+    stub_docker_images_python_py_test
+    assert docker.runnable?(languages['Python-py.test']), 'python_py_test'
+    refute docker.runnable?(languages['C-assert']),       'c_assert'
+    assert_equal sudoi('docker images'), @bash.spied[1]
   end
     
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -99,12 +91,12 @@ class DockerGitCloneRunnerTests < LibTestBase
   def assert_bash_commands_spied
     spied = @bash.spied
     # 0 docker info from initialize()
-    assert_equal exact_git_push_cmd,      spied[1], 'git push'
-    assert_equal "rm -f #{cid_filename}", spied[2], 'remove cidfile'
-    assert_equal exact_docker_run_cmd,    spied[3], 'main docker run command'
-    assert_equal "cat #{cid_filename}",   spied[4], 'get pid from cidfile'
-    assert_equal "docker stop #{pid}",    spied[5], 'docker stop pid'
-    assert_equal "docker rm #{pid}",      spied[6], 'docker rm pid'
+    assert_equal exact_git_push_cmd,          spied[1], 'git push'
+    assert_equal "rm -f #{cid_filename}",     spied[2], 'remove cidfile'
+    assert_equal exact_docker_run_cmd,        spied[3], 'main docker run command'
+    assert_equal "cat #{cid_filename}",       spied[4], 'get pid from cidfile'
+    assert_equal sudoi("docker stop #{pid}"), spied[5], 'docker stop pid'
+    assert_equal sudoi("docker rm #{pid}"),   spied[6], 'docker rm pid'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

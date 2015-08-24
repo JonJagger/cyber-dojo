@@ -15,8 +15,8 @@ module DockerTestHelpers # mix-in
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def stub_docker_images
-    @bash.stub(docker_images_output, success)
+  def stub_docker_images_python_py_test
+    @bash.stub(docker_images_python_py_test, success)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -48,12 +48,11 @@ module DockerTestHelpers # mix-in
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def docker_images_output
+  def docker_images_python_py_test
     [
       'REPOSITORY                       TAG     IMAGE ID      CREATED        VIRTUAL SIZE',
       '<none>                           <none>  b7253690a1dd  2 weeks ago    1.266 GB',
       'cyberdojo/python-3.3.5_pytest    latest  d9603e342b22  13 months ago  692.9 MB',
-      'cyberdojo/rust-1.0.0_test        latest  a8e2d9d728dc  2 weeks ago    750.3 MB',
       '<none>                           <none>  0ebf80aa0a8a  2 weeks ago    569.8 MB'
     ].join("\n")
   end

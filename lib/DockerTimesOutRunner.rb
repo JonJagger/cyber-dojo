@@ -3,9 +3,9 @@ require_relative 'Runner'
 require_relative 'Stderr2Stdout'
 
 # Assumes:
-#   @bash
+#   @bash.exec(cmd)
 #   @cid_filename
-#   sudoi()
+#   sudoi(cmd)
 
 
 module DockerTimesOutRunner # mix-in
@@ -20,7 +20,7 @@ module DockerTimesOutRunner # mix-in
   end
 
   def installed?
-    _,exit_status = bash(sudoi('docker info > /dev/null'))
+    _,exit_status = bash(sudoi('docker info'))
     exit_status === 0
   end
 
@@ -52,15 +52,15 @@ module DockerTimesOutRunner # mix-in
       'docker run' +
       ' --user=www-data' +
       " --cidfile=#{quoted(@cid_filename)}" +
-      ' ' + options.strip +
-      ' ' + image_name +
+      " #{options.strip}" +
+      " #{image_name}" +
       " /bin/bash -c #{quoted(cmd)}",
       max_seconds+5)
 
     output,exit_status = bash(sudoi(outer_command))
     pid,_ = bash("cat #{@cid_filename}")
-    bash("docker stop #{pid}")
-    bash("docker rm #{pid}")
+    bash(sudoi("docker stop #{pid}"))
+    bash(sudoi("docker rm #{pid}"))
     exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
   end
 
