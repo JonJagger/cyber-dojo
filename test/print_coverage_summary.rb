@@ -7,7 +7,7 @@ def modules
      'app_lib',
      'app_models',
      'lib',
-#     'languages', 
+     'languages', 
 #     'integration', 
 #     'app_controllers'
    ]

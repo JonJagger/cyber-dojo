@@ -1,4 +1,4 @@
-#!/bin/sh ../test_wrapper.sh
+#!/bin/bash ../test_wrapper.sh
 
 require_relative 'languages_test_base'
 
