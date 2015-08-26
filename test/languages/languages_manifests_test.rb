@@ -1,5 +1,4 @@
-#!/bin/sh
-"exec" "../test_wrapper.sh" "languages" "$0"
+#!/bin/sh ../test_wrapper.sh
 
 require_relative 'languages_test_base'
 

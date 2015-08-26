@@ -26,9 +26,9 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Ok. Something odd here. Ruby (on my mac book) is *not* ignoring
 # the first shebang line in test/*.rb files.
-# So I'm creating a temp file by stripping the two shebang line.
-# Yeuch! This makes the line-number in any diagnostic off by two.
-# I fix that by putting two extra lines at the top of the temp file.
+# So I'm creating a temp file by stripping the first shebang line.
+# Yeuch! This makes the line-number in any diagnostic off by one.
+# I fix that by putting an extra line at the top of the temp file.
 # It also makes the (temp) filename wrong in any diagnostics.
 # If a single test file is being run I base the temp filename on
 # its filename which helps.
@@ -38,10 +38,12 @@ wrapper_test_log='WRAPPER.log.tmp'
 
 echo 'test_wrapper.sh....'
 
-module=$1
+cwd=${PWD##*/}
+module=${cwd/_//}
 echo $module
-if [ "$#" -eq 2 ]; then
-  filename=$2
+
+if [ "$#" -eq 1 ]; then
+  filename=$1
 else
   filename='all_tests'
 fi
@@ -49,12 +51,10 @@ wrapped_filename="$filename.WRAPPED"
 
 GIT_USER_NAME_BEFORE=`git config user.name`
 
-# Add two extra lines 
+# Add an extra line
 echo '' > $wrapped_filename
-echo '' >> $wrapped_filename
 
-shift
-cat ${*} | tail -n +3 >> $wrapped_filename
+cat ${*} | tail -n +2 >> $wrapped_filename
 
 rm -rf ../../coverage/.resultset.json
 ruby $wrapped_filename 2>&1 | tee $wrapper_test_log
