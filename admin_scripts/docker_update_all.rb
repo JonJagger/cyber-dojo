@@ -7,11 +7,17 @@
 #
 # is a (fairly fast) no-op if there is no change to the container.
 
+# This needs to be done before requiring lib_doman so the correct
+# runner class is used.
+ENV['CYBER_DOJO_RUNNER_CLASS_NAME'] ||= 'DockerVolumeMountRunner'
+
 require_relative 'lib_domain'
 
 dojo.languages.each do |language|
-  cmd = "docker pull #{language.image_name}"
-  print cmd + "\n"
-  `#{cmd}`
+  if language.runnable?
+    cmd = "docker pull #{language.image_name}"
+    print cmd + "\n"
+    `#{cmd}`
+  end
 end
 

@@ -10,6 +10,10 @@
 cyberDojoHome=/var/www/cyber-dojo
 cd $cyberDojoHome
 
+# let the use know
+echo "Git commit SHA1 before update is :"
+git rev-parse --verify HEAD
+
 # store the time-stamp of this file before doing git-pull
 MY_TIME_STAMP_BEFORE=`stat -c %y $cyberDojoHome/admin_scripts/pull.sh`
 
