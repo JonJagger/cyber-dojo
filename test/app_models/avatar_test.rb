@@ -1,4 +1,4 @@
-#!/usr/bin/env ../test_wrapper.sh app/models
+#!/bin/bash ../test_wrapper.sh
 
 require_relative 'model_test_base'
 
@@ -103,8 +103,7 @@ class AvatarTests < ModelTestBase
 
   test 'avatar creation saves' +
           ' each visible_file into avatar/sandbox,' +
-          ' and empty avatar/increments.json,' +
-          ' and links each support_filename into avatar/sandbox' do
+          ' and empty avatar/increments.json' do
             
     language = languages['Java-JUnit']    
     exercise = exercises['Fizz_Buzz']
@@ -114,10 +113,6 @@ class AvatarTests < ModelTestBase
     language.visible_files.each do |filename,content|
       assert_equal content, sandbox.dir.read(filename)
     end
-    assert_not_equal 0, language.support_filenames.size
-    #language.support_filenames.each do |support_filename|
-    #  assert sandbox.dir.exists? support_filename
-    #end
     assert_equal [ ], JSON.parse(avatar.dir.read('increments.json'))
   end
 
