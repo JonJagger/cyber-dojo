@@ -1,4 +1,4 @@
-FROM       cyberdojofoundation/gpp-4.8.1
+FROM       cyberdojofoundation/gpp-4.8.4
 MAINTAINER Byran Wills-Heath <byran@adgico.co.uk>
 
 RUN apt-get update
