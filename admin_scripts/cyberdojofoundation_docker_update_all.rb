@@ -7,8 +7,8 @@ end
 def conversion
   [
 # Asm
-    foundation("nasm-2.10.0"),
-    foundation("nasm-2.10.0_assert"),
+    foundation("nasm-2.10.0"                      "nasm-2.10.09"),
+    foundation("nasm-2.10.0_assert",              "nasm-2.10.09_assert"),
 # Bash
     foundation("bash"),
     foundation("bash_shunit2"),
