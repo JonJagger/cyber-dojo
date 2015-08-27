@@ -39,8 +39,8 @@ def conversion
     foundation("coffeescript-1.14.3"),
     foundation("coffeescript-1.14.3_jasmine"),
 # D
-    foundation("d-4.8.1"),
-    foundation("d-4.8.1_unittest"),
+    foundation("d-4.8.1",                         "d-4.8.4"),
+    foundation("d-4.8.1_unittest",                "d-4.8.4_unittest"),
 # Erlang
     foundation("erlang-5.10.2"),
     foundation("erlang-5.10.2_eunit"),
@@ -51,13 +51,13 @@ def conversion
     foundation("fortran-4.8"),
     foundation("fortran-4.8_funit"),
 # g++4.8.1
-    foundation("gpp-4.8.1",                  "gpp-4.8.4"),
-    foundation("gpp-4.8.1_assert",           "gpp-4.8.4_assert"),
-    foundation("gpp-4.8.1_boosttest",        "gpp-4.8.4_boosttest"),
-    foundation("gpp-4.8.1_catch",            "gpp-4.8.4_catch"),
-    foundation("gpp-4.8.1_cpputest",         "gpp-4.8.4_cpputest"),
-    foundation("gpp-4.8.1_googletest",       "gpp-4.8.4_googletest"),
-    foundation("gpp-4.8.1_igloo",            "gpp-4.8.4_igloo"),
+    foundation("gpp-4.8.1",                       "gpp-4.8.4"),
+    foundation("gpp-4.8.1_assert",                "gpp-4.8.4_assert"),
+    foundation("gpp-4.8.1_boosttest",             "gpp-4.8.4_boosttest"),
+    foundation("gpp-4.8.1_catch",                 "gpp-4.8.4_catch"),
+    foundation("gpp-4.8.1_cpputest",              "gpp-4.8.4_cpputest"),
+    foundation("gpp-4.8.1_googletest",            "gpp-4.8.4_googletest"),
+    foundation("gpp-4.8.1_igloo",                 "gpp-4.8.4_igloo"),
 # g++4.9
     foundation("gpp-4.9"),
     foundation("gpp-4.9_googlemock"),
@@ -65,9 +65,9 @@ def conversion
     foundation("go-1.1.2"),
     foundation("go-1.1.2_testing"),
 # Groovy
-    foundation("groovy-2.2.0",               "groovy-2.4.4"),
-    foundation("groovy-2.2.0_spock",         "groovy-2.4.4_spock"),
-    foundation("groovy-2.2.0_junit",         "groovy-2.4.4_junit"),
+    foundation("groovy-2.2.0",                    "groovy-2.4.4"),
+    foundation("groovy-2.2.0_spock",              "groovy-2.4.4_spock"),
+    foundation("groovy-2.2.0_junit",              "groovy-2.4.4_junit"),
 # Haskell
     foundation("haskell-7.6.3"),
     foundation("haskell-7.6.3_hunit"),
@@ -110,8 +110,8 @@ def conversion
     foundation("rust-1.0.0"),
     foundation("rust-1.0.0_test"),
 # Scala
-    foundation("scala-2.9.2",                 "scala-2.11.7"),
-    foundation("scala-2.9.2_scalatest",       "scala-2.11.7_scalatest"),
+    foundation("scala-2.9.2",                      "scala-2.11.7"),
+    foundation("scala-2.9.2_scalatest",            "scala-2.11.7_scalatest"),
 # VisualBasic
     foundation("visual_basic-0.5943"),
     foundation("visual_basic-0.5943_nunit")
