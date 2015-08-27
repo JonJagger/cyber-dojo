@@ -85,8 +85,8 @@ def conversion
     foundation("javascript-0.10.15_jasmine",      "javascript-0.10.25_jasmine"),
     foundation("javascript-mocha",                "javascript-0.10.25_mocha_chai_sinon"),
 # Perl
-    foundation("perl-5.14.2"),
-    foundation("perl-5.14.2_test_simple"),
+    foundation("perl-5.14.2",                     "perl-5.18.2"),
+    foundation("perl-5.14.2_test_simple",         "perl-5.18.2_test_simple"),
 # PHP
     foundation("php-5.5.3",                       "php-5.5.9"),
     foundation("php-5.5.3_phpunit",               "php-5.5.9_phpunit"),
