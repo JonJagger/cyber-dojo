@@ -48,8 +48,8 @@ def conversion
     foundation("fsharp-3.0"),
     foundation("fsharp-3.0_nunit"),
 # Fortran
-    foundation("fortran-4.8"),
-    foundation("fortran-4.8_funit"),
+    foundation("fortran-4.8",                     "fortran-4.8.4"),
+    foundation("fortran-4.8_funit",               "fortran-4.8.4_funit"),
 # g++4.8.1
     foundation("gpp-4.8.1",                       "gpp-4.8.4"),
     foundation("gpp-4.8.1_assert",                "gpp-4.8.4_assert"),
