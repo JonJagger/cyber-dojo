@@ -16,9 +16,6 @@ An alternative is to put ADD commands into the relevant Dockerfiles
 to add supporting files to the created docker container directly.
 This would remove the need for sym-linking
 and also the need for the docker run language volume.
-The support files would be in the sandbox_volume which is read_write.
-They could thus be deleted from cyber-dojo.sh but they would magically
-re-appear in the next test run!
 
 
 Languages that use support_filenames (and hence rely on sym-linking) are
