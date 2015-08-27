@@ -109,13 +109,13 @@ private
       'C++-Igloo'      => 'C++ (g++)-Igloo',
       'C++-GoogleMock' => 'C++ (g++)-GoogleMock',
 
-      # multiple language versions (4.8.1 & 4.9)
-      'C++ (g++)-assert'     => 'g++4.8.1-assert',
-      'C++ (g++)-Boost.Test' => 'g++4.8.1-Boost.Test',
-      'C++ (g++)-Catch'      => 'g++4.8.1-Catch',
-      'C++ (g++)-CppUTest'   => 'g++4.8.1-CppUTest',
-      'C++ (g++)-GoogleTest' => 'g++4.8.1-GoogleTest',
-      'C++ (g++)-Igloo'      => 'g++4.8.1-Igloo',
+      # multiple language versions (4.8.4 & 4.9)
+      'C++ (g++)-assert'     => 'g++4.8.4-assert',
+      'C++ (g++)-Boost.Test' => 'g++4.8.4-Boost.Test',
+      'C++ (g++)-Catch'      => 'g++4.8.4-Catch',
+      'C++ (g++)-CppUTest'   => 'g++4.8.4-CppUTest',
+      'C++ (g++)-GoogleTest' => 'g++4.8.4-GoogleTest',
+      'C++ (g++)-Igloo'      => 'g++4.8.4-Igloo',
       'C++ (g++)-GoogleMock' => 'g++4.9-GoogleMock',
                   
       # multiple language versions (1.9.3 & 2.1.3)
