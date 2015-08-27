@@ -1,4 +1,4 @@
-FROM       cyberdojofoundation/gcc-4.8.1
+FROM       cyberdojofoundation/gcc-4.8.4
 MAINTAINER Byran Wills-Heath <byran@adgico.co.uk>
 
 # Ruby is needed for the script that builds the main function

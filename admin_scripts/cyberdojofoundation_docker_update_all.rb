@@ -29,10 +29,10 @@ def conversion
     foundation("clang-3.6.0_assert"),
     foundation("clang-3.6.0_googletest"),
 # C (gcc)
-    foundation("gcc-4.8.1"),
-    foundation("gcc-4.8.1_assert"),
-    foundation("gcc-4.8.1_cpputest"),
-    foundation("gcc-4.8.1_unity"),
+    foundation("gcc-4.8.1",                       "gcc-4.8.4"),
+    foundation("gcc-4.8.1_assert",                "gcc-4.8.4_assert"),
+    foundation("gcc-4.8.1_cpputest",              "gcc-4.8.4_cpputest"),
+    foundation("gcc-4.8.1_unity",                 "gcc-4.8.4_unity"),
 # Clojure
     foundation("clojure-1.4.0"),
 # CoffeeScript
