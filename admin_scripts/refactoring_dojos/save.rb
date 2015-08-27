@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 
-# run from cyberdojo dir
+# has to be run from cyber-dojo dir
+# cd /var/www/cyber-dojo
+# ./admin_scripts/refactoring_dojos/save.rb
 
 ids = [ ]
 
