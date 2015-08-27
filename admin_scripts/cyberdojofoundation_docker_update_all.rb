@@ -62,8 +62,8 @@ def conversion
     foundation("gpp-4.9"),
     foundation("gpp-4.9_googlemock"),
 # Go
-    foundation("go-1.1.2"),
-    foundation("go-1.1.2_testing"),
+    foundation("go-1.1.2",                        "go-1.2.1"),
+    foundation("go-1.1.2_testing",                "go-1.2.1_testing"),
 # Groovy
     foundation("groovy-2.2.0",                    "groovy-2.4.4"),
     foundation("groovy-2.2.0_spock",              "groovy-2.4.4_spock"),
