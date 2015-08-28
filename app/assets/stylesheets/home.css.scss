@@ -32,14 +32,21 @@
   }
 
   #the-place-to-practice-programming {
-    font-size: 1.35em;
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;    
+    font-size: 1.15em;
     color: lighten($text-color, 5%);
     position: relative;
     top: -32px;
+    margin-right: 2px;
   }
 
   #learn-more-button {
-    font-size: 0.9em;
+    width: 240px;
+    padding-right: 20px;
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    color: $darker-color;    
+    text-align: right;  
+    font-size: 0.87em;
     position: relative;
     top: -25px;
     left: 2px;
@@ -93,11 +100,11 @@
   }
   #create-button, #enter-button, #reenter-button,  #review-button, 
   #charity-button, #donate-button {
+    width: 240px;
+    padding-right: 20px;
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     color: $darker-color;
     @include font-size-largest();
-    width: 240px;
-    padding-right: 20px;
     margin-left: 10px;
     text-align: right;
   }
