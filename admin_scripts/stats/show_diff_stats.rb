@@ -2,7 +2,7 @@
 
 # A ruby script to display stats on light->light transitions.
 
-require_relative 'lib_domain'
+require_relative '../lib_domain'
 
 $stats =
 {

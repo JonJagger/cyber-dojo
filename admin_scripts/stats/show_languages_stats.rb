@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative 'lib_domain'
+require_relative '../lib_domain'
 
 def gather_stats(dojo)
   puts
