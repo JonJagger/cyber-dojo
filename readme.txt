@@ -1,7 +1,7 @@
 
 The main setup is to run on a proper server with apache.
 This currently sets the environment variable CYBER_DOJO_RUNNER_CLASS_NAME 
-to DockerVolumeMountRunner.However, work is underway to migrate away
+to DockerVolumeMountRunner. However, work is underway to migrate away
 from volume-mounting to allow scaling using docker-swarm. This will
 set the environment variable CYBER_DOJO_RUNNER_CLASS_NAME to DockerGitCloneRunner
 
