@@ -52,9 +52,7 @@ private
       content = clean(content)
       # Cater for windows line endings from windows browser
       content = content.gsub(/\r\n/, "\n")
-      # Cater for jquery-tabby.js plugin
-      # See app/lib/MakefileFilter.rb
-      seen[filename] = MakefileFilter.filter(filename, content)
+      seen[filename] = content
     end
     seen
   end

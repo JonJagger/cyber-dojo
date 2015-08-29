@@ -1,5 +1,7 @@
 
-module OutputColour
+module OutputColour # mix-in
+
+  module_function
 
   #  'red'   - the tests ran but at least one failed
   #  'amber' - the tests could not be run (eg syntax error)

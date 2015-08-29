@@ -1,5 +1,7 @@
 
-module PrevNextRing
+module PrevNextRing # mix-in
+
+  module_function
 
   def prev_ring(array,current)
     return '' if array.length === 1

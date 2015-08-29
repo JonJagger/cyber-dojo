@@ -88,13 +88,6 @@ class Language
     OutputColour.of(unit_test_framework, output)
   end
 
-  def after_test(dir, visible_files)
-    if name.include?('Approval')
-      add_created_txt_files(dir, visible_files)
-      remove_deleted_txt_files(dir, visible_files)
-    end
-  end
-
 private
 
   include ManifestProperty

@@ -153,6 +153,59 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'save() saves changed makefile with leading spaces converted to tabs' do
+    kata = make_kata
+    avatar = kata.start_avatar
+    filenames = avatar.visible_files.keys
+    assert filenames.include? 'makefile'
+    visible_files = { 'makefile' => makefile_with_leading_spaces }
+    delta = {
+      :changed => [ 'makefile' ],
+      :unchanged => [ ],
+      :deleted => [ ],
+      :new => [ ],
+    }
+    runner.stub_output('hello')
+    avatar.test(delta, visible_files)
+    assert_equal makefile_with_leading_tab, avatar.sandbox.dir.read('makefile')
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'save() saves new makefile with leading spaces converted to tabs' do
+    kata = make_kata
+    avatar = kata.start_avatar
+    filenames = avatar.visible_files.keys
+    assert filenames.include? 'makefile'
+
+    # makefile can be deleted, not readonly
+    visible_files = { }
+    delta = {
+      :changed => [ ],
+      :unchanged => [ ],
+      :deleted => [ 'makefile' ],
+      :new => [ ],
+    }
+    runner.stub_output('hello')
+    avatar.test(delta, visible_files)
+
+    filenames = avatar.visible_files.keys
+    refute filenames.include? 'makefile'
+
+    visible_files = { 'makefile' => makefile_with_leading_spaces }
+    delta = {
+      :changed => [ ],
+      :unchanged => [ ],
+      :deleted => [ ],
+      :new => [ 'makefile' ],
+    }
+    runner.stub_output('hello')
+    avatar.test(delta, visible_files)
+    assert_equal makefile_with_leading_tab, avatar.sandbox.dir.read('makefile')
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'save():delta[:changed] files are saved' do
     kata = make_kata
     language = kata.language
@@ -325,6 +378,28 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - -
 
+  def makefile_with_leading_spaces
+    space = ' '
+    [
+      "CFLAGS += -I. -Wall -Wextra -Werror -std=c11",
+      "test: makefile $(C_FILES) $(COMPILED_H_FILES)",
+      space + space + "@gcc $(CFLAGS) $(C_FILES) -o $@"
+    ].join("\n")
+  end
+
+  #- - - - - - - - - - - - - - - - - - -
+
+  def makefile_with_leading_tab
+    tab = "\t"
+    [
+      "CFLAGS += -I. -Wall -Wextra -Werror -std=c11",
+      "test: makefile $(C_FILES) $(COMPILED_H_FILES)",
+      tab + "@gcc $(CFLAGS) $(C_FILES) -o $@"
+    ].join("\n")
+  end
+
+  #- - - - - - - - - - - - - - - - - - -
+
   def fake_three_tests(avatar)
     incs =
     [
@@ -346,194 +421,8 @@ class AvatarTests < ModelTestBase
     ]
     avatar.dir.write('increments.json', incs)
   end
-  
+
   #- - - - - - - - - - - - - - - - - - -
-  #- - - - - - - - - - - - - - - - - - -
-  #- - - - - - - - - - - - - - - - - - -
-
-=begin
-  test 'visible_files' do
-    kata = make_kata
-    visible_files = kata.start_avatar(['lion']).visible_files
-    assert visible_files['wibble.hpp'].start_with?('#include <iostream>')
-    assert visible_files['wibble.cpp'].start_with?('#include "wibble.hpp"')
-    assert visible_files['instructions'].start_with?('Note: The initial code')
-    assert_equal '', visible_files['output']
-  end
-=end
-  
-    #- - - - - - - - - - - - - - - - - - - - - - - - -
-
-=begin
-  test "avatar (json) creation sets up initial git repo of visible files " +
-        "but support_files are not in git repo" do
-    @dojo = Dojo.new('spied/','json')
-    @kata = @dojo[@id]
-    visible_files = {
-      'name' => 'content for name'
-    }
-    language = @dojo.language('C')
-    manifest = {
-      :id => @id,
-      :visible_files => visible_files,
-      :language => language.name
-    }
-    kata_manifest_spy_read(manifest)
-    language.dir.spy_read('manifest.json', JSON.unparse({ }))
-    kata = @dojo.create_kata(manifest)
-    avatar = kata.start_avatar
-
-    git_log = @git.log[avatar.path]
-    assert_equal [ 'init', '--quiet'], git_log[0]
-    add1_index = git_log.index([ 'add', 'increments.json' ])
-    assert_not_nil add1_index
-    add2_index = git_log.index([ 'add', 'manifest.json'])
-    assert_not_nil add2_index
-    commit1_index = git_log.index([ 'commit', "-a -m '0' --quiet" ])
-    assert_not_nil commit1_index
-    commit2_index = git_log.index([ 'commit', "-m '0' 0 HEAD" ])
-    assert_not_nil commit2_index
-
-    assert add1_index < commit1_index
-    assert add1_index < commit2_index
-    assert add2_index < commit1_index
-    assert add2_index < commit2_index
-
-    assert_equal [
-      [ 'add', 'name']
-    ], @git.log[avatar.sandbox.path], @git.log.inspect
-
-    assert avatar.dir.log.include?([ 'write', 'manifest.json', JSON.unparse(visible_files)]), avatar.dir.log.inspect
-    assert avatar.dir.log.include?([ 'write', 'increments.json', JSON.unparse([ ])]), avatar.dir.log.inspect
-    assert kata.dir.log.include?([ 'write','manifest.json', JSON.unparse(manifest)]), kata.dir.log.inspect
-    assert kata.dir.log.include?([ 'read','manifest.json', JSON.unparse(manifest)]), kata.dir.log.inspect
-  end
-=end
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-=begin
-  test "avatar's tag 0 repo contains an empty output file only when kata-manifest does" do
-    @dojo = Dojo.new('spied/','json')
-    @kata = @dojo[@id]
-    visible_files = {
-      'name' => 'content for name',
-      'output' => ''
-    }
-    language = @dojo.language('C')
-    manifest = {
-      :id => @id,
-      :visible_files => visible_files,
-      :language => language.name
-    }
-    kata_manifest_spy_read(manifest)
-    language.dir.spy_read('manifest.json', JSON.unparse({ }))
-    kata = @dojo.create_kata(manifest)
-    avatar = kata.start_avatar
-    visible_files = avatar.visible_files
-    assert visible_files.keys.include?('output'),
-          "visible_files.keys.include?('output')"
-    assert_equal "", visible_files['output']
-  end
-=end
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-=begin
-  test "after first test() traffic_lights contains one traffic-light " +
-        "which does not contain output" do
-    @dojo = Dojo.new('spied/', 'json')
-    @kata = @dojo[@id]
-    visible_files = {
-      'untitled.c' => 'content for visible file',
-      'cyber-dojo.sh' => 'make',
-    }
-    language = @dojo.language('C')
-    manifest = {
-      :id => @id,
-      :visible_files => visible_files,
-      :language => language.name
-    }
-    kata_manifest_spy_read(manifest)
-    kata = @dojo.create_kata(manifest)
-    language.dir.spy_read('manifest.json', JSON.unparse({
-        "visible_files" => visible_files,
-        "unit_test_framework" => "cassert"
-      }))
-    avatar = @kata.start_avatar
-    avatar.sandbox.dir.spy_write('untitled.c', 'content for visible file')
-    avatar.sandbox.dir.spy_write('cyber-dojo.sh', 'make')
-    delta = {
-      :changed => [ 'untitled.c' ],
-      :unchanged => [ 'cyber-dojo.sh' ],
-      :deleted => [ 'wibble.cs' ],
-      :new => [ ]
-    }
-    avatar.sandbox.write(delta, avatar.visible_files)
-    output = avatar.sandbox.test(timeout=15)
-    visible_files['output'] = output
-    avatar.save_manifest(visible_files)
-
-    traffic_light = OutputParser::parse(@kata.language.unit_test_framework, output)
-    traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
-    assert_equal 1, traffic_lights.length
-    assert_nil traffic_lights.last[:run_tests_output]
-    assert_nil traffic_lights.last[:output]
-  end
-=end
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-=begin
-  test "one more traffic light each test() call" do
-    @dojo = Dojo.new('spied/', 'json')
-    @kata = @dojo[@id]
-    language = @dojo.language('C')
-    manifest = {
-      :id => @id,
-      :language => language.name,
-      :visible_files => [ ]
-    }
-    kata_manifest_spy_read(manifest)
-    @kata = @dojo.create_kata(manifest)
-    language.dir.spy_read('manifest.json', JSON.unparse({
-        "visible_files" => [ ],
-        "unit_test_framework" => "cassert"
-      }))
-    avatar = @kata.start_avatar
-    output = 'stubbed'
-    traffic_light = OutputParser::parse('cassert', output)
-    traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
-    assert_equal 1, traffic_lights.length
-    traffic_light = OutputParser::parse('cassert', output)
-    traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
-    assert_equal 2, traffic_lights.length
-  end
-=end
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-=begin
-  test "locked_read with tag" do
-    @dojo = Dojo.new('spied/', 'json')
-    @kata = @dojo[@id]
-    avatar = @kata['lion']
-    output = avatar.visible_files(tag=4)
-    assert @git.log[avatar.path].include?(
-      [
-       'show',
-       '4:manifest.rb'
-      ])
-  end
-=end
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-=begin
-  def kata_manifest_spy_read(manifest)
-    @paas.dir(@kata).spy_read('manifest.json', JSON.unparse(manifest))
-  end
-=end
 
   def git_log_include?(path,find)
     git.log[path].any?{|entry| entry == find}    
