@@ -25,19 +25,9 @@ class Sandbox
   end
   
   def save_files(delta, files)
-    delta[:deleted].each do |filename|
-      git.rm(path,filename)
-    end
-
-    delta[:new].each do |filename|
-      content = filter(filename, files[filename])
-      git_add(filename, content)
-    end
-
-    delta[:changed].each do |filename|
-      content = filter(filename, files[filename])
-      write(filename, content)
-    end
+    delta[:deleted].each { |filename| git.rm(path,filename) }
+    delta[:new    ].each { |filename| git_add(filename, filter(filename, files[filename])) }
+    delta[:changed].each { |filename|   write(filename, filter(filename, files[filename])) }
   end
 
   def run_tests(files, time_limit)
@@ -52,7 +42,7 @@ private
   def filter(filename, content)
     # Cater for app/assets/javascripts/jquery-tabby.js plugin
     # See app/lib/MakefileFilter.rb 
-    content = MakefileFilter.filter(filename, content)
+    MakefileFilter.filter(filename, content)
   end
 
   def git_add(filename, content)
