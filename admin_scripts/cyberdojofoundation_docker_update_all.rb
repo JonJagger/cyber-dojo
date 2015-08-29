@@ -107,8 +107,8 @@ def conversion
     foundation("ruby-2.1.3"),
     foundation("ruby-2.1.3_mini_test"),
 # Rust
-    foundation("rust-1.0.0"),
-    foundation("rust-1.0.0_test"),
+    foundation("rust-1.0.0",                       "rust-1.2.0"),
+    foundation("rust-1.0.0_test",                  "rust-1.2.0_test"),
 # Scala
     foundation("scala-2.9.2",                      "scala-2.11.7"),
     foundation("scala-2.9.2_scalatest",            "scala-2.11.7_scalatest"),
