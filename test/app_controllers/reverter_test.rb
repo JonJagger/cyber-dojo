@@ -50,24 +50,44 @@ end
 
 # ===============================================================
 
+class RunnerStubAdapter
+
+  def method_missing(sym, *args, &block)
+    @@runner ||= RunnerStub.new
+    @@runner.send(sym, *args, &block)
+  end
+
+  def self.reset
+    @@runner = nil
+  end
+
+end
+
+# ===============================================================
+
 class ReverterControllerTest  < ControllerTestBase
 
   test 'revert' do
-    @id = create_kata
+    set_runner_class_name('RunnerStubAdapter')
+    @id = create_kata('Java, JUnit')
     enter
     avatar = katas[@id].avatars[@avatar_name]
     kata_edit
 
-    filename = 'cyber-dojo.sh'
+    filename = 'Hiker.java'
+    assert avatar.visible_files.keys.include?(filename)
+    # 1
     hash_maker = HashMaker.new(avatar)
     hash_maker.change_file(filename, old_content='echo abc')
-    kata_run_tests hash_maker.params  #1
+    runner.stub_output('dummy')
+    kata_run_tests hash_maker.params
     assert_response :success
     assert_equal old_content,avatar.visible_files[filename]
-
+    # 2
     hash_maker = HashMaker.new(avatar)
     hash_maker.change_file(filename, new_content='something different')
-    kata_run_tests hash_maker.params #2
+    runner.stub_output('dummy')
+    kata_run_tests hash_maker.params
     assert_response :success
     assert_equal new_content,avatar.visible_files[filename]
 

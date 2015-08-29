@@ -59,6 +59,9 @@ class Avatar
     sandbox.save_files(delta,files)
     output = sandbox.run_tests(files, time_limit)
     colour = kata.language.colour(output)
+    output = kata.language.after_test(output,files)
+    sandbox.dir.write('output', output) # so output is committed
+    files['output'] = output
     rags = increments
     tag = rags.length + 1
     rag = { 'colour' => colour, 'time' => now, 'number' => tag }

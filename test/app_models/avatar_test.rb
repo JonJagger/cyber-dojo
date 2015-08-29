@@ -103,9 +103,7 @@ class AvatarTests < ModelTestBase
 
   test 'avatar creation saves' +
           ' each visible_file into avatar/sandbox,' +
-          ' and empty avatar/increments.json,' +
-          ' and links each support_filename into avatar/sandbox' do
-            
+          ' and empty avatar/increments.json' do
     language = languages['Java-JUnit']    
     exercise = exercises['Fizz_Buzz']
     kata = katas.create_kata(language, exercise)
@@ -114,10 +112,6 @@ class AvatarTests < ModelTestBase
     language.visible_files.each do |filename,content|
       assert_equal content, sandbox.dir.read(filename)
     end
-    assert_not_equal 0, language.support_filenames.size
-    #language.support_filenames.each do |support_filename|
-    #  assert sandbox.dir.exists? support_filename
-    #end
     assert_equal [ ], JSON.parse(avatar.dir.read('increments.json'))
   end
 
@@ -134,7 +128,7 @@ class AvatarTests < ModelTestBase
     visible_files = {
       code_filename => 'content for code file',
       test_filename => kata.language.visible_files[test_filename],
-      'cyber-dojo.sh' => 'make'
+      'cyber-dojo.sh' => kata.language.visible_files['cyber-dojo.sh']
     }
     delta = {
       :changed => [ code_filename ],
@@ -142,71 +136,208 @@ class AvatarTests < ModelTestBase
       :deleted => [ ],
       :new => [ ]
     }
-    runner.stub_output('hello')
+    runner.stub_output('helloWorld')
     assert !visible_files.keys.include?('output')    
-    avatar.test(delta, visible_files)
+    _,output = avatar.test(delta, visible_files)
     assert visible_files.keys.include?('output')
-    output = visible_files['output']
-    assert_equal 'hello', output
-    assert_equal output, avatar.sandbox.dir.read('output')
+
+    assert_equal 'helloWorld', output
+    assert_equal 'helloWorld', visible_files['output']
+    assert_equal 'helloWorld', avatar.sandbox.dir.read('output')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'save() saves changed makefile with leading spaces converted to tabs' do
+  #TODO: if cyber-dojo.sh first line starts with a # (shebang) it should be left alone?
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'test() on master cyber-dojo.sh results in standard output' +
+       ' with no ALERT, and no modification to any cyber-dojo.sh' do
+    kata = make_kata(unique_id, 'Java-JUnit')
+    avatar = kata.start_avatar
+    cyber_dojo_sh = 'cyber-dojo.sh'
+    visible_files = avatar.visible_files
+    master = visible_files[cyber_dojo_sh]
+    delta = {
+      :changed => [ ],
+      :unchanged => [ ],
+      :deleted => [ ],
+      :new => [ ],
+    }
+    radiohead = 'no alarms and no surprises'
+    runner.stub_output(radiohead)
+    _,output = avatar.test(delta, visible_files)
+    assert_equal radiohead, output
+    assert_equal radiohead, visible_files['output']
+    assert_equal radiohead, avatar.visible_files['output']
+    assert_equal radiohead, avatar.sandbox.dir.read('output')
+    assert_equal master, visible_files[cyber_dojo_sh]
+    assert_equal master, avatar.visible_files[cyber_dojo_sh]
+    assert_equal master, avatar.sandbox.dir.read(cyber_dojo_sh)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'test() on commented master cyber-dojo.sh results in standard output' +
+       ' with no ALERT, and no modification to any cyber-dojo.sh' do
+    kata = make_kata(unique_id, 'Java-JUnit')
+    avatar = kata.start_avatar
+    cyber_dojo_sh = 'cyber-dojo.sh'
+    visible_files = avatar.visible_files
+    master = visible_files[cyber_dojo_sh]
+    visible_files[cyber_dojo_sh] = commented(master)
+    delta = {
+      :changed => [ cyber_dojo_sh ],
+      :unchanged => [ ],
+      :deleted => [ ],
+      :new => [ ],
+    }
+    radiohead = 'no alarms and no surprises'
+    runner.stub_output(radiohead)
+    _,output = avatar.test(delta, visible_files)
+    assert_equal radiohead, output
+    assert_equal radiohead, visible_files['output']
+    assert_equal radiohead, avatar.visible_files['output']
+    assert_equal radiohead, avatar.sandbox.dir.read('output')
+    assert_equal commented(master), visible_files[cyber_dojo_sh]
+    assert_equal commented(master), avatar.visible_files[cyber_dojo_sh]
+    assert_equal commented(master), avatar.sandbox.dir.read(cyber_dojo_sh)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'test() sees changed cyber-dojo.sh file and appends' +
+       ' commented master version to browsers version of cyber-dojo,sh,' +
+       ' and prepends an alert to the output. ' +
+       ' It saves the original cyber-dojo.sh to the sandbox not the' +
+       ' version with the appended commented master. And it does all' +
+       ' this only *once*' do
+    kata = make_kata(unique_id, 'Java-JUnit')
+    avatar = kata.start_avatar
+    cyber_dojo_sh = 'cyber-dojo.sh'
+    master = avatar.visible_files[cyber_dojo_sh]
+    assert master.split.size > 1
+    first_content = "hello\nworld"
+    visible_files = { cyber_dojo_sh => first_content }
+    delta = {
+      :changed => [ cyber_dojo_sh ],
+      :unchanged => [ ],
+      :deleted => [ ],
+      :new => [ ],
+    }
+    radiohead = 'no alarms and no surprises'
+    runner.stub_output(radiohead)
+
+    _,output = avatar.test(delta, visible_files)
+
+    expected_output = 
+      [
+        'ALERT: your cyber-dojo.sh differs from the master cyber-dojo.sh.',
+        'ALERT:  - the master has been appended (in comments) to your cyber-dojo.sh.',
+        'ALERT:  - please examine cyber-dojo.sh carefully',
+        '',
+        radiohead
+      ].join("\n")
+    assert_equal expected_output,output
+
+    expected_saved_cyber_dojo_sh = first_content
+    actual_saved_cyber_dojo_sh = avatar.sandbox.dir.read('cyber-dojo.sh')
+    assert_equal expected_saved_cyber_dojo_sh, actual_saved_cyber_dojo_sh
+
+    appended_commented_master = first_content + "\n\n" + commented(master)
+    expected_returned_cyber_dojo_sh = appended_commented_master
+    actual_returned_cyber_dojo_sh = visible_files[cyber_dojo_sh]
+    assert_equal expected_returned_cyber_dojo_sh, actual_returned_cyber_dojo_sh
+
+    # --- only once ---
+
+    second_content = appended_commented_master
+    visible_files = { cyber_dojo_sh => second_content }
+    delta = {
+      :changed => [ cyber_dojo_sh ],
+      :unchanged => [ ],
+      :deleted => [ ],
+      :new => [ ],
+    }
+    runner.stub_output(radiohead)
+    _,output = avatar.test(delta, visible_files)
+
+    assert_equal radiohead,output, 'no ALERT prefixes this time'
+
+    expected_saved_cyber_dojo_sh = appended_commented_master
+    actual_saved_cyber_dojo_sh = avatar.sandbox.dir.read('cyber-dojo.sh')
+    assert_equal expected_saved_cyber_dojo_sh, actual_saved_cyber_dojo_sh
+
+    expected_returned_cyber_dojo_sh = appended_commented_master
+    actual_returned_cyber_dojo_sh = visible_files[cyber_dojo_sh]
+    assert_equal expected_returned_cyber_dojo_sh, actual_returned_cyber_dojo_sh
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'test() saves changed makefile with leading spaces converted to tabs' +
+       ' and these changes are made to the visible_files parameter too' +
+       ' so they also occur in the manifest file' do
     kata = make_kata
     avatar = kata.start_avatar
-    filenames = avatar.visible_files.keys
-    assert filenames.include? 'makefile'
-    visible_files = { 'makefile' => makefile_with_leading_spaces }
+    filenames = avatar.visible_files
+    makefile = 'makefile'
+    assert filenames.include? makefile
+    visible_files = { makefile => makefile_with_leading_spaces }
     delta = {
-      :changed => [ 'makefile' ],
+      :changed => [ makefile ],
       :unchanged => [ ],
       :deleted => [ ],
       :new => [ ],
     }
     runner.stub_output('hello')
     avatar.test(delta, visible_files)
-    assert_equal makefile_with_leading_tab, avatar.sandbox.dir.read('makefile')
+    assert_equal makefile_with_leading_tab, avatar.sandbox.dir.read(makefile)
+    assert_equal makefile_with_leading_tab, visible_files[makefile]
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'save() saves new makefile with leading spaces converted to tabs' do
+  test 'test() saves *new* makefile with leading spaces converted to tabs' +
+       ' and these changes are made to the visible_files parameter too' +
+       ' so they also occur in the manifest file' do
     kata = make_kata
     avatar = kata.start_avatar
     filenames = avatar.visible_files.keys
-    assert filenames.include? 'makefile'
+    makefile = 'makefile'
+    assert filenames.include? makefile
 
     # makefile can be deleted, not readonly
     visible_files = { }
     delta = {
       :changed => [ ],
       :unchanged => [ ],
-      :deleted => [ 'makefile' ],
+      :deleted => [ makefile ],
       :new => [ ],
     }
     runner.stub_output('hello')
     avatar.test(delta, visible_files)
 
     filenames = avatar.visible_files.keys
-    refute filenames.include? 'makefile'
+    refute filenames.include? makefile
 
-    visible_files = { 'makefile' => makefile_with_leading_spaces }
+    visible_files = { makefile => makefile_with_leading_spaces }
     delta = {
       :changed => [ ],
       :unchanged => [ ],
       :deleted => [ ],
-      :new => [ 'makefile' ],
+      :new => [ makefile ],
     }
     runner.stub_output('hello')
     avatar.test(delta, visible_files)
-    assert_equal makefile_with_leading_tab, avatar.sandbox.dir.read('makefile')
+    assert_equal makefile_with_leading_tab, avatar.sandbox.dir.read(makefile)
+    assert_equal makefile_with_leading_tab, visible_files[makefile]
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'save():delta[:changed] files are saved' do
+  test 'test():delta[:changed] files are saved' do
     kata = make_kata
     language = kata.language
     avatar = kata.start_avatar
@@ -239,7 +370,7 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'save():delta[:unchanged] files are not saved' do
+  test 'test():delta[:unchanged] files are not saved' do
     kata = make_kata
     language = kata.language  
     avatar = kata.start_avatar
@@ -268,7 +399,7 @@ class AvatarTests < ModelTestBase
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'save():delta[:new] files are saved and git added' do
+  test 'test():delta[:new] files are saved and git added' do
     kata = make_kata
     avatar = kata.start_avatar
     language = kata.language
@@ -301,7 +432,7 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "save():delta[:deleted] files are git rm'd" do
+  test "test():delta[:deleted] files are git rm'd" do
     kata = make_kata
     avatar = kata.start_avatar
     visible_files = {
@@ -427,5 +558,11 @@ class AvatarTests < ModelTestBase
   def git_log_include?(path,find)
     git.log[path].any?{|entry| entry == find}    
   end  
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def commented(lines)
+    lines.split("\n").map{ |line| '# ' + line }.join("\n")
+  end
 
 end

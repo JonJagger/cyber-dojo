@@ -23,7 +23,7 @@ class KataController < ApplicationController
     now = time_now
     time_limit = 15
     @traffic_lights,@output = @avatar.test(delta, visible_files, now, time_limit)
-      
+    @cyber_dojo_sh = visible_files['cyber-dojo.sh']
     tag = @traffic_lights.length
     diffed_files = avatar.diff(tag-1,tag)
     hash = {

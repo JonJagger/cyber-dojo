@@ -94,9 +94,33 @@ class Language
     MakefileFilter.filter(filename, content)
   end
 
+  def after_test(output,files)
+    content = files['cyber-dojo.sh']
+    #TODO: !content.nil? is because test/app_model/avatar_tests.rb are poor
+    #      and have interactions with no cyber-dojo.sh file
+    if !content.nil? && !content.include?(cyber_dojo_sh) && !content.include?(commented_cyber_dojo_sh)
+      separator = "\n\n"
+      output = [
+        'ALERT: your cyber-dojo.sh differs from the master cyber-dojo.sh.',
+        'ALERT:  - the master has been appended (in comments) to your cyber-dojo.sh.',
+        'ALERT:  - please examine cyber-dojo.sh carefully'
+      ].join("\n") + separator + output
+      files['cyber-dojo.sh'] = content.rstrip + separator + commented_cyber_dojo_sh
+    end
+    output
+  end
+
 private
 
   include ManifestProperty
+
+  def cyber_dojo_sh
+    visible_files['cyber-dojo.sh']
+  end
+
+  def commented_cyber_dojo_sh
+    cyber_dojo_sh.split("\n").map{|line| '# ' + line}.join("\n")
+  end
 
   def manifest
     begin

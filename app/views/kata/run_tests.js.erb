@@ -4,3 +4,9 @@ $("#traffic-lights")
 
 $("#output")
   .html("<%= js_partial('output') %>");
+
+cyber_dojo_sh = document.getElementById('cyber-dojo.sh_div');
+cyber_dojo_sh.parentNode.removeChild(cyber_dojo_sh);
+
+$("#visible-files-container")
+  .append("<%= js_partial('cyber_dojo_sh') %>");
