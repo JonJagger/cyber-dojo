@@ -88,6 +88,12 @@ class Language
     OutputColour.of(unit_test_framework, output)
   end
 
+  def filter(filename,content)
+    # Cater for app/assets/javascripts/jquery-tabby.js plugin
+    # See app/lib/MakefileFilter.rb 
+    MakefileFilter.filter(filename, content)
+  end
+
 private
 
   include ManifestProperty
@@ -109,22 +115,6 @@ private
 
   def read(filename)
     dir.read(filename)
-  end
-
-  def add_created_txt_files(dir, visible_files)
-    txt_files = dir.each_file.select do |entry|
-      entry.end_with?('.txt')
-    end
-    txt_files.each do |filename|
-      visible_files[filename] = dir.read(filename)
-    end
-  end
-
-  def remove_deleted_txt_files(dir, visible_files)
-    all_files = dir.each_file.entries
-    visible_files.delete_if do |filename, value|
-      filename.end_with?('.txt') && !all_files.include?(filename)
-    end
   end
 
 end

@@ -36,11 +36,10 @@ class Avatar
   end
 
   def active?
-    # o) Players sometimes start an extra avatar solely to read the
-    #    instructions. I don't want these avatars appearing on the
-    #    dashboard.
-    # o) When forking a new kata you can enter as one animal
-    #    to sanity check it is ok (but not press [test])
+    # Players sometimes start an extra avatar solely to read the 
+    # instructions. I don't want these avatars appearing on the dashboard.
+    # When forking a new kata you can enter as one animal to sanity check
+    # it is ok (but not press [test])
     exists? && lights.count > 0
   end
 
@@ -53,8 +52,6 @@ class Avatar
   end
 
   def visible_files
-    # Equivalent to tags[-1].visible_files but
-    # faking files is easier than faking git.
     JSON.parse(read(manifest_filename))
   end
 
@@ -133,12 +130,13 @@ private
   end
   
   def manifest_filename
+    # Stores cache of visible files - filenames and contents.
     'manifest.json'
   end
     
   def increments_filename
-    # stores cache of key-info for each git commit tag
-    # helps optimize the dashboard
+    # Stores cache of key info for each [test]'s git commit tag.
+    # Helps optimize the review dashboard.
     'increments.json'
   end
 

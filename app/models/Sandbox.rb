@@ -40,9 +40,7 @@ class Sandbox
 private
 
   def filter(filename, content)
-    # Cater for app/assets/javascripts/jquery-tabby.js plugin
-    # See app/lib/MakefileFilter.rb 
-    MakefileFilter.filter(filename, content)
+    avatar.kata.language.filter(filename,content)
   end
 
   def git_add(filename, content)
