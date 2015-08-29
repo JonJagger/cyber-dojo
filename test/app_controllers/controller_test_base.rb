@@ -15,7 +15,8 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   
   def setup
     super
-    set_katas_root('/var/www/cyber-dojo/tmp/katas')    
+    root = File.expand_path('../..', File.dirname(__FILE__)) 
+    set_katas_root(root + '/tmp/katas')
     set_one_self_class_name('OneSelfDummy')
   end
   

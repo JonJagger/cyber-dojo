@@ -15,7 +15,7 @@ class HostDiskTests < LibTestBase
   end
   
   def path
-    File.expand_path('../..', File.dirname(__FILE__)) + '/temp/'
+    File.expand_path('../..', File.dirname(__FILE__)) + '/tmp/'
   end
   
   def dir
