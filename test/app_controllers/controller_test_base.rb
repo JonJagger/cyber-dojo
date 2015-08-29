@@ -15,6 +15,7 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   
   def setup
     super
+    set_katas_root('/var/www/cyber-dojo/tmp/katas')    
     set_one_self_class_name('OneSelfDummy')
   end
   
