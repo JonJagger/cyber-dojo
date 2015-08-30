@@ -135,18 +135,22 @@ end
 def update_images
   images = installed_images
   images.each do |image|
-    update_to = image
     print image
+
     update_to = find_latest_image_name(image)
+
     if image != update_to
       print " -> #{update_to}"
     end
+
     output = `docker pull #{update_to} 2>&1`
+
     if $?.exitstatus == 0
       print " - OK"
     else
       print " - FAILED"
     end
+
     print "\n"
   end
 end
@@ -156,8 +160,19 @@ def remove_old_images
   images.each do |image|
     index = conversion.find_index{|p| p[0]===image}
     if index != nil
-      print "Removing " + image + "\n"
-    end
+      print "Removing " + image
+
+      output = `docker rmi #{image} 2>&1`
+
+      if $?.exitstatus == 0
+        print " - OK"
+      else
+        print " - FAILED"
+      end
+
+      print "\n"
+
+     end
   end
 end
 
@@ -170,11 +185,12 @@ if ($0 == __FILE__)
   puts "Pulling latest images"
   console_break
   update_images
+
+  if (ARGV[0] === "clean")
+    console_break
+    puts "Removing old images"
+    console_break
+    remove_old_images
+  end
 end
 
-if (ARGV[0] === "clean")
-  console_break
-  puts "Removing old images"
-  console_break
-  remove_old_images
-end
