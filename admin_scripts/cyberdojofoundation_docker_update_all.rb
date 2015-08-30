@@ -124,15 +124,28 @@ def installed_images
   lines.collect{|line| line.split[0]}.sort
 end
 
+def find_latest_image_name(image)
+  index = conversion.find_index{|p| p[0]===image}
+  if index != nil
+    image = find_latest_image_name(conversion[index][1])
+  end
+  image
+end
+
 def update_images
   images = installed_images
   images.each do |image|
     update_to = image
     print image
-    index = conversion.find_index{|p| p[0]===image}
-    if index != nil
-      update_to = conversion[index][1]
+    update_to = find_latest_image_name(image)
+    if image != update_to
       print " -> #{update_to}"
+    end
+    output = `docker pull #{update_to} 2>&1`
+    if $?.exitstatus == 0
+      print " - OK"
+    else
+      print " - FAILED"
     end
     print "\n"
   end
