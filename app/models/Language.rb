@@ -94,13 +94,13 @@ class Language
     MakefileFilter.filter(filename, content)
   end
 
-  def updates(output,files)
+  def update_cyber_dojo_sh(files)
     # The base docker containers were refactored to avoid voume-mounting
     # as part of the docker-swarm re-architect work. The support_files
     # were moved *inside* their docker containers by ADD'ing them to the
-    # appropriate Dockerfile. This sometimes resulting in a change to
+    # appropriate Dockerfile. This usually requires in a change to
     # the cyber-dojo.sh file. This is no problem for dojos started after
-    # the re-architecture but it is for forking/reverting in a dojo
+    # the re-architecture but it is for test/fork/revert in a dojo
     # started *before* the re-architecture.
     #
     # To help in this situation the new master cyber-dojo.sh is appended
@@ -126,21 +126,12 @@ class Language
     content = files['cyber-dojo.sh']
     #TODO: !content.nil? is because test/app_model/avatar_tests.rb are poor
     #      and have interactions with no cyber-dojo.sh file
-    if !content.nil? && !content.include?(cyber_dojo_sh) && !content.include?(commented_cyber_dojo_sh)
+    needs_update = !content.nil? && !content.include?(cyber_dojo_sh) && !content.include?(commented_cyber_dojo_sh)
+    if needs_update
       sep = "\n\n"
-      output = output_alert + sep + output
       files['cyber-dojo.sh'] = content.rstrip + sep + cyber_dojo_sh_alert + sep + commented_cyber_dojo_sh
     end
-    output
-  end
-
-  def output_alert
-    [
-      "ALERT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-      "ALERT >>> problem with the cyber-dojo.sh file detected >>>",
-      "ALERT >>>   examine cyber-dojo.sh for detailed info    >>>",
-      "ALERT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-    ].join("\n")
+    needs_update
   end
 
   def cyber_dojo_sh_alert
@@ -154,6 +145,22 @@ class Language
       '# this alert appropriately. Editing or removing the #master',
       '# below this alert will retrigger the alert!',
       '# </ALERT>',
+    ].join("\n")
+  end
+
+  def update_output(output,cyber_dojo_sh_updated)
+    # If the cyber-dojo.sh file has been modified (see above)
+    # the output also contains an alert
+    sep = "\n\n"
+    cyber_dojo_sh_updated ? output_alert + sep + output : output
+  end
+
+  def output_alert
+    [
+      "ALERT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+      "ALERT >>> problem with the cyber-dojo.sh file detected >>>",
+      "ALERT >>>   examine cyber-dojo.sh for detailed info    >>>",
+      "ALERT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
     ].join("\n")
   end
 

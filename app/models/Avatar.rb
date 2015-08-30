@@ -56,21 +56,23 @@ class Avatar
   end
 
   def test(delta, files, now = time_now, time_limit = 15)
+    cyber_dojo_sh_updated = language.update_cyber_dojo_sh(files)
     sandbox.save_files(delta,files)
     output = sandbox.run_tests(files, time_limit)
     colour = kata.language.colour(output)
-    output = kata.language.updates(output,files)
-    # ensure output is part of diff
-    sandbox.dir.write('output', output)
-    # ensure possible updated cyber-dojo.sh is part of diff
-    sandbox.dir.write('cyber-dojo.sh', files['cyber-dojo.sh'])
-    files['output'] = output
+
     rags = increments
     tag = rags.length + 1
     rag = { 'colour' => colour, 'time' => now, 'number' => tag }
     rags << rag
     write_increments(rags)
-    write_manifest(files)    
+
+    # output is part of state
+    output = language.update_output(output,cyber_dojo_sh_updated)
+    sandbox.dir.write('output', output)
+    files['output'] = output
+    write_manifest(files)
+
     git_commit(tag)    
     [rags,output]    
   end
@@ -156,6 +158,10 @@ private
 
   def quoted(s)
     '"' + s + '"'
+  end
+
+  def language
+    kata.language
   end
 
 end
