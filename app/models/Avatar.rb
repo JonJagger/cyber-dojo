@@ -59,8 +59,11 @@ class Avatar
     sandbox.save_files(delta,files)
     output = sandbox.run_tests(files, time_limit)
     colour = kata.language.colour(output)
-    output = kata.language.after_test(output,files)
-    sandbox.dir.write('output', output) # so output is committed
+    output = kata.language.updates(output,files)
+    # ensure output is part of diff
+    sandbox.dir.write('output', output)
+    # ensure possible updated cyber-dojo.sh is part of diff
+    sandbox.dir.write('cyber-dojo.sh', files['cyber-dojo.sh'])
     files['output'] = output
     rags = increments
     tag = rags.length + 1

@@ -3,7 +3,7 @@
 require_relative 'controller_test_base'
 require 'digest/md5'
 
-class HashMaker
+class ParamsMaker
 
   def initialize(avatar)
     @visible_files = avatar.visible_files
@@ -13,8 +13,6 @@ class HashMaker
       @outgoing[filename] = hash(content)
     end
   end
-
-  attr_reader :hash
 
   def new_file(filename,content)
     @visible_files[filename] = content
@@ -77,17 +75,17 @@ class ReverterControllerTest  < ControllerTestBase
     filename = 'Hiker.java'
     assert avatar.visible_files.keys.include?(filename)
     # 1
-    hash_maker = HashMaker.new(avatar)
-    hash_maker.change_file(filename, old_content='echo abc')
+    params_maker = ParamsMaker.new(avatar)
+    params_maker.change_file(filename, old_content='echo abc')
     runner.stub_output('dummy')
-    kata_run_tests hash_maker.params
+    kata_run_tests params_maker.params
     assert_response :success
     assert_equal old_content,avatar.visible_files[filename]
     # 2
-    hash_maker = HashMaker.new(avatar)
-    hash_maker.change_file(filename, new_content='something different')
+    params_maker = ParamsMaker.new(avatar)
+    params_maker.change_file(filename, new_content='something different')
     runner.stub_output('dummy')
-    kata_run_tests hash_maker.params
+    kata_run_tests params_maker.params
     assert_response :success
     assert_equal new_content,avatar.visible_files[filename]
 

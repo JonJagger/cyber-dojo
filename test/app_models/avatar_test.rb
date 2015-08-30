@@ -148,10 +148,6 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  #TODO: if cyber-dojo.sh first line starts with a # (shebang) it should be left alone?
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'test() on master cyber-dojo.sh results in standard output' +
        ' with no ALERT, and no modification to any cyber-dojo.sh' do
     kata = make_kata(unique_id, 'Java-JUnit')
@@ -208,17 +204,18 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'test() sees changed cyber-dojo.sh file and appends' +
-       ' commented master version to browsers version of cyber-dojo,sh,' +
-       ' and prepends an alert to the output. ' +
-       ' It saves the original cyber-dojo.sh to the sandbox not the' +
-       ' version with the appended commented master. And it does all' +
+       ' info plus commented master version to cyber-dojo.sh' +
+       ' and prepends an alert to the output. And it does all' +
        ' this only *once*' do
     kata = make_kata(unique_id, 'Java-JUnit')
     avatar = kata.start_avatar
+    language = avatar.kata.language
     cyber_dojo_sh = 'cyber-dojo.sh'
     master = avatar.visible_files[cyber_dojo_sh]
     assert master.split.size > 1
     first_content = "hello\nworld"
+    separator = "\n\n"
+
     visible_files = { cyber_dojo_sh => first_content }
     delta = {
       :changed => [ cyber_dojo_sh ],
@@ -231,29 +228,28 @@ class AvatarTests < ModelTestBase
 
     _,output = avatar.test(delta, visible_files)
 
-    expected_output = 
-      [
-        'ALERT: your cyber-dojo.sh differs from the master cyber-dojo.sh.',
-        'ALERT:  - the master has been appended (in comments) to your cyber-dojo.sh.',
-        'ALERT:  - please examine cyber-dojo.sh carefully',
-        '',
-        radiohead
-      ].join("\n")
+    expected_output = language.output_alert + separator + radiohead
     assert_equal expected_output,output
 
-    expected_saved_cyber_dojo_sh = first_content
-    actual_saved_cyber_dojo_sh = avatar.sandbox.dir.read('cyber-dojo.sh')
-    assert_equal expected_saved_cyber_dojo_sh, actual_saved_cyber_dojo_sh
+    appended_commented_master =
+      first_content +
+      separator +
+      language.cyber_dojo_sh_alert +
+      separator +
+      commented(master)
 
-    appended_commented_master = first_content + "\n\n" + commented(master)
-    expected_returned_cyber_dojo_sh = appended_commented_master
-    actual_returned_cyber_dojo_sh = visible_files[cyber_dojo_sh]
-    assert_equal expected_returned_cyber_dojo_sh, actual_returned_cyber_dojo_sh
+    saved_cyber_dojo_sh = avatar.sandbox.dir.read('cyber-dojo.sh')
+    assert_equal appended_commented_master, saved_cyber_dojo_sh
+
+    returned_cyber_dojo_sh = visible_files[cyber_dojo_sh]
+    assert_equal appended_commented_master, returned_cyber_dojo_sh
+
+    manifested_cyber_dojo_sh = avatar.visible_files[cyber_dojo_sh]
+    assert_equal appended_commented_master, manifested_cyber_dojo_sh
 
     # --- only once ---
 
-    second_content = appended_commented_master
-    visible_files = { cyber_dojo_sh => second_content }
+    visible_files = { cyber_dojo_sh => appended_commented_master }
     delta = {
       :changed => [ cyber_dojo_sh ],
       :unchanged => [ ],
@@ -265,13 +261,14 @@ class AvatarTests < ModelTestBase
 
     assert_equal radiohead,output, 'no ALERT prefixes this time'
 
-    expected_saved_cyber_dojo_sh = appended_commented_master
-    actual_saved_cyber_dojo_sh = avatar.sandbox.dir.read('cyber-dojo.sh')
-    assert_equal expected_saved_cyber_dojo_sh, actual_saved_cyber_dojo_sh
+    saved_cyber_dojo_sh = avatar.sandbox.dir.read('cyber-dojo.sh')
+    assert_equal appended_commented_master, saved_cyber_dojo_sh
 
-    expected_returned_cyber_dojo_sh = appended_commented_master
-    actual_returned_cyber_dojo_sh = visible_files[cyber_dojo_sh]
-    assert_equal expected_returned_cyber_dojo_sh, actual_returned_cyber_dojo_sh
+    returned_cyber_dojo_sh = visible_files[cyber_dojo_sh]
+    assert_equal appended_commented_master, returned_cyber_dojo_sh
+
+    manifested_cyber_dojo_sh = avatar.visible_files[cyber_dojo_sh]
+    assert_equal appended_commented_master, manifested_cyber_dojo_sh
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

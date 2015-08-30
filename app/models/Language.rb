@@ -94,20 +94,67 @@ class Language
     MakefileFilter.filter(filename, content)
   end
 
-  def after_test(output,files)
+  def updates(output,files)
+    # The base docker containers were refactored to avoid voume-mounting
+    # as part of the docker-swarm re-architect work. The support_files
+    # were moved *inside* their docker containers by ADD'ing them to the
+    # appropriate Dockerfile. This sometimes resulting in a change to
+    # the cyber-dojo.sh file. This is no problem for dojos started after
+    # the re-architecture but it is for forking/reverting in a dojo
+    # started *before* the re-architecture.
+    #
+    # To help in this situation the new master cyber-dojo.sh is appended
+    # (in # comments) to the end of the existing cyber-dojo.sh
+    # There are two reasons for doing it this way rather than the old
+    # cyber-dojo.sh file being commented out and the new master pre-pended
+    # to it.
+    #
+    # 1. Suppose the users cyber-dojo.sh has some custom mods and they
+    #    tweak it in light of new info (eg new paths).
+    #    The next [test] will set these back to comments!
+    #
+    # 2. It does not follow the philosophy of cyber-dojo, that the user
+    #    in charge. To quote Martin Richards, of BCPL fame
+    #    "The philosophy of BCPL is not one of the tyrant who thinks
+    #     he knows best and lays down the law on what is and what is
+    #     not allowed; rather BCPL acts more as a servant offering
+    #     his services to the best of his ability without complaint,
+    #     even when confronted with apparant nonsense."
+    #               BCPL the language and its compiler
+    #               Martin Richards and Colin Whitby-Strevens
+    #               ISBN 0-521-21965-5
     content = files['cyber-dojo.sh']
     #TODO: !content.nil? is because test/app_model/avatar_tests.rb are poor
     #      and have interactions with no cyber-dojo.sh file
     if !content.nil? && !content.include?(cyber_dojo_sh) && !content.include?(commented_cyber_dojo_sh)
-      separator = "\n\n"
-      output = [
-        'ALERT: your cyber-dojo.sh differs from the master cyber-dojo.sh.',
-        'ALERT:  - the master has been appended (in comments) to your cyber-dojo.sh.',
-        'ALERT:  - please examine cyber-dojo.sh carefully'
-      ].join("\n") + separator + output
-      files['cyber-dojo.sh'] = content.rstrip + separator + commented_cyber_dojo_sh
+      sep = "\n\n"
+      output = output_alert + sep + output
+      files['cyber-dojo.sh'] = content.rstrip + sep + cyber_dojo_sh_alert + sep + commented_cyber_dojo_sh
     end
     output
+  end
+
+  def output_alert
+    [
+      "ALERT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+      "ALERT >>> problem with the cyber-dojo.sh file detected >>>",
+      "ALERT >>>   examine cyber-dojo.sh for detailed info    >>>",
+      "ALERT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+    ].join("\n")
+  end
+
+  def cyber_dojo_sh_alert
+    [
+      '# <ALERT>',
+      "# This cyber-dojo.sh file probably won't work.",
+      '# The lines in this cyber-dojo.sh file (above this alert)',
+      '# differ from the lines in the master cyber-dojo.sh file',
+      '# (below this alert).',
+      '# Please examine the differences and edit the lines above',
+      '# this alert appropriately. Editing or removing the #master',
+      '# below this alert will retrigger the alert!',
+      '# </ALERT>',
+    ].join("\n")
   end
 
 private
@@ -154,4 +201,3 @@ end
 # 2. default set of files direct from languages/
 #    viz, no highlight_filenames entry in manifest
 # - - - - - - - - - - - - - - - - - - - -
-
