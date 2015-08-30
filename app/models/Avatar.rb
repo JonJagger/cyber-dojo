@@ -58,18 +58,15 @@ class Avatar
   def test(delta, files, now = time_now, time_limit = 15)
     cyber_dojo_sh_updated = language.update_cyber_dojo_sh(files)
     sandbox.save_files(delta,files)
-    output = sandbox.run_tests(files, time_limit)
-    colour = kata.language.colour(output)
+    output = sandbox.run_tests(time_limit)
+    colour = language.colour(output)
+    output = language.update_output(output,cyber_dojo_sh_updated)
 
     rags = increments
     tag = rags.length + 1
-    rag = { 'colour' => colour, 'time' => now, 'number' => tag }
-    rags << rag
-    write_increments(rags)
+    write_increments(rags << { 'colour' => colour, 'time' => now, 'number' => tag })
 
-    # output is part of state
-    output = language.update_output(output,cyber_dojo_sh_updated)
-    sandbox.dir.write('output', output)
+    sandbox.dir.write('output', output) # output is part of diff state
     files['output'] = output
     write_manifest(files)
 
@@ -110,7 +107,8 @@ private
   end
 
   def tag0
-    @zeroth ||= [
+    @zeroth ||=
+    [
       'event' => 'created',
       'time' => time_now(kata.created),
       'number' => 0

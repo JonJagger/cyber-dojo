@@ -30,8 +30,7 @@ class Sandbox
     delta[:changed].each { |filename|   write(filename, filter(filename, files)) }
   end
 
-  def run_tests(files, time_limit)
-    #TODO: move into Avatar and drop files parameter
+  def run_tests(time_limit)
     runner.run(self, './cyber-dojo.sh', time_limit)
   end
   
