@@ -70,10 +70,6 @@ $cyberDojoHome/exercises/cache.rb
 echo "poking rails"
 bundle install
 
-echo "pulling latest docker images"
-cd /var/www/cyber-dojo/admin_scripts
-./cyberdojofoundation_docker_update_all.rb
-
 echo "restarting apache"
 service apache2 restart
 

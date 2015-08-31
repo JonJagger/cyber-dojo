@@ -168,9 +168,16 @@ def console_break
   puts "--------------------------------------------------------------------------------"
 end
 
-if ($0 == __FILE__)
+def update_cyber_dojo_docker_images
   console_break
   puts "Pulling latest images"
   console_break
+
+  `service apache2 stop`
   update_images
+  `service apache2 start`
+end
+
+if ($0 == __FILE__)
+  update_cyber_dojo_docker_images
 end
