@@ -56,7 +56,7 @@ class LanguagesTests < ModelTestBase
         :test_dir_name => 'assert'
       },
       'C++ (g++), assert' => {
-        :dir_name => 'g++4.8.1', 
+        :dir_name => 'g++4.8.4',
         :test_dir_name => 'assert'        
       }
     }
@@ -70,7 +70,7 @@ class LanguagesTests < ModelTestBase
     assert_equal 'assert',      languages['Asm-assert'].test_dir_name
     
     assert_equal 'C++ (g++), assert', languages['C++ (g++)-assert'].display_name
-    assert_equal 'g++4.8.1',          languages['C++ (g++)-assert'].dir_name
+    assert_equal 'g++4.8.4',          languages['C++ (g++)-assert'].dir_name
     assert_equal 'assert',            languages['C++ (g++)-assert'].test_dir_name    
   end
 
