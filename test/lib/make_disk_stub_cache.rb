@@ -3,7 +3,7 @@
 # traverses languages/ and exercises/ and creates
 # cache.json file on disk for use in unit-tests
 
-require_relative 'lib_domain'
+require_relative '../../admin_scripts/lib_domain'
 
 $cache = { }
 
@@ -20,7 +20,7 @@ dojo.languages.each do |language|
   end  
 end
 
-File.write('/var/www/cyber-dojo/test/lib/disk_cache.json', JSON.unparse($cache))
+File.write('/var/www/cyber-dojo/test/lib/disk_stub_cache.json', JSON.unparse($cache.sort))
 
 
 

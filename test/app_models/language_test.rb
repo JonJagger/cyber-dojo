@@ -276,38 +276,6 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  class StubSandbox
-    def initialize
-      @disk = DiskFake.new
-    end
-    def dir
-      @disk['approval']
-    end
-  end
-
-  test 'after test Approval newly created txt files are added ' +
-       'to visible_files and existing deleted txt files are ' +
-       'removed from visible_files' do
-    name = 'Ruby-Approval'
-    @language = languages[name]
-    @language.dir.write('manifest.json', { :display_name => 'Ruby, Approval' })
-    sandbox = StubSandbox.new
-    sandbox.dir.write('created.txt', 'content')
-    sandbox.dir.write('wibble.hpp', 'non txt file')
-    visible_files = {
-      'deleted.txt' => 'once upon a time',
-      'wibble.cpp'  => '#include <wibble.hpp>'
-    }
-    @language.after_test(sandbox.dir, visible_files)
-    expected = {
-      'created.txt' => 'content',
-      'wibble.cpp'  => '#include <wibble.hpp>'
-    }
-    assert_equal expected, visible_files
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'RunnerStub.runnable?(language) is false ' +
        'when language does not have image_name set in manifest' do
     runner.stub_runnable(false)

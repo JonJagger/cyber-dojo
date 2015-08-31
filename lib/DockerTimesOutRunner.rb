@@ -1,24 +1,41 @@
 
-# Commonality from DockerGitCloneRunner and DockerVolumeMountRunner 
-
 require_relative 'Runner'
 require_relative 'Stderr2Stdout'
-require 'tempfile'
 
-class DockerRunner
+# Assumes:
+#   @bash.exec(cmd)
+#   @cid_filename
+#   sudoi(cmd)
 
-  def initialize(bash = Bash.new)
-    @bash = bash
+
+module DockerTimesOutRunner # mix-in
+
+  module_function
+
+  include Runner
+  include Stderr2Stdout
+
+  def raise_if_docker_not_installed
     raise RuntimeError.new('Docker not installed') if !installed?
-    output,_ = bash('docker images')
-    lines = output.split("\n").select{|line| line.start_with?('cyberdojo')}
-    @image_names = lines.collect{|line| line.split[0]}.sort
   end
-  
-  attr_reader :image_names
+
+  def installed?
+    _,exit_status = bash(sudoi('docker info'))
+    exit_status === 0
+  end
+
+  def image_names
+    @image_names ||= read_image_names
+  end
+
+  def read_image_names
+    output,_ = bash(sudoi('docker images'))
+    lines = output.split("\n").select{|line| line.start_with?('cyberdojo')}
+    image_names = lines.collect{|line| line.split[0]}
+  end
 
   def image_pulled?(language)
-    @image_names.include?(language.image_name)
+    image_names.include?(language.image_name)
   end
 
   def approval_test?(language)
@@ -29,27 +46,21 @@ class DockerRunner
     language.support_filenames != []
   end
 
-  def started(avatar); end
-
-  def pre_test(avatar); end
-
-  def docker_run(options, image_name, cmd, max_seconds)
-    cidfile = Tempfile.new('cyber-dojo').path
-
-    bash("rm -f #{cidfile}")
-
+  def times_out_run(options, image_name, cmd, max_seconds)
+    bash("rm -f #{@cid_filename}")
     outer_command = timeout(
       'docker run' +
       ' --user=www-data' +
-      " --cidfile=#{quoted(cidfile)} " + 
-      ' ' + options +
-      ' ' + image_name +
-      " /bin/bash -c #{quoted(timeout(cmd,max_seconds))}", 
+      " --cidfile=#{quoted(@cid_filename)}" +
+      " #{options.strip}" +
+      " #{image_name}" +
+      " /bin/bash -c #{quoted(cmd)}",
       max_seconds+5)
 
-    output,exit_status = bash(outer_command)
-    pid,_ = bash("cat #{cidfile}")
-    bash("docker stop #{pid} ; docker rm #{pid}")
+    output,exit_status = bash(sudoi(outer_command))
+    pid,_ = bash("cat #{@cid_filename}")
+    bash(sudoi("docker stop #{pid}"))
+    bash(sudoi("docker rm #{pid}"))
     exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
   end
 
@@ -61,19 +72,8 @@ class DockerRunner
     '"' + arg + '"'
   end
 
-private
-  
-  include Runner  
-  include Stderr2Stdout
-   
-  def installed?
-    _,exit_status = bash(stderr2stdout('docker info > /dev/null'))
-    exit_status === 0
-  end
-   
-  def timeout(command,after)
-    # timeout does not exist on OSX :-(
-    "timeout --signal=#{kill} #{after}s #{stderr2stdout(command)}"
+  def timeout(command,secs)
+    "timeout --signal=#{kill} #{secs}s #{stderr2stdout(command)}"
   end
 
   def fatal_error(signal)
@@ -92,7 +92,7 @@ end
 #    " -u www-data" +
 #    " --cidfile=#{quoted(cidfile)}" +
 #    ...
-#    " /bin/bash -c #{quoted(timeout(command,max_seconds))}"
+#    " /bin/bash -c #{quoted(cmd)}"
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
@@ -103,7 +103,7 @@ end
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# --cidfile=#{quoted(cidfile)}
+# --cidfile=#{quoted(@cidfile)}
 #
 #   The cidfile must *not* exist before the docker command is run.
 #   Thus I rm the cidfile *before* the docker run.
@@ -122,12 +122,13 @@ end
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# /bin/bash -c #{quoted(timeout(command,max_seconds))}"
+# /bin/bash -c #{quoted(cmd)}"
 #
 #   The command that is run as the docker container's "main" is
-#   run via bash inside a timeout.
-#   I *also* put a timeout on the outer docker-run command.
-#   This is for security - a determined attacker might somehow kill
+#   run via bash. If the caller wants this to have a timeout
+#   they must write the timeout.
+#   Regardless, the outer docker-run command always has a timeout.
+#   This is for extra security - a determined attacker might somehow kill
 #   the inner timeout and thus acquire unlimited time to run any command.
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

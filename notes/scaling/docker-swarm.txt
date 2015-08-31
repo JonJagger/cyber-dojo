@@ -1,0 +1,462 @@
+
+yak-hair yak-hair yak-hair yak-hair yak-hair yak-hair yak-hair yak-hair
+
+
+Shut down VirtualBox servers.
+Quit VirtualBox.
+
+Installed Docker Toolbox 
+https://www.docker.com/toolbox
+on my macbook pro.
+https://docs.docker.com/installation/mac/
+
+Can now open a Docker Quickstart Terminal
+Type docker in magnifying-glass search icon top right.
+
+Want to create a new digital-ocean node.
+
+http://docs.docker.com/machine/get-started-cloud/
+http://docs.docker.com/machine/drivers/digital-ocean/
+
+
+From digital-ocean control panel - API - generated a new PersonalAccessToken
+name=cyberdojo
+It wasn't this one
+6787ffcd0180ef79b384ec10cb887204c827e4472b139db85af944ff8d33edfc
+
+
+https://developers.digitalocean.com/documentation/v2/#regions
+Gave me options
+Here goes, from regular terminal
+
+$ docker-machine create --driver digitalocean  --digitalocean-access-token=6787ffcd0180ef79b384ec10cb887204c827e4472b139db85af944ff8d33edfc --digitalocean-region=lon1 --digitalocean-size=1gb docker-agent-01
+
+It says...
+
+Creating SSH key...
+Creating Digital Ocean droplet...
+To see how to connect Docker to this machine, run: docker-machine env docker-agent-01
+
+In digital-ocean console I can see it.
+Its IP address is 178.62.56.190
+
+From a regular terminal
+$ docker-machine ls
+NAME              ACTIVE   DRIVER         STATE     URL                         SWARM
+default                    virtualbox     Running   tcp://192.168.99.100:2376   
+docker-agent-01            digitalocean   Running   tcp://178.62.56.190:2376   
+$ docker-machine ip docker-agent-01
+178.62.56.190
+
+
+From a DockerQuickStartTerminal
+$ docker-machine ls
+NAME              ACTIVE   DRIVER         STATE     URL                         SWARM
+default           *        virtualbox     Running   tcp://192.168.99.100:2376   
+docker-agent-01            digitalocean   Running   tcp://178.62.56.190:2376 
+$ docker-machine ip docker-agent-01
+178.62.56.190
+
+<paste>
+Before you can run a docker command on a machine, you configure your command-line to point to that machine. The docker-machine env <machine-name> subcommand outputs the configuration command you should use. When you run a container on the Docker host, the container’s ports map to ports on the VM.
+
+To prepare the Docker client to send commands to the remote server we have created, we can use the subshell method again:
+</paste>
+
+$ docker-machine env docker-agent-01
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://178.62.56.190:2376"
+export DOCKER_CERT_PATH="/Users/jonjagger/.docker/machine/machines/docker-agent-01"
+export DOCKER_MACHINE_NAME="docker-agent-01"
+
+$ eval "$(docker-machine env docker-agent-01)"
+
+$ docker-machine ls
+NAME              ACTIVE   DRIVER         STATE     URL                         SWARM
+default                    virtualbox     Running   tcp://192.168.99.100:2376   
+docker-agent-01   *        digitalocean   Running   tcp://178.62.56.190:2376 
+
+Note the active machine has switched.
+
+Looking at http://docs.docker.com/machine/get-started-cloud/
+
+Machine has switched...
+From DockerQuickStartTerminal
+
+$ docker run swarm create
+cef6b72abf4623c13ea7e543b9ac5217
+
+Once you have the token, you can create the cluster.
+Create the swarm-master
+
+$ docker-machine create \
+   --driver digitalocean \
+   --digitalocean-access-token=6787ffcd0180ef79b384ec10cb887204c827e4472b139db85af944ff8d33edfc \
+   --digitalocean-region=lon1 \
+   --digitalocean-size=1gb \
+   --swarm \
+   --swarm-master \
+   --swarm-discovery token://cef6b72abf4623c13ea7e543b9ac5217 \
+   swarm-master
+
+Creating SSH key...
+Creating Digital Ocean droplet...
+
+That's finished.
+$ docker-machine ls
+says swarm-master's IP is 178.62.6.86
+Yup. Digital-Ocean console confirms it.
+
+$ eval "$(docker-machine env --swarm swarm-master)"
+$ docker info
+
+Containers: 2
+Images: 1
+Role: primary
+Strategy: spread
+Filters: affinity, health, constraint, port, dependency
+Nodes: 1
+ swarm-master: 178.62.6.86:2376
+  └ Containers: 2
+  └ Reserved CPUs: 0 / 1
+  └ Reserved Memory: 0 B / 1.019 GiB
+  └ Labels: executiondriver=native-0.2, kernelversion=3.13.0-57-generic, operatingsystem=Ubuntu 14.04.3 LTS, provider=digitalocean, storagedriver=aufs
+CPUs: 1
+Total Memory: 1.019 GiB
+Name: 49851306b232
+
+
+Yes. Progress.
+But docker-agent-01 is not in the swarm. Only needed that to create
+the swarm cluster-id token.
+Better to use -d virtualbox for that.
+
+
+Next step to create a swarm node
+$ docker-machine create \
+   --driver digitalocean \
+   --digitalocean-access-token=6787ffcd0180ef79b384ec10cb887204c827e4472b139db85af944ff8d33edfc \
+   --digitalocean-region=lon1 \
+   --digitalocean-size=2gb \
+   --swarm \
+   --swarm-discovery token://cef6b72abf4623c13ea7e543b9ac5217 \
+   docker-swarm-node-00
+Error creating machine: Maximum number of retries (60) exceeded
+You will want to check the provider to make sure the machine and associated resources were properly removed.
+
+$ docker-machine rm docker-swarm-node-00
+
+Trying again...
+Trying again...
+https://status.digitalocean.com/ reports event processing delays...
+Seems to be New York.
+Trying London
+Ok. Now Have a swarm-manager and two swarm-nodes
+
+$ eval "$(docker-machine env --swarm swarm-master)"
+$ docker info
+
+Containers: 4
+Images: 3
+Role: primary
+Strategy: spread
+Filters: affinity, health, constraint, port, dependency
+Nodes: 3
+ swarm-master: 178.62.6.86:2376
+  └ Containers: 2
+  └ Reserved CPUs: 0 / 1
+  └ Reserved Memory: 0 B / 1.019 GiB
+  └ Labels: executiondriver=native-0.2, kernelversion=3.13.0-57-generic, operatingsystem=Ubuntu 14.04.3 LTS, provider=digitalocean, storagedriver=aufs
+ swarm-node-00: 178.62.79.147:2376
+  └ Containers: 1
+  └ Reserved CPUs: 0 / 2
+  └ Reserved Memory: 0 B / 2.053 GiB
+  └ Labels: executiondriver=native-0.2, kernelversion=3.13.0-57-generic, operatingsystem=Ubuntu 14.04.3 LTS, provider=digitalocean, storagedriver=aufs
+ swarm-node-01: 178.62.85.112:2376
+  └ Containers: 1
+  └ Reserved CPUs: 0 / 2
+  └ Reserved Memory: 0 B / 2.053 GiB
+  └ Labels: executiondriver=native-0.2, kernelversion=3.13.0-57-generic, operatingsystem=Ubuntu 14.04.3 LTS, provider=digitalocean, storagedriver=aufs
+CPUs: 5
+Total Memory: 5.125 GiB
+Name: 49851306b232
+
+
+
+Want to do a docker run on the swarm...
+See bottom of
+
+https://docs.docker.com/swarm/install-w-machine/
+
+$ eval "$(docker-machine env --swarm swarm-master)"
+$ docker run hello-world
+Worked
+$ docker ps -a
+It ran on swarm-node-00 and its container-id was 61bf26e6cfb4
+
+$ eval "$(docker-machine env swarm-node-00)"
+$ docker ps -a
+Shows the swarm-agent on swarm-node-00
+$ docker images
+Lists hello-world
+
+$ eval "$(docker-machine env --swarm swarm-master)"
+$ docker rm 61bf26e6cfb4
+
+$ eval "$(docker-machine env swarm-node-00)"
+$ docker ps -a
+It's gone. So docker rm is forwarded to the agent.
+
+
+What next?
+Would like to learn about docker-machine ssh
+Need that to check there is a www-data user on the swarm-nodes!
+https://docs.docker.com/machine/reference/ssh/
+
+$ docker-machine ssh swarm-node-00
+$ cat /etc/passwd
+YES. id=33
+
+First attempt. Git server is at 46.101.57.179
+Dojo id = 2C98AA8256
+Avatar = buffalo
+
+$ eval "$(docker-machine env --swarm swarm-master)"
+$ docker run --user=www-data --net=host cyberdojo/gcc-4.8.1_assert /bin/bash -c "git clone git://46.101.57.179/2C/98AA8256/buffalo.git /tmp/buffalo;cd /tmp/buffalo/sandbox && ./cyber-dojo.sh"
+
+And it only bloody worked!
+
+$ docker ps -a
+Says it ran on swarm-node-00
+$ eval "$(docker-machine env swarm-node-00)"
+$ docker ps -a
+Confirms it.
+$ docker images
+Confirms cyberdojo/gcc-4.8.1_assert is present
+
+$ eval "$(docker-machine env --swarm swarm-master)"
+$ docker ps -a
+container ID = f63a83c060f3
+$ docker rm f63a83c060f3
+
+$ eval "$(docker-machine env swarm-node-00)"
+$ docker ps -a
+Confirms its gone.
+$ docker images
+Confirms cyberdojo/gcc-4.8.1_assert is still present
+
+Running following several times
+$ eval "$(docker-machine env --swarm swarm-master)"
+$ docker run --user=www-data --net=host cyberdojo/gcc-4.8.1_assert /bin/bash -c "git clone git://46.101.57.179/2C/98AA8256/buffalo.git /tmp/buffalo;cd /tmp/buffalo/sandbox && ./cyber-dojo.sh"
+
+Now can confirm that cyberdojo/gcc-4.8.1_assert container is present on
+both swarm-node-00 and swarm-node-01 with 
+And 
+$ eval "$(docker-machine env --swarm swarm-master)"
+$ docker images
+Lists cyberdojo/gcc-4.8.1_assert *twice*
+Will need to ponder that.
+
+
+$ docker-machine ssh swarm-node-00 'docker pull cyberdojo/gcc-4.8.1_assert'
+That works.
+$ docker-machine ssh swarm-node-00 'docker images'
+That works.
+
+
+$ docker-machine env --swarm swarm-master
+is
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://178.62.84.64:3376"
+export DOCKER_CERT_PATH="/root/.docker/machine/machines/cyber-dojo-docker-swarm-master"
+export DOCKER_MACHINE_NAME="cyber-dojo-docker-swarm-master"
+
+How to set these in rails-server?
+Could edit /etc/profile
+Could edit /etc/apache2/apache2conf
+<VirtualHost *:80>
+      ...
+      SetEnv DOCKER_TLS_VERIFY 1
+</VirtualHost>      
+Could set them for cyber-dojo user by appending
+them to the end of /home/cyber-dojo/.bashrc
+
+Now DOCKER_CERT_PATH won't be readable as its in /root/
+
+The docker-machine commands need to be run as cyber-dojo user
+Recreate the cluster. Eg start with...
+
+On cyber-dojo server
+$ gpasswd -a cyber-dojo docker
+$ su cyber-dojo
+$ build-swarm.sh DIGIT_OCEAN_ACCESS_TOKEN
+
+Runs...
+$ docker-machine create \
+    --driver digitalocean \
+    --digitalocean-access-token=... \
+    --digitalocean-region=lon1 \
+    --digitalocean-size=1gb \
+    cyber-dojo-docker-swarm-master
+    
+Now
+$ docker-machine env cyber-dojo-docker-swarm-master
+
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://46.101.43.7:2376"
+export DOCKER_CERT_PATH="/home/cyber-dojo/.docker/machine/machines/cyber-dojo-docker-swarm-master"
+export DOCKER_MACHINE_NAME="cyber-dojo-docker-swarm-master"
+
+
+Now to ensure these env vars are set when www-data su/sudo as cyber-dojo
+to issue bash [docker run] command.
+
+$ su cyber-dojo
+$ cd ~
+$ export
+reveals that the env settings are *not* in place.
+Edited .bashrc which is run when [su cyber-dojo] occurs
+It's last line is now
+. ~/setup_docker_machine_env_vars.sh
+
+And that file contains the following four lines
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://178.62.20.144:2376"
+export DOCKER_CERT_PATH="/home/cyber-dojo/.docker/machine/machines/cyber-dojo-docker-swarm-master"
+export DOCKER_MACHINE_NAME="cyber-dojo-docker-swarm-master"
+
+Can now do
+$ su cyber-dojo
+$ docker-machine ls
+
+What about
+$ sudo -u cyber-dojo pwd
+That does *not* load run .bashrc or .profile
+$ sudo -u cyber-dojo -i pwd
+Does run the .profile
+
+Edited .profile so it's last line is also
+. ~/setup_docker_machine_env_vars.sh
+
+
+
+$ sudo -u cyber-dojo -i export
+Does list the DOCKER_ machine env vars.
+$ sudo -u cyber-dojo -i docker-machine ls
+Ok
+
+So now from the terminal
+$ sudo -u cyber-dojo -i docker run --user=www-data --net=host cyberdojo/gcc-4.8.1_assert /bin/bash -c "git clone git://46.101.57.179/2C/98AA8256/buffalo.git /tmp/buffalo;cd /tmp/buffalo/sandbox && ./cyber-dojo.sh"
+
+That works.
+Ok. On server, as root, no DOCKER_ machine env vars.
+$ docker images
+Confirms no cyberdojo/xxx images
+
+lib/DockerRunner.rb initialize now doing
+"sudo -u cyber-dojo -i docker images"
+Does see the cyberdojo/xxx image on the two swarm-nodes and does appear on create page.
+
+Added [sudo -u cyber-dojo -i] prefix to docker_run() outer_command string.
+
+That seems to be working.
+Verify.
+Check if cyberdojo/xxxx image has been pulled. On server as root. No DOCKER_ machine env vars.
+$ docker images
+It hasn't.
+$ docker ps -a
+Lists only one container - the swarm agent.
+
+Ok.
+Now trying to add outer timeout back.
+Running directly from terminal
+
+$ timeout --signal=9 20s sudo -u cyber-dojo -i docker run --user=www-data --cidfile="/tmp/cyber-dojo20150821-21329-1u8tmpt" --net=host cyberdojo/gcc-4.8.1_assert /bin/bash -c "git clone git://46.101.57.179/2C/98AA8256/buffalo.git /tmp/buffalo 2>&1 > /dev/null;cd /tmp/buffalo/sandbox && ./cyber-dojo.sh" 2>&1
+
+Error: Host does not exist: swarm-master
+
+And that seemed to pull cyberdojo/xxx container.
+docker rmi and docker rm to clean up.
+
+Take timeout out.
+Take docker stop'rm command out so I can
+see container still visible to absolutely verify
+container was run on swarm-node
+Nope. Not working.
+
+
+$ su cyber-dojo
+$ docker info
+
+Now reports only one node in the swarm (the master)
+Think I accidentally stopped and rm'd something I shouldn't.
+Hmm. That's not good.
+Do I need to rebuild the cluster?!
+Later found
+$ docker-machine NAME restart
+Which might have fixed it.
+Rebuilt it.
+cyber-dojo user info in setup-cyber-dojo-server.txt
+Script to rebuild is build-swarm.sh
+
+Crucial that you don't forget the --swarm option in the following
+
+$ su cyber-dojo
+$ eval "$(docker-machine env --swarm cyber-dojo-docker-swarm-master)"
+$ docker info
+Shows the swarm with its nodes
+
+Ok Back.
+Now to set lib/DockerRunner.rb as before
+Make sure to set git-servers IP address back
+
+$ su cyber-dojo
+Show swarm cluster
+$ docker info
+
+Show swarm-cluster including IP addresses
+$ docker-machine ls
+
+Show ip address of node
+$ docker-machine ip cyber-dojo-docker-swarm-00
+
+Show images on all cluster nodes
+$ docker images
+
+Show initial running containers that keep the swarm together
+$ docker ps -a
+
+Show output of command run on a node
+$ docker-machine ssh cyber-dojo-docker-swarm-00 
+$ command
+
+
+[sudo -u cyber-dojo -i docker run ....]
+is working.
+
+Need to...
+1) fix cidfile [stop and rm]
+
+2) put timeouts back
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

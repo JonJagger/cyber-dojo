@@ -36,11 +36,10 @@ class Avatar
   end
 
   def active?
-    # o) Players sometimes start an extra avatar solely to read the
-    #    instructions. I don't want these avatars appearing on the
-    #    dashboard.
-    # o) When forking a new kata you can enter as one animal
-    #    to sanity check it is ok (but not press [test])
+    # Players sometimes start an extra avatar solely to read the 
+    # instructions. I don't want these avatars appearing on the dashboard.
+    # When forking a new kata you can enter as one animal to sanity check
+    # it is ok (but not press [test])
     exists? && lights.count > 0
   end
 
@@ -53,22 +52,24 @@ class Avatar
   end
 
   def visible_files
-    # Equivalent to tags[-1].visible_files but
-    # faking files is easier than faking git.
     JSON.parse(read(manifest_filename))
   end
 
   def test(delta, files, now = time_now, time_limit = 15)
+    cyber_dojo_sh_updated = language.update_cyber_dojo_sh(files)
     sandbox.save_files(delta,files)
-    runner.pre_test(self)
-    output = sandbox.run_tests(files, time_limit)
-    colour = kata.language.colour(output)
+    output = sandbox.run_tests(time_limit)
+    colour = language.colour(output)
+    output = language.update_output(output,cyber_dojo_sh_updated)
+
     rags = increments
     tag = rags.length + 1
-    rag = { 'colour' => colour, 'time' => now, 'number' => tag }
-    rags << rag
-    write_increments(rags)
-    write_manifest(files)    
+    write_increments(rags << { 'colour' => colour, 'time' => now, 'number' => tag })
+
+    sandbox.dir.write('output', output) # output is part of diff state
+    files['output'] = output
+    write_manifest(files)
+
     git_commit(tag)    
     [rags,output]    
   end
@@ -95,7 +96,7 @@ private
     git.init(path, '--quiet')
     git.config(path, 'user.name ' + user_name)
     git.config(path, 'user.email ' + user_email)
-    # Next line needed for DockerGitCloneRunner.rb
+    # Next line needed if runner=DockerGitCloneRunner
     git.config(path, 'push.default current')
   end
 
@@ -106,7 +107,8 @@ private
   end
 
   def tag0
-    @zeroth ||= [
+    @zeroth ||=
+    [
       'event' => 'created',
       'time' => time_now(kata.created),
       'number' => 0
@@ -134,12 +136,13 @@ private
   end
   
   def manifest_filename
+    # Stores cache of visible files - filenames and contents.
     'manifest.json'
   end
     
   def increments_filename
-    # stores cache of key-info for each git commit tag
-    # helps optimize the dashboard
+    # Stores cache of key info for each [test]'s git commit tag.
+    # Helps optimize the review dashboard.
     'increments.json'
   end
 
@@ -153,6 +156,10 @@ private
 
   def quoted(s)
     '"' + s + '"'
+  end
+
+  def language
+    kata.language
   end
 
 end

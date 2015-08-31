@@ -32,14 +32,21 @@
   }
 
   #the-place-to-practice-programming {
-    font-size: 1.35em;
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;    
+    font-size: 1.15em;
     color: lighten($text-color, 5%);
     position: relative;
     top: -32px;
+    margin-right: 2px;
   }
 
   #learn-more-button {
-    font-size: 0.9em;
+    width: 240px;
+    padding-right: 20px;
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    color: $darker-color;    
+    text-align: right;  
+    font-size: 0.87em;
     position: relative;
     top: -25px;
     left: 2px;
@@ -59,7 +66,6 @@
     }
   }
   .each {
-    text-decoration: underline;
     font-style: italic;
   }
   .number {
@@ -92,25 +98,34 @@
     position: relative;
     right: -1px;
   }
-  #create-button, #enter-button, #reenter-button,  #review-button, #donate-button {
+  #create-button, #enter-button, #reenter-button,  #review-button, 
+  #charity-button, #donate-button {
+    width: 240px;
+    padding-right: 20px;
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     color: $darker-color;
     @include font-size-largest();
-    width: 240px;
-    padding-right: 20px;
     margin-left: 10px;
     text-align: right;
   }
   #review-button { margin-top: 4px; }
 
-  #donate-container, #jon-jagger-container, #accu-container {
+  #charity-container, #donate-container, #jon-jagger-container, #accu-container {
     font-size: 1em;
     font-size: 0.8em;    
     @include edged-panel();
     margin: 10px;    
     width: 280px;
-    text-align: right;
-    
+    text-align: right;    
+  }
+
+  #charity-container {
+    #charity-button { 
+      width: 95px;
+      font-size: 1.30em;
+      padding: 6px;
+      padding-right: 7px;
+    }    
   }
 
   #donate-container {

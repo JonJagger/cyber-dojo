@@ -2,14 +2,10 @@
 
 require 'json'
 
-root_dir = ARGV[0]
-if root_dir.nil?
-  puts "docker_show_deps.rb [root-dir]"
-  exit
-end
+CYBER_DOJO_ROOT_DIR = '/var/www/cyber-dojo'
 
 dependencies = [ ]
-Dir.glob("#{root_dir}/languages/*/*/Dockerfile") do |file|
+Dir.glob("#{CYBER_DOJO_ROOT_DIR}/languages/*/*/Dockerfile") do |file|
   sh = File.expand_path(File.dirname(file)) + '/build-docker-container.sh'
   to = IO.read(sh).split[4]
   from = IO.read(file).split[1]

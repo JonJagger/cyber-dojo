@@ -22,8 +22,6 @@ o) save increments.json
 o) save manifest.json
 o) git-commit and git-tag
 
-And will then perform one extra step
-o) git-push to the cyber-dojo-git-server
 
 Sym-linking
 One issue with this approach is how it works with languages that have support 
@@ -49,101 +47,46 @@ new .txt files have been produced and to load them back
 into the browser. So also initally filter these out in the 
 DockerGitServerRunner.runnable?(language) method.
 
-
-Step 2. Dashboard works in new design.
-This should be relatively easy. The source of the increments.json 
-files will be the cyber-dojo-git-server rather than the local
-hard disk.
-
-Step 3. Swarm on multiple nodes is now possible.
+Step 2. Swarm on multiple nodes is now possible.
 (Without forking or reverting).
 
-Step 4. Add forking.
+Step 3. Add forking.
+This is tricky. Suppose I'm reviewing a traffic-light
+from a dojo *before* the switch to no-volume-mount for languages/
+A fork will not work. This is because the cyber-dojo.sh
+commands assume the support files are in the local sandbox
+and now they aren't. 
+For example Java-JUnit has this in its cyber-dojo.sh
+CLASSES=.:`ls *.jar | tr '\n' ':'`
+I think the simplest thing to do in this
+case is to #comment out each line in the cyber-dojo.sh file
+being forked *from* and to append the contents of the new
+cyber-dojo.sh file for that language+test. Assuming they are not
+the same. And perhaps also add some comments on why this
+has been done. 
 
-Step 5. Adding reverting.
-
-Step 6.
-Refactor language/test containers which have sym-linked support
-files so the support files are present in the container itself.
+Make this work for switching to new docker containers
+and no sym-linking. Should then be no need to fixup
+refactoring dojo. (Except for C# Yahztee patch)
 
 
-Step 7. Add docker data-containers.
-Means the git-clone in step i) above can change to a git-pull.
+Step 4. Adding reverting.
+How can I handle this during a switch-over of docker containers?
+Only an issue when dojo is live. 
+Perhaps the simplest way to solve this is to add a time-limit
+to dojos. Eg 24 hours after 1st traffic-light.
+Expiry also helps read-only dojo hub.
 
 
 Also to consider. 
 
-Upgrading old cyber-dojos. How does the server know that its ID 
-corresponds to a cyber-dojo that needs to be accessed differently?
-
-Obvious answer is dojos with old IDs are git pushed to new 
-cyber-dojo-git-server and then removed from the hard-disk.
-But ID being present on the hard disk could be an indicator
-allowing dynamic configuration.
-Suggests that it when doing Step 1 the files are saved to a 
-temp folder. Hmmm that would work for test events but how
-would it work when someone entered - how would the server
-know what language/test/exercise corresponded to the 
-cyber-dojo with the given ID, or even that the given ID was 
-valid. Have to keep that basic info on the local hard disk.
-But it would be quite easy to detect whether a given ID
-was present on the local disk and *also* present on the
-cyber-dojo-git-server. Or would it? Not if only avatars
-are stored on the cyber-dojo-git-server.
-Perhaps have two kinds of repos on the git-server.
-One for dojos. Stores language/test/exercise selection
-against a given ID. One one for animals.
+The default should be that the git-server is the rails-server.
+People building their own servers have to know that by default
+they push all the source files to the git-server.
+The URL of the git-server needs to be configurable.
 
 
-Further point is that people building their own servers have
-to know that by default they push all the source files to the
-git-server. The URL of the git-server needs to be configurable.
-
-
-Thinking about all the above suggests I should continue
-the refactoring I started when I added the
-complete_kata_id() and each_kata_id() methods to HostDir.
-Consider for example
-  def Avatar.start
-    dir.make
-    git_setup
-    write_manifest(kata.visible_files)
-    git.add(path,manifest_filename)
-    write_increments([ ])
-    git.add(path,increments_filename)     
-    sandbox.start
-    git_commit(0)    
-  end
-becoming
-  def Avatar.start
-    dir.enter(self)
-  end
-  def HostDir.enter(avatar)
-    make
-    #git_setup
-      git.init(avatar.path, '--quiet')
-      git.config(avatar.path, 'user.name ' + user_name)
-      git.config(avatar.path, 'user.email ' + user_email)    
-    #write_manifest(avatar.kata.visible_files)
-      write('manifest.json', files)    
-    git.add(avatar.path, 'manifest.json')
-    #write_increments([ ])
-      write('increments.json', [])        
-    git.add(avatar.path,'increments.json')     
-    #sandbox.start
-      avatar.visible_files.each { |filename,content| 
-        #git_add(filename,content) 
-        write(filename,content)
-        git.add(avatar.path,filename)        
-      }    
-    #git_commit(0)    
-      git.commit(avatar.path, "-a -m '#{0}' --quiet")
-      git.gc(avatar.path, '--auto --quiet')
-      git.tag(avatar.path, "-m '#{0}' #{0} HEAD")    
-  end    
-etc
-
-And perhaps further still. Maybe have a single 'External' object
+Maybe have a single 'External' object
 and delegate back to that. It knows the sub objects/classes for 
 disk/dir/git etc.
 

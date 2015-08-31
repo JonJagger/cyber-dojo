@@ -20,11 +20,20 @@ class Kata
   end
 
   def start_avatar(avatar_names = Avatars.names.shuffle)
-    free_names = avatar_names - avatars.names
-    if free_names != [ ]
-      avatar = Avatar.new(self,free_names[0])
-      avatar.start
-      one_self.started(avatar)
+    avatar = nil
+    dir.lock do
+      filename = 'started_avatars.json'
+      started = dir.exists?(filename) ? JSON.parse(dir.read(filename)) : avatars.names
+      free_names = avatar_names - started
+      if free_names != [ ]
+        avatar = Avatar.new(self, free_names[0])
+        avatar.start
+        if dir.exists?(filename)
+          started << avatar.name
+          dir.write(filename, started)
+        end
+        one_self.started(avatar)
+      end
     end
     avatar
   end

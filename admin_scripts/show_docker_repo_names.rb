@@ -2,14 +2,12 @@
 
 require 'json'
 
-me = File.expand_path(File.dirname(__FILE__))
-root_folder = File.expand_path('..', me) + '/'  
+CYBER_DOJO_ROOT_DIR = '/var/www/cyber-dojo'
 
 image_names = [ ]
-Dir.glob("#{root_folder}/languages/*/*/manifest.json") do |file|
-  json = JSON.parse(IO.read(file))
-  image_name = json['image_name']
-  image_names << image_name if !image_name.nil?
+Dir.glob("#{CYBER_DOJO_ROOT_DIR}/languages/*/*/manifest.json") do |file|
+  manifest = JSON.parse(IO.read(file))
+  image_names << manifest['image_name']
 end
 
 puts image_names.sort

@@ -31,6 +31,7 @@ class Katas
     manifest[:visible_files]['instructions'] = text
     kata = self[id]
     kata.dir.write('manifest.json', manifest)
+    kata.dir.write('started_avatars.json', [])
     kata
   end
 

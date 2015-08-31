@@ -23,7 +23,7 @@ class KataController < ApplicationController
     now = time_now
     time_limit = 15
     @traffic_lights,@output = @avatar.test(delta, visible_files, now, time_limit)
-      
+    @cyber_dojo_sh = visible_files['cyber-dojo.sh']
     tag = @traffic_lights.length
     diffed_files = avatar.diff(tag-1,tag)
     hash = {
@@ -52,9 +52,7 @@ private
       content = clean(content)
       # Cater for windows line endings from windows browser
       content = content.gsub(/\r\n/, "\n")
-      # Cater for jquery-tabby.js plugin
-      # See app/lib/MakefileFilter.rb
-      seen[filename] = MakefileFilter.filter(filename, content)
+      seen[filename] = content
     end
     seen
   end

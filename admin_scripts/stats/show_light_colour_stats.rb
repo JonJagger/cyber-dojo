@@ -2,7 +2,7 @@
 
 # A ruby script to display stats on light colours per language.
 
-require_relative 'lib_domain'
+require_relative '../lib_domain'
 
 $stats = { }
 

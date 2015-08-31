@@ -1,0 +1,103 @@
+
+Create a cyber-dojo user on the server.
+=======================================
+
+Digital Ocean server created using instructions here
+http://blog.cyber-dojo.org/2015/01/setting-up-your-own-digital-ocean-cyber.html
+
+Now steps needed to run DockerGitCloneRunner
+
+Create cyber-dojo user
+======================
+$ userdel -r cyber-dojo
+$ adduser cyber-dojo
+
+Important to give it a strong password to revent
+the server being hijacked and used to attack from.
+
+
+Allow www-data/root to sudo -u cyber-dojo
+=========================================
+Added this line to /etc/sudoers.d/custom  (new file)
+
+www-data ALL=(cyber-dojo:cyber-dojo) NOPASSWD:ALL
+
+
+
+Ensure cyber-dojo has docker-machine env vars setup
+===================================================
+Added this line to the end of /home/cyber-dojo/.bashrc
+This handles [su cyber-dojo]
+. ~/setup_docker_swarm_env_vars.sh
+
+Added this line to the end of /home/cyber-dojo/.profile
+This handles [sudo -u cyber-dojo -i COMMAND]
+. ~/setup_docker_swarm_env_vars.sh
+
+Created the file /home/cyber-dojo/setup_docker_swarm_env_vars.sh
+to contain this one line.
+eval "$(docker-machine env --swarm cyber-dojo-docker-swarm-master)"
+
+Which assumes the docker-swarm has been built as per
+build-swarm.txt notes.
+
+
+Setup up cyber-dojo user's ssh keys
+===================================
+$ whoami
+cyber-dojo
+$ cd ~
+$ mkdir .ssh
+$ chown cyber-dojo:cyber-dojo .ssh
+$ chmod 700 .ssh
+$ cd .ssh
+$ ssh-keygen -t rsa
+Hit enter enter enter
+$ ssh-copy-id git@GIT_SERVER_IP_ADDRESS
+need to enter git password
+
+
+
+
+Permissions
+===========
+Create a group and make both www-data and cyber-dojo
+members of the group so cyber-dojo can read/write (only needs read)
+files under katas/ when it issues git commands.
+
+$ whoami
+root
+$ usermod -a -G www-data cyber-dojo
+$ gpasswd -a cyber-dojo docker
+$ cd /var/www/cyber-dojo
+$ chmod g+rwsx katas
+$ apt-get install -y acl
+$ setfacl -d -m group:www-data:rwx katas
+$ setfacl -m group:www-data:rwx katas
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Installing docker-machine
+=========================
+http://docs.docker.com/machine/install-machine/
+
+$ curl -L https://github.com/docker/machine/releases/download/v0.4.0/docker-machine_linux-amd64 > /usr/local/bin/docker-machine
+
+$ chmod +x /usr/local/bin/docker-machine
+
+
+Misc Notes
+==========
+>>>>>Would like to lose --net=host in [docker run --net=host]
+>>>>>Make cyber-dojo user password-less if possible?
+>>>>>Make cyber-dojo user login shell-less if possible?
+
+
+
+
+
+
+

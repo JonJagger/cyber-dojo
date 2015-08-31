@@ -1,5 +1,7 @@
 
-module Cleaner # mixin
+module Cleaner # mix-in
+
+  module_function
 
   def clean(s)
     # force an encoding change - if encoding is already utf-8

@@ -8,6 +8,7 @@
   Bash
   HttpRequester
   Runner
+    DockerTimesOutRunner
     DockerGitCloneRunner
     DockerVolumeMountRunner
     HostRunner

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative 'lib_domain'
+require_relative '../lib_domain'
 
 exercises_names = dojo.exercises.collect {|exercise| exercise.name}
 

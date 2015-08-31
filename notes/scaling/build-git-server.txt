@@ -18,7 +18,7 @@ On 1st step look for Apple option in list but then
 
 Note
 ----
-To get the git-server and the cyber-dojo server both
-running with host-only-adapter and not have the same IP
+In VirtualBox on MacBook Pro to get the git-server and the cyber-dojo
+server both running with host-only-adapter and not have the same IP
 address I had to tweak one of them so its apparent mac address
 was different to the other one. I cloned one server from the other.

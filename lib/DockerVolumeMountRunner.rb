@@ -6,18 +6,21 @@
 #
 # Comments at end of file
 
-require_relative 'DockerRunner'
+require_relative 'DockerTimesOutRunner'
+require 'tempfile'
 
-class DockerVolumeMountRunner < DockerRunner
+class DockerVolumeMountRunner
 
-  def initialize(bash = Bash.new)
-    super(bash)
+  def initialize(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
+    @bash,@cid_filename = bash,cid_filename
+    raise_if_docker_not_installed
   end
 
   def runnable?(language)
-    image_pulled?(language) &&
-      !approval_test?(language)
+    image_pulled?(language) && !approval_test?(language)
   end
+
+  def started(avatar); end
 
   def run(sandbox, command, max_seconds)
     language = sandbox.avatar.kata.language
@@ -27,12 +30,21 @@ class DockerVolumeMountRunner < DockerRunner
     sandbox_volume = "#{sandbox.path}:/sandbox:#{read_write}"
 
     options =
-        " --net=#{quoted('none')}" +
+        ' --net=none' +
         " -v #{quoted(language_volume)}" +
         " -v #{quoted(sandbox_volume)}" +
         ' -w /sandbox'
 
-    docker_run(options, language.image_name, command, max_seconds)
+    cmd = timeout(command,max_seconds)
+    times_out_run(options, language.image_name, cmd, max_seconds)
+  end
+
+private
+
+  include DockerTimesOutRunner
+
+  def sudoi(cmd)
+    cmd
   end
 
 end
@@ -41,14 +53,14 @@ end
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 # "docker run" +
-#    " --net=#{quoted('none')}" +
+#    ' --net=none' +
 #    " -v #{quoted(language_volume)}" +
 #    " -v #{quoted(sandbox_volume)}" +
 #    " -w /sandbox" +
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# --net="none"
+# --net=none
 #
 #   Turn off all networking inside the container.
 #

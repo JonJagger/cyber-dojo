@@ -24,6 +24,17 @@ class KatasTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - -
 
+  test 'create_kata saves empty started_avatars.json file' do
+    id = unique_id
+    kata = make_kata(id)
+    filename = 'started_avatars.json'
+    assert kata.dir.exists?(filename), 'exists'
+    started = JSON.parse(kata.dir.read(filename))
+    assert_equal [],started
+  end
+
+  #- - - - - - - - - - - - - - - -
+
   test 'katas[id] returns previously created kata with given id' do
     kata = make_kata
     k = katas[kata.id.to_s]
