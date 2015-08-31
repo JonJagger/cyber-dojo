@@ -1,0 +1,177 @@
+
+Notes on trying Byran's branch on my digital-ocean test server
+to test out converting cyberdojo/X docker images to cyberdojofoundation/X
+images that do not require a volume-mount.
+First step in moving to stateless docker swarm architecture
+===============================================================
+
+
+ssh'd onto my digital-ocean test server
+
+$ git remote set-url origin  https://github.com/byran/cyber-dojo.git
+$ admin_scripts/pull.sh
+
+Failed. Saying
+You asked to pull from the remote 'origin', but did not specify
+a branch. Because this is not the default configured remote
+for your current branch, you must specify a branch on the command line.
+
+Noticed too that the pull.sh echo says
+>echo "git pulling from https://github.com/JonJagger/cyber-dojo"
+And that is not true in this case
+
+The problem is the line
+>git pull --no-edit origin
+
+does not specify master
+
+$ git pull origin master
+
+Now it says tell me who you are
+
+$ git config --global user.email "jon@jaggersoft.com"
+$ git config --global user.name "Jon Jagger"
+
+Now
+$ git pull origin master
+
+From https://github.com/byran/cyber-dojo
+ * branch            master     -> FETCH_HEAD
+Auto-merging test/test-summary.txt
+CONFLICT (content): Merge conflict in test/test-summary.txt
+Auto-merging test/lib/host_disk_dir_test.rb
+Auto-merging test/lib/docker_volume_mount_runner_test.rb
+CONFLICT (content): Merge conflict in test/lib/docker_volume_mount_runner_test.rb
+Auto-merging test/lib/docker_git_clone_runner_test.rb
+CONFLICT (content): Merge conflict in test/lib/docker_git_clone_runner_test.rb
+CONFLICT (modify/delete): test/lib/disk_cache.json deleted in HEAD and modified in 7032ac7a063bbe4935093935d3481d41a13ffbe3. Version 7032ac7a063bbe4935093935d3481d41a13ffbe3 of test/lib/disk_cache.json left in tree.
+Auto-merging test/app_models/language_test.rb
+Auto-merging test/app_models/katas_test.rb
+Auto-merging test/app_models/kata_test.rb
+Auto-merging test/app_models/avatar_test.rb
+CONFLICT (content): Merge conflict in test/app_models/avatar_test.rb
+Auto-merging test/app_controllers/reverter_test.rb
+Auto-merging test/app_controllers/kata_test.rb
+Auto-merging languages/g++4.8.4/assert/manifest.json
+Auto-merging languages/g++4.8.4/assert/Dockerfile
+Auto-merging languages/g++4.8.4/Igloo/manifest.json
+Auto-merging languages/g++4.8.4/Igloo/Dockerfile
+Auto-merging languages/g++4.8.4/GoogleTest/manifest.json
+Auto-merging languages/g++4.8.4/GoogleTest/Dockerfile
+Auto-merging languages/g++4.8.4/CppUTest/manifest.json
+Auto-merging languages/g++4.8.4/CppUTest/Dockerfile
+Auto-merging languages/g++4.8.4/Catch/manifest.json
+Auto-merging languages/g++4.8.4/Catch/hiker.tests.cpp
+Auto-merging languages/g++4.8.4/Boost.Test/manifest.json
+Removing languages/g++4.8.1/build-docker-container.sh
+Removing languages/g++4.8.1/assert/build-docker-container.sh
+Removing languages/g++4.8.1/assert/Dockerfile
+Removing languages/g++4.8.1/Igloo/build-docker-container.sh
+Removing languages/g++4.8.1/GoogleTest/build-docker-container.sh
+Removing languages/g++4.8.1/Dockerfile
+Removing languages/g++4.8.1/CppUTest/build-docker-container.sh
+Removing languages/g++4.8.1/Catch/build-docker-container.sh
+Removing languages/g++4.8.1/Boost.Test/build-docker-container.sh
+Removing languages/g++4.8.1/Boost.Test/Dockerfile
+Removing languages/Scala/scalatest/scalatest_2.9.0-1.8.jar
+Removing languages/Groovy/Spock/spock-core-0.7-groovy-2.0.jar
+Removing languages/Groovy/Spock/junit-dep-4.10.jar
+Removing languages/Groovy/Spock/hamcrest-core-1.3.jar
+Removing languages/Groovy/Spock/groovy-all-2.0.5.jar
+Removing languages/Groovy/JUnit/junit-4.11.jar
+Removing languages/Groovy/JUnit/hamcrest-core-1.3.jar
+Removing languages/Groovy/JUnit/groovy-all-2.2.0.jar
+Removing languages/F#/NUnit/nunit.framework.dll
+Auto-merging app/lib/OutputColour.rb
+Auto-merging admin_scripts/docker_update_all.rb
+Automatic merge failed; fix conflicts and then commit the result.
+
+
+Let's look
+Conflicts first
+
+CONFLICT (content): Merge conflict in test/test-summary.txt
+CONFLICT (content): Merge conflict in test/lib/docker_volume_mount_runner_test.rb
+CONFLICT (content): Merge conflict in test/lib/docker_git_clone_runner_test.rb
+CONFLICT (modify/delete): test/lib/disk_cache.json deleted in HEAD and modified in 7032ac7a063bbe4935093935d3481d41a13ffbe3. Version 7032ac7a063bbe4935093935d3481d41a13ffbe3 of test/lib/disk_cache.json left in tree.
+CONFLICT (content): Merge conflict in test/app_models/avatar_test.rb
+
+
+CONFLICT (content): Merge conflict in test/test-summary.txt
+                    t      a  f  e  secs    t/sec     a/sec      cov
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+<<<<<<< HEAD
+app_helpers        14     32  0  0  0.02   662.53   1514.36   100.00
+app_lib           112   4871  0  0  0.61   184.71   8033.26   100.00
+app_models        120    436  0  0  0.61   196.59    714.28   100.00
+lib                95    559  0  0  4.25    22.34    131.44   100.00
+app_controllers    33    143  0  0 11.53     2.86     12.41   100.00
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+total             374   6041  0  0 17.02    21.97    354.94
+=======
+app_helpers        14     32  0  0  0.38    36.95     84.46   100.00
+app_lib           112   4871  0  0  0.68   165.65   7204.31   100.00
+app_models        112    371  0  0  0.76   147.07    487.18    99.77
+lib                95    584  0  0  8.32    11.41     70.15   100.00
+languages           2    981  0  0176.03     0.01      5.57    87.01
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+total             335   6839  0  0186.17     1.80     36.74
+>>>>>>> 7032ac7a063bbe4935093935d3481d41a13ffbe3
+
+
+Note the 0176.03 for languages. Need extra space there.
+
+
+CONFLICT (content): Merge conflict in test/lib/docker_volume_mount_runner_test.rb
+This needs to be from my repo
+How to checkout a single file
+
+http://stackoverflow.com/questions/7343870/how-can-i-check-out-a-single-file-from-github-without-cloning-the-whole-reposito
+
+curl -O https://raw.github.com/documentcloud/backbone/master/backbone-min.js
+
+So I'll need
+
+curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/test/lib/docker_volume_mount_runner_test.rb
+
+Trying that locally first.
+Yup that worked. Edited first line.
+
+curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/test/lib/docker_volume_mount_runner_test.rb
+
+Edited first line.
+
+Tried to run it
+$ docker_volume_mount_runner_test.rb
+Failed because ENV vars are not set.
+$ . admin_scripts/setup_host_runner_env_vars.sh
+$ docker_volume_mount_runner_test.rb
+Now they pass.
+
+$ cd admin_scripts
+$ ./cyberdojofoundation_docker_update_all.rb
+
+Worked fine.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+TODO: test-summary Note the 0176.03 for languages. Need extra space there.
+TODO: Check that ENV vars are set in test_wrapper.sh
+TODO: rename languages/cache.rb to refresh_cache.rb
+TODO: rename exercises/cache.rb to refresh_cache.rb 
+TODO: pull.sh echo says
+>echo "git pulling from https://github.com/JonJagger/cyber-dojo"
+And that wasn't true in this case
+
+
+
+
+
+
+
+
+
+
+
+
+

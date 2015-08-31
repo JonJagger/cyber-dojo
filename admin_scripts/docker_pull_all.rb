@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+# Issues unconditional 'docker pull <image_name> for all languages.
+
 require 'json'
 
 CYBER_DOJO_ROOT_DIR = '/var/www/cyber-dojo'
