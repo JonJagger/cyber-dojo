@@ -155,6 +155,7 @@ def update_images
     print_exit_status
 
     if image != update_to
+      print "removing #{image}"
       output = `docker rmi #{image} 2>&1`
       print_exit_status
     end
