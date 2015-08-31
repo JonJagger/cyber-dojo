@@ -155,7 +155,32 @@ Worked fine.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-TODO: test-summary Note the 0176.03 for languages. Need extra space there.
+TODO: remove support_filenames from Language.rb
+TODO: remove sym-linking from Sandbox.start()
+TODO: remove symlink() from lib/HostDisk.rb
+TODO: remove symlink() from test/lib/DiskFake.rb
+TODO: remove 4 lines from lib/DockerVolumeMountRunner.rb
+    language = sandbox.avatar.kata.language
+    read_only = 'ro'
+    language_volume = "#{language.path}:#{language.path}:#{read_only}"
+    " -v #{quoted(language_volume)}"
+
+TODO: languages/readme.txt will need editing
+      Lose symlinked languages info
+      s/cyberdojo/cyberdojofoundation/
+      username = jon.jagger@cyber-dojo.org
+      
+TODO: blog pages mentioning support_files
+http://blog.cyber-dojo.org/2014/09/cyber-dojo-languages-manifest-json-entries-explained.html
+remove support_filenames from example manifest.json
+remove support_filenames: [string,string] section
+
+http://blog.cyber-dojo.org/2014/09/overview-of-how-cyber-dojos-language-docker-containers-work.html
+s/cyberdojo/cyberdojofoundation/
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - -
+minor
+
 TODO: Check that ENV vars are set in test_wrapper.sh
 TODO: rename languages/cache.rb to refresh_cache.rb
 TODO: rename exercises/cache.rb to refresh_cache.rb 
@@ -164,6 +189,20 @@ TODO: pull.sh echo says
 And that wasn't true in this case
 
 
+TODO: test-summary 
+Note the 0176.03 for languages. 
+Need extra space 0 176.03
+
+                    t      a  f  e  secs    t/sec     a/sec      cov
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ total             374   6041  0  0 17.02    21.97    354.94
+=======
+app_helpers        14     32  0  0  0.38    36.95     84.46   100.00
+app_lib           112   4871  0  0  0.68   165.65   7204.31   100.00
+app_models        112    371  0  0  0.76   147.07    487.18    99.77
+lib                95    584  0  0  8.32    11.41     70.15   100.00
+languages           2    981  0  0176.03     0.01      5.57    87.01
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 
