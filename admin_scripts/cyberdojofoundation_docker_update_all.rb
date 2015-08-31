@@ -134,9 +134,9 @@ end
 
 def print_exit_status
   if $?.exitstatus == 0
-    print " - OK"
+    print " - OK\n"
   else
-    print " - FAILED"
+    print " - FAILED\n"
   end
 end
 
@@ -153,12 +153,10 @@ def update_images
 
     output = `docker pull #{update_to} 2>&1`
     print_exit_status
-    print "\n"
 
     if image != update_to
       output = `docker rmi #{image} 2>&1`
       print_exit_status
-      print "\n"
     end
 
   end
@@ -170,12 +168,19 @@ end
 
 def update_cyber_dojo_docker_images
   console_break
-  puts "Pulling latest images"
-  console_break
 
-  `service apache2 stop`
+  print "Stopping apache"
+  `service apache2 stop 2>&1`
+  print_exit_status
+
+  puts "Pulling latest images"
   update_images
-  `service apache2 start`
+
+  print "Starting apache"
+  `service apache2 start 2>&1`
+  print_exit_status
+
+  console_break
 end
 
 if ($0 == __FILE__)
