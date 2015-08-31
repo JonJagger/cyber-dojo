@@ -178,12 +178,29 @@ remove support_filenames: [string,string] section
 http://blog.cyber-dojo.org/2014/09/overview-of-how-cyber-dojos-language-docker-containers-work.html
 s/cyberdojo/cyberdojofoundation/
 
+http://blog.cyber-dojo.org/2014/09/about-cyber-dojo.html
+links to cyberdojo docker index
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 minor
 
 TODO: Check that ENV vars are set in test_wrapper.sh
 TODO: rename languages/cache.rb to refresh_cache.rb
+      also mentioned at bottom of admin_scripts/docker_pull_all.rb
+      also mentioned at bottom of http://blog.cyber-dojo.org/2015/01/setting-up-your-own-digital-ocean-cyber.html
+      
 TODO: rename exercises/cache.rb to refresh_cache.rb 
+      also mentioned at bottom of http://blog.cyber-dojo.org/2015/01/setting-up-your-own-digital-ocean-cyber.html
+
+TODO: why does bottom of http://blog.cyber-dojo.org/2015/01/setting-up-your-own-digital-ocean-cyber.html
+      says to update the caches and then chown the cache?
+      why doesn't the command do the chown itself?
+      blog should simply say to do this...
+      $ cd /var/www/cyber-dojo/languages
+      $ ./refresh_cache.rb
+      $ cd /var/www/cyber-dojo/exercises
+      $ ./refresh_cache.rb
+
 TODO: pull.sh echo says
 >echo "git pulling from https://github.com/JonJagger/cyber-dojo"
 And that wasn't true in this case
