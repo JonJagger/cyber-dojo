@@ -8,6 +8,6 @@
   "filename_extension" : ".pl",
   "display_name": "Perl, Test::Simple",
   "unit_test_framework": "perl_test_simple",
-  "image_name": "cyberdojo/perl-5.14.2_test_simple",
+  "image_name": "cyberdojofoundation/perl-5.18.2_test_simple",
   "tab_size": 4
 }
