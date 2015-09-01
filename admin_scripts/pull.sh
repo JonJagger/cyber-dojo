@@ -21,7 +21,7 @@ MY_TIME_STAMP_BEFORE=`stat -c %y $cyberDojoHome/admin_scripts/pull.sh`
 # *before* the git-pull updates their languages/ sub-folder.
 # This minimizes elapsed time when state is 'torn'.
 dockerUpdate=cyberdojofoundation_docker_update_all.rb
-cd admin_scripts
+cd tmp
 curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/admin_scripts/$dockerUpdate
 chmod +x $dockerUpdate
 ./$dockerUpdate
