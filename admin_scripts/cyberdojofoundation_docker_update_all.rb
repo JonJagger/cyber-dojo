@@ -110,10 +110,10 @@ def conversion
 # Rust
     foundation("rust-1.0.0",                       "rust-1.2.0"),
     foundation("rust-1.0.0_test",                  "rust-1.2.0_test"),
+=end
 # Scala
     foundation("scala-2.9.2",                      "scala-2.11.7"),
     foundation("scala-2.9.2_scalatest",            "scala-2.11.7_scalatest"),
-=end
 # VisualBasic
     foundation("visual_basic-0.5943"),
     foundation("visual_basic-0.5943_nunit")

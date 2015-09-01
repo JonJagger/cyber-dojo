@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/scala-2.9.2  .
+docker build -t cyberdojofoundation/scala-2.11.7  .
