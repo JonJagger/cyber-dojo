@@ -1,0 +1,11 @@
+
+{
+  "visible_filenames": [
+    "hiker.d",
+    "cyber-dojo.sh"
+  ],
+  "filename_extension" : ".d",
+  "display_name": "D, unittest",
+  "unit_test_framework": "d_unittest",
+  "image_name": "cyberdojofoundation/d-4.8.4_unittest"
+}

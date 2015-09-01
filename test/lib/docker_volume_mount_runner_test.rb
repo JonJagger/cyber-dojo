@@ -1,4 +1,4 @@
-#!/usr/bin/env ../test_wrapper.sh lib
+#!/bin/bash ../test_wrapper.sh
 
 require_relative 'lib_test_base'
 require_relative 'DockerTestHelpers'
@@ -34,13 +34,13 @@ class DockerVolumeMountRunnerTests < LibTestBase
 
   test 'runnable?() uses [docker images] not run as sudo' do
     stub_docker_installed
-    docker = make_docker_runner    
+    docker = make_docker_runner
     stub_docker_images_python_py_test
     assert docker.runnable?(languages['Python-py.test'])
     refute docker.runnable?(languages['C-assert'])
     assert_equal 'docker images', @bash.spied[1]
   end
-    
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'started(avatar) is a no-op' do
@@ -51,7 +51,7 @@ class DockerVolumeMountRunnerTests < LibTestBase
     after = @bash.spied.clone
     assert_equal before, after
   end
-    
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'run() completes and does not timeout - exact bash cmd interaction' do
@@ -62,8 +62,8 @@ class DockerVolumeMountRunnerTests < LibTestBase
     output = docker.run(@lion.sandbox, cyber_dojo_cmd, max_seconds)
     assert_equal 'blah', output, 'output'
     assert_bash_commands_spied
-  end    
-  
+  end
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'run() times out - exact base cmd interaction' do
@@ -81,9 +81,9 @@ class DockerVolumeMountRunnerTests < LibTestBase
   def make_docker_runner
     DockerVolumeMountRunner.new(@bash,cid_filename)
   end
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    
+
   def assert_bash_commands_spied
     spied = @bash.spied
     # 0 docker info from initialize()

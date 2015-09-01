@@ -1,4 +1,4 @@
-#!/usr/bin/env ../test_wrapper.sh lib
+#!/bin/bash ../test_wrapper.sh
 
 require_relative 'lib_test_base'
 require_relative 'DockerTestHelpers'
@@ -41,7 +41,7 @@ class DockerGitCloneRunnerTests < LibTestBase
     refute docker.runnable?(languages['C-assert']),       'c_assert'
     assert_equal sudoi('docker images'), @bash.spied[1]
   end
-    
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'started(avatar) clones avatar repo and pushes it to git server' do
@@ -55,7 +55,7 @@ class DockerGitCloneRunnerTests < LibTestBase
     assert bash_cmd.include?('sudo -u cyber-dojo scp -r lion.git'), 'copies it to git server'
     assert bash_cmd.include?('git-daemon-export-ok'), 'sets git-daemon-export-ok'
     assert bash_cmd.include?('git remote add master'), 'sets up git remote master 1'
-    assert bash_cmd.include?('sudo -u cyber-dojo git push --set-upstream master master'), 'sets up git remote master 1'    
+    assert bash_cmd.include?('sudo -u cyber-dojo git push --set-upstream master master'), 'sets up git remote master 1'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -79,7 +79,7 @@ class DockerGitCloneRunnerTests < LibTestBase
     assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds."), 'Unable'
     assert_bash_commands_spied
   end
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def make_docker_runner
@@ -150,5 +150,5 @@ class DockerGitCloneRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def sudoi(s); 'sudo -u cyber-dojo -i' + ' ' + s; end
-  
+
 end

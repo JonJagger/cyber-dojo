@@ -1,8 +1,8 @@
 #!/bin/bash
 
-./../admin_scripts/make_disk_cache.rb
+./lib/make_disk_stub_cache.rb
 
-.  ./../admin_scripts/setup_host_runner_env_vars.sh
+.  ./../admin_scripts/setup_docker_volume_mount_runner_env_vars.sh
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -12,9 +12,9 @@ modules=(
   app_lib 
   app_models 
   lib 
-  # languages
-  # integration 
-  app_controllers 
+  languages
+#  integration 
+#  app_controllers 
 )
 
 echo

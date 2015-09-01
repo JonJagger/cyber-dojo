@@ -1,0 +1,13 @@
+
+{
+  "visible_filenames": [
+    "Hiker.java",
+    "HikerTest.java",
+    "cyber-dojo.sh",
+    "HikerTest.life_the_universe_and_everything.approved.txt"
+  ],
+  "filename_extension" : ".java",
+  "display_name": "Java, Approval",
+  "unit_test_framework": "junit",
+  "image_name": "cyberdojofoundation/java-1.8_approval"
+}

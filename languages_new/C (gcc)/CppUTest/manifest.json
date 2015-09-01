@@ -1,0 +1,20 @@
+{
+    "visible_filenames": [
+       "AllTests.cpp",
+       "cyber-dojo.sh",
+       "untitled.c",
+       "untitled.h",
+       "untitledTest.cpp",
+       "makefile"
+    ],
+    "highlight_filenames": [
+       "untitled.c",
+       "untitled.h",
+       "untitledTest.cpp"
+    ],
+    "filename_extension" : ".c",
+    "unit_test_framework":  "cpputest",
+    "display_name": "C (gcc), CppUTest",
+    "progress_regexs" : [ "Errors \(.* ms\)", "OK \(.* ms\)" ],
+    "image_name": "cyberdojofoundation/gcc-4.8.4_cpputest"
+}

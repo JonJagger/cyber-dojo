@@ -50,10 +50,10 @@ module DockerTestHelpers # mix-in
 
   def docker_images_python_py_test
     [
-      'REPOSITORY                       TAG     IMAGE ID      CREATED        VIRTUAL SIZE',
-      '<none>                           <none>  b7253690a1dd  2 weeks ago    1.266 GB',
-      'cyberdojo/python-3.3.5_pytest    latest  d9603e342b22  13 months ago  692.9 MB',
-      '<none>                           <none>  0ebf80aa0a8a  2 weeks ago    569.8 MB'
+      'REPOSITORY                                 TAG     IMAGE ID      CREATED        VIRTUAL SIZE',
+      '<none>                                     <none>  b7253690a1dd  2 weeks ago    1.266 GB',
+      'cyberdojofoundation/python-3.3.5_pytest    latest  d9603e342b22  13 months ago  692.9 MB',
+      '<none>                                     <none>  0ebf80aa0a8a  2 weeks ago    569.8 MB'
     ].join("\n")
   end
 

@@ -1,0 +1,14 @@
+
+{
+  "visible_filenames": [
+    "DeepThought.java",
+    "DeepThoughtTest.java",
+    "AnswerSeeker.java",
+    "cyber-dojo.sh"
+  ],
+
+  "filename_extension": ".java",
+  "display_name": "Java, JMock",
+  "unit_test_framework": "junit",
+  "image_name": "cyberdojofoundation/java-1.8_jmock"
+}

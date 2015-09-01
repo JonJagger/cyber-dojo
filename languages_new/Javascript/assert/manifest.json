@@ -1,0 +1,12 @@
+{
+  "visible_filenames": [
+    "hikerTest.js",
+    "hiker.js",
+    "cyber-dojo.sh"
+  ],
+  "filename_extension" : ".js",
+  "display_name": "Javascript, assert",
+  "unit_test_framework": "node",
+  "image_name": "cyberdojofoundation/javascript-0.10.25_assert",
+  "tab_size": 2
+}

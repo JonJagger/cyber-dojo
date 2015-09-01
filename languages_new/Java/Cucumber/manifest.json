@@ -1,0 +1,14 @@
+
+{
+  "visible_filenames": [
+    "Hiker.java",
+    "HikerStepDef.java",
+    "Hiker.feature",
+    "RunCukesTest.java",
+    "cyber-dojo.sh"
+  ],
+  "filename_extension" : ".java",
+  "display_name": "Java, Cucumber",
+  "unit_test_framework": "java_cucumber",
+  "image_name": "cyberdojofoundation/java-1.8_cucumber"
+}
