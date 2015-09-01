@@ -69,10 +69,10 @@ def conversion
     foundation("groovy-2.2.0",                    "groovy-2.4.4"),
     foundation("groovy-2.2.0_spock",              "groovy-2.4.4_spock"),
     foundation("groovy-2.2.0_junit",              "groovy-2.4.4_junit"),
+=end
 # Haskell
     foundation("haskell-7.6.3"),
     foundation("haskell-7.6.3_hunit"),
-=end
 # Java
     foundation("java-1.8"),
     foundation("java-1.8_approval"),

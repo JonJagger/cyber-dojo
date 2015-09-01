@@ -1,2 +1,2 @@
-FROM       cyberdojo/haskell-7.6.3
+FROM       cyberdojofoundation/haskell-7.6.3
 MAINTAINER Jon Jagger <jon@jaggersoft.com>

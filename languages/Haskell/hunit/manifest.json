@@ -7,6 +7,6 @@
   "filename_extension" : ".hs",
   "display_name": "Haskell, hunit",
   "unit_test_framework": "hunit",
-  "image_name": "cyberdojo/haskell-7.6.3_hunit",
+  "image_name": "cyberdojofoundation/haskell-7.6.3_hunit",
   "tab_size": 4
 }
