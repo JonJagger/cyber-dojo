@@ -10,5 +10,5 @@
   "filename_extension" : ".cpp",
   "display_name": "C++ (g++), GoogleMock",
   "unit_test_framework": "google_test",
-  "image_name": "cyberdojo/gpp-4.9_googlemock"
+  "image_name": "cyberdojofoundation/gpp-4.9_googlemock"
 }

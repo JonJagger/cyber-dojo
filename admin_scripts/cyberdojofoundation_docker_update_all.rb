@@ -59,10 +59,10 @@ def conversion
     foundation("gpp-4.8.1_cpputest",              "gpp-4.8.4_cpputest"),
     foundation("gpp-4.8.1_googletest",            "gpp-4.8.4_googletest"),
     foundation("gpp-4.8.1_igloo",                 "gpp-4.8.4_igloo"),
+=end
 # g++4.9
     foundation("gpp-4.9"),
     foundation("gpp-4.9_googlemock"),
-=end
 # Go
     foundation("go-1.1.2",                        "go-1.2.1"),
     foundation("go-1.1.2_testing",                "go-1.2.1_testing"),
