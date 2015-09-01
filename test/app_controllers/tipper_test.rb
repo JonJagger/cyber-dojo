@@ -1,4 +1,4 @@
-#!/usr/bin/env ../test_wrapper.sh app/controllers
+#!/bin/bash ../test_wrapper.sh
 
 require_relative 'controller_test_base'
 

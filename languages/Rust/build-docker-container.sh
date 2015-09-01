@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/rust-1.0.0 .
+docker build -t cyberdojofoundation/rust-1.2.0 .

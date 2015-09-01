@@ -8,6 +8,6 @@
   "filename_extension" : ".go",
   "display_name": "Go, testing",
   "unit_test_framework": "go_testing",
-  "image_name": "cyberdojo/go-1.1.2_testing",
+  "image_name": "cyberdojofoundation/go-1.2.1_testing",
   "tab_size": 4
 }

@@ -1,4 +1,4 @@
-FROM       cyberdojo/csharp-2.10.8.1_nunit
+FROM       cyberdojofoundation/csharp-2.10.8.1_nunit
 MAINTAINER Seb Rose <seb@claysnow.co.uk>
 
 RUN apt-get -y install wget
@@ -19,3 +19,6 @@ RUN gacutil -i TechTalk.SpecFlow.Parser.dll -package SpecFlow
 RUN gacutil -i TechTalk.SpecFlow.Reporting.dll -package SpecFlow
 RUN gacutil -i TechTalk.SpecFlow.Utils.dll  -package SpecFlow
 WORKDIR ..
+
+ADD specflow.exe /specflow/
+

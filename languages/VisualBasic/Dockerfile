@@ -1,4 +1,4 @@
-FROM       ubuntu:14.04  
+FROM       cyberdojofoundation/build-essential
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 # trusty

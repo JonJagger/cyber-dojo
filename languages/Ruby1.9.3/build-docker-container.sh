@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/ruby-1.9.3  .
+docker build -t cyberdojofoundation/ruby-1.9.3  .

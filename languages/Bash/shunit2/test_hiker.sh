@@ -13,4 +13,4 @@ oneTimeSetUp()
 }
 
 # load and run shUnit2
-. ./shunit2
+. shunit2

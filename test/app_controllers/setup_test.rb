@@ -1,4 +1,4 @@
-#!/usr/bin/env ../test_wrapper.sh app/controllers
+#!/bin/bash ../test_wrapper.sh
 
 require_relative 'controller_test_base'
 
@@ -107,7 +107,7 @@ class SetupControllerTest < ControllerTestBase
         :test_dir_name => 'assert'
       },
       'C++ (g++), assert' => {
-        :dir_name => 'g++4.8.1',
+        :dir_name => 'g++4.8.4',
         :test_dir_name => 'assert'
       }
     }

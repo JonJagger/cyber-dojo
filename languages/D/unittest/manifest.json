@@ -7,5 +7,5 @@
   "filename_extension" : ".d",
   "display_name": "D, unittest",
   "unit_test_framework": "d_unittest",
-  "image_name": "cyberdojo/d-4.8.1_unittest"
+  "image_name": "cyberdojofoundation/d-4.8.4_unittest"
 }

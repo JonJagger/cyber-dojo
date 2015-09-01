@@ -8,6 +8,6 @@
   "filename_extension" : ".rb",
   "display_name": "Ruby, RSpec",
   "unit_test_framework": "ruby_rspec",
-  "image_name": "cyberdojo/ruby-1.9.3_rspec",
+  "image_name": "cyberdojofoundation/ruby-1.9.3_rspec",
   "tab_size": 2
 }

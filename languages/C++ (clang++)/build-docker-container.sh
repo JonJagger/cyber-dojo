@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/clang-3.6.0 .
+docker build -t cyberdojofoundation/clang-3.6.0 .

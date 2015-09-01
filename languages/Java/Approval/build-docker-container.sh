@@ -1,3 +1,4 @@
 #!/bin/bash
 
-docker build -t cyberdojo/java-1.8_approval .
+docker build -t cyberdojofoundation/java-1.8_approval .
+

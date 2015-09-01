@@ -1,4 +1,4 @@
-FROM       cyberdojo/build-essential
+FROM       cyberdojofoundation/build-essential
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 
@@ -11,3 +11,6 @@ WORKDIR BCPL/cintcode
 RUN . os/linux/setbcplenv
 RUN make clean
 RUN make -f MakefileRaspi sys
+
+ENV HOME=/
+

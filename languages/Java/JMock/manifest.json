@@ -7,14 +7,8 @@
     "cyber-dojo.sh"
   ],
 
-  "support_filenames": [
-    "junit-4.11.jar",
-    "jmock-2.6.0.jar",
-    "jmock-junit4-2.6.0.jar"
-  ],
-
   "filename_extension": ".java",
   "display_name": "Java, JMock",
   "unit_test_framework": "junit",
-  "image_name": "cyberdojo/java-1.8_jmock"
+  "image_name": "cyberdojofoundation/java-1.8_jmock"
 }

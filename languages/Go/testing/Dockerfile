@@ -1,2 +1,2 @@
-FROM       cyberdojo/go-1.1.2
+FROM       cyberdojofoundation/go-1.2.1
 MAINTAINER Jon Jagger <jon@jaggersoft.com>

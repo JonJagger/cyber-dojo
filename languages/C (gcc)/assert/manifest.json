@@ -10,5 +10,5 @@
   "filename_extension" : ".c",
   "display_name": "C (gcc), assert",
   "unit_test_framework": "cassert",
-  "image_name": "cyberdojo/gcc-4.8.1_assert"
+  "image_name": "cyberdojofoundation/gcc-4.8.4_assert"
 }

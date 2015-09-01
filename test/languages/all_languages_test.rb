@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/bin/bash ../test_wrapper.sh
 
 require_relative 'languages_test_base'
 require_relative 'one_language_checker'

@@ -1,4 +1,4 @@
-FROM       cyberdojo/gpp-4.9
+FROM       cyberdojofoundation/gpp-4.9
 MAINTAINER Michel Estermann <estermann.michel@gmail.com>
 
 RUN apt-get update

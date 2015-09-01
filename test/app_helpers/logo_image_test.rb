@@ -1,4 +1,4 @@
-#!/usr/bin/env ../test_wrapper.sh app/helpers
+#!/bin/bash ../test_wrapper.sh
 
 require_relative 'app_helpers_test_base'
 

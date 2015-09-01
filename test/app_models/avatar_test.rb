@@ -1,4 +1,4 @@
-#!/usr/bin/env ../test_wrapper.sh app/models
+#!/bin/bash ../test_wrapper.sh
 
 require_relative 'model_test_base'
 
@@ -30,7 +30,7 @@ class AvatarTests < ModelTestBase
     avatar = kata.start_avatar
     assert_equal kata, avatar.kata
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "after avatar is created its sandbox contains each visible_file" do
@@ -40,7 +40,7 @@ class AvatarTests < ModelTestBase
       assert_equal content, avatar.sandbox.dir.read(filename)
     end
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
@@ -98,13 +98,13 @@ class AvatarTests < ModelTestBase
     assert avatar.visible_files.keys.include? 'output'
     assert_equal '',avatar.visible_files['output']
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'avatar creation saves' +
           ' each visible_file into avatar/sandbox,' +
           ' and empty avatar/increments.json' do
-    language = languages['Java-JUnit']    
+    language = languages['Java-JUnit']
     exercise = exercises['Fizz_Buzz']
     kata = katas.create_kata(language, exercise)
     avatar = kata.start_avatar
@@ -118,7 +118,7 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'after test() output-file is saved in sandbox ' +
-       'and output is inserted into the visible_files argument' do         
+       'and output is inserted into the visible_files argument' do
     kata = make_kata
     avatar = kata.start_avatar
     code_filename = 'hiker.c'
@@ -137,7 +137,7 @@ class AvatarTests < ModelTestBase
       :new => [ ]
     }
     runner.stub_output('helloWorld')
-    assert !visible_files.keys.include?('output')    
+    assert !visible_files.keys.include?('output')
     _,output = avatar.test(delta, visible_files)
     assert visible_files.keys.include?('output')
 
@@ -353,13 +353,13 @@ class AvatarTests < ModelTestBase
       :unchanged => [ ],
       :deleted => [ ],
       :new => [ ]
-    }    
+    }
     delta[:changed].each do |filename|
       assert_equal language.visible_files[filename], sandbox.dir.read(filename)
       assert_not_equal language.visible_files[filename], visible_files[filename]
     end
     runner.stub_output('')
-    avatar.test(delta, visible_files)    
+    avatar.test(delta, visible_files)
     delta[:changed].each do |filename|
       assert_equal visible_files[filename], sandbox.dir.read(filename)
     end
@@ -369,9 +369,9 @@ class AvatarTests < ModelTestBase
 
   test 'test():delta[:unchanged] files are not saved' do
     kata = make_kata
-    language = kata.language  
+    language = kata.language
     avatar = kata.start_avatar
-    sandbox = avatar.sandbox  
+    sandbox = avatar.sandbox
     code_filename = 'abc.c'
     test_filename = 'abc.tests.c'
     filenames = language.visible_files.keys
@@ -382,18 +382,18 @@ class AvatarTests < ModelTestBase
       'cyber-dojo.sh' => 'make'
     }
     delta = {
-      :changed => [ ], 
+      :changed => [ ],
       :unchanged => [ code_filename, test_filename ],
       :deleted => [ ],
       :new => [ ]
-    }  
+    }
     runner.stub_output('')
     avatar.test(delta, visible_files)
     delta[:unchanged].each do |filename|
       assert !sandbox.dir.exists?(filename)
     end
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'test():delta[:new] files are saved and git added' do
@@ -412,18 +412,18 @@ class AvatarTests < ModelTestBase
       :new => [ new_filename ]
     }
 
-    assert !git_log_include?(avatar.sandbox.path, ['add', "#{new_filename}"])    
+    assert !git_log_include?(avatar.sandbox.path, ['add', "#{new_filename}"])
     delta[:new].each do |filename|
       assert !sandbox.dir.exists?(filename)
-    end           
-    
+    end
+
     runner.stub_output('')
     avatar.test(delta, visible_files)
-    
-    assert git_log_include?(avatar.sandbox.path, ['add', "#{new_filename}"])    
+
+    assert git_log_include?(avatar.sandbox.path, ['add', "#{new_filename}"])
     delta[:new].each do |filename|
       assert sandbox.dir.exists?(filename)
-      assert_equal visible_files[filename], sandbox.dir.read(filename)      
+      assert_equal visible_files[filename], sandbox.dir.read(filename)
     end
   end
 
@@ -444,13 +444,13 @@ class AvatarTests < ModelTestBase
       :new => [ ]
     }
 
-    runner.stub_output('')    
+    runner.stub_output('')
     avatar.test(delta, visible_files)
 
     git_log = git.log[avatar.sandbox.path]
     assert git_log.include?([ 'rm', 'wibble.cs' ]), git_log.inspect
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'tag.diff' do
@@ -553,8 +553,8 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - -
 
   def git_log_include?(path,find)
-    git.log[path].any?{|entry| entry == find}    
-  end  
+    git.log[path].any?{|entry| entry == find}
+  end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

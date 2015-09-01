@@ -1,2 +1,2 @@
-FROM       cyberdojo/rust-1.0.0
+FROM       cyberdojofoundation/rust-1.2.0
 MAINTAINER Jon Jagger <jon@jaggersoft.com>

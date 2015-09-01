@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/javascript-0.10.15  .
+docker build -t cyberdojofoundation/javascript-0.10.25  .

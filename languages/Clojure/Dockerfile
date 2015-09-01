@@ -1,3 +1,5 @@
-FROM       cyberdojo/java-1.8
+FROM       cyberdojofoundation/java-1.8
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
+
+ADD clojure-1.4.0.jar /clojure/
 

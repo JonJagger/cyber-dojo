@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/fsharp-3.0  .
+docker build -t cyberdojofoundation/fsharp-3.0  .

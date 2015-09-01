@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/perl-5.14.2_test_simple .
+docker build -t cyberdojofoundation/perl-5.18.2_test_simple .

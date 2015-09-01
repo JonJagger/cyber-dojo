@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/erlang-5.10.2  .
+docker build -t cyberdojofoundation/erlang-5.10.4  .

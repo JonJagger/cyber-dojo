@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/gpp-4.9  .
+docker build -t cyberdojofoundation/gpp-4.9  .

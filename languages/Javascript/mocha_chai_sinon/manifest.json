@@ -10,6 +10,6 @@
   "filename_extension" : ".js",
   "display_name": "Javascript, Mocha+chai+sinon",
   "unit_test_framework": "mocha",
-  "image_name": "cyberdojo/javascript-mocha",
+  "image_name": "cyberdojofoundation/javascript-0.10.25_mocha_chai_sinon",
   "tab_size": 2
 }

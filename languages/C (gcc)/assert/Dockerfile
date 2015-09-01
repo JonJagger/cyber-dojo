@@ -1,3 +1,3 @@
-FROM       cyberdojo/gcc-4.8.1
+FROM       cyberdojofoundation/gcc-4.8.4
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 

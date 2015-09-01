@@ -1,0 +1,15 @@
+
+{
+  "visible_filenames": [
+    "hiker.tests.cpp",
+    "hiker.cpp",
+    "hiker.hpp",
+    "main.cpp",
+    "makefile",
+    "cyber-dojo.sh"
+  ],
+  "filename_extension" : ".cpp",
+  "display_name": "C++ (g++), Igloo",
+  "unit_test_framework": "cppigloo",
+  "image_name": "cyberdojofoundation/gpp-4.8.4_igloo"
+}

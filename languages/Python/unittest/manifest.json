@@ -8,6 +8,6 @@
   "filename_extension" : ".py",
   "display_name": "Python, unittest",
   "unit_test_framework": "python_unittest",
-  "image_name": "cyberdojo/python-3.3.5_unittest",
+  "image_name": "cyberdojofoundation/python-3.3.5_unittest",
   "tab_size": 4
 }

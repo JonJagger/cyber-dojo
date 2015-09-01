@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/bcpl .
+docker build -t cyberdojofoundation/bcpl .

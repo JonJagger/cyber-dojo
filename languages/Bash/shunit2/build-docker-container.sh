@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker build -t cyberdojo/bash_shunit2 .
+docker build -t cyberdojofoundation/bash_shunit2 .
 
