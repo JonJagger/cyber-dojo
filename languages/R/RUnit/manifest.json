@@ -8,5 +8,5 @@
   "filename_extension" : ".R",
   "display_name": "R, RUnit",
   "unit_test_framework": "runit",
-  "image_name": "cyberdojo/r-3.0.1_runit"
+  "image_name": "cyberdojofoundation/r-3.0.1_runit"
 }
