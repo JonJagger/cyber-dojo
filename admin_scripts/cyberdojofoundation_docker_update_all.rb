@@ -6,6 +6,7 @@ end
 
 def conversion
   [
+=begin
 # Asm
     foundation("nasm-2.10.0"                      "nasm-2.10.09"),
     foundation("nasm-2.10.0_assert",              "nasm-2.10.09_assert"),
@@ -109,6 +110,7 @@ def conversion
 # Rust
     foundation("rust-1.0.0",                       "rust-1.2.0"),
     foundation("rust-1.0.0_test",                  "rust-1.2.0_test"),
+=end
 # Scala
     foundation("scala-2.9.2",                      "scala-2.11.7"),
     foundation("scala-2.9.2_scalatest",            "scala-2.11.7_scalatest"),
@@ -121,69 +123,48 @@ end
 def installed_images
   output = `docker images 2>&1`
   lines = output.split("\n").select{|line| line.start_with?('cyberdojo')}
-  lines.collect{|line| line.split[0]}.sort
+  lines.collect{|line| line.split[0]}.sort.uniq
 end
 
-def find_latest_image_name(image)
-  index = conversion.find_index{|p| p[0]===image}
-  if index != nil
-    image = find_latest_image_name(conversion[index][1])
+def latest(image_name)
+  index = conversion.find_index{|p| p[0]===image_name}
+  if !index.nil?
+    image_name = latest(conversion[index][1])
   end
-  image
+  image_name
 end
 
 def print_exit_status
-  if $?.exitstatus == 0
-    print " - OK\n"
-  else
-    print " - FAILED\n"
-  end
+  print " - " + ($?.exitstatus == 0 ? "OK" : "FAILED") + "\n"
 end
 
 def update_images
-  images = installed_images
-  images.each do |image|
-    print image
+  installed_images.each do |image_name|
+    print image_name
+    update_to = latest(image_name)
+    print " -> #{update_to}" if image_name != update_to
 
-    update_to = find_latest_image_name(image)
-
-    if image != update_to
-      print " -> #{update_to}"
-    end
-
-    output = `docker pull #{update_to} 2>&1`
+    `docker pull #{update_to} 2>&1`
     print_exit_status
 
-    if image != update_to
-      print "removing #{image}"
-      output = `docker rmi #{image} 2>&1`
-      print_exit_status
-    end
+    #if image_name != update_to
+    #  print "removing #{image_name}"
+    #  output = `docker rmi #{image_name} 2>&1`
+    #  print_exit_status
+    #end
 
   end
 end
 
-def console_break
-  puts "--------------------------------------------------------------------------------"
+def line
+  '-'*80
 end
 
 def update_cyber_dojo_docker_images
-  console_break
-
-  print "Stopping apache"
-  `service apache2 stop 2>&1`
-  print_exit_status
-
+  p line
   puts "Pulling latest images"
   update_images
-
-  print "Starting apache"
-  `service apache2 start 2>&1`
-  print_exit_status
-
-  console_break
+  p line
 end
 
-if ($0 == __FILE__)
-  update_cyber_dojo_docker_images
-end
+update_cyber_dojo_docker_images
