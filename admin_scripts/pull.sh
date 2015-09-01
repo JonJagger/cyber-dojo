@@ -16,10 +16,20 @@ GIT_SHA1_BEFORE=`git rev-parse --verify HEAD`
 # store the time-stamp of this file before doing git-pull
 MY_TIME_STAMP_BEFORE=`stat -c %y $cyberDojoHome/admin_scripts/pull.sh`
 
-# get latest source from https://github.com/JonJagger/cyber-dojo
-# if it asks for a password just hit return
+# get cyberdojofoundation_docker_update_all.rb and run it *before* the
+# git pull below. This ensures new docker-containers are docker-pulled
+# *before* the git-pull updates their languages/ sub-folder.
+# This minimizes elapsed time when state is 'torn'.
+dockerUpdate=cyberdojofoundation_docker_update_all.rb
+cd admin_scripts
+curl -O https://raw.githubusercontent.com/byran/cyber-dojo/master/admin_scripts/$dockerUpdate
+chmod +x $dockerUpdate
+./$dockerUpdate
+
+# get latest source
 echo "git pulling from https://github.com/JonJagger/cyber-dojo"
-git pull --no-edit origin
+cd $cyberDojoHome
+git pull --no-edit origin master
 ret=$?
 if [ $ret -ne 0 ]; then
   exit
@@ -80,5 +90,7 @@ if [ "$MY_TIME_STAMP_BEFORE" != "$MY_TIME_STAMP_AFTER" ]; then
   echo ">>>>>>>>> ALERT <<<<<<<<<"
 fi
 
-echo "If you want to revert to the previous version the"
-echo "git sha1 before the update was $GIT_SHA1_BEFORE"
+echo
+echo "If something went wrong and you want to revert to the previous version.."
+echo "$ git checkout $GIT_SHA1_BEFORE"
+echo

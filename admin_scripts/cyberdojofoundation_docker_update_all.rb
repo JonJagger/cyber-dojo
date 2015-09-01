@@ -110,13 +110,13 @@ def conversion
 # Rust
     foundation("rust-1.0.0",                       "rust-1.2.0"),
     foundation("rust-1.0.0_test",                  "rust-1.2.0_test"),
-=end
 # Scala
     foundation("scala-2.9.2",                      "scala-2.11.7"),
     foundation("scala-2.9.2_scalatest",            "scala-2.11.7_scalatest"),
 # VisualBasic
     foundation("visual_basic-0.5943"),
     foundation("visual_basic-0.5943_nunit")
+=end
   ]
 end
 
@@ -124,14 +124,6 @@ def installed_images
   output = `docker images 2>&1`
   lines = output.split("\n").select{|line| line.start_with?('cyberdojo/')}
   lines.collect{|line| line.split[0]}.sort.uniq
-end
-
-def latest(image_name)
-  index = conversion.find_index{|p| p[0]===image_name}
-  if !index.nil?
-    image_name = latest(conversion[index][1])
-  end
-  image_name
 end
 
 def ok_or_failed
@@ -142,14 +134,14 @@ def update_images
   images = installed_images
   conversion.each do |old,new|
     if images.include?(old) && !images.include?(new)
-      p "#{old} -> #{new}"
+      puts "#{old} -> #{new}"
       cmd = "docker pull #{new}"
       `#{cmd}`
-      p "  #{cmd} #{ok_or_failed}"
+      puts "  #{cmd} #{ok_or_failed}"
       if $?.exitstatus === 0
         cmd = "docker rmi #{old}"
         `#{cmd}`
-        p "  #{cmd} #{ok_or_failed}"
+        puts "  #{cmd} #{ok_or_failed}"
       end
     end
   end
@@ -159,11 +151,7 @@ def line
   '-'*80
 end
 
-def update_cyber_dojo_docker_images
-  p line
-  puts "Pulling latest images"
-  update_images
-  p line
-end
-
-update_cyber_dojo_docker_images
+puts line
+puts "Pulling latest images"
+update_images
+puts line
