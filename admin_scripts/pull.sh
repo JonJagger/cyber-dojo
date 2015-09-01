@@ -25,6 +25,7 @@ cd admin_scripts
 curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/admin_scripts/$dockerUpdate
 chmod +x $dockerUpdate
 ./$dockerUpdate
+rm $dockerUpdate
 
 # get latest source
 echo "git pulling from https://github.com/JonJagger/cyber-dojo"
