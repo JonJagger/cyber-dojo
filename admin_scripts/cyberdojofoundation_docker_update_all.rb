@@ -88,10 +88,10 @@ def conversion
 # Perl
     foundation("perl-5.14.2",                     "perl-5.18.2"),
     foundation("perl-5.14.2_test_simple",         "perl-5.18.2_test_simple"),
+=end
 # PHP
     foundation("php-5.5.3",                       "php-5.5.9"),
     foundation("php-5.5.3_phpunit",               "php-5.5.9_phpunit"),
-=end
 # Python
     foundation("python-3.3.5"),
     foundation("python-3.3.5_pytest"),

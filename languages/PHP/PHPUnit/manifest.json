@@ -8,6 +8,6 @@
   "filename_extension" : ".php",
   "display_name": "PHP, PHPUnit",
   "unit_test_framework": "php_unit",
-  "image_name": "cyberdojo/php-5.5.3_phpunit",
+  "image_name": "cyberdojofoundation/php-5.5.9_phpunit",
   "tab_size": 4
 }
