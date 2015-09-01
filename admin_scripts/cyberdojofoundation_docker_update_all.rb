@@ -91,11 +91,11 @@ def conversion
 # PHP
     foundation("php-5.5.3",                       "php-5.5.9"),
     foundation("php-5.5.3_phpunit",               "php-5.5.9_phpunit"),
+=end
 # Python
     foundation("python-3.3.5"),
     foundation("python-3.3.5_pytest"),
     foundation("python-3.3.5_unittest"),
-=end
 # R
     foundation("r-3.0.1"),
     foundation("r-3.0.1_runit"),
