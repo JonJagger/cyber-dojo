@@ -37,6 +37,7 @@ def conversion
 =end
 # Clojure
     foundation("clojure-1.4.0"),
+    foundation("clojure-1.4.0_test"),
 # CoffeeScript
     foundation("coffeescript-1.14.3"),
     foundation("coffeescript-1.14.3_jasmine"),
