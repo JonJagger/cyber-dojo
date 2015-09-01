@@ -5,11 +5,8 @@
     "hiker.clj",
     "cyber-dojo.sh"
   ],
-  "support_filenames": [
-    "clojure-1.4.0.jar"
-  ],
   "filename_extension" : ".clj",
   "display_name": "Clojure, .test",
   "unit_test_framework": "clojure_test",
-  "image_name": "cyberdojo/clojure-1.4.0_test"
+  "image_name": "cyberdojofoundation/clojure-1.4.0_test"
 }

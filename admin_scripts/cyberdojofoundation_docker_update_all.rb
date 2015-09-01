@@ -34,9 +34,9 @@ def conversion
     foundation("gcc-4.8.1_assert",                "gcc-4.8.4_assert"),
     foundation("gcc-4.8.1_cpputest",              "gcc-4.8.4_cpputest"),
     foundation("gcc-4.8.1_unity",                 "gcc-4.8.4_unity"),
+=end
 # Clojure
     foundation("clojure-1.4.0"),
-=end
 # CoffeeScript
     foundation("coffeescript-1.14.3"),
     foundation("coffeescript-1.14.3_jasmine"),
