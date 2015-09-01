@@ -122,7 +122,7 @@ end
 
 def installed_images
   output = `docker images 2>&1`
-  lines = output.split("\n").select{|line| line.start_with?('cyberdojo')}
+  lines = output.split("\n").select{|line| line.start_with?('cyberdojo/')}
   lines.collect{|line| line.split[0]}.sort.uniq
 end
 
@@ -134,25 +134,24 @@ def latest(image_name)
   image_name
 end
 
-def print_exit_status
-  print " - " + ($?.exitstatus == 0 ? "OK" : "FAILED") + "\n"
+def ok_or_failed
+  $?.exitstatus === 0 ? 'OK' : 'FAILED'
 end
 
 def update_images
-  installed_images.each do |image_name|
-    print image_name
-    update_to = latest(image_name)
-    print " -> #{update_to}" if image_name != update_to
-
-    `docker pull #{update_to} 2>&1`
-    print_exit_status
-
-    #if image_name != update_to
-    #  print "removing #{image_name}"
-    #  output = `docker rmi #{image_name} 2>&1`
-    #  print_exit_status
-    #end
-
+  images = installed_images
+  conversion.each do |old,new|
+    if images.include?(old) && !images.include?(new)
+      p "#{old} -> #{new}"
+      cmd = "docker pull #{new}"
+      `#{cmd}`
+      p "  #{cmd} #{ok_or_failed}"
+      if $?.exitstatus === 0
+        cmd = "docker rmi #{old}"
+        `#{cmd}`
+        p "  #{cmd} #{ok_or_failed}"
+      end
+    end
   end
 end
 
