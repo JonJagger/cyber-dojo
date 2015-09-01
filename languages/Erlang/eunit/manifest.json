@@ -9,6 +9,6 @@
   "filename_extension" : ".erl",
   "display_name": "Erlang, eunit",
   "unit_test_framework": "eunit",
-  "image_name": "cyberdojo/erlang-5.10.2_eunit",
+  "image_name": "cyberdojofoundation/erlang-5.10.4_eunit",
   "tab_size": 2
 }
