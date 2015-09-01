@@ -1,0 +1,2 @@
+funit --clean
+funit hiker

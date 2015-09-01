@@ -1,0 +1,14 @@
+
+{
+  "visible_filenames": [
+    "hiker.tests.cpp",
+    "hiker.cpp",
+    "hiker.hpp",
+    "makefile",
+    "cyber-dojo.sh"
+  ],
+  "filename_extension" : ".cpp",
+  "display_name": "C++ (g++), GoogleMock",
+  "unit_test_framework": "google_test",
+  "image_name": "cyberdojo/gpp-4.9_googlemock"
+}

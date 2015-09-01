@@ -1,0 +1,18 @@
+
+{
+  "visible_filenames": [
+    "HikerSpec.groovy",
+    "Hiker.groovy",
+    "cyber-dojo.sh"
+  ],
+  "support_filenames": [
+    "junit-dep-4.10.jar",
+    "groovy-all-2.0.5.jar",
+    "hamcrest-core-1.3.jar",
+    "spock-core-0.7-groovy-2.0.jar"
+  ],
+  "filename_extension" : ".groovy",
+  "display_name": "Groovy, Spock",
+  "image_name": "cyberdojo/groovy-2.2.0_spock",
+  "unit_test_framework": "groovy_spock"
+}

@@ -1,0 +1,1 @@
+Rscript *.tests.R

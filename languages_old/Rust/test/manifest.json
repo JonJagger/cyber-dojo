@@ -1,0 +1,11 @@
+
+{
+  "visible_filenames": [
+    "hiker.rs",
+    "cyber-dojo.sh"
+  ],
+  "filename_extension" : ".rs",
+  "display_name": "Rust, test",
+  "unit_test_framework": "rust_test",
+  "image_name": "cyberdojo/rust-1.0.0_test"
+}

@@ -1,0 +1,14 @@
+
+{
+  "visible_filenames": [
+   "hiker.tests.c",
+   "hiker.h",
+   "hiker.asm",
+   "makefile",
+   "cyber-dojo.sh"
+  ],
+  "filename_extension" : ".asm",
+  "display_name": "Asm, assert",
+  "unit_test_framework": "cassert",
+  "image_name": "cyberdojo/nasm-2.10.0_assert"
+}
