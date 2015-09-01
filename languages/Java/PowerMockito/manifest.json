@@ -6,16 +6,8 @@
     "Hiker.java",
     "cyber-dojo.sh"
   ],
-  "support_filenames": [
-    "cglib-nodep-2.2.2.jar",
-    "javassist-3.18.1-GA.jar",
-    "junit-4.11.jar",
-    "mockito-all-1.9.5.jar",
-    "objenesis-2.1.jar",
-    "powermock-mockito-1.5.4-full.jar"
-  ],
   "filename_extension" : ".java",
   "display_name": "Java, PowerMockito",
   "unit_test_framework": "junit",
-  "image_name": "cyberdojo/java-1.8_powermockito"
+  "image_name": "cyberdojofoundation/java-1.8_powermockito"
 }

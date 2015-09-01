@@ -6,12 +6,8 @@
     "HikerHelper.java",
     "cyber-dojo.sh"
   ],
-  "support_filenames": [
-    "junit-4.11.jar",
-    "mockito-all-1.9.5.jar"
-  ],
   "filename_extension" : ".java",
   "display_name": "Java, Mockito",
   "unit_test_framework": "junit",
-  "image_name": "cyberdojo/java-1.8_mockito"
+  "image_name": "cyberdojofoundation/java-1.8_mockito"
 }

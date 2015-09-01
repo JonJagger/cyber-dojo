@@ -72,6 +72,7 @@ def conversion
 # Haskell
     foundation("haskell-7.6.3"),
     foundation("haskell-7.6.3_hunit"),
+=end
 # Java
     foundation("java-1.8"),
     foundation("java-1.8_approval"),
@@ -80,7 +81,6 @@ def conversion
     foundation("java-1.8_junit"),
     foundation("java-1.8_mockito"),
     foundation("java-1.8_powermockito"),
-=end
 # Javascript
     foundation("javascript-0.10.15",              "javascript-0.10.25"),
     foundation("javascript-0.10.15_assert",       "javascript-0.10.25_assert"),

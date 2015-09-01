@@ -6,10 +6,6 @@
     "cyber-dojo.sh"
   ],
 
-  "support_filenames": [
-    "junit-4.11.jar"
-  ],
-
   "progress_regexs": [
     "Tests run\\: (\\d)+,(\\s)+Failures\\: (\\d)+",
     "OK \\((\\d)+ test(s)?\\)"
@@ -18,5 +14,5 @@
   "filename_extension": ".java",
   "display_name": "Java, JUnit",
   "unit_test_framework": "junit",
-  "image_name": "cyberdojo/java-1.8_junit"
+  "image_name": "cyberdojofoundation/java-1.8_junit"
 }
