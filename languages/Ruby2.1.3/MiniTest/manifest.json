@@ -9,5 +9,5 @@
   "display_name": "Ruby, MiniTest",
   "unit_test_framework": "ruby_mini_test",
   "tab_size": 2,
-  "image_name": "cyberdojo/ruby-2.1.3_mini_test"
+  "image_name": "cyberdojofoundation/ruby-2.1.3_mini_test"
 }

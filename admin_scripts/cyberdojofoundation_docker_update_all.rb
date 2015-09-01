@@ -98,6 +98,7 @@ def conversion
 # R
     foundation("r-3.0.1"),
     foundation("r-3.0.1_runit"),
+=end
 # Ruby1.9.3
     foundation("ruby-1.9.3"),
     foundation("ruby-1.9.3_approval"),
@@ -107,7 +108,6 @@ def conversion
 # Ruby2.1.3
     foundation("ruby-2.1.3"),
     foundation("ruby-2.1.3_mini_test"),
-=end
 # Rust
     foundation("rust-1.0.0",                       "rust-1.2.0"),
     foundation("rust-1.0.0_test",                  "rust-1.2.0_test"),
