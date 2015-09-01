@@ -51,6 +51,7 @@ def conversion
 # Fortran
     foundation("fortran-4.8",                     "fortran-4.8.4"),
     foundation("fortran-4.8_funit",               "fortran-4.8.4_funit"),
+=end
 # g++4.8.1
     foundation("gpp-4.8.1",                       "gpp-4.8.4"),
     foundation("gpp-4.8.1_assert",                "gpp-4.8.4_assert"),
@@ -59,7 +60,6 @@ def conversion
     foundation("gpp-4.8.1_cpputest",              "gpp-4.8.4_cpputest"),
     foundation("gpp-4.8.1_googletest",            "gpp-4.8.4_googletest"),
     foundation("gpp-4.8.1_igloo",                 "gpp-4.8.4_igloo"),
-=end
 # g++4.9
     foundation("gpp-4.9"),
     foundation("gpp-4.9_googlemock"),
