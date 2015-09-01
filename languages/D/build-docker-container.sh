@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/d-4.8.1 .
+docker build -t cyberdojofoundation/d-4.8.4 .

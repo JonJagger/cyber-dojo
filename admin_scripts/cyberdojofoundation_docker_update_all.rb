@@ -39,10 +39,10 @@ def conversion
 # CoffeeScript
     foundation("coffeescript-1.14.3"),
     foundation("coffeescript-1.14.3_jasmine"),
+=end
 # D
     foundation("d-4.8.1",                         "d-4.8.4"),
     foundation("d-4.8.1_unittest",                "d-4.8.4_unittest"),
-=end
 # Erlang
     foundation("erlang-5.10.2",                   "erlang-5.10.4"),
     foundation("erlang-5.10.2_eunit",             "erlang-5.10.4_eunit"),
