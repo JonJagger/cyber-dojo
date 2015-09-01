@@ -36,10 +36,10 @@ def conversion
     foundation("gcc-4.8.1_unity",                 "gcc-4.8.4_unity"),
 # Clojure
     foundation("clojure-1.4.0"),
+=end
 # CoffeeScript
     foundation("coffeescript-1.14.3"),
     foundation("coffeescript-1.14.3_jasmine"),
-=end
 # D
     foundation("d-4.8.1",                         "d-4.8.4"),
     foundation("d-4.8.1_unittest",                "d-4.8.4_unittest"),
