@@ -45,10 +45,10 @@ def conversion
 # Erlang
     foundation("erlang-5.10.2",                   "erlang-5.10.4"),
     foundation("erlang-5.10.2_eunit",             "erlang-5.10.4_eunit"),
+=end
 # F#
     foundation("fsharp-3.0"),
     foundation("fsharp-3.0_nunit"),
-=end
 # Fortran
     foundation("fortran-4.8",                     "fortran-4.8.4"),
     foundation("fortran-4.8_funit",               "fortran-4.8.4_funit"),
