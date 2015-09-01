@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/fortran-4.8_funit .
+docker build -t cyberdojofoundation/fortran-4.8.4_funit .
