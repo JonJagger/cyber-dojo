@@ -30,6 +30,7 @@ class DockerVolumeMountRunner
         " -v #{quoted(sandbox_volume)}" +
         ' -w /sandbox'
     cmd = timeout(command,max_seconds)
+    language = sandbox.avatar.kata.language
     times_out_run(options, language.image_name, cmd, max_seconds)
   end
 
