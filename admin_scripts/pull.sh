@@ -20,12 +20,12 @@ MY_TIME_STAMP_BEFORE=`stat -c %y $cyberDojoHome/admin_scripts/pull.sh`
 # git pull below. This ensures new docker-containers are docker-pulled
 # *before* the git-pull updates their languages/ sub-folder.
 # This minimizes elapsed time when state is 'torn'.
-dockerUpdate=cyberdojofoundation_docker_update_all.rb
-cd tmp
-curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/admin_scripts/$dockerUpdate
-chmod +x $dockerUpdate
-./$dockerUpdate
-rm $dockerUpdate
+# dockerUpdate=cyberdojofoundation_docker_update_all.rb
+# cd tmp
+# curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/admin_scripts/$dockerUpdate
+# chmod +x $dockerUpdate
+# ./$dockerUpdate
+# rm $dockerUpdate
 
 # get latest source
 echo "git pulling from https://github.com/JonJagger/cyber-dojo"

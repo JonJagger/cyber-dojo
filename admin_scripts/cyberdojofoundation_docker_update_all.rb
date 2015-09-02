@@ -151,6 +151,6 @@ def line
 end
 
 puts line
-puts "Pulling latest images"
+puts "Pulling latest images - this may take a while..."
 update_images
 puts line
