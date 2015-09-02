@@ -22,10 +22,10 @@ def conversion
     foundation("csharp-2.10.8.1"),
     foundation("csharp-2.10.8.1_nunit"),
     foundation("csharp-2.10.8.1_specflow"),
+=end
 # C (clang)
     foundation("clang-3.6.1"),
     foundation("clang-3.6.1_assert"),
-=end
 # C++ (clang++)
     foundation("clang-3.6.0"),
     foundation("clang-3.6.0_assert"),

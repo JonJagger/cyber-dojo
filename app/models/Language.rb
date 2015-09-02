@@ -137,13 +137,10 @@ class Language
   def cyber_dojo_sh_alert
     [
       '# <ALERT>',
-      "# This cyber-dojo.sh file probably won't work.",
-      '# The lines in this cyber-dojo.sh file (above this alert)',
-      '# differ from the lines in the master cyber-dojo.sh file',
-      '# (below this alert).',
-      '# Please examine the differences and edit the lines above',
-      '# this alert appropriately. Editing or removing the #master',
-      '# below this alert will retrigger the alert!',
+      '# The lines in this cyber-dojo.sh file (above this alert) differ from the',
+      '# lines in the master cyber-dojo.sh file (below this alert). If this file',
+      '# is not working please examine the differences. Editing or removing the',
+      '# master (below this alert) will re-trigger the alert!',
       '# </ALERT>',
     ].join("\n")
   end
@@ -158,7 +155,7 @@ class Language
   def output_alert
     [
       "ALERT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-      "ALERT >>> problem with the cyber-dojo.sh file detected >>>",
+      "ALERT >>>          possible problem detected           >>>",
       "ALERT >>>   examine cyber-dojo.sh for detailed info    >>>",
       "ALERT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
     ].join("\n")
