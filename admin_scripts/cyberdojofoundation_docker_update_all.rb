@@ -132,11 +132,11 @@ end
 def update_images
   images = installed_images
   conversion.each do |old,new|
-    if !images.include?(new)
+    if images.include?(old) && !images.include?(new)
       cmd = "docker pull #{new}"
       `#{cmd}`
       puts "  #{cmd} #{ok_or_failed}"
-      if $?.exitstatus === 0 && images.include?(old)
+      if $?.exitstatus === 0
         cmd = "docker rmi #{old}"
         `#{cmd}`
         puts "  #{cmd} #{ok_or_failed}"
