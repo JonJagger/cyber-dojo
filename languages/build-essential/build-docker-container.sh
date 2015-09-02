@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/build-essential  .
+docker build -t cyberdojofoundation/build-essential  .

@@ -10,5 +10,5 @@
   "filename_extension" : ".asm",
   "display_name": "Asm, assert",
   "unit_test_framework": "cassert",
-  "image_name": "cyberdojo/nasm-2.10.0_assert"
+  "image_name": "cyberdojofoundation/nasm-2.10.09_assert"
 }

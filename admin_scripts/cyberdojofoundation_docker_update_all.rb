@@ -6,7 +6,6 @@ end
 
 def conversion
   [
-=begin
 # build-essential
     foundation("build-essential"),
 # Asm
@@ -18,7 +17,6 @@ def conversion
 # BCPL
     foundation("bcpl"),
     foundation("bcpl-all_tests_passed"),
-=end
 # C#
     foundation("csharp-2.10.8.1"),
     foundation("csharp-2.10.8.1_nunit"),

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/nasm-2.10.0 .
+docker build -t cyberdojofoundation/nasm-2.10.09 .
