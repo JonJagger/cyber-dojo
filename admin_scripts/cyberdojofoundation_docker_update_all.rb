@@ -25,11 +25,11 @@ def conversion
 # C (clang)
     foundation("clang-3.6.1"),
     foundation("clang-3.6.1_assert"),
+=end
 # C++ (clang++)
     foundation("clang-3.6.0"),
     foundation("clang-3.6.0_assert"),
     foundation("clang-3.6.0_googletest"),
-=end
 # C (gcc)
     foundation("gcc-4.8.1",                       "gcc-4.8.4"),
     foundation("gcc-4.8.1_assert",                "gcc-4.8.4_assert"),

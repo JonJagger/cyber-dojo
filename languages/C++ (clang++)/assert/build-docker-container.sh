@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker build -t cyberdojo/clang-3.6.0_assert .
+docker build -t cyberdojofoundation/clang-3.6.0_assert .
 
