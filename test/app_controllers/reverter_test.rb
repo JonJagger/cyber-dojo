@@ -15,20 +15,20 @@ class ParamsMaker
   end
 
   def new_file(filename,content)
-    #refute @visible_files.keys.include?(filename)
+    refute { @visible_files.keys.include?(filename) }
     @visible_files[filename] = content
     @outgoing[filename] = hash(content)
   end
 
   def delete_file(filename)
-    #assert @visible_files.keys.include?(filename)
+    assert { @visible_files.keys.include?(filename) }
     @visible_files.delete(filename)
     @outgoing.delete(filename)
   end
 
   def change_file(filename,content)
-    #assert @visible_files.keys.include?(filename)
-    #assert_not_equal @visible_files[filename],content
+    assert { @visible_files.keys.include?(filename) }
+    refute { @visible_files[filename] == content }
     @visible_files[filename] = content
     @outgoing[filename] = hash(content)
   end
@@ -45,6 +45,14 @@ private
 
   def hash(content)
     Digest::MD5.hexdigest(content)
+  end
+
+  def assert(&block)
+    raise RuntimeError.new('DeltaMaker.assert') if !block.call
+  end
+
+  def refute(&block)
+    raise RuntimeError.new('DeltaMaker.refute') if block.call
   end
 
 end
