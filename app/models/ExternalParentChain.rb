@@ -1,9 +1,11 @@
 
-module ExternalParentChain # mixin
+module ExternalParentChain # mix-in
 
   def dir
     disk[path]
   end
+
+  module_function
 
   def method_missing(command,*args)   
     return @parent.send(command,*args) 
@@ -13,7 +15,7 @@ end
 
 #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 # All the model classes include this module.
-# method_missing assumes the including class has two things
+# method_missing assumes the including class has three things
 #   @parent
 #   disk 
 #   path (a string)
