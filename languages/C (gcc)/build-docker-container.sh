@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/gcc-4.8.1 .
+docker build -t cyberdojofoundation/gcc-4.8.4 .

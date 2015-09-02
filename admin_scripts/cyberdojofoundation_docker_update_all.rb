@@ -29,12 +29,12 @@ def conversion
     foundation("clang-3.6.0"),
     foundation("clang-3.6.0_assert"),
     foundation("clang-3.6.0_googletest"),
+=end
 # C (gcc)
     foundation("gcc-4.8.1",                       "gcc-4.8.4"),
     foundation("gcc-4.8.1_assert",                "gcc-4.8.4_assert"),
     foundation("gcc-4.8.1_cpputest",              "gcc-4.8.4_cpputest"),
     foundation("gcc-4.8.1_unity",                 "gcc-4.8.4_unity"),
-=end
 # Clojure
     foundation("clojure-1.4.0"),
     foundation("clojure-1.4.0_test"),
