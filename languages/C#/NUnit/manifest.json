@@ -8,5 +8,5 @@
   "filename_extension" : ".cs",
   "display_name": "C#, NUnit",
   "unit_test_framework": "nunit",
-  "image_name": "cyberdojo/csharp-2.10.8.1_nunit"
+  "image_name": "cyberdojofoundation/csharp-2.10.8.1_nunit"
 }

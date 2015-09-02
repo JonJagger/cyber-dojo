@@ -7,6 +7,8 @@ end
 def conversion
   [
 =begin
+# build-essential
+    foundation("build-essential"),
 # Asm
     foundation("nasm-2.10.0"                      "nasm-2.10.09"),
     foundation("nasm-2.10.0_assert",              "nasm-2.10.09_assert"),
@@ -16,13 +18,11 @@ def conversion
 # BCPL
     foundation("bcpl"),
     foundation("bcpl-all_tests_passed"),
-# build-essential
-    foundation("build-essential"),
+=end
 # C#
     foundation("csharp-2.10.8.1"),
     foundation("csharp-2.10.8.1_nunit"),
     foundation("csharp-2.10.8.1_specflow"),
-=end
 # C (clang)
     foundation("clang-3.6.1"),
     foundation("clang-3.6.1_assert"),
