@@ -506,23 +506,20 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - -
 
-  def makefile_with_leading_spaces
-    space = ' '
-    [
-      "CFLAGS += -I. -Wall -Wextra -Werror -std=c11",
-      "test: makefile $(C_FILES) $(COMPILED_H_FILES)",
-      space + space + "@gcc $(CFLAGS) $(C_FILES) -o $@"
-    ].join("\n")
+  def makefile_with_leading_tab
+    makefile_with_leading("\t")
   end
 
-  #- - - - - - - - - - - - - - - - - - -
+  def makefile_with_leading_spaces
+    makefile_with_leading(' '+' ')
+  end
 
-  def makefile_with_leading_tab
+  def makefile_with_leading(s)
     tab = "\t"
     [
       "CFLAGS += -I. -Wall -Wextra -Werror -std=c11",
       "test: makefile $(C_FILES) $(COMPILED_H_FILES)",
-      tab + "@gcc $(CFLAGS) $(C_FILES) -o $@"
+      s + "@gcc $(CFLAGS) $(C_FILES) -o $@"
     ].join("\n")
   end
 

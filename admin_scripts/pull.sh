@@ -92,6 +92,6 @@ if [ "$MY_TIME_STAMP_BEFORE" != "$MY_TIME_STAMP_AFTER" ]; then
 fi
 
 echo
-echo "If something went wrong and you want to revert to the previous version.."
+echo "If something went wrong you can revert to the previous version."
 echo "$ git checkout $GIT_SHA1_BEFORE"
 echo
