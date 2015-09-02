@@ -153,7 +153,7 @@ def cyberdojo_foundation_docker_update_all
   puts line
   puts "Pulling latest images - this may take a while."
   puts "If a new image is docker-pulled its language+test"
-  puts "work till the docker-pull completes."
+  puts "will *NOT* work till the docker-pull completes."
   update_images
   puts line
 end
