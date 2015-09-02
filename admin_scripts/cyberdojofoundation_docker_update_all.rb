@@ -150,7 +150,10 @@ def line
   '-'*80
 end
 
-puts line
-puts "Pulling latest images - this may take a while..."
-update_images
-puts line
+def cyberdojo_foundation_docker_update_all
+  puts line
+  puts "Pulling latest images - this may take a while..."
+  update_images
+  puts line
+end
+
