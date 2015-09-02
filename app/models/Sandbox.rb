@@ -45,8 +45,4 @@ private
     dir.write(filename, content)
   end
 
-  def language
-    avatar.kata.language
-  end
-
 end

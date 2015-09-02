@@ -6,7 +6,7 @@
 #    I don't want any confusion between the git repo created
 #    in a test (for an animal) and the main git repo of cyber-dojo!
 #
-# 2. collect and processes coverage stats
+# 2. collects and processes coverage stats
 # 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Programmed for three cases...
@@ -38,8 +38,9 @@ wrapper_test_log='WRAPPER.log.tmp'
 
 echo 'test_wrapper.sh....'
 
-cwd=${PWD##*/}
-module=${cwd/_//}
+#pwd                       # eg  /var/www/cyber-dojo/test/app_lib
+cwd=${PWD##*/}             # eg  app_lib
+module=${cwd/_//}          # eg  app/lib
 echo $module
 
 if [ "$#" -eq 1 ]; then
