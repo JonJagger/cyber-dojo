@@ -98,8 +98,6 @@ class DockerVolumeMountRunnerTests < LibTestBase
 
   def exact_docker_run_cmd
     language = @lion.kata.language
-    language_path = language.path
-    language_volume_mount = language_path + ':' + language_path + ":ro"
     kata_volume_mount = @lion.sandbox.path + ":/sandbox:rw"
 
     command = "timeout --signal=#{kill} #{max_seconds}s #{cyber_dojo_cmd} 2>&1"
@@ -109,7 +107,6 @@ class DockerVolumeMountRunnerTests < LibTestBase
         ' --user=www-data' +
         " --cidfile=#{quoted(cid_filename)}" +
         ' --net=none' +
-        " -v #{quoted(language_volume_mount)}" +
         " -v #{quoted(kata_volume_mount)}" +
         ' -w /sandbox' +
         " #{language.image_name}" +

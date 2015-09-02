@@ -1,6 +1,8 @@
 
 module IdSplitter # mix-in
 
+  module_function
+
   def outer(id)
     id[0..1]  # 'E5'
   end

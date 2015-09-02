@@ -16,10 +16,6 @@ class DockerVolumeMountRunner
     raise_if_docker_not_installed
   end
 
-  def runnable?(language)
-    image_pulled?(language)
-  end
-
   def started(avatar); end
 
   def run(sandbox, command, max_seconds)
@@ -29,14 +25,14 @@ class DockerVolumeMountRunner
         ' --net=none' +
         " -v #{quoted(sandbox_volume)}" +
         ' -w /sandbox'
-    cmd = timeout(command,max_seconds)
     language = sandbox.avatar.kata.language
+    cmd = timeout(command,max_seconds)
     times_out_run(options, language.image_name, cmd, max_seconds)
   end
 
-private
-
   include DockerTimesOutRunner
+
+private
 
   def sudoi(cmd)
     cmd

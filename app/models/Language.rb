@@ -118,12 +118,19 @@ class Language
     #               Martin Richards and Colin Whitby-Strevens
     #               ISBN 0-521-21965-5
     content = files['cyber-dojo.sh']
-    #TODO: !content.nil? is because test/app_model/avatar_tests.rb are poor
-    #      and have interactions with no cyber-dojo.sh file
+    #TODO: !content.nil? hack (twice) is because test/app_model/avatar_tests.rb
+    #      are poor and have interactions with no cyber-dojo.sh file which is
+    #      impossible in a real dojo. Invalid stub-data bites!
+    #      Maybe use ParamsMaker in test/app_controllers/reverter_test.rb
+    content = content.strip if !content.nil?
     needs_update = !content.nil? && !content.include?(cyber_dojo_sh) && !content.include?(commented_cyber_dojo_sh)
     if needs_update
-      sep = "\n\n"
-      files['cyber-dojo.sh'] = content.rstrip + sep + cyber_dojo_sh_alert + sep + commented_cyber_dojo_sh
+      files['cyber-dojo.sh'] =
+        content.rstrip +
+        separator +
+        cyber_dojo_sh_alert +
+        separator +
+        commented_cyber_dojo_sh
     end
     needs_update
   end
@@ -142,8 +149,7 @@ class Language
   def update_output(output,cyber_dojo_sh_updated)
     # If the cyber-dojo.sh file has been modified (see above)
     # the output also contains an alert
-    sep = "\n\n"
-    cyber_dojo_sh_updated ? output_alert + sep + output : output
+    cyber_dojo_sh_updated ? output_alert + separator + output : output
   end
 
   def output_alert
@@ -160,11 +166,15 @@ private
   include ManifestProperty
 
   def cyber_dojo_sh
-    visible_files['cyber-dojo.sh']
+    visible_files['cyber-dojo.sh'].strip
   end
 
   def commented_cyber_dojo_sh
     cyber_dojo_sh.split("\n").map{|line| '# ' + line}.join("\n")
+  end
+
+  def separator
+    "\n\n"
   end
 
   def manifest

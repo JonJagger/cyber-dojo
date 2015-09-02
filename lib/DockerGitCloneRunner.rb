@@ -9,15 +9,11 @@
 require_relative 'DockerTimesOutRunner'
 require 'tempfile'
 
-class DockerGitCloneRunner
+class DockerGitCloneRunner # Work-in-progress
 
   def initialize(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
     @bash,@cid_filename = bash,cid_filename
     raise_if_docker_not_installed
-  end
-
-  def runnable?(language)    
-    image_pulled?(language)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -89,10 +85,10 @@ class DockerGitCloneRunner
     '46.101.57.179'
   end
 
-private
-
   include DockerTimesOutRunner
   include IdSplitter
+
+private
 
   def git_push(avatar)
     # Changes from browser have already been reflected in avatar's sandbox.

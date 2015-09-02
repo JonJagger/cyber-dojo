@@ -214,9 +214,8 @@ class AvatarTests < ModelTestBase
     master = avatar.visible_files[cyber_dojo_sh]
     assert master.split.size > 1
     first_content = "hello\nworld"
-    separator = "\n\n"
-
     visible_files = { cyber_dojo_sh => first_content }
+    separator = "\n\n"
     delta = {
       :changed => [ cyber_dojo_sh ],
       :unchanged => [ ],
@@ -269,6 +268,44 @@ class AvatarTests < ModelTestBase
 
     manifested_cyber_dojo_sh = avatar.visible_files[cyber_dojo_sh]
     assert_equal appended_commented_master, manifested_cyber_dojo_sh
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'test() does NOT append commented master version to cyber-dojo.sh' +
+       ' nor prepends an alert to the output when cyber-dojo.sh is' +
+       ' stripped version of one-liner' do
+    kata = make_kata(unique_id, 'C (gcc)-assert')
+    avatar = kata.start_avatar
+    language = avatar.kata.language
+    cyber_dojo_sh = 'cyber-dojo.sh'
+    master = avatar.visible_files[cyber_dojo_sh]
+    assert master.split.size === 2
+    first_content = master.strip
+    assert first_content.split("\n").size === 1
+    visible_files = { cyber_dojo_sh => first_content }
+    delta = {
+      :changed => [ cyber_dojo_sh ],
+      :unchanged => [ ],
+      :deleted => [ ],
+      :new => [ ],
+    }
+    radiohead = 'no alarms and no surprises'
+    runner.stub_output(radiohead)
+
+    _,output = avatar.test(delta, visible_files)
+
+    expected_output = radiohead
+    assert_equal expected_output,output
+
+    saved_cyber_dojo_sh = avatar.sandbox.dir.read('cyber-dojo.sh')
+    assert_equal first_content, saved_cyber_dojo_sh
+
+    returned_cyber_dojo_sh = visible_files[cyber_dojo_sh]
+    assert_equal first_content, returned_cyber_dojo_sh
+
+    manifested_cyber_dojo_sh = avatar.visible_files[cyber_dojo_sh]
+    assert_equal first_content, manifested_cyber_dojo_sh
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

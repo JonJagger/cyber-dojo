@@ -7,8 +7,11 @@ require_relative 'Stderr2Stdout'
 #   @cid_filename
 #   sudoi(cmd)
 
-
 module DockerTimesOutRunner # mix-in
+
+  def runnable?(language)
+    image_names.include?(language.image_name)
+  end
 
   module_function
 
@@ -32,10 +35,6 @@ module DockerTimesOutRunner # mix-in
     output,_ = bash(sudoi('docker images'))
     lines = output.split("\n").select{|line| line.start_with?('cyberdojo')}
     image_names = lines.collect{|line| line.split[0]}
-  end
-
-  def image_pulled?(language)
-    image_names.include?(language.image_name)
   end
 
   def times_out_run(options, image_name, cmd, max_seconds)
@@ -91,7 +90,7 @@ end
 # -u www-data
 #
 #   The user which runs the inner_command *inside* the docker container.
-#   See comments in languages/C#-NUnit/Dockerfile
+#   See comments in languages/C#/NUnit/Dockerfile
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
