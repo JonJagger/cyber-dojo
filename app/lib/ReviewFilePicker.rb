@@ -1,5 +1,7 @@
 
-module ReviewFilePicker
+module ReviewFilePicker # mix-in
+
+  module_function
 
   def pick_file_id(diffs, current_filename)
     # Prefers to stay on the same file if it still exists

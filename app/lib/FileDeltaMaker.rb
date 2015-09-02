@@ -1,7 +1,9 @@
 
-module FileDeltaMaker
+module FileDeltaMaker # mix-in
 
-  def self.make_delta(was, now)
+  module_function
+
+  def make_delta(was, now)
     # Noticeably absent from this is :renamed
     # If browser file new/rename/delete events all
     # caused a git-tag on the server I could capture
@@ -12,7 +14,8 @@ module FileDeltaMaker
     # step would be to tag-commit when switching files.
     # When this is coded be careful that a :renamed
     # is not *also* seen as a :deleted
-    result = {
+    result =
+    {
       :unchanged => [ ],
       :changed   => [ ],
       :deleted   => [ ]

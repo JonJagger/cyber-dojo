@@ -7,6 +7,8 @@
 
 module Chooser # mixin
 
+  module_function
+
   def choose_language(languages, id, katas)
     chooser(languages, id, katas) { |kata| kata.language.display_name }
   end

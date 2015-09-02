@@ -1,5 +1,7 @@
 
-module LineSplitter
+module LineSplitter # mix-in
+
+  module_function
 
   def self.line_split(source)
     if source.nil?
