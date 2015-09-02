@@ -9,7 +9,7 @@ def conversion
 # build-essential
     foundation("build-essential"),
 # Asm
-    foundation("nasm-2.10.0"                      "nasm-2.10.09"),
+    foundation("nasm-2.10.0",                     "nasm-2.10.09"),
     foundation("nasm-2.10.0_assert",              "nasm-2.10.09_assert"),
 # Bash
     foundation("bash"),
@@ -154,7 +154,6 @@ def cyberdojo_foundation_docker_update_all
   puts "Pulling latest images - this may take a while."
   puts "If a new image is docker-pulled its language+test"
   puts "work till the docker-pull completes."
-  puts line
   update_images
   puts line
 end
