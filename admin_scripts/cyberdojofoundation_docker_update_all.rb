@@ -121,7 +121,7 @@ end
 
 def installed_images
   output = `docker images 2>&1`
-  lines = output.split("\n").select{|line| line.start_with?('cyberdojo/')}
+  lines = output.split("\n").select{|line| line.start_with?('cyberdojo')}
   lines.collect{|line| line.split[0]}.sort.uniq
 end
 
@@ -132,12 +132,11 @@ end
 def update_images
   images = installed_images
   conversion.each do |old,new|
-    if images.include?(old) && !images.include?(new)
-      puts "#{old} -> #{new}"
+    if !images.include?(new)
       cmd = "docker pull #{new}"
       `#{cmd}`
       puts "  #{cmd} #{ok_or_failed}"
-      if $?.exitstatus === 0
+      if $?.exitstatus === 0 && images.include?(old)
         cmd = "docker rmi #{old}"
         `#{cmd}`
         puts "  #{cmd} #{ok_or_failed}"
@@ -152,7 +151,9 @@ end
 
 def cyberdojo_foundation_docker_update_all
   puts line
-  puts "Pulling latest images - this may take a while..."
+  puts "Pulling latest images - this may take a while."
+  puts "While it runs language state is 'torn'."
+  puts "Viz, the languages' manifests image_name entries"
   update_images
   puts line
 end
