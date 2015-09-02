@@ -5,10 +5,6 @@ class DiskFake
     @dirs ||= { }
   end
 
-  def symlink_log
-    @symlink_log ||= [ ]
-  end
-
   def dir_separator
     '/'
   end
@@ -34,10 +30,6 @@ class DiskFake
   def [](path)
     path = slashed(path)
     dirs[path] ||= make_dir(self, path)
-  end
-
-  def symlink(old_name, new_name)
-    symlink_log << ['symlink', old_name, new_name]
   end
 
   def make_dir(disk,path)

@@ -78,27 +78,10 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'support_filenames defaults to [ ] when not set' do
-    @language = languages['Ruby']
-    spy_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
-    assert_equal [ ], @language.support_filenames
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'support_filenames reads back as set' do
-    @language = languages['Java']
-    support_filenames = [ 'x.jar', 'y.jar' ]
-    spy_manifest({ 'support_filenames' => support_filenames })
-    assert_equal support_filenames, @language.support_filenames
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'highlight_filenames defaults to [ ] when not set' do
     @language = languages['Ruby']
     spy_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
-    assert_equal [ ], @language.support_filenames
+    assert_equal [ ], @language.highlight_filenames
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

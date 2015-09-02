@@ -38,14 +38,6 @@ module DockerTimesOutRunner # mix-in
     image_names.include?(language.image_name)
   end
 
-  def approval_test?(language)
-    language.display_name.end_with?('Approval')
-  end
-
-  def sym_linked?(language)
-    language.support_filenames != []
-  end
-
   def times_out_run(options, image_name, cmd, max_seconds)
     bash("rm -f #{@cid_filename}")
     outer_command = timeout(

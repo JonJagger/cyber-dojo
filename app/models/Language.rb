@@ -51,13 +51,7 @@ class Language
   end
 
   def visible_files
-    Hash[visible_filenames.collect{ |filename|
-      [ filename, read(filename) ]
-    }]
-  end
-
-  def support_filenames
-    manifest_property || [ ]
+    Hash[visible_filenames.collect{ |filename| [ filename, read(filename) ] }]
   end
 
   def highlight_filenames

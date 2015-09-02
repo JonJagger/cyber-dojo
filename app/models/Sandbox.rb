@@ -16,12 +16,7 @@ class Sandbox
   end
 
   def start
-    avatar.visible_files.each { |filename,content| 
-      git_add(filename,content) 
-    }
-    language.support_filenames.each { |filename|
-      disk.symlink(language.path + filename, path + filename)
-    }
+    avatar.visible_files.each { |filename,content| git_add(filename,content) }
   end
   
   def save_files(delta, files)

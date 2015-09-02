@@ -171,7 +171,12 @@ class LanguagesTests < ModelTestBase
   end
 
   def exists?(lang,test)
-    File.directory?("#{get_languages_root}/#{lang}/#{test}")
+    File.directory?("#{cyber_dojo_root}/languages/#{lang}/#{test}") ||
+    File.directory?("#{cyber_dojo_root}/languages_offline/#{lang}/#{test}")        
+  end
+
+  def cyber_dojo_root
+    Dir.pwd + '/../..'
   end
 
 end

@@ -9,19 +9,6 @@ Worked fine. docker-container upgrade on cyber-dojo.org complete.
 
 Notes.
 
-TODO: remove support_filenames from Language.rb
-TODO: remove sym-linking from Sandbox.start()
-TODO: remove symlink() from lib/HostDisk.rb
-TODO: remove symlink() from test/lib/DiskFake.rb
-TODO: remove 4 lines from lib/DockerVolumeMountRunner.rb
-    language = sandbox.avatar.kata.language
-    read_only = 'ro'
-    language_volume = "#{language.path}:#{language.path}:#{read_only}"
-    " -v #{quoted(language_volume)}"
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - -
-minor
-
 TODO: Check that ENV vars are set in test_wrapper.sh
 TODO: rename languages/cache.rb to refresh_cache.rb
       also mentioned at bottom of admin_scripts/docker_pull_all.rb

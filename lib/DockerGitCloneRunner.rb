@@ -17,12 +17,7 @@ class DockerGitCloneRunner
   end
 
   def runnable?(language)    
-    # Can't have sym-linked support-files because
-    # a docker swarm solution cannot volume mount.
-    # Approval style tests are disabled because their
-    # post-run .txt file retrieval is not trivial on
-    # a docker swarm solution.
-    image_pulled?(language) && !sym_linked?(language) && !approval_test?(language)
+    image_pulled?(language)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

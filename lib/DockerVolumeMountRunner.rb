@@ -17,24 +17,18 @@ class DockerVolumeMountRunner
   end
 
   def runnable?(language)
-    image_pulled?(language) && !approval_test?(language)
+    image_pulled?(language)
   end
 
   def started(avatar); end
 
   def run(sandbox, command, max_seconds)
-    language = sandbox.avatar.kata.language
-    read_only = 'ro'
-    language_volume = "#{language.path}:#{language.path}:#{read_only}"
     read_write = 'rw'
     sandbox_volume = "#{sandbox.path}:/sandbox:#{read_write}"
-
     options =
         ' --net=none' +
-        " -v #{quoted(language_volume)}" +
         " -v #{quoted(sandbox_volume)}" +
         ' -w /sandbox'
-
     cmd = timeout(command,max_seconds)
     times_out_run(options, language.image_name, cmd, max_seconds)
   end
@@ -54,7 +48,6 @@ end
 #
 # "docker run" +
 #    ' --net=none' +
-#    " -v #{quoted(language_volume)}" +
 #    " -v #{quoted(sandbox_volume)}" +
 #    " -w /sandbox" +
 #
@@ -63,20 +56,6 @@ end
 # --net=none
 #
 #   Turn off all networking inside the container.
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-# -v #{quoted(language_volume)}
-#
-#   Volume mount the language's folder to the same folder inside
-#   the docker container. Intermediate folders are created as necessary
-#   (like mkdir -p). This provides access to supporting files which
-#   were sym-linked from the animal's sandbox when the animal started.
-#   Not all languages have symlinks but it's simpler to just do it anyway.
-#   Mounted as a read-only volume since these support files are shared
-#   by all animals in all katas that choose that language.
-#   Important to quote the volume incase any paths contain spaces
-#   eg languages/C (gcc)/
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
