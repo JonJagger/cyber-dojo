@@ -5,4 +5,6 @@ require_relative '../test_base'
 
 class AppHelpersTestBase < TestBase
 
+  include TestHelpers
+
 end

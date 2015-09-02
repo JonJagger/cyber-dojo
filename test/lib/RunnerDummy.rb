@@ -16,6 +16,5 @@ class RunnerDummy
   end
 
   def started(avatar); end
-  def pre_test(avatar); end
 
 end

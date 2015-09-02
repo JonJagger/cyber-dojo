@@ -4,13 +4,37 @@ require_relative 'languages_test_base'
 
 class LanguagesManifestsTests < LanguagesTestBase
 
-  test 'manifests of all languages' do
-    dirs = Dir.glob("#{root_path}languages/*/*/manifest.json").each do |file|
-      folders = File.dirname(file).split('/')[-2..-1]
+  test 'manifests of each languages' do
+    manifests.each do |filename|
+      folders = File.dirname(filename).split('/')[-2..-1]
       assert_equal 2, folders.size
       lang,test = folders
       check("#{lang}-#{test}")
     end
+  end
+
+  test 'no two manifests have the same image_name' do
+    so_far = []
+    manifests.each do |filename|
+      manifest = JSON.parse(IO.read(filename))
+      image_name = manifest['image_name']
+      assert !so_far.include?(image_name), image_name
+      so_far << image_name
+    end
+  end
+
+  test 'no two manifests have the same display_name' do
+    so_far = []
+    manifests.each do |filename|
+      manifest = JSON.parse(IO.read(filename))
+      display_name = manifest['display_name']
+      assert !so_far.include?(display_name), display_name
+      so_far << display_name
+    end
+  end
+
+  def manifests
+    Dir.glob("#{root_path}languages/*/*/manifest.json")
   end
 
   def check(language_name)

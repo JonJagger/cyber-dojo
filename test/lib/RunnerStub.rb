@@ -24,6 +24,5 @@ class RunnerStub
   end
 
   def started(avatar); end
-  def pre_test(avatar); end
 
 end

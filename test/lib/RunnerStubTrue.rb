@@ -12,6 +12,8 @@ class RunnerStubTrue
     @output
   end
 
+  def started(avatar); end
+
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - -

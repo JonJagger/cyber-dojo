@@ -1,7 +1,7 @@
 gem "minitest"
 require 'minitest/autorun'
 
-module TestHelpers # mixin
+module TestHelpers # mix-in
 
   def setup
     check_external_setup
@@ -36,9 +36,7 @@ module TestHelpers # mixin
     
   # - - - - - - - - - - - - - - - - - - -
   
-  def dojo
-    @dojo ||= Dojo.new
-  end  
+  def dojo; @dojo ||= Dojo.new; end
 
   def languages; dojo.languages; end
   def exercises; dojo.exercises; end  
@@ -124,29 +122,33 @@ private
   end
   
   def env_vars
-    [languages_key,exercises_key,katas_key,disk_key,runner_key,git_key,one_self_key]
+    [
+      languages_key,
+      exercises_key,
+      katas_key,
+      disk_key,
+      runner_key,
+      git_key,
+      one_self_key
+    ]
   end
     
   # - - - - - - - - - - - - - - - - - - - - - - - - -
     
   def check_external_setup
-    env_vars.each { |var| 
+    env_vars.each do |var|
       raise RuntimeError.new("ENV['#{var}'] not set") if ENV[var].nil?
-    }
+    end
   end
   
   def store_external_setup
     @test_env = {}       
-    env_vars.each { |var| 
-      @test_env[var] = ENV[var]
-    }    
+    env_vars.each { |var| @test_env[var] = ENV[var] }
   end
 
   def restore_external_setup
     raise "store_external_setup not called" if @test_env.nil?
-    env_vars.each { |var| 
-      ENV[var] = @test_env[var]
-    }    
+    env_vars.each { |var| ENV[var] = @test_env[var] }
     @test_env = {}    
   end
 

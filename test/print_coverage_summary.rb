@@ -6,8 +6,8 @@ def modules
      'app_helpers',
      'app_lib',
      'app_models',
-     'lib',
-     'languages', 
+#     'lib',
+#     'languages', 
 #     'integration', 
 #     'app_controllers'
    ]
@@ -77,7 +77,7 @@ def columns
     names[n += 1] => [  3, 'f',      'number of failures'    ],
     names[n += 1] => [  3, 'e',      'number of errors'      ],
     #names[n += 1] => [  3, 's',      'number of skips'       ],
-    names[n += 1] => [  6, 'secs',   'time in seconds'       ],
+    names[n += 1] => [  7, 'secs',   'time in seconds'       ],
     names[n += 1] => [  9, 't/sec',  'tests per second'      ],
     names[n += 1] => [ 10, 'a/sec',  'assertions per second' ],
     names[n += 1] => [  9, 'cov',    'coverage %'            ],
