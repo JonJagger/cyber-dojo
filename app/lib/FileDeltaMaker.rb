@@ -14,6 +14,9 @@ module FileDeltaMaker # mix-in
     # step would be to tag-commit when switching files.
     # When this is coded be careful that a :renamed
     # is not *also* seen as a :deleted
+    
+    now_keys = now.keys.clone
+    
     result =
     {
       :unchanged => [ ],
@@ -29,10 +32,10 @@ module FileDeltaMaker # mix-in
       else
         result[:deleted] << filename
       end
-      now.delete(filename)
+      now_keys.delete(filename)
     end
 
-    result[:new] = now.keys
+    result[:new] = now_keys
     result
   end
 
@@ -41,4 +44,3 @@ end
 # a file-delta helps on two fronts
 # 1. optimization; an unchanged file is not resaved.
 # 2. testing; easy to specify which file changes I want to apply
-#

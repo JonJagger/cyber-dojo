@@ -15,17 +15,20 @@ class ParamsMaker
   end
 
   def new_file(filename,content)
+    #refute @visible_files.keys.include?(filename)
     @visible_files[filename] = content
     @outgoing[filename] = hash(content)
   end
 
   def delete_file(filename)
-    assert @visible_files.keys.include? filename
+    #assert @visible_files.keys.include?(filename)
     @visible_files.delete(filename)
     @outgoing.delete(filename)
   end
 
   def change_file(filename,content)
+    #assert @visible_files.keys.include?(filename)
+    #assert_not_equal @visible_files[filename],content
     @visible_files[filename] = content
     @outgoing[filename] = hash(content)
   end
