@@ -7,10 +7,6 @@ $(function() {
     return "<%= @tab %>";
   };
 
-  cd.supportFilenames = function() {
-    return $.parseJSON('<%= @kata.language.support_filenames.inspect.html_safe %>');
-  };
-
   cd.highlightFilenames = function() {
     return $.parseJSON('<%= @kata.language.highlight_filenames.inspect.html_safe %>');
   };
