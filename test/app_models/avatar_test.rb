@@ -124,8 +124,7 @@ class AvatarTests < ModelTestBase
     assert_equal '',visible_files['output']
 
     runner.stub_output(expected='helloWorld')
-    delta,visible_files = *DeltaMaker.new(avatar).test_args
-    _,output = avatar.test(delta, visible_files)
+    delta,visible_files,output = DeltaMaker.new(avatar).run_test
 
     assert visible_files.keys.include?('output')
     assert_equal expected, output
@@ -142,8 +141,7 @@ class AvatarTests < ModelTestBase
     master = avatar.visible_files[cyber_dojo_sh]
 
     runner.stub_output(expected = 'no alarms and no surprises')
-    delta,visible_files = *DeltaMaker.new(avatar).test_args
-    _,output = avatar.test(delta, visible_files)
+    delta,visible_files,output = DeltaMaker.new(avatar).run_test
 
     assert_equal expected, output
     assert_equal expected, visible_files['output']
@@ -161,21 +159,20 @@ class AvatarTests < ModelTestBase
     kata = make_kata(unique_id, 'Java-JUnit')
     avatar = kata.start_avatar
     maker = DeltaMaker.new(avatar)
-    master = maker.was[cyber_dojo_sh]
-    maker.change_file(cyber_dojo_sh, commented(master))
+    commented_master = commented(maker.was[cyber_dojo_sh])
+    maker.change_file(cyber_dojo_sh, commented_master)
 
     runner.stub_output(expected = 'no alarms and no surprises')
-    delta,visible_files = *maker.test_args
-    _,output = avatar.test(delta,visible_files)
+    delta,visible_files,output = maker.run_test
 
     assert_equal expected, output
     assert_equal expected, visible_files['output']
     assert_equal expected, avatar.visible_files['output']
     assert_equal expected, avatar.sandbox.read('output')
 
-    assert_equal commented(master), visible_files[cyber_dojo_sh]
-    assert_equal commented(master), avatar.visible_files[cyber_dojo_sh]
-    assert_equal commented(master), avatar.sandbox.read(cyber_dojo_sh)
+    assert_equal commented_master, visible_files[cyber_dojo_sh]
+    assert_equal commented_master, avatar.visible_files[cyber_dojo_sh]
+    assert_equal commented_master, avatar.sandbox.read(cyber_dojo_sh)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -192,10 +189,8 @@ class AvatarTests < ModelTestBase
 
     maker = DeltaMaker.new(avatar)
     maker.change_file(cyber_dojo_sh, first_content = "hello\nworld")
-    radiohead = 'no alarms and no surprises'
-    runner.stub_output(radiohead)
-    delta, visible_files = *maker.test_args
-    _,output = avatar.test(delta, visible_files)
+    runner.stub_output(radiohead = 'no alarms and no surprises')
+    delta,visible_files,output = maker.run_test
 
     separator = "\n\n"
     expected_output = language.output_alert + separator + radiohead
@@ -220,9 +215,7 @@ class AvatarTests < ModelTestBase
     # --- only once ---
 
     runner.stub_output(radiohead)
-    maker = DeltaMaker.new(avatar)
-    delta, visible_files = *maker.test_args
-    _,output = avatar.test(delta, visible_files)
+    delta,visible_files,output = DeltaMaker.new(avatar).run_test
 
     assert_equal radiohead,output, 'no ALERT prefixes this time'
 
@@ -252,8 +245,7 @@ class AvatarTests < ModelTestBase
     runner.stub_output(radiohead = 'no alarms and no surprises')
     maker = DeltaMaker.new(avatar)
     maker.change_file(cyber_dojo_sh, stripped_master)
-    delta, visible_files = *maker.test_args
-    _,output = avatar.test(delta, visible_files)
+    delta,visible_files,output = maker.run_test
 
     expected_output = radiohead
     assert_equal expected_output,output
@@ -281,8 +273,7 @@ class AvatarTests < ModelTestBase
     runner.stub_output('hello')
     maker = DeltaMaker.new(avatar)
     maker.change_file(makefile, makefile_with_leading_spaces)
-    delta, visible_files = *maker.test_args
-    avatar.test(delta, visible_files)
+    delta,visible_files,_ = maker.run_test
 
     assert_equal makefile_with_leading_tab, avatar.sandbox.read(makefile)
     assert_equal makefile_with_leading_tab, visible_files[makefile]
@@ -301,8 +292,7 @@ class AvatarTests < ModelTestBase
     runner.stub_output('hello')
     maker = DeltaMaker.new(avatar)
     maker.delete_file(makefile)
-    delta, visible_files = *maker.test_args
-    avatar.test(delta, visible_files)
+    delta,visible_files,_ = maker.run_test
 
     refute visible_files.keys.include? makefile
     filenames = avatar.visible_files.keys
@@ -311,8 +301,7 @@ class AvatarTests < ModelTestBase
     runner.stub_output('hello')
     maker = DeltaMaker.new(avatar)
     maker.new_file(makefile, makefile_with_leading_spaces)
-    delta, visible_files = *maker.test_args
-    avatar.test(delta, visible_files)
+    delta,visible_files,_ = maker.run_test
 
     assert_equal makefile_with_leading_tab, avatar.sandbox.read(makefile)
     assert_equal makefile_with_leading_tab, visible_files[makefile]

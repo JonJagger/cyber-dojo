@@ -6,6 +6,7 @@ class DeltaMaker
   include FileDeltaMaker
 
   def initialize(avatar)
+    @avatar = avatar
     @was = avatar.visible_files
     @now = avatar.visible_files
   end
@@ -26,6 +27,13 @@ class DeltaMaker
     assert { @was.keys.include?(filename) }
     refute { @was[filename] == content }
     @now[filename] = content
+  end
+
+  def run_test
+    delta = make_delta(@was,@now)
+    visible_files = now
+    _,output = @avatar.test(delta, visible_files)
+    [delta,visible_files,output]
   end
 
   def test_args
