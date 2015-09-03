@@ -127,7 +127,7 @@ class AvatarTests < ModelTestBase
     _,@visible_files,@output = DeltaMaker.new(@avatar).run_test
 
     assert @visible_files.keys.include?('output')
-    assert_file_equal expected, 'output'
+    assert_file 'output', expected
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -141,8 +141,8 @@ class AvatarTests < ModelTestBase
     runner.stub_output(expected = 'no alarms and no surprises')
     _,@visible_files,@output = DeltaMaker.new(@avatar).run_test
 
-    assert_file_equal expected, 'output'
-    assert_file_equal master, cyber_dojo_sh
+    assert_file 'output', expected
+    assert_file cyber_dojo_sh, master
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -158,8 +158,8 @@ class AvatarTests < ModelTestBase
     runner.stub_output(expected = 'no alarms and no surprises')
     _,@visible_files,@output = maker.run_test
 
-    assert_file_equal expected, 'output'
-    assert_file_equal commented_master, cyber_dojo_sh
+    assert_file 'output', expected
+    assert_file cyber_dojo_sh, commented_master
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -181,7 +181,7 @@ class AvatarTests < ModelTestBase
 
     separator = "\n\n"
     expected_output = language.output_alert + separator + radiohead
-    assert_file_equal expected_output, 'output'
+    assert_file 'output', expected_output
 
     appended_commented_master =
       first_content +
@@ -190,15 +190,15 @@ class AvatarTests < ModelTestBase
       separator +
       commented(master)
 
-    assert_file_equal(appended_commented_master,cyber_dojo_sh)
+    assert_file cyber_dojo_sh, appended_commented_master
 
     # --- only once ---
 
     runner.stub_output(radiohead)
     _,@visible_files,@output = DeltaMaker.new(@avatar).run_test
 
-    assert_file_equal radiohead, 'output'
-    assert_file_equal appended_commented_master, cyber_dojo_sh
+    assert_file 'output', radiohead
+    assert_file cyber_dojo_sh, appended_commented_master
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -219,8 +219,8 @@ class AvatarTests < ModelTestBase
     maker.change_file(cyber_dojo_sh, stripped_master)
     _,@visible_files,@output = maker.run_test
 
-    assert_file_equal radiohead, 'output'
-    assert_file_equal stripped_master, cyber_dojo_sh
+    assert_file 'output', radiohead
+    assert_file cyber_dojo_sh, stripped_master
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -236,7 +236,7 @@ class AvatarTests < ModelTestBase
     maker.change_file(makefile, makefile_with_leading_spaces)
     _,@visible_files,_ = maker.run_test
 
-    assert_file_equal makefile_with_leading_tab, makefile
+    assert_file makefile, makefile_with_leading_tab
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -257,7 +257,7 @@ class AvatarTests < ModelTestBase
     maker.new_file(makefile, makefile_with_leading_spaces)
     _,@visible_files,_ = maker.run_test
 
-    assert_file_equal makefile_with_leading_tab, makefile
+    assert_file makefile, makefile_with_leading_tab
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -275,8 +275,8 @@ class AvatarTests < ModelTestBase
     runner.stub_output('')
     _,@visible_files,_ = maker.run_test
 
-    assert_file_equal new_code, code_filename
-    assert_file_equal new_test, test_filename
+    assert_file code_filename, new_code
+    assert_file test_filename, new_test
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -301,34 +301,19 @@ class AvatarTests < ModelTestBase
 
   test 'test():delta[:new] files are saved and git added' do
     kata = make_kata
-    avatar = kata.start_avatar
-    language = kata.language
+    @avatar = kata.start_avatar
     new_filename = 'ab.c'
-    visible_files = {
-      new_filename => 'content for new code file',
-    }
-    delta = {
-      :changed => [ ],
-      :unchanged => [ ],
-      :deleted => [ ],
-      :new => [ new_filename ]
-    }
 
-    assert !git_log_include?(avatar.sandbox.path, ['add', "#{new_filename}"])
-
-    delta[:new].each do |filename|
-      assert !avatar.sandbox.dir.exists?(filename)
-    end
+    assert !git_log_include?(@avatar.sandbox.path, ['add', "#{new_filename}"])
+    assert !@avatar.sandbox.dir.exists?(new_filename)
 
     runner.stub_output('')
-    avatar.test(delta, visible_files)
+    maker = DeltaMaker.new(@avatar)
+    maker.new_file(new_filename, new_content = 'content for new file')
+    _,@visible_files,_ = maker.run_test
 
-    assert git_log_include?(avatar.sandbox.path, ['add', "#{new_filename}"])
-
-    delta[:new].each do |filename|
-      assert avatar.sandbox.dir.exists?(filename)
-      assert_equal visible_files[filename], avatar.sandbox.read(filename)
-    end
+    assert git_log_include?(@avatar.sandbox.path, ['add', "#{new_filename}"])
+    assert_file new_filename, new_content
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -462,7 +447,7 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def assert_file_equal(expected,filename)
+  def assert_file(filename, expected)
     assert_equal(expected, @output) if filename === 'output'
     assert_equal expected, returned_to_browser = @visible_files[filename]
     assert_equal expected, saved_to_manifest = @avatar.visible_files[filename]
