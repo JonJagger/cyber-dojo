@@ -265,23 +265,18 @@ class AvatarTests < ModelTestBase
   test 'test():delta[:changed] files are saved' do
     kata = make_kata
     language = kata.language
-    avatar = kata.start_avatar
+    @avatar = kata.start_avatar
     code_filename = 'hiker.c'
     test_filename = 'hiker.tests.c'
 
-    maker = DeltaMaker.new(avatar)
+    maker = DeltaMaker.new(@avatar)
     maker.change_file(code_filename, new_code='changed content for code file')
     maker.change_file(test_filename, new_test='changed content for test file')
     runner.stub_output('')
-    delta,visible_files,_ = maker.run_test
+    _,@visible_files,_ = maker.run_test
 
-    assert delta[:changed].include?(code_filename)
-    assert_equal new_code, visible_files[code_filename]
-    assert_equal new_code, avatar.sandbox.read(code_filename)
-
-    assert delta[:changed].include?(test_filename)
-    assert_equal new_test, visible_files[test_filename]
-    assert_equal new_test, avatar.sandbox.read(test_filename)
+    assert_file_equal new_code, code_filename
+    assert_file_equal new_test, test_filename
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -294,12 +289,14 @@ class AvatarTests < ModelTestBase
     test_filename = 'abc.tests.c'
     filenames = language.visible_files.keys
     [code_filename,test_filename].each {|filename| assert !filenames.include?(filename) }
-    visible_files = {
+    visible_files =
+    {
       code_filename => 'changed content for code file',
       test_filename => 'changed content for test file',
       'cyber-dojo.sh' => 'make'
     }
-    delta = {
+    delta =
+    {
       :changed => [ ],
       :unchanged => [ code_filename, test_filename ],
       :deleted => [ ],
@@ -330,6 +327,7 @@ class AvatarTests < ModelTestBase
     }
 
     assert !git_log_include?(avatar.sandbox.path, ['add', "#{new_filename}"])
+
     delta[:new].each do |filename|
       assert !avatar.sandbox.dir.exists?(filename)
     end
@@ -338,6 +336,7 @@ class AvatarTests < ModelTestBase
     avatar.test(delta, visible_files)
 
     assert git_log_include?(avatar.sandbox.path, ['add', "#{new_filename}"])
+
     delta[:new].each do |filename|
       assert avatar.sandbox.dir.exists?(filename)
       assert_equal visible_files[filename], avatar.sandbox.read(filename)
@@ -364,8 +363,7 @@ class AvatarTests < ModelTestBase
     runner.stub_output('')
     avatar.test(delta, visible_files)
 
-    git_log = git.log[avatar.sandbox.path]
-    assert git_log.include?([ 'rm', 'wibble.cs' ]), git_log.inspect
+    assert git_log_include?(avatar.sandbox.path, [ 'rm', 'wibble.cs' ])
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
@@ -428,7 +426,7 @@ class AvatarTests < ModelTestBase
   end
 
   def makefile_with_leading_spaces
-    makefile_with_leading(' '+' ')
+    makefile_with_leading(' ' + ' ')
   end
 
   def makefile_with_leading(s)
@@ -467,7 +465,7 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - -
 
   def git_log_include?(path,find)
-    git.log[path].any?{|entry| entry == find}
+    git.log[path].include?(find)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -481,7 +479,7 @@ class AvatarTests < ModelTestBase
   def makefile; 'makefile'; end
 
   def assert_file_equal(expected,filename)
-    assert_equal(expected,@output) if filename === 'output'
+    assert_equal(expected, @output) if filename === 'output'
     assert_equal expected, returned_to_browser = @visible_files[filename]
     assert_equal expected, saved_to_manifest = @avatar.visible_files[filename]
     assert_equal expected, saved_to_sandbox = @avatar.sandbox.read(filename)
