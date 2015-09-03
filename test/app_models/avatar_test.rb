@@ -126,8 +126,8 @@ class AvatarTests < ModelTestBase
     runner.stub_output(expected='helloWorld')
     delta,visible_files = *DeltaMaker.new(avatar).test_args
     _,output = avatar.test(delta, visible_files)
-    assert visible_files.keys.include?('output')
 
+    assert visible_files.keys.include?('output')
     assert_equal expected, output
     assert_equal expected, visible_files['output']
     assert_equal expected, avatar.sandbox.read('output')
@@ -139,11 +139,12 @@ class AvatarTests < ModelTestBase
        ' with no ALERT, and no modification to any cyber-dojo.sh' do
     kata = make_kata(unique_id, 'Java-JUnit')
     avatar = kata.start_avatar
-    cyber_dojo_sh = 'cyber-dojo.sh'
     master = avatar.visible_files[cyber_dojo_sh]
+
     runner.stub_output(expected = 'no alarms and no surprises')
     delta,visible_files = *DeltaMaker.new(avatar).test_args
     _,output = avatar.test(delta, visible_files)
+
     assert_equal expected, output
     assert_equal expected, visible_files['output']
     assert_equal expected, avatar.visible_files['output']
@@ -160,16 +161,18 @@ class AvatarTests < ModelTestBase
     kata = make_kata(unique_id, 'Java-JUnit')
     avatar = kata.start_avatar
     maker = DeltaMaker.new(avatar)
-    cyber_dojo_sh = 'cyber-dojo.sh'
     master = maker.was[cyber_dojo_sh]
     maker.change_file(cyber_dojo_sh, commented(master))
+
     runner.stub_output(expected = 'no alarms and no surprises')
     delta,visible_files = *maker.test_args
     _,output = avatar.test(delta,visible_files)
+
     assert_equal expected, output
     assert_equal expected, visible_files['output']
     assert_equal expected, avatar.visible_files['output']
     assert_equal expected, avatar.sandbox.read('output')
+
     assert_equal commented(master), visible_files[cyber_dojo_sh]
     assert_equal commented(master), avatar.visible_files[cyber_dojo_sh]
     assert_equal commented(master), avatar.sandbox.read(cyber_dojo_sh)
@@ -184,23 +187,17 @@ class AvatarTests < ModelTestBase
     kata = make_kata(unique_id, 'Java-JUnit')
     avatar = kata.start_avatar
     language = avatar.kata.language
-    cyber_dojo_sh = 'cyber-dojo.sh'
     master = avatar.visible_files[cyber_dojo_sh]
     assert master.split.size > 1
-    first_content = "hello\nworld"
-    visible_files = { cyber_dojo_sh => first_content }
-    separator = "\n\n"
-    delta = {
-      :changed => [ cyber_dojo_sh ],
-      :unchanged => [ ],
-      :deleted => [ ],
-      :new => [ ],
-    }
+
+    maker = DeltaMaker.new(avatar)
+    maker.change_file(cyber_dojo_sh, first_content = "hello\nworld")
     radiohead = 'no alarms and no surprises'
     runner.stub_output(radiohead)
-
+    delta, visible_files = *maker.test_args
     _,output = avatar.test(delta, visible_files)
 
+    separator = "\n\n"
     expected_output = language.output_alert + separator + radiohead
     assert_equal expected_output,output
 
@@ -222,14 +219,9 @@ class AvatarTests < ModelTestBase
 
     # --- only once ---
 
-    visible_files = { cyber_dojo_sh => appended_commented_master }
-    delta = {
-      :changed => [ cyber_dojo_sh ],
-      :unchanged => [ ],
-      :deleted => [ ],
-      :new => [ ],
-    }
     runner.stub_output(radiohead)
+    maker = DeltaMaker.new(avatar)
+    delta, visible_files = *maker.test_args
     _,output = avatar.test(delta, visible_files)
 
     assert_equal radiohead,output, 'no ALERT prefixes this time'
@@ -252,34 +244,28 @@ class AvatarTests < ModelTestBase
     kata = make_kata(unique_id, 'C (gcc)-assert')
     avatar = kata.start_avatar
     language = avatar.kata.language
-    cyber_dojo_sh = 'cyber-dojo.sh'
     master = avatar.visible_files[cyber_dojo_sh]
     assert master.split.size === 2
-    first_content = master.strip
-    assert first_content.split("\n").size === 1
-    visible_files = { cyber_dojo_sh => first_content }
-    delta = {
-      :changed => [ cyber_dojo_sh ],
-      :unchanged => [ ],
-      :deleted => [ ],
-      :new => [ ],
-    }
-    radiohead = 'no alarms and no surprises'
-    runner.stub_output(radiohead)
+    stripped_master = master.strip
+    assert stripped_master.split("\n").size === 1
 
+    runner.stub_output(radiohead = 'no alarms and no surprises')
+    maker = DeltaMaker.new(avatar)
+    maker.change_file(cyber_dojo_sh, stripped_master)
+    delta, visible_files = *maker.test_args
     _,output = avatar.test(delta, visible_files)
 
     expected_output = radiohead
     assert_equal expected_output,output
 
-    saved_cyber_dojo_sh = avatar.sandbox.read('cyber-dojo.sh')
-    assert_equal first_content, saved_cyber_dojo_sh
+    saved_cyber_dojo_sh = avatar.sandbox.read(cyber_dojo_sh)
+    assert_equal stripped_master, saved_cyber_dojo_sh
 
     returned_cyber_dojo_sh = visible_files[cyber_dojo_sh]
-    assert_equal first_content, returned_cyber_dojo_sh
+    assert_equal stripped_master, returned_cyber_dojo_sh
 
     manifested_cyber_dojo_sh = avatar.visible_files[cyber_dojo_sh]
-    assert_equal first_content, manifested_cyber_dojo_sh
+    assert_equal stripped_master, manifested_cyber_dojo_sh
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -289,18 +275,15 @@ class AvatarTests < ModelTestBase
        ' so they also occur in the manifest file' do
     kata = make_kata
     avatar = kata.start_avatar
-    filenames = avatar.visible_files
-    makefile = 'makefile'
+    filenames = avatar.visible_files.keys
     assert filenames.include? makefile
-    visible_files = { makefile => makefile_with_leading_spaces }
-    delta = {
-      :changed => [ makefile ],
-      :unchanged => [ ],
-      :deleted => [ ],
-      :new => [ ],
-    }
+
     runner.stub_output('hello')
+    maker = DeltaMaker.new(avatar)
+    maker.change_file(makefile, makefile_with_leading_spaces)
+    delta, visible_files = *maker.test_args
     avatar.test(delta, visible_files)
+
     assert_equal makefile_with_leading_tab, avatar.sandbox.read(makefile)
     assert_equal makefile_with_leading_tab, visible_files[makefile]
   end
@@ -313,32 +296,24 @@ class AvatarTests < ModelTestBase
     kata = make_kata
     avatar = kata.start_avatar
     filenames = avatar.visible_files.keys
-    makefile = 'makefile'
     assert filenames.include? makefile
 
-    # makefile can be deleted, not readonly
-    visible_files = { }
-    delta = {
-      :changed => [ ],
-      :unchanged => [ ],
-      :deleted => [ makefile ],
-      :new => [ ],
-    }
     runner.stub_output('hello')
+    maker = DeltaMaker.new(avatar)
+    maker.delete_file(makefile)
+    delta, visible_files = *maker.test_args
     avatar.test(delta, visible_files)
 
+    refute visible_files.keys.include? makefile
     filenames = avatar.visible_files.keys
     refute filenames.include? makefile
 
-    visible_files = { makefile => makefile_with_leading_spaces }
-    delta = {
-      :changed => [ ],
-      :unchanged => [ ],
-      :deleted => [ ],
-      :new => [ makefile ],
-    }
     runner.stub_output('hello')
+    maker = DeltaMaker.new(avatar)
+    maker.new_file(makefile, makefile_with_leading_spaces)
+    delta, visible_files = *maker.test_args
     avatar.test(delta, visible_files)
+
     assert_equal makefile_with_leading_tab, avatar.sandbox.read(makefile)
     assert_equal makefile_with_leading_tab, visible_files[makefile]
   end
@@ -566,5 +541,9 @@ class AvatarTests < ModelTestBase
   def commented(lines)
     lines.split("\n").map{ |line| '# ' + line }.join("\n")
   end
+
+  def cyber_dojo_sh; 'cyber-dojo.sh'; end
+
+  def makefile; 'makefile'; end
 
 end
