@@ -285,28 +285,16 @@ class AvatarTests < ModelTestBase
     kata = make_kata
     language = kata.language
     avatar = kata.start_avatar
-    code_filename = 'abc.c'
-    test_filename = 'abc.tests.c'
-    filenames = language.visible_files.keys
-    [code_filename,test_filename].each {|filename| assert !filenames.include?(filename) }
-    visible_files =
-    {
-      code_filename => 'changed content for code file',
-      test_filename => 'changed content for test file',
-      'cyber-dojo.sh' => 'make'
-    }
-    delta =
-    {
-      :changed => [ ],
-      :unchanged => [ code_filename, test_filename ],
-      :deleted => [ ],
-      :new => [ ]
-    }
+    assert avatar.visible_files.keys.include? hiker_c
+    assert avatar.sandbox.dir.exists? hiker_c
+
+    avatar.sandbox.dir.delete(hiker_c)
+    refute avatar.sandbox.dir.exists? hiker_c
+
     runner.stub_output('')
-    avatar.test(delta, visible_files)
-    delta[:unchanged].each do |filename|
-      assert !avatar.sandbox.dir.exists?(filename)
-    end
+    avatar.test(*DeltaMaker.new(avatar).test_args)
+
+    refute avatar.sandbox.dir.exists? hiker_c
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -464,25 +452,25 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - -
 
-  def git_log_include?(path,find)
-    git.log[path].include?(find)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   def commented(lines)
     lines.split("\n").map{ |line| '# ' + line }.join("\n")
   end
 
   def cyber_dojo_sh; 'cyber-dojo.sh'; end
-
   def makefile; 'makefile'; end
+  def hiker_c; 'hiker.c'; end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def assert_file_equal(expected,filename)
     assert_equal(expected, @output) if filename === 'output'
     assert_equal expected, returned_to_browser = @visible_files[filename]
     assert_equal expected, saved_to_manifest = @avatar.visible_files[filename]
     assert_equal expected, saved_to_sandbox = @avatar.sandbox.read(filename)
+  end
+
+  def git_log_include?(path,find)
+    git.log[path].include?(find)
   end
 
 end
