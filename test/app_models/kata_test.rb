@@ -86,10 +86,10 @@ class KataTests < ModelTestBase
   test 'start_avatar puts started avatars name into katas started_avatars.json file' do
     kata = make_kata
     kata.start_avatar(['hippo'])
-    started = JSON.parse(kata.dir.read('started_avatars.json'))
+    started = JSON.parse(kata.read('started_avatars.json'))
     assert_equal ['hippo'], started
     kata.start_avatar(['lion'])
-    started = JSON.parse(kata.dir.read('started_avatars.json'))
+    started = JSON.parse(kata.read('started_avatars.json'))
     assert_equal ['hippo','lion'], started.sort
   end
 
@@ -101,7 +101,7 @@ class KataTests < ModelTestBase
    animals = ['lion','hippo','cheetah'].sort
    3.times { kata.start_avatar(animals) }
    filename = 'started_avatars.json'
-   started = JSON.parse(kata.dir.read(filename))
+   started = JSON.parse(kata.read(filename))
    assert_equal animals, started.sort
    # now delete started_avatars.json to simulate old dojo
    # with started avatars and no started_avatars.json file

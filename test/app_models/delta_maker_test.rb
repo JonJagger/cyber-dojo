@@ -35,7 +35,7 @@ class DeltaMakerTests < ModelTestBase
   
   test 'new_file(filename) succeeds if filename is new' +
        ', adds filename to visible_files' +
-       ', and delta[:new] includes filename' do
+       ', delta[:new] includes filename' do
     content = 'Snaeda'
     @maker.new_file(@new_filename, content)
     delta,now = *@maker.test_args
@@ -46,7 +46,7 @@ class DeltaMakerTests < ModelTestBase
 
   test 'change_file(filename) succeeds if filename is not new and content is new' +
        ", updates filename's content in visible_files" +
-       ', and delta[:changed] includes filename' do
+       ', delta[:changed] includes filename' do
     new_content = 'Snaeda'
     @maker.change_file(@existing_filename, new_content)
     delta,now = *@maker.test_args
@@ -57,7 +57,7 @@ class DeltaMakerTests < ModelTestBase
 
   test 'delete_file(filename) succeeds if filename is not new' +
        ', removes filename from visible_files' +
-       ', and delta[:deleted] includes filename' do
+       ', delta[:deleted] includes filename' do
     @maker.delete_file(@existing_filename)
     delta,now = *@maker.test_args
     refute now.keys.include?(@existing_filename) 

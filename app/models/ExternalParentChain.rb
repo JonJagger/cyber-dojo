@@ -1,6 +1,10 @@
 
 module ExternalParentChain # mix-in
 
+  def read(filename)
+    dir.read(filename)
+  end
+
   def dir
     disk[path]
   end

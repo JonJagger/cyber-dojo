@@ -18,7 +18,7 @@ class Exercise
   end
 
   def instructions
-    @instructions || dir.read(instructions_filename)
+    @instructions || read(instructions_filename)
   end
 
 private

@@ -29,7 +29,7 @@ class KatasTests < ModelTestBase
     kata = make_kata(id)
     filename = 'started_avatars.json'
     assert kata.dir.exists?(filename), 'exists'
-    started = JSON.parse(kata.dir.read(filename))
+    started = JSON.parse(kata.read(filename))
     assert_equal [],started
   end
 

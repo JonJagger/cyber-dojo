@@ -25,9 +25,7 @@ class Exercises
     cache = { }
     dir.each_dir do |sub_dir|
       exercise = make_exercise(sub_dir)
-      cache[exercise.name] = {
-        :instructions => exercise.instructions
-      }
+      cache[exercise.name] = { :instructions => exercise.instructions }
     end
     dir.write(cache_filename,cache)        
   end
@@ -40,7 +38,7 @@ private
 
   def read_cache
     cache = [ ]
-    JSON.parse(dir.read(cache_filename)).each do |name,exercise|
+    JSON.parse(read(cache_filename)).each do |name,exercise|
       cache << make_exercise(name,exercise['instructions'])
     end
     cache

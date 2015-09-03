@@ -192,10 +192,6 @@ private
     'manifest.json'
   end
 
-  def read(filename)
-    dir.read(filename)
-  end
-
 end
 
 # - - - - - - - - - - - - - - - - - - - -

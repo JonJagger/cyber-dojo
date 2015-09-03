@@ -120,26 +120,22 @@ private
   end
 
   def write_increments(increments)
-    write(increments_filename, increments)    
+    write(increments_filename, increments)
   end
-  
+
   def write(filename,content)
     dir.write(filename,content)
   end
-  
-  def read(filename)
-    dir.read(filename)
-  end
-  
+
   def increments
     JSON.parse(read(increments_filename))
   end
-  
+
   def manifest_filename
     # Stores cache of visible files - filenames and contents.
     'manifest.json'
   end
-    
+
   def increments_filename
     # Stores cache of key info for each [test]'s git commit tag.
     # Helps optimize the review dashboard.

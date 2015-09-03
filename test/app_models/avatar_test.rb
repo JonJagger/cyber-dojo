@@ -1,6 +1,7 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative 'model_test_base'
+require_relative 'DeltaMaker'
 
 class AvatarTests < ModelTestBase
 
@@ -18,7 +19,7 @@ class AvatarTests < ModelTestBase
 
   test 'attempting to create an Avatar with an invalid name raises RuntimeError' do
     kata = katas[unique_id]
-    invalid_name = 'salmon'
+    invalid_name = 'mobilephone'
     assert !Avatars.names.include?(invalid_name)
     assert_raises(RuntimeError) { kata.avatars[invalid_name] }
   end
@@ -37,7 +38,7 @@ class AvatarTests < ModelTestBase
     kata = make_kata
     avatar = kata.start_avatar
     kata.language.visible_files.each do |filename,content|
-      assert_equal content, avatar.sandbox.dir.read(filename)
+      assert_equal content, avatar.sandbox.read(filename)
     end
   end
 
@@ -102,48 +103,34 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'avatar creation saves' +
-          ' each visible_file into avatar/sandbox,' +
-          ' and empty avatar/increments.json' do
-    language = languages['Java-JUnit']
-    exercise = exercises['Fizz_Buzz']
-    kata = katas.create_kata(language, exercise)
+          ' each visible_file into sandbox/,' +
+          ' and empty increments.json into avatar/' do
+    kata = make_kata
     avatar = kata.start_avatar
-    sandbox = avatar.sandbox
-    language.visible_files.each do |filename,content|
-      assert_equal content, sandbox.dir.read(filename)
+    kata.language.visible_files.each do |filename,content|
+      assert_equal content, avatar.sandbox.read(filename)
     end
-    assert_equal [ ], JSON.parse(avatar.dir.read('increments.json'))
+    assert_equal [ ], JSON.parse(avatar.read('increments.json'))
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'after test() output-file is saved in sandbox ' +
-       'and output is inserted into the visible_files argument' do
+  test 'after test() output-file is saved in sandbox/' +
+       ' and output is inserted into the visible_files' do
     kata = make_kata
     avatar = kata.start_avatar
-    code_filename = 'hiker.c'
-    test_filename = 'hiker.tests.c'
-    filenames = kata.language.visible_files.keys
-    [code_filename,test_filename].each {|filename| assert filenames.include? filename}
-    visible_files = {
-      code_filename => 'content for code file',
-      test_filename => kata.language.visible_files[test_filename],
-      'cyber-dojo.sh' => kata.language.visible_files['cyber-dojo.sh']
-    }
-    delta = {
-      :changed => [ code_filename ],
-      :unchanged => [ test_filename ],
-      :deleted => [ ],
-      :new => [ ]
-    }
-    runner.stub_output('helloWorld')
-    assert !visible_files.keys.include?('output')
+    visible_files = avatar.visible_files
+    assert visible_files.keys.include?('output')
+    assert_equal '',visible_files['output']
+
+    runner.stub_output(expected='helloWorld')
+    delta,visible_files = *DeltaMaker.new(avatar).test_args
     _,output = avatar.test(delta, visible_files)
     assert visible_files.keys.include?('output')
 
-    assert_equal 'helloWorld', output
-    assert_equal 'helloWorld', visible_files['output']
-    assert_equal 'helloWorld', avatar.sandbox.dir.read('output')
+    assert_equal expected, output
+    assert_equal expected, visible_files['output']
+    assert_equal expected, avatar.sandbox.read('output')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -153,24 +140,17 @@ class AvatarTests < ModelTestBase
     kata = make_kata(unique_id, 'Java-JUnit')
     avatar = kata.start_avatar
     cyber_dojo_sh = 'cyber-dojo.sh'
-    visible_files = avatar.visible_files
-    master = visible_files[cyber_dojo_sh]
-    delta = {
-      :changed => [ ],
-      :unchanged => [ ],
-      :deleted => [ ],
-      :new => [ ],
-    }
-    radiohead = 'no alarms and no surprises'
-    runner.stub_output(radiohead)
+    master = avatar.visible_files[cyber_dojo_sh]
+    runner.stub_output(expected = 'no alarms and no surprises')
+    delta,visible_files = *DeltaMaker.new(avatar).test_args
     _,output = avatar.test(delta, visible_files)
-    assert_equal radiohead, output
-    assert_equal radiohead, visible_files['output']
-    assert_equal radiohead, avatar.visible_files['output']
-    assert_equal radiohead, avatar.sandbox.dir.read('output')
+    assert_equal expected, output
+    assert_equal expected, visible_files['output']
+    assert_equal expected, avatar.visible_files['output']
+    assert_equal expected, avatar.sandbox.read('output')
     assert_equal master, visible_files[cyber_dojo_sh]
     assert_equal master, avatar.visible_files[cyber_dojo_sh]
-    assert_equal master, avatar.sandbox.dir.read(cyber_dojo_sh)
+    assert_equal master, avatar.sandbox.read(cyber_dojo_sh)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -179,26 +159,20 @@ class AvatarTests < ModelTestBase
        ' with no ALERT, and no modification to any cyber-dojo.sh' do
     kata = make_kata(unique_id, 'Java-JUnit')
     avatar = kata.start_avatar
+    maker = DeltaMaker.new(avatar)
     cyber_dojo_sh = 'cyber-dojo.sh'
-    visible_files = avatar.visible_files
-    master = visible_files[cyber_dojo_sh]
-    visible_files[cyber_dojo_sh] = commented(master)
-    delta = {
-      :changed => [ cyber_dojo_sh ],
-      :unchanged => [ ],
-      :deleted => [ ],
-      :new => [ ],
-    }
-    radiohead = 'no alarms and no surprises'
-    runner.stub_output(radiohead)
-    _,output = avatar.test(delta, visible_files)
-    assert_equal radiohead, output
-    assert_equal radiohead, visible_files['output']
-    assert_equal radiohead, avatar.visible_files['output']
-    assert_equal radiohead, avatar.sandbox.dir.read('output')
+    master = maker.was[cyber_dojo_sh]
+    maker.change_file(cyber_dojo_sh, commented(master))
+    runner.stub_output(expected = 'no alarms and no surprises')
+    delta,visible_files = *maker.test_args
+    _,output = avatar.test(delta,visible_files)
+    assert_equal expected, output
+    assert_equal expected, visible_files['output']
+    assert_equal expected, avatar.visible_files['output']
+    assert_equal expected, avatar.sandbox.read('output')
     assert_equal commented(master), visible_files[cyber_dojo_sh]
     assert_equal commented(master), avatar.visible_files[cyber_dojo_sh]
-    assert_equal commented(master), avatar.sandbox.dir.read(cyber_dojo_sh)
+    assert_equal commented(master), avatar.sandbox.read(cyber_dojo_sh)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -237,7 +211,7 @@ class AvatarTests < ModelTestBase
       separator +
       commented(master)
 
-    saved_cyber_dojo_sh = avatar.sandbox.dir.read('cyber-dojo.sh')
+    saved_cyber_dojo_sh = avatar.sandbox.read('cyber-dojo.sh')
     assert_equal appended_commented_master, saved_cyber_dojo_sh
 
     returned_cyber_dojo_sh = visible_files[cyber_dojo_sh]
@@ -260,7 +234,7 @@ class AvatarTests < ModelTestBase
 
     assert_equal radiohead,output, 'no ALERT prefixes this time'
 
-    saved_cyber_dojo_sh = avatar.sandbox.dir.read('cyber-dojo.sh')
+    saved_cyber_dojo_sh = avatar.sandbox.read('cyber-dojo.sh')
     assert_equal appended_commented_master, saved_cyber_dojo_sh
 
     returned_cyber_dojo_sh = visible_files[cyber_dojo_sh]
@@ -298,7 +272,7 @@ class AvatarTests < ModelTestBase
     expected_output = radiohead
     assert_equal expected_output,output
 
-    saved_cyber_dojo_sh = avatar.sandbox.dir.read('cyber-dojo.sh')
+    saved_cyber_dojo_sh = avatar.sandbox.read('cyber-dojo.sh')
     assert_equal first_content, saved_cyber_dojo_sh
 
     returned_cyber_dojo_sh = visible_files[cyber_dojo_sh]
@@ -327,7 +301,7 @@ class AvatarTests < ModelTestBase
     }
     runner.stub_output('hello')
     avatar.test(delta, visible_files)
-    assert_equal makefile_with_leading_tab, avatar.sandbox.dir.read(makefile)
+    assert_equal makefile_with_leading_tab, avatar.sandbox.read(makefile)
     assert_equal makefile_with_leading_tab, visible_files[makefile]
   end
 
@@ -365,7 +339,7 @@ class AvatarTests < ModelTestBase
     }
     runner.stub_output('hello')
     avatar.test(delta, visible_files)
-    assert_equal makefile_with_leading_tab, avatar.sandbox.dir.read(makefile)
+    assert_equal makefile_with_leading_tab, avatar.sandbox.read(makefile)
     assert_equal makefile_with_leading_tab, visible_files[makefile]
   end
 
@@ -375,7 +349,6 @@ class AvatarTests < ModelTestBase
     kata = make_kata
     language = kata.language
     avatar = kata.start_avatar
-    sandbox = avatar.sandbox
     code_filename = 'hiker.c'
     test_filename = 'hiker.tests.c'
     filenames = language.visible_files.keys
@@ -392,13 +365,13 @@ class AvatarTests < ModelTestBase
       :new => [ ]
     }
     delta[:changed].each do |filename|
-      assert_equal language.visible_files[filename], sandbox.dir.read(filename)
+      assert_equal language.visible_files[filename], avatar.sandbox.read(filename)
       assert_not_equal language.visible_files[filename], visible_files[filename]
     end
     runner.stub_output('')
     avatar.test(delta, visible_files)
     delta[:changed].each do |filename|
-      assert_equal visible_files[filename], sandbox.dir.read(filename)
+      assert_equal visible_files[filename], avatar.sandbox.read(filename)
     end
   end
 
@@ -408,7 +381,6 @@ class AvatarTests < ModelTestBase
     kata = make_kata
     language = kata.language
     avatar = kata.start_avatar
-    sandbox = avatar.sandbox
     code_filename = 'abc.c'
     test_filename = 'abc.tests.c'
     filenames = language.visible_files.keys
@@ -427,7 +399,7 @@ class AvatarTests < ModelTestBase
     runner.stub_output('')
     avatar.test(delta, visible_files)
     delta[:unchanged].each do |filename|
-      assert !sandbox.dir.exists?(filename)
+      assert !avatar.sandbox.dir.exists?(filename)
     end
   end
 
@@ -437,7 +409,6 @@ class AvatarTests < ModelTestBase
     kata = make_kata
     avatar = kata.start_avatar
     language = kata.language
-    sandbox = avatar.sandbox
     new_filename = 'ab.c'
     visible_files = {
       new_filename => 'content for new code file',
@@ -451,7 +422,7 @@ class AvatarTests < ModelTestBase
 
     assert !git_log_include?(avatar.sandbox.path, ['add', "#{new_filename}"])
     delta[:new].each do |filename|
-      assert !sandbox.dir.exists?(filename)
+      assert !avatar.sandbox.dir.exists?(filename)
     end
 
     runner.stub_output('')
@@ -459,8 +430,8 @@ class AvatarTests < ModelTestBase
 
     assert git_log_include?(avatar.sandbox.path, ['add', "#{new_filename}"])
     delta[:new].each do |filename|
-      assert sandbox.dir.exists?(filename)
-      assert_equal visible_files[filename], sandbox.dir.read(filename)
+      assert avatar.sandbox.dir.exists?(filename)
+      assert_equal visible_files[filename], avatar.sandbox.read(filename)
     end
   end
 
