@@ -1,6 +1,7 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative 'model_test_base'
+require_relative 'DeltaMaker'
 
 class TagsTest < ModelTestBase
 
@@ -38,7 +39,11 @@ class TagsTest < ModelTestBase
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     assert_equal 1, lion.tags.length
-    stub_test(lion, 3)
+    runner.stub_output('xxxx')
+    maker = DeltaMaker.new(lion)
+    maker.run_test
+    maker.run_test
+    maker.run_test
     assert_equal 4, lion.tags.length
     lion.tags.each_with_index{|tag,i| assert_equal i, tag.number }
   end
@@ -48,7 +53,11 @@ class TagsTest < ModelTestBase
   test 'tags[-n] duplicates Array[-n] behaviour' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
-    stub_test(lion, test_count=3)
+    runner.stub_output('xxxx')
+    maker = DeltaMaker.new(lion)
+    maker.run_test
+    maker.run_test
+    maker.run_test
     tags = lion.tags
     (1..tags.length).each {|i| assert_equal tags.length-i, tags[-i].number }
   end

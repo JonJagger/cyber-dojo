@@ -66,7 +66,8 @@ class AvatarTests < ModelTestBase
   test 'avatar is active? when it has one traffic-light' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
-    stub_test(lion,1)
+    runner.stub_output('')
+    DeltaMaker.new(lion).run_test
     assert_equal 1, lion.lights.length
     assert lion.active?
   end

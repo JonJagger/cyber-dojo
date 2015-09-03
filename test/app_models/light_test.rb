@@ -1,6 +1,7 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative 'model_test_base'
+require_relative 'DeltaMaker'
 
 class LightTests < ModelTestBase
 
@@ -57,12 +58,16 @@ class LightTests < ModelTestBase
   test 'each test creates a new light' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])    
-    stub_test(lion, [:red,:amber,:green])
+    maker = DeltaMaker.new(lion)
+    runner.stub_output('xxxxx')
+    maker.run_test
+    maker.run_test
+    maker.run_test
     lights = lion.lights
     assert_equal 3, lights.length
-    assert_equal :red  , lights[0].colour    
-    assert_equal :amber, lights[1].colour    
-    assert_equal :green, lights[2].colour    
+    assert_equal :amber, lights[0].colour    # TODO :red
+    assert_equal :amber, lights[1].colour
+    assert_equal :amber, lights[2].colour    # TODO :green
   end
   
   # - - - - - - - - - - - - - - - - - - - - - - -
