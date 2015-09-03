@@ -320,23 +320,14 @@ class AvatarTests < ModelTestBase
 
   test "test():delta[:deleted] files are git rm'd" do
     kata = make_kata
-    avatar = kata.start_avatar
-    visible_files = {
-      'untitled.cs' => 'content for code file',
-      'untitled.test.cs' => 'content for test file',
-      'cyber-dojo.sh' => 'gmcs'
-    }
-    delta = {
-      :changed => [ 'untitled.cs' ],
-      :unchanged => [ 'cyber-dojo.sh', 'untitled.test.cs' ],
-      :deleted => [ 'wibble.cs' ],
-      :new => [ ]
-    }
-
+    @avatar = kata.start_avatar
     runner.stub_output('')
-    avatar.test(delta, visible_files)
+    maker = DeltaMaker.new(@avatar)
+    maker.delete_file(makefile)
+    _,@visible_files,_ = maker.run_test
 
-    assert git_log_include?(avatar.sandbox.path, [ 'rm', 'wibble.cs' ])
+    assert git_log_include?(@avatar.sandbox.path, [ 'rm', makefile ])
+    refute @visible_files.keys.include? makefile
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
