@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # ExecuteAround test-runner which...
@@ -11,17 +12,17 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Programmed for three cases...
 #
-# 1. running a single test (you must in the test's folder)
+# 1. running a single test (you must be in its folder)
 #    $ cd /var/www/cyber-dojo/test/app_model
-#    $ ./exercises_test.rb
+#    $ ./exercises_test.rb <PARAMS>
 #
 # 2. running all the tests in one folder (you must be in that folder)
 #   $ cd /var/www/cyber-dojo/test/lib
-#   $ ./run_all.sh
+#   $ ./run_all.sh <PARAMS>
 #
 # 3. running all the tests in all the folders (you must be in test folder)
 #   $ cd /var/www/cyber-dojo/test
-#   $ ./run_all.sh
+#   $ ./run_all.sh <PARAMS>
 #
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Ok. Something odd here. Ruby (on my mac book) is *not* ignoring
@@ -34,6 +35,19 @@
 # its filename which helps.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+if [ "$#" -eq 0 ]; then
+  echo
+  echo 'Do not call directly.'
+  echo '  1. run individual tests, eg'
+  echo '     $ cd test/app_model'
+  echo '     $ ./avatar_test.rb'
+  echo '  2. run multiple tests, eg'
+  echo '     $ cd test/app_model'
+  echo '     $ ./run_all.sh'
+  echo
+  exit
+fi
+
 wrapper_test_log='WRAPPER.log.tmp'
 
 echo 'test_wrapper.sh....'
@@ -43,8 +57,18 @@ cwd=${PWD##*/}             # eg  app_lib
 module=${cwd/_//}          # eg  app/lib
 echo $module
 
-if [ "$#" -eq 1 ]; then
-  filename=$1
+while (( "$#" )); do
+  if [[ $1 != *.rb ]]; then
+    PARAMS=($*)
+    break
+  else
+    TEST_FILES+=($1)
+    shift
+  fi
+done
+
+if [ ${#TEST_FILES[@]} -eq 1 ]; then
+  filename=${TEST_FILES[0]}
 else
   filename='all_tests'
 fi
@@ -55,10 +79,10 @@ GIT_USER_NAME_BEFORE=`git config user.name`
 # Add an extra line
 echo '' > $wrapped_filename
 
-cat ${*} | tail -n +2 >> $wrapped_filename
+cat ${TEST_FILES[*]} | tail -n +2 >> $wrapped_filename
 
 rm -rf ../../coverage/.resultset.json
-ruby $wrapped_filename 2>&1 | tee $wrapper_test_log
+ruby $wrapped_filename -- ${PARAMS[*]} 2>&1 | tee $wrapper_test_log
 rm $wrapped_filename
 cp -R ../../coverage/* .
 ruby ../print_coverage_percent.rb index.html $module | tee -a $wrapper_test_log

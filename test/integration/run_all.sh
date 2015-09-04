@@ -1,3 +1,2 @@
 #!/bin/bash
-
-../run_one.sh integration
+../test_wrapper.sh *_test.rb $*
