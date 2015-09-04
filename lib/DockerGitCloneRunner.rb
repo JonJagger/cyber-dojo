@@ -23,8 +23,8 @@ class DockerGitCloneRunner # Work-in-progress
 
     # TODO: Suppose there is an avatar created *before* the move to docker-swarm
     #       I want to be able to re-enter it and then continue. But I don't
-    #       think that will work unless the already existing avatars folder
-    #       has the following commands run on it so it can push to the git server.
+    #       think that will work unless the already existing avatar's folder has
+    #       the following commands run on it so it can then push to the git server.
     #
     #       One way to resolve this might be to move this inside the run() command
     #       and only run it once by detecting if the avatar's repo already has a remote.
@@ -35,6 +35,25 @@ class DockerGitCloneRunner # Work-in-progress
     #       This might also be a better place to do the
     #           git.config(path, 'push.default current')
     #       currently in Avatar.git_setup()
+
+    # I think the code below is overly complicated
+    # See http://thelucid.com/2008/12/02/git-setting-up-a-remote-repository-and-doing-an-initial-push/
+    # How about this...
+    #
+    # 1. setup git-server
+    # git_server = "git@#{git_server_ip}"
+    # repo_dir = "#{opt_git_kata_path(kata)/#{avatar.name}.git"
+    #
+    # ssh #{git_server} 'mkdir -p #{repo_dir}'
+    # ssh #{git_server} 'cd #{repo_dir} && git init --bare'
+    # ssh #{git_server} 'cd #{repo_dir} && touch git-daemon-export-ok'
+    # cd #{avatar.path} && git remote add master #{git_server}:#{repo_dir}
+    # cd #{avatar.path} && git push --set-upstream master master
+    #
+    # 2. push to git-server
+    # sudo -u cyber-dojo git commit -am 'pre-test-push' --quiet",
+    # sudo -u cyber-dojo git push master"
+
 
     kata = avatar.kata  
     cmds = [

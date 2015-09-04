@@ -393,7 +393,6 @@ class AvatarTests < ModelTestBase
   end
 
   def makefile_with_leading(s)
-    tab = "\t"
     [
       "CFLAGS += -I. -Wall -Wextra -Werror -std=c11",
       "test: makefile $(C_FILES) $(COMPILED_H_FILES)",
@@ -439,9 +438,9 @@ class AvatarTests < ModelTestBase
 
   def assert_file(filename, expected)
     assert_equal(expected, @output) if filename === 'output'
-    assert_equal expected, returned_to_browser = @visible_files[filename]
-    assert_equal expected, saved_to_manifest = @avatar.visible_files[filename]
-    assert_equal expected, saved_to_sandbox = @avatar.sandbox.read(filename)
+    assert_equal expected, @visible_files[filename], 'returned_to_browser'
+    assert_equal expected, @avatar.visible_files[filename], 'saved_to_manifest'
+    assert_equal expected, @avatar.sandbox.read(filename), 'saved_to_sandbox'
   end
 
   def git_log_include?(path,find)
