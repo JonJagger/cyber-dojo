@@ -32,7 +32,13 @@ class Avatar
   end
   
   def path
+    # The avatar's folder holds its manifest and increments caches
     kata.path + name + '/'
+  end
+
+  def sandbox
+    # The avatar's sandbox holds its source files
+    Sandbox.new(self)
   end
 
   def active?
@@ -49,6 +55,10 @@ class Avatar
 
   def lights
     tags.select{ |tag| tag.light? }
+  end
+
+  def visible_filenames
+    visible_files.keys
   end
 
   def visible_files
@@ -81,12 +91,6 @@ class Avatar
     git_diff(diff_lines, visible_files)
   end
 
-  def sandbox
-    # An avatar's source files are held in its sandbox sub-folder.
-    # The avatar's folder itself holds config (manifests/caches/etc)    
-    Sandbox.new(self)
-  end
-
 private
 
   include GitDiff
@@ -96,7 +100,7 @@ private
     git.init(path, '--quiet')
     git.config(path, 'user.name ' + user_name)
     git.config(path, 'user.email ' + user_email)
-    # Next line needed if runner=DockerGitCloneRunner
+    # Next line needed if runner=DockerGitCloneRunner (work in progress)
     git.config(path, 'push.default current')
   end
 
@@ -132,12 +136,12 @@ private
   end
 
   def manifest_filename
-    # Stores cache of visible files - filenames and contents.
+    # Stores cache of avatar's current visible files - filenames and contents.
     'manifest.json'
   end
 
   def increments_filename
-    # Stores cache of key info for each [test]'s git commit tag.
+    # Stores cache of colours and time-stamps for all avatar's current [test]s
     # Helps optimize the review dashboard.
     'increments.json'
   end

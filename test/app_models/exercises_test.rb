@@ -61,7 +61,7 @@ class ExercisesTests < ModelTestBase
     exercises['100 doors'].dir.write('instructions', 'XXX')
     exercises['Bowling Game'].dir.write('instructions', 'YYY')
     
-    assert_equal 'XXX',       exercises['100 doors'].instructions, '100 doors'    
+    assert_equal 'XXX', exercises['100 doors'].instructions, '100 doors'
     assert_equal 'YYY', exercises['Bowling Game'].instructions, 'Bowling Game'
   end
     

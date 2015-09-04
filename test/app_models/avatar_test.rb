@@ -20,7 +20,7 @@ class AvatarTests < ModelTestBase
   test 'attempting to create an Avatar with an invalid name raises RuntimeError' do
     kata = katas[unique_id]
     invalid_name = 'mobilephone'
-    assert !Avatars.names.include?(invalid_name)
+    refute Avatars.names.include?(invalid_name)
     assert_raises(RuntimeError) { kata.avatars[invalid_name] }
   end
 
@@ -48,8 +48,8 @@ class AvatarTests < ModelTestBase
   test 'avatar is not active? when it does not exist' do
     kata = katas[unique_id]
     lion = kata.avatars['lion']
-    assert !lion.exists?
-    assert !lion.active?
+    refute lion.exists?
+    refute lion.active?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -58,7 +58,7 @@ class AvatarTests < ModelTestBase
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     assert_equal [ ], lion.lights
-    assert !lion.active?
+    refute lion.active?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -77,7 +77,7 @@ class AvatarTests < ModelTestBase
   test 'exists? is true when dir exists and name is in Avatar.names' do
     kata = katas[unique_id]
     lion = kata.avatars['lion']
-    assert !lion.exists?
+    refute lion.exists?
     lion.dir.make
     assert lion.exists?
   end
@@ -92,12 +92,12 @@ class AvatarTests < ModelTestBase
     language = kata.language
     avatar = kata.start_avatar
     language.visible_files.each do |filename,content|
-      assert avatar.visible_files.keys.include?(filename)
+      assert avatar.visible_filenames.include?(filename)
       assert_equal avatar.visible_files[filename], content
     end
-    assert avatar.visible_files.keys.include? 'instructions'
+    assert avatar.visible_filenames.include? 'instructions'
     assert avatar.visible_files['instructions'].include? kata.exercise.instructions
-    assert avatar.visible_files.keys.include? 'output'
+    assert avatar.visible_filenames.include? 'output'
     assert_equal '',avatar.visible_files['output']
   end
 
@@ -181,7 +181,7 @@ class AvatarTests < ModelTestBase
     _,@visible_files,@output = maker.run_test
 
     separator = "\n\n"
-    expected_output = language.output_alert + separator + radiohead
+    expected_output = @avatar.kata.language.output_alert + separator + radiohead
     assert_file 'output', expected_output
 
     appended_commented_master =
@@ -265,7 +265,6 @@ class AvatarTests < ModelTestBase
 
   test 'test():delta[:changed] files are saved' do
     kata = make_kata
-    language = kata.language
     @avatar = kata.start_avatar
     code_filename = 'hiker.c'
     test_filename = 'hiker.tests.c'
@@ -284,9 +283,8 @@ class AvatarTests < ModelTestBase
 
   test 'test():delta[:unchanged] files are not saved' do
     kata = make_kata
-    language = kata.language
     avatar = kata.start_avatar
-    assert avatar.visible_files.keys.include? hiker_c
+    assert avatar.visible_filenames.include? hiker_c
     assert avatar.sandbox.dir.exists? hiker_c
 
     avatar.sandbox.dir.delete(hiker_c)
@@ -305,8 +303,8 @@ class AvatarTests < ModelTestBase
     @avatar = kata.start_avatar
     new_filename = 'ab.c'
 
-    assert !git_log_include?(@avatar.sandbox.path, ['add', "#{new_filename}"])
-    assert !@avatar.sandbox.dir.exists?(new_filename)
+    refute git_log_include?(@avatar.sandbox.path, ['add', "#{new_filename}"])
+    refute @avatar.sandbox.dir.exists?(new_filename)
 
     runner.stub_output('')
     maker = DeltaMaker.new(@avatar)
