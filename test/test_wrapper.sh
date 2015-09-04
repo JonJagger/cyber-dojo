@@ -55,7 +55,6 @@ echo 'test_wrapper.sh....'
 #pwd                       # eg  /var/www/cyber-dojo/test/app_lib
 cwd=${PWD##*/}             # eg  app_lib
 module=${cwd/_//}          # eg  app/lib
-echo $module
 
 while (( "$#" )); do
   if [[ $1 != *.rb ]]; then
