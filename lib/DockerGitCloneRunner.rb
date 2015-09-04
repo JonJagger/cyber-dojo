@@ -28,13 +28,13 @@ class DockerGitCloneRunner # Work-in-progress
     #
     #       One way to resolve this might be to move this inside the run() command
     #       and only run it once by detecting if the avatar's repo already has a remote.
-    #
     #       This is a nice solution in that it also removes the need for this
     #       "special" method which is a no-op in DockerVolumeMountRunner.rb
-    #
     #       This might also be a better place to do the
     #           git.config(path, 'push.default current')
-    #       currently in Avatar.git_setup()
+    #       which is currently in Avatar.git_setup()
+    #       How to tell if a remote git-server has already been setup?
+    #       I guess to a 'git remote -a' and grep the output
 
     # I think the code below is overly complicated
     # See http://thelucid.com/2008/12/02/git-setting-up-a-remote-repository-and-doing-an-initial-push/
@@ -47,13 +47,22 @@ class DockerGitCloneRunner # Work-in-progress
     # ssh #{git_server} 'mkdir -p #{repo_dir}'
     # ssh #{git_server} 'cd #{repo_dir} && git init --bare'
     # ssh #{git_server} 'cd #{repo_dir} && touch git-daemon-export-ok'
-    # cd #{avatar.path} && git remote add master #{git_server}:#{repo_dir}
-    # cd #{avatar.path} && git push --set-upstream master master
+    # (collapse these into one command)
+    # cd #{avatar.path} && git remote add git-server #{git_server}:#{repo_dir}
+    # cd #{avatar.path} && git push --set-upstream git-server git-server
+    # (collapse these into one command)
     #
     # 2. push to git-server
     # sudo -u cyber-dojo git commit -am 'pre-test-push' --quiet",
-    # sudo -u cyber-dojo git push master"
-
+    # sudo -u cyber-dojo git push git-server"
+    #
+    #
+    # Also, the repeated sudo -u cyber-dojo below suggested I should create
+    # a sudo_bash class which runs the command you give it as a sudo
+    # That will require all command to work with 
+    #    sudo -u cyber-dojo -i
+    # and some of them don't yet have the -i option
+    #    sudo -u cyber-dojo
 
     kata = avatar.kata  
     cmds = [
