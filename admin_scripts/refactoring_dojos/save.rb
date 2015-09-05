@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+# After running this script you want to get the tgz file off the server you need
+# scp root@cyber-dojo.org:/var/www/cyber-dojo/admin_scripts/refactoring_dojos/refactoring_dojos.tgz .
+
 ids = [ ]
 
 # http://jonjagger.blogspot.co.uk/2012/05/yahtzee-cyber-dojo-refactoring-in-java.html
