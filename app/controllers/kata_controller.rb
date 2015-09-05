@@ -24,17 +24,21 @@ class KataController < ApplicationController
     time_limit = 15
     @traffic_lights,@output = @avatar.test(delta, visible_files, now, time_limit)
     @cyber_dojo_sh = visible_files['cyber-dojo.sh']
-    tag = @traffic_lights.length
-    diffed_files = avatar.diff(tag-1,tag)
-    hash = {
-      :tag => tag,
-      :colour => @traffic_lights[-1]['colour'],
-      :now => now,
-      :added_line_count  => added_line_count(diffed_files),
-      :deleted_line_count => deleted_line_count(diffed_files),    
-      :seconds_since_last_test => seconds_since_last_test(avatar,tag)
-    }
-    one_self.tested(@avatar,hash)
+
+    # Turn this off as it is somehow causing errors when the
+    # cyber-dojo.sh and output files are updated.
+    #
+    #tag = @traffic_lights.length
+    #diffed_files = avatar.diff(tag-1,tag)
+    #hash = {
+    #  :tag => tag,
+    #  :colour => @traffic_lights[-1]['colour'],
+    #  :now => now,
+    #  :added_line_count  => added_line_count(diffed_files),
+    #  :deleted_line_count => deleted_line_count(diffed_files),
+    #  :seconds_since_last_test => seconds_since_last_test(avatar,tag)
+    #}
+    #one_self.tested(@avatar,hash)
       
     respond_to do |format|
       format.js { render layout: false }
