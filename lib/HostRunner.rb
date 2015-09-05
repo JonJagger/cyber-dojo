@@ -1,7 +1,10 @@
 
-# Deprecated test runner that runs directly on the host server
+# Deprecated test runner that runs *directly* on the host server
+# instead of inside a docker-container.
+# See DockerVolumeMountRunner.rb and DockerGitCloneRunner.rb
 # No isolation/protection/security, nothing.
-# See DockerVolumeMountRunner.rb
+# Won't work if the cyber-dojo.sh file relies on files inside
+# the docker-container.
 
 require_relative 'Runner'
 
