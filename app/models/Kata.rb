@@ -32,7 +32,6 @@ class Kata
           started << avatar.name
           dir.write(filename, started)
         end
-        one_self.started(avatar)
       end
     end
     avatar
