@@ -131,3 +131,7 @@ private
   end
   
 end
+
+
+# Would it be possible to issue an http post containing json in bash?
+# http://stackoverflow.com/questions/14978411/http-post-and-get-using-curl-in-linux/14978657#14978657
