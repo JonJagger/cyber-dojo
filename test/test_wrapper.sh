@@ -14,15 +14,15 @@
 #
 # 1. running a single test (you must be in its folder)
 #    $ cd /var/www/cyber-dojo/test/app_model
-#    $ ./exercises_test.rb <PARAMS>
+#    $ ./exercises_test.rb <ARGS>
 #
 # 2. running all the tests in one folder (you must be in that folder)
 #   $ cd /var/www/cyber-dojo/test/lib
-#   $ ./run_all.sh <PARAMS>
+#   $ ./run_all.sh <ARGS>
 #
 # 3. running all the tests in all the folders (you must be in test folder)
 #   $ cd /var/www/cyber-dojo/test
-#   $ ./run_all.sh <PARAMS>
+#   $ ./run_all.sh <ARGS>
 #
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Ok. Something odd here. Ruby (on my mac book) is *not* ignoring
@@ -40,25 +40,21 @@ if [ "$#" -eq 0 ]; then
   echo 'Do not call directly.'
   echo '  1. run individual tests, eg'
   echo '     $ cd test/app_model'
-  echo '     $ ./avatar_test.rb'
-  echo '  2. run multiple tests, eg'
+  echo '     $ ./avatar_test.rb <ARGS>'
+  echo '  2. run module tests, eg'
   echo '     $ cd test/app_model'
-  echo '     $ ./run_all.sh'
-  echo
+  echo '     $ ./run_all.sh <ARGS>'
+  echo '  3. run all tests, eg'
+  echo '     $ cd test'
+  echo '     $ ./run_all.sh <ARGS>'
   exit
 fi
 
 wrapper_test_log='WRAPPER.log.tmp'
 
-echo 'test_wrapper.sh....'
-
-#pwd                       # eg  /var/www/cyber-dojo/test/app_lib
-cwd=${PWD##*/}             # eg  app_lib
-module=${cwd/_//}          # eg  app/lib
-
 while (( "$#" )); do
   if [[ $1 != *.rb ]]; then
-    PARAMS=($*)
+    ARGS=($*)
     break
   else
     TEST_FILES+=($1)
@@ -72,22 +68,23 @@ else
   filename='all_tests'
 fi
 wrapped_filename="$filename.WRAPPED"
+# Add an extra line
+echo '' > $wrapped_filename
+cat ${TEST_FILES[*]} | tail -n +2 >> $wrapped_filename
 
 GIT_USER_NAME_BEFORE=`git config user.name`
 
-# Add an extra line
-echo '' > $wrapped_filename
-
-cat ${TEST_FILES[*]} | tail -n +2 >> $wrapped_filename
-
 rm -rf ../../coverage/.resultset.json
-ruby $wrapped_filename -- ${PARAMS[*]} 2>&1 | tee $wrapper_test_log
+ruby $wrapped_filename -- ${ARGS[*]} 2>&1 | tee $wrapper_test_log
 rm $wrapped_filename
 cp -R ../../coverage/* .
+#pwd                       # eg  /var/www/cyber-dojo/test/app_lib
+cwd=${PWD##*/}             # eg  app_lib
+module=${cwd/_//}          # eg  app/lib
 ruby ../print_coverage_percent.rb index.html $module | tee -a $wrapper_test_log
 
-GIT_USER_NAME_AFTER=`git config user.name`
 
+GIT_USER_NAME_AFTER=`git config user.name`
 if [ "$GIT_USER_NAME_BEFORE" != "$GIT_USER_NAME_AFTER" ]; then
   echo "--------------------------------------"
   echo " META TEST FAILURE!"

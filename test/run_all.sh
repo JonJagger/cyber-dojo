@@ -24,7 +24,7 @@ do
     echo
     echo "======$module======"  
     cd $module
-    ./run_all.sh
+    ./run_all.sh $*
     cd ..
 done
 echo
