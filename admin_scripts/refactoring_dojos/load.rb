@@ -8,4 +8,5 @@
 # cd /var/www/cyber-dojo
 # ./admin_scripts/refactoring_dojos/load.rb
 
-`tar -xvpf refactoring_dojos.tgz`
+cd /var/www/cyber-dojo
+`tar -xvpf /var/www/cyber-dojo/admin_scripts/refactoring_dojos/refactoring_dojos.tgz`

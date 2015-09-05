@@ -20,17 +20,17 @@ $(function() {
   <tr class="row">
 
     <% if @avatar.active? %>
-	  <% @avatar.lights.each do |light| %>
-		<td>
-		  <%= raw diff_traffic_light(light) %>
-		</td>
-	  <% end %>
-	  <td>
-		<%= raw traffic_light_count(@avatar) %>
-	  </td>
-	  <td>
-		<%= raw pie_chart(@avatar.lights, @avatar.name) %>
-	  </td>
+	    <% @avatar.lights.each do |light| %>
+		  <td>
+		    <%= raw diff_traffic_light(light) %>
+		  </td>
+	    <% end %>
+	    <td>
+		  <%= raw traffic_light_count(@avatar) %>
+	    </td>
+	    <td>
+		  <%= raw pie_chart(@avatar.lights, @avatar.name) %>
+	    </td>
     <% end %>
 
 	<td>
