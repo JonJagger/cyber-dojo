@@ -1,9 +1,5 @@
 #!/usr/bin/env ruby
 
-# has to be run from cyber-dojo dir
-# cd /var/www/cyber-dojo
-# ./admin_scripts/refactoring_dojos/save.rb
-
 ids = [ ]
 
 # http://jonjagger.blogspot.co.uk/2012/05/yahtzee-cyber-dojo-refactoring-in-java.html
@@ -29,5 +25,5 @@ ids.each do |id|
   dirs << kata_dir
 end
 
-tar_command = "tar czf refactoring_dojos.tgz #{dirs.join(' ')}"
+tar_command = "tar -C /var/www/cyber-dojo -czf refactoring_dojos.tgz #{dirs.join(' ')}"
 `#{tar_command}`
