@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 
-<title>class OsDir - Rails Application Documentation</title>
+<title>class HostDir - Rails Application Documentation</title>
 
 <link href="./fonts.css" rel="stylesheet">
 <link href="./rdoc.css" rel="stylesheet">
@@ -65,7 +65,18 @@
   
 </div>
 
-    
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="Cleaner.html">Cleaner</a>
+  
+  
+  </ul>
+</div>
+
     
     <!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
@@ -75,7 +86,13 @@
     
     <li ><a href="#method-c-new">::new</a>
     
+    <li ><a href="#method-i-complete_kata_id">#complete_kata_id</a>
+    
     <li ><a href="#method-i-each_dir">#each_dir</a>
+    
+    <li ><a href="#method-i-each_file">#each_file</a>
+    
+    <li ><a href="#method-i-each_kata_id">#each_kata_id</a>
     
     <li ><a href="#method-i-exists-3F">#exists?</a>
     
@@ -93,9 +110,9 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-OsDir">
-  <h1 id="class-OsDir" class="class">
-    class OsDir
+<main role="main" aria-labelledby="class-HostDir">
+  <h1 id="class-HostDir" class="class">
+    class HostDir
   </h1>
 
   <section class="description">
@@ -161,7 +178,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/OsDir.rb, line 5</span>
+            <pre><span class="ruby-comment"># File lib/HostDir.rb, line 5</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">disk</span>,<span class="ruby-identifier">path</span>)
   <span class="ruby-ivar">@disk</span>,<span class="ruby-ivar">@path</span> = <span class="ruby-identifier">disk</span>,<span class="ruby-identifier">path</span>
   <span class="ruby-ivar">@path</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">separator</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@path</span>.<span class="ruby-identifier">end_with?</span>(<span class="ruby-identifier">separator</span>)
@@ -184,11 +201,54 @@
        </header>
 
     
+      <div id="method-i-complete_kata_id" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">complete_kata_id</span><span
+            class="method-args">(id)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="complete_kata_id-source">
+            <pre><span class="ruby-comment"># File lib/HostDir.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">complete_kata_id</span>(<span class="ruby-identifier">id</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">id</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">id</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">4</span>
+    <span class="ruby-identifier">id</span>.<span class="ruby-identifier">upcase!</span>
+    <span class="ruby-identifier">inner_dir</span> = <span class="ruby-ivar">@disk</span>[<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">id</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">1</span>]]
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">inner_dir</span>.<span class="ruby-identifier">exists?</span>
+      <span class="ruby-identifier">dirs</span> = <span class="ruby-identifier">inner_dir</span>.<span class="ruby-identifier">each_dir</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">outer_dir</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">outer_dir</span>.<span class="ruby-identifier">start_with?</span>(<span class="ruby-identifier">id</span>[<span class="ruby-value">2</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>])
+      }
+      <span class="ruby-identifier">id</span> = <span class="ruby-identifier">id</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">1</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">dirs</span>[<span class="ruby-value">0</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">dirs</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">===</span> <span class="ruby-value">1</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">id</span> <span class="ruby-operator">||</span> <span class="ruby-string">&#39;&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-each_dir" class="method-detail ">
         
         <div class="method-heading">
           <span class="method-name">each_dir</span><span
-            class="method-args">() { |name| ... }</span>
+            class="method-args">() { |entry| ... }</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -203,12 +263,115 @@
 
           
           <div class="method-source-code" id="each_dir-source">
-            <pre><span class="ruby-comment"># File lib/OsDir.rb, line 12</span>
+            <pre><span class="ruby-comment"># File lib/HostDir.rb, line 12</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">each_dir</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">enum_for</span>(<span class="ruby-value">:each_dir</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">block_given?</span>
-  <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">entries</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
-    <span class="ruby-keyword">yield</span> <span class="ruby-identifier">name</span>
+  <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">entries</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">pathed</span> = <span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">entry</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-identifier">entry</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@disk</span>.<span class="ruby-identifier">dir?</span>(<span class="ruby-identifier">pathed</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">dot?</span>(<span class="ruby-identifier">pathed</span>)
   <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-each_file" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">each_file</span><span
+            class="method-args">() { |entry| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="each_file-source">
+            <pre><span class="ruby-comment"># File lib/HostDir.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">each_file</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">enum_for</span>(<span class="ruby-value">:each_file</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">block_given?</span>
+  <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">entries</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">pathed</span> = <span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">entry</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-identifier">entry</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@disk</span>.<span class="ruby-identifier">dir?</span>(<span class="ruby-identifier">pathed</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-each_kata_id" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">each_kata_id</span><span
+            class="method-args">() { |outer_dir| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li>
+<p>-</p>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="each_kata_id-source">
+            <pre><span class="ruby-comment"># File lib/HostDir.rb, line 61</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">each_kata_id</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">enum_for</span>(<span class="ruby-value">:each_kata_id</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">block_given?</span>    
+  <span class="ruby-ivar">@disk</span>[<span class="ruby-identifier">path</span>].<span class="ruby-identifier">each_dir</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">outer_dir</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@disk</span>[<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">outer_dir</span>].<span class="ruby-identifier">each_dir</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">inner_dir</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">yield</span> <span class="ruby-identifier">outer_dir</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">inner_dir</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>    
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -239,7 +402,7 @@
 
           
           <div class="method-source-code" id="exists-3F-source">
-            <pre><span class="ruby-comment"># File lib/OsDir.rb, line 19</span>
+            <pre><span class="ruby-comment"># File lib/HostDir.rb, line 28</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">filename</span> = <span class="ruby-keyword">nil</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">path</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">filename</span>.<span class="ruby-identifier">nil?</span>
   <span class="ruby-keyword">return</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">filename</span>)
@@ -267,13 +430,40 @@
 
         <div class="method-description">
           
-          
+          <ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li>
+<p>-</p>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
           
           
 
           
           <div class="method-source-code" id="lock-source">
-            <pre><span class="ruby-comment"># File lib/OsDir.rb, line 51</span>
+            <pre><span class="ruby-comment"># File lib/HostDir.rb, line 86</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">lock</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-comment"># io locking uses blocking call.</span>
   <span class="ruby-comment"># For example, when a player starts-coding then</span>
@@ -320,7 +510,7 @@
 
           
           <div class="method-source-code" id="make-source">
-            <pre><span class="ruby-comment"># File lib/OsDir.rb, line 24</span>
+            <pre><span class="ruby-comment"># File lib/HostDir.rb, line 33</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">make</span>
   <span class="ruby-comment"># mkdir -p creates intermediate dirs as required</span>
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">path</span>)
@@ -354,9 +544,9 @@
 
           
           <div class="method-source-code" id="read-source">
-            <pre><span class="ruby-comment"># File lib/OsDir.rb, line 47</span>
+            <pre><span class="ruby-comment"># File lib/HostDir.rb, line 55</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">read</span>(<span class="ruby-identifier">filename</span>)
-  <span class="ruby-constant">IO</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">filename</span>)
+  <span class="ruby-identifier">clean</span>(<span class="ruby-constant">IO</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">filename</span>))
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -387,14 +577,13 @@
 
           
           <div class="method-source-code" id="write-source">
-            <pre><span class="ruby-comment"># File lib/OsDir.rb, line 29</span>
+            <pre><span class="ruby-comment"># File lib/HostDir.rb, line 38</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">write</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">object</span>)
   <span class="ruby-identifier">pathed_filename</span> = <span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">filename</span>
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">pathed_filename</span>))
-  <span class="ruby-comment"># The filename could be pathed, eg abc/def.hpp</span>
-  <span class="ruby-comment"># if I allow pathed filenames to be entered from</span>
-  <span class="ruby-comment"># the browser (or via language manifests?).</span>
-  <span class="ruby-comment"># Not currently working though...</span>
+  <span class="ruby-comment"># The filename could be pathed, eg a/b/c/def.hpp if I</span>
+  <span class="ruby-comment"># allowed pathed filenames to be entered from the browser</span>
+  <span class="ruby-comment"># (or via language manifests) which I currently don&#39;t.</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">String</span>
     <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">pathed_filename</span>, <span class="ruby-string">&#39;w&#39;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">fd</span><span class="ruby-operator">|</span> <span class="ruby-identifier">fd</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">object</span>) }
     <span class="ruby-identifier">execute</span> = <span class="ruby-value">0755</span>

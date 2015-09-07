@@ -94,9 +94,9 @@
     
     <li ><a href="#method-i-active">#active</a>
     
-    <li ><a href="#method-i-count">#count</a>
-    
     <li ><a href="#method-i-each">#each</a>
+    
+    <li ><a href="#method-i-names">#names</a>
     
   </ul>
 </div>
@@ -151,7 +151,7 @@
 
           
           <div class="method-source-code" id="names-source">
-            <pre><span class="ruby-comment"># File app/models/Avatars.rb, line 4</span>
+            <pre><span class="ruby-comment"># File app/models/Avatars.rb, line 6</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">names</span>
     <span class="ruby-node">%w(
         alligator buffalo cheetah deer
@@ -189,9 +189,9 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/models/Avatars.rb, line 21</span>
+            <pre><span class="ruby-comment"># File app/models/Avatars.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">kata</span>)
-  <span class="ruby-ivar">@kata</span> = <span class="ruby-identifier">kata</span>
+  <span class="ruby-ivar">@parent</span> = <span class="ruby-identifier">kata</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -222,7 +222,7 @@
 
           
           <div class="method-source-code" id="valid-3F-source">
-            <pre><span class="ruby-comment"># File app/models/Avatars.rb, line 13</span>
+            <pre><span class="ruby-comment"># File app/models/Avatars.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">valid?</span>(<span class="ruby-identifier">name</span>)
   <span class="ruby-identifier">names</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">name</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -263,10 +263,9 @@
 
           
           <div class="method-source-code" id="5B-5D-source">
-            <pre><span class="ruby-comment"># File app/models/Avatars.rb, line 38</span>
+            <pre><span class="ruby-comment"># File app/models/Avatars.rb, line 33</span>
 <span class="ruby-keyword">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">name</span>)
-  <span class="ruby-comment"># kata.avatars[&#39;lion&#39;]</span>
-  <span class="ruby-constant">Avatar</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@kata</span>,<span class="ruby-identifier">name</span>)
+  <span class="ruby-constant">Avatar</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@parent</span>,<span class="ruby-identifier">name</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -297,44 +296,9 @@
 
           
           <div class="method-source-code" id="active-source">
-            <pre><span class="ruby-comment"># File app/models/Avatars.rb, line 33</span>
+            <pre><span class="ruby-comment"># File app/models/Avatars.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">active</span>
-  <span class="ruby-comment"># kata.avatars.active</span>
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">select</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">avatar</span><span class="ruby-operator">|</span> <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">active?</span> }
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-count" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">count</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="count-source">
-            <pre><span class="ruby-comment"># File app/models/Avatars.rb, line 43</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">count</span>
-  <span class="ruby-comment"># kata.avatars.count</span>
-  <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">length</span>
+  <span class="ruby-identifier">select</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">avatar</span><span class="ruby-operator">|</span> <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">active?</span> }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -365,13 +329,48 @@
 
           
           <div class="method-source-code" id="each-source">
-            <pre><span class="ruby-comment"># File app/models/Avatars.rb, line 25</span>
+            <pre><span class="ruby-comment"># File app/models/Avatars.rb, line 23</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">each</span>
-  <span class="ruby-comment"># kata.avatars.each {|avatar| ...}</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">enum_for</span>(<span class="ruby-value">:each</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">block_given?</span>
+  <span class="ruby-comment"># Could do kata.dir.exists?(&#39;started_avatars.json&#39;)</span>
+  <span class="ruby-comment"># and use that if it exists</span>
   <span class="ruby-constant">Avatars</span>.<span class="ruby-identifier">names</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">avatar</span> = <span class="ruby-keyword">self</span>[<span class="ruby-identifier">name</span>]
-    <span class="ruby-keyword">yield</span> <span class="ruby-identifier">avatar</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">exists?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">block_given?</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-identifier">avatar</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">exists?</span>
   <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-names" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">names</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="names-source">
+            <pre><span class="ruby-comment"># File app/models/Avatars.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">names</span>
+  <span class="ruby-identifier">collect</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">avatar</span><span class="ruby-operator">|</span> <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">name</span> }
 <span class="ruby-keyword">end</span></pre>
           </div>
           

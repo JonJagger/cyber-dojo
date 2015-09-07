@@ -71,15 +71,7 @@
   <ul class="link-list">
   
   
-    <li><a class="include" href="Externals.html">Externals</a>
-  
-  
-  
-    <li><a class="include" href="Cleaner.html">Cleaner</a>
-  
-  
-  
-    <li><a class="include" href="GitDiff.html">GitDiff</a>
+    <li><a class="include" href="ExternalParentChain.html">ExternalParentChain</a>
   
   
   </ul>
@@ -94,9 +86,19 @@
     
     <li ><a href="#method-c-new">::new</a>
     
-    <li ><a href="#method-i-diff">#diff</a>
+    <li ><a href="#method-i-avatar">#avatar</a>
+    
+    <li ><a href="#method-i-colour">#colour</a>
+    
+    <li ><a href="#method-i-light-3F">#light?</a>
+    
+    <li ><a href="#method-i-number">#number</a>
     
     <li ><a href="#method-i-output">#output</a>
+    
+    <li ><a href="#method-i-time">#time</a>
+    
+    <li ><a href="#method-i-to_json">#to_json</a>
     
     <li ><a href="#method-i-visible_files">#visible_files</a>
     
@@ -140,7 +142,7 @@
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(avatar,n)</span>
+            class="method-args">(avatar,hash)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -155,10 +157,9 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/models/Tag.rb, line 6</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">avatar</span>,<span class="ruby-identifier">n</span>)
-  <span class="ruby-identifier">raise_if_no</span>([<span class="ruby-value">:git</span>])
-  <span class="ruby-ivar">@avatar</span>,<span class="ruby-ivar">@n</span> = <span class="ruby-identifier">avatar</span>,<span class="ruby-identifier">n</span>
+            <pre><span class="ruby-comment"># File app/models/Tag.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">avatar</span>,<span class="ruby-identifier">hash</span>)
+  <span class="ruby-ivar">@parent</span>,<span class="ruby-ivar">@hash</span> = <span class="ruby-identifier">avatar</span>,<span class="ruby-identifier">hash</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -178,11 +179,11 @@
        </header>
 
     
-      <div id="method-i-diff" class="method-detail ">
+      <div id="method-i-avatar" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">diff</span><span
-            class="method-args">(m)</span>
+          <span class="method-name">avatar</span><span
+            class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -196,13 +197,114 @@
           
 
           
-          <div class="method-source-code" id="diff-source">
-            <pre><span class="ruby-comment"># File app/models/Tag.rb, line 21</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">diff</span>(<span class="ruby-identifier">m</span>)
-  <span class="ruby-identifier">command</span> = <span class="ruby-node">&quot;--ignore-space-at-eol --find-copies-harder #{@n} #{m} sandbox&quot;</span>
-  <span class="ruby-identifier">diff_lines</span> = <span class="ruby-identifier">clean</span>(<span class="ruby-identifier">git</span>.<span class="ruby-identifier">diff</span>(<span class="ruby-ivar">@avatar</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">command</span>))
-  <span class="ruby-identifier">visible_files</span> = <span class="ruby-ivar">@avatar</span>.<span class="ruby-identifier">tags</span>[<span class="ruby-identifier">m</span>].<span class="ruby-identifier">visible_files</span>
-  <span class="ruby-identifier">git_diff</span>(<span class="ruby-identifier">diff_lines</span>, <span class="ruby-identifier">visible_files</span>)
+          <div class="method-source-code" id="avatar-source">
+            <pre><span class="ruby-comment"># File app/models/Tag.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">avatar</span>
+  <span class="ruby-ivar">@parent</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-colour" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">colour</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="colour-source">
+            <pre><span class="ruby-comment"># File app/models/Tag.rb, line 35</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">colour</span>
+  <span class="ruby-comment"># if this is called on tag that is not a light</span>
+  <span class="ruby-comment"># it will raise a NoMethodError</span>
+  (<span class="ruby-identifier">hash</span>[<span class="ruby-string">&#39;colour&#39;</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">hash</span>[<span class="ruby-string">&#39;outcome&#39;</span>]).<span class="ruby-identifier">to_sym</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-light-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">light?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="light-3F-source">
+            <pre><span class="ruby-comment"># File app/models/Tag.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">light?</span>
+  <span class="ruby-comment"># Very early dojos used outcome</span>
+  <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">&#39;colour&#39;</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">&#39;outcome&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-number" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">number</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="number-source">
+            <pre><span class="ruby-comment"># File app/models/Tag.rb, line 50</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">number</span>
+  <span class="ruby-comment"># badly named but dojos on disk have stored</span>
+  <span class="ruby-comment"># hash with &#39;number&#39; as the key - make private?</span>
+  <span class="ruby-identifier">hash</span>[<span class="ruby-string">&#39;number&#39;</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -233,11 +335,82 @@
 
           
           <div class="method-source-code" id="output-source">
-            <pre><span class="ruby-comment"># File app/models/Tag.rb, line 15</span>
+            <pre><span class="ruby-comment"># File app/models/Tag.rb, line 20</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">output</span>
-  <span class="ruby-comment"># tag 0&#39;s manifest (start_avatar commit)</span>
-  <span class="ruby-comment"># does not have an output file</span>
+  <span class="ruby-comment"># Very early dojos didn&#39;t store output in initial commit</span>
   <span class="ruby-identifier">visible_files</span>[<span class="ruby-string">&#39;output&#39;</span>] <span class="ruby-operator">||</span> <span class="ruby-string">&#39;&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-time" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">time</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="time-source">
+            <pre><span class="ruby-comment"># File app/models/Tag.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">time</span>
+  <span class="ruby-comment"># todo: times ?need? to come from browser and use iso8601</span>
+  <span class="ruby-constant">Time</span>.<span class="ruby-identifier">mktime</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">hash</span>[<span class="ruby-string">&#39;time&#39;</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-to_json" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_json</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="to_json-source">
+            <pre><span class="ruby-comment"># File app/models/Tag.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_json</span>
+  <span class="ruby-comment"># Used only in differ_controller.rb</span>
+  {
+    <span class="ruby-string">&#39;colour&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">colour</span>,
+    <span class="ruby-string">&#39;time&#39;</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">time</span>,
+    <span class="ruby-string">&#39;number&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">number</span>
+  }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -268,9 +441,9 @@
 
           
           <div class="method-source-code" id="visible_files-source">
-            <pre><span class="ruby-comment"># File app/models/Tag.rb, line 11</span>
+            <pre><span class="ruby-comment"># File app/models/Tag.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visible_files</span>
-  <span class="ruby-ivar">@manifest</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">clean</span>(<span class="ruby-identifier">git</span>.<span class="ruby-identifier">show</span>(<span class="ruby-ivar">@avatar</span>.<span class="ruby-identifier">path</span>, <span class="ruby-node">&quot;#{@n}:manifest.json&quot;</span>)))
+  <span class="ruby-ivar">@manifest</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">git</span>.<span class="ruby-identifier">show</span>(<span class="ruby-identifier">path</span>, <span class="ruby-node">&quot;#{number}:manifest.json&quot;</span>))
 <span class="ruby-keyword">end</span></pre>
           </div>
           

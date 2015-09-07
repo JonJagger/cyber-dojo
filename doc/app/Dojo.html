@@ -73,13 +73,19 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-c-new">::new</a>
+    <li ><a href="#method-i-disk">#disk</a>
     
     <li ><a href="#method-i-exercises">#exercises</a>
+    
+    <li ><a href="#method-i-git">#git</a>
     
     <li ><a href="#method-i-katas">#katas</a>
     
     <li ><a href="#method-i-languages">#languages</a>
+    
+    <li ><a href="#method-i-one_self">#one_self</a>
+    
+    <li ><a href="#method-i-runner">#runner</a>
     
   </ul>
 </div>
@@ -94,7 +100,7 @@
 
   <section class="description">
     
-<p>See cyber-dojo-model.pdf</p>
+<p>See comments at end of file See cyber-dojo-model.pdf</p>
 
   </section>
 
@@ -109,40 +115,19 @@
     
 
     
-    <section class="attribute-method-details" class="method-section">
-      <header>
-        <h3>Attributes</h3>
-      </header>
-
-      
-      <div id="attribute-i-path" class="method-detail">
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">path</span><span
-            class="attribute-access-type">[R]</span>
-        </div>
-
-        <div class="method-description">
-        
-        
-        
-        </div>
-      </div>
-      
-    </section>
-    
 
     
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
-         <h3>Public Class Methods</h3>
+         <h3>Public Instance Methods</h3>
        </header>
 
     
-      <div id="method-c-new" class="method-detail ">
+      <div id="method-i-disk" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">new</span><span
-            class="method-args">(path)</span>
+          <span class="method-name">disk</span><span
+            class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -156,11 +141,10 @@
           
 
           
-          <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/models/Dojo.rb, line 6</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">path</span>)
-  <span class="ruby-identifier">path</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&#39;/&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">end_with?</span>(<span class="ruby-string">&#39;/&#39;</span>)
-  <span class="ruby-ivar">@path</span> = <span class="ruby-identifier">path</span>
+          <div class="method-source-code" id="disk-source">
+            <pre><span class="ruby-comment"># File app/models/Dojo.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">disk</span>
+  <span class="ruby-ivar">@disk</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">external_obj</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -170,14 +154,6 @@
 
         
       </div>
-
-    
-    </section>
-  
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
-       <header>
-         <h3>Public Instance Methods</h3>
-       </header>
 
     
       <div id="method-i-exercises" class="method-detail ">
@@ -199,9 +175,42 @@
 
           
           <div class="method-source-code" id="exercises-source">
-            <pre><span class="ruby-comment"># File app/models/Dojo.rb, line 17</span>
+            <pre><span class="ruby-comment"># File app/models/Dojo.rb, line 10</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">exercises</span>
-  <span class="ruby-ivar">@exercises</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Exercises</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;exercises/&#39;</span>)
+  <span class="ruby-ivar">@exercises</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Exercises</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">external_root</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-git" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">git</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="git-source">
+            <pre><span class="ruby-comment"># File app/models/Dojo.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">git</span>
+  <span class="ruby-ivar">@git</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">external_obj</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -232,13 +241,9 @@
 
           
           <div class="method-source-code" id="katas-source">
-            <pre><span class="ruby-comment"># File app/models/Dojo.rb, line 21</span>
+            <pre><span class="ruby-comment"># File app/models/Dojo.rb, line 14</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">katas</span>
-  <span class="ruby-identifier">katas_path</span> = <span class="ruby-identifier">path</span>
-  <span class="ruby-comment"># see test/languages/one_language_checker.rb</span>
-  <span class="ruby-identifier">katas_path</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&#39;test/cyberdojo/&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;CYBERDOJO_TEST_ROOT_DIR&#39;</span>]
-  <span class="ruby-identifier">katas_path</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&#39;katas/&#39;</span>
-  <span class="ruby-constant">Katas</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">katas_path</span>)
+  <span class="ruby-ivar">@katas</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Katas</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">external_root</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -269,9 +274,75 @@
 
           
           <div class="method-source-code" id="languages-source">
-            <pre><span class="ruby-comment"># File app/models/Dojo.rb, line 13</span>
+            <pre><span class="ruby-comment"># File app/models/Dojo.rb, line 6</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">languages</span>
-  <span class="ruby-ivar">@languages</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Languages</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;languages/&#39;</span>)
+  <span class="ruby-ivar">@languages</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Languages</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">external_root</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-one_self" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">one_self</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="one_self-source">
+            <pre><span class="ruby-comment"># File app/models/Dojo.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">one_self</span>
+  <span class="ruby-ivar">@one_self</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">external_obj_pass_disk</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-runner" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">runner</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="runner-source">
+            <pre><span class="ruby-comment"># File app/models/Dojo.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">runner</span>
+  <span class="ruby-ivar">@runner</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">external_obj</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

@@ -71,11 +71,7 @@
   <ul class="link-list">
   
   
-    <li><a class="include" href="Externals.html">Externals</a>
-  
-  
-  
-    <li><a class="include" href="Cleaner.html">Cleaner</a>
+    <li><a class="include" href="ExternalParentChain.html">ExternalParentChain</a>
   
   
   </ul>
@@ -93,8 +89,6 @@
     <li ><a href="#method-i-exists-3F">#exists?</a>
     
     <li ><a href="#method-i-instructions">#instructions</a>
-    
-    <li ><a href="#method-i-new_name">#new_name</a>
     
     <li ><a href="#method-i-path">#path</a>
     
@@ -157,7 +151,7 @@
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(path,name)</span>
+            class="method-args">(exercises,name,instructions=nil)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -172,10 +166,9 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 4</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">path</span>,<span class="ruby-identifier">name</span>)
-  <span class="ruby-identifier">raise_if_no</span>([<span class="ruby-value">:disk</span>])
-  <span class="ruby-ivar">@path</span>,<span class="ruby-ivar">@name</span> = <span class="ruby-identifier">path</span>,<span class="ruby-identifier">name</span>
+            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 6</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">exercises</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">instructions</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-ivar">@parent</span>,<span class="ruby-ivar">@name</span>,<span class="ruby-ivar">@instructions</span> = <span class="ruby-identifier">exercises</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">instructions</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -214,7 +207,7 @@
 
           
           <div class="method-source-code" id="exists-3F-source">
-            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 22</span>
+            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">exists?</span>
   <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">instructions_filename</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -247,49 +240,9 @@
 
           
           <div class="method-source-code" id="instructions-source">
-            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 26</span>
+            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 20</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">instructions</span>
-  <span class="ruby-identifier">clean</span>(<span class="ruby-identifier">dir</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">instructions_filename</span>))
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-new_name" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">new_name</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="new_name-source">
-            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 11</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">new_name</span>
-  <span class="ruby-comment"># Some exercises/ sub-folders have been renamed.</span>
-  <span class="ruby-comment"># See app/models/Kata.rb ::exercise()</span>
-  <span class="ruby-comment"># See app/models/Kata.rb ::original_exercise()</span>
-  <span class="ruby-identifier">renames</span> = {
-    <span class="ruby-string">&#39;Yahtzee&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Yatzy&#39;</span>,
-    <span class="ruby-string">&#39;Yahtzee_Cutdown&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Yatzy_Cutdown&#39;</span>
-  }
-  <span class="ruby-identifier">renames</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">name</span>
+  <span class="ruby-ivar">@instructions</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">read</span>(<span class="ruby-identifier">instructions_filename</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -320,9 +273,9 @@
 
           
           <div class="method-source-code" id="path-source">
-            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 30</span>
+            <pre><span class="ruby-comment"># File app/models/Exercise.rb, line 12</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">path</span>
-  <span class="ruby-ivar">@path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>
+  <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+
+<title>class OneSelf - Rails Application Documentation</title>
+
+<link href="./fonts.css" rel="stylesheet">
+<link href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/search_index.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/searcher.js"></script>
+<script src="./js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link"><a href="Object.html">Object</a>
+  
+</div>
+
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-created">#created</a>
+    
+    <li ><a href="#method-i-manifest_filename">#manifest_filename</a>
+    
+    <li ><a href="#method-i-started">#started</a>
+    
+    <li ><a href="#method-i-tested">#tested</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-OneSelf">
+  <h1 id="class-OneSelf" class="class">
+    class OneSelf
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(disk, requester = HttpRequester.new)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/OneSelf.rb, line 9</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">disk</span>, <span class="ruby-identifier">requester</span> = <span class="ruby-constant">HttpRequester</span>.<span class="ruby-identifier">new</span>)
+  <span class="ruby-ivar">@disk</span>,<span class="ruby-ivar">@requester</span> = <span class="ruby-identifier">disk</span>,<span class="ruby-identifier">requester</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-created" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">created</span><span
+            class="method-args">(hash)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="created-source">
+            <pre><span class="ruby-comment"># File lib/OneSelf.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">created</span>(<span class="ruby-identifier">hash</span>)
+  <span class="ruby-identifier">data</span> = {
+    <span class="ruby-string">&#39;objectTags&#39;</span> =<span class="ruby-operator">&gt;</span> [ <span class="ruby-string">&#39;cyber-dojo&#39;</span> ],
+    <span class="ruby-string">&#39;actionTags&#39;</span> =<span class="ruby-operator">&gt;</span> [ <span class="ruby-string">&#39;create&#39;</span> ],
+    <span class="ruby-string">&#39;dateTime&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">server_time</span>(<span class="ruby-identifier">hash</span>[<span class="ruby-value">:now</span>]),      
+    <span class="ruby-string">&#39;location&#39;</span> =<span class="ruby-operator">&gt;</span> { 
+      <span class="ruby-string">&#39;lat&#39;</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">:latitude</span>], 
+      <span class="ruby-string">&#39;long&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">:longtitude</span>] 
+    },
+    <span class="ruby-string">&#39;properties&#39;</span> =<span class="ruby-operator">&gt;</span> {
+      <span class="ruby-string">&#39;dojo-id&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">:kata_id</span>],
+      <span class="ruby-string">&#39;exercise-name&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">:exercise_name</span>],
+      <span class="ruby-string">&#39;language-name&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">:language_name</span>],
+      <span class="ruby-string">&#39;test-name&#39;</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">:test_name</span>]
+    }
+  }
+  <span class="ruby-identifier">url</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-node">&quot;#{streams_url}/#{stream_id}/events&quot;</span>)    
+  <span class="ruby-identifier">request</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Post</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">url</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">json_header</span>(<span class="ruby-identifier">write_token</span>))
+  <span class="ruby-identifier">request</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">to_json</span>
+  <span class="ruby-identifier">http_response</span>(<span class="ruby-identifier">url</span>.<span class="ruby-identifier">host</span>, <span class="ruby-identifier">request</span>)    
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-manifest_filename" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">manifest_filename</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li>
+<p>-</p>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="manifest_filename-source">
+            <pre><span class="ruby-comment"># File lib/OneSelf.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">manifest_filename</span>
+  <span class="ruby-string">&#39;1self_manifest.json&#39;</span>    
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-started" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">started</span><span
+            class="method-args">(avatar)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li>
+<p>-</p>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="started-source">
+            <pre><span class="ruby-comment"># File lib/OneSelf.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">started</span>(<span class="ruby-identifier">avatar</span>)
+  <span class="ruby-identifier">url</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">streams_url</span>)
+  <span class="ruby-identifier">request</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Post</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">url</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">json_header</span>(<span class="ruby-node">&quot;#{app_key}:#{app_secret}&quot;</span>))
+  <span class="ruby-identifier">response</span> = <span class="ruby-identifier">http_response</span>(<span class="ruby-identifier">url</span>.<span class="ruby-identifier">host</span>, <span class="ruby-identifier">request</span>)    
+  <span class="ruby-identifier">body</span> =  <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)
+  <span class="ruby-identifier">one_self</span> = {
+    <span class="ruby-value">:stream_id</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">body</span>[<span class="ruby-string">&#39;streamid&#39;</span>],
+    <span class="ruby-value">:read_token</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">body</span>[<span class="ruby-string">&#39;readToken&#39;</span>],
+    <span class="ruby-value">:write_token</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">body</span>[<span class="ruby-string">&#39;writeToken&#39;</span>]
+  }
+  <span class="ruby-ivar">@disk</span>[<span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">path</span>].<span class="ruby-identifier">write</span>(<span class="ruby-identifier">manifest_filename</span>, <span class="ruby-identifier">one_self</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-tested" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">tested</span><span
+            class="method-args">(avatar,hash)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li>
+<p>-</p>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="tested-source">
+            <pre><span class="ruby-comment"># File lib/OneSelf.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">tested</span>(<span class="ruby-identifier">avatar</span>,<span class="ruby-identifier">hash</span>)
+  <span class="ruby-comment"># tags belonging to 1self are camelCase</span>
+  <span class="ruby-comment"># tags belonging to me (in properties) are dash-separated    </span>
+  <span class="ruby-identifier">data</span> = {
+    <span class="ruby-string">&#39;objectTags&#39;</span> =<span class="ruby-operator">&gt;</span> [ <span class="ruby-string">&#39;cyber-dojo&#39;</span> ],
+    <span class="ruby-string">&#39;actionTags&#39;</span> =<span class="ruby-operator">&gt;</span> [ <span class="ruby-string">&#39;test-run&#39;</span> ],
+    <span class="ruby-string">&#39;dateTime&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">server_time</span>(<span class="ruby-identifier">hash</span>[<span class="ruby-value">:now</span>]),
+    <span class="ruby-string">&#39;properties&#39;</span> =<span class="ruby-operator">&gt;</span> {
+      <span class="ruby-string">&#39;dojo-id&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">kata</span>.<span class="ruby-identifier">id</span>,
+      <span class="ruby-string">&#39;avatar&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">name</span>,
+      <span class="ruby-string">&#39;tag&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">:tag</span>],
+      <span class="ruby-string">&#39;color&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">css</span>(<span class="ruby-identifier">hash</span>[<span class="ruby-value">:colour</span>]),
+      <span class="ruby-string">&#39;added-line-count&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">:added_line_count</span>],
+      <span class="ruby-string">&#39;deleted-line-count&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">:deleted_line_count</span>],
+      <span class="ruby-string">&#39;seconds-since-last-test&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">:seconds_since_last_test</span>],
+    }
+  }
+  <span class="ruby-identifier">one_self</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-ivar">@disk</span>[<span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">path</span>].<span class="ruby-identifier">read</span>(<span class="ruby-identifier">manifest_filename</span>))    
+  <span class="ruby-identifier">url</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-node">&quot;#{streams_url}/#{one_self[&#39;stream_id&#39;]}/events&quot;</span>)
+  <span class="ruby-identifier">request</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Post</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">url</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">json_header</span>(<span class="ruby-node">&quot;#{one_self[&#39;write_token&#39;]}&quot;</span>))
+  <span class="ruby-identifier">request</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">to_json</span>
+  <span class="ruby-identifier">http_response</span>(<span class="ruby-identifier">url</span>.<span class="ruby-identifier">host</span>, <span class="ruby-identifier">request</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

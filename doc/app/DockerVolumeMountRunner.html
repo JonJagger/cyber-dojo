@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 
-<title>class HostTestRunner - Rails Application Documentation</title>
+<title>class DockerVolumeMountRunner - Rails Application Documentation</title>
 
 <link href="./fonts.css" rel="stylesheet">
 <link href="./rdoc.css" rel="stylesheet">
@@ -71,7 +71,7 @@
   <ul class="link-list">
   
   
-    <li><a class="include" href="TestRunner.html">TestRunner</a>
+    <li><a class="include" href="DockerTimesOutRunner.html">DockerTimesOutRunner</a>
   
   
   </ul>
@@ -84,9 +84,11 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-c-new">::new</a>
+    
     <li ><a href="#method-i-run">#run</a>
     
-    <li ><a href="#method-i-runnable-3F">#runnable?</a>
+    <li ><a href="#method-i-started">#started</a>
     
   </ul>
 </div>
@@ -94,9 +96,9 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-HostTestRunner">
-  <h1 id="class-HostTestRunner" class="class">
-    class HostTestRunner
+<main role="main" aria-labelledby="class-DockerVolumeMountRunner">
+  <h1 id="class-DockerVolumeMountRunner" class="class">
+    class DockerVolumeMountRunner
   </h1>
 
   <section class="description">
@@ -116,6 +118,48 @@
     
 
     
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/DockerVolumeMountRunner.rb, line 14</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">bash</span> = <span class="ruby-constant">Bash</span>.<span class="ruby-identifier">new</span>, <span class="ruby-identifier">cid_filename</span> = <span class="ruby-constant">Tempfile</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&#39;cyber-dojo&#39;</span>).<span class="ruby-identifier">path</span>)
+  <span class="ruby-ivar">@bash</span>,<span class="ruby-ivar">@cid_filename</span> = <span class="ruby-identifier">bash</span>,<span class="ruby-identifier">cid_filename</span>
+  <span class="ruby-identifier">raise_if_docker_not_installed</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
      <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Instance Methods</h3>
@@ -141,25 +185,17 @@
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/HostTestRunner.rb, line 18</span>
+            <pre><span class="ruby-comment"># File lib/DockerVolumeMountRunner.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">run</span>(<span class="ruby-identifier">sandbox</span>, <span class="ruby-identifier">command</span>, <span class="ruby-identifier">max_seconds</span>)
-  <span class="ruby-identifier">command</span> = <span class="ruby-node">&quot;cd &#39;#{sandbox.path}&#39;;&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">stderr2stdout</span>(<span class="ruby-identifier">command</span>)
-  <span class="ruby-identifier">pipe</span> = <span class="ruby-constant">IO</span><span class="ruby-operator">::</span><span class="ruby-identifier">popen</span>(<span class="ruby-identifier">command</span>)
-  <span class="ruby-identifier">output</span> = <span class="ruby-string">&quot;&quot;</span>
-  <span class="ruby-identifier">sandbox_thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> { <span class="ruby-identifier">output</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">pipe</span>.<span class="ruby-identifier">read</span> }
-  <span class="ruby-identifier">result</span> = <span class="ruby-identifier">sandbox_thread</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">max_seconds</span>);
-  <span class="ruby-identifier">timed_out</span> = (<span class="ruby-identifier">result</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span>)
-
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">sandbox_thread</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
-    <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">kill</span>(<span class="ruby-identifier">sandbox_thread</span>)
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">pid</span> = <span class="ruby-identifier">pipe</span>.<span class="ruby-identifier">pid</span>
-  <span class="ruby-identifier">kill</span>(<span class="ruby-identifier">descendant_pids_of</span>(<span class="ruby-identifier">pid</span>))
-  <span class="ruby-identifier">pipe</span>.<span class="ruby-identifier">close</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">timed_out</span>
-    <span class="ruby-identifier">output</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">didnt_complete</span>(<span class="ruby-identifier">max_seconds</span>)
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">limited</span>(<span class="ruby-identifier">output</span>,<span class="ruby-value">50</span><span class="ruby-operator">*</span><span class="ruby-value">1024</span>)
+  <span class="ruby-identifier">read_write</span> = <span class="ruby-string">&#39;rw&#39;</span>
+  <span class="ruby-identifier">sandbox_volume</span> = <span class="ruby-node">&quot;#{sandbox.path}:/sandbox:#{read_write}&quot;</span>
+  <span class="ruby-identifier">options</span> =
+      <span class="ruby-string">&#39; --net=none&#39;</span> <span class="ruby-operator">+</span>
+      <span class="ruby-node">&quot; -v #{quoted(sandbox_volume)}&quot;</span> <span class="ruby-operator">+</span>
+      <span class="ruby-string">&#39; -w /sandbox&#39;</span>
+  <span class="ruby-identifier">language</span> = <span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">kata</span>.<span class="ruby-identifier">language</span>
+  <span class="ruby-identifier">cmd</span> = <span class="ruby-identifier">timeout</span>(<span class="ruby-identifier">command</span>,<span class="ruby-identifier">max_seconds</span>)
+  <span class="ruby-identifier">times_out_run</span>(<span class="ruby-identifier">options</span>, <span class="ruby-identifier">language</span>.<span class="ruby-identifier">image_name</span>, <span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">max_seconds</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -171,11 +207,11 @@
       </div>
 
     
-      <div id="method-i-runnable-3F" class="method-detail ">
+      <div id="method-i-started" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">runnable?</span><span
-            class="method-args">(language)</span>
+          <span class="method-name">started</span><span
+            class="method-args">(avatar)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -189,11 +225,9 @@
           
 
           
-          <div class="method-source-code" id="runnable-3F-source">
-            <pre><span class="ruby-comment"># File lib/HostTestRunner.rb, line 14</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">runnable?</span>(<span class="ruby-identifier">language</span>)
-  <span class="ruby-keyword">true</span>
-<span class="ruby-keyword">end</span></pre>
+          <div class="method-source-code" id="started-source">
+            <pre><span class="ruby-comment"># File lib/DockerVolumeMountRunner.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">started</span>(<span class="ruby-identifier">avatar</span>); <span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>

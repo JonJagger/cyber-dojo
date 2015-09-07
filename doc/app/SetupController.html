@@ -71,7 +71,11 @@
   <ul class="link-list">
   
   
-    <li><a class="include" href="Chooser.html">Chooser</a>
+    <li><a class="include" href="SetupWorker.html">SetupWorker</a>
+  
+  
+  
+    <li><a class="include" href="TimeNow.html">TimeNow</a>
   
   
   </ul>
@@ -141,14 +145,22 @@
 
           
           <div class="method-source-code" id="save-source">
-            <pre><span class="ruby-comment"># File app/controllers/setup_controller.rb, line 13</span>
+            <pre><span class="ruby-comment"># File app/controllers/setup_controller.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">save</span>
-  <span class="ruby-identifier">language</span> = <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">languages</span>[<span class="ruby-identifier">params</span>[<span class="ruby-string">&#39;language&#39;</span>]]
-  <span class="ruby-identifier">exercise</span> = <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">exercises</span>[<span class="ruby-identifier">params</span>[<span class="ruby-string">&#39;exercise&#39;</span>]]
-  <span class="ruby-identifier">kata</span> = <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">katas</span>.<span class="ruby-identifier">create_kata</span>(<span class="ruby-identifier">language</span>, <span class="ruby-identifier">exercise</span>)
-  <span class="ruby-identifier">render</span> <span class="ruby-value">:json</span> =<span class="ruby-operator">&gt;</span> {
-    <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-identifier">language</span> = <span class="ruby-identifier">languages</span>[<span class="ruby-identifier">language_name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;-&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">test_name</span>]
+  <span class="ruby-identifier">exercise</span> = <span class="ruby-identifier">exercises</span>[<span class="ruby-identifier">exercise_name</span>]
+  <span class="ruby-identifier">kata</span> = <span class="ruby-identifier">katas</span>.<span class="ruby-identifier">create_kata</span>(<span class="ruby-identifier">language</span>, <span class="ruby-identifier">exercise</span>)
+  <span class="ruby-identifier">hash</span> = {
+    <span class="ruby-value">:now</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">time_now</span>,      
+    <span class="ruby-value">:kata_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">id</span>,
+    <span class="ruby-value">:exercise_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exercise_name</span>,
+    <span class="ruby-value">:language_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">language_name</span>,
+    <span class="ruby-value">:test_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">test_name</span>,
+    <span class="ruby-value">:latitude</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">latitude</span>,
+    <span class="ruby-value">:longtitude</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">longtitude</span>
   }
+  <span class="ruby-identifier">one_self</span>.<span class="ruby-identifier">created</span>(<span class="ruby-identifier">hash</span>)
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> { <span class="ruby-identifier">id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span> }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -181,12 +193,14 @@
           <div class="method-source-code" id="show-source">
             <pre><span class="ruby-comment"># File app/controllers/setup_controller.rb, line 4</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
-  <span class="ruby-identifier">read_languages</span>
-  <span class="ruby-identifier">read_exercises</span>
-  <span class="ruby-ivar">@selected_language_index</span> = <span class="ruby-identifier">choose_language</span>(<span class="ruby-ivar">@languages_names</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">katas</span>)
-  <span class="ruby-ivar">@selected_exercise_index</span> = <span class="ruby-identifier">choose_exercise</span>(<span class="ruby-ivar">@exercises_names</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">katas</span>)
   <span class="ruby-ivar">@id</span> = <span class="ruby-identifier">id</span>
   <span class="ruby-ivar">@title</span> = <span class="ruby-string">&#39;create&#39;</span>
+  <span class="ruby-ivar">@exercises_names</span>,<span class="ruby-ivar">@instructions</span> = <span class="ruby-identifier">read_exercises</span>        
+  <span class="ruby-ivar">@initial_exercise_index</span> = <span class="ruby-identifier">choose_exercise</span>(<span class="ruby-ivar">@exercises_names</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">katas</span>)    
+  <span class="ruby-identifier">languages_names</span> = <span class="ruby-identifier">read_languages</span>
+  <span class="ruby-identifier">index</span> = <span class="ruby-identifier">choose_language</span>(<span class="ruby-identifier">languages_names</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">katas</span>)    
+  <span class="ruby-ivar">@languages</span> = <span class="ruby-operator">::</span><span class="ruby-constant">LanguagesDisplayNamesSplitter</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">languages_names</span>, <span class="ruby-identifier">index</span>)
+  <span class="ruby-ivar">@initial_language_index</span> = <span class="ruby-ivar">@languages</span>.<span class="ruby-identifier">selected_index</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

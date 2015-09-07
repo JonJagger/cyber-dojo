@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 
-<title>module Docker - Rails Application Documentation</title>
+<title>module Open4 - Rails Application Documentation</title>
 
 <link href="./fonts.css" rel="stylesheet">
 <link href="./rdoc.css" rel="stylesheet">
@@ -60,23 +60,13 @@
     
     
     
-    <!-- Method Quickref -->
-<div id="method-list-section" class="nav-section">
-  <h3>Methods</h3>
-
-  <ul class="link-list" role="directory">
     
-    <li ><a href="#method-c-installed-3F">::installed?</a>
-    
-  </ul>
-</div>
-
   </div>
 </nav>
 
-<main role="main" aria-labelledby="module-Docker">
-  <h1 id="module-Docker" class="module">
-    module Docker
+<main role="main" aria-labelledby="module-Open4">
+  <h1 id="module-Open4" class="module">
+    module Open4
   </h1>
 
   <section class="description">
@@ -96,49 +86,6 @@
     
 
     
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
-       <header>
-         <h3>Public Class Methods</h3>
-       </header>
-
-    
-      <div id="method-c-installed-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">installed?</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="installed-3F-source">
-            <pre><span class="ruby-comment"># File lib/Docker.rb, line 4</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">installed?</span>
-  <span class="ruby-identifier">command</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">stderr2stdout</span>(<span class="ruby-string">&#39;docker info &gt; /dev/null&#39;</span>)
-  <span class="ruby-node">%x#{command}`</span>
-  <span class="ruby-identifier">$?</span>.<span class="ruby-identifier">exitstatus</span> <span class="ruby-operator">===</span> <span class="ruby-value">0</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-    </section>
-  
   </section>
 </main>
 

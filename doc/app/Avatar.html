@@ -71,11 +71,11 @@
   <ul class="link-list">
   
   
-    <li><a class="include" href="Externals.html">Externals</a>
+    <li><a class="include" href="ExternalParentChain.html">ExternalParentChain</a>
   
   
   
-    <li><a class="include" href="Cleaner.html">Cleaner</a>
+    <li><a class="include" href="GitDiff.html">GitDiff</a>
   
   
   
@@ -96,9 +96,11 @@
     
     <li ><a href="#method-i-active-3F">#active?</a>
     
-    <li ><a href="#method-i-commit">#commit</a>
+    <li ><a href="#method-i-diff">#diff</a>
     
     <li ><a href="#method-i-exists-3F">#exists?</a>
+    
+    <li ><a href="#method-i-kata">#kata</a>
     
     <li ><a href="#method-i-lights">#lights</a>
     
@@ -106,11 +108,13 @@
     
     <li ><a href="#method-i-sandbox">#sandbox</a>
     
-    <li ><a href="#method-i-save_manifest">#save_manifest</a>
+    <li ><a href="#method-i-start">#start</a>
     
     <li ><a href="#method-i-tags">#tags</a>
     
     <li ><a href="#method-i-test">#test</a>
+    
+    <li ><a href="#method-i-visible_filenames">#visible_filenames</a>
     
     <li ><a href="#method-i-visible_files">#visible_files</a>
     
@@ -127,6 +131,8 @@
 
   <section class="description">
     
+<p>See comments at end of file</p>
+
   </section>
 
   
@@ -145,19 +151,6 @@
         <h3>Attributes</h3>
       </header>
 
-      
-      <div id="attribute-i-kata" class="method-detail">
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">kata</span><span
-            class="attribute-access-type">[R]</span>
-        </div>
-
-        <div class="method-description">
-        
-        
-        
-        </div>
-      </div>
       
       <div id="attribute-i-name" class="method-detail">
         <div class="method-heading attribute-method-heading">
@@ -201,11 +194,10 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 4</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 7</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">kata</span>,<span class="ruby-identifier">name</span>)
-  <span class="ruby-identifier">raise_if_no</span>([<span class="ruby-value">:disk</span>,<span class="ruby-value">:git</span>,<span class="ruby-value">:runner</span>])
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Invalid Avatar(name)&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">Avatars</span>.<span class="ruby-identifier">valid?</span>(<span class="ruby-identifier">name</span>)
-  <span class="ruby-ivar">@kata</span>,<span class="ruby-ivar">@name</span> = <span class="ruby-identifier">kata</span>,<span class="ruby-identifier">name</span>
+  <span class="ruby-ivar">@parent</span>,<span class="ruby-ivar">@name</span> = <span class="ruby-identifier">kata</span>,<span class="ruby-identifier">name</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -244,13 +236,12 @@
 
           
           <div class="method-source-code" id="active-3F-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 20</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">active?</span>
-  <span class="ruby-comment"># o) Players sometimes start an extra avatar solely to read the</span>
-  <span class="ruby-comment">#    instructions. I don&#39;t want these avatars appearing on the</span>
-  <span class="ruby-comment">#    dashboard.</span>
-  <span class="ruby-comment"># o) When forking a new kata you can enter as one animal</span>
-  <span class="ruby-comment">#    to sanity check it is ok (but not press [test])</span>
+  <span class="ruby-comment"># Players sometimes start an extra avatar solely to read the </span>
+  <span class="ruby-comment"># instructions. I don&#39;t want these avatars appearing on the dashboard.</span>
+  <span class="ruby-comment"># When forking a new kata you can enter as one animal to sanity check</span>
+  <span class="ruby-comment"># it is ok (but not press [test])</span>
   <span class="ruby-identifier">exists?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">lights</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -263,11 +254,11 @@
       </div>
 
     
-      <div id="method-i-commit" class="method-detail ">
+      <div id="method-i-diff" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">commit</span><span
-            class="method-args">(tag)</span>
+          <span class="method-name">diff</span><span
+            class="method-args">(n,m)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -281,12 +272,13 @@
           
 
           
-          <div class="method-source-code" id="commit-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 94</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">commit</span>(<span class="ruby-identifier">tag</span>)
-  <span class="ruby-identifier">git</span>.<span class="ruby-identifier">commit</span>(<span class="ruby-identifier">path</span>, <span class="ruby-node">&quot;-a -m &#39;#{tag}&#39; --quiet&quot;</span>)
-  <span class="ruby-identifier">git</span>.<span class="ruby-identifier">gc</span>(<span class="ruby-identifier">path</span>, <span class="ruby-string">&#39;--auto --quiet&#39;</span>)
-  <span class="ruby-identifier">git</span>.<span class="ruby-identifier">tag</span>(<span class="ruby-identifier">path</span>, <span class="ruby-node">&quot;-m &#39;#{tag}&#39; #{tag} HEAD&quot;</span>)
+          <div class="method-source-code" id="diff-source">
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 87</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">diff</span>(<span class="ruby-identifier">n</span>,<span class="ruby-identifier">m</span>)
+  <span class="ruby-identifier">command</span> = <span class="ruby-node">&quot;--ignore-space-at-eol --find-copies-harder #{n} #{m} sandbox&quot;</span>
+  <span class="ruby-identifier">diff_lines</span> = <span class="ruby-identifier">git</span>.<span class="ruby-identifier">diff</span>(<span class="ruby-identifier">path</span>,<span class="ruby-identifier">command</span>)
+  <span class="ruby-identifier">visible_files</span> = <span class="ruby-identifier">tags</span>[<span class="ruby-identifier">m</span>].<span class="ruby-identifier">visible_files</span>
+  <span class="ruby-identifier">git_diff</span>(<span class="ruby-identifier">diff_lines</span>, <span class="ruby-identifier">visible_files</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -317,9 +309,42 @@
 
           
           <div class="method-source-code" id="exists-3F-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 16</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 18</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">exists?</span>
   <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">exists?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-kata" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">kata</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="kata-source">
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 14</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">kata</span>
+  <span class="ruby-ivar">@parent</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -350,10 +375,9 @@
 
           
           <div class="method-source-code" id="lights-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 34</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 56</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">lights</span>
-  <span class="ruby-comment"># See comment below.</span>
-  <span class="ruby-identifier">increments</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">inc</span><span class="ruby-operator">|</span> <span class="ruby-constant">Light</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>,<span class="ruby-identifier">inc</span>) }
+  <span class="ruby-identifier">tags</span>.<span class="ruby-identifier">select</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">tag</span><span class="ruby-operator">|</span> <span class="ruby-identifier">tag</span>.<span class="ruby-identifier">light?</span> }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -384,8 +408,9 @@
 
           
           <div class="method-source-code" id="path-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 12</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 34</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">path</span>
+  <span class="ruby-comment"># The avatar&#39;s folder holds its manifest and increments caches</span>
   <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -417,8 +442,9 @@
 
           
           <div class="method-source-code" id="sandbox-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 100</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">sandbox</span>
+  <span class="ruby-comment"># The avatar&#39;s sandbox holds its source files</span>
   <span class="ruby-constant">Sandbox</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -431,11 +457,11 @@
       </div>
 
     
-      <div id="method-i-save_manifest" class="method-detail ">
+      <div id="method-i-start" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">save_manifest</span><span
-            class="method-args">(visible_files)</span>
+          <span class="method-name">start</span><span
+            class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -449,10 +475,18 @@
           
 
           
-          <div class="method-source-code" id="save_manifest-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 90</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">save_manifest</span>(<span class="ruby-identifier">visible_files</span>)
-  <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;manifest.json&#39;</span>, <span class="ruby-identifier">visible_files</span>)
+          <div class="method-source-code" id="start-source">
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">start</span>
+  <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">make</span>
+  <span class="ruby-identifier">git_setup</span>
+  <span class="ruby-identifier">write_manifest</span>(<span class="ruby-identifier">kata</span>.<span class="ruby-identifier">visible_files</span>)
+  <span class="ruby-identifier">git</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">path</span>,<span class="ruby-identifier">manifest_filename</span>)
+  <span class="ruby-identifier">write_increments</span>([ ])
+  <span class="ruby-identifier">git</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">path</span>,<span class="ruby-identifier">increments_filename</span>)     
+  <span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">start</span>
+  <span class="ruby-identifier">git_commit</span>(<span class="ruby-value">0</span>)    
+  <span class="ruby-identifier">runner</span>.<span class="ruby-identifier">started</span>(<span class="ruby-keyword">self</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -483,10 +517,9 @@
 
           
           <div class="method-source-code" id="tags-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 29</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 52</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">tags</span>
-  <span class="ruby-comment"># See comment below.</span>
-  (<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">increments</span>.<span class="ruby-identifier">length</span>).<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span> <span class="ruby-constant">Tag</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>,<span class="ruby-identifier">n</span>) }
+  (<span class="ruby-identifier">tag0</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">increments</span>).<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">h</span><span class="ruby-operator">|</span> <span class="ruby-constant">Tag</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>,<span class="ruby-identifier">h</span>) }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -502,7 +535,7 @@
         
         <div class="method-heading">
           <span class="method-name">test</span><span
-            class="method-args">(delta, visible_files, now = time_now, time_limit = 15)</span>
+            class="method-args">(delta, files, now = time_now, time_limit = 15)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -517,50 +550,57 @@
 
           
           <div class="method-source-code" id="test-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 45</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">test</span>(<span class="ruby-identifier">delta</span>, <span class="ruby-identifier">visible_files</span>, <span class="ruby-identifier">now</span> = <span class="ruby-identifier">time_now</span>, <span class="ruby-identifier">time_limit</span> = <span class="ruby-value">15</span>)
-  <span class="ruby-identifier">delta</span>[<span class="ruby-value">:changed</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">dir</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">visible_files</span>[<span class="ruby-identifier">filename</span>])
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">delta</span>[<span class="ruby-value">:new</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">dir</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">visible_files</span>[<span class="ruby-identifier">filename</span>])
-    <span class="ruby-identifier">git</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">filename</span>)
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">delta</span>[<span class="ruby-value">:deleted</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">git</span>.<span class="ruby-identifier">rm</span>(<span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">filename</span>)
-  <span class="ruby-keyword">end</span>
-
-  <span class="ruby-identifier">pre_test_filenames</span> = <span class="ruby-identifier">visible_files</span>.<span class="ruby-identifier">keys</span>
-
-  <span class="ruby-identifier">output</span> = <span class="ruby-identifier">clean</span>(<span class="ruby-identifier">runner</span>.<span class="ruby-identifier">run</span>(<span class="ruby-identifier">sandbox</span>, <span class="ruby-string">&#39;./cyber-dojo.sh&#39;</span>, <span class="ruby-identifier">time_limit</span>))
-  <span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;output&#39;</span>, <span class="ruby-identifier">output</span>) <span class="ruby-comment"># so output appears in diff-view</span>
-  <span class="ruby-identifier">visible_files</span>[<span class="ruby-string">&#39;output&#39;</span>] = <span class="ruby-identifier">output</span>
-  <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">language</span>.<span class="ruby-identifier">after_test</span>(<span class="ruby-identifier">sandbox</span>, <span class="ruby-identifier">visible_files</span>)
-
-  <span class="ruby-identifier">new_files</span> = <span class="ruby-identifier">visible_files</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span>
-    <span class="ruby-operator">!</span><span class="ruby-identifier">pre_test_filenames</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">filename</span>)
-  }
-  <span class="ruby-identifier">new_files</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">git</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">filename</span>)
-  }
-
-  <span class="ruby-identifier">filenames_to_delete</span> = <span class="ruby-identifier">pre_test_filenames</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span>
-    <span class="ruby-operator">!</span><span class="ruby-identifier">visible_files</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">filename</span>)
-  }
-
-  <span class="ruby-identifier">save_manifest</span>(<span class="ruby-identifier">visible_files</span>)
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 68</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">test</span>(<span class="ruby-identifier">delta</span>, <span class="ruby-identifier">files</span>, <span class="ruby-identifier">now</span> = <span class="ruby-identifier">time_now</span>, <span class="ruby-identifier">time_limit</span> = <span class="ruby-value">15</span>)
+  <span class="ruby-identifier">cyber_dojo_sh_updated</span> = <span class="ruby-identifier">language</span>.<span class="ruby-identifier">update_cyber_dojo_sh</span>(<span class="ruby-identifier">files</span>)
+  <span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">save_files</span>(<span class="ruby-identifier">delta</span>,<span class="ruby-identifier">files</span>)
+  <span class="ruby-identifier">output</span> = <span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">run_tests</span>(<span class="ruby-identifier">time_limit</span>)
+  <span class="ruby-identifier">colour</span> = <span class="ruby-identifier">language</span>.<span class="ruby-identifier">colour</span>(<span class="ruby-identifier">output</span>)
+  <span class="ruby-identifier">output</span> = <span class="ruby-identifier">language</span>.<span class="ruby-identifier">update_output</span>(<span class="ruby-identifier">output</span>,<span class="ruby-identifier">cyber_dojo_sh_updated</span>)
 
   <span class="ruby-identifier">rags</span> = <span class="ruby-identifier">increments</span>
-  <span class="ruby-identifier">rag</span> = {
-    <span class="ruby-string">&#39;colour&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">language</span>.<span class="ruby-identifier">colour</span>(<span class="ruby-identifier">output</span>),
-    <span class="ruby-string">&#39;time&#39;</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">now</span>,
-    <span class="ruby-string">&#39;number&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">rags</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
-  }
-  <span class="ruby-identifier">rags</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">rag</span>
-  <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;increments.json&#39;</span>, <span class="ruby-identifier">rags</span>)
-  <span class="ruby-identifier">commit</span>(<span class="ruby-identifier">rags</span>.<span class="ruby-identifier">length</span>)
+  <span class="ruby-identifier">tag</span> = <span class="ruby-identifier">rags</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+  <span class="ruby-identifier">write_increments</span>(<span class="ruby-identifier">rags</span> <span class="ruby-operator">&lt;&lt;</span> { <span class="ruby-string">&#39;colour&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">colour</span>, <span class="ruby-string">&#39;time&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">now</span>, <span class="ruby-string">&#39;number&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">tag</span> })
 
-  [<span class="ruby-identifier">rags</span>,<span class="ruby-identifier">new_files</span>,<span class="ruby-identifier">filenames_to_delete</span>]
+  <span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">dir</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;output&#39;</span>, <span class="ruby-identifier">output</span>) <span class="ruby-comment"># output is part of diff state</span>
+  <span class="ruby-identifier">files</span>[<span class="ruby-string">&#39;output&#39;</span>] = <span class="ruby-identifier">output</span>
+  <span class="ruby-identifier">write_manifest</span>(<span class="ruby-identifier">files</span>)
+
+  <span class="ruby-identifier">git_commit</span>(<span class="ruby-identifier">tag</span>)    
+  [<span class="ruby-identifier">rags</span>,<span class="ruby-identifier">output</span>]    
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-visible_filenames" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">visible_filenames</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="visible_filenames-source">
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">visible_filenames</span>
+  <span class="ruby-identifier">visible_files</span>.<span class="ruby-identifier">keys</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -591,11 +631,9 @@
 
           
           <div class="method-source-code" id="visible_files-source">
-            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 39</span>
+            <pre><span class="ruby-comment"># File app/models/Avatar.rb, line 64</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visible_files</span>
-  <span class="ruby-comment"># equivalent to tags[-1].visible_files but much easier</span>
-  <span class="ruby-comment"># to test (faking files is easier than faking git)</span>
-  <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">clean</span>(<span class="ruby-identifier">dir</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&#39;manifest.json&#39;</span>)))
+  <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">read</span>(<span class="ruby-identifier">manifest_filename</span>))
 <span class="ruby-keyword">end</span></pre>
           </div>
           

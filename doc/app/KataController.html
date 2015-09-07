@@ -151,12 +151,11 @@
   <span class="ruby-ivar">@avatar</span> = <span class="ruby-identifier">avatar</span>
   <span class="ruby-ivar">@tab</span> = <span class="ruby-ivar">@kata</span>.<span class="ruby-identifier">language</span>.<span class="ruby-identifier">tab</span>
   <span class="ruby-ivar">@visible_files</span> = <span class="ruby-ivar">@avatar</span>.<span class="ruby-identifier">visible_files</span>
-
   <span class="ruby-ivar">@new_files</span> = { }
   <span class="ruby-ivar">@filenames_to_delete</span> = [ ]
   <span class="ruby-ivar">@traffic_lights</span> = <span class="ruby-ivar">@avatar</span>.<span class="ruby-identifier">lights</span>
   <span class="ruby-ivar">@output</span> = <span class="ruby-ivar">@visible_files</span>[<span class="ruby-string">&#39;output&#39;</span>]
-  <span class="ruby-ivar">@title</span> = <span class="ruby-string">&#39;test&#39;</span>
+  <span class="ruby-ivar">@title</span> = <span class="ruby-string">&#39;test:&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@kata</span>.<span class="ruby-identifier">id</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>] <span class="ruby-operator">+</span> <span class="ruby-string">&#39;:&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@avatar</span>.<span class="ruby-identifier">name</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -187,24 +186,36 @@
 
           
           <div class="method-source-code" id="run_tests-source">
-            <pre><span class="ruby-comment"># File app/controllers/kata_controller.rb, line 17</span>
+            <pre><span class="ruby-comment"># File app/controllers/kata_controller.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">run_tests</span>
   <span class="ruby-ivar">@kata</span>   = <span class="ruby-identifier">kata</span>
   <span class="ruby-ivar">@avatar</span> = <span class="ruby-identifier">avatar</span>
-
-  <span class="ruby-identifier">was</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:file_hashes_incoming</span>]
-  <span class="ruby-identifier">now</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:file_hashes_outgoing</span>]
-  <span class="ruby-identifier">delta</span> = <span class="ruby-constant">FileDeltaMaker</span>.<span class="ruby-identifier">make_delta</span>(<span class="ruby-identifier">was</span>, <span class="ruby-identifier">now</span>)
+  <span class="ruby-identifier">incoming</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:file_hashes_incoming</span>]
+  <span class="ruby-identifier">outgoing</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:file_hashes_outgoing</span>]
+  <span class="ruby-identifier">delta</span> = <span class="ruby-constant">FileDeltaMaker</span>.<span class="ruby-identifier">make_delta</span>(<span class="ruby-identifier">incoming</span>, <span class="ruby-identifier">outgoing</span>)
   <span class="ruby-identifier">visible_files</span> = <span class="ruby-identifier">received_files</span>
+  <span class="ruby-identifier">now</span> = <span class="ruby-identifier">time_now</span>
   <span class="ruby-identifier">time_limit</span> = <span class="ruby-value">15</span>
+  <span class="ruby-ivar">@traffic_lights</span>,<span class="ruby-ivar">@output</span> = <span class="ruby-ivar">@avatar</span>.<span class="ruby-identifier">test</span>(<span class="ruby-identifier">delta</span>, <span class="ruby-identifier">visible_files</span>, <span class="ruby-identifier">now</span>, <span class="ruby-identifier">time_limit</span>)
+  <span class="ruby-ivar">@cyber_dojo_sh</span> = <span class="ruby-identifier">visible_files</span>[<span class="ruby-string">&#39;cyber-dojo.sh&#39;</span>]
 
-  <span class="ruby-ivar">@traffic_lights</span>,<span class="ruby-ivar">@new_files</span>,<span class="ruby-ivar">@filenames_to_delete</span> =
-    <span class="ruby-ivar">@avatar</span>.<span class="ruby-identifier">test</span>(<span class="ruby-identifier">delta</span>, <span class="ruby-identifier">visible_files</span>, <span class="ruby-identifier">time_now</span>, <span class="ruby-identifier">time_limit</span>)
-
-  <span class="ruby-ivar">@output</span> = <span class="ruby-identifier">visible_files</span>[<span class="ruby-string">&#39;output&#39;</span>]
-
+  <span class="ruby-comment"># Turn this off as it is somehow causing errors when the</span>
+  <span class="ruby-comment"># cyber-dojo.sh and output files are updated.</span>
+  <span class="ruby-comment">#</span>
+  <span class="ruby-comment">#tag = @traffic_lights.length</span>
+  <span class="ruby-comment">#diffed_files = avatar.diff(tag-1,tag)</span>
+  <span class="ruby-comment">#hash = {</span>
+  <span class="ruby-comment">#  :tag =&gt; tag,</span>
+  <span class="ruby-comment">#  :colour =&gt; @traffic_lights[-1][&#39;colour&#39;],</span>
+  <span class="ruby-comment">#  :now =&gt; now,</span>
+  <span class="ruby-comment">#  :added_line_count  =&gt; added_line_count(diffed_files),</span>
+  <span class="ruby-comment">#  :deleted_line_count =&gt; deleted_line_count(diffed_files),</span>
+  <span class="ruby-comment">#  :seconds_since_last_test =&gt; seconds_since_last_test(avatar,tag)</span>
+  <span class="ruby-comment">#}</span>
+  <span class="ruby-comment">#one_self.tested(@avatar,hash)</span>
+    
   <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">js</span> { <span class="ruby-identifier">render</span> <span class="ruby-value">:layout</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span> }
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">js</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">layout</span><span class="ruby-operator">:</span> <span class="ruby-keyword">false</span> }
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>

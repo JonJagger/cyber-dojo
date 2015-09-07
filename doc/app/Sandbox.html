@@ -71,7 +71,7 @@
   <ul class="link-list">
   
   
-    <li><a class="include" href="Externals.html">Externals</a>
+    <li><a class="include" href="ExternalParentChain.html">ExternalParentChain</a>
   
   
   </ul>
@@ -86,9 +86,15 @@
     
     <li ><a href="#method-c-new">::new</a>
     
+    <li ><a href="#method-i-avatar">#avatar</a>
+    
     <li ><a href="#method-i-path">#path</a>
     
-    <li ><a href="#method-i-write">#write</a>
+    <li ><a href="#method-i-run_tests">#run_tests</a>
+    
+    <li ><a href="#method-i-save_files">#save_files</a>
+    
+    <li ><a href="#method-i-start">#start</a>
     
   </ul>
 </div>
@@ -115,27 +121,6 @@
 
     
 
-    
-    <section class="attribute-method-details" class="method-section">
-      <header>
-        <h3>Attributes</h3>
-      </header>
-
-      
-      <div id="attribute-i-avatar" class="method-detail">
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">avatar</span><span
-            class="attribute-access-type">[R]</span>
-        </div>
-
-        <div class="method-description">
-        
-        
-        
-        </div>
-      </div>
-      
-    </section>
     
 
     
@@ -164,10 +149,9 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/models/Sandbox.rb, line 4</span>
+            <pre><span class="ruby-comment"># File app/models/Sandbox.rb, line 6</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">avatar</span>)
-  <span class="ruby-identifier">raise_if_no</span>([<span class="ruby-value">:disk</span>])
-  <span class="ruby-ivar">@avatar</span> = <span class="ruby-identifier">avatar</span>
+  <span class="ruby-ivar">@parent</span> = <span class="ruby-identifier">avatar</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -185,6 +169,39 @@
        <header>
          <h3>Public Instance Methods</h3>
        </header>
+
+    
+      <div id="method-i-avatar" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">avatar</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="avatar-source">
+            <pre><span class="ruby-comment"># File app/models/Sandbox.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">avatar</span>
+  <span class="ruby-ivar">@parent</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-path" class="method-detail ">
@@ -206,7 +223,7 @@
 
           
           <div class="method-source-code" id="path-source">
-            <pre><span class="ruby-comment"># File app/models/Sandbox.rb, line 15</span>
+            <pre><span class="ruby-comment"># File app/models/Sandbox.rb, line 14</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">path</span>
   <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;sandbox/&#39;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -220,11 +237,11 @@
       </div>
 
     
-      <div id="method-i-write" class="method-detail ">
+      <div id="method-i-run_tests" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">write</span><span
-            class="method-args">(filename, content)</span>
+          <span class="method-name">run_tests</span><span
+            class="method-args">(time_limit)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -238,10 +255,78 @@
           
 
           
-          <div class="method-source-code" id="write-source">
-            <pre><span class="ruby-comment"># File app/models/Sandbox.rb, line 11</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">write</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">content</span>)
-  <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">content</span>)
+          <div class="method-source-code" id="run_tests-source">
+            <pre><span class="ruby-comment"># File app/models/Sandbox.rb, line 28</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">run_tests</span>(<span class="ruby-identifier">time_limit</span>)
+  <span class="ruby-identifier">runner</span>.<span class="ruby-identifier">run</span>(<span class="ruby-keyword">self</span>, <span class="ruby-string">&#39;./cyber-dojo.sh&#39;</span>, <span class="ruby-identifier">time_limit</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-save_files" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">save_files</span><span
+            class="method-args">(delta, files)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="save_files-source">
+            <pre><span class="ruby-comment"># File app/models/Sandbox.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">save_files</span>(<span class="ruby-identifier">delta</span>, <span class="ruby-identifier">files</span>)
+  <span class="ruby-identifier">delta</span>[<span class="ruby-value">:deleted</span>].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span> <span class="ruby-identifier">git_rm</span>(<span class="ruby-identifier">filename</span>) }
+  <span class="ruby-identifier">delta</span>[<span class="ruby-value">:new</span>    ].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span> <span class="ruby-identifier">git_add</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">filter</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">files</span>)) }
+  <span class="ruby-identifier">delta</span>[<span class="ruby-value">:changed</span>].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span>   <span class="ruby-identifier">write</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">filter</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">files</span>)) }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-start" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">start</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="start-source">
+            <pre><span class="ruby-comment"># File app/models/Sandbox.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">start</span>
+  <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">visible_files</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span>,<span class="ruby-identifier">content</span><span class="ruby-operator">|</span> <span class="ruby-identifier">git_add</span>(<span class="ruby-identifier">filename</span>,<span class="ruby-identifier">content</span>) }
 <span class="ruby-keyword">end</span></pre>
           </div>
           

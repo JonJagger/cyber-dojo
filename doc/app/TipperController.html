@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 
-<title>class DifferController - Rails Application Documentation</title>
+<title>class TipperController - Rails Application Documentation</title>
 
 <link href="./fonts.css" rel="stylesheet">
 <link href="./rdoc.css" rel="stylesheet">
@@ -71,7 +71,7 @@
   <ul class="link-list">
   
   
-    <li><a class="include" href="DifferWorker.html">DifferWorker</a>
+    <li><a class="include" href="TipHelper.html">TipHelper</a>
   
   
   </ul>
@@ -84,7 +84,9 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-i-diff">#diff</a>
+    <li ><a href="#method-i-traffic_light_count_tip">#traffic_light_count_tip</a>
+    
+    <li ><a href="#method-i-traffic_light_tip">#traffic_light_tip</a>
     
   </ul>
 </div>
@@ -92,9 +94,9 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-DifferController">
-  <h1 id="class-DifferController" class="class">
-    class DifferController
+<main role="main" aria-labelledby="class-TipperController">
+  <h1 id="class-TipperController" class="class">
+    class TipperController
   </h1>
 
   <section class="description">
@@ -120,10 +122,10 @@
        </header>
 
     
-      <div id="method-i-diff" class="method-detail ">
+      <div id="method-i-traffic_light_count_tip" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">diff</span><span
+          <span class="method-name">traffic_light_count_tip</span><span
             class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -138,21 +140,43 @@
           
 
           
-          <div class="method-source-code" id="diff-source">
-            <pre><span class="ruby-comment"># File app/controllers/differ_controller.rb, line 4</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">diff</span>
-  <span class="ruby-ivar">@lights</span> = <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">lights</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">light</span><span class="ruby-operator">|</span> <span class="ruby-identifier">light</span>.<span class="ruby-identifier">to_json</span> }
-  <span class="ruby-identifier">diffs</span> = <span class="ruby-identifier">git_diff_view</span>(<span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">diff</span>(<span class="ruby-identifier">was_tag</span>,<span class="ruby-identifier">now_tag</span>))
-  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {
-            <span class="ruby-identifier">lights</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@lights</span>,
-            <span class="ruby-identifier">diffs</span><span class="ruby-operator">:</span> <span class="ruby-identifier">diffs</span>,
-            <span class="ruby-identifier">prevAvatar</span><span class="ruby-operator">:</span> <span class="ruby-identifier">prev_ring</span>(<span class="ruby-identifier">active_avatar_names</span>,<span class="ruby-identifier">avatar_name</span>),
-            <span class="ruby-identifier">nextAvatar</span><span class="ruby-operator">:</span> <span class="ruby-identifier">next_ring</span>(<span class="ruby-identifier">active_avatar_names</span>,<span class="ruby-identifier">avatar_name</span>),
-            <span class="ruby-identifier">idsAndSectionCounts</span><span class="ruby-operator">:</span> <span class="ruby-identifier">prune</span>(<span class="ruby-identifier">diffs</span>),
-            <span class="ruby-identifier">currentFilenameId</span><span class="ruby-operator">:</span> <span class="ruby-identifier">pick_file_id</span>(<span class="ruby-identifier">diffs</span>, <span class="ruby-identifier">current_filename</span>),
-            <span class="ruby-identifier">wasTag</span><span class="ruby-operator">:</span> <span class="ruby-identifier">was_tag</span>,
-            <span class="ruby-identifier">nowTag</span><span class="ruby-operator">:</span> <span class="ruby-identifier">now_tag</span>
-          }    
+          <div class="method-source-code" id="traffic_light_count_tip-source">
+            <pre><span class="ruby-comment"># File app/controllers/tipper_controller.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">traffic_light_count_tip</span>
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> { <span class="ruby-identifier">html</span><span class="ruby-operator">:</span> <span class="ruby-identifier">traffic_light_count_tip_html</span>(<span class="ruby-identifier">params</span>) }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-traffic_light_tip" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">traffic_light_tip</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="traffic_light_tip-source">
+            <pre><span class="ruby-comment"># File app/controllers/tipper_controller.rb, line 6</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">traffic_light_tip</span>
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> { <span class="ruby-identifier">html</span><span class="ruby-operator">:</span> <span class="ruby-identifier">traffic_light_tip_html</span>(<span class="ruby-identifier">avatar</span>,<span class="ruby-identifier">was_tag</span>,<span class="ruby-identifier">now_tag</span>) }
 <span class="ruby-keyword">end</span></pre>
           </div>
           

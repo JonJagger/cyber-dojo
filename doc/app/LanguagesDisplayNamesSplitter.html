@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 
-<title>class Light - Rails Application Documentation</title>
+<title>class LanguagesDisplayNamesSplitter - Rails Application Documentation</title>
 
 <link href="./fonts.css" rel="stylesheet">
 <link href="./rdoc.css" rel="stylesheet">
@@ -75,15 +75,13 @@
     
     <li ><a href="#method-c-new">::new</a>
     
-    <li ><a href="#method-i-colour">#colour</a>
+    <li ><a href="#method-i-names">#names</a>
     
-    <li ><a href="#method-i-number">#number</a>
+    <li ><a href="#method-i-selected_index">#selected_index</a>
     
-    <li ><a href="#method-i-tag">#tag</a>
+    <li ><a href="#method-i-tests_indexes">#tests_indexes</a>
     
-    <li ><a href="#method-i-time">#time</a>
-    
-    <li ><a href="#method-i-to_json">#to_json</a>
+    <li ><a href="#method-i-tests_names">#tests_names</a>
     
   </ul>
 </div>
@@ -91,15 +89,13 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-Light">
-  <h1 id="class-Light" class="class">
-    class Light
+<main role="main" aria-labelledby="class-LanguagesDisplayNamesSplitter">
+  <h1 id="class-LanguagesDisplayNamesSplitter" class="class">
+    class LanguagesDisplayNamesSplitter
   </h1>
 
   <section class="description">
     
-<p>See comment at bottom of Avatar.rb</p>
-
   </section>
 
   
@@ -113,27 +109,6 @@
     
 
     
-    <section class="attribute-method-details" class="method-section">
-      <header>
-        <h3>Attributes</h3>
-      </header>
-
-      
-      <div id="attribute-i-avatar" class="method-detail">
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">avatar</span><span
-            class="attribute-access-type">[R]</span>
-        </div>
-
-        <div class="method-description">
-        
-        
-        
-        </div>
-      </div>
-      
-    </section>
-    
 
     
      <section id="public-class-5Buntitled-5D-method-details" class="method-section">
@@ -146,7 +121,7 @@
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(avatar,hash)</span>
+            class="method-args">(display_names,selected_index)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -161,9 +136,9 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/models/Light.rb, line 6</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">avatar</span>,<span class="ruby-identifier">hash</span>)
-  <span class="ruby-ivar">@avatar</span>,<span class="ruby-ivar">@hash</span> = <span class="ruby-identifier">avatar</span>,<span class="ruby-identifier">hash</span>
+            <pre><span class="ruby-comment"># File lib/LanguagesDisplayNamesSplitter.rb, line 4</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">display_names</span>,<span class="ruby-identifier">selected_index</span>)
+  <span class="ruby-ivar">@display_names</span>,<span class="ruby-ivar">@selected_index</span> = <span class="ruby-identifier">display_names</span>,<span class="ruby-identifier">selected_index</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -183,10 +158,10 @@
        </header>
 
     
-      <div id="method-i-colour" class="method-detail ">
+      <div id="method-i-names" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">colour</span><span
+          <span class="method-name">names</span><span
             class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -201,11 +176,10 @@
           
 
           
-          <div class="method-source-code" id="colour-source">
-            <pre><span class="ruby-comment"># File app/models/Light.rb, line 12</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">colour</span>
-  <span class="ruby-comment"># old katas used &#39;outcome&#39;</span>
-  (<span class="ruby-ivar">@hash</span>[<span class="ruby-string">&#39;colour&#39;</span>] <span class="ruby-operator">||</span> <span class="ruby-ivar">@hash</span>[<span class="ruby-string">&#39;outcome&#39;</span>]).<span class="ruby-identifier">to_sym</span>
+          <div class="method-source-code" id="names-source">
+            <pre><span class="ruby-comment"># File lib/LanguagesDisplayNamesSplitter.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">names</span>
+  <span class="ruby-ivar">@names</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">split</span>(<span class="ruby-value">0</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -217,10 +191,10 @@
       </div>
 
     
-      <div id="method-i-number" class="method-detail ">
+      <div id="method-i-selected_index" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">number</span><span
+          <span class="method-name">selected_index</span><span
             class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -235,10 +209,11 @@
           
 
           
-          <div class="method-source-code" id="number-source">
-            <pre><span class="ruby-comment"># File app/models/Light.rb, line 21</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">number</span>
-  <span class="ruby-ivar">@hash</span>[<span class="ruby-string">&#39;number&#39;</span>].<span class="ruby-identifier">to_i</span>
+          <div class="method-source-code" id="selected_index-source">
+            <pre><span class="ruby-comment"># File lib/LanguagesDisplayNamesSplitter.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">selected_index</span>
+  <span class="ruby-identifier">name</span> = <span class="ruby-ivar">@display_names</span>[<span class="ruby-ivar">@selected_index</span>].<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;,&#39;</span>)[<span class="ruby-value">0</span>].<span class="ruby-identifier">strip</span>
+  <span class="ruby-identifier">names</span>.<span class="ruby-identifier">index</span>(<span class="ruby-identifier">name</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -250,10 +225,10 @@
       </div>
 
     
-      <div id="method-i-tag" class="method-detail ">
+      <div id="method-i-tests_indexes" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">tag</span><span
+          <span class="method-name">tests_indexes</span><span
             class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -268,10 +243,10 @@
           
 
           
-          <div class="method-source-code" id="tag-source">
-            <pre><span class="ruby-comment"># File app/models/Light.rb, line 33</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">tag</span>
-  <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">tags</span>[<span class="ruby-identifier">number</span>]
+          <div class="method-source-code" id="tests_indexes-source">
+            <pre><span class="ruby-comment"># File lib/LanguagesDisplayNamesSplitter.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">tests_indexes</span>
+  <span class="ruby-identifier">names</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">make_test_indexes</span>(<span class="ruby-identifier">name</span>) }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -283,10 +258,10 @@
       </div>
 
     
-      <div id="method-i-time" class="method-detail ">
+      <div id="method-i-tests_names" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">time</span><span
+          <span class="method-name">tests_names</span><span
             class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -301,47 +276,10 @@
           
 
           
-          <div class="method-source-code" id="time-source">
-            <pre><span class="ruby-comment"># File app/models/Light.rb, line 17</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">time</span>
-  <span class="ruby-constant">Time</span>.<span class="ruby-identifier">mktime</span>(<span class="ruby-operator">*</span><span class="ruby-ivar">@hash</span>[<span class="ruby-string">&#39;time&#39;</span>])
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-to_json" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">to_json</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="to_json-source">
-            <pre><span class="ruby-comment"># File app/models/Light.rb, line 25</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_json</span>
-  {
-    <span class="ruby-string">&#39;colour&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">colour</span>,
-    <span class="ruby-string">&#39;time&#39;</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">time</span>,
-    <span class="ruby-string">&#39;number&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">number</span>
-  }
+          <div class="method-source-code" id="tests_names-source">
+            <pre><span class="ruby-comment"># File lib/LanguagesDisplayNamesSplitter.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">tests_names</span>
+  <span class="ruby-ivar">@tests_names</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">split</span>(<span class="ruby-value">1</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           

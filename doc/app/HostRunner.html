@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+
+<title>class HostRunner - Rails Application Documentation</title>
+
+<link href="./fonts.css" rel="stylesheet">
+<link href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/search_index.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/searcher.js"></script>
+<script src="./js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link"><a href="Object.html">Object</a>
+  
+</div>
+
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="Runner.html">Runner</a>
+  
+  
+  
+    <li><a class="include" href="Stderr2Stdout.html">Stderr2Stdout</a>
+  
+  
+  </ul>
+</div>
+
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-i-run">#run</a>
+    
+    <li ><a href="#method-i-runnable-3F">#runnable?</a>
+    
+    <li ><a href="#method-i-started">#started</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-HostRunner">
+  <h1 id="class-HostRunner" class="class">
+    class HostRunner
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-run" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">run</span><span
+            class="method-args">(sandbox, command, max_seconds)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="run-source">
+            <pre><span class="ruby-comment"># File lib/HostRunner.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">run</span>(<span class="ruby-identifier">sandbox</span>, <span class="ruby-identifier">command</span>, <span class="ruby-identifier">max_seconds</span>)
+  <span class="ruby-identifier">command</span> = <span class="ruby-node">&quot;cd &#39;#{sandbox.path}&#39;;&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">stderr2stdout</span>(<span class="ruby-identifier">command</span>)
+  <span class="ruby-identifier">pipe</span> = <span class="ruby-constant">IO</span><span class="ruby-operator">::</span><span class="ruby-identifier">popen</span>(<span class="ruby-identifier">command</span>)
+  <span class="ruby-identifier">output</span> = <span class="ruby-string">&quot;&quot;</span>
+  <span class="ruby-identifier">sandbox_thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> { <span class="ruby-identifier">output</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">pipe</span>.<span class="ruby-identifier">read</span> }
+  <span class="ruby-identifier">result</span> = <span class="ruby-identifier">sandbox_thread</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">max_seconds</span>);
+  <span class="ruby-identifier">timed_out</span> = (<span class="ruby-identifier">result</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span>)
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">sandbox_thread</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+    <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">kill</span>(<span class="ruby-identifier">sandbox_thread</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">pid</span> = <span class="ruby-identifier">pipe</span>.<span class="ruby-identifier">pid</span>
+  <span class="ruby-identifier">kill</span>(<span class="ruby-identifier">descendant_pids_of</span>(<span class="ruby-identifier">pid</span>))
+  <span class="ruby-identifier">pipe</span>.<span class="ruby-identifier">close</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">timed_out</span>
+    <span class="ruby-identifier">output</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">didnt_complete</span>(<span class="ruby-identifier">max_seconds</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">limited</span>(<span class="ruby-identifier">output</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-runnable-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">runnable?</span><span
+            class="method-args">(language)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="runnable-3F-source">
+            <pre><span class="ruby-comment"># File lib/HostRunner.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">runnable?</span>(<span class="ruby-identifier">language</span>)
+  <span class="ruby-operator">!</span><span class="ruby-identifier">language</span>.<span class="ruby-identifier">display_name</span>.<span class="ruby-identifier">end_with?</span> <span class="ruby-string">&#39;Approval&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-started" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">started</span><span
+            class="method-args">(avatar)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="started-source">
+            <pre><span class="ruby-comment"># File lib/HostRunner.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">started</span>(<span class="ruby-identifier">avatar</span>); <span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

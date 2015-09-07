@@ -108,7 +108,7 @@
         
         <div class="method-heading">
           <span class="method-name">pie_chart</span><span
-            class="method-args">(traffic_lights, size, key)</span>
+            class="method-args">(lights, key)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -124,16 +124,16 @@
           
           <div class="method-source-code" id="pie_chart-source">
             <pre><span class="ruby-comment"># File app/helpers/pie_chart_helper.rb, line 4</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">pie_chart</span>(<span class="ruby-identifier">traffic_lights</span>, <span class="ruby-identifier">size</span>, <span class="ruby-identifier">key</span>)
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pie_chart</span>(<span class="ruby-identifier">lights</span>, <span class="ruby-identifier">key</span>)
    <span class="ruby-comment"># key is often the traffic-light&#39;s avatar&#39;s name</span>
    <span class="ruby-comment"># but is &#39;zoo&#39; for the collective-pie-chart of</span>
    <span class="ruby-comment"># all the animals</span>
    <span class="ruby-identifier">pie_chart_from_counts</span>({
-      <span class="ruby-value">:red</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">count</span>(<span class="ruby-identifier">traffic_lights</span>, <span class="ruby-value">:red</span>),
-      <span class="ruby-value">:amber</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">count</span>(<span class="ruby-identifier">traffic_lights</span>, <span class="ruby-value">:amber</span>),
-      <span class="ruby-value">:green</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">count</span>(<span class="ruby-identifier">traffic_lights</span>, <span class="ruby-value">:green</span>),
-      <span class="ruby-value">:timed_out</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">count</span>(<span class="ruby-identifier">traffic_lights</span>, <span class="ruby-value">:timed_out</span>)
-   }, <span class="ruby-identifier">size</span>, <span class="ruby-identifier">key</span>)
+      <span class="ruby-value">:red</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">count</span>(<span class="ruby-identifier">lights</span>, <span class="ruby-value">:red</span>),
+      <span class="ruby-value">:amber</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">count</span>(<span class="ruby-identifier">lights</span>, <span class="ruby-value">:amber</span>),
+      <span class="ruby-value">:green</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">count</span>(<span class="ruby-identifier">lights</span>, <span class="ruby-value">:green</span>),
+      <span class="ruby-value">:timed_out</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">count</span>(<span class="ruby-identifier">lights</span>, <span class="ruby-value">:timed_out</span>)
+   }, <span class="ruby-value">27</span>, <span class="ruby-identifier">key</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+
+<title>module DojoWorker - Rails Application Documentation</title>
+
+<link href="./fonts.css" rel="stylesheet">
+<link href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/search_index.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/searcher.js"></script>
+<script src="./js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="module">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-i-bind">#bind</a>
+    
+    <li ><a href="#method-i-dojo_exists">#dojo_exists</a>
+    
+    <li ><a href="#method-i-empty">#empty</a>
+    
+    <li ><a href="#method-i-enter_dialog_html">#enter_dialog_html</a>
+    
+    <li ><a href="#method-i-full_dialog_html">#full_dialog_html</a>
+    
+    <li ><a href="#method-i-re_enter_dialog_html">#re_enter_dialog_html</a>
+    
+    <li ><a href="#method-i-started_avatar_names">#started_avatar_names</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="module-DojoWorker">
+  <h1 id="module-DojoWorker" class="module">
+    module DojoWorker
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-bind" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">bind</span><span
+            class="method-args">(pathed_filename)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="bind-source">
+            <pre><span class="ruby-comment"># File app/controllers/dojo_worker.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">bind</span>(<span class="ruby-identifier">pathed_filename</span>)
+  <span class="ruby-identifier">filename</span> = <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">pathed_filename</span>
+  <span class="ruby-constant">ERB</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">filename</span>)).<span class="ruby-identifier">result</span>(<span class="ruby-identifier">binding</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-dojo_exists" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">dojo_exists</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="dojo_exists-source">
+            <pre><span class="ruby-comment"># File app/controllers/dojo_worker.rb, line 4</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">dojo_exists</span>
+  <span class="ruby-ivar">@dojo_exists</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">katas</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">id</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-empty" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">empty</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="empty-source">
+            <pre><span class="ruby-comment"># File app/controllers/dojo_worker.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">empty</span>
+  <span class="ruby-identifier">started_avatar_names</span> <span class="ruby-operator">==</span> [ ]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-enter_dialog_html" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">enter_dialog_html</span><span
+            class="method-args">(avatar_name)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="enter_dialog_html-source">
+            <pre><span class="ruby-comment"># File app/controllers/dojo_worker.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">enter_dialog_html</span>(<span class="ruby-identifier">avatar_name</span>)
+  <span class="ruby-ivar">@avatar_name</span> = <span class="ruby-identifier">avatar_name</span>
+  <span class="ruby-identifier">bind</span>(<span class="ruby-string">&#39;/app/views/dojo/enter_dialog.html.erb&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-full_dialog_html" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">full_dialog_html</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="full_dialog_html-source">
+            <pre><span class="ruby-comment"># File app/controllers/dojo_worker.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">full_dialog_html</span>
+  <span class="ruby-ivar">@all_avatar_names</span> = <span class="ruby-constant">Avatars</span>.<span class="ruby-identifier">names</span>
+  <span class="ruby-identifier">bind</span>(<span class="ruby-string">&#39;/app/views/dojo/full_dialog.html.erb&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-re_enter_dialog_html" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">re_enter_dialog_html</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="re_enter_dialog_html-source">
+            <pre><span class="ruby-comment"># File app/controllers/dojo_worker.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">re_enter_dialog_html</span>
+  <span class="ruby-ivar">@id</span> = <span class="ruby-identifier">id</span>
+  <span class="ruby-ivar">@started_avatar_names</span> = <span class="ruby-identifier">started_avatar_names</span>
+  <span class="ruby-ivar">@all_avatar_names</span> = <span class="ruby-constant">Avatars</span>.<span class="ruby-identifier">names</span>
+  <span class="ruby-identifier">bind</span>(<span class="ruby-string">&#39;/app/views/dojo/re_enter_dialog.html.erb&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-started_avatar_names" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">started_avatar_names</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="started_avatar_names-source">
+            <pre><span class="ruby-comment"># File app/controllers/dojo_worker.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">started_avatar_names</span>
+  <span class="ruby-ivar">@started_avatar_names</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">avatars</span>.<span class="ruby-identifier">each</span>.<span class="ruby-identifier">collect</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">avatar</span><span class="ruby-operator">|</span> <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">name</span>} 
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

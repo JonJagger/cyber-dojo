@@ -132,9 +132,7 @@ helps to re-inforce the idea of repetition.</p>
           <div class="method-source-code" id="choose_exercise-source">
             <pre><span class="ruby-comment"># File app/lib/Chooser.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">choose_exercise</span>(<span class="ruby-identifier">exercises</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">katas</span>)
-  <span class="ruby-identifier">chooser</span>(<span class="ruby-identifier">exercises</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">katas</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">kata</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">exercise</span>.<span class="ruby-identifier">name</span>
-  }
+  <span class="ruby-identifier">chooser</span>(<span class="ruby-identifier">exercises</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">katas</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">kata</span><span class="ruby-operator">|</span> <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">exercise</span>.<span class="ruby-identifier">name</span> }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -165,11 +163,9 @@ helps to re-inforce the idea of repetition.</p>
 
           
           <div class="method-source-code" id="choose_language-source">
-            <pre><span class="ruby-comment"># File app/lib/Chooser.rb, line 10</span>
+            <pre><span class="ruby-comment"># File app/lib/Chooser.rb, line 12</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">choose_language</span>(<span class="ruby-identifier">languages</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">katas</span>)
-  <span class="ruby-identifier">chooser</span>(<span class="ruby-identifier">languages</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">katas</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">kata</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">language</span>.<span class="ruby-identifier">name</span>
-  }
+  <span class="ruby-identifier">chooser</span>(<span class="ruby-identifier">languages</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">katas</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">kata</span><span class="ruby-operator">|</span> <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">language</span>.<span class="ruby-identifier">display_name</span> }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -200,7 +196,7 @@ helps to re-inforce the idea of repetition.</p>
 
           
           <div class="method-source-code" id="chooser-source">
-            <pre><span class="ruby-comment"># File app/lib/Chooser.rb, line 22</span>
+            <pre><span class="ruby-comment"># File app/lib/Chooser.rb, line 20</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">chooser</span>(<span class="ruby-identifier">choices</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">katas</span>)
   <span class="ruby-identifier">choice</span> = [<span class="ruby-operator">*</span><span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">choices</span>.<span class="ruby-identifier">length</span>].<span class="ruby-identifier">shuffle</span>[<span class="ruby-value">0</span>]
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">katas</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">id</span>)

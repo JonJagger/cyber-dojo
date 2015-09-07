@@ -71,11 +71,15 @@
   <ul class="link-list">
   
   
-    <li><a class="include" href="Externals.html">Externals</a>
+    <li><a class="include" href="ExternalParentChain.html">ExternalParentChain</a>
   
   
   
-    <li><a class="include" href="Cleaner.html">Cleaner</a>
+    <li><a class="include" href="ManifestProperty.html">ManifestProperty</a>
+  
+  
+  
+    <li><a class="include" href="IdSplitter.html">IdSplitter</a>
   
   
   </ul>
@@ -102,11 +106,11 @@
     
     <li ><a href="#method-i-exists-3F">#exists?</a>
     
+    <li ><a href="#method-i-finished-3F">#finished?</a>
+    
     <li ><a href="#method-i-language">#language</a>
     
-    <li ><a href="#method-i-original_exercise">#original_exercise</a>
-    
-    <li ><a href="#method-i-original_language">#original_language</a>
+    <li ><a href="#method-i-manifest">#manifest</a>
     
     <li ><a href="#method-i-path">#path</a>
     
@@ -127,6 +131,8 @@
 
   <section class="description">
     
+<p>See comments at end of file</p>
+
   </section>
 
   
@@ -149,19 +155,6 @@
       <div id="attribute-i-id" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">id</span><span
-            class="attribute-access-type">[R]</span>
-        </div>
-
-        <div class="method-description">
-        
-        
-        
-        </div>
-      </div>
-      
-      <div id="attribute-i-katas" class="method-detail">
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">katas</span><span
             class="attribute-access-type">[R]</span>
         </div>
 
@@ -201,11 +194,10 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 4</span>
+            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 7</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">katas</span>,<span class="ruby-identifier">id</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Invalid Kata(id)&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">katas</span>.<span class="ruby-identifier">valid?</span>(<span class="ruby-identifier">id</span>)
-  <span class="ruby-identifier">raise_if_no</span>([<span class="ruby-value">:disk</span>, <span class="ruby-value">:git</span>])
-  <span class="ruby-ivar">@katas</span>,<span class="ruby-ivar">@id</span> = <span class="ruby-identifier">katas</span>,<span class="ruby-identifier">id</span>
+  <span class="ruby-ivar">@parent</span>,<span class="ruby-ivar">@id</span> = <span class="ruby-identifier">katas</span>,<span class="ruby-identifier">id</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -244,7 +236,7 @@
 
           
           <div class="method-source-code" id="active-3F-source">
-            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 58</span>
+            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">active?</span>
   <span class="ruby-identifier">avatars</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
@@ -277,7 +269,7 @@
 
           
           <div class="method-source-code" id="age-source">
-            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 89</span>
+            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 48</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">age</span>(<span class="ruby-identifier">now</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">to_a</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>].<span class="ruby-identifier">reverse</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-value">0</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">active?</span>
   <span class="ruby-keyword">return</span> (<span class="ruby-constant">Time</span>.<span class="ruby-identifier">mktime</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">now</span>) <span class="ruby-operator">-</span> <span class="ruby-identifier">earliest_light</span>).<span class="ruby-identifier">to_i</span>
@@ -311,7 +303,7 @@
 
           
           <div class="method-source-code" id="avatars-source">
-            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 81</span>
+            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 18</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">avatars</span>
   <span class="ruby-constant">Avatars</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -344,9 +336,9 @@
 
           
           <div class="method-source-code" id="created-source">
-            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 85</span>
+            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 59</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">created</span>
-  <span class="ruby-constant">Time</span>.<span class="ruby-identifier">mktime</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;created&#39;</span>])
+  <span class="ruby-constant">Time</span>.<span class="ruby-identifier">mktime</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">manifest_property</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -377,9 +369,9 @@
 
           
           <div class="method-source-code" id="exercise-source">
-            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 77</span>
+            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 71</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">exercise</span>
-  <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">exercises</span>[<span class="ruby-identifier">original_exercise</span>.<span class="ruby-identifier">new_name</span>]
+  <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">exercises</span>[<span class="ruby-identifier">manifest_property</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -410,9 +402,44 @@
 
           
           <div class="method-source-code" id="exists-3F-source">
-            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 54</span>
+            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 40</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">exists?</span>
   <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">exists?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-finished-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">finished?</span><span
+            class="method-args">(now = Time.now.to_a[0..5].reverse)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="finished-3F-source">
+            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">finished?</span>(<span class="ruby-identifier">now</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">to_a</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>].<span class="ruby-identifier">reverse</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">active?</span>
+  <span class="ruby-identifier">seconds_per_day</span> = <span class="ruby-value">60</span> <span class="ruby-operator">*</span> <span class="ruby-value">60</span> <span class="ruby-operator">*</span> <span class="ruby-value">24</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">age</span>(<span class="ruby-identifier">now</span>) <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">seconds_per_day</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -443,9 +470,9 @@
 
           
           <div class="method-source-code" id="language-source">
-            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 69</span>
+            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 67</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">language</span>
-  <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">languages</span>[<span class="ruby-identifier">original_language</span>.<span class="ruby-identifier">new_name</span>]
+  <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">languages</span>[<span class="ruby-identifier">manifest_property</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -457,10 +484,10 @@
       </div>
 
     
-      <div id="method-i-original_exercise" class="method-detail ">
+      <div id="method-i-manifest" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">original_exercise</span><span
+          <span class="method-name">manifest</span><span
             class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -475,46 +502,10 @@
           
 
           
-          <div class="method-source-code" id="original_exercise-source">
-            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 73</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">original_exercise</span>
-  <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">exercises</span>[<span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;exercise&#39;</span>]]
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-original_language" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">original_language</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="original_language-source">
-            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 62</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">original_language</span>
-  <span class="ruby-comment"># allow kata to be reviewed/forked even</span>
-  <span class="ruby-comment"># if it&#39;s language name has changed</span>
-  <span class="ruby-comment"># See app/models/Language.rb ::new_name()</span>
-  <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">languages</span>[<span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;language&#39;</span>]]
+          <div class="method-source-code" id="manifest-source">
+            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 75</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">manifest</span>
+  <span class="ruby-ivar">@manifest</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">read</span>(<span class="ruby-identifier">manifest_filename</span>))
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -545,9 +536,9 @@
 
           
           <div class="method-source-code" id="path-source">
-            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 50</span>
+            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 14</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">path</span>
-  <span class="ruby-ivar">@katas</span>.<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">outer</span>(<span class="ruby-identifier">id</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">inner</span>(<span class="ruby-identifier">id</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>
+  <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">outer</span>(<span class="ruby-identifier">id</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">inner</span>(<span class="ruby-identifier">id</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -578,41 +569,21 @@
 
           
           <div class="method-source-code" id="start_avatar-source">
-            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 12</span>
+            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 22</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">start_avatar</span>(<span class="ruby-identifier">avatar_names</span> = <span class="ruby-constant">Avatars</span>.<span class="ruby-identifier">names</span>.<span class="ruby-identifier">shuffle</span>)
-  <span class="ruby-identifier">started_avatar_names</span> = <span class="ruby-identifier">avatars</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">avatar</span><span class="ruby-operator">|</span> <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">name</span> }
-  <span class="ruby-identifier">unstarted_avatar_names</span> = <span class="ruby-identifier">avatar_names</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">started_avatar_names</span>
   <span class="ruby-identifier">avatar</span> = <span class="ruby-keyword">nil</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">unstarted_avatar_names</span> <span class="ruby-operator">!=</span> [ ]
-    <span class="ruby-identifier">avatar_name</span> = <span class="ruby-identifier">unstarted_avatar_names</span>[<span class="ruby-value">0</span>]
-    <span class="ruby-identifier">avatar</span> = <span class="ruby-constant">Avatar</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>,<span class="ruby-identifier">avatar_name</span>)
-
-    <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">dir</span>.<span class="ruby-identifier">make</span>
-    <span class="ruby-identifier">git</span>.<span class="ruby-identifier">init</span>(<span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">path</span>, <span class="ruby-string">&#39;--quiet&#39;</span>)
-    <span class="ruby-identifier">user_name</span> = <span class="ruby-node">&quot;user.name #{quoted(avatar_name+&#39;_&#39;+id)}&quot;</span>
-    <span class="ruby-identifier">git</span>.<span class="ruby-identifier">config</span>(<span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">user_name</span>)
-    <span class="ruby-identifier">user_email</span> = <span class="ruby-node">&quot;user.email #{quoted(avatar.name)}@cyber-dojo.org&quot;</span>
-    <span class="ruby-identifier">git</span>.<span class="ruby-identifier">config</span>(<span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">user_email</span>)
-
-    <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">dir</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;manifest.json&#39;</span>, <span class="ruby-identifier">visible_files</span>)
-    <span class="ruby-identifier">git</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">path</span>, <span class="ruby-string">&#39;manifest.json&#39;</span>)
-
-    <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">dir</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;increments.json&#39;</span>, [ ])
-    <span class="ruby-identifier">git</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">path</span>, <span class="ruby-string">&#39;increments.json&#39;</span>)
-
-    <span class="ruby-identifier">visible_files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span>,<span class="ruby-identifier">content</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">dir</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">content</span>)
-      <span class="ruby-identifier">git</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">filename</span>)
+  <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">lock</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">filename</span> = <span class="ruby-string">&#39;started_avatars.json&#39;</span>
+    <span class="ruby-identifier">started</span> = <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">filename</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">read</span>(<span class="ruby-identifier">filename</span>)) <span class="ruby-operator">:</span> <span class="ruby-identifier">avatars</span>.<span class="ruby-identifier">names</span>
+    <span class="ruby-identifier">free_names</span> = <span class="ruby-identifier">avatar_names</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">started</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">free_names</span> <span class="ruby-operator">!=</span> [ ]
+      <span class="ruby-identifier">avatar</span> = <span class="ruby-constant">Avatar</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">free_names</span>[<span class="ruby-value">0</span>])
+      <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">start</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">filename</span>)
+        <span class="ruby-identifier">started</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">name</span>
+        <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">started</span>)
+      <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">end</span>
-
-    <span class="ruby-identifier">language</span>.<span class="ruby-identifier">support_filenames</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">from</span> = <span class="ruby-identifier">language</span>.<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">filename</span>
-        <span class="ruby-identifier">to</span> = <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">filename</span>
-      <span class="ruby-identifier">disk</span>.<span class="ruby-identifier">symlink</span>(<span class="ruby-identifier">from</span>, <span class="ruby-identifier">to</span>)
-    <span class="ruby-keyword">end</span>
-
-    <span class="ruby-identifier">tag</span> = <span class="ruby-value">0</span>
-    <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">commit</span>(<span class="ruby-identifier">tag</span>)
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">avatar</span>
 <span class="ruby-keyword">end</span></pre>
@@ -645,9 +616,9 @@
 
           
           <div class="method-source-code" id="visible_files-source">
-            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 94</span>
+            <pre><span class="ruby-comment"># File app/models/Kata.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visible_files</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;visible_files&#39;</span>]
+  <span class="ruby-identifier">manifest_property</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

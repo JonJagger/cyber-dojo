@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 
-<title>class OsDisk - Rails Application Documentation</title>
+<title>class HostDisk - Rails Application Documentation</title>
 
 <link href="./fonts.css" rel="stylesheet">
 <link href="./rdoc.css" rel="stylesheet">
@@ -75,13 +75,9 @@
     
     <li ><a href="#method-i-5B-5D">#[]</a>
     
+    <li ><a href="#method-i-dir-3F">#dir?</a>
+    
     <li ><a href="#method-i-dir_separator">#dir_separator</a>
-    
-    <li ><a href="#method-i-dotted-3F">#dotted?</a>
-    
-    <li ><a href="#method-i-is_dir-3F">#is_dir?</a>
-    
-    <li ><a href="#method-i-symlink">#symlink</a>
     
   </ul>
 </div>
@@ -89,9 +85,9 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-OsDisk">
-  <h1 id="class-OsDisk" class="class">
-    class OsDisk
+<main role="main" aria-labelledby="class-HostDisk">
+  <h1 id="class-HostDisk" class="class">
+    class HostDisk
   </h1>
 
   <section class="description">
@@ -136,9 +132,42 @@
 
           
           <div class="method-source-code" id="5B-5D-source">
-            <pre><span class="ruby-comment"># File lib/OsDisk.rb, line 16</span>
+            <pre><span class="ruby-comment"># File lib/HostDisk.rb, line 12</span>
 <span class="ruby-keyword">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">name</span>)
-  <span class="ruby-constant">OsDir</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">name</span>)
+  <span class="ruby-constant">HostDir</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">name</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-dir-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">dir?</span><span
+            class="method-args">(name)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="dir-3F-source">
+            <pre><span class="ruby-comment"># File lib/HostDisk.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">dir?</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">name</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -169,108 +198,9 @@
 
           
           <div class="method-source-code" id="dir_separator-source">
-            <pre><span class="ruby-comment"># File lib/OsDisk.rb, line 4</span>
+            <pre><span class="ruby-comment"># File lib/HostDisk.rb, line 4</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dir_separator</span>
   <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">SEPARATOR</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-dotted-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">dotted?</span><span
-            class="method-args">(name)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="dotted-3F-source">
-            <pre><span class="ruby-comment"># File lib/OsDisk.rb, line 12</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">dotted?</span>(<span class="ruby-identifier">name</span>)
-  <span class="ruby-identifier">name</span>.<span class="ruby-identifier">end_with?</span>(<span class="ruby-string">&#39;.&#39;</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-is_dir-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">is_dir?</span><span
-            class="method-args">(name)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="is_dir-3F-source">
-            <pre><span class="ruby-comment"># File lib/OsDisk.rb, line 8</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_dir?</span>(<span class="ruby-identifier">name</span>)
-  <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">name</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">dotted?</span>(<span class="ruby-identifier">name</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-symlink" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">symlink</span><span
-            class="method-args">(old_name, new_name)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="symlink-source">
-            <pre><span class="ruby-comment"># File lib/OsDisk.rb, line 20</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">symlink</span>(<span class="ruby-identifier">old_name</span>, <span class="ruby-identifier">new_name</span>)
- <span class="ruby-constant">File</span>.<span class="ruby-identifier">symlink</span>(<span class="ruby-identifier">old_name</span>, <span class="ruby-identifier">new_name</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           

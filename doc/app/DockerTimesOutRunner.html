@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+
+<title>module DockerTimesOutRunner - Rails Application Documentation</title>
+
+<link href="./fonts.css" rel="stylesheet">
+<link href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/search_index.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/searcher.js"></script>
+<script src="./js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="module">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="Runner.html">Runner</a>
+  
+  
+  
+    <li><a class="include" href="Stderr2Stdout.html">Stderr2Stdout</a>
+  
+  
+  </ul>
+</div>
+
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-i-bash">#bash</a>
+    
+    <li ><a href="#method-i-fatal_error">#fatal_error</a>
+    
+    <li ><a href="#method-i-image_names">#image_names</a>
+    
+    <li ><a href="#method-i-installed-3F">#installed?</a>
+    
+    <li ><a href="#method-i-kill">#kill</a>
+    
+    <li ><a href="#method-i-quoted">#quoted</a>
+    
+    <li ><a href="#method-i-raise_if_docker_not_installed">#raise_if_docker_not_installed</a>
+    
+    <li ><a href="#method-i-read_image_names">#read_image_names</a>
+    
+    <li ><a href="#method-i-runnable-3F">#runnable?</a>
+    
+    <li ><a href="#method-i-timeout">#timeout</a>
+    
+    <li ><a href="#method-i-times_out_run">#times_out_run</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="module-DockerTimesOutRunner">
+  <h1 id="module-DockerTimesOutRunner" class="module">
+    module DockerTimesOutRunner
+  </h1>
+
+  <section class="description">
+    
+<p>Assumes:</p>
+
+<pre>@bash.exec(cmd)
+@cid_filename
+sudoi(cmd)</pre>
+
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-bash" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">bash</span><span
+            class="method-args">(command)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="bash-source">
+            <pre><span class="ruby-comment"># File lib/DockerTimesOutRunner.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">bash</span>(<span class="ruby-identifier">command</span>)
+  <span class="ruby-ivar">@bash</span>.<span class="ruby-identifier">exec</span>(<span class="ruby-identifier">command</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-fatal_error" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">fatal_error</span><span
+            class="method-args">(signal)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="fatal_error-source">
+            <pre><span class="ruby-comment"># File lib/DockerTimesOutRunner.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">fatal_error</span>(<span class="ruby-identifier">signal</span>)
+  <span class="ruby-value">128</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">signal</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-image_names" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">image_names</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="image_names-source">
+            <pre><span class="ruby-comment"># File lib/DockerTimesOutRunner.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">image_names</span>
+  <span class="ruby-ivar">@image_names</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">read_image_names</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-installed-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">installed?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="installed-3F-source">
+            <pre><span class="ruby-comment"># File lib/DockerTimesOutRunner.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">installed?</span>
+  <span class="ruby-identifier">_</span>,<span class="ruby-identifier">exit_status</span> = <span class="ruby-identifier">bash</span>(<span class="ruby-identifier">sudoi</span>(<span class="ruby-string">&#39;docker info&#39;</span>))
+  <span class="ruby-identifier">exit_status</span> <span class="ruby-operator">===</span> <span class="ruby-value">0</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-kill" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">kill</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="kill-source">
+            <pre><span class="ruby-comment"># File lib/DockerTimesOutRunner.rb, line 74</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">kill</span>
+  <span class="ruby-value">9</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-quoted" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">quoted</span><span
+            class="method-args">(arg)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="quoted-source">
+            <pre><span class="ruby-comment"># File lib/DockerTimesOutRunner.rb, line 62</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">quoted</span>(<span class="ruby-identifier">arg</span>)
+  <span class="ruby-string">&#39;&quot;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">arg</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&quot;&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-raise_if_docker_not_installed" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">raise_if_docker_not_installed</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="raise_if_docker_not_installed-source">
+            <pre><span class="ruby-comment"># File lib/DockerTimesOutRunner.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">raise_if_docker_not_installed</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">RuntimeError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&#39;Docker not installed&#39;</span>) <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">installed?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-read_image_names" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_image_names</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_image_names-source">
+            <pre><span class="ruby-comment"># File lib/DockerTimesOutRunner.rb, line 34</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_image_names</span>
+  <span class="ruby-identifier">output</span>,<span class="ruby-identifier">_</span> = <span class="ruby-identifier">bash</span>(<span class="ruby-identifier">sudoi</span>(<span class="ruby-string">&#39;docker images&#39;</span>))
+  <span class="ruby-identifier">lines</span> = <span class="ruby-identifier">output</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;\n&quot;</span>).<span class="ruby-identifier">select</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">start_with?</span>(<span class="ruby-string">&#39;cyberdojo&#39;</span>)}
+  <span class="ruby-identifier">image_names</span> = <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>[<span class="ruby-value">0</span>]}
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-runnable-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">runnable?</span><span
+            class="method-args">(language)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="runnable-3F-source">
+            <pre><span class="ruby-comment"># File lib/DockerTimesOutRunner.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">runnable?</span>(<span class="ruby-identifier">language</span>)
+  <span class="ruby-identifier">image_names</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">language</span>.<span class="ruby-identifier">image_name</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-timeout" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">timeout</span><span
+            class="method-args">(command,secs)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="timeout-source">
+            <pre><span class="ruby-comment"># File lib/DockerTimesOutRunner.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">timeout</span>(<span class="ruby-identifier">command</span>,<span class="ruby-identifier">secs</span>)
+  <span class="ruby-node">&quot;timeout --signal=#{kill} #{secs}s #{stderr2stdout(command)}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-times_out_run" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">times_out_run</span><span
+            class="method-args">(options, image_name, cmd, max_seconds)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="times_out_run-source">
+            <pre><span class="ruby-comment"># File lib/DockerTimesOutRunner.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">times_out_run</span>(<span class="ruby-identifier">options</span>, <span class="ruby-identifier">image_name</span>, <span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">max_seconds</span>)
+  <span class="ruby-identifier">bash</span>(<span class="ruby-node">&quot;rm -f #{@cid_filename}&quot;</span>)
+  <span class="ruby-identifier">outer_command</span> = <span class="ruby-identifier">timeout</span>(
+    <span class="ruby-string">&#39;docker run&#39;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-string">&#39; --user=www-data&#39;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-node">&quot; --cidfile=#{quoted(@cid_filename)}&quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-node">&quot; #{options.strip}&quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-node">&quot; #{image_name}&quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-node">&quot; /bin/bash -c #{quoted(cmd)}&quot;</span>,
+    <span class="ruby-identifier">max_seconds</span><span class="ruby-operator">+</span><span class="ruby-value">5</span>)
+
+  <span class="ruby-identifier">output</span>,<span class="ruby-identifier">exit_status</span> = <span class="ruby-identifier">bash</span>(<span class="ruby-identifier">sudoi</span>(<span class="ruby-identifier">outer_command</span>))
+  <span class="ruby-identifier">pid</span>,<span class="ruby-identifier">_</span> = <span class="ruby-identifier">bash</span>(<span class="ruby-node">&quot;cat #{@cid_filename}&quot;</span>)
+  <span class="ruby-identifier">bash</span>(<span class="ruby-identifier">sudoi</span>(<span class="ruby-node">&quot;docker stop #{pid}&quot;</span>))
+  <span class="ruby-identifier">bash</span>(<span class="ruby-identifier">sudoi</span>(<span class="ruby-node">&quot;docker rm #{pid}&quot;</span>))
+  <span class="ruby-identifier">exit_status</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">fatal_error</span>(<span class="ruby-identifier">kill</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">limited</span>(<span class="ruby-identifier">output</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">didnt_complete</span>(<span class="ruby-identifier">max_seconds</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

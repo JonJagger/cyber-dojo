@@ -68,13 +68,15 @@
     
     <li ><a href="#method-i-apostrophe">#apostrophe</a>
     
-    <li ><a href="#method-i-arrow">#arrow</a>
+    <li ><a href="#method-i-avatar_image">#avatar_image</a>
+    
+    <li ><a href="#method-i-count">#count</a>
     
     <li ><a href="#method-i-diff_avatar_image">#diff_avatar_image</a>
     
     <li ><a href="#method-i-diff_traffic_light">#diff_traffic_light</a>
     
-    <li ><a href="#method-i-tool_tip">#tool_tip</a>
+    <li ><a href="#method-i-traffic_light_count">#traffic_light_count</a>
     
     <li ><a href="#method-i-traffic_light_image">#traffic_light_image</a>
     
@@ -131,7 +133,7 @@
 
           
           <div class="method-source-code" id="apostrophe-source">
-            <pre><span class="ruby-comment"># File app/helpers/traffic_light_helper.rb, line 49</span>
+            <pre><span class="ruby-comment"># File app/helpers/traffic_light_helper.rb, line 67</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">apostrophe</span>
   <span class="ruby-string">&#39;&amp;#39;&#39;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -145,11 +147,11 @@
       </div>
 
     
-      <div id="method-i-arrow" class="method-detail ">
+      <div id="method-i-avatar_image" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">arrow</span><span
-            class="method-args">()</span>
+          <span class="method-name">avatar_image</span><span
+            class="method-args">(avatar_name)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -163,10 +165,44 @@
           
 
           
-          <div class="method-source-code" id="arrow-source">
+          <div class="method-source-code" id="avatar_image-source">
+            <pre><span class="ruby-comment"># File app/helpers/traffic_light_helper.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">avatar_image</span>(<span class="ruby-identifier">avatar_name</span>)
+  <span class="ruby-node">&quot;&lt;img src=&#39;/images/avatars/#{avatar_name}.jpg&#39;&quot;</span> <span class="ruby-operator">+</span>
+      <span class="ruby-node">&quot; alt=&#39;#{avatar_name}&#39;/&gt;&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-count" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">count</span><span
+            class="method-args">(traffic_lights, colour)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="count-source">
             <pre><span class="ruby-comment"># File app/helpers/traffic_light_helper.rb, line 53</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">arrow</span>
-  <span class="ruby-string">&#39;&amp;harr;&#39;</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">count</span>(<span class="ruby-identifier">traffic_lights</span>, <span class="ruby-identifier">colour</span>)
+   <span class="ruby-identifier">traffic_lights</span>.<span class="ruby-identifier">entries</span>.<span class="ruby-identifier">count</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">light</span><span class="ruby-operator">|</span> <span class="ruby-identifier">light</span>.<span class="ruby-identifier">colour</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">colour</span> }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -197,18 +233,15 @@
 
           
           <div class="method-source-code" id="diff_avatar_image-source">
-            <pre><span class="ruby-comment"># File app/helpers/traffic_light_helper.rb, line 23</span>
+            <pre><span class="ruby-comment"># File app/helpers/traffic_light_helper.rb, line 26</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">diff_avatar_image</span>(<span class="ruby-identifier">avatar</span>)
   <span class="ruby-string">&quot;&lt;div class=&#39;diff-traffic-light avatar-image&#39;&quot;</span> <span class="ruby-operator">+</span>
-      <span class="ruby-node">&quot; title=&#39;Click to review #{avatar.name}#{apostrophe}s current code&#39;&quot;</span> <span class="ruby-operator">+</span>
+      <span class="ruby-node">&quot; data-tip=&#39;Click to review #{avatar.name}#{apostrophe}s current code&#39;&quot;</span> <span class="ruby-operator">+</span>
       <span class="ruby-node">&quot; data-id=&#39;#{avatar.kata.id}&#39;&quot;</span> <span class="ruby-operator">+</span>
       <span class="ruby-node">&quot; data-avatar-name=&#39;#{avatar.name}&#39;&quot;</span> <span class="ruby-operator">+</span>
       <span class="ruby-string">&quot; data-was-tag=&#39;-1&#39;&quot;</span> <span class="ruby-operator">+</span>
       <span class="ruby-string">&quot; data-now-tag=&#39;-1&#39;&gt;&quot;</span> <span class="ruby-operator">+</span>
-      <span class="ruby-node">&quot;&lt;img src=&#39;/images/avatars/#{avatar.name}.jpg&#39;&quot;</span> <span class="ruby-operator">+</span>
-          <span class="ruby-node">&quot; alt=&#39;#{avatar.name}&#39;&quot;</span> <span class="ruby-operator">+</span>
-          <span class="ruby-string">&quot; width=&#39;45&#39;&quot;</span> <span class="ruby-operator">+</span>
-          <span class="ruby-string">&quot; height=&#39;45&#39;/&gt;&quot;</span> <span class="ruby-operator">+</span>
+      <span class="ruby-identifier">avatar_image</span>(<span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">name</span>) <span class="ruby-operator">+</span>
    <span class="ruby-string">&quot;&lt;/div&gt;&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -234,27 +267,33 @@
 
         <div class="method-description">
           
-          <p>The data-id, data-avatar-name, data-was-tag, data-now-tag values are used
-to create click handlers that open a diff-dialog See
-setupTrafficLightOpensDiffDialogHandlers() in
-app/asserts/javascripts/cyber-dojo_dialog_diff.rb</p>
+          <p>The data-id, data-avatar-name, data-was-tag, data-now-tag properties are
+used to create click handlers that open a diff-dialog</p>
+
+<pre>see setupTrafficLightOpensHistoryDialogHandlers()
+in app/asserts/javascripts/cyber-dojo_traffic_lights.js</pre>
+
+<p>The data-tip property is used to create a hover-tip.</p>
+
+<pre>see setupHoverTips()
+in app/asserts/javascripts/cyber-dojo_hover_tips.js</pre>
           
           
 
           
           <div class="method-source-code" id="diff_traffic_light-source">
-            <pre><span class="ruby-comment"># File app/helpers/traffic_light_helper.rb, line 9</span>
+            <pre><span class="ruby-comment"># File app/helpers/traffic_light_helper.rb, line 12</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">diff_traffic_light</span>(<span class="ruby-identifier">light</span>)
   <span class="ruby-comment"># used from test page and from dashboard page</span>
   <span class="ruby-identifier">number</span> = <span class="ruby-identifier">light</span>.<span class="ruby-identifier">number</span>
   <span class="ruby-identifier">avatar</span> = <span class="ruby-identifier">light</span>.<span class="ruby-identifier">avatar</span>
   <span class="ruby-string">&quot;&lt;div class=&#39;diff-traffic-light&#39;&quot;</span> <span class="ruby-operator">+</span>
-      <span class="ruby-node">&quot; title=&#39;#{tool_tip(light)}&#39;&quot;</span> <span class="ruby-operator">+</span>
+      <span class="ruby-string">&quot; data-tip=&#39;ajax:traffic_light&#39;&quot;</span> <span class="ruby-operator">+</span>
       <span class="ruby-node">&quot; data-id=&#39;#{avatar.kata.id}&#39;&quot;</span> <span class="ruby-operator">+</span>
       <span class="ruby-node">&quot; data-avatar-name=&#39;#{avatar.name}&#39;&quot;</span> <span class="ruby-operator">+</span>
       <span class="ruby-node">&quot; data-was-tag=&#39;#{number-1}&#39;&quot;</span> <span class="ruby-operator">+</span>
       <span class="ruby-node">&quot; data-now-tag=&#39;#{number}&#39;&gt;&quot;</span> <span class="ruby-operator">+</span>
-      <span class="ruby-identifier">traffic_light_image</span>(<span class="ruby-identifier">light</span>.<span class="ruby-identifier">colour</span>, <span class="ruby-value">17</span>, <span class="ruby-value">54</span>) <span class="ruby-operator">+</span>
+      <span class="ruby-identifier">traffic_light_image</span>(<span class="ruby-identifier">light</span>.<span class="ruby-identifier">colour</span>) <span class="ruby-operator">+</span>
    <span class="ruby-string">&quot;&lt;/div&gt;&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -267,11 +306,11 @@ app/asserts/javascripts/cyber-dojo_dialog_diff.rb</p>
       </div>
 
     
-      <div id="method-i-tool_tip" class="method-detail ">
+      <div id="method-i-traffic_light_count" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">tool_tip</span><span
-            class="method-args">(light)</span>
+          <span class="method-name">traffic_light_count</span><span
+            class="method-args">(avatar)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -285,11 +324,22 @@ app/asserts/javascripts/cyber-dojo_dialog_diff.rb</p>
           
 
           
-          <div class="method-source-code" id="tool_tip-source">
-            <pre><span class="ruby-comment"># File app/helpers/traffic_light_helper.rb, line 44</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">tool_tip</span>(<span class="ruby-identifier">light</span>)
-  <span class="ruby-identifier">n</span> = <span class="ruby-identifier">light</span>.<span class="ruby-identifier">number</span>
-  <span class="ruby-node">&quot;Click to review #{light.avatar.name}#{apostrophe}s #{n-1} #{arrow} #{n} diff&quot;</span>
+          <div class="method-source-code" id="traffic_light_count-source">
+            <pre><span class="ruby-comment"># File app/helpers/traffic_light_helper.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">traffic_light_count</span>(<span class="ruby-identifier">avatar</span>)
+  <span class="ruby-identifier">lights</span> = <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">lights</span>
+  <span class="ruby-identifier">colour</span> = <span class="ruby-identifier">lights</span>[<span class="ruby-value">-1</span>].<span class="ruby-identifier">colour</span>
+  <span class="ruby-node">&quot;&lt;div class=&#39;traffic-light-count #{colour}&#39;&quot;</span> <span class="ruby-operator">+</span>
+      <span class="ruby-string">&quot; data-tip=&#39;ajax:traffic_light_count&#39;&quot;</span> <span class="ruby-operator">+</span>
+      <span class="ruby-node">&quot; data-id=&#39;#{avatar.kata.id}&#39;&quot;</span> <span class="ruby-operator">+</span>
+      <span class="ruby-node">&quot; data-avatar-name=&#39;#{avatar.name}&#39;&quot;</span> <span class="ruby-operator">+</span>
+      <span class="ruby-node">&quot; data-current-colour=&#39;#{colour}&#39;&quot;</span> <span class="ruby-operator">+</span>
+      <span class="ruby-node">&quot; data-red-count=&#39;#{count(lights, :red)}&#39;&quot;</span> <span class="ruby-operator">+</span>
+      <span class="ruby-node">&quot; data-amber-count=&#39;#{count(lights, :amber)}&#39;&quot;</span> <span class="ruby-operator">+</span>
+      <span class="ruby-node">&quot; data-green-count=&#39;#{count(lights, :green)}&#39;&quot;</span> <span class="ruby-operator">+</span>
+      <span class="ruby-node">&quot; data-timed-out-count=&#39;#{count(lights, :timed_out)}&#39;&gt;&quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-identifier">lights</span>.<span class="ruby-identifier">count</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span>
+  <span class="ruby-string">&quot;&lt;/div&gt;&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -305,7 +355,7 @@ app/asserts/javascripts/cyber-dojo_dialog_diff.rb</p>
         
         <div class="method-heading">
           <span class="method-name">traffic_light_image</span><span
-            class="method-args">(colour, width, height)</span>
+            class="method-args">(colour)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -320,12 +370,10 @@ app/asserts/javascripts/cyber-dojo_dialog_diff.rb</p>
 
           
           <div class="method-source-code" id="traffic_light_image-source">
-            <pre><span class="ruby-comment"># File app/helpers/traffic_light_helper.rb, line 37</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">traffic_light_image</span>(<span class="ruby-identifier">colour</span>, <span class="ruby-identifier">width</span>, <span class="ruby-identifier">height</span>)
-  <span class="ruby-node">&quot;&lt;img src=&#39;/images/traffic_light_#{colour}.png&#39;&quot;</span> <span class="ruby-operator">+</span>
-     <span class="ruby-node">&quot; alt=&#39;#{colour} traffic-light&#39;&quot;</span> <span class="ruby-operator">+</span>
-     <span class="ruby-node">&quot; width=&#39;#{width}&#39;&quot;</span> <span class="ruby-operator">+</span>
-     <span class="ruby-node">&quot; height=&#39;#{height}&#39;/&gt;&quot;</span>
+            <pre><span class="ruby-comment"># File app/helpers/traffic_light_helper.rb, line 62</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">traffic_light_image</span>(<span class="ruby-identifier">colour</span>)
+  <span class="ruby-node">&quot;&lt;img src=&#39;/images/bulb_#{colour}.png&#39;&quot;</span> <span class="ruby-operator">+</span>
+     <span class="ruby-node">&quot; alt=&#39;#{colour} traffic-light&#39;/&gt;&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

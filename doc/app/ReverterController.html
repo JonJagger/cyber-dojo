@@ -130,8 +130,8 @@
           <div class="method-source-code" id="revert-source">
             <pre><span class="ruby-comment"># File app/controllers/reverter_controller.rb, line 4</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">revert</span>
-  <span class="ruby-identifier">render</span> <span class="ruby-value">:json</span> =<span class="ruby-operator">&gt;</span> {
-    <span class="ruby-value">:visibleFiles</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">tags</span>[<span class="ruby-identifier">tag</span>].<span class="ruby-identifier">visible_files</span>
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {
+    <span class="ruby-identifier">visibleFiles</span><span class="ruby-operator">:</span> <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">tags</span>[<span class="ruby-identifier">tag</span>].<span class="ruby-identifier">visible_files</span>
   }
 <span class="ruby-keyword">end</span></pre>
           </div>

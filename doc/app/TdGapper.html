@@ -83,7 +83,11 @@
     
     <li ><a href="#method-i-number">#number</a>
     
+    <li ><a href="#method-i-ordinal">#ordinal</a>
+    
     <li ><a href="#method-i-stats">#stats</a>
+    
+    <li ><a href="#method-i-strip">#strip</a>
     
     <li ><a href="#method-i-vertical_bleed">#vertical_bleed</a>
     
@@ -100,7 +104,7 @@
 
   <section class="description">
     
-<p>See test/app-lib/test_td_gapper.rb</p>
+<p>See comments at end of file</p>
 
   </section>
 
@@ -185,7 +189,7 @@
 
           
           <div class="method-source-code" id="collapsed_table-source">
-            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 55</span>
+            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 81</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">collapsed_table</span>(<span class="ruby-identifier">td_nos</span>)
   <span class="ruby-identifier">max_uncollapsed_tds</span> = <span class="ruby-ivar">@max_seconds_uncollapsed</span> <span class="ruby-operator">/</span> <span class="ruby-ivar">@seconds_per_td</span>
   <span class="ruby-identifier">obj</span> = { }
@@ -240,7 +244,7 @@
       <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">s</span>[<span class="ruby-value">:avatars</span>]
+  <span class="ruby-identifier">strip</span>(<span class="ruby-identifier">s</span>[<span class="ruby-value">:avatars</span>])
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -271,9 +275,9 @@
 
           
           <div class="method-source-code" id="n-source">
-            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 70</span>
+            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 96</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">n</span>(<span class="ruby-identifier">now</span>)
-  ((<span class="ruby-constant">Time</span>.<span class="ruby-identifier">mktime</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">now</span>) <span class="ruby-operator">-</span> <span class="ruby-ivar">@start</span>) <span class="ruby-operator">/</span> <span class="ruby-ivar">@seconds_per_td</span>).<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">ordinal</span>(<span class="ruby-constant">Time</span>.<span class="ruby-identifier">mktime</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">now</span>))
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -304,9 +308,42 @@
 
           
           <div class="method-source-code" id="number-source">
-            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 66</span>
+            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 92</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">number</span>(<span class="ruby-identifier">light</span>)
-  ((<span class="ruby-identifier">light</span>.<span class="ruby-identifier">time</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@start</span>) <span class="ruby-operator">/</span> <span class="ruby-ivar">@seconds_per_td</span>).<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">ordinal</span>(<span class="ruby-identifier">light</span>.<span class="ruby-identifier">time</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-ordinal" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ordinal</span><span
+            class="method-args">(o)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="ordinal-source">
+            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 100</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ordinal</span>(<span class="ruby-identifier">o</span>)
+  ((<span class="ruby-identifier">o</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@start</span>) <span class="ruby-operator">/</span> <span class="ruby-ivar">@seconds_per_td</span>).<span class="ruby-identifier">to_i</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -337,7 +374,7 @@
 
           
           <div class="method-source-code" id="stats-source">
-            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 29</span>
+            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 55</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">stats</span>(<span class="ruby-identifier">all_lights</span>, <span class="ruby-identifier">now</span>)
   <span class="ruby-identifier">obj</span> = {
     <span class="ruby-value">:avatars</span> =<span class="ruby-operator">&gt;</span> { },
@@ -354,6 +391,61 @@
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">obj</span>[<span class="ruby-value">:td_nos</span>].<span class="ruby-identifier">sort!</span>.<span class="ruby-identifier">uniq!</span>
   <span class="ruby-identifier">obj</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-strip" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">strip</span><span
+            class="method-args">(gapped)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="strip-source">
+            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">strip</span>(<span class="ruby-identifier">gapped</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">gapped</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">gapped</span> <span class="ruby-operator">==</span> {}
+  
+  <span class="ruby-identifier">empty_column</span> = <span class="ruby-identifier">lambda</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">td</span><span class="ruby-operator">|</span> <span class="ruby-identifier">gapped</span>.<span class="ruby-identifier">all?</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">_</span>,<span class="ruby-identifier">h</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">td</span>] <span class="ruby-operator">==</span> []} }
+  <span class="ruby-identifier">collapsed_column</span> = <span class="ruby-identifier">lambda</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">td</span><span class="ruby-operator">|</span> <span class="ruby-identifier">gapped</span>.<span class="ruby-identifier">all?</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">_</span>,<span class="ruby-identifier">h</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">td</span>].<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Hash</span>} }
+  <span class="ruby-identifier">lightless_column</span> = <span class="ruby-identifier">lambda</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">td</span><span class="ruby-operator">|</span> <span class="ruby-identifier">empty_column</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">td</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">collapsed_column</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">td</span>) }
+  <span class="ruby-identifier">delete_column</span> = <span class="ruby-identifier">lambda</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">td</span><span class="ruby-operator">|</span> <span class="ruby-identifier">gapped</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">_</span>,<span class="ruby-identifier">h</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">td</span>)} } 
+  
+  <span class="ruby-identifier">animal</span> = <span class="ruby-identifier">gapped</span>.<span class="ruby-identifier">keys</span>[<span class="ruby-value">0</span>]
+  <span class="ruby-identifier">gapped</span>[<span class="ruby-identifier">animal</span>].<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">reverse</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">td</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">lightless_column</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">td</span>)
+      <span class="ruby-identifier">delete_column</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">td</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-keyword">break</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">gapped</span>[<span class="ruby-identifier">animal</span>].<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">td</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">lightless_column</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">td</span>)
+      <span class="ruby-identifier">delete_column</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">td</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-keyword">break</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>    
+  <span class="ruby-identifier">gapped</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -384,7 +476,7 @@
 
           
           <div class="method-source-code" id="vertical_bleed-source">
-            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 47</span>
+            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 73</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">vertical_bleed</span>(<span class="ruby-identifier">s</span>)
   <span class="ruby-identifier">s</span>[<span class="ruby-value">:td_nos</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">s</span>[<span class="ruby-value">:avatars</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>,<span class="ruby-identifier">td_map</span><span class="ruby-operator">|</span>

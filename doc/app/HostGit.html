@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 
-<title>class DummyTestRunner - Rails Application Documentation</title>
+<title>class HostGit - Rails Application Documentation</title>
 
 <link href="./fonts.css" rel="stylesheet">
 <link href="./rdoc.css" rel="stylesheet">
@@ -71,7 +71,11 @@
   <ul class="link-list">
   
   
-    <li><a class="include" href="TestRunner.html">TestRunner</a>
+    <li><a class="include" href="Cleaner.html">Cleaner</a>
+  
+  
+  
+    <li><a class="include" href="Stderr2Stdout.html">Stderr2Stdout</a>
   
   
   </ul>
@@ -84,9 +88,9 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-i-run">#run</a>
+    <li ><a href="#method-i-log">#log</a>
     
-    <li ><a href="#method-i-runnable-3F">#runnable?</a>
+    <li ><a href="#method-i-method_missing">#method_missing</a>
     
   </ul>
 </div>
@@ -94,9 +98,9 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-DummyTestRunner">
-  <h1 id="class-DummyTestRunner" class="class">
-    class DummyTestRunner
+<main role="main" aria-labelledby="class-HostGit">
+  <h1 id="class-HostGit" class="class">
+    class HostGit
   </h1>
 
   <section class="description">
@@ -122,11 +126,11 @@
        </header>
 
     
-      <div id="method-i-run" class="method-detail ">
+      <div id="method-i-log" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">run</span><span
-            class="method-args">(sandbox, command, max_seconds)</span>
+          <span class="method-name">log</span><span
+            class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -140,12 +144,10 @@
           
 
           
-          <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/DummyTestRunner.rb, line 13</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">run</span>(<span class="ruby-identifier">sandbox</span>, <span class="ruby-identifier">command</span>, <span class="ruby-identifier">max_seconds</span>)
-  <span class="ruby-string">&quot;dummy-test-runner\n&quot;</span> <span class="ruby-operator">+</span>
-  <span class="ruby-string">&quot;to use HostTestRunner\n&quot;</span> <span class="ruby-operator">+</span>
-  <span class="ruby-string">&quot;$ export CYBERDOJO_USE_HOST=true&quot;</span>
+          <div class="method-source-code" id="log-source">
+            <pre><span class="ruby-comment"># File lib/HostGit.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">log</span>
+  <span class="ruby-ivar">@log</span> <span class="ruby-operator">||=</span> [ ]
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -157,11 +159,11 @@
       </div>
 
     
-      <div id="method-i-runnable-3F" class="method-detail ">
+      <div id="method-i-method_missing" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">runnable?</span><span
-            class="method-args">(language)</span>
+          <span class="method-name">method_missing</span><span
+            class="method-args">(cmd,*args)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -175,10 +177,20 @@
           
 
           
-          <div class="method-source-code" id="runnable-3F-source">
-            <pre><span class="ruby-comment"># File lib/DummyTestRunner.rb, line 9</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">runnable?</span>(<span class="ruby-identifier">language</span>)
-  <span class="ruby-keyword">false</span>
+          <div class="method-source-code" id="method_missing-source">
+            <pre><span class="ruby-comment"># File lib/HostGit.rb, line 4</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">cmd</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">path</span>,<span class="ruby-identifier">options</span> = <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>],<span class="ruby-identifier">args</span>[<span class="ruby-value">1</span>]
+  <span class="ruby-identifier">options</span> = <span class="ruby-identifier">single_quoted</span>(<span class="ruby-identifier">options</span>) <span class="ruby-keyword">if</span> [<span class="ruby-string">&#39;add&#39;</span>,<span class="ruby-string">&#39;rm&#39;</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">to_s</span>)
+  <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span>(<span class="ruby-identifier">path</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">git_cmd</span> = <span class="ruby-identifier">stderr2stdout</span>(<span class="ruby-node">&quot;git #{cmd} #{options}&quot;</span>)
+    <span class="ruby-identifier">log</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">git_cmd</span>
+    <span class="ruby-identifier">output</span> = <span class="ruby-node">%x#{git_cmd}`</span> 
+    <span class="ruby-identifier">log</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">output</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">output</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;&quot;</span>
+    <span class="ruby-identifier">status</span> = <span class="ruby-identifier">$?</span>.<span class="ruby-identifier">exitstatus</span>
+    <span class="ruby-identifier">log</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;$?.exitstatus=#{status}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">status</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">success</span>
+    <span class="ruby-identifier">clean</span>(<span class="ruby-identifier">output</span>)       
+  <span class="ruby-keyword">end</span>        
 <span class="ruby-keyword">end</span></pre>
           </div>
           

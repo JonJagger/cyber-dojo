@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 
-<title>class DownloaderController - Rails Application Documentation</title>
+<title>module IdSplitter - Rails Application Documentation</title>
 
 <link href="./fonts.css" rel="stylesheet">
 <link href="./rdoc.css" rel="stylesheet">
@@ -21,7 +21,7 @@
 <script src="./js/darkfish.js"></script>
 
 
-<body id="top" role="document" class="class">
+<body id="top" role="document" class="module">
 <nav role="navigation">
   <div id="project-navigation">
     <div id="home-section" role="region" title="Quick navigation" class="nav-section">
@@ -57,26 +57,8 @@
 
   <div id="class-metadata">
     
-    <div id="parent-class-section" class="nav-section">
-  <h3>Parent</h3>
-
-  
-  <p class="link"><a href="ApplicationController.html">ApplicationController</a>
-  
-</div>
-
-    <div id="includes-section" class="nav-section">
-  <h3>Included Modules</h3>
-
-  <ul class="link-list">
-  
-  
-    <li><a class="include" href="IdSplitter.html">IdSplitter</a>
-  
-  
-  </ul>
-</div>
-
+    
+    
     
     <!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
@@ -84,7 +66,9 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-i-download">#download</a>
+    <li ><a href="#method-i-inner">#inner</a>
+    
+    <li ><a href="#method-i-outer">#outer</a>
     
   </ul>
 </div>
@@ -92,9 +76,9 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-DownloaderController">
-  <h1 id="class-DownloaderController" class="class">
-    class DownloaderController
+<main role="main" aria-labelledby="module-IdSplitter">
+  <h1 id="module-IdSplitter" class="module">
+    module IdSplitter
   </h1>
 
   <section class="description">
@@ -120,11 +104,11 @@
        </header>
 
     
-      <div id="method-i-download" class="method-detail ">
+      <div id="method-i-inner" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">download</span><span
-            class="method-args">()</span>
+          <span class="method-name">inner</span><span
+            class="method-args">(id)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -138,20 +122,43 @@
           
 
           
-          <div class="method-source-code" id="download-source">
-            <pre><span class="ruby-comment"># File app/controllers/downloader_controller.rb, line 4</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">download</span>
-  <span class="ruby-comment"># an id such as 01FE818E68 corresponds to the folder katas/01/FE818E86</span>
-  <span class="ruby-identifier">cd_cmd</span> = <span class="ruby-node">&quot;cd #{katas.path}&quot;</span>
-  <span class="ruby-identifier">tar_cmd</span> = <span class="ruby-node">&quot;tar -zcf ../zips/#{id}.tar.gz #{outer(id)}/#{inner(id)}&quot;</span>
-  <span class="ruby-identifier">system</span>(<span class="ruby-identifier">cd_cmd</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;;&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">tar_cmd</span>)
-  <span class="ruby-identifier">zip_filename</span> = <span class="ruby-node">&quot;#{katas.path}/../zips/#{id}.tar.gz&quot;</span>
-  <span class="ruby-identifier">send_file</span> <span class="ruby-identifier">zip_filename</span>
-  <span class="ruby-comment"># would like to delete this zip file</span>
-  <span class="ruby-comment"># but download tests unzip them to verify</span>
-  <span class="ruby-comment"># unzipped zip is identical to original</span>
-  <span class="ruby-comment"># rm_cmd = &quot;rm #{zip_filename}&quot;</span>
-  <span class="ruby-comment"># `rm_cmd`</span>
+          <div class="method-source-code" id="inner-source">
+            <pre><span class="ruby-comment"># File lib/IdSplitter.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">inner</span>(<span class="ruby-identifier">id</span>)
+  <span class="ruby-identifier">id</span>[<span class="ruby-value">2</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>] <span class="ruby-comment"># &#39;6A3327FE&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-outer" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">outer</span><span
+            class="method-args">(id)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="outer-source">
+            <pre><span class="ruby-comment"># File lib/IdSplitter.rb, line 6</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">outer</span>(<span class="ruby-identifier">id</span>)
+  <span class="ruby-identifier">id</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">1</span>]  <span class="ruby-comment"># &#39;E5&#39;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

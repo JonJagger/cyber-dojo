@@ -65,7 +65,18 @@
   
 </div>
 
-    
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="DojoWorker.html">DojoWorker</a>
+  
+  
+  </ul>
+</div>
+
     
     <!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
@@ -73,7 +84,7 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-i-check_id">#check_id</a>
+    <li ><a href="#method-i-check">#check</a>
     
     <li ><a href="#method-i-enter">#enter</a>
     
@@ -115,10 +126,10 @@
        </header>
 
     
-      <div id="method-i-check_id" class="method-detail ">
+      <div id="method-i-check" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">check_id</span><span
+          <span class="method-name">check</span><span
             class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -133,12 +144,10 @@
           
 
           
-          <div class="method-source-code" id="check_id-source">
-            <pre><span class="ruby-comment"># File app/controllers/dojo_controller.rb, line 11</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">check_id</span>
-  <span class="ruby-identifier">render</span> <span class="ruby-value">:json</span> =<span class="ruby-operator">&gt;</span> {
-    <span class="ruby-value">:exists</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exists</span>
-  }
+          <div class="method-source-code" id="check-source">
+            <pre><span class="ruby-comment"># File app/controllers/dojo_controller.rb, line 9</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">check</span>
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> { <span class="ruby-identifier">exists</span><span class="ruby-operator">:</span> <span class="ruby-identifier">dojo_exists</span> }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -169,19 +178,16 @@
 
           
           <div class="method-source-code" id="enter-source">
-            <pre><span class="ruby-comment"># File app/controllers/dojo_controller.rb, line 19</span>
+            <pre><span class="ruby-comment"># File app/controllers/dojo_controller.rb, line 13</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">enter</span>
-  <span class="ruby-identifier">avatar</span> = (<span class="ruby-identifier">exists</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">start_avatar</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>)
-  <span class="ruby-identifier">full</span> = <span class="ruby-identifier">exists</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">nil?</span>
-  <span class="ruby-identifier">enter_html</span> = <span class="ruby-identifier">exists</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">avatar</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">enter_dialog_html</span>(<span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">name</span>) <span class="ruby-operator">:</span> <span class="ruby-string">&#39;&#39;</span>
-  <span class="ruby-identifier">full_html</span> = <span class="ruby-identifier">full</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">full_dialog_html</span>() <span class="ruby-operator">:</span> <span class="ruby-string">&#39;&#39;</span>
-  <span class="ruby-identifier">render</span> <span class="ruby-value">:json</span> =<span class="ruby-operator">&gt;</span> {
-    <span class="ruby-value">:exists</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exists</span>,
-    <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">id</span>,
-    <span class="ruby-value">:avatar_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">avatar</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>,
-    <span class="ruby-value">:full</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">full</span>,
-    <span class="ruby-value">:enter_dialog_html</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">enter_html</span>,
-    <span class="ruby-value">:full_dialog_html</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">full_html</span>
+  <span class="ruby-identifier">avatar</span> = <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">start_avatar</span>    
+  <span class="ruby-identifier">full</span> = <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-comment">#one_self.started(avatar) if !full</span>
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {
+    <span class="ruby-identifier">avatar_name</span><span class="ruby-operator">:</span> <span class="ruby-operator">!</span><span class="ruby-identifier">full</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>,
+    <span class="ruby-identifier">full</span><span class="ruby-operator">:</span> <span class="ruby-identifier">full</span>,
+    <span class="ruby-identifier">enter_dialog_html</span><span class="ruby-operator">:</span> <span class="ruby-operator">!</span><span class="ruby-identifier">full</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">enter_dialog_html</span>(<span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">name</span>) <span class="ruby-operator">:</span> <span class="ruby-string">&#39;&#39;</span>,
+    <span class="ruby-identifier">full_dialog_html</span><span class="ruby-operator">:</span> <span class="ruby-identifier">full</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">full_dialog_html</span> <span class="ruby-operator">:</span> <span class="ruby-string">&#39;&#39;</span>
   }
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -247,14 +253,11 @@
 
           
           <div class="method-source-code" id="re_enter-source">
-            <pre><span class="ruby-comment"># File app/controllers/dojo_controller.rb, line 36</span>
+            <pre><span class="ruby-comment"># File app/controllers/dojo_controller.rb, line 25</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">re_enter</span>
-  <span class="ruby-identifier">started_avatar_names</span> = <span class="ruby-identifier">exists</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">avatars</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">avatar</span><span class="ruby-operator">|</span> <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">name</span>} <span class="ruby-operator">:</span> [ ]
-  <span class="ruby-identifier">empty</span> = (<span class="ruby-identifier">started_avatar_names</span> <span class="ruby-operator">==</span> [ ])
-  <span class="ruby-identifier">render</span> <span class="ruby-value">:json</span> =<span class="ruby-operator">&gt;</span> {
-    <span class="ruby-value">:exists</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exists</span>,
-    <span class="ruby-value">:empty</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">empty</span>,
-    <span class="ruby-value">:re_enter_dialog_html</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">exists</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">re_enter_dialog_html</span>(<span class="ruby-identifier">kata</span>, <span class="ruby-identifier">started_avatar_names</span>) <span class="ruby-operator">:</span> <span class="ruby-string">&#39;&#39;</span>)
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {
+    <span class="ruby-identifier">empty</span><span class="ruby-operator">:</span> <span class="ruby-identifier">empty</span>,
+    <span class="ruby-identifier">re_enter_dialog_html</span><span class="ruby-operator">:</span> <span class="ruby-identifier">dojo_exists</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">re_enter_dialog_html</span> <span class="ruby-operator">:</span> <span class="ruby-string">&#39;&#39;</span>
   }
 <span class="ruby-keyword">end</span></pre>
           </div>

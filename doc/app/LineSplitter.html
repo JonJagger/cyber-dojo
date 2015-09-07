@@ -115,63 +115,13 @@
 
         <div class="method-description">
           
-          <ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li>
-<p>-</p>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-
-<p>Note that source = “anb”</p>
-
-<pre>line_split(source)        --&gt; [ &quot;a, &quot;b&quot; ]</pre>
-
-<p>and</p>
-
-<pre>line_split(source + &quot;\n&quot;) --&gt; [ &quot;a, &quot;b&quot; ]</pre>
-
-<p>Viz, if the last character is a n it is &#39;lost&#39; This means that it
-is not guaranteed that <a
-href="LineSplitter.html#method-c-line_split">::line_split</a>(source).join(“n”)
-== source</p>
-<ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li>
-<p>-</p>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-</li></ul>
-
-<p>See tests/lib/line_splitter_tests.rb</p>
+          
           
           
 
           
           <div class="method-source-code" id="line_split-source">
-            <pre><span class="ruby-comment"># File app/lib/LineSplitter.rb, line 17</span>
+            <pre><span class="ruby-comment"># File app/lib/LineSplitter.rb, line 6</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">line_split</span>(<span class="ruby-identifier">source</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">source</span>.<span class="ruby-identifier">nil?</span>
     [ ]

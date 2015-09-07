@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+
+<title>module TipHelper - Rails Application Documentation</title>
+
+<link href="./fonts.css" rel="stylesheet">
+<link href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/search_index.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/searcher.js"></script>
+<script src="./js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="module">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-i-arrow">#arrow</a>
+    
+    <li ><a href="#method-i-colour_tag">#colour_tag</a>
+    
+    <li ><a href="#method-i-light_colour_tag">#light_colour_tag</a>
+    
+    <li ><a href="#method-i-line_counts">#line_counts</a>
+    
+    <li ><a href="#method-i-plural">#plural</a>
+    
+    <li ><a href="#method-i-plural_colour">#plural_colour</a>
+    
+    <li ><a href="#method-i-plural_word">#plural_word</a>
+    
+    <li ><a href="#method-i-traffic_light_count_tip_html">#traffic_light_count_tip_html</a>
+    
+    <li ><a href="#method-i-traffic_light_tip_html">#traffic_light_tip_html</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="module-TipHelper">
+  <h1 id="module-TipHelper" class="module">
+    module TipHelper
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-arrow" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">arrow</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="arrow-source">
+            <pre><span class="ruby-comment"># File app/helpers/tip_helper.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">arrow</span>
+  <span class="ruby-string">&#39;&amp;harr;&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-colour_tag" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">colour_tag</span><span
+            class="method-args">(colour,tag)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="colour_tag-source">
+            <pre><span class="ruby-comment"># File app/helpers/tip_helper.rb, line 62</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">colour_tag</span>(<span class="ruby-identifier">colour</span>,<span class="ruby-identifier">tag</span>)
+  <span class="ruby-node">&quot;&lt;span class=&#39;#{colour}&#39;&gt;#{tag}&lt;/span&gt;&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-light_colour_tag" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">light_colour_tag</span><span
+            class="method-args">(lights,tag)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="light_colour_tag-source">
+            <pre><span class="ruby-comment"># File app/helpers/tip_helper.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">light_colour_tag</span>(<span class="ruby-identifier">lights</span>,<span class="ruby-identifier">tag</span>)
+  <span class="ruby-identifier">colour</span> = (<span class="ruby-identifier">tag</span> <span class="ruby-operator">===</span> <span class="ruby-value">0</span>) <span class="ruby-operator">?</span> <span class="ruby-string">&#39;none&#39;</span> <span class="ruby-operator">:</span><span class="ruby-identifier">lights</span>[<span class="ruby-identifier">tag</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>].<span class="ruby-identifier">colour</span>
+  <span class="ruby-identifier">colour_tag</span>(<span class="ruby-identifier">colour</span>, <span class="ruby-identifier">tag</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-line_counts" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">line_counts</span><span
+            class="method-args">(diffed_files)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="line_counts-source">
+            <pre><span class="ruby-comment"># File app/helpers/tip_helper.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">line_counts</span>(<span class="ruby-identifier">diffed_files</span>)
+  <span class="ruby-identifier">added_count</span>,<span class="ruby-identifier">deleted_count</span> = <span class="ruby-value">0</span>,<span class="ruby-value">0</span>
+  <span class="ruby-identifier">diffed_files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span>,<span class="ruby-identifier">diff</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">filename</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;output&#39;</span>
+      <span class="ruby-identifier">added_count</span>   <span class="ruby-operator">+=</span> <span class="ruby-identifier">diff</span>.<span class="ruby-identifier">count</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">:type</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:added</span>   }
+      <span class="ruby-identifier">deleted_count</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">diff</span>.<span class="ruby-identifier">count</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">:type</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:deleted</span> }
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  [<span class="ruby-identifier">added_count</span>,<span class="ruby-identifier">deleted_count</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-plural" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">plural</span><span
+            class="method-args">(count, text)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="plural-source">
+            <pre><span class="ruby-comment"># File app/helpers/tip_helper.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">plural</span>(<span class="ruby-identifier">count</span>, <span class="ruby-identifier">text</span>)
+  <span class="ruby-identifier">count</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39; &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">plural_word</span>(<span class="ruby-identifier">text</span>,<span class="ruby-identifier">count</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-plural_colour" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">plural_colour</span><span
+            class="method-args">(count,colour)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="plural_colour-source">
+            <pre><span class="ruby-comment"># File app/helpers/tip_helper.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">plural_colour</span>(<span class="ruby-identifier">count</span>,<span class="ruby-identifier">colour</span>)
+  <span class="ruby-identifier">word</span> = <span class="ruby-identifier">plural_word</span>(<span class="ruby-identifier">colour</span>,<span class="ruby-identifier">count</span>)
+  <span class="ruby-string">&quot;&lt;div&gt;&quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-node">&quot;&amp;bull; #{count} #{colour_tag(colour,word)}&quot;</span> <span class="ruby-operator">+</span>
+  <span class="ruby-string">&quot;&lt;/div&gt;&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-plural_word" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">plural_word</span><span
+            class="method-args">(word,count)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="plural_word-source">
+            <pre><span class="ruby-comment"># File app/helpers/tip_helper.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">plural_word</span>(<span class="ruby-identifier">word</span>,<span class="ruby-identifier">count</span>)
+  <span class="ruby-identifier">word</span> = <span class="ruby-string">&#39;timeout&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">word</span> <span class="ruby-operator">===</span> <span class="ruby-string">&#39;timed_out&#39;</span>
+  <span class="ruby-identifier">word</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">count</span> <span class="ruby-operator">===</span> <span class="ruby-value">1</span> <span class="ruby-operator">?</span> <span class="ruby-string">&#39;&#39;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&#39;s&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-traffic_light_count_tip_html" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">traffic_light_count_tip_html</span><span
+            class="method-args">(params)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="traffic_light_count_tip_html-source">
+            <pre><span class="ruby-comment"># File app/helpers/tip_helper.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">traffic_light_count_tip_html</span>(<span class="ruby-identifier">params</span>)
+  <span class="ruby-identifier">avatar_name</span> = <span class="ruby-identifier">params</span>[<span class="ruby-string">&#39;avatar&#39;</span>]
+  <span class="ruby-identifier">colour</span> = <span class="ruby-identifier">params</span>[<span class="ruby-string">&#39;current_colour&#39;</span>]
+  <span class="ruby-identifier">red_count</span> = <span class="ruby-identifier">params</span>[<span class="ruby-string">&#39;red_count&#39;</span>].<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">amber_count</span> = <span class="ruby-identifier">params</span>[<span class="ruby-string">&#39;amber_count&#39;</span>].<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">green_count</span> = <span class="ruby-identifier">params</span>[<span class="ruby-string">&#39;green_count&#39;</span>].<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">timed_out_count</span> = <span class="ruby-identifier">params</span>[<span class="ruby-string">&#39;timed_out_count&#39;</span>].<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">bulb_count</span> = <span class="ruby-identifier">red_count</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">amber_count</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">green_count</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">timed_out_count</span>
+
+  <span class="ruby-identifier">avatar_name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39; has &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">plural</span>(<span class="ruby-identifier">bulb_count</span>, <span class="ruby-string">&#39;traffic-light&#39;</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&lt;br/&gt;&#39;</span> <span class="ruby-operator">+</span>
+  <span class="ruby-identifier">plural_colour</span>(<span class="ruby-identifier">red_count</span>, <span class="ruby-string">&#39;red&#39;</span>) <span class="ruby-operator">+</span>
+  <span class="ruby-identifier">plural_colour</span>(<span class="ruby-identifier">amber_count</span>, <span class="ruby-string">&#39;amber&#39;</span>) <span class="ruby-operator">+</span>
+  <span class="ruby-identifier">plural_colour</span>(<span class="ruby-identifier">green_count</span>, <span class="ruby-string">&#39;green&#39;</span>) <span class="ruby-operator">+</span>
+  <span class="ruby-identifier">plural_colour</span>(<span class="ruby-identifier">timed_out_count</span>, <span class="ruby-string">&#39;timed_out&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-traffic_light_tip_html" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">traffic_light_tip_html</span><span
+            class="method-args">(avatar, was_tag, now_tag)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="traffic_light_tip_html-source">
+            <pre><span class="ruby-comment"># File app/helpers/tip_helper.rb, line 4</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">traffic_light_tip_html</span>(<span class="ruby-identifier">avatar</span>, <span class="ruby-identifier">was_tag</span>, <span class="ruby-identifier">now_tag</span>)
+  <span class="ruby-identifier">was_tag</span> = <span class="ruby-identifier">was_tag</span>.<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">now_tag</span> = <span class="ruby-identifier">now_tag</span>.<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">lights</span> = <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">lights</span>
+  <span class="ruby-identifier">tip</span> = <span class="ruby-string">&#39;Click to review &#39;</span>
+  <span class="ruby-identifier">tip</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;#{avatar.name}&#39;s&quot;</span>   <span class="ruby-comment"># panda&#39;s</span>
+  <span class="ruby-identifier">tip</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&#39; &#39;</span>
+  <span class="ruby-identifier">tip</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">light_colour_tag</span>(<span class="ruby-identifier">lights</span>, <span class="ruby-identifier">was_tag</span>)      <span class="ruby-comment"># 13</span>
+  <span class="ruby-identifier">tip</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&#39; &#39;</span>
+  <span class="ruby-identifier">tip</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;#{arrow}&quot;</span>                       <span class="ruby-comment"># &lt;-&gt;</span>
+  <span class="ruby-identifier">tip</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&#39; &#39;</span>
+  <span class="ruby-identifier">tip</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">light_colour_tag</span>(<span class="ruby-identifier">lights</span>, <span class="ruby-identifier">now_tag</span>)      <span class="ruby-comment"># 14</span>
+  <span class="ruby-identifier">tip</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&#39; &#39;</span>
+  <span class="ruby-identifier">tip</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&#39;diff&#39;</span>
+  <span class="ruby-identifier">diff</span> = <span class="ruby-identifier">avatar</span>.<span class="ruby-identifier">diff</span>(<span class="ruby-identifier">was_tag</span>,<span class="ruby-identifier">now_tag</span>)
+  <span class="ruby-identifier">added_count</span>,<span class="ruby-identifier">deleted_count</span> = <span class="ruby-identifier">line_counts</span>(<span class="ruby-identifier">diff</span>)
+  <span class="ruby-identifier">tip</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;div&gt;&amp;bull; #{plural(added_count, &#39;added line&#39;)}&lt;/div&gt;&quot;</span>
+  <span class="ruby-identifier">tip</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;div&gt;&amp;bull; #{plural(deleted_count, &#39;deleted line&#39;)}&lt;/div&gt;&quot;</span>
+  <span class="ruby-identifier">tip</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

@@ -66,7 +66,7 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-c-make_delta">::make_delta</a>
+    <li ><a href="#method-i-make_delta">#make_delta</a>
     
   </ul>
 </div>
@@ -96,13 +96,13 @@
     
 
     
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
-         <h3>Public Class Methods</h3>
+         <h3>Public Instance Methods</h3>
        </header>
 
     
-      <div id="method-c-make_delta" class="method-detail ">
+      <div id="method-i-make_delta" class="method-detail ">
         
         <div class="method-heading">
           <span class="method-name">make_delta</span><span
@@ -121,8 +121,8 @@
 
           
           <div class="method-source-code" id="make_delta-source">
-            <pre><span class="ruby-comment"># File app/lib/FileDeltaMaker.rb, line 4</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">make_delta</span>(<span class="ruby-identifier">was</span>, <span class="ruby-identifier">now</span>)
+            <pre><span class="ruby-comment"># File app/lib/FileDeltaMaker.rb, line 6</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">make_delta</span>(<span class="ruby-identifier">was</span>, <span class="ruby-identifier">now</span>)
   <span class="ruby-comment"># Noticeably absent from this is :renamed</span>
   <span class="ruby-comment"># If browser file new/rename/delete events all</span>
   <span class="ruby-comment"># caused a git-tag on the server I could capture</span>
@@ -133,7 +133,11 @@
   <span class="ruby-comment"># step would be to tag-commit when switching files.</span>
   <span class="ruby-comment"># When this is coded be careful that a :renamed</span>
   <span class="ruby-comment"># is not *also* seen as a :deleted</span>
-  <span class="ruby-identifier">result</span> = {
+  
+  <span class="ruby-identifier">now_keys</span> = <span class="ruby-identifier">now</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">clone</span>
+  
+  <span class="ruby-identifier">result</span> =
+  {
     <span class="ruby-value">:unchanged</span> =<span class="ruby-operator">&gt;</span> [ ],
     <span class="ruby-value">:changed</span>   =<span class="ruby-operator">&gt;</span> [ ],
     <span class="ruby-value">:deleted</span>   =<span class="ruby-operator">&gt;</span> [ ]
@@ -142,15 +146,15 @@
   <span class="ruby-identifier">was</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span>,<span class="ruby-identifier">hash</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">now</span>[<span class="ruby-identifier">filename</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">hash</span>
       <span class="ruby-identifier">result</span>[<span class="ruby-value">:unchanged</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">filename</span>
-    <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">now</span>[<span class="ruby-identifier">filename</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+    <span class="ruby-keyword">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">now</span>[<span class="ruby-identifier">filename</span>].<span class="ruby-identifier">nil?</span>
       <span class="ruby-identifier">result</span>[<span class="ruby-value">:changed</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">filename</span>
     <span class="ruby-keyword">else</span>
       <span class="ruby-identifier">result</span>[<span class="ruby-value">:deleted</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">filename</span>
     <span class="ruby-keyword">end</span>
-    <span class="ruby-identifier">now</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">filename</span>)
+    <span class="ruby-identifier">now_keys</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">filename</span>)
   <span class="ruby-keyword">end</span>
 
-  <span class="ruby-identifier">result</span>[<span class="ruby-value">:new</span>] = <span class="ruby-identifier">now</span>.<span class="ruby-identifier">keys</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:new</span>] = <span class="ruby-identifier">now_keys</span>
   <span class="ruby-identifier">result</span>
 <span class="ruby-keyword">end</span></pre>
           </div>

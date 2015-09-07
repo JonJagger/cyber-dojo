@@ -71,7 +71,11 @@
   <ul class="link-list">
   
   
-    <li><a class="include" href="Externals.html">Externals</a>
+    <li><a class="include" href="ExternalParentChain.html">ExternalParentChain</a>
+  
+  
+  
+    <li><span class="include">Enumerable</span>
   
   
   </ul>
@@ -90,6 +94,8 @@
     
     <li ><a href="#method-i-each">#each</a>
     
+    <li ><a href="#method-i-refresh_cache">#refresh_cache</a>
+    
   </ul>
 </div>
 
@@ -103,6 +109,8 @@
 
   <section class="description">
     
+<p>See comments at end of file</p>
+
   </section>
 
   
@@ -149,7 +157,7 @@
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(path)</span>
+            class="method-args">(dojo,path)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -164,9 +172,10 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/models/Exercises.rb, line 4</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">path</span>)
-  <span class="ruby-ivar">@path</span> = <span class="ruby-identifier">path</span>
+            <pre><span class="ruby-comment"># File app/models/Exercises.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">dojo</span>,<span class="ruby-identifier">path</span>)
+  <span class="ruby-ivar">@parent</span>,<span class="ruby-ivar">@path</span> = <span class="ruby-identifier">dojo</span>,<span class="ruby-identifier">path</span>
+  <span class="ruby-ivar">@path</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&#39;/&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@path</span>.<span class="ruby-identifier">end_with?</span> <span class="ruby-string">&#39;/&#39;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -205,9 +214,9 @@
 
           
           <div class="method-source-code" id="5B-5D-source">
-            <pre><span class="ruby-comment"># File app/models/Exercises.rb, line 17</span>
+            <pre><span class="ruby-comment"># File app/models/Exercises.rb, line 20</span>
 <span class="ruby-keyword">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">name</span>)
-  <span class="ruby-identifier">make_exercise</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-identifier">make_exercise</span>(<span class="ruby-identifier">name</span>) <span class="ruby-comment"># See comment below</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -238,12 +247,48 @@
 
           
           <div class="method-source-code" id="each-source">
-            <pre><span class="ruby-comment"># File app/models/Exercises.rb, line 10</span>
+            <pre><span class="ruby-comment"># File app/models/Exercises.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">each</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">enum_for</span>(<span class="ruby-value">:each</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">block_given?</span>
-  <span class="ruby-identifier">exercises</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">exercise</span><span class="ruby-operator">|</span>
-    <span class="ruby-keyword">yield</span> <span class="ruby-identifier">exercise</span>
+  <span class="ruby-identifier">exercises</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">exercise</span><span class="ruby-operator">|</span> <span class="ruby-keyword">yield</span> <span class="ruby-identifier">exercise</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-refresh_cache" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">refresh_cache</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="refresh_cache-source">
+            <pre><span class="ruby-comment"># File app/models/Exercises.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">refresh_cache</span>
+  <span class="ruby-identifier">cache</span> = { }
+  <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">each_dir</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">sub_dir</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">exercise</span> = <span class="ruby-identifier">make_exercise</span>(<span class="ruby-identifier">sub_dir</span>)
+    <span class="ruby-identifier">cache</span>[<span class="ruby-identifier">exercise</span>.<span class="ruby-identifier">name</span>] = { <span class="ruby-value">:instructions</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exercise</span>.<span class="ruby-identifier">instructions</span> }
   <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">cache_filename</span>,<span class="ruby-identifier">cache</span>)        
 <span class="ruby-keyword">end</span></pre>
           </div>
           

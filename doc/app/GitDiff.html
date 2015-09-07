@@ -66,8 +66,6 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-i-change_count">#change_count</a>
-    
     <li ><a href="#method-i-deleted_file-3F">#deleted_file?</a>
     
     <li ><a href="#method-i-deleteify">#deleteify</a>
@@ -85,8 +83,6 @@
     <li ><a href="#method-i-git_diff_view">#git_diff_view</a>
     
     <li ><a href="#method-i-ify">#ify</a>
-    
-    <li ><a href="#method-i-most_changed_file_id">#most_changed_file_id</a>
     
     <li ><a href="#method-i-sameify">#sameify</a>
     
@@ -122,39 +118,6 @@
        <header>
          <h3>Public Instance Methods</h3>
        </header>
-
-    
-      <div id="method-i-change_count" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">change_count</span><span
-            class="method-args">(diff)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="change_count-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 93</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">change_count</span>(<span class="ruby-identifier">diff</span>)
-  <span class="ruby-identifier">diff</span>[<span class="ruby-value">:deleted_line_count</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">diff</span>[<span class="ruby-value">:added_line_count</span>]
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
 
     
       <div id="method-i-deleted_file-3F" class="method-detail ">
@@ -246,7 +209,7 @@
 
           
           <div class="method-source-code" id="diff_htmlify-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 120</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 86</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">diff_htmlify</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">n</span>)
   <span class="ruby-identifier">result</span> = <span class="ruby-string">&#39;&#39;</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">n</span>[<span class="ruby-value">:type</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:section</span>
@@ -290,7 +253,7 @@
 
           
           <div class="method-source-code" id="diff_htmlify_line_numbers-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 151</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 117</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">diff_htmlify_line_numbers</span>(<span class="ruby-identifier">n</span>)
   <span class="ruby-identifier">result</span> = <span class="ruby-string">&#39;&#39;</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">n</span>[<span class="ruby-value">:type</span>] <span class="ruby-operator">!=</span> <span class="ruby-value">:section</span>
@@ -388,7 +351,7 @@ given tag.</p>
 
           
           <div class="method-source-code" id="git_diff_html_file-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 116</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 82</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">git_diff_html_file</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">diff</span>)
   <span class="ruby-identifier">lines</span> = <span class="ruby-identifier">diff</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span> <span class="ruby-identifier">diff_htmlify</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">n</span>) }.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;&#39;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -421,7 +384,7 @@ given tag.</p>
 
           
           <div class="method-source-code" id="git_diff_html_line_numbers-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 135</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 101</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">git_diff_html_line_numbers</span>(<span class="ruby-identifier">diff</span>)
   <span class="ruby-comment"># Originally I left-padded each line-number.</span>
   <span class="ruby-comment"># Now I don&#39;t and the CSS right-aligns the line-numbers.</span>
@@ -460,13 +423,34 @@ given tag.</p>
 
         <div class="method-description">
           
-          
+          <ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li>
+<p>-</p>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
           
           
 
           
           <div class="method-source-code" id="git_diff_view-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 97</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">git_diff_view</span>(<span class="ruby-identifier">diffed_files</span>)
   <span class="ruby-identifier">n</span> = <span class="ruby-value">0</span>
   <span class="ruby-identifier">diffs</span> = [ ]
@@ -523,67 +507,6 @@ given tag.</p>
       <span class="ruby-value">:number</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">number</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
     }
   <span class="ruby-keyword">end</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-most_changed_file_id" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">most_changed_file_id</span><span
-            class="method-args">(diffs, current_filename)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="most_changed_file_id-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 61</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">most_changed_file_id</span>(<span class="ruby-identifier">diffs</span>, <span class="ruby-identifier">current_filename</span>)
-  <span class="ruby-comment"># Prefers to stay on the same file if it still exists</span>
-  <span class="ruby-comment"># in the now_tag (it could have been deleted or renamed)</span>
-  <span class="ruby-comment"># and has at least one change.</span>
-  <span class="ruby-comment"># Otherwise prefers the file with the most changes.</span>
-  <span class="ruby-comment"># If nothing has changed prefers the largest file</span>
-  <span class="ruby-comment"># that isn&#39;t output or instructions (this is likely to</span>
-  <span class="ruby-comment"># be a test file).</span>
-
-  <span class="ruby-identifier">chosen_diff</span> = <span class="ruby-keyword">nil</span>
-  <span class="ruby-identifier">current_filename_diff</span> = <span class="ruby-identifier">diffs</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">diff</span><span class="ruby-operator">|</span> <span class="ruby-identifier">diff</span>[<span class="ruby-value">:filename</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">current_filename</span> }
-
-  <span class="ruby-identifier">files</span> = <span class="ruby-identifier">diffs</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">diff</span><span class="ruby-operator">|</span> <span class="ruby-identifier">diff</span>[<span class="ruby-value">:filename</span>] <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;output&#39;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">diff</span>[<span class="ruby-value">:filename</span>] <span class="ruby-operator">!=</span> <span class="ruby-identifier">current_filename</span> }
-  <span class="ruby-identifier">files</span> = <span class="ruby-identifier">files</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">diff</span><span class="ruby-operator">|</span> <span class="ruby-identifier">change_count</span>(<span class="ruby-identifier">diff</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> }
-  <span class="ruby-identifier">most_changed_diff</span> = <span class="ruby-identifier">files</span>.<span class="ruby-identifier">max</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">lhs</span>,<span class="ruby-identifier">rhs</span><span class="ruby-operator">|</span> <span class="ruby-identifier">change_count</span>(<span class="ruby-identifier">lhs</span>) <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">change_count</span>(<span class="ruby-identifier">rhs</span>) }
-
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_filename_diff</span>.<span class="ruby-identifier">nil?</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">change_count</span>(<span class="ruby-identifier">current_filename_diff</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">most_changed_diff</span>.<span class="ruby-identifier">nil?</span>
-      <span class="ruby-identifier">chosen_diff</span> = <span class="ruby-identifier">current_filename_diff</span>
-    <span class="ruby-keyword">else</span>
-      <span class="ruby-identifier">chosen_diff</span> = <span class="ruby-identifier">most_changed_diff</span>
-    <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">most_changed_diff</span>.<span class="ruby-identifier">nil?</span>
-    <span class="ruby-identifier">chosen_diff</span> = <span class="ruby-identifier">most_changed_diff</span>
-  <span class="ruby-keyword">else</span>
-    <span class="ruby-identifier">diffs</span> = <span class="ruby-identifier">diffs</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">diff</span><span class="ruby-operator">|</span> <span class="ruby-identifier">diff</span>[<span class="ruby-value">:filename</span>] <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;output&#39;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">diff</span>[<span class="ruby-value">:filename</span>] <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;instructions&#39;</span> }
-    <span class="ruby-identifier">chosen_diff</span> = <span class="ruby-identifier">diffs</span>.<span class="ruby-identifier">max_by</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">diff</span><span class="ruby-operator">|</span> <span class="ruby-identifier">diff</span>[<span class="ruby-value">:content</span>].<span class="ruby-identifier">size</span> }
-  <span class="ruby-keyword">end</span>
-
-  <span class="ruby-identifier">chosen_diff</span>[<span class="ruby-value">:id</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
           

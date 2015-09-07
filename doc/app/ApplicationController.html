@@ -65,18 +65,7 @@
   
 </div>
 
-    <div id="includes-section" class="nav-section">
-  <h3>Included Modules</h3>
-
-  <ul class="link-list">
-  
-  
-    <li><a class="include" href="Externals.html">Externals</a>
-  
-  
-  </ul>
-</div>
-
+    
     
     <!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
@@ -84,15 +73,17 @@
 
   <ul class="link-list" role="directory">
     
-    <li class="calls-super" ><a href="#method-c-new">::new</a>
-    
     <li ><a href="#method-i-avatar">#avatar</a>
     
     <li ><a href="#method-i-avatar_name">#avatar_name</a>
     
     <li ><a href="#method-i-avatars">#avatars</a>
     
+    <li ><a href="#method-i-disk">#disk</a>
+    
     <li ><a href="#method-i-dojo">#dojo</a>
+    
+    <li ><a href="#method-i-exercises">#exercises</a>
     
     <li ><a href="#method-i-id">#id</a>
     
@@ -100,7 +91,11 @@
     
     <li ><a href="#method-i-katas">#katas</a>
     
+    <li ><a href="#method-i-languages">#languages</a>
+    
     <li ><a href="#method-i-now_tag">#now_tag</a>
+    
+    <li ><a href="#method-i-one_self">#one_self</a>
     
     <li ><a href="#method-i-was_tag">#was_tag</a>
     
@@ -132,53 +127,6 @@
     
 
     
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
-       <header>
-         <h3>Public Class Methods</h3>
-       </header>
-
-    
-      <div id="method-c-new" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">new</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-            <div class="method-calls-super">
-              Calls superclass method
-              
-            </div>
-          
-
-          
-          <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 40</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
-  <span class="ruby-keyword">super</span>
-  <span class="ruby-identifier">disk</span>; <span class="ruby-identifier">git</span>; <span class="ruby-identifier">runner</span> <span class="ruby-comment"># put externals onto Thread.current</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-    </section>
-  
      <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Instance Methods</h3>
@@ -204,10 +152,8 @@
 
           
           <div class="method-source-code" id="avatar-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 69</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">avatar</span>
-  <span class="ruby-identifier">avatars</span>[<span class="ruby-identifier">avatar_name</span>]
-<span class="ruby-keyword">end</span></pre>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">avatar</span>; <span class="ruby-identifier">avatars</span>[<span class="ruby-identifier">avatar_name</span>]; <span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
@@ -237,10 +183,8 @@
 
           
           <div class="method-source-code" id="avatar_name-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 65</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">avatar_name</span>
-      <span class="ruby-identifier">params</span>[<span class="ruby-value">:avatar</span>]
-<span class="ruby-keyword">end</span></pre>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 23</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">avatar_name</span>; <span class="ruby-identifier">params</span>[<span class="ruby-value">:avatar</span>]; <span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
@@ -270,10 +214,39 @@
 
           
           <div class="method-source-code" id="avatars-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 61</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">avatars</span>
-  <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">avatars</span>
-<span class="ruby-keyword">end</span></pre>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">avatars</span>; <span class="ruby-identifier">kata</span>.<span class="ruby-identifier">avatars</span>; <span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-disk" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">disk</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="disk-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">disk</span>; <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">disk</span>; <span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
@@ -303,10 +276,39 @@
 
           
           <div class="method-source-code" id="dojo-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 45</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">dojo</span>
-  <span class="ruby-ivar">@dojo</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Dojo</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">to_s</span>)
-<span class="ruby-keyword">end</span></pre>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">dojo</span>; <span class="ruby-ivar">@dojo</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Dojo</span>.<span class="ruby-identifier">new</span>; <span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-exercises" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">exercises</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="exercises-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 15</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">exercises</span>; <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">exercises</span>; <span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
@@ -336,10 +338,8 @@
 
           
           <div class="method-source-code" id="id-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 53</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">id</span>
-  <span class="ruby-ivar">@id</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">katas</span>.<span class="ruby-identifier">complete</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
-<span class="ruby-keyword">end</span></pre>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">id</span>; <span class="ruby-ivar">@id</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">katas</span>.<span class="ruby-identifier">dir</span>.<span class="ruby-identifier">complete_kata_id</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>]); <span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
@@ -369,10 +369,8 @@
 
           
           <div class="method-source-code" id="kata-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 57</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">kata</span>
-  <span class="ruby-identifier">katas</span>[<span class="ruby-identifier">id</span>]
-<span class="ruby-keyword">end</span></pre>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">kata</span>; <span class="ruby-identifier">katas</span>[<span class="ruby-identifier">id</span>]; <span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
@@ -402,10 +400,39 @@
 
           
           <div class="method-source-code" id="katas-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 49</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">katas</span>
-  <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">katas</span>
-<span class="ruby-keyword">end</span></pre>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">katas</span>; <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">katas</span>; <span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-languages" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">languages</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="languages-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 14</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">languages</span>; <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">languages</span>; <span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
@@ -435,10 +462,39 @@
 
           
           <div class="method-source-code" id="now_tag-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 77</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">now_tag</span>
-  <span class="ruby-identifier">params</span>[<span class="ruby-string">&#39;now_tag&#39;</span>]
-<span class="ruby-keyword">end</span></pre>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">now_tag</span>; <span class="ruby-identifier">params</span>[<span class="ruby-value">:now_tag</span>]; <span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-one_self" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">one_self</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="one_self-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">one_self</span>; <span class="ruby-identifier">dojo</span>.<span class="ruby-identifier">one_self</span>; <span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
@@ -468,10 +524,8 @@
 
           
           <div class="method-source-code" id="was_tag-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 73</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">was_tag</span>
-  <span class="ruby-identifier">params</span>[<span class="ruby-string">&#39;was_tag&#39;</span>]
-<span class="ruby-keyword">end</span></pre>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">was_tag</span>; <span class="ruby-identifier">params</span>[<span class="ruby-value">:was_tag</span>]; <span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>

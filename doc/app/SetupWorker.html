@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 
-<title>class DashboardController - Rails Application Documentation</title>
+<title>module SetupWorker - Rails Application Documentation</title>
 
 <link href="./fonts.css" rel="stylesheet">
 <link href="./rdoc.css" rel="stylesheet">
@@ -21,7 +21,7 @@
 <script src="./js/darkfish.js"></script>
 
 
-<body id="top" role="document" class="class">
+<body id="top" role="document" class="module">
 <nav role="navigation">
   <div id="project-navigation">
     <div id="home-section" role="region" title="Quick navigation" class="nav-section">
@@ -57,21 +57,14 @@
 
   <div id="class-metadata">
     
-    <div id="parent-class-section" class="nav-section">
-  <h3>Parent</h3>
-
-  
-  <p class="link"><a href="ApplicationController.html">ApplicationController</a>
-  
-</div>
-
+    
     <div id="includes-section" class="nav-section">
   <h3>Included Modules</h3>
 
   <ul class="link-list">
   
   
-    <li><a class="include" href="DashboardWorker.html">DashboardWorker</a>
+    <li><a class="include" href="Chooser.html">Chooser</a>
   
   
   </ul>
@@ -84,11 +77,9 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-i-heartbeat">#heartbeat</a>
+    <li ><a href="#method-i-read_exercises">#read_exercises</a>
     
-    <li ><a href="#method-i-progress">#progress</a>
-    
-    <li ><a href="#method-i-show">#show</a>
+    <li ><a href="#method-i-read_languages">#read_languages</a>
     
   </ul>
 </div>
@@ -96,9 +87,9 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-DashboardController">
-  <h1 id="class-DashboardController" class="class">
-    class DashboardController
+<main role="main" aria-labelledby="module-SetupWorker">
+  <h1 id="module-SetupWorker" class="module">
+    module SetupWorker
   </h1>
 
   <section class="description">
@@ -124,10 +115,10 @@
        </header>
 
     
-      <div id="method-i-heartbeat" class="method-detail ">
+      <div id="method-i-read_exercises" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">heartbeat</span><span
+          <span class="method-name">read_exercises</span><span
             class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -142,11 +133,19 @@
           
 
           
-          <div class="method-source-code" id="heartbeat-source">
-            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 11</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">heartbeat</span>
-  <span class="ruby-identifier">gather</span>
-  <span class="ruby-identifier">respond_to</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span> <span class="ruby-identifier">format</span>.<span class="ruby-identifier">js</span> }    
+          <div class="method-source-code" id="read_exercises-source">
+            <pre><span class="ruby-comment"># File app/controllers/setup_worker.rb, line 14</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_exercises</span>
+  <span class="ruby-comment"># I avoid doing</span>
+  <span class="ruby-comment">#     exercises[name].instructions </span>
+  <span class="ruby-comment"># as that currently bypasses the exercises cache</span>
+  <span class="ruby-identifier">exercises_names</span> = []
+  <span class="ruby-identifier">instructions_hash</span> =  {}
+  <span class="ruby-identifier">exercises</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">exercise</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">exercises_names</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">exercise</span>.<span class="ruby-identifier">name</span>
+    <span class="ruby-identifier">instructions_hash</span>[<span class="ruby-identifier">exercise</span>.<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">exercise</span>.<span class="ruby-identifier">instructions</span>
+  <span class="ruby-keyword">end</span>
+  [<span class="ruby-identifier">exercises_names</span>.<span class="ruby-identifier">sort</span>,<span class="ruby-identifier">instructions_hash</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -158,10 +157,10 @@
       </div>
 
     
-      <div id="method-i-progress" class="method-detail ">
+      <div id="method-i-read_languages" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">progress</span><span
+          <span class="method-name">read_languages</span><span
             class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -176,44 +175,14 @@
           
 
           
-          <div class="method-source-code" id="progress-source">
-            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 16</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">progress</span>
-  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> { <span class="ruby-identifier">animals</span><span class="ruby-operator">:</span> <span class="ruby-identifier">animals_progress</span> }
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-show" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">show</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="show-source">
-            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 6</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
-  <span class="ruby-identifier">gather</span>
-  <span class="ruby-ivar">@title</span> = <span class="ruby-string">&#39;dashboard:&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@kata</span>.<span class="ruby-identifier">id</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>]
+          <div class="method-source-code" id="read_languages-source">
+            <pre><span class="ruby-comment"># File app/controllers/setup_worker.rb, line 6</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_languages</span>
+    <span class="ruby-identifier">languages</span>.<span class="ruby-identifier">select</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">language</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">language</span>.<span class="ruby-identifier">runnable?</span>
+    }.<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">language</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">language</span>.<span class="ruby-identifier">display_name</span>
+    }.<span class="ruby-identifier">sort</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

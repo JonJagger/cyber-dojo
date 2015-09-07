@@ -71,11 +71,11 @@
   <ul class="link-list">
   
   
-    <li><a class="include" href="Externals.html">Externals</a>
+    <li><a class="include" href="ExternalParentChain.html">ExternalParentChain</a>
   
   
   
-    <li><a class="include" href="Cleaner.html">Cleaner</a>
+    <li><a class="include" href="ManifestProperty.html">ManifestProperty</a>
   
   
   </ul>
@@ -90,9 +90,9 @@
     
     <li ><a href="#method-c-new">::new</a>
     
-    <li ><a href="#method-i-after_test">#after_test</a>
-    
     <li ><a href="#method-i-colour">#colour</a>
+    
+    <li ><a href="#method-i-cyber_dojo_sh_alert">#cyber_dojo_sh_alert</a>
     
     <li ><a href="#method-i-display_name">#display_name</a>
     
@@ -102,13 +102,17 @@
     
     <li ><a href="#method-i-filename_extension">#filename_extension</a>
     
+    <li ><a href="#method-i-filter">#filter</a>
+    
     <li ><a href="#method-i-highlight_filenames">#highlight_filenames</a>
     
     <li ><a href="#method-i-image_name">#image_name</a>
     
     <li ><a href="#method-i-lowlight_filenames">#lowlight_filenames</a>
     
-    <li ><a href="#method-i-new_name">#new_name</a>
+    <li ><a href="#method-i-name">#name</a>
+    
+    <li ><a href="#method-i-output_alert">#output_alert</a>
     
     <li ><a href="#method-i-path">#path</a>
     
@@ -116,13 +120,15 @@
     
     <li ><a href="#method-i-runnable-3F">#runnable?</a>
     
-    <li ><a href="#method-i-support_filenames">#support_filenames</a>
-    
     <li ><a href="#method-i-tab">#tab</a>
     
     <li ><a href="#method-i-tab_size">#tab_size</a>
     
     <li ><a href="#method-i-unit_test_framework">#unit_test_framework</a>
+    
+    <li ><a href="#method-i-update_cyber_dojo_sh">#update_cyber_dojo_sh</a>
+    
+    <li ><a href="#method-i-update_output">#update_output</a>
     
     <li ><a href="#method-i-visible_filenames">#visible_filenames</a>
     
@@ -141,6 +147,8 @@
 
   <section class="description">
     
+<p>See comments at end of file</p>
+
   </section>
 
   
@@ -160,9 +168,22 @@
       </header>
 
       
-      <div id="attribute-i-name" class="method-detail">
+      <div id="attribute-i-dir_name" class="method-detail">
         <div class="method-heading attribute-method-heading">
-          <span class="method-name">name</span><span
+          <span class="method-name">dir_name</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-test_dir_name" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">test_dir_name</span><span
             class="attribute-access-type">[R]</span>
         </div>
 
@@ -187,7 +208,7 @@
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(path,name)</span>
+            class="method-args">(languages,dir_name,test_dir_name,display_name=nil)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -202,10 +223,9 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 4</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">path</span>,<span class="ruby-identifier">name</span>)
-  <span class="ruby-identifier">raise_if_no</span>([<span class="ruby-value">:disk</span>,<span class="ruby-value">:runner</span>])
-  <span class="ruby-ivar">@path</span>,<span class="ruby-ivar">@name</span> = <span class="ruby-identifier">path</span>,<span class="ruby-identifier">name</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 7</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">languages</span>,<span class="ruby-identifier">dir_name</span>,<span class="ruby-identifier">test_dir_name</span>,<span class="ruby-identifier">display_name</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-ivar">@parent</span>,<span class="ruby-ivar">@dir_name</span>,<span class="ruby-ivar">@test_dir_name</span>,<span class="ruby-ivar">@display_name</span> = <span class="ruby-identifier">languages</span>,<span class="ruby-identifier">dir_name</span>,<span class="ruby-identifier">test_dir_name</span>,<span class="ruby-identifier">display_name</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -223,42 +243,6 @@
        <header>
          <h3>Public Instance Methods</h3>
        </header>
-
-    
-      <div id="method-i-after_test" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">after_test</span><span
-            class="method-args">(sandbox, visible_files)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="after_test-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 123</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">after_test</span>(<span class="ruby-identifier">sandbox</span>, <span class="ruby-identifier">visible_files</span>)
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">&#39;Approval&#39;</span>)
-    <span class="ruby-constant">Approval</span>.<span class="ruby-identifier">add_created_txt_files</span>(<span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">visible_files</span>)
-    <span class="ruby-constant">Approval</span>.<span class="ruby-identifier">remove_deleted_txt_files</span>(<span class="ruby-identifier">sandbox</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">visible_files</span>)
-  <span class="ruby-keyword">end</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
 
     
       <div id="method-i-colour" class="method-detail ">
@@ -280,9 +264,49 @@
 
           
           <div class="method-source-code" id="colour-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 119</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 81</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">colour</span>(<span class="ruby-identifier">output</span>)
-  <span class="ruby-constant">OutputParser</span>.<span class="ruby-identifier">colour</span>(<span class="ruby-identifier">unit_test_framework</span>, <span class="ruby-identifier">output</span>)
+  <span class="ruby-constant">OutputColour</span>.<span class="ruby-identifier">of</span>(<span class="ruby-identifier">unit_test_framework</span>, <span class="ruby-identifier">output</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-cyber_dojo_sh_alert" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">cyber_dojo_sh_alert</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="cyber_dojo_sh_alert-source">
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 139</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">cyber_dojo_sh_alert</span>
+  [
+    <span class="ruby-string">&#39;# &lt;ALERT&gt;&#39;</span>,
+    <span class="ruby-string">&#39;# The lines in this cyber-dojo.sh file (above this alert) differ from the&#39;</span>,
+    <span class="ruby-string">&#39;# lines in the master cyber-dojo.sh file (below this alert). If this file&#39;</span>,
+    <span class="ruby-string">&#39;# is not working please examine the differences. Editing or removing the&#39;</span>,
+    <span class="ruby-string">&#39;# master (below this alert) will re-trigger the alert!&#39;</span>,
+    <span class="ruby-string">&#39;# &lt;/ALERT&gt;&#39;</span>,
+  ].<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;\n&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -313,9 +337,9 @@
 
           
           <div class="method-source-code" id="display_name-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 19</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">display_name</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;display_name&#39;</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">name</span>
+  <span class="ruby-ivar">@display_name</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">manifest_property</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -346,9 +370,9 @@
 
           
           <div class="method-source-code" id="display_test_name-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 23</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 41</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">display_test_name</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;display_test_name&#39;</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">unit_test_framework</span>
+  <span class="ruby-identifier">manifest_property</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">unit_test_framework</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -379,7 +403,7 @@
 
           
           <div class="method-source-code" id="exists-3F-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 11</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 25</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">exists?</span>
   <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">manifest_filename</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -412,9 +436,44 @@
 
           
           <div class="method-source-code" id="filename_extension-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 31</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 45</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">filename_extension</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;filename_extension&#39;</span>] <span class="ruby-operator">||</span> <span class="ruby-string">&#39;&#39;</span>
+  <span class="ruby-identifier">manifest_property</span> <span class="ruby-operator">||</span> <span class="ruby-string">&#39;&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-filter" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">filter</span><span
+            class="method-args">(filename,content)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="filter-source">
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">filter</span>(<span class="ruby-identifier">filename</span>,<span class="ruby-identifier">content</span>)
+  <span class="ruby-comment"># Cater for app/assets/javascripts/jquery-tabby.js plugin</span>
+  <span class="ruby-comment"># See app/lib/MakefileFilter.rb </span>
+  <span class="ruby-constant">MakefileFilter</span>.<span class="ruby-identifier">filter</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">content</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -445,9 +504,9 @@
 
           
           <div class="method-source-code" id="highlight_filenames-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 45</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 57</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">highlight_filenames</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;highlight_filenames&#39;</span>] <span class="ruby-operator">||</span> [ ]
+  <span class="ruby-identifier">manifest_property</span> <span class="ruby-operator">||</span> [ ]
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -478,9 +537,9 @@
 
           
           <div class="method-source-code" id="image_name-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 27</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 33</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">image_name</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;image_name&#39;</span>] <span class="ruby-operator">||</span> <span class="ruby-string">&#39;&#39;</span>
+  <span class="ruby-identifier">manifest_property</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -511,13 +570,8 @@
 
           
           <div class="method-source-code" id="lowlight_filenames-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 49</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 73</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">lowlight_filenames</span>
-  <span class="ruby-comment"># Catering for two uses</span>
-  <span class="ruby-comment"># 1. carefully constructed set of start files (like James Grenning uses)</span>
-  <span class="ruby-comment">#    with explicitly set highlight_filenames entry in manifest</span>
-  <span class="ruby-comment"># 2. default set of files direct from languages/</span>
-  <span class="ruby-comment">#    viz, no highlight_filenames entry in manifest</span>
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">highlight_filenames</span>.<span class="ruby-identifier">empty?</span>
     <span class="ruby-keyword">return</span> <span class="ruby-identifier">visible_filenames</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">highlight_filenames</span>
   <span class="ruby-keyword">else</span>
@@ -534,10 +588,10 @@
       </div>
 
     
-      <div id="method-i-new_name" class="method-detail ">
+      <div id="method-i-name" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">new_name</span><span
+          <span class="method-name">name</span><span
             class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -552,43 +606,48 @@
           
 
           
-          <div class="method-source-code" id="new_name-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 78</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">new_name</span>
-  <span class="ruby-comment"># Some languages/ sub-folders have been renamed.</span>
-  <span class="ruby-comment"># This creates a problem for practice-sessions done</span>
-  <span class="ruby-comment"># before the rename that you now wish to review or</span>
-  <span class="ruby-comment"># fork from. Particularly for sessions with</span>
-  <span class="ruby-comment"># well known id&#39;s such as the refactoring dojos.</span>
-  <span class="ruby-comment"># See app/models/Kata.rb language()</span>
-  <span class="ruby-comment"># See app/models/Kata.rb original_language()</span>
-  <span class="ruby-identifier">renames</span> = {
-    <span class="ruby-string">&#39;C&#39;</span>            =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;C-assert&#39;</span>,
-    <span class="ruby-string">&#39;C++&#39;</span>          =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;C++-assert&#39;</span>,
-    <span class="ruby-string">&#39;C#&#39;</span>           =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;C#-NUnit&#39;</span>,
-    <span class="ruby-string">&#39;Clojure&#39;</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Clojure-.test&#39;</span>,
-    <span class="ruby-string">&#39;CoffeeScript&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;CoffeeScript-jasmine&#39;</span>,
-    <span class="ruby-string">&#39;Erlang&#39;</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Erlang-eunit&#39;</span>,
-    <span class="ruby-string">&#39;Go&#39;</span>           =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Go-testing&#39;</span>,
-    <span class="ruby-string">&#39;Haskell&#39;</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Haskell-hunit&#39;</span>,
+          <div class="method-source-code" id="name-source">
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">name</span>    
+  <span class="ruby-identifier">display_name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;,&#39;</span>).<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">strip</span> }.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;-&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
 
-    <span class="ruby-string">&#39;Java&#39;</span>               =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Java-1.8_JUnit&#39;</span>,
-    <span class="ruby-string">&#39;Java-JUnit&#39;</span>         =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Java-1.8_JUnit&#39;</span>,
-    <span class="ruby-string">&#39;Java-Approval&#39;</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Java-1.8_Approval&#39;</span>,
-    <span class="ruby-string">&#39;Java-ApprovalTests&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Java-1.8_Approval&#39;</span>,
-    <span class="ruby-string">&#39;Java-Cucumber&#39;</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Java-1.8_Cucumber&#39;</span>,
-    <span class="ruby-string">&#39;Java-Mockito&#39;</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Java-1.8_Mockito&#39;</span>,
-    <span class="ruby-string">&#39;Java-JUnit-Mockito&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Java-1.8_Mockito&#39;</span>,
-    <span class="ruby-string">&#39;Java-PowerMockito&#39;</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Java-1.8_Powermockito&#39;</span>,
+        
 
-    <span class="ruby-string">&#39;Javascript&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Javascript-assert&#39;</span>,
-    <span class="ruby-string">&#39;Perl&#39;</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Perl-TestSimple&#39;</span>,
-    <span class="ruby-string">&#39;PHP&#39;</span>        =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;PHP-PHPUnit&#39;</span>,
-    <span class="ruby-string">&#39;Python&#39;</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Python-unittest&#39;</span>,
-    <span class="ruby-string">&#39;Ruby&#39;</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Ruby-TestUnit&#39;</span>,
-    <span class="ruby-string">&#39;Scala&#39;</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Scala-scalatest&#39;</span>
-  }
-  <span class="ruby-identifier">renames</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">name</span>
+        
+      </div>
+
+    
+      <div id="method-i-output_alert" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">output_alert</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="output_alert-source">
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 156</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">output_alert</span>
+  [
+    <span class="ruby-string">&quot;ALERT &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span>,
+    <span class="ruby-string">&quot;ALERT &gt;&gt;&gt;          possible problem detected           &gt;&gt;&gt;&quot;</span>,
+    <span class="ruby-string">&quot;ALERT &gt;&gt;&gt;   examine cyber-dojo.sh for detailed info    &gt;&gt;&gt;&quot;</span>,
+    <span class="ruby-string">&quot;ALERT &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span>,
+  ].<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;\n&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -619,9 +678,9 @@
 
           
           <div class="method-source-code" id="path-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 130</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 13</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">path</span>
-  <span class="ruby-ivar">@path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>
+  <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">dir_name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">test_dir_name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -652,9 +711,9 @@
 
           
           <div class="method-source-code" id="progress_regexs-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 115</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 61</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">progress_regexs</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;progress_regexs&#39;</span>] <span class="ruby-operator">||</span> [ ]
+  <span class="ruby-identifier">manifest_property</span> <span class="ruby-operator">||</span> [ ]
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -685,42 +744,9 @@
 
           
           <div class="method-source-code" id="runnable-3F-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 15</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 29</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">runnable?</span>
   <span class="ruby-identifier">runner</span>.<span class="ruby-identifier">runnable?</span>(<span class="ruby-keyword">self</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-support_filenames" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">support_filenames</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="support_filenames-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 41</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">support_filenames</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;support_filenames&#39;</span>] <span class="ruby-operator">||</span> [ ]
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -751,9 +777,9 @@
 
           
           <div class="method-source-code" id="tab-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 66</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 69</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">tab</span>
-  <span class="ruby-string">&quot; &quot;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">tab_size</span>
+  <span class="ruby-string">&#39; &#39;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">tab_size</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -784,9 +810,9 @@
 
           
           <div class="method-source-code" id="tab_size-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 70</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 65</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">tab_size</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;tab_size&#39;</span>] <span class="ruby-operator">||</span> <span class="ruby-value">4</span>
+  <span class="ruby-identifier">manifest_property</span> <span class="ruby-operator">||</span> <span class="ruby-value">4</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -817,9 +843,121 @@
 
           
           <div class="method-source-code" id="unit_test_framework-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 62</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">unit_test_framework</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;unit_test_framework&#39;</span>]
+  <span class="ruby-identifier">manifest_property</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-update_cyber_dojo_sh" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update_cyber_dojo_sh</span><span
+            class="method-args">(files)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="update_cyber_dojo_sh-source">
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 91</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update_cyber_dojo_sh</span>(<span class="ruby-identifier">files</span>)
+  <span class="ruby-comment"># The base docker containers were refactored to avoid voume-mounting</span>
+  <span class="ruby-comment"># as part of the docker-swarm re-architect work. The support_files</span>
+  <span class="ruby-comment"># were moved *inside* their docker containers by ADD&#39;ing them to the</span>
+  <span class="ruby-comment"># appropriate Dockerfile. This often required a path-related change to</span>
+  <span class="ruby-comment"># the cyber-dojo.sh file. This is no problem for dojos started after</span>
+  <span class="ruby-comment"># the re-architecture but it is for test/fork/revert in a dojo</span>
+  <span class="ruby-comment"># started *before* the re-architecture.</span>
+  <span class="ruby-comment">#</span>
+  <span class="ruby-comment"># To help in this situation the new master cyber-dojo.sh is appended</span>
+  <span class="ruby-comment"># (in # comments) to the end of the existing cyber-dojo.sh file.</span>
+  <span class="ruby-comment"># There are two reasons for doing it this way rather than the old</span>
+  <span class="ruby-comment"># cyber-dojo.sh file being commented out and the new master pre-pended</span>
+  <span class="ruby-comment"># to it.</span>
+  <span class="ruby-comment">#</span>
+  <span class="ruby-comment"># 1. Suppose the users cyber-dojo.sh has some custom mods and they</span>
+  <span class="ruby-comment">#    tweak it in light of new info (eg new paths).</span>
+  <span class="ruby-comment">#    The next [test] would set these back to comments!</span>
+  <span class="ruby-comment">#</span>
+  <span class="ruby-comment"># 2. It follows the philosophy of cyber-dojo, that the user</span>
+  <span class="ruby-comment">#    in charge. To quote Martin Richards, of BCPL fame</span>
+  <span class="ruby-comment">#      &quot;The philosophy of BCPL is not one of the tyrant who thinks</span>
+  <span class="ruby-comment">#       he knows best and lays down the law on what is and what is</span>
+  <span class="ruby-comment">#       not allowed; rather BCPL acts more as a servant offering</span>
+  <span class="ruby-comment">#       his services to the best of his ability without complaint,</span>
+  <span class="ruby-comment">#       even when confronted with apparant nonsense.&quot;</span>
+  <span class="ruby-comment">#               BCPL the language and its compiler</span>
+  <span class="ruby-comment">#               Martin Richards and Colin Whitby-Strevens</span>
+  <span class="ruby-comment">#               ISBN 0-521-21965-5</span>
+
+  <span class="ruby-identifier">content</span> = <span class="ruby-identifier">files</span>[<span class="ruby-string">&#39;cyber-dojo.sh&#39;</span>]
+  <span class="ruby-comment">#TODO: !content.nil? hack (twice) is because test/app_model/avatar_tests.rb</span>
+  <span class="ruby-comment">#      are poor and have interactions with no cyber-dojo.sh file which is</span>
+  <span class="ruby-comment">#      impossible in a real dojo. Invalid stub-data bites!</span>
+  <span class="ruby-comment">#      Maybe use ParamsMaker in test/app_controllers/reverter_test.rb</span>
+  <span class="ruby-identifier">content</span> = <span class="ruby-identifier">content</span>.<span class="ruby-identifier">strip</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">content</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">needs_update</span> = <span class="ruby-operator">!</span><span class="ruby-identifier">content</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">content</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">cyber_dojo_sh</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">content</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">commented_cyber_dojo_sh</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">needs_update</span>
+    <span class="ruby-identifier">files</span>[<span class="ruby-string">&#39;cyber-dojo.sh&#39;</span>] =
+      <span class="ruby-identifier">content</span>.<span class="ruby-identifier">rstrip</span> <span class="ruby-operator">+</span>
+      <span class="ruby-identifier">separator</span> <span class="ruby-operator">+</span>
+      <span class="ruby-identifier">cyber_dojo_sh_alert</span> <span class="ruby-operator">+</span>
+      <span class="ruby-identifier">separator</span> <span class="ruby-operator">+</span>
+      <span class="ruby-identifier">commented_cyber_dojo_sh</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">needs_update</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-update_output" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update_output</span><span
+            class="method-args">(output,cyber_dojo_sh_updated)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="update_output-source">
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 150</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update_output</span>(<span class="ruby-identifier">output</span>,<span class="ruby-identifier">cyber_dojo_sh_updated</span>)
+  <span class="ruby-comment"># If the cyber-dojo.sh file has been modified (see above)</span>
+  <span class="ruby-comment"># the output also contains an alert</span>
+  <span class="ruby-identifier">cyber_dojo_sh_updated</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">output_alert</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">separator</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">output</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">output</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -850,9 +988,9 @@
 
           
           <div class="method-source-code" id="visible_filenames-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 74</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visible_filenames</span>
-  <span class="ruby-identifier">manifest</span>[<span class="ruby-string">&#39;visible_filenames&#39;</span>] <span class="ruby-operator">||</span> [ ]
+  <span class="ruby-identifier">manifest_property</span> <span class="ruby-operator">||</span> [ ]
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -883,11 +1021,9 @@
 
           
           <div class="method-source-code" id="visible_files-source">
-            <pre><span class="ruby-comment"># File app/models/Language.rb, line 35</span>
+            <pre><span class="ruby-comment"># File app/models/Language.rb, line 53</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visible_files</span>
-  <span class="ruby-constant">Hash</span>[<span class="ruby-identifier">visible_filenames</span>.<span class="ruby-identifier">collect</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span>
-    [ <span class="ruby-identifier">filename</span>, <span class="ruby-identifier">read</span>(<span class="ruby-identifier">filename</span>) ]
-  }]
+  <span class="ruby-constant">Hash</span>[<span class="ruby-identifier">visible_filenames</span>.<span class="ruby-identifier">collect</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span> [ <span class="ruby-identifier">filename</span>, <span class="ruby-identifier">read</span>(<span class="ruby-identifier">filename</span>) ] }]
 <span class="ruby-keyword">end</span></pre>
           </div>
           
