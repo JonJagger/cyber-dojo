@@ -1,21 +1,8 @@
 
-Notes on trying Byran's branch on my digital-ocean test server
-to test out converting cyberdojo/X docker images to cyberdojofoundation/X
-images that do not require a volume-mount.
+Docker-container upgrade on cyber-dojo.org complete.
 First step in moving to stateless docker swarm architecture
-===============================================================
-
-Worked fine. docker-container upgrade on cyber-dojo.org complete.
-
-Notes.
 
 TODO: Check that ENV vars are set in test_wrapper.sh
-TODO: rename languages/cache.rb to refresh_cache.rb
-      also mentioned at bottom of admin_scripts/docker_pull_all.rb
-      also mentioned at bottom of http://blog.cyber-dojo.org/2015/01/setting-up-your-own-digital-ocean-cyber.html
-      
-TODO: rename exercises/cache.rb to refresh_cache.rb 
-      also mentioned at bottom of http://blog.cyber-dojo.org/2015/01/setting-up-your-own-digital-ocean-cyber.html
 
 TODO: why does bottom of http://blog.cyber-dojo.org/2015/01/setting-up-your-own-digital-ocean-cyber.html
       says to update the caches and then chown the cache?

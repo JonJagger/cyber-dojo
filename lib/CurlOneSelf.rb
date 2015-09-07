@@ -80,7 +80,5 @@ end
 p '<STATUS>'
 p status.exitstatus
 
-# This was giving 502 Bad Gateway
-
   
 

@@ -22,4 +22,4 @@ end
 puts "# -----------------------"
 puts "# now refresh the language cache"
 puts "$ cd /var/www/cyber-dojo/languages"
-puts "$ ./cache.rb"
+puts "$ ./refresh_cache.rb"
