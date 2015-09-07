@@ -4,6 +4,7 @@
 #require 'net/http'
 #require 'uri'
 require 'json'
+require 'open4'
 
 write_token = 'ddbc8384eaf4b6f0e70d66b606ccbf7ad4bb22bfe113'
 
@@ -30,6 +31,8 @@ data = {
 streams_url = 'https://api.1self.co/v1/streams'
 stream_id = 'GSYZNQSYANLMWEEH'
 
+# Using Net::HTTP::Post
+#
 #url = URI.parse("#{streams_url}/#{stream_id}/events")    
 #request = Net::HTTP::Post.new(url.path, json_header)
 #request.body = data.to_json
@@ -46,16 +49,38 @@ curl = 'curl' +
   " #{streams_url}/#{stream_id}/events"
 
 p curl
+
+# Using backtick
+#
 #output = `#{curl} &`
 #es = $?.exitstatus    
 #p es if es != 0
 #p output if output != ""
 
+# Using Process::spawn
+#
 #http://ujihisa.blogspot.co.uk/2010/03/how-to-run-external-command.html
-pid = Process::spawn(curl) 
-Process::wait(pid)
-p $?
+#pid = Process::spawn(curl)
+#Process::wait(pid)
+#p $?
 
+
+# Using Open4
+#https://github.com/ahoward/open4
+
+#pid,stdin,stdout,stderr = Open4::popen4 curl
+#_,status = Process::waitpid2 pid
+
+status = Open4::popen4(curl) do |_pid,stdin,stdout,stderr|
+  p '<STDOUT>'
+  p stdout.read.strip
+  p '<STDERR>'
+  p stderr.read.strip
+end
+p '<STATUS>'
+p status.exitstatus
+
+# This was giving 502 Bad Gateway
 
   
 
