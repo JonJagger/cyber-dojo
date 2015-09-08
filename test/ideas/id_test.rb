@@ -19,38 +19,9 @@
 # Ignore coverage stats
 
 require 'minitest/autorun'
+require_relative 'TestWithId'
 
-class TestWithId < MiniTest::Test
-
-  def initialize(klass)
-    @klass = klass
-    @args = ARGV.sort.uniq - ['--']      
-    ObjectSpace.define_finalizer( self, self.finalize() )
-  end
-
-  def finalize
-    proc { print ">>>>tests with ids #{@args} not found\n" if @args != []  }
-  end
-  
-  def [](id)
-    @id = id
-    self
-  end
-
-  def is(id=@id,name,&block)
-    if @args==[] || @args.include?(id)
-      @args.delete(id)
-      @klass.instance_eval { 
-        define_method("test_[#{id}].#{name}".to_sym, &block)
-      }
-    end 
-  end
-
-end
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-class IdeaTestsHaveUniqueIdToStubAgainst < MiniTest::Test
+class EachTestHasUniqueIdToStubAgainst < MiniTest::Test
 
   def self.tests
     @@tests ||= TestWithId.new(self)
@@ -61,7 +32,11 @@ class IdeaTestsHaveUniqueIdToStubAgainst < MiniTest::Test
   end
 
   tests['F01E97'].is 'def' do
-    assert_equal 1,2
+    assert_equal 1,1
+  end
+
+  tests['F01E98'].is 'ghi' do
+    assert_equal 1,1
   end
 
 end

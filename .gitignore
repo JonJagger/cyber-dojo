@@ -23,6 +23,8 @@ test/cyber-dojo/katas/*
 test/cyber-dojo/languages
 test/cyber-dojo/exercises
 
+test/*/assets
+
 admin_scripts/exceptions.log
 
 exercises/cache.json

@@ -14,18 +14,18 @@ class DeltaMaker
   attr_reader :was,:now
 
   def new_file(filename,content)
-    refute { @was.keys.include?(filename) }
+    refute { file?(filename) }
     @now[filename] = content
   end
 
   def delete_file(filename)
-    assert { @was.keys.include?(filename) }
+    assert { file?(filename) }
     @now.delete(filename)
   end
 
   def change_file(filename,content)
-    assert { @was.keys.include?(filename) }
-    refute { @was[filename] == content }
+    assert { file?(filename) }
+    refute { @now[filename] == content }
     @now[filename] = content
   end
 
@@ -41,13 +41,17 @@ class DeltaMaker
   end
 
 private
-  
-  def assert(&block)
-    raise RuntimeError.new('DeltaMaker.assert') if !block.call
+
+  def file?(filename)
+    @now.keys.include?(filename)
   end
 
-  def refute(&block)
-    raise RuntimeError.new('DeltaMaker.refute') if block.call
+  def assert(&pred)
+    raise RuntimeError.new('DeltaMaker.assert') if !pred.call
+  end
+
+  def refute(&pred)
+    raise RuntimeError.new('DeltaMaker.refute') if pred.call
   end
 
 end
