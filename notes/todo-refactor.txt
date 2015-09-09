@@ -65,16 +65,6 @@ Further, every [test] event in katas/ could be processed
 to ensure the colour.of(output) matches the colour stored
 in the increments.json file.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-When I support 100 avatars in a cyber-dojo determining which
-avatars have started, and hence which are left, when starting
-a new avatar will get slow.
-Currently it sees if each of the 16 animals exists so it
-does 16 disk probes per avatar start.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Kata.start_avatar
-  needs to do dir.lock do...end
-  to ensure you don't get two avatars with the same name.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
