@@ -3,7 +3,6 @@ log/*
 db/*.sqlite3
 tmp
 coverage
-katas_rb
 
 .DS_Store
 .sass-cache/
@@ -22,8 +21,6 @@ cyberDojo.db
 test/cyber-dojo/katas/*
 test/cyber-dojo/languages
 test/cyber-dojo/exercises
-
-test/*/assets
 
 admin_scripts/exceptions.log
 

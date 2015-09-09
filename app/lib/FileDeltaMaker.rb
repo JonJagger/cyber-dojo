@@ -3,6 +3,10 @@ module FileDeltaMaker # mix-in
 
   module_function
 
+  # make_delta finds out which files are :new, :unchanged, :changed, or :deleted.
+  # This allows unchanged files to *not* be (re)saved. This is important
+  # for some build environments, eg incremental makefiles.
+
   def make_delta(was, now)
     # Noticeably absent from this is :renamed
     # If browser file new/rename/delete events all
@@ -40,7 +44,3 @@ module FileDeltaMaker # mix-in
   end
 
 end
-
-# a file-delta helps on two fronts
-# 1. optimization; an unchanged file is not resaved.
-# 2. testing; easy to specify which file changes I want to apply
