@@ -13,6 +13,15 @@ class KataController < ApplicationController
     @title = 'test:' + @kata.id[0..5] + ':' + @avatar.name
   end
 
+  def show_json
+    render :json => {
+      'visible_files' => avatar.visible_files,
+      'avatar' => avatar.name,
+      'csrf_token' => form_authenticity_token,
+      'lights' => avatar.lights.map { |light| light.to_json }
+    }
+  end
+
   def run_tests
     @kata   = kata
     @avatar = avatar
@@ -39,9 +48,10 @@ class KataController < ApplicationController
     #  :seconds_since_last_test => seconds_since_last_test(avatar,tag)
     #}
     #one_self.tested(@avatar,hash)
-      
+
     respond_to do |format|
       format.js { render layout: false }
+      format.json { show_json }
     end
   end
 
@@ -84,5 +94,5 @@ private
   def seconds_since_last_test(avatar,tag)
     (avatar.tags[tag].time - avatar.tags[tag-1].time).to_i
   end
-  
+
 end
