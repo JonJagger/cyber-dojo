@@ -1,11 +1,7 @@
 #!/bin/bash
 
 # Installs the latest cyber-dojo.
-# Does *not* install docker containers.
-# For that use
-#   $ /var/www/cyber-dojo/admin_scripts/docker_pull_all.sh
-# or
-#   $ /var/www/cyber-dojo/admin_scripts/docker_update_all.sh
+# Also updates docker containers.
 
 cyberDojoHome=/var/www/cyber-dojo
 cd $cyberDojoHome
@@ -61,11 +57,11 @@ chown -R www-data:www-data $cyberDojoHome/tmp
 echo "deleting the rails cache"
 rm -rf $cyberDojoHome/tmp/*
 
-echo "refreshing the languages/ cache"
-$cyberDojoHome/languages/cache.rb
+echo "refreshing the languages/"
+$cyberDojoHome/languages/refresh_cache.rb
 
-echo "refreshing the exercises/ cache"
-$cyberDojoHome/exercises/cache.rb
+echo "refreshing the exercises/"
+$cyberDojoHome/exercises/refresh_cache.rb
 
 echo "poking rails"
 bundle install
@@ -83,4 +79,5 @@ fi
 echo
 echo "If something went wrong you can revert to the previous version."
 echo "$ git checkout $GIT_SHA1_BEFORE"
+echo "$ service apache2 restart"
 echo
