@@ -48,9 +48,11 @@ class Katas
 
   def each
     return enum_for(:each) unless block_given?
-    dir.each_kata_id do |id|
-      yield self[id]
-    end  
+    disk[path].each_dir do |outer_dir|
+      disk[path + outer_dir].each_dir do |inner_dir|
+        yield self[outer_dir + inner_dir]
+      end
+    end        
   end
 
   def [](id)
