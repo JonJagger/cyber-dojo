@@ -43,7 +43,6 @@ private
     
   def git_rm(filename)
     git.rm(path,filename)
-    dir.delete(filename)
   end
 
   def write(filename, content)

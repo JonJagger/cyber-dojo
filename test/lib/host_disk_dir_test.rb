@@ -134,18 +134,6 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'symlink' do
-    expected = 'content'
-    dir.write('filename', expected)
-    oldname = path + 'filename'
-    newname = path + 'linked'
-    disk.symlink(oldname, newname)
-    assert !File.symlink?(oldname)
-    assert File.symlink?(newname)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'save_file (json) for non-string is saved as JSON object ' +
        'and folder is automatically created' do
     object = { :a => 1, :b => 2 }

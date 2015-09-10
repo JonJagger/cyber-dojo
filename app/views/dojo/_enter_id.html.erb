@@ -24,7 +24,7 @@ $(function() {
     }
   };
 
-  var enableDisableEnterReEnterReview = function() {
+  cd.enableDisableEnterReEnterReview = function() {
     var id = kataIdInput.val();
     disable(enter);
     disable(review);
@@ -43,10 +43,10 @@ $(function() {
   };
 
   kataIdInput.keyup(function() {
-    enableDisableEnterReEnterReview();
+    cd.enableDisableEnterReEnterReview();
   });
 
-  enableDisableEnterReEnterReview();
+  cd.enableDisableEnterReEnterReview();
 });
 
 //--></script>

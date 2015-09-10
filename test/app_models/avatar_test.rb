@@ -286,6 +286,7 @@ class AvatarTests < ModelTestBase
     assert avatar.visible_filenames.include? hiker_c
     assert avatar.sandbox.dir.exists? hiker_c
 
+    # dir.delete(filename) only exists on DirFake not on HostDir
     avatar.sandbox.dir.delete(hiker_c)
     refute avatar.sandbox.dir.exists? hiker_c
 
