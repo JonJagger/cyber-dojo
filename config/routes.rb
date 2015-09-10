@@ -1,6 +1,6 @@
 
 CyberDojo::Application.routes.draw do
-  
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -23,13 +23,14 @@ CyberDojo::Application.routes.draw do
     get 're_enter'    => :re_enter, :constraints => { :format => :json }
   end
 
-  scope path: '/setup', controller: :setup do    
+  scope path: '/setup', controller: :setup do
     get 'show(/:id)' => :show
     get 'save' => :save, :constraints => { :format => :json }
   end
 
   scope path: '/kata', controller: :kata do
     get  'edit(/:id)'      => :edit
+    get  'show_json(/:id)' => :show_json
     post 'run_tests(/:id)' => :run_tests
   end
 
