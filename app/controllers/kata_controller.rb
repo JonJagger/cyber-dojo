@@ -6,14 +6,13 @@ class KataController < ApplicationController
     @avatar = avatar
     @tab = @kata.language.tab
     @visible_files = @avatar.visible_files
-    @new_files = { }
-    @filenames_to_delete = [ ]
     @traffic_lights = @avatar.lights
     @output = @visible_files['output']
     @title = 'test:' + @kata.id[0..5] + ':' + @avatar.name
   end
 
   def show_json
+    # https://atom.io/packages/cyber-dojo
     render :json => {
       'visible_files' => avatar.visible_files,
       'avatar' => avatar.name,
@@ -71,28 +70,28 @@ private
     seen
   end
 
-  def added_line_count(diffed_files)
-    count = 0
-    diffed_files.each do |filename,diff|
-      if filename != 'output'
-        count += diff.count { |line| line[:type] == :added   }
-      end
-    end
-    count
-  end
+  #def added_line_count(diffed_files)
+  #  count = 0
+  #  diffed_files.each do |filename,diff|
+  #    if filename != 'output'
+  #      count += diff.count { |line| line[:type] == :added   }
+  #    end
+  #  end
+  #  count
+  #end
 
-  def deleted_line_count(diffed_files)
-    count = 0
-    diffed_files.each do |filename,diff|
-      if filename != 'output'
-        count += diff.count { |line| line[:type] == :deleted }
-      end
-    end
-    count
-  end
+  #def deleted_line_count(diffed_files)
+  #  count = 0
+  #  diffed_files.each do |filename,diff|
+  #    if filename != 'output'
+  #      count += diff.count { |line| line[:type] == :deleted }
+  #    end
+  #  end
+  #  count
+  #end
 
-  def seconds_since_last_test(avatar,tag)
-    (avatar.tags[tag].time - avatar.tags[tag-1].time).to_i
-  end
+  #def seconds_since_last_test(avatar,tag)
+  #  (avatar.tags[tag].time - avatar.tags[tag-1].time).to_i
+  #end
 
 end
