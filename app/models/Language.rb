@@ -89,7 +89,7 @@ class Language
   end
 
   def update_cyber_dojo_sh(files)
-    # The base docker containers were refactored to avoid voume-mounting
+    # The base docker containers were refactored to avoid volume-mounting
     # as part of the docker-swarm re-architect work. The support_files
     # were moved *inside* their docker containers by ADD'ing them to the
     # appropriate Dockerfile. This often required a path-related change to
@@ -107,8 +107,8 @@ class Language
     #    tweak it in light of new info (eg new paths).
     #    The next [test] would set these back to comments!
     #
-    # 2. It follows the philosophy of cyber-dojo, that the user
-    #    in charge. To quote Martin Richards, of BCPL fame
+    # 2. It follows the philosophy of cyber-dojo, that the user is in charge.
+    #    To quote Martin Richards, of BCPL fame
     #      "The philosophy of BCPL is not one of the tyrant who thinks
     #       he knows best and lays down the law on what is and what is
     #       not allowed; rather BCPL acts more as a servant offering
@@ -127,7 +127,7 @@ class Language
     needs_update = !content.nil? && !content.include?(cyber_dojo_sh) && !content.include?(commented_cyber_dojo_sh)
     if needs_update
       files['cyber-dojo.sh'] =
-        content.rstrip +
+        content +
         separator +
         cyber_dojo_sh_alert +
         separator +

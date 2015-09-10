@@ -16,7 +16,6 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   test 'attempting to create an Avatar with an invalid name raises RuntimeError' do
     kata = katas[unique_id]
     invalid_name = 'mobilephone'
@@ -84,10 +83,10 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'after avatar is started its visible_files are ' +
-       ' the language visible_files,' +
-       ' the exercse instructions,' +
-       ' and empty output' do
+  test 'after avatar is started its visible_files are:' +
+       ' 1. the language visible_files,' +
+       ' 2. the exercse instructions,' +
+       ' 3. empty output' do
     kata = make_kata
     language = kata.language
     avatar = kata.start_avatar
