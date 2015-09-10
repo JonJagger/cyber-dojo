@@ -4,12 +4,10 @@ module FileDeltaMaker # mix-in
   module_function
 
   # make_delta finds out which files are :new, :unchanged, :changed, or :deleted.
-  # This allows unchanged files to *not* be (re)saved. This is important
-  # when using DockerVolumeMountRunner.rb since it creates the possibility of, eg 
-  # incremental makefiles. But DockerGitCloneRunner.rb uses Git which, by default,
-  # does *not* record timestamps. They can be added back in using the meta store
-  # and hooks. But if the timestamps are not preserved then all the delta code
-  # can be deleted. Something to be said for that option. Certainly simpler.
+  # It ensures files deleted in the browser are correspondingly deleted under katas/
+  # It also allows unchanged files to *not* be (re)saved. 
+  # Unfortunately using DockerGitCloneRunner each test event causes a git-clone
+  # and Git does *not* record timestamps so it's not much of an optimization.
 
   def make_delta(was, now)
     # Noticeably absent from this is :renamed
