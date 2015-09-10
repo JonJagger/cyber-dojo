@@ -427,7 +427,7 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - -
 
   def commented(lines)
-    lines.split("\n").map{ |line| '# ' + line }.join("\n")
+    lines.split("\n").map{ |line| '#' + line }.join("\n")
   end
 
   def cyber_dojo_sh; 'cyber-dojo.sh'; end

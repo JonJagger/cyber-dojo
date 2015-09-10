@@ -171,7 +171,7 @@ private
   end
 
   def commented_cyber_dojo_sh
-    cyber_dojo_sh.split("\n").map{|line| '# ' + line}.join("\n")
+    cyber_dojo_sh.split("\n").map{|line| '#' + line}.join("\n")
   end
 
   def separator
