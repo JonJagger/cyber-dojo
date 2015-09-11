@@ -1,84 +1,74 @@
-
-# Quick look at replacing Net::HTTP::Post calls with bash curl calls
-
-#require 'net/http'
-#require 'uri'
 require 'json'
-require 'open4'
+require_relative 'BackgroundProcess'
 
-write_token = 'ddbc8384eaf4b6f0e70d66b606ccbf7ad4bb22bfe113'
+class CurlOneSelf
 
-def json_header
-  { 'Content-Type' =>'application/json', 'Authorization' => write_token }
-end
+  def initialize(process = BackgroundProcess.new)
+    @process = process
+  end
 
-data = {
+  def created(hash)
+    data = {
       'objectTags' => [ 'cyber-dojo' ],
       'actionTags' => [ 'create' ],
-      'dateTime' => '2015-06-25T09:11:15-00:00',
-      'location' => { 
-        'lat'  => 'LAT', # ??
-        'long' => 'LONG' # ??
+      'dateTime' => server_time(hash[:now]),
+      'location' => {
+        'lat'  => hash[:latitude],
+        'long' => hash[:longtitude]
       },
       'properties' => {
-        'dojo-id' => '96DA91B46B',
-        'exercise-name' => 'Fizz_Buzz',
-        'language-name' => 'C#',
-        'test-name'     => 'NUnit'
+        'dojo-id' => hash[:kata_id],
+        'exercise-name' => hash[:exercise_name],
+        'language-name' => hash[:language_name],
+        'test-name'     => hash[:test_name]
       }
-}
+    }
 
-streams_url = 'https://api.1self.co/v1/streams'
-stream_id = 'GSYZNQSYANLMWEEH'
+    curl = 'curl' +
+      ' --silent' +
+      ' --header content-type:application/json' +
+      " --header authorization:#{write_token}" +
+      ' -X POST' +
+      " -d '#{data.to_json}'" +
+      " #{streams_url}/#{stream_id}/events"
 
-# Using Net::HTTP::Post
-#
-#url = URI.parse("#{streams_url}/#{stream_id}/events")    
-#request = Net::HTTP::Post.new(url.path, json_header)
-#request.body = data.to_json
-#result = Net::HTTP.new(url.host).request(request)
-#p result
+    @process.start(curl)
+  end
 
+  # - - - - - - - - - - - - - - - - - - - - - -
 
-curl = 'curl' +
-  ' --silent' +
-  ' --header content-type:application/json' + 
-  " --header authorization:#{write_token}" +
-  ' -X POST' +
-  " -d '#{data.to_json}'" +
-  " #{streams_url}/#{stream_id}/events"
+  def started(avatar)
+  end
 
-p curl
+  # - - - - - - - - - - - - - - - - - - - - - -
 
-# Using backtick
-#
-#output = `#{curl} &`
-#es = $?.exitstatus    
-#p es if es != 0
-#p output if output != ""
+  def tested(avatar,hash)
+  end
 
-# Using Process::spawn
-#
-#http://ujihisa.blogspot.co.uk/2010/03/how-to-run-external-command.html
-#pid = Process::spawn(curl)
-#Process::wait(pid)
-#p $?
+private
 
+    def server_time(now)
+      s = Time.mktime(*now).utc.iso8601.to_s
+      # eg 2015-06-25T09:11:15Z
+      # the offset to local time is now known (yet)
+      # this is represented by removing the Z and adding -00:00
+      s[0..-2] + "-00:00"
+    end
 
-# Using Open4
-#https://github.com/ahoward/open4
+    def write_token
+      'ddbc8384eaf4b6f0e70d66b606ccbf7ad4bb22bfe113'
+    end
 
-#pid,stdin,stdout,stderr = Open4::popen4 curl
-#_,status = Process::waitpid2 pid
+    def json_header
+      { 'Content-Type' =>'application/json', 'Authorization' => write_token }
+    end
 
-status = Open4::popen4(curl) do |_pid,stdin,stdout,stderr|
-  p '<STDOUT>'
-  p stdout.read.strip
-  p '<STDERR>'
-  p stderr.read.strip
+    def streams_url
+      'https://api.1self.co/v1/streams'
+    end
+
+    def stream_id
+      'GSYZNQSYANLMWEEH'
+    end
+
 end
-p '<STATUS>'
-p status.exitstatus
-
-  
-
