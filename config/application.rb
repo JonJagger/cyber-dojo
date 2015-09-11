@@ -60,13 +60,14 @@ module CyberDojo
     config.assets.version = '1.0'
 
     config.before_configuration do
-      ENV['CYBER_DOJO_LANGUAGES_ROOT'] ||= '/var/www/cyber-dojo/languages'
-      ENV['CYBER_DOJO_EXERCISES_ROOT'] ||= '/var/www/cyber-dojo/exercises'
-      ENV['CYBER_DOJO_KATAS_ROOT']     ||= '/var/www/cyber-dojo/katas'
-      ENV['CYBER_DOJO_RUNNER_CLASS_NAME']   ||= 'DockerVolumeMountRunner'
-      ENV['CYBER_DOJO_DISK_CLASS_NAME']     ||= 'HostDisk'
-      ENV['CYBER_DOJO_GIT_CLASS_NAME']      ||= 'HostGit'
-      ENV['CYBER_DOJO_ONE_SELF_CLASS_NAME'] ||= 'OneSelf'
+      cyber_dojo_root = '/var/www/cyber-dojo'
+      ENV['CYBER_DOJO_LANGUAGES_ROOT'] ||= "${cyber_dojo_root}/languages"
+      ENV['CYBER_DOJO_EXERCISES_ROOT'] ||= "${cyber_dojo_root}/exercises"
+      ENV['CYBER_DOJO_KATAS_ROOT']     ||= "${cyber_dojo_root}/katas"
+      ENV['CYBER_DOJO_RUNNER_CLASS']   ||= 'DockerVolumeMountRunner'
+      ENV['CYBER_DOJO_DISK_CLASS']     ||= 'HostDisk'
+      ENV['CYBER_DOJO_GIT_CLASS']      ||= 'HostGit'
+      ENV['CYBER_DOJO_ONE_SELF_CLASS'] ||= 'OneSelf'
     end
     
     config.colorize_logging = true

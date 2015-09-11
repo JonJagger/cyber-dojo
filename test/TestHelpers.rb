@@ -18,10 +18,10 @@ module TestHelpers # mix-in
   def set_exercises_root(value); cd_set(exercises_key,value); end
   def set_katas_root(value);     cd_set(    katas_key,value); end
   
-  def set_runner_class_name(value);   cd_set(  runner_key,value); end  
-  def set_disk_class_name(value);     cd_set(    disk_key,value); end
-  def set_git_class_name(value);      cd_set(     git_key,value); end
-  def set_one_self_class_name(value); cd_set(one_self_key,value); end
+  def set_runner_class(value);   cd_set(  runner_key,value); end
+  def set_disk_class(value);     cd_set(    disk_key,value); end
+  def set_git_class(value);      cd_set(     git_key,value); end
+  def set_one_self_class(value); cd_set(one_self_key,value); end
   
   # - - - - - - - - - - - - - - - - - - -
   
@@ -29,10 +29,10 @@ module TestHelpers # mix-in
   def get_exercises_root; cd_get(exercises_key); end
   def get_katas_root;     cd_get(    katas_key); end  
   
-  def get_runner_class_name;   cd_get(  runner_key); end  
-  def get_disk_class_name;     cd_get(    disk_key); end  
-  def get_git_class_name;      cd_get(     git_key); end
-  def get_one_self_class_name; cd_get(one_self_key); end
+  def get_runner_class;   cd_get(  runner_key); end
+  def get_disk_class;     cd_get(    disk_key); end
+  def get_git_class;      cd_get(     git_key); end
+  def get_one_self_class; cd_get(one_self_key); end
     
   # - - - - - - - - - - - - - - - - - - -
   
@@ -112,7 +112,7 @@ private
   def one_self_key; class_name('ONE_SELF'); end
 
   def class_name(key)
-    cd(key + '_CLASS_NAME')
+    cd(key + '_CLASS')
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - -

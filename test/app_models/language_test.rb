@@ -32,7 +32,7 @@ class LanguageTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'exists? is true only when dir and manifest exist' do
-    set_disk_class_name('DiskFake')
+    set_disk_class('DiskFake')
     @language = languages['Erlang']
     assert !@language.exists?, '1'
     @language.dir.make

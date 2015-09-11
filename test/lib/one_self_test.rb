@@ -47,9 +47,9 @@ class OneSelfTests < LibTestBase
 
   def setup
     super
-    set_disk_class_name     'DiskStub'    
-    set_git_class_name      'GitSpy'        
-    set_one_self_class_name 'OneSelfDummy'
+    set_disk_class     'DiskStub'
+    set_git_class      'GitSpy'
+    set_one_self_class 'OneSelfDummy'
     # important to use OneSelfDummy because
     # creating a new kata calls dojo.one_self.created
   end

@@ -23,20 +23,17 @@ class DojoTests < ModelTestBase
   end
 
   test 'runner' do
-    name = 'RunnerStub'
-    set_runner_class_name(name)
+    set_runner_class(name = 'RunnerStub')
     assert_equal name, runner.class.name
   end
   
   test 'disk' do
-    name = 'DiskStub'
-    set_disk_class_name(name)
+    set_disk_class(name = 'DiskStub')
     assert_equal name, disk.class.name
   end
     
   test 'git' do
-    name = 'GitSpy'
-    set_git_class_name(name)
+    set_git_class(name = 'GitSpy')
     assert_equal name, git.class.name
   end
   

@@ -25,7 +25,7 @@ class LanguagesTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - -
 
   test 'refresh_cache requires manifest.json for each file to read display_name from' do
-    set_disk_class_name('DiskFake')
+    set_disk_class('DiskFake')
     runey = languages['R-runey']
     runey.dir.write('manifest.json',
       {

@@ -8,7 +8,7 @@ class TipTests < AppHelpersTestBase
 
   def setup
     super
-    set_one_self_class_name 'OneSelfDummy'
+    set_one_self_class 'OneSelfDummy'
   end
   
   #- - - - - - - - - - - - - - - - - -
@@ -36,8 +36,8 @@ class TipTests < AppHelpersTestBase
   #- - - - - - - - - - - - - - - - - -
 
   test 'traffic light tip' do
-    set_runner_class_name('RunnerStub')
-    set_git_class_name('GitSpy')
+    set_runner_class('RunnerStub')
+    set_git_class('GitSpy')
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     

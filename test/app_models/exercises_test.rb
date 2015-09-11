@@ -25,7 +25,7 @@ class ExercisesTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test 'refresh_cache' do
-    set_disk_class_name('DiskFake')
+    set_disk_class('DiskFake')
     disk[exercises.path + '100 doors'].write('instructions', 'imagine there are 100 doors...')    
     exercises.refresh_cache
     exercises_names = exercises.map {|exercise| exercise.name }.sort
@@ -36,7 +36,7 @@ class ExercisesTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'no exercises when cache is empty' do
-    set_disk_class_name('DiskFake')
+    set_disk_class('DiskFake')
     exercises.dir.write('cache.json', cache={})    
     assert_equal [], exercises.to_a
   end

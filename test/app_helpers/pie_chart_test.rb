@@ -7,7 +7,7 @@ class PieChartTests < AppHelpersTestBase
   include PieChartHelper
 
   test 'pie-chart from avatar.lights' do
-    set_disk_class_name('DiskStub')
+    set_disk_class('DiskStub')
     kata = make_kata
     lion = kata.avatars['lion']
     lion.dir.write('increments.json', [

@@ -6,7 +6,7 @@ class OutputColourTests < AppLibTestBase
 
   def setup
     super
-    set_runner_class_name('RunnerStub')
+    set_runner_class('RunnerStub')
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  

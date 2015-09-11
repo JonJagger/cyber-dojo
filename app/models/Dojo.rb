@@ -38,11 +38,11 @@ private
   end
   
   def external_obj
-    Object.const_get(external(name_of(caller) + '_CLASS_NAME')).new
+    Object.const_get(external(name_of(caller) + '_CLASS')).new
   end
 
   def external_obj_pass_disk
-    Object.const_get(external(name_of(caller) + '_CLASS_NAME')).new(disk)
+    Object.const_get(external(name_of(caller) + '_CLASS')).new(disk)
   end
   
   def external(key)

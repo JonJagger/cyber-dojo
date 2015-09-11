@@ -24,7 +24,7 @@ class SetupControllerTest < ControllerTestBase
 
   def setup
     super
-    set_disk_class_name('DiskFakeAdapter')
+    set_disk_class('DiskFakeAdapter')
     setup_exercises_cache
     setup_languages_cache
   end
@@ -72,7 +72,7 @@ class SetupControllerTest < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
   
   def setup_show(n)
-    set_runner_class_name('RunnerStubTrue')
+    set_runner_class('RunnerStubTrue')
     
     languages_display_names = languages.map {|language| language.display_name}.sort    
     language_display_name = languages_display_names.shuffle[0]

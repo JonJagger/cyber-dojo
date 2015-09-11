@@ -77,7 +77,7 @@ end
 class ReverterControllerTest  < ControllerTestBase
 
   test 'revert' do
-    set_runner_class_name('RunnerStubAdapter')
+    set_runner_class('RunnerStubAdapter')
     @id = create_kata('Java, JUnit')
     enter
     avatar = katas[@id].avatars[@avatar_name]

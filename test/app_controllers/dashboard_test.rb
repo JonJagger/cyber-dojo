@@ -59,7 +59,7 @@ class DashboardControllerTest < ControllerTestBase
   end
   
   test 'progress when avatar has only amber traffic-lights' do
-    set_runner_class_name('RunnerStub')
+    set_runner_class('RunnerStub')
     enter                     # 0
     stub_test_output(:amber)  # 1
     progress

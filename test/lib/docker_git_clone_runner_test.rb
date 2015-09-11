@@ -9,9 +9,9 @@ class DockerGitCloneRunnerTests < LibTestBase
 
   def setup
     super
-    set_disk_class_name     'DiskStub'
-    set_git_class_name      'GitSpy'
-    set_one_self_class_name 'OneSelfDummy'
+    set_disk_class     'DiskStub'
+    set_git_class      'GitSpy'
+    set_one_self_class 'OneSelfDummy'
     @lion = make_kata.start_avatar(['lion'])
     @bash = BashStub.new
   end

@@ -17,7 +17,7 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
     super
     root = File.expand_path('../..', File.dirname(__FILE__)) 
     set_katas_root(root + '/tmp/katas')
-    set_one_self_class_name('OneSelfDummy')
+    set_one_self_class('OneSelfDummy')
   end
   
   def create_kata(language_name = random_language, exercise_name = random_exercise)
