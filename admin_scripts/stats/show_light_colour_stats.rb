@@ -25,12 +25,12 @@ def collect_light_stats(kata)
 end
 
 def print_percent(name, n, total)
-    printf(name)
-    if total != 0
-      printf("%3.2f", (n.to_f / total) * 100)
-    else
-      printf("%3.2f", 0.0)
-    end
+  printf(name)
+  if total != 0
+    printf("%3.2f", (n.to_f / total) * 100)
+  else
+    printf("%3.2f", 0.0)
+  end
 end
 
 def show_light_stats

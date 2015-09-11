@@ -58,3 +58,4 @@ end
 
 show_light_stats
 mention(exceptions)
+puts
