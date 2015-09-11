@@ -70,11 +70,9 @@ class HostDir
   def complete_kata_id(id)
     if !id.nil? && id.length >= 4
       id.upcase!
-      inner_dir = @disk[path + id[0..1]]
-      if inner_dir.exists?
-        dirs = inner_dir.each_dir.select { |outer_dir|
-          outer_dir.start_with?(id[2..-1])
-        }
+      outer_dir = @disk[path + id[0..1]]
+      if outer_dir.exists?
+        dirs = outer_dir.each_dir.select { |inner_dir| inner_dir.start_with?(id[2..-1]) }
         id = id[0..1] + dirs[0] if dirs.length === 1
       end
     end

@@ -5,11 +5,6 @@ require 'tempfile'
 
 class HostRunnerTests < LibTestBase
 
-  test 'runnable? is false for Approval style tests' do
-    assert host_runner.runnable?(languages['Asm-assert'])
-    refute host_runner.runnable?(languages['Java-Approval'])
-  end
-
   test 'command executes within timeout and returns command output' do
     sandbox = SandboxStub.new
     command = 'echo "Hello"'
