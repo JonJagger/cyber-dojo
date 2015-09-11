@@ -35,7 +35,7 @@ class KatasTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  test 'katas[id] returns previously created kata with given id' do
+  test 'katas[id] is kata with given id' do
     kata = make_kata
     k = katas[kata.id.to_s]
     assert_not_nil k
@@ -44,11 +44,31 @@ class KatasTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  test 'katas.each() returns all currently created katas' do
+  def all_ids(k)
+    k.each.map{|kata| kata.id.to_s}
+  end
+
+  test 'katas.each() yields nothing when there are no katas' do
+    assert_equal [], all_ids(katas)
+  end
+
+  test 'katas.each() when there is one kata' do
+    kata = make_kata
+    assert_equal [kata.id.to_s], all_ids(katas)
+  end
+
+  test 'katas.each() with two unrelated ids' do
     kata1 = make_kata
     kata2 = make_kata
-    ids = katas.each.map{|kata| kata.id.to_s.gsub('/','') }
-    assert_equal [kata1.id.to_s,kata2.id.to_s].sort, ids.sort
+    assert_equal all_ids([kata1,kata2]).sort, all_ids(katas).sort
+  end
+
+  test 'katas.each() with several ids with common first two characters' do
+    id = 'ABCDE1234'
+    kata1 = make_kata(id + '1')
+    kata2 = make_kata(id + '2')
+    kata3 = make_kata(id + '3')
+    assert_equal all_ids([kata1,kata2,kata3]).sort, all_ids(katas).sort
   end
 
   #- - - - - - - - - - - - - - - -

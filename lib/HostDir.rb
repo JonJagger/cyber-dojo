@@ -56,17 +56,7 @@ class HostDir
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def each_kata_id
-    return enum_for(:each_kata_id) unless block_given?    
-    @disk[path].each_dir do |outer_dir|
-      @disk[path + outer_dir].each_dir do |inner_dir|
-        yield outer_dir + inner_dir
-      end
-    end    
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+  # TODO: move to application_controller.rb
   def complete_kata_id(id)
     if !id.nil? && id.length >= 4
       id.upcase!

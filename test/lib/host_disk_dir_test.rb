@@ -323,30 +323,6 @@ class HostDiskTests < LibTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # each kata id 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  test 'each_kata_id yields nothing when there are no katas' do
-    assert_equal [], dir.each_kata_id.entries
-  end
-
-  test 'each_kata_id yields the kata id when there is one kata' do
-    id = unique_id
-    make_dir_with_split_id(id)    
-    assert_equal [id], dir.each_kata_id.entries
-  end
-
-  test 'each_kata_id yields the katas ids when there are many katas' do
-    ids = [ ]
-    10.times do 
-      id = unique_id
-      ids << id 
-      make_dir_with_split_id(id)          
-    end      
-    assert_equal ids.sort, dir.each_kata_id.entries.sort
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def check_save_file(filename, content, expected_content, executable = false)
     dir.write(filename, content)
