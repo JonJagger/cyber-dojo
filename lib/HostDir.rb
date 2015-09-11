@@ -56,21 +56,6 @@ class HostDir
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  # TODO: move to application_controller.rb
-  def complete_kata_id(id)
-    if !id.nil? && id.length >= 4
-      id.upcase!
-      outer_dir = @disk[path + id[0..1]]
-      if outer_dir.exists?
-        dirs = outer_dir.each_dir.select { |inner_dir| inner_dir.start_with?(id[2..-1]) }
-        id = id[0..1] + dirs[0] if dirs.length === 1
-      end
-    end
-    id || ''
-  end
-    
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    
   def lock(&block)
     # io locking uses blocking call.
     # For example, when a player starts-coding then

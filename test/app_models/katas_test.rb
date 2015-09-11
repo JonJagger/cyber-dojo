@@ -71,6 +71,55 @@ class KatasTests < ModelTestBase
     assert_equal all_ids([kata1,kata2,kata3]).sort, all_ids(katas).sort
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # complete(id)
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test 'complete(id=nil) is ""' do
+    assert_equal "", katas.complete(nil)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'complete(id="") is ""' do
+    assert_equal '', katas.complete('')
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'complete(id): id unchanged when id is less than 4 chars in length ' +
+       'because trying to complete from a short id will waste time going through ' +
+       'lots of candidates with the likely outcome of no unique result' do
+    id = unique_id[0..2]
+    assert_equal 3, id.length
+    assert_equal id, katas.complete(id)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'complete(id): id unchanged when 4+ chars long and no matches' do
+    id = unique_id[0..3]
+    assert_equal 4, id.length
+    assert_equal id, katas.complete(id)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test 'complete(id): completes when 4+ chars and 1 match' do
+    kata = make_kata
+    id = kata.id.to_s
+    assert_equal id, katas.complete(id[0..3])
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'complete(id): id unchanged when 4+ chars long and 2+ matches' do
+    id = 'ABCD'
+    make_kata(id + 'E12345')
+    make_kata(id + 'E12346')
+    assert_equal id[0..3], katas.complete(id[0..3])
+  end
+
   #- - - - - - - - - - - - - - - -
   
   test 'is Enumerable, eg each not needed if doing map' do

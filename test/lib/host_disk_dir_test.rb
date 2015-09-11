@@ -266,61 +266,7 @@ class HostDiskTests < LibTestBase
       filename.end_with?('.txt')
     }
     assert_equal ['c.txt','d.txt'], matches.sort
-  end
-  
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # complete_kata_id
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  test 'complete(id=nil) is ""' do
-    assert_equal "", dir.complete_kata_id(nil)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'complete(id="") is ""' do
-    assert_equal '', dir.complete_kata_id('')
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'complete(id): id unchanged when id is less than 4 chars in length ' +
-       'because trying to complete from a short id will waste time going through ' +
-       'lots of candidates with the likely outcome of no unique result' do
-    id = unique_id[0..2]
-    assert_equal 3, id.length
-    assert_equal id, dir.complete_kata_id(id)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'complete(id): id unchanged when 4+ chars long and no matches' do
-    id = unique_id[0..3]
-    assert_equal 4, id.length
-    assert_equal id, dir.complete_kata_id(id)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  test 'complete(id) does complete when 4+ chars and 1 match' do
-    id = unique_id
-    make_dir_with_split_id(id)
-    assert_equal id, disk[path].complete_kata_id(id[0..3])
-  end
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'complete(id): id unchanged when 4+ chars long and 2+ matches' do
-    id = unique_id     
-    common = path + split(id[0..3])                        
-    match_1 = common + unique_id[4..-1]
-    match_2 = common + unique_id[4..-1]
-    assert_not_equal match_1,match_2
-    disk[match_1].make   # .../temp/45/6E94442D
-    disk[match_2].make   # .../temp/45/6E7433ED
-    assert_equal id[0..3], disk[path].complete_kata_id(id[0..3])
-  end
+  end  
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
