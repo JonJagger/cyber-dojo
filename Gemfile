@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails',        '4.1'
 gem 'jquery-rails', '2.1.3'
 gem 'sass-rails', "~> 4.0.3"
+gem 'open4', "~> 1.3.4"
 
 group :test do
   gem 'minitest', '~> 5.0'

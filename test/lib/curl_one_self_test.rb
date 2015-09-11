@@ -16,7 +16,7 @@ class BackgroundProcessSpy
   end
 end
 
-class CurlOneSelfTests < LibTestBase #MiniTest::Test
+class CurlOneSelfTests < LibTestBase
 
   def self.tests
     @@tests ||= TestWithId.new(self)
@@ -33,7 +33,7 @@ class CurlOneSelfTests < LibTestBase #MiniTest::Test
 
   tests['2ED22E'].is 'kata created' do
     processes = BackgroundProcessSpy.new
-    one_self = CurlOneSelf.new(processes)
+    one_self = CurlOneSelf.new(disk, processes)
 #    kata = make_kata
 #    exercise_name = kata.exercise.name
 #    language_name,test_name = kata.language.display_name.split(',').map{|s| s.strip }

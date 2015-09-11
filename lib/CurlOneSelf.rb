@@ -3,7 +3,7 @@ require_relative 'BackgroundProcess'
 
 class CurlOneSelf
 
-  def initialize(process = BackgroundProcess.new)
+  def initialize(disk, process = BackgroundProcess.new)
     @process = process
   end
 
