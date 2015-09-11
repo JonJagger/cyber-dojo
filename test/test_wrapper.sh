@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cyberDojoHome=/var/www/cyber-dojo
+
 if [ "$#" -eq 0 ]; then
   echo
   echo '  How to use test_wrapper.sh'
@@ -21,7 +22,7 @@ if [ "$#" -eq 0 ]; then
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# collect trailing arguments to pass to tests
+# collect trailing arguments to forward to tests
 
 while (( "$#" )); do
   if [[ $1 == *.rb ]]; then

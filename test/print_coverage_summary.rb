@@ -1,20 +1,11 @@
 #!/usr/bin/env ruby
 
 def modules
-  # This list is duplicated in test/run_all.sh
-  [ 
-     'app_helpers',
-     'app_lib',
-     'app_models',
-#     'lib',
-#     'languages', 
-#     'integration', 
-#     'app_controllers'
-   ]
+   ARGV
 end
 
 def wrapper_test_log
-  # This list is duplicated in test/test_wrapper.sh
+  # duplicated in test/test_wrapper.sh
   'WRAPPER.log.tmp'
 end
 
@@ -88,7 +79,7 @@ end
 
 def gather_stats
   stats = { }
-  number = '([\.|\d]+)'
+  number = '([\.|\d]+)'  
   modules.each do |module_name|
         
     log = `cat #{module_name}/#{wrapper_test_log}`
@@ -101,7 +92,7 @@ def gather_stats
     h[:tests_per_sec]      = f2(m[2])
     h[:assertions_per_sec] = f2(m[3])
 
-    summary_pattern = %w( runs assertions failures errors skips).map{ |s| "#{number} #{s}" }.join(', ')
+    summary_pattern = %w(runs assertions failures errors skips).map{ |s| "#{number} #{s}" }.join(', ')
     m = log.match(Regexp.new(summary_pattern))
     h[:test_count]      = m[1].to_i
     h[:assertion_count] = m[2].to_i
@@ -149,18 +140,12 @@ def print_totals(stats)
   pr = lambda { |key,value| print_right(columns[key][0], value) }
   stat = lambda { |key| stats.map{|_,h| h[key].to_i}.reduce(:+) }
   print_left(indent, 'total')
-  name = :test_count
-  pr.call(name, c=stat.call(name))
-  name = :assertion_count
-  pr.call(name, a=stat.call(name))
-  name = :failure_count
-  pr.call(name, stat.call(name))
-  name = :error_count
-  pr.call(name, stat.call(name))
-  #name = :skip_count
-  #pr.call(name, stat.call(name))
-  name = :time
-  pr.call(name, t=f2(stats.map{|_,h| h[name].to_f}.reduce(:+)))
+  pr.call(name=:test_count, c=stat.call(name))
+  pr.call(name=:assertion_count, a=stat.call(name))
+  pr.call(name=:failure_count, stat.call(name))
+  pr.call(name=:error_count, stat.call(name))
+  #pr.call(name=:skip_count, stat.call(name))
+  pr.call(name=:time, t=f2(stats.map{|_,h| h[name].to_f}.reduce(:+)))
   pr.call(:tests_per_sec,        f2(c / t.to_f))
   pr.call(:assertions_per_sec,   f2(a / t.to_f))
 end

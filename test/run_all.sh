@@ -7,7 +7,6 @@
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 
-# This list is duplicated in test/print_coverage_summary.rb
 modules=( 
   app_helpers 
   app_lib 
@@ -30,4 +29,4 @@ done
 echo
 echo
 
-./print_coverage_summary.rb | tee test-summary.txt
+./print_coverage_summary.rb ${modules[*]} | tee test-summary.txt
