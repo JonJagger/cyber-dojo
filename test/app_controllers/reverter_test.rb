@@ -107,9 +107,9 @@ class ReverterControllerTest  < ControllerTestBase
     assert_response :success
 
     visible_files = json['visibleFiles']
-    assert_not_nil visible_files
-    assert_not_nil visible_files['output']
-    assert_not_nil visible_files[filename]
+    refute_nil visible_files
+    refute_nil visible_files['output']
+    refute_nil visible_files[filename]
     assert_equal old_content, visible_files[filename]
   end
 

@@ -157,7 +157,7 @@ class HostGitTests < LibTestBase
   
   def fails(&block)
     message = block.call
-    assert_not_equal 0, $?.exitstatus
+    refute_equal 0, $?.exitstatus
     git.log.inspect
   end
   

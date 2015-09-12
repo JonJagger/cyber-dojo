@@ -14,7 +14,7 @@ class BashTests < LibTestBase
     non_existent_command = 'eeeeeeeee'
     output,exit_status = Bash.new.exec(non_existent_command)
     assert output.include?(non_existent_command)
-    assert_not_equal 0, exit_status
+    refute_equal 0, exit_status
   end
     
 end

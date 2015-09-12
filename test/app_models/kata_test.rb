@@ -109,7 +109,7 @@ class KataTests < ModelTestBase
    refute kata.dir.exists?(filename)
    (Avatars.names.size - 3).times do
      avatar = kata.start_avatar
-     assert_not_nil avatar
+     refute_nil avatar
      refute kata.dir.exists?(filename)
    end
    avatar = kata.start_avatar
@@ -256,7 +256,7 @@ class KataTests < ModelTestBase
     created = [ ]
     Avatars.names.length.times do |n|      
       avatar = kata.start_avatar
-      assert_not_nil avatar
+      refute_nil avatar
       created << avatar
     end
     assert_equal Avatars.names.sort, created.collect{|avatar| avatar.name}.sort

@@ -10,13 +10,11 @@ root = '../..'
 require_relative root + '/test/test_coverage'
 require_relative root + '/test/all'
 require_relative root + '/config/environment'
-require_relative root + '/test/TestAssertHelpers'
 require_relative root + '/test/TestDomainHelpers'
 require_relative root + '/test/TestExternalHelpers'
   
 class ControllerTestBase < ActionDispatch::IntegrationTest
 
-  include TestAssertHelpers
   include TestDomainHelpers
   include TestExternalHelpers
   

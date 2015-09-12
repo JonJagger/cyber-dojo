@@ -46,7 +46,7 @@ class KatasTests < ModelTestBase
   test 'katas[id] is kata with given id' do
     kata = make_kata
     k = katas[kata.id.to_s]
-    assert_not_nil k
+    refute_nil k
     assert_equal k.id.to_s, kata.id.to_s
   end
 

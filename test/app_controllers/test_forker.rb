@@ -215,17 +215,17 @@ class ForkerControllerTest < ControllerTestBase
   end
 
   def forked?
-    assert_not_nil json
+    refute_nil json
     json['forked']
   end
 
   def forked_kata_id
-    assert_not_nil json
+    refute_nil json
     json['id']
   end
 
   def assert_reason_is(expected)
-    assert_not_nil json
+    refute_nil json
     assert_equal expected, json['reason']
   end
 

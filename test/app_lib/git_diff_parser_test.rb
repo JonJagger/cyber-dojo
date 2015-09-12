@@ -208,7 +208,7 @@ class GitDiffParserTests < AppLibTestBase
       actual['a/sandbox/untitled.rb'][:chunks][0][:sections][0][:deleted_lines]
 
     md = %r|^(.)/sandbox/(.*)|.match('a/sandbox/untitled.rb')
-    assert_not_nil md
+    refute_nil md
     assert_equal 'a', md[1]
     filename = md[2]
     assert_equal 'untitled.rb', filename
