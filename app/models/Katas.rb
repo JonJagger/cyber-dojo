@@ -17,6 +17,9 @@ class Katas
   attr_reader :path
 
   def create_kata(language, exercise, id = unique_id, now = time_now)
+    # a kata's id has 10 hex chars. This gives 16^10 possibilities
+    # which is 1,099,511,627,776 which is big enough to not
+    # need to check that a kata with the id already exists.
     manifest = create_kata_manifest(language, exercise, id, now)
     manifest[:visible_files] = language.visible_files
     manifest[:visible_files]['output'] = ''
@@ -70,12 +73,14 @@ class Katas
   end
 
   def complete(id)
-    if !id.nil? && id.length >= 4
-      id.upcase!
-      outer_dir = disk[path + id[0..1]]
+    # If at least 6 characters of the id are provided attempt to do id-completion.
+    # Doing completion with fewer characters would likely result in a lot of
+    # disk activity and no unique outcome.
+    if !id.nil? && id.length >= 6
+      outer_dir = disk[path + outer(id)]
       if outer_dir.exists?
-        dirs = outer_dir.each_dir.select { |inner_dir| inner_dir.start_with?(id[2..-1]) }
-        id = id[0..1] + dirs[0] if dirs.length === 1
+        dirs = outer_dir.each_dir.select { |inner_dir| inner_dir.start_with?(inner(id)) }
+        id = outer(id) + dirs[0] if dirs.length === 1
       end
     end
     id || ''
@@ -85,28 +90,10 @@ private
 
   include UniqueId
   include TimeNow
+  include IdSplitter
 
   def is_hex?(char)
     '0123456789ABCDEF'.include?(char)
   end
 
 end
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# create_kata
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# a kata's id has 10 hex chars. This gives 16^10 possibilities
-# which is 1,099,511,627,776 which is big enough to not
-# need to check that a kata with the id already exists.
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# complete
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# if at least 4 characters of the id are
-# provided attempt to do id-completion
-# Doing completion with fewer characters would likely result
-# in a lot of disk activity and no unique outcome.
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
