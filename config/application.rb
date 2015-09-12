@@ -66,9 +66,9 @@ module CyberDojo
       ENV['CYBER_DOJO_RUNNER_CLASS_NAME']   ||= 'DockerVolumeMountRunner'
       ENV['CYBER_DOJO_DISK_CLASS_NAME']     ||= 'HostDisk'
       ENV['CYBER_DOJO_GIT_CLASS_NAME']      ||= 'HostGit'
-      ENV['CYBER_DOJO_ONE_SELF_CLASS_NAME'] ||= 'OneSelf'
+      ENV['CYBER_DOJO_ONE_SELF_CLASS_NAME'] ||= 'CurlOneSelf'
     end
-    
+
     config.colorize_logging = true
 
     config.exceptions_app = lambda do |env|
