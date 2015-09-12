@@ -9,7 +9,7 @@ class ForkerControllerTest < ControllerTestBase
        'and the reason given is dojo' do
     stub_dojo
     fork('bad', 'hippo', 1)
-    assert !forked?
+    refute forked?
     assert_reason_is('dojo')
     assert_nil forked_kata_id
     assert_equal({ }, git.log)
@@ -26,7 +26,7 @@ class ForkerControllerTest < ControllerTestBase
     language_name = 'doesNot-Exist'
     kata.dir.write('manifest.json', { :language => language_name })
     fork(id,'hippo',1)
-    assert !forked?
+    refute forked?
     assert_reason_is('language')
     assert_equal language_name, json['language']
     assert_nil forked_kata_id
@@ -48,7 +48,7 @@ class ForkerControllerTest < ControllerTestBase
     kata = @dojo.katas[id]
     kata.dir.write('manifest.json', { :language => language.name })
     fork(id,'hippo',1)
-    assert !forked?
+    refute forked?
     assert_reason_is('avatar')
     assert_equal 'hippo', json['avatar']
     assert_nil forked_kata_id
@@ -86,7 +86,7 @@ class ForkerControllerTest < ControllerTestBase
       stub_traffic_lights(avatar, red)
     end
     fork(id,avatar_name,bad_tag)
-    assert !forked?
+    refute forked?
     assert_reason_is('traffic_light')
     assert_nil forked_kata_id
     assert_equal({ }, git.log)

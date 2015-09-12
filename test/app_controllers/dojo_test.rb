@@ -25,8 +25,8 @@ class DojoControllerTest < ControllerTestBase
       @id = @id[0..(n-1)]
       assert_equal n, @id.length
       check_id
-      assert !empty?
-      assert !full?
+      refute empty?
+      refute full?
     end
   end
 
@@ -39,16 +39,16 @@ class DojoControllerTest < ControllerTestBase
     assert_raises(RuntimeError) { enter }
   end
 
-  #test 'enter with id that does not exist raises RuntimeError' do
-  #  @id = 'ab00ab11ab'
-  #  assert_raise(RuntimeError) { enter }
-  #end
-  
+  test 'enter with id that does not exist raises RuntimeError' do
+    @id = 'ab00ab11ab'
+    assert_raise(RuntimeError) { enter }
+  end
+
   test 'enter with id that does exist => !full,avatar_name' do
     create_kata    
     enter
-    assert !empty?
-    assert !full?
+    refute empty?
+    refute full?
     assert Avatars.names.include?(avatar_name)
   end
   
@@ -56,33 +56,28 @@ class DojoControllerTest < ControllerTestBase
     create_kata    
     Avatars.names.each do |avatar_name|
       enter
-      assert !full?
+      refute full?
       assert_not_nil avatar_name
     end
     enter
-    assert !empty?
+    refute empty?
     assert full?
     assert_nil avatar_name
-  end
-
-  test 're_enter with id that does not exist' do
-    @id = 'ab00ab11ab'
-    re_enter
   end
 
   test 're_enter with id that exists but is empty' do
     create_kata    
     re_enter
     assert empty?
-    assert !full?
+    refute full?
   end
 
   test 're_enter with id that exists and is not empty' do
     create_kata    
     enter
     re_enter
-    assert !empty?
-    assert !full?
+    refute empty?
+    refute full?
   end
   
 private
