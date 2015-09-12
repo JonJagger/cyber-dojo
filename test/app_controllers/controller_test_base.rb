@@ -2,17 +2,28 @@
 ENV['RAILS_ENV'] = 'test'
 #ENV['CYBER_DOJO_RUNNER_CLASS_NAME'] = 'DummyTestRunner'
 
+gem "minitest"
+require 'minitest/autorun'
+
 root = '../..'
 
 require_relative root + '/test/test_coverage'
 require_relative root + '/test/all'
 require_relative root + '/config/environment'
-require_relative root + '/test/TestHelpers'
+require_relative root + '/test/TestAssertHelpers'
+require_relative root + '/test/TestDomainHelpers'
+require_relative root + '/test/TestExternalHelpers'
   
 class ControllerTestBase < ActionDispatch::IntegrationTest
 
-  include TestHelpers
+  include TestAssertHelpers
+  include TestDomainHelpers
+  include TestExternalHelpers
   
+  def self.test(name, &block)
+    define_method("test_#{name}".to_sym, &block)
+  end
+
   def setup
     super
     root = File.expand_path('../..', File.dirname(__FILE__)) 
