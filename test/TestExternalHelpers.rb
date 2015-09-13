@@ -1,6 +1,6 @@
 
 module TestExternalHelpers # mix-in
-  
+
   module_function
 
   def setup
@@ -11,8 +11,6 @@ module TestExternalHelpers # mix-in
   def teardown
     restore_external_setup    
   end
-
-  # - - - - - - - - - - - - - - - - - - -
 
   def check_external_setup
     env_vars.each do |var|

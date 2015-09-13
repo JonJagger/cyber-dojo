@@ -2,7 +2,7 @@
 ENV['RAILS_ENV'] = 'test'
 #ENV['CYBER_DOJO_RUNNER_CLASS_NAME'] = 'DummyTestRunner'
 
-gem "minitest"
+gem 'minitest'
 require 'minitest/autorun'
 
 root = '../..'

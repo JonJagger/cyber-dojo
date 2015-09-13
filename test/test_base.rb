@@ -1,5 +1,5 @@
 
-gem "minitest"
+gem 'minitest'
 require 'minitest/autorun'
 
 require_relative './TestDomainHelpers'
@@ -13,5 +13,5 @@ class TestBase < MiniTest::Test
   def self.test(name, &block)
     define_method("test_#{name}".to_sym, &block)
   end
-    
+
 end
