@@ -4,11 +4,11 @@ module SetupWorker # mixin
   include Chooser
   
   def read_languages
-      languages.select{ |language|
-        language.runnable?
-      }.map{ |language|
-        language.display_name
-      }.sort
+    languages.select{ |language|
+      language.runnable?
+    }.map{ |language|
+      language.display_name
+    }.sort
   end
 
   def read_exercises

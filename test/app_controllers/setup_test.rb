@@ -104,17 +104,22 @@ class SetupControllerTest < ControllerTestBase
     languages_cache = {
       'Asm, assert' => {
         :dir_name => 'Asm',
-        :test_dir_name => 'assert'
+        :test_dir_name => 'assert',
+        :image_name => 'cyberdojofoundation/nasm-2.10.09_assert'
       },
       'C++ (g++), assert' => {
         :dir_name => 'g++4.8.4',
-        :test_dir_name => 'assert'
+        :test_dir_name => 'assert',
+        :image_name => 'cyberdojofoundation/gpp-4.8.4_assert'
       }
     }
     languages.dir.write('cache.json', languages_cache)
-    languages_cache.keys.each do |display_name|
+    languages_cache.each do |display_name,hash|
       key = get_language_from(display_name) + '-' + get_test_from(display_name)
-      languages[key].dir.write('manifest.json', { :display_name => display_name})      
+      languages[key].dir.write('manifest.json', {
+        :display_name => display_name,
+        :image_name => hash[:image_name]
+      })
     end    
   end
 
