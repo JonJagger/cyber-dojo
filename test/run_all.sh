@@ -18,7 +18,7 @@ modules=(
 )
 
 echo
-for module in ${modules[@]}
+for module in ${modules[*]}
 do
     echo
     echo "======$module======"  
