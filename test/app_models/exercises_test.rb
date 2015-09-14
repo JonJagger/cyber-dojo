@@ -4,7 +4,8 @@ require_relative 'model_test_base'
 
 class ExercisesTests < ModelTestBase
 
-  test 'path is set from ENV' do
+  id['14AD4C'].test\
+  'path is set from ENV' do
     path = 'end_with_slash/'
     set_exercises_root(path)
     assert_equal path, exercises.path
@@ -14,7 +15,8 @@ class ExercisesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'path is forced to end in a slash' do
+  id['B09C99'].test\
+  'path is forced to end in a slash' do
     path = 'unslashed'
     set_exercises_root(path)
     assert_equal path+'/', exercises.path
@@ -24,7 +26,8 @@ class ExercisesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test 'refresh_cache' do
+  id['F027CB'].test\
+  'refresh_cache' do
     set_disk_class('DiskFake')
     disk[exercises.path + '100 doors'].write('instructions', 'imagine there are 100 doors...')    
     exercises.refresh_cache
@@ -35,7 +38,8 @@ class ExercisesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'no exercises when cache is empty' do
+  id['3E277A'].test\
+  'no exercises when cache is empty' do
     set_disk_class('DiskFake')
     exercises.dir.write('cache.json', cache={})    
     assert_equal [], exercises.to_a
@@ -43,7 +47,8 @@ class ExercisesTests < ModelTestBase
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'execises from cache when cache is not empty' do
+  id['52110A'].test\
+  'execises from cache when cache is not empty' do
     cache = {
       '100 doors' => {
         :instructions => 'go here'
