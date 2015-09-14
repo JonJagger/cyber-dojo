@@ -18,7 +18,7 @@ class LanguagesManifestsTests < LanguagesTestBase
     manifests.each do |filename|
       manifest = JSON.parse(IO.read(filename))
       image_name = manifest['image_name']
-      assert !so_far.include?(image_name), image_name
+      refute so_far.include?(image_name), image_name
       so_far << image_name
     end
   end
@@ -28,7 +28,7 @@ class LanguagesManifestsTests < LanguagesTestBase
     manifests.each do |filename|
       manifest = JSON.parse(IO.read(filename))
       display_name = manifest['display_name']
-      assert !so_far.include?(display_name), display_name
+      refute so_far.include?(display_name), display_name
       so_far << display_name
     end
   end
@@ -41,19 +41,19 @@ class LanguagesManifestsTests < LanguagesTestBase
     @language = language_name
     assert manifest_file_exists?
     assert required_keys_exist?
-    assert !unknown_keys_exist?
-    assert !duplicate_visible_filenames?
+    refute unknown_keys_exist?
+    refute duplicate_visible_filenames?
     assert progress_regexs_valid?
     assert display_name_valid?
-    assert !filename_extension_starts_with_dot?
+    refute filename_extension_starts_with_dot?
     assert cyberdojo_sh_exists?
     assert cyberdojo_sh_has_execute_permission?
     assert all_visible_files_exist?
     assert highlight_filenames_are_subset_of_visible_filenames?
     assert colour_method_for_unit_test_framework_output_exists?
-    assert !any_files_owner_is_root?
-    assert !any_files_group_is_root?
-    assert !any_file_is_unreadable?
+    refute any_files_owner_is_root?
+    refute any_files_group_is_root?
+    refute any_file_is_unreadable?
     assert dockerfile_exists?
     assert build_docker_container_exists?
     assert build_docker_container_starts_with_cyberdojo?
