@@ -9,10 +9,7 @@ class TestWithId
   end
 
   def finalize
-    proc { 
-      unseen = @args - @seen
-      warning("tests#{unseen} not found") if unseen != []  
-    }
+    proc { warning("tests#{unseen_ids} not found") if unseen_ids != [] }
   end
   
   def [](id)
@@ -22,12 +19,9 @@ class TestWithId
   end
 
   def test(id=@id,name,&block)
-    if @args==[]
-      @klass.instance_eval { define_method("test__#{name}".to_sym, &block) }
-    end 
-    if @args.include?(id)
+    if @args==[] || @args.include?(id)
       @seen << id
-      @klass.instance_eval { define_method("test__#{name}".to_sym, &block) }
+      @klass.instance_eval { define_method("test__[#{id}]__#{name}".to_sym, &block) }
     end 
   end
 
@@ -42,6 +36,10 @@ private
     puts '>' * 35
     puts message
     puts '>' * 35
+  end
+
+  def unseen_ids
+    @args - @seen
   end
 
 end
