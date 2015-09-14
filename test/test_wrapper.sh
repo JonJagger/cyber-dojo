@@ -8,16 +8,25 @@ if [ "$#" -eq 0 ]; then
   echo
   echo '  1. running a single test'
   echo "     $ cd $cyberDojoHome/test/app_model"
-  echo '     $ sudo -E -u www-data ./avatar_test.rb <ARGS>'
+  echo '     $ ./avatar_test.rb <ARGS>'
   echo
   echo '  2. running all the tests in one folder'
   echo "     $ cd $cyberDojoHome/app_model"
-  echo '     $ sudo -E -u www-data ./run_all.sh <ARGS>'
+  echo '     $ ./run_all.sh <ARGS>'
   echo
   echo '  3. running all the tests in all the folders'
   echo "     $ cd $cyberDojoHome"
-  echo '     $ sudo -E -u www-data ./run_all.sh <ARGS>'
+  echo '     $ ./run_all.sh <ARGS>'
   echo
+  exit
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# make sure this is being run as www-data
+
+if [ $(whoami) != 'www-data' ]; then
+  cmd="sudo -E -u www-data ${0} $*"
+  $cmd
   exit
 fi
 

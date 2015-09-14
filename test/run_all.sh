@@ -1,7 +1,5 @@
 #!/bin/bash
 
-.  ./../admin_scripts/setup_docker_volume_mount_runner_env_vars.sh
-
 ../languages/refresh_cache.rb
 ./lib/make_disk_stub_cache.rb
 
@@ -29,4 +27,4 @@ done
 echo
 echo
 
-./print_coverage_summary.rb ${modules[*]} | tee test-summary.txt
+sudo -E -u www-data ./print_coverage_summary.rb ${modules[*]} | tee test-summary.txt
