@@ -9,10 +9,10 @@ modules=(
   app_helpers 
   app_lib 
   app_models 
+  app_controllers 
 #  lib
 #  languages
 #  integration 
-  app_controllers 
 )
 
 echo

@@ -7,7 +7,8 @@ class AvatarTests < ModelTestBase
 
   include TimeNow
 
-  test 'path(avatar)' do
+  id['2ED22E'].test\
+  'path(avatar)' do
     kata = make_kata
     avatar = kata.start_avatar(Avatars.names)
     assert path_ends_in_slash?(avatar)
@@ -16,7 +17,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'attempting to create an Avatar with an invalid name raises RuntimeError' do
+  id['3D8638'].test\
+  'attempting to create an Avatar with an invalid name raises RuntimeError' do
     kata = katas[unique_id]
     invalid_name = 'mobilephone'
     refute Avatars.names.include?(invalid_name)
@@ -25,7 +27,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "avatar returns kata it was created with" do
+  id['4C9E81'].test\
+  'avatar returns kata it was created with' do
     kata = make_kata
     avatar = kata.start_avatar
     assert_equal kata, avatar.kata
@@ -33,7 +36,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "after avatar is created its sandbox contains each visible_file" do
+  id['50BE31'].test\
+  'after avatar is created its sandbox contains each visible_file' do
     kata = make_kata
     avatar = kata.start_avatar
     kata.language.visible_files.each do |filename,content|
@@ -43,8 +47,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
-  test 'avatar is not active? when it does not exist' do
+  id['0F5216'].test\
+  'avatar is not active? when it does not exist' do
     kata = katas[unique_id]
     lion = kata.avatars['lion']
     refute lion.exists?
@@ -53,7 +57,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'avatar is not active? when it has zero traffic-lights' do
+  id['7DD92F'].test\
+  'avatar is not active? when it has zero traffic-lights' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     assert_equal [ ], lion.lights
@@ -62,7 +67,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'avatar is active? when it has one traffic-light' do
+  id['BEABAB'].test\
+  'avatar is active? when it has one traffic-light' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     runner.stub_output('')
@@ -73,7 +79,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'exists? is true when dir exists and name is in Avatar.names' do
+  id['39CCCC'].test\
+  'exists? is true when dir exists and name is in Avatar.names' do
     kata = katas[unique_id]
     lion = kata.avatars['lion']
     refute lion.exists?
@@ -83,7 +90,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'after avatar is started its visible_files are:' +
+  id['F70D2B'].test\
+    'after avatar is started its visible_files are:' +
        ' 1. the language visible_files,' +
        ' 2. the exercse instructions,' +
        ' 3. empty output' do
@@ -102,7 +110,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'avatar creation saves' +
+  id['000667'].test\
+    'avatar creation saves' +
           ' each visible_file into sandbox/,' +
           ' and empty increments.json into avatar/' do
     kata = make_kata
@@ -115,7 +124,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'after test() output-file is saved in sandbox/' +
+  id['3FF0CA'].test\
+    'after test() output-file is saved in sandbox/' +
        ' and output is inserted into the visible_files' do
     kata = make_kata
     @avatar = kata.start_avatar
@@ -131,8 +141,9 @@ class AvatarTests < ModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'test() on master cyber-dojo.sh results in standard output' +
+  
+  id['BEB313'].test\
+    'test() on master cyber-dojo.sh results in standard output' +
        ' with no ALERT, and no modification to any cyber-dojo.sh' do
     kata = make_kata(unique_id, 'Java-JUnit')
     @avatar = kata.start_avatar
@@ -147,7 +158,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'test() on commented master cyber-dojo.sh results in standard output' +
+  id['C33111'].test\
+    'test() on commented master cyber-dojo.sh results in standard output' +
        ' with no ALERT, and no modification to any cyber-dojo.sh' do
     kata = make_kata(unique_id, 'Java-JUnit')
     @avatar = kata.start_avatar
@@ -164,7 +176,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'test() sees changed cyber-dojo.sh file and appends' +
+  id['C718B2'].test\
+    'test() sees changed cyber-dojo.sh file and appends' +
        ' info plus commented master version to cyber-dojo.sh' +
        ' and prepends an alert to the output. And it does all' +
        ' this only *once*' do
@@ -203,7 +216,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'test() does NOT append commented master version to cyber-dojo.sh' +
+  id['1659F8'].test\
+    'test() does NOT append commented master version to cyber-dojo.sh' +
        ' nor prepends an alert to the output when cyber-dojo.sh is' +
        ' stripped version of one-liner' do
     kata = make_kata(unique_id, 'C (gcc)-assert')
@@ -225,7 +239,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'test() saves changed makefile with leading spaces converted to tabs' +
+  id['D0E7FD'].test\
+    'test() saves changed makefile with leading spaces converted to tabs' +
        ' and these changes are made to the visible_files parameter too' +
        ' so they also occur in the manifest file' do
     kata = make_kata
@@ -241,7 +256,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'test() saves *new* makefile with leading spaces converted to tabs' +
+  id['B547AF'].test\
+    'test() saves *new* makefile with leading spaces converted to tabs' +
        ' and these changes are made to the visible_files parameter too' +
        ' so they also occur in the manifest file' do
     kata = make_kata
@@ -262,7 +278,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'test():delta[:changed] files are saved' do
+  id['37E925'].test\
+  'test():delta[:changed] files are saved' do
     kata = make_kata
     @avatar = kata.start_avatar
     code_filename = 'hiker.c'
@@ -280,7 +297,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'test():delta[:unchanged] files are not saved' do
+  id['83B749'].test\
+  'test():delta[:unchanged] files are not saved' do
     kata = make_kata
     avatar = kata.start_avatar
     assert avatar.visible_filenames.include? hiker_c
@@ -298,7 +316,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'test():delta[:new] files are saved and git added' do
+  id['8EF1A3'].test\
+  'test():delta[:new] files are saved and git added' do
     kata = make_kata
     @avatar = kata.start_avatar
     new_filename = 'ab.c'
@@ -317,7 +336,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "test():delta[:deleted] files are git rm'd" do
+  id['A66E09'].test\
+  "test():delta[:deleted] files are git rm'd" do
     kata = make_kata
     @avatar = kata.start_avatar
     runner.stub_output('')
@@ -331,7 +351,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'tag.diff' do
+  id['464F65'].test\
+  'tag.diff' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     fake_three_tests(lion)
@@ -381,7 +402,7 @@ class AvatarTests < ModelTestBase
     }
     assert_equal expected, actual
   end
-
+  
   #- - - - - - - - - - - - - - - - - - -
 
   def makefile_with_leading_tab
