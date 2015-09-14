@@ -60,10 +60,10 @@ module CyberDojo
     config.assets.version = '1.0'
 
     config.before_configuration do
-      cyber_dojo_root = '/var/www/cyber-dojo'
-      ENV['CYBER_DOJO_LANGUAGES_ROOT'] ||= "#{cyber_dojo_root}/languages"
-      ENV['CYBER_DOJO_EXERCISES_ROOT'] ||= "#{cyber_dojo_root}/exercises"
-      ENV['CYBER_DOJO_KATAS_ROOT']     ||= "#{cyber_dojo_root}/katas"
+      root_dir = '/var/www/cyber-dojo'
+      ENV['CYBER_DOJO_LANGUAGES_ROOT'] ||= "#{root_dir}/languages"
+      ENV['CYBER_DOJO_EXERCISES_ROOT'] ||= "#{root_dir}/exercises"
+      ENV['CYBER_DOJO_KATAS_ROOT']     ||= "#{root_dir}/katas"
       ENV['CYBER_DOJO_RUNNER_CLASS']   ||= 'DockerVolumeMountRunner'
       ENV['CYBER_DOJO_DISK_CLASS']     ||= 'HostDisk'
       ENV['CYBER_DOJO_GIT_CLASS']      ||= 'HostGit'
