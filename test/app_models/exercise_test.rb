@@ -15,7 +15,7 @@ class ExerciseTests < ModelTestBase
 
   test 'exists? is false if exercise does not exist' do
     exercise = exercises['wibble_XXX']
-    assert !exercise.exists?
+    refute exercise.exists?
   end
   
   #- - - - - - - - - - - - - - - - - - - - - -

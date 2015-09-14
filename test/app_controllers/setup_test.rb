@@ -50,7 +50,7 @@ class SetupControllerTest < ControllerTestBase
     assert_response :success
     assert /data-language\=\"C++/.match(html), 'C++'
     assert /data-language\=\"Asm/.match(html), 'Asm'
-    assert !/data-language\=\"Java/.match(html), 'Java'
+    refute /data-language\=\"Java/.match(html), 'Java'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -

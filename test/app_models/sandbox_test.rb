@@ -28,7 +28,7 @@ class SandboxTests < ModelTestBase
     kata = katas['45ED23A2F1']
     avatar = kata.avatars['hippo']
     sandbox = avatar.sandbox
-    assert !sandbox.dir.exists?
+    refute sandbox.dir.exists?
   end
 
 end

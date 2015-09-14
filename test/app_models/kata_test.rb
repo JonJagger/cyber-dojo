@@ -49,7 +49,7 @@ class KataTests < ModelTestBase
   test 'exists? is false before dir is made' do
     id = unique_id
     kata = katas[id]        
-    assert !kata.exists?
+    refute kata.exists?
     kata.dir.make
     assert kata.exists?
   end
@@ -62,9 +62,9 @@ class KataTests < ModelTestBase
        ' and its age is zero' do
     id = unique_id
     kata = katas[id]             
-    assert !kata.exists?
-    assert !kata.active?
-    assert !kata.finished?
+    refute kata.exists?
+    refute kata.active?
+    refute kata.finished?
     assert_equal 0, kata.age
   end
 
@@ -76,8 +76,8 @@ class KataTests < ModelTestBase
        ' and its age is zero' do
     kata = make_kata
     assert kata.exists?
-    assert !kata.active?
-    assert !kata.finished?
+    refute kata.active?
+    refute kata.finished?
     assert_equal 0, kata.age
   end
 
@@ -126,8 +126,8 @@ class KataTests < ModelTestBase
     kata = make_kata
     kata.start_avatar(['hippo'])
     kata.start_avatar(['lion'])
-    assert !kata.active?
-    assert !kata.finished?
+    refute kata.active?
+    refute kata.finished?
     assert_equal 0, kata.age
   end
 
@@ -160,16 +160,16 @@ class KataTests < ModelTestBase
     assert kata.active?
     now = first['time']
     now[seconds=5] += 17
-    assert !kata.finished?(now), "!kata.finished?(one-second-old)"
+    refute kata.finished?(now), "!kata.finished?(one-second-old)"
     assert_equal 17, kata.age(now)
 
     now = first['time']
     now[minutes=4] += 1
-    assert !kata.finished?(now), "!kata.finished?(one-minute-old)"
+    refute kata.finished?(now), "!kata.finished?(one-minute-old)"
     
     now = first['time']
     now[hours=3] += 1
-    assert !kata.finished?(now), "!kata.finished?(one-hour-old)"
+    refute kata.finished?(now), "!kata.finished?(one-hour-old)"
     
     now = first['time']
     now[days=2] += 1
@@ -230,7 +230,7 @@ class KataTests < ModelTestBase
     kata = make_kata
     hippo = kata.start_avatar(['hippo'])
     avatar = kata.start_avatar(['hippo'])
-    assert_equal nil, avatar
+    assert_nil avatar
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

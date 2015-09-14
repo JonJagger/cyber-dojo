@@ -34,9 +34,9 @@ class LanguageTests < ModelTestBase
   test 'exists? is true only when dir and manifest exist' do
     set_disk_class('DiskFake')
     @language = languages['Erlang']
-    assert !@language.exists?, '1'
+    refute @language.exists?, '1'
     @language.dir.make
-    assert !@language.exists?, '2'
+    refute @language.exists?, '2'
     spy_manifest({})
     assert @language.exists?, '3'
   end
@@ -264,7 +264,7 @@ class LanguageTests < ModelTestBase
     runner.stub_runnable(false)
     ruby = languages['Ruby-TestUnit']
     ruby.dir.write(manifest_filename, { }) # this line has no effect
-    assert !ruby.runnable?
+    refute ruby.runnable?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
