@@ -1,42 +1,26 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'controller_test_base'
-
-# DiskFakeAdapter ensures multiple threads all use the same DiskFake object.
-# Is there a way to force rails to use a single thread?
-
-class DiskFakeAdapter
-
-  def method_missing(sym, *args, &block)
-    @@disk ||= DiskFake.new
-    @@disk.send(sym, *args, &block)
-  end
-
-  def self.reset
-    @@disk = nil
-  end
-
-end
-
-# - - - - - - - - - - - - - - - - - - - - - -
+require_relative './controller_test_base'
+require_relative './RailsDiskFakeAdapter'
 
 class SetupControllerTest < ControllerTestBase
 
   def setup
     super
-    set_disk_class('DiskFakeAdapter')
+    set_disk_class('RailsDiskFakeAdapter')
     setup_exercises_cache
     setup_languages_cache
   end
 
   def teardown
     super
-    DiskFakeAdapter.reset
+    RailsDiskFakeAdapter.reset
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'setup page uses cached exercises' do
+  id['BB9967'].test\
+  'setup page uses cached exercises' do
     get 'setup/show'
     assert_response :success
     assert /data-exercise\=\"#{print_diamond}/.match(html), print_diamond
@@ -45,7 +29,8 @@ class SetupControllerTest < ControllerTestBase
   
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'setup page uses cached languages' do
+  id['9F4020'].test\
+  'setup page uses cached languages' do
     get 'setup/show'
     assert_response :success
     assert /data-language\=\"C++/.match(html), 'C++'
@@ -55,7 +40,8 @@ class SetupControllerTest < ControllerTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'setup/show chooses language and exercise of kata ' +
+  id['D79BA3'].test\
+    'setup/show chooses language and exercise of kata ' +
        'whose 10-char id is passed in URL ' +
        '(to encourage repetition)' do
     setup_show(10)    
@@ -63,13 +49,14 @@ class SetupControllerTest < ControllerTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'setup/show chooses language and exercise of kata ' +
+  id['82562A'].test\
+    'setup/show chooses language and exercise of kata ' +
        'whose 6-char id is passed in URL ' +
        '(to encourage repetition) by using completion' do
     setup_show(6)    
   end
   
-  # - - - - - - - - - - - - - - - - - - - - - -
+private
   
   def setup_show(n)
     set_runner_class('RunnerStubTrue')

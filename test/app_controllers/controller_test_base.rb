@@ -1,6 +1,5 @@
 
 ENV['RAILS_ENV'] = 'test'
-#ENV['CYBER_DOJO_RUNNER_CLASS_NAME'] = 'DummyTestRunner'
 
 gem 'minitest'
 require 'minitest/autorun'
@@ -12,6 +11,7 @@ require_relative root + '/test/all'
 require_relative root + '/config/environment'
 require_relative root + '/test/TestDomainHelpers'
 require_relative root + '/test/TestExternalHelpers'
+require_relative root + '/test/TestWithId'
   
 class ControllerTestBase < ActionDispatch::IntegrationTest
 
@@ -20,6 +20,10 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   
   def self.test(name, &block)
     define_method("test_#{name}".to_sym, &block)
+  end
+
+  def self.id
+    @@tests ||= TestWithId.new(self)
   end
 
   def setup
