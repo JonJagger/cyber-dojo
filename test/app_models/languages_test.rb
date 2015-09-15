@@ -4,7 +4,8 @@ require_relative 'model_test_base'
 
 class LanguagesTests < ModelTestBase
 
-  test 'path is set from ENV' do
+  test '743810',
+  'path is set from ENV' do
     path = 'end_with_slash/'
     set_languages_root(path)  
     assert_equal path, languages.path
@@ -14,7 +15,8 @@ class LanguagesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test 'path is forced to end in a slash' do
+  test '8D3BB5',
+  'path is forced to end in a slash' do
     path = 'unslashed'
     set_languages_root(path)  
     assert_equal path+'/', languages.path
@@ -24,7 +26,8 @@ class LanguagesTests < ModelTestBase
   
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test 'refresh_cache requires manifest.json for each file to read display_name from' do
+  test '7D53C5',
+  'refresh_cache requires manifest.json for each file to read display_name from' do
     set_disk_class('DiskFake')
     runey = languages['R-runey']
     runey.dir.write('manifest.json',
@@ -42,14 +45,16 @@ class LanguagesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test 'no languages when cache is empty' do
+  test '15BD19',
+  'no languages when cache is empty' do
     languages.dir.write('cache.json', cache={})
     assert_equal [], languages.to_a
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test 'languages from cache when cache is not empty' do
+  test '09A1D4',
+  'languages from cache when cache is not empty' do
     cache = {
       'Asm, assert' => {
         :dir_name => 'Asm', 
@@ -76,7 +81,8 @@ class LanguagesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test 'languages[X] is language named X' do
+  test '69110F',
+  'languages[X] is language named X' do
     ['C (gcc)-assert','C#-NUnit'].each do |name|
       assert_equal name, languages[name].name
     end
@@ -84,7 +90,8 @@ class LanguagesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test 'name is translated when katas manifest.json language entry has been renamed' do  
+  test 'C61BBE',
+  'name is translated when katas manifest.json language entry has been renamed' do
     historical_language_names do |old_name|
       new_name = languages.renamed(old_name)
       assert exists?(*new_name), old_name
