@@ -3,6 +3,7 @@ ENV['RAILS_ENV'] = 'test'
 
 gem 'minitest'
 require 'minitest/autorun'
+require 'digest/md5'
 
 root = '../..'
 
@@ -17,30 +18,35 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
   include TestDomainHelpers
   include TestExternalHelpers
 
-  # TODO: duplicated in test/test_base.rb  - capture duplication in abstraction
+  # TODO: duplicated in test/test_base.rb
+  #       capture duplication in abstraction
 
-  def self.test(id='343434',name,&block)
+  def self.test(id = hex_hash(name), name, &block)
     if @@args==[] || @@args.include?(id)
       @@seen << id
-      define_method("test__[#{id}]__#{name}".to_sym, &block)
+      define_method("test_ '#{id}',\n#{name}\n".to_sym, &block)
     end
   end
 
-private
+  def self.hex_hash(name)
+    Digest::MD5.hexdigest(name).upcase[0..5]
+  end
 
   def self.dtor
-    proc { warn_unseed_ids if unseen_ids != [] }
+    proc {
+      if unseen_ids != []
+        line = 'X' * 35
+       puts
+        puts line
+        puts 'the following test ids were *not* found'
+        puts "#{unseen_ids}"
+        puts line
+        puts
+      end
+    }
   end
 
   ObjectSpace.define_finalizer( self, dtor() )
-
-  def self.warn_unseen_ids
-    puts '>' * 35
-    puts 'the following test ids were *not* found'
-    puts "#{unseen_ids}"
-    puts message
-    puts '>' * 35
-  end
 
   def self.unseen_ids
     @@args - @@seen
