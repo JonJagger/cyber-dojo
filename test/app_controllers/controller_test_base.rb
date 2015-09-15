@@ -3,7 +3,6 @@ ENV['RAILS_ENV'] = 'test'
 
 gem 'minitest'
 require 'minitest/autorun'
-require 'digest/md5'
 
 root = '../..'
 
@@ -12,50 +11,13 @@ require_relative root + '/test/all'
 require_relative root + '/config/environment'
 require_relative root + '/test/TestDomainHelpers'
 require_relative root + '/test/TestExternalHelpers'
+require_relative root + '/test/TestHexIdHelpers'
   
 class ControllerTestBase < ActionDispatch::IntegrationTest
 
   include TestDomainHelpers
   include TestExternalHelpers
-
-  # TODO: duplicated in test/test_base.rb
-  #       capture duplication in abstraction
-
-  def self.test(id = hex_hash(name), name, &block)
-    if @@args==[] || @@args.include?(id)
-      @@seen << id
-      define_method("test_ '#{id}',\n#{name}\n".to_sym, &block)
-    end
-  end
-
-  def self.hex_hash(name)
-    Digest::MD5.hexdigest(name).upcase[0..5]
-  end
-
-  def self.dtor
-    proc {
-      if unseen_ids != []
-        line = 'X' * 35
-       puts
-        puts line
-        puts 'the following test ids were *not* found'
-        puts "#{unseen_ids}"
-        puts line
-        puts
-      end
-    }
-  end
-
-  ObjectSpace.define_finalizer( self, dtor() )
-
-  def self.unseen_ids
-    @@args - @@seen
-  end
-
-  @@args = ARGV.sort.uniq - ['--']
-  @@seen = []
-
-public
+  include TestHexIdHelpers
 
   def setup
     super

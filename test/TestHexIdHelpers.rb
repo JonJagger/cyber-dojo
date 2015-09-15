@@ -1,0 +1,40 @@
+require 'digest/md5'
+
+module TestHexIdHelpers # mix-in
+  
+  def self.included(base)
+    base.extend(ClassMethods)
+  end
+  
+  module ClassMethods
+
+    @@args = ARGV.sort.uniq - ['--']
+    @@seen = []
+
+    def test(id = hex_hash(name), name, &block)
+     if @@args==[] || @@args.include?(id)
+        @@seen << id
+        define_method("test_ '#{id}',\n #{name}\n".to_sym, &block)
+      end
+    end
+
+    def hex_hash(name)
+      Digest::MD5.hexdigest(name).upcase[0..5]
+    end
+
+    ObjectSpace.define_finalizer(self, proc {
+      unseen_ids = @@args - @@seen
+      if unseen_ids != []
+        line = 'X' * 35
+        puts
+        puts line
+        puts 'the following test ids were *not* found'
+        puts "#{unseen_ids}"
+        puts line
+        puts
+      end
+    })
+
+  end
+
+end
