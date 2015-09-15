@@ -11,12 +11,13 @@ require_relative root + '/test/all'
 require_relative root + '/config/environment'
 require_relative root + '/test/TestDomainHelpers'
 require_relative root + '/test/TestExternalHelpers'
-require_relative root + '/test/TestWithId'
   
 class ControllerTestBase < ActionDispatch::IntegrationTest
 
   include TestDomainHelpers
   include TestExternalHelpers
+
+  # TODO: duplicated in test/test_base.rb  - capture duplication in abstraction
 
   def self.test(id='343434',name,&block)
     if @@args==[] || @@args.include?(id)
@@ -24,8 +25,31 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
       define_method("test__[#{id}]__#{name}".to_sym, &block)
     end
   end
+
+private
+
+  def self.dtor
+    proc { warn_unseed_ids if unseen_ids != [] }
+  end
+
+  ObjectSpace.define_finalizer( self, dtor() )
+
+  def self.warn_unseen_ids
+    puts '>' * 35
+    puts 'the following test ids were *not* found'
+    puts "#{unseen_ids}"
+    puts message
+    puts '>' * 35
+  end
+
+  def self.unseen_ids
+    @@args - @@seen
+  end
+
   @@args = ARGV.sort.uniq - ['--']
   @@seen = []
+
+public
 
   def setup
     super

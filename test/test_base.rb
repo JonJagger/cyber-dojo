@@ -4,7 +4,6 @@ require 'minitest/autorun'
 
 require_relative './TestDomainHelpers'
 require_relative './TestExternalHelpers'
-require_relative './TestWithId'
 
 class TestBase < MiniTest::Test
   
@@ -20,18 +19,21 @@ class TestBase < MiniTest::Test
 
 private
 
-  # TODO: somehow get this called in class.finalizer
-  def finalize
-    proc { warning("tests#{unseen_ids} not found") if unseen_ids != [] }
+  def self.dtor
+    proc { warn_unseed_ids if unseen_ids != [] }
   end
 
-  def warning(message)
+  ObjectSpace.define_finalizer( self, dtor() )
+
+  def self.warn_unseen_ids
     puts '>' * 35
+    puts 'the following test ids were *not* found'
+    puts "#{unseen_ids}"
     puts message
     puts '>' * 35
   end
 
-  def unseen_ids
+  def self.unseen_ids
     @@args - @@seen
   end
 
