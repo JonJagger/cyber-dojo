@@ -11,10 +11,20 @@ module TestHexIdHelpers # mix-in
     @@args = ARGV.sort.uniq - ['--']
     @@seen = []
 
-    def test(id = hex_hash(name), name, &block)
-     if @@args==[] || @@args.include?(id)
-        @@seen << id
-        define_method("test_ '#{id}',\n #{name}\n".to_sym, &block)
+    def test(id = nil, name, &block)
+      id ||= hex_hash(name)
+      if @@args==[] || @@args.include?(id)
+        if @@seen.include?(id)
+          line = 'X' * 35
+          puts
+          puts line
+          puts "test with id #{id} has already been seen"
+          puts line
+          puts
+        else
+          @@seen << id
+          define_method("test_ '#{id}',\n #{name}\n".to_sym, &block)
+        end
       end
     end
 

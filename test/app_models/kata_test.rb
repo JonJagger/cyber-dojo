@@ -4,7 +4,8 @@ require_relative 'model_test_base'
 
 class KataTests < ModelTestBase
 
-  test 'attempting to create a Kata with an invalid id raises a RuntimeError' do
+  test 'F3B8B1',
+  'attempting to create a Kata with an invalid id raises a RuntimeError' do
     bad_ids = [
       nil,          # not string
       Object.new,   # not string
@@ -20,7 +21,8 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'id reads back as set' do
+  test '677A57',
+  'id reads back as set' do
     id = unique_id
     kata = katas[id]    
     assert_equal id, kata.id
@@ -28,7 +30,8 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'path format basics' do
+  test '6F3999',
+  'path format basics' do
     id = unique_id
     kata = katas[id]        
     assert path_ends_in_slash?(kata)
@@ -37,7 +40,8 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'path is split ala git' do
+  test '1E4B7A',
+  'path is split ala git' do
     id = unique_id
     kata = katas[id]        
     assert kata.path.include?(kata.id[0..1])
@@ -46,7 +50,8 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test 'exists? is false before dir is made' do
+  test 'C11AFC',
+  'exists? is false before dir is made' do
     id = unique_id
     kata = katas[id]        
     refute kata.exists?
@@ -56,7 +61,8 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when kata does not exist' +
+  test '8EA395',
+    'when kata does not exist' +
        ' then it is not active' +
        ' and it has not finished' +
        ' and its age is zero' do
@@ -70,7 +76,8 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when kata exists but has no avatars' +
+  test '66C9AE',
+    'when kata exists but has no avatars' +
        ' then it is not active ' +
        ' and it has not finished ' +
        ' and its age is zero' do
@@ -83,7 +90,8 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test 'start_avatar puts started avatars name into katas started_avatars.json file' do
+  test '9ECF8D',
+  'start_avatar puts started avatars name into katas started_avatars.json file' do
     kata = make_kata
     kata.start_avatar(['hippo'])
     started = JSON.parse(kata.read('started_avatars.json'))
@@ -95,7 +103,8 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'start_avatar on old dojo that as no started_avatars.json file' +
+  test '9A1C97',
+    'start_avatar on old dojo that as no started_avatars.json file' +
        ' reverts to doing dir.exists? for each avatar' do
    kata = make_kata
    animals = ['lion','hippo','cheetah'].sort
@@ -119,7 +128,8 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when kata exists but all its avatars have 0 traffic-lights' +
+  test 'B9340E',
+    'when kata exists but all its avatars have 0 traffic-lights' +
        ' then it is not active ' +
        ' and it has not finished' +
        ' and its age is zero' do
@@ -133,7 +143,8 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test 'when kata exists and at least one avatar has 1 or more traffic-lights' +
+  test 'F2CDD3',
+    'when kata exists and at least one avatar has 1 or more traffic-lights' +
        ' then kata is active ' +
        ' and age is from earliest traffic-light to now' +
        ' and finishes when age >= 1 day' do
@@ -179,7 +190,8 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test 'make_kata with default-now uses-time-now' do
+  test '78A205',
+  'make_kata with default-now uses-time-now' do
     now = Time.now
     kata = make_kata
     created = Time.mktime(*kata.created)
@@ -190,14 +202,16 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'make_kata saves manifest in kata dir' do
+  test 'CE9083',
+  'make_kata saves manifest in kata dir' do
     kata = make_kata
     assert kata.dir.exists?('manifest.json')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'kata.id, kata.created, kata.language_name, ' +
+  test '6AF51F',
+    'kata.id, kata.created, kata.language_name,' +
        'kata.exercise_name, kata.visible_files ' +
        'all read from manifest' do
     language = languages['Java-JUnit']
@@ -215,7 +229,8 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'start_avatar with specific avatar-name' +
+  test '139C43',
+    'start_avatar with specific avatar-name' +
        ' (useful for testing) succeeds if avatar has not yet started' do
     kata = make_kata
     hippo = kata.start_avatar(['hippo'])
@@ -225,7 +240,8 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'start_avatar with specific avatar-name' +
+  test 'A653FA',
+    'start_avatar with specific avatar-name' +
        ' (useful for testing) fails if avatar has already started' do
     kata = make_kata
     hippo = kata.start_avatar(['hippo'])
@@ -235,7 +251,8 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
-  test 'start_avatar with specific avatar-names arg is used ' +
+  test '4C66C8',
+    'start_avatar with specific avatar-names arg is used' +
        '(useful for testing)' do
     kata = make_kata
     names = [ 'panda', 'lion', 'cheetah' ]
@@ -251,7 +268,8 @@ class KataTests < ModelTestBase
   end
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test 'start_avatar succeeds once for each avatar name then fails' do
+  test '08141A',
+  'start_avatar succeeds once for each avatar name then fails' do
     kata = make_kata
     created = [ ]
     Avatars.names.length.times do |n|      
