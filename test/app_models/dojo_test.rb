@@ -4,40 +4,40 @@ require_relative 'model_test_base'
 
 class DojoTests < ModelTestBase
 
-  id['209EA1'].test\
+  test '209EA1',
   'exercises' do
     path = 'fake_exercises_path/'
     set_exercises_root(path)
     assert_equal path, exercises.path
   end
 
-  id['27A597'].test\
+  test '27A597',
   'languages' do
     path = 'fake_languages_path/'
     set_languages_root(path)    
     assert_equal path, languages.path
   end
 
-  id['B6CC06'].test\
+  test 'B6CC06',
   'katas' do
     path = 'fake_katas_path/'
     set_katas_root(path)    
     assert_equal path, katas.path
   end
 
-  id['055B3C'].test\
+  test '055B3C',
   'runner' do
     set_runner_class(name = 'RunnerStub')
     assert_equal name, runner.class.name
   end
   
-  id['B9E496'].test\
+  test 'B9E496',
   'disk' do
     set_disk_class(name = 'DiskStub')
     assert_equal name, disk.class.name
   end
     
-  id['8874E9'].test\
+  test '8874E9',
   'git' do
     set_git_class(name = 'GitSpy')
     assert_equal name, git.class.name

@@ -17,14 +17,15 @@ class ControllerTestBase < ActionDispatch::IntegrationTest
 
   include TestDomainHelpers
   include TestExternalHelpers
-  
-  def self.test(name, &block)
-    define_method("test_#{name}".to_sym, &block)
-  end
 
-  def self.id
-    @@tests ||= TestWithId.new(self)
+  def self.test(id='343434',name,&block)
+    if @@args==[] || @@args.include?(id)
+      @@seen << id
+      define_method("test__[#{id}]__#{name}".to_sym, &block)
+    end
   end
+  @@args = ARGV.sort.uniq - ['--']
+  @@seen = []
 
   def setup
     super

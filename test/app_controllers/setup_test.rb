@@ -19,7 +19,7 @@ class SetupControllerTest < ControllerTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  id['BB9967'].test\
+  test 'BB9967',
   'setup page uses cached exercises' do
     get 'setup/show'
     assert_response :success
@@ -29,7 +29,7 @@ class SetupControllerTest < ControllerTestBase
   
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  id['9F4020'].test\
+  test '9F4020',
   'setup page uses cached languages' do
     get 'setup/show'
     assert_response :success
@@ -40,7 +40,7 @@ class SetupControllerTest < ControllerTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  id['D79BA3'].test\
+  test 'D79BA3',
     'setup/show chooses language and exercise of kata ' +
        'whose 10-char id is passed in URL ' +
        '(to encourage repetition)' do
@@ -49,7 +49,7 @@ class SetupControllerTest < ControllerTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  id['82562A'].test\
+  test '82562A',
     'setup/show chooses language and exercise of kata ' +
        'whose 6-char id is passed in URL ' +
        '(to encourage repetition) by using completion' do

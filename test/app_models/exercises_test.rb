@@ -4,7 +4,7 @@ require_relative 'model_test_base'
 
 class ExercisesTests < ModelTestBase
 
-  id['14AD4C'].test\
+  test '14AD4C',
   'path is set from ENV' do
     path = 'end_with_slash/'
     set_exercises_root(path)
@@ -15,7 +15,7 @@ class ExercisesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  id['B09C99'].test\
+  test 'B09C99',
   'path is forced to end in a slash' do
     path = 'unslashed'
     set_exercises_root(path)
@@ -26,7 +26,7 @@ class ExercisesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  id['F027CB'].test\
+  test 'F027CB',
   'refresh_cache' do
     set_disk_class('DiskFake')
     disk[exercises.path + '100 doors'].write('instructions', 'imagine there are 100 doors...')    
@@ -38,7 +38,7 @@ class ExercisesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  id['3E277A'].test\
+  test '3E277A',
   'no exercises when cache is empty' do
     set_disk_class('DiskFake')
     exercises.dir.write('cache.json', cache={})    
@@ -47,7 +47,7 @@ class ExercisesTests < ModelTestBase
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  id['52110A'].test\
+  test '52110A',
   'execises from cache when cache is not empty' do
     cache = {
       '100 doors' => {

@@ -16,40 +16,40 @@ class DeltaMakerTests < ModelTestBase
     refute @maker.now.keys.include?(@new_filename)
   end
 
-  id['A63CD3'].test\
+  test 'A63CD3',
   'new_file(filename) raises RuntimeError if filename not new' do
     assert_raises(RuntimeError) { @maker.new_file(@existing_filename, '')}
   end
 
-  id['2E2849'].test\
+  test '2E2849',
   'new_file(filename) is then not new' do
     @maker.new_file(@new_filename, content='any')    
     assert_raises(RuntimeError) { @maker.new_file(@new_filename, '')}
   end
     
-  id['E9D907'].test\
+  test 'E9D907',
   'change_file(filename) raises RuntimeError if filename new' do
     assert_raises(RuntimeError) { @maker.change_file(@new_filename, '') }
   end
   
-  id['507D76'].test\
+  test '507D76',
   'change_file(filename) raises RuntimeError if content unchanged' do
     content = @maker.now[@existing_filename]
     assert_raises(RuntimeError) { @maker.change_file(@existing_filename,content) }
   end
 
-  id['F7F137'].test\
+  test 'F7F137',
   'delete_file(filename) raises RuntimeError if filename new' do
     assert_raises(RuntimeError) { @maker.delete_file(@new_filename) }
   end
   
-  id['B839BC'].test\
+  test 'B839BC',
   'delete_file(filename) is then not present' do
     @maker.delete_file(@existing_filename)    
     assert_raises(RuntimeError) { @maker.delete_file(@existing_filename)}
   end
   
-  id['6385D8'].test\
+  test '6385D8',
     'new_file(filename) succeeds if filename is new' +
        ', adds filename to visible_files' +
        ', delta[:new] includes filename' do
@@ -61,7 +61,7 @@ class DeltaMakerTests < ModelTestBase
     assert delta[:new].include?(@new_filename)
   end
 
-  id['AE99D7'].test\
+  test 'AE99D7',
     'change_file(filename) succeeds if filename is not new and content is new' +
        ", updates filename's content in visible_files" +
        ', delta[:changed] includes filename' do
@@ -73,7 +73,7 @@ class DeltaMakerTests < ModelTestBase
     assert delta[:changed].include?(@existing_filename)
   end
 
-  id['439B76'].test\
+  test '439B76',
     'delete_file(filename) succeeds if filename is not new' +
        ', removes filename from visible_files' +
        ', delta[:deleted] includes filename' do

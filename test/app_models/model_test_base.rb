@@ -27,5 +27,5 @@ class ModelTestBase < TestBase
     doubled_separator = '/' * 2
     object.path.scan(doubled_separator).length === 0
   end
-  
+
 end

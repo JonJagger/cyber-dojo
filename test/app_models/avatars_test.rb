@@ -4,14 +4,14 @@ require_relative 'model_test_base'
 
 class AvatarsTests < ModelTestBase
 
-  id['631149'].test\
+  test '631149',
   'there are 16 avatar names' do
     assert_equal 16, Avatars.names.length
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  id['E7A60F'].test\
+  test 'E7A60F',
   'avatars names all begin with a different letter' do
     first_letters = Avatars.names.collect{|name| name[0]}.uniq
     assert_equal first_letters.length, Avatars.names.length
@@ -19,7 +19,7 @@ class AvatarsTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  id['B6F12F'].test\
+  test 'B6F12F',
   'avatars.each is [] when empty' do
     kata = make_kata
     assert_equal [], kata.avatars.to_a
@@ -27,7 +27,7 @@ class AvatarsTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  id['B85F79'].test\
+  test 'B85F79',
   'avatars returns all avatars started in the kata' do
     kata = make_kata
     kata.start_avatar([cheetah])
@@ -37,7 +37,7 @@ class AvatarsTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
   
-  id['B11555'].test\
+  test 'B11555',
   'avatars.map works' do
     kata = make_kata
     kata.start_avatar([cheetah])
@@ -48,7 +48,7 @@ class AvatarsTests < ModelTestBase
     
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  id['1F9350'].test\
+  test '1F9350',
   'katas[id].avatars returns all avatars started in the kata with that id' do
     kata = make_kata
     kata.start_avatar([lion])
@@ -60,7 +60,7 @@ class AvatarsTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  id['6A074D'].test\
+  test '6A074D',
   'katas[id].avatars[panda] finds the panda' do
     kata = make_kata
     kata.start_avatar([panda])
