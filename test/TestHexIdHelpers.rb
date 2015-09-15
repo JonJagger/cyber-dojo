@@ -12,7 +12,7 @@ module TestHexIdHelpers # mix-in
     @@seen = []
 
     def test(id = nil, name, &block)
-      id ||= hex_hash(name)
+      id ||= Digest::MD5.hexdigest(name).upcase[0..5]
       if @@args==[] || @@args.include?(id)
         if @@seen.include?(id)
           line = 'X' * 35
@@ -26,10 +26,6 @@ module TestHexIdHelpers # mix-in
           define_method("test_ '#{id}',\n #{name}\n".to_sym, &block)
         end
       end
-    end
-
-    def hex_hash(name)
-      Digest::MD5.hexdigest(name).upcase[0..5]
     end
 
     ObjectSpace.define_finalizer(self, proc {
