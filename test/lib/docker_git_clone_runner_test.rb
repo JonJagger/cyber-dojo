@@ -1,6 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'lib_test_base'
+require_relative 'LibTestBase'
 require_relative 'DockerTestHelpers'
 
 class DockerGitCloneRunnerTests < LibTestBase
@@ -18,14 +18,19 @@ class DockerGitCloneRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'initialize() raises RuntimeError when docker is not installed' do
+  def self.class_name
+    # test id defaults to name that does not include class name
+    'DockerGitCloneRunner'
+  end
+  
+  test "#{class_name}.initialize() raises RuntimeError when docker is not installed" do
     stub_docker_not_installed
     assert_raises(RuntimeError) { make_docker_runner }
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'initialize() uses [docker info] run as [sudo -u cyber-dojo]' do
+  test "#{class_name}.initialize() uses [docker info] run as [sudo -u cyber-dojo]" do
     stub_docker_installed
     make_docker_runner
     assert_equal sudoi('docker info'), @bash.spied[0]
@@ -60,7 +65,7 @@ class DockerGitCloneRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'run() completes and does not timeout - exact bash cmd interaction' do
+  test "#{class_name}.run() completes and does not timeout - exact bash cmd interaction" do
     stub_docker_installed
     make_docker_runner
     stub_docker_run(completes)

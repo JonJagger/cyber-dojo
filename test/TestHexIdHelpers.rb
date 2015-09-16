@@ -19,6 +19,7 @@ module TestHexIdHelpers # mix-in
           puts
           puts line
           puts "test with id #{id} has already been seen"
+          puts "#{name}"
           puts line
           puts
         else
