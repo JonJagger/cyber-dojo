@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative 'controller_test_base'
+require_relative 'app_controller_test_base'
 
-class ForkerControllerTest < ControllerTestBase
+class ForkerControllerTest < AppControllerTestBase
 
   test 'when id is invalid ' +
        'then fork fails ' +

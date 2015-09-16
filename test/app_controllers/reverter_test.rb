@@ -1,6 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'controller_test_base'
+require_relative 'app_controller_test_base'
 require 'digest/md5'
 
 class ParamsMaker
@@ -74,7 +74,7 @@ end
 
 # ===============================================================
 
-class ReverterControllerTest  < ControllerTestBase
+class ReverterControllerTest  < AppControllerTestBase
 
   test 'revert' do
     set_runner_class('RunnerStubAdapter')

@@ -1,9 +1,9 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './controller_test_base'
+require_relative './app_controller_test_base'
 require_relative './RailsDiskFakeAdapter'
 
-class SetupControllerTest < ControllerTestBase
+class SetupControllerTest < AppControllerTestBase
 
   def setup
     super

@@ -1,5 +1,5 @@
 
-ENV['RAILS_ENV'] = 'test'
+ENV['RAILS_ENV'] = 'test' # ????
 
 gem 'minitest'
 require 'minitest/autorun'
@@ -13,7 +13,7 @@ require_relative root + '/test/TestDomainHelpers'
 require_relative root + '/test/TestExternalHelpers'
 require_relative root + '/test/TestHexIdHelpers'
   
-class ControllerTestBase < ActionDispatch::IntegrationTest
+class AppControllerTestBase < ActionDispatch::IntegrationTest
 
   include TestDomainHelpers
   include TestExternalHelpers

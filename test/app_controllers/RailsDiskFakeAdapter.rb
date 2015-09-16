@@ -1,6 +1,4 @@
 
-require_relative 'controller_test_base'
-
 # Ensures multiple threads all use the same DiskFake object.
 # Is there a way to coax rails into using a single thread?
 

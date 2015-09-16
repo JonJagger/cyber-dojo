@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'controller_test_base'
+require_relative 'app_controller_test_base'
 
-class DashboardControllerTest < ControllerTestBase
+class DashboardControllerTest < AppControllerTestBase
 
   def setup
     super

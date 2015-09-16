@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'controller_test_base'
+require_relative 'app_controller_test_base'
 
-class TipperControllerTest < ControllerTestBase
+class TipperControllerTest < AppControllerTestBase
 
   test 'traffic_light_tip' do
     @id = create_kata    

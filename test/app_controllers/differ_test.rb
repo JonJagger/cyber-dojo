@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'controller_test_base'
+require_relative 'app_controller_test_base'
 
-class DifferControllerTest < ControllerTestBase
+class DifferControllerTest < AppControllerTestBase
 
   test 'no lines different in any files between successive tags' do
     @id = create_kata('C++, assert')

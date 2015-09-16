@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative 'controller_test_base'
+require_relative 'app_controller_test_base'
 
-class ExceptionControllerTests < ControllerTestBase
+class ExceptionControllerTests < AppControllerTestBase
 
   def setup
     @consider = Rails.application.config.consider_all_requests_local

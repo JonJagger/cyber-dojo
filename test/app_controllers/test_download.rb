@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative 'controller_test_base'
+require_relative 'app_controller_test_base'
 
-class DownloadControllerTest < ControllerTestBase
+class DownloadControllerTest < AppControllerTestBase
 
 =begin
   test 'downloaded zip of empty dojo with no animals yet ' +

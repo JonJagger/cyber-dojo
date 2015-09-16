@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'controller_test_base'
+require_relative 'app_controller_test_base'
 
-class DojoControllerTest < ControllerTestBase
+class DojoControllerTest < AppControllerTestBase
 
   test 'index without id' do
     get 'dojo/index'
