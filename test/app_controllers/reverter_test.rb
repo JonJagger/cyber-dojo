@@ -1,13 +1,13 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative 'AppControllerTestBase'
-require_relative 'RailsRunnerStubAdapter'
+require_relative 'RailsRunnerStubThreadAdapter'
 require_relative 'ParamsMaker'
 
 class ReverterControllerTest  < AppControllerTestBase
 
   test 'revert' do
-    set_runner_class('RailsRunnerStubAdapter')
+    set_runner_class('RailsRunnerStubThreadAdapter')
     @id = create_kata('Java, JUnit')
     enter
     avatar = katas[@id].avatars[@avatar_name]

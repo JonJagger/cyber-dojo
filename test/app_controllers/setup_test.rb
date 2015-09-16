@@ -1,23 +1,23 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative './AppControllerTestBase'
-require_relative './RailsDiskFakeAdapter'
-require_relative './RailsRunnerStubTrueAdapter'
+require_relative './RailsDiskFakeThreadAdapter'
+require_relative './RailsRunnerStubTrueThreadAdapter'
 
 class SetupControllerTest < AppControllerTestBase
 
   def setup
     super
-    set_disk_class('RailsDiskFakeAdapter')
-    set_runner_class('RailsRunnerStubTrueAdapter')
+    set_disk_class('RailsDiskFakeThreadAdapter')
+    RailsDiskFakeThreadAdapter.reset
+    set_runner_class('RailsRunnerStubTrueThreadAdapter')
+    RailsRunnerStubTrueThreadAdapter.reset
     setup_exercises_cache
     setup_languages_cache
   end
 
   def teardown
     super
-    RailsDiskFakeAdapter.reset
-    RailsRunnerStubTrueAdapter.reset
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
