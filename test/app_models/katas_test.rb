@@ -14,7 +14,7 @@ class KatasTests < ModelTestBase
     set_katas_root(path)
     assert_equal path, katas.path
     assert path_ends_in_slash?(katas)
-    assert path_has_no_adjacent_separators?(katas)
+    refute path_has_adjacent_separators?(katas)
   end
 
   #- - - - - - - - - - - - - - - -
@@ -25,7 +25,7 @@ class KatasTests < ModelTestBase
     set_katas_root(path)
     assert_equal path+'/', katas.path
     assert path_ends_in_slash?(katas)
-    assert path_has_no_adjacent_separators?(katas)
+    refute path_has_adjacent_separators?(katas)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

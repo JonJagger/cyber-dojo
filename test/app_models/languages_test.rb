@@ -10,7 +10,7 @@ class LanguagesTests < ModelTestBase
     set_languages_root(path)  
     assert_equal path, languages.path
     assert path_ends_in_slash?(languages)
-    assert path_has_no_adjacent_separators?(languages)    
+    refute path_has_adjacent_separators?(languages)    
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
@@ -21,7 +21,7 @@ class LanguagesTests < ModelTestBase
     set_languages_root(path)  
     assert_equal path+'/', languages.path
     assert path_ends_in_slash?(languages)
-    assert path_has_no_adjacent_separators?(languages)    
+    refute path_has_adjacent_separators?(languages)    
   end
   
   #- - - - - - - - - - - - - - - - - - - - -

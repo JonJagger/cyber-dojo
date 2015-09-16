@@ -10,7 +10,7 @@ class ExercisesTests < ModelTestBase
     set_exercises_root(path)
     assert_equal path, exercises.path
     assert path_ends_in_slash?(exercises)
-    assert path_has_no_adjacent_separators?(exercises)    
+    refute path_has_adjacent_separators?(exercises)    
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -21,7 +21,7 @@ class ExercisesTests < ModelTestBase
     set_exercises_root(path)
     assert_equal path+'/', exercises.path
     assert path_ends_in_slash?(exercises)
-    assert path_has_no_adjacent_separators?(exercises)    
+    refute path_has_adjacent_separators?(exercises)    
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

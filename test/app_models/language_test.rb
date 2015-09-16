@@ -11,7 +11,7 @@ class LanguageTests < ModelTestBase
     language = languages[language_dir + '-' + test_dir]
     assert language.path.match(language_dir + '/' + test_dir)
     assert path_ends_in_slash?(language)
-    assert path_has_no_adjacent_separators?(language)
+    refute path_has_adjacent_separators?(language)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

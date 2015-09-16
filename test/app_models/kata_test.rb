@@ -35,7 +35,7 @@ class KataTests < ModelTestBase
     id = unique_id
     kata = katas[id]        
     assert path_ends_in_slash?(kata)
-    assert path_has_no_adjacent_separators?(kata)
+    refute path_has_adjacent_separators?(kata)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

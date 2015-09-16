@@ -23,9 +23,9 @@ class ModelTestBase < TestBase
     object.path.end_with?('/')
   end
 
-  def path_has_no_adjacent_separators?(object)
+  def path_has_adjacent_separators?(object)
     doubled_separator = '/' * 2
-    object.path.scan(doubled_separator).length === 0
+    object.path.scan(doubled_separator).length != 0
   end
 
 end

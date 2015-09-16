@@ -12,7 +12,7 @@ class AvatarTests < ModelTestBase
     kata = make_kata
     avatar = kata.start_avatar(Avatars.names)
     assert path_ends_in_slash?(avatar)
-    assert path_has_no_adjacent_separators?(avatar)
+    refute path_has_adjacent_separators?(avatar)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
