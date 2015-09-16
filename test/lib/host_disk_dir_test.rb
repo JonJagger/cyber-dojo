@@ -24,13 +24,15 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'disk[...].path always ends in /' do
+  test '437EB1',
+  'disk[...].path always ends in /' do
     assert_equal "ABC/", disk['ABC'].path
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'disk[path].exists? false when path does not exist, true when it does' do
+  test '0DB5F3',
+  'disk[path].exists? false when path does not exist, true when it does' do
     `rm -rf #{path}`
     assert !dir.exists?
     dir.make
@@ -39,7 +41,8 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'disk[path].exists?(filename) false when file exists, true when it does' do
+  test '61FCE8',
+  'disk[path].exists?(filename) false when file exists, true when it does' do
     `rm -rf #{path}`
     filename = 'hello.txt'
     assert !dir.exists?(filename)
@@ -49,7 +52,8 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'disk[path].read() reads back what was written' do
+  test '247EAB',
+  'disk[path].read() reads back what was written' do
     expected = "content"
     dir.write('filename', expected)
     actual = dir.read('filename')
@@ -58,7 +62,8 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'disk.lock throws exception, does not execute block, ' +
+  test '7B7E1A',
+    'disk.lock throws exception, does not execute block,' +
        'and result is nil, when path does not exist' do
     block_run = false
     exception_thrown = false
@@ -77,7 +82,8 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when dir.lock is obtained block is executed ' +
+  test 'BE0ED2',
+    'when dir.lock is obtained block is executed' +
        'and result is result of block' do
     block_run = false
     begin
@@ -91,7 +97,8 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'outer dir.lock is blocking so inner lock blocks' do
+  test '9E019E',
+  'outer dir.lock is blocking so inner lock blocks' do
     outer_run = false
     inner_run = false
     dir.lock do
@@ -114,7 +121,8 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'holding lock on parent dir does not prevent ' +
+  test '0B1E7A',
+    'holding lock on parent dir does not prevent' +
        'acquisition of lock on child dir' do
     parent_path = path + 'parent' + disk.dir_separator
     child_path = parent_path + 'child' + disk.dir_separator
@@ -134,7 +142,8 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'save_file (json) for non-string is saved as JSON object ' +
+  test '1C4A9F',
+    'save_file (json) for non-string is saved as JSON object' +
        'and folder is automatically created' do
     object = { :a => 1, :b => 2 }
     check_save_file('manifest.json', object, '{"a":1,"b":2}')
@@ -142,14 +151,16 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'save_file for string - folder is automatically created' do
+  test '8F329F',
+  'save_file for string - folder is automatically created' do
     object = 'hello world'
     check_save_file('manifest.rb', object, "hello world")
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'saving a file with a folder creates the subfolder ' +
+  test '748F3B',
+    'saving a file with a folder creates the subfolder' +
        'and the file in it' do
     pathed_filename = 'f1/f2/wibble.txt'
     content = 'Hello world'
@@ -162,20 +173,23 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'save file for non executable file' do
+  test '95EA3F',
+  'save file for non executable file' do
     check_save_file('file.a', 'content', 'content')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'save file for executable file' do
+  test 'B5C931',
+  'save file for executable file' do
     executable = true
     check_save_file('file.sh', 'ls', 'ls', executable)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'save filename longer than but ends in makefile is not auto-tabbed' do
+  test '51EE30',
+  'save filename longer than but ends in makefile is not auto-tabbed' do
     content = '    abc'
     expected_content = content
     check_save_file('smakefile', content, expected_content)
@@ -183,31 +197,36 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'disk.dir?(.) is true' do
+  test '25EACA',
+  'disk.dir?(.) is true' do
     assert disk.dir?(path + '.')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'disk.dir?(..) is true' do
+  test '75CA3F',
+  'disk.dir?(..) is true' do
     assert disk.dir?(path + '..')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'disk.dir?(not-a-dir) is false' do
+  test '73E40A',
+  'disk.dir?(not-a-dir) is false' do
     assert !disk.dir?('blah-blah')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'disk.dir?(a-dir) is true' do
+  test 'AFEE82',
+  'disk.dir?(a-dir) is true' do
     assert disk.dir?(path)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'dir.each_dir' do
+  test '0CC3B9',
+  'dir.each_dir' do
     cwd = `pwd`.strip + '/../'
     dirs = disk[cwd].each_dir.entries
     %w( app_helpers app_lib ).each { |dir_name|
@@ -217,7 +236,8 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'disk[path].each_dir does not give filenames' do
+  test '91E408',
+  'disk[path].each_dir does not give filenames' do
     disk[path].make
     disk[path].write('beta.txt', 'content')
     disk[path + 'alpha'].make
@@ -227,7 +247,8 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'disk[path].each_dir.select' do
+  test '89211C',
+  'disk[path].each_dir.select' do
     disk[path + 'alpha'].make
     disk[path + 'beta'].make
     disk[path + 'alpha'].write('a.txt', 'a')
@@ -240,7 +261,8 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'disk[path].each_file' do
+  test '7CA54E',
+  'disk[path].each_file' do
     disk[path + 'a'].write('c.txt', 'content')
     disk[path + 'a'].write('d.txt', 'content')
     assert_equal ['c.txt','d.txt'], disk[path+'a'].each_file.entries.sort
@@ -248,7 +270,8 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'disk[path].each_file does not give dirs' do
+  test '500EA2',
+  'disk[path].each_file does not give dirs' do
     disk[path].make
     disk[path].write('beta.txt', 'content')
     disk[path + 'alpha'].make
@@ -258,7 +281,8 @@ class HostDiskTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'disk[path].each_file.select' do
+  test 'F569F8',
+  'disk[path].each_file.select' do
     disk[path + 'a'].write('b.cpp', 'content')
     disk[path + 'a'].write('c.txt', 'content')
     disk[path + 'a'].write('d.txt', 'content')

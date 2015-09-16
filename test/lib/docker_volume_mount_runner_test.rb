@@ -17,14 +17,16 @@ class DockerVolumeMountRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'initialize() raises RuntimeError when docker is not installed' do
+  test 'EE59BB',
+  'initialize() raises RuntimeError when docker is not installed' do
     stub_docker_not_installed
     assert_raises(RuntimeError) { make_docker_runner }
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'initialize() uses [docker info] not run as sudo' do
+  test 'E58A3B',
+  'initialize() uses [docker info] not run as sudo' do
     stub_docker_installed
     make_docker_runner
     assert_equal 'docker info', @bash.spied[0]
@@ -32,7 +34,8 @@ class DockerVolumeMountRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'runnable?() uses [docker images] not run as sudo' do
+  test '3813F9',
+  'runnable?() uses [docker images] not run as sudo' do
     stub_docker_installed
     docker = make_docker_runner
     stub_docker_images_python_py_test
@@ -43,7 +46,8 @@ class DockerVolumeMountRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'started(avatar) is a no-op' do
+  test 'D4BA23',
+  'started(avatar) is a no-op' do
     stub_docker_installed
     docker = make_docker_runner
     before = @bash.spied.clone
@@ -54,7 +58,8 @@ class DockerVolumeMountRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'run() completes and does not timeout - exact bash cmd interaction' do
+  test '6459A7',
+  'run() completes and does not timeout - exact bash cmd interaction' do
     stub_docker_installed
     docker = make_docker_runner
     @lion = make_kata.start_avatar(['lion'])
@@ -66,7 +71,8 @@ class DockerVolumeMountRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'run() times out - exact base cmd interaction' do
+  test 'B8750C',
+  'run() times out - exact base cmd interaction' do
     stub_docker_installed
     docker = make_docker_runner
     @lion = make_kata.start_avatar(['lion'])
