@@ -1,8 +1,8 @@
 
-class RailsDiskFakeAdapter
+class RailsRunnerStubAdapter
 
   def method_missing(sym, *args, &block)
-    @@adaptee ||= DiskFake.new
+    @@adaptee ||= RunnerStub.new
     @@adaptee.send(sym, *args, &block)
   end
 
