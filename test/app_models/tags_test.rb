@@ -5,7 +5,8 @@ require_relative 'DeltaMaker'
 
 class TagsTest < ModelTestBase
 
-  test 'tag zero exists after avatar is started ' +
+  test 'A30AF3',
+    'tag zero exists after avatar is started' +
        'and before first [test] is run ' +
        'and contains all visible files' do
     language = languages['C-assert']
@@ -35,7 +36,8 @@ class TagsTest < ModelTestBase
   
   #- - - - - - - - - - - - - - - - - - -
 
-  test 'each [test]-event creates a new tag' do
+  test '839D39',
+  'each [test]-event creates a new tag' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     assert_equal 1, lion.tags.length
@@ -50,7 +52,8 @@ class TagsTest < ModelTestBase
   
   #- - - - - - - - - - - - - - - - - - -
 
-  test 'tags[-n] duplicates Array[-n] behaviour' do
+  test '8F2A42',
+  'tags[-n] duplicates Array[-n] behaviour' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     runner.stub_output('xxxx')
