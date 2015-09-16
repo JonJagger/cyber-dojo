@@ -1,6 +1,6 @@
-#!/usr/bin/env ruby
+#!/bin/bash ../test_wrapper.sh
 
-require_relative 'app_controller_test_base'
+require_relative 'AppControllerTestBase'
 
 class ForkerControllerTest < AppControllerTestBase
 
