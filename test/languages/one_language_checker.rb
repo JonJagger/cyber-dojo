@@ -1,10 +1,12 @@
 
 require_relative '../all'
-require_relative '../TestHelpers'
+require_relative '../TestDomainHelpers'
+require_relative '../TestExternalHelpers'
 
 class OneLanguageChecker
 
-  include TestHelpers
+  include TestDomainHelpers
+  include TestExternalHelpers
 
   def initialize(verbose)
     @verbose = verbose
