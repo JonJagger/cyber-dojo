@@ -13,7 +13,8 @@ class TimeNowTests < LibTestBase
     def sec; 59; end
   end
 
-  test 'time_now' do
+  test '8319F0',
+  'time_now' do
     expected = [1966,11,23,8,45,59]
     assert_equal expected, time_now(FakeTime.new)
   end

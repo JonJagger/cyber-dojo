@@ -27,13 +27,15 @@ class HostGitTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
  
-  test '[git] with no arguments returns ' +
+  test '62653B',
+    '[git] with no arguments returns' +
        'externally the set :git object ' +
        'which can be Stub object' do
     assert_equal 'HostGit', git.class.name
   end
 
-  test 'all git commands raise exception if path names a dir that does not exist' do
+  test 'E779D6',
+  'all git commands raise exception if path names a dir that does not exist' do
     set_path 'dir_that_does_not_exist'
     [:init,:config,:add,:rm,:commit,:gc,:tag,:show,:diff].each do |cmd|
       error = assert_raises(Errno::ENOENT) { 
@@ -44,7 +46,8 @@ class HostGitTests < LibTestBase
     end
   end
 
-  test '[git init] initializes an empty repository in the callers path' do
+  test 'BC2468',
+  '[git init] initializes an empty repository in the callers path' do
     message = ok { git.init(path, '') }
     uk_git_init_message = message.start_with?('Initialised');
     us_git_init_message = message.start_with?('Initialized');
@@ -52,7 +55,8 @@ class HostGitTests < LibTestBase
     assert message.end_with?("empty Git repository in #{path}.git/\n")
   end
   
-  test '[git config] succeeds silently' do
+  test '44858F',
+  '[git config] succeeds silently' do
     ok { git.init(path, '') }
     silent_ok { git.config(path, 'user.name "Fred Flintsone"') }
     # sometimes the above git.config command somehow has the 
@@ -66,7 +70,8 @@ class HostGitTests < LibTestBase
     assert fred==='', "Fred is back in /var/www/cyber-dojo/.git/config"
   end
 
-  test 'git command with bad options returns log of command+message+status' do
+  test '67EF14',
+  'git command with bad options returns log of command+message+status' do
     ok { git.init(path, '') }
     log = fails { git.add(path, 'not-there-file.txt') }
     assert log.include?("git add 'not-there-file.txt'"), log
@@ -74,13 +79,15 @@ class HostGitTests < LibTestBase
     assert log.include?("$?.exitstatus=128"), log
   end
 
-  test '[git add] succeeds silently' do
+  test '805700',
+  '[git add] succeeds silently' do
     ok { git.init(path, '') }
     write_file
     silent_ok { git.add(path, filename) }
   end
 
-  test '[git commit] succeeds non-silently' do
+  test 'BFD83C',
+  '[git commit] succeeds non-silently' do
     ok { git.init(path, '') }
     write_file
     ok { git.add(path, filename) }
@@ -88,7 +95,8 @@ class HostGitTests < LibTestBase
     assert message.include?("create mode 100644 #{filename}")
   end
 
-  test '[git rm] succeeds non-silently' do
+  test '3F7CE0',
+  '[git rm] succeeds non-silently' do
     ok { git.init(path, '') }
     write_file
     ok { git.add(path, filename) }
@@ -97,7 +105,8 @@ class HostGitTests < LibTestBase
     assert message.start_with?("rm '#{filename}'")
   end
 
-  test '[git show tag:filename] is content of filename for that tag' do
+  test '95BBC8',
+  '[git show tag:filename] is content of filename for that tag' do
     ok { git.init(path, '') }
     content = 'greetings'
     write_file(content)
@@ -108,7 +117,8 @@ class HostGitTests < LibTestBase
     assert_equal content, message
   end
 
-  test '[git diff was_tag now_tag] is raw git diff output' do
+  test 'BCCB7E',
+  '[git diff was_tag now_tag] is raw git diff output' do
     ok { git.init(path, '') }
     old_content = 'aaaaa'
     write_file(old_content)
@@ -129,7 +139,8 @@ class HostGitTests < LibTestBase
     assert diff.include?('+' + new_content)
   end
 
-  test '[git gc] succeeds silently' do
+  test 'EBE7EF',
+  '[git gc] succeeds silently' do
     ok { git.init(path, '') }
     silent_ok { git.gc(path, '--auto --quiet') }
   end

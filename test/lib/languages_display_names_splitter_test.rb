@@ -4,7 +4,8 @@ require_relative './LibTestBase'
 
 class LanguagesDisplayNamesSplitterTests < LibTestBase
 
-  test 'display_names is split on comma into [languages_names,tests_names]' do
+  test '0B2D3E',
+  'display_names is split on comma into [languages_names,tests_names]' do
     
     # At present 
     # o) the languages' display_names combine the name of the 
