@@ -8,7 +8,7 @@ class AppModelTestBase < TestBase
   include UniqueId
 
   def setup
-    super    
+    super
     set_runner_class   'RunnerStub'
     set_disk_class     'DiskStub'      # DiskFake would be faster but lots of tests
     set_git_class      'GitSpy'        # fail because they don't Stub specific files.
