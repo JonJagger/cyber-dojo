@@ -1,12 +1,13 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_lib_test_base'
+require_relative './AppLibTestBase'
 
 class ChooseTests < AppLibTestBase
 
   include Chooser
 
-  test 'when no id is given then' +
+  test 'CD36CB',
+    'when no id is given then' +
        ' choose random known language and' +
        ' choose random known exercise' do
     assert_is_randomly_chosen_language(test_languages_names, id=nil, katas)
@@ -15,7 +16,8 @@ class ChooseTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when id is given and !katas[id].exists then' +
+  test '41EB67',
+    'when id is given and !katas[id].exists then' +
        ' choose random known language and' +
        ' choose random known exercise' do
     id = unique_id
@@ -27,7 +29,8 @@ class ChooseTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test "when id is given and katas[id].exists? but kata's language is unknown" +
+  test '9671E1',
+    "when id is given and katas[id].exists? but kata's language is unknown" +
        ' then choose random language' do
     test_languages_names.each do |unknown_language|
       languages = test_languages_names - [unknown_language]
@@ -40,7 +43,8 @@ class ChooseTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test "when id is given and katas[id].exists? but kata's exercise is unknown" +
+  test '8D0F94',
+    "when id is given and katas[id].exists? but kata's exercise is unknown" +
        ' then choose random exercise' do
     test_exercises_names.each do |unknown_exercise|
       exercises = test_exercises_names - [unknown_exercise]
@@ -53,7 +57,8 @@ class ChooseTests < AppLibTestBase
   
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test "when id is given and katas[id].exists? and kata's language is known" +
+  test '773616',
+    "when id is given and katas[id].exists? and kata's language is known" +
        ' then choose that language' do
     cmd = test_languages_names.map{ |name| name.split('-').join(', ') }
     test_languages_names.each_with_index do |language,n|
@@ -67,7 +72,8 @@ class ChooseTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test "when id is given and katas[id].exists? and kata's exercise is known" +
+  test 'D9C2F2',
+    "when id is given and katas[id].exists? and kata's exercise is known" +
        ' then choose that exercise' do         
     test_exercises_names.each_with_index do |exercise,n|
       kata = make_kata(unique_id, test_languages_names.shuffle[0], exercise)

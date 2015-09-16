@@ -1,12 +1,13 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_lib_test_base'
+require_relative './AppLibTestBase'
 
 class DiffBugTests < AppLibTestBase
 
   include GitDiff
 
-  test 'another specific real dojo that once failed a diff' do
+  test '930827',
+  'another specific real dojo that once failed a diff' do
     bad_diff_lines =
     [
       'diff --git a/sandbox/recently_used_list.cpp b/sandbox/was_recently_used_list.test.cpp',
@@ -41,7 +42,8 @@ class DiffBugTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'specific real dojo that fails diff show narrowing' do
+  test '9DC0FD',
+  'specific real dojo that fails diff show narrowing' do
     visible_files = { }
     visible_files['gapper.rb'] =
           [
@@ -111,7 +113,7 @@ class DiffBugTests < AppLibTestBase
       "+",
       "+class TestEachPair < Test::Unit::TestCase",
       "+",
-      "+  test \"each_pair\"",
+      "+  test 'each_pair'",
       "+",
       "+    [2,4,5,6].each_pair do |a,b| p a; p b; end",
       "+",
