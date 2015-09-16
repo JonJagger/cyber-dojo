@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative 'AppControllerTestBase'
-require_relative 'RailsRunnerStubThreadAdapter'
 require_relative 'ParamsMaker'
+require_relative 'RailsRunnerStubThreadAdapter'
 
 class ReverterControllerTest  < AppControllerTestBase
 

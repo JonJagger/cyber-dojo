@@ -1,6 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'app_model_test_base'
+require_relative 'AppModelTestBase'
 require_relative 'DeltaMaker'
 
 class AvatarTests < AppModelTestBase
