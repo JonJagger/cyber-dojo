@@ -6,12 +6,11 @@ require 'tempfile'
 class LanguageTests < ModelTestBase
 
   test '43EACE',
-  'path(language) has correct format' do
+  "language's path has correct format" do
     language_dir,test_dir = 'C#','NUnit'    
     language = languages[language_dir + '-' + test_dir]
     assert language.path.match(language_dir + '/' + test_dir)
-    assert path_ends_in_slash?(language)
-    refute path_has_adjacent_separators?(language)
+    assert correct_path_format?(language)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

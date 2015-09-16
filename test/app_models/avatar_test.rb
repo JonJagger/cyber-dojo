@@ -8,18 +8,17 @@ class AvatarTests < ModelTestBase
   include TimeNow
 
   test '2ED22E',
-  'path(avatar)' do
+  "avatar's path has correct format" do
     kata = make_kata
     avatar = kata.start_avatar(Avatars.names)
-    assert path_ends_in_slash?(avatar)
-    refute path_has_adjacent_separators?(avatar)
+    assert correct_path_format?(avatar)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '3D8638',
   'attempting to create an Avatar with an invalid name raises RuntimeError' do
-    kata = katas[unique_id]
+    kata = make_kata
     invalid_name = 'mobilephone'
     refute Avatars.names.include?(invalid_name)
     assert_raises(RuntimeError) { kata.avatars[invalid_name] }
@@ -49,7 +48,7 @@ class AvatarTests < ModelTestBase
 
   test '0F5216',
   'avatar is not active? when it does not exist' do
-    kata = katas[unique_id]
+    kata = make_kata
     lion = kata.avatars['lion']
     refute lion.exists?
     refute lion.active?
@@ -81,7 +80,7 @@ class AvatarTests < ModelTestBase
 
   test '39CCCC',
   'exists? is true when dir exists and name is in Avatar.names' do
-    kata = katas[unique_id]
+    kata = make_kata
     lion = kata.avatars['lion']
     refute lion.exists?
     lion.dir.make

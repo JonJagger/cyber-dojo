@@ -31,29 +31,25 @@ class KataTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '6F3999',
-  'path format basics' do
-    id = unique_id
-    kata = katas[id]        
-    assert path_ends_in_slash?(kata)
-    refute path_has_adjacent_separators?(kata)
+  "kata's path has correct format" do
+    kata = katas[unique_id]
+    assert correct_path_format?(kata)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '1E4B7A',
   'path is split ala git' do
-    id = unique_id
-    kata = katas[id]        
-    assert kata.path.include?(kata.id[0..1])
-    assert kata.path.include?(kata.id[2..-1])
+    kata = katas[unique_id]
+    split = kata.id[0..1] + '/' + kata.id[2..-1]
+    assert kata.path.include?(split)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test 'C11AFC',
   'exists? is false before dir is made' do
-    id = unique_id
-    kata = katas[id]        
+    kata = katas[unique_id]
     refute kata.exists?
     kata.dir.make
     assert kata.exists?
@@ -66,8 +62,7 @@ class KataTests < ModelTestBase
        ' then it is not active' +
        ' and it has not finished' +
        ' and its age is zero' do
-    id = unique_id
-    kata = katas[id]             
+    kata = katas[unique_id]
     refute kata.exists?
     refute kata.active?
     refute kata.finished?

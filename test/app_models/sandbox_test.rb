@@ -5,12 +5,11 @@ require_relative 'model_test_base'
 class SandboxTests < ModelTestBase
 
   test 'B7E4D5',
-  'path(avatar)' do
+  'sandbox has correct path format' do
     kata = make_kata
     avatar = kata.start_avatar(Avatars.names)
     sandbox = avatar.sandbox
-    assert path_ends_in_slash?(sandbox)
-    refute path_has_adjacent_separators?(sandbox)
+    assert correct_path_format?(sandbox)
     assert sandbox.path.include?('sandbox')
   end
 

@@ -5,23 +5,21 @@ require_relative 'model_test_base'
 class LanguagesTests < ModelTestBase
 
   test '743810',
-  'path is set from ENV' do
-    path = 'end_with_slash/'
+  'languages path has correct format when set with trailing slash' do
+    path = 'slashed/'
     set_languages_root(path)  
     assert_equal path, languages.path
-    assert path_ends_in_slash?(languages)
-    refute path_has_adjacent_separators?(languages)    
+    assert correct_path_format?(languages)
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
   test '8D3BB5',
-  'path is forced to end in a slash' do
+  'languages path has correct format when set without trailing slash' do
     path = 'unslashed'
     set_languages_root(path)  
     assert_equal path+'/', languages.path
-    assert path_ends_in_slash?(languages)
-    refute path_has_adjacent_separators?(languages)    
+    assert correct_path_format?(languages)
   end
   
   #- - - - - - - - - - - - - - - - - - - - -

@@ -9,23 +9,21 @@ class KatasTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B55710',
-  'path is set from ENV' do
-    path = 'end_with_slash/'
+  'katas path has correct format when set with trailing slash' do
+    path = 'slashed/'
     set_katas_root(path)
     assert_equal path, katas.path
-    assert path_ends_in_slash?(katas)
-    refute path_has_adjacent_separators?(katas)
+    assert correct_path_format?(katas)
   end
 
   #- - - - - - - - - - - - - - - -
 
   test 'B2F787',
-  'path is forced to end in a slash' do
+  'katas path has correct format when set without trailing slash' do
     path = 'unslashed'
     set_katas_root(path)
     assert_equal path+'/', katas.path
-    assert path_ends_in_slash?(katas)
-    refute path_has_adjacent_separators?(katas)
+    assert correct_path_format?(katas)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -34,8 +32,7 @@ class KatasTests < ModelTestBase
 
   test 'B9916D',
   'create_kata saves empty started_avatars.json file' do
-    id = unique_id
-    kata = make_kata(id)
+    kata = make_kata
     filename = 'started_avatars.json'
     assert kata.dir.exists?(filename), 'exists'
     started = JSON.parse(kata.read(filename))

@@ -5,23 +5,21 @@ require_relative 'model_test_base'
 class ExercisesTests < ModelTestBase
 
   test '14AD4C',
-  'path is set from ENV' do
-    path = 'end_with_slash/'
+  'exercises path has correct basic format when set with trailing slash' do
+    path = 'slashed/'
     set_exercises_root(path)
     assert_equal path, exercises.path
-    assert path_ends_in_slash?(exercises)
-    refute path_has_adjacent_separators?(exercises)    
+    assert correct_path_format?(exercises)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B09C99',
-  'path is forced to end in a slash' do
+  'exercises path has correct basic format when set without trailing slash' do
     path = 'unslashed'
     set_exercises_root(path)
     assert_equal path+'/', exercises.path
-    assert path_ends_in_slash?(exercises)
-    refute path_has_adjacent_separators?(exercises)    
+    assert correct_path_format?(exercises)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

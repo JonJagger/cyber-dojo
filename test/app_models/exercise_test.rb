@@ -5,11 +5,10 @@ require_relative 'model_test_base'
 class ExerciseTests < ModelTestBase
 
   test '2DDD85',
-  'path(exercise)' do
+  "exercise path has correct basic format" do
     exercise = exercises['Fizz_Buzz']
     assert exercise.path.match(exercise.name)
-    assert path_ends_in_slash?(exercise)
-    refute path_has_adjacent_separators?(exercise)
+    assert correct_path_format?(exercise)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - -
@@ -24,8 +23,7 @@ class ExerciseTests < ModelTestBase
 
   test '10EEF3',
   'name is as set in ctor' do
-    name = 'Fizz_Buzz'
-    exercise = exercises[name]
+    exercise = exercises[name = 'Fizz_Buzz']
     assert_equal name, exercise.name
   end
 
