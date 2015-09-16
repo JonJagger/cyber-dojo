@@ -21,7 +21,7 @@ class HostDiskTests < LibTestBase
   def dir
     disk[path]
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'disk[...].path always ends in /' do
@@ -267,7 +267,7 @@ class HostDiskTests < LibTestBase
     }
     assert_equal ['c.txt','d.txt'], matches.sort
   end  
-
+  
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def check_save_file(filename, content, expected_content, executable = false)

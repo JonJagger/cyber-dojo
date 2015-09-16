@@ -19,7 +19,10 @@ class DockerGitCloneRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def self.class_name
-    # test id defaults to name that does not include class name
+    # TODO: test id defaults to name that does not include class name
+    #       this means if two different classes have a test with the
+    #       same name and no explicit hex-id then they will be appear
+    #       the same.
     'DockerGitCloneRunner'
   end
   
