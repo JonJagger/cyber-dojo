@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'model_test_base'
+require_relative 'app_model_test_base'
 
-class KataTests < ModelTestBase
+class KataTests < AppModelTestBase
 
   test 'F3B8B1',
   'attempting to create a Kata with an invalid id raises a RuntimeError' do

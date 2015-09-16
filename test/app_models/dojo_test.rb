@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'model_test_base'
+require_relative 'app_model_test_base'
 
-class DojoTests < ModelTestBase
+class DojoTests < AppModelTestBase
 
   test '209EA1',
   'exercises' do

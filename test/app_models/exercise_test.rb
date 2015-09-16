@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'model_test_base'
+require_relative 'app_model_test_base'
 
-class ExerciseTests < ModelTestBase
+class ExerciseTests < AppModelTestBase
 
   test '2DDD85',
   "exercise path has correct basic format" do

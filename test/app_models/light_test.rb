@@ -1,9 +1,9 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'model_test_base'
+require_relative 'app_model_test_base'
 require_relative 'DeltaMaker'
 
-class LightTests < ModelTestBase
+class LightTests < AppModelTestBase
 
   test 'AC96D0',
   'colour is converted to a symbol' do

@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'model_test_base'
+require_relative 'app_model_test_base'
 
-class SandboxTests < ModelTestBase
+class SandboxTests < AppModelTestBase
 
   test 'B7E4D5',
   'sandbox has correct path format' do

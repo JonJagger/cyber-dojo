@@ -1,9 +1,9 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'model_test_base'
+require_relative 'app_model_test_base'
 require 'tempfile'
 
-class LanguageTests < ModelTestBase
+class LanguageTests < AppModelTestBase
 
   test '43EACE',
   "language's path has correct format" do

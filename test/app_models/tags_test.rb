@@ -1,9 +1,9 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'model_test_base'
+require_relative 'app_model_test_base'
 require_relative 'DeltaMaker'
 
-class TagsTest < ModelTestBase
+class TagsTest < AppModelTestBase
 
   test 'A30AF3',
     'tag zero exists after avatar is started' +

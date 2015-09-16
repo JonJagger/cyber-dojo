@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'model_test_base'
+require_relative 'app_model_test_base'
 
-class LanguagesTests < ModelTestBase
+class LanguagesTests < AppModelTestBase
 
   test '743810',
   'languages path has correct format when set with trailing slash' do

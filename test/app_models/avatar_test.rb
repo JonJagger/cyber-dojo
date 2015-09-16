@@ -1,9 +1,9 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'model_test_base'
+require_relative 'app_model_test_base'
 require_relative 'DeltaMaker'
 
-class AvatarTests < ModelTestBase
+class AvatarTests < AppModelTestBase
 
   include TimeNow
 
