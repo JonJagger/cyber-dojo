@@ -10,7 +10,9 @@ end
   from_remote = "root@cyber-dojo.org:#{root}/katas/#{hex}"
   to_local = "#{root}/katas"
   rsync = "rsync -avzP --stats #{from_remote} #{to_local}"
+  print "#{rsync}\n"
   `#{rsync}`
+  print "sleeping\n"
   `sleep 30`
 
 end
