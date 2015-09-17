@@ -15,7 +15,9 @@ architecture I am working towards.
 New docker images are pushed (by me) to their cyberdojofoundation hub
 https://hub.docker.com/u/cyberdojofoundation/
 as follows
+$ docker login
 $ docker push cyberdojofoundation/NAME
 username: jonjagger
-password: ....
+password: ...
+email: ...
 

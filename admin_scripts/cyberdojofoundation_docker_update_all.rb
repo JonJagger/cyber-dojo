@@ -83,7 +83,7 @@ def conversion
 # Javascript
     foundation("javascript-0.10.15",              "javascript-0.10.25"),
     foundation("javascript-0.10.15_assert",       "javascript-0.10.25_assert"),
-    foundation("javascript-0.10.15_jasmine",      "javascript-0.10.25_jasmine"),
+    foundation("javascript-0.10.15_jasmine",      "javascript-0.12.7_jasmine-2.3"),
     foundation("javascript-mocha",                "javascript-0.10.25_mocha_chai_sinon"),
 # Perl
     foundation("perl-5.14.2",                     "perl-5.18.2"),
