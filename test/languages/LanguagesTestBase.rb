@@ -3,8 +3,6 @@ require_relative '../test_coverage'
 require_relative '../all'
 require_relative '../test_base'
 
-class AppHelpersTestBase < TestBase
-
-  include TestHelpers
+class LanguagesTestBase < TestBase
 
 end

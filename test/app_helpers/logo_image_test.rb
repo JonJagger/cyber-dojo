@@ -1,12 +1,13 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'app_helpers_test_base'
+require_relative 'AppHelpersTestBase'
 
 class LogoImageTests < AppHelpersTestBase
 
   include LogoImageHelper
 
-  test "logo_image html" do
+  test '27DC8E',
+  "logo_image html" do
     html = logo_image(size=42, title='wibble')
     assert html.start_with?('<img '), '<img : ' + html
     assert html.match("alt='cyber-dojo yin-yang logo'"), 'alt: ' + html
@@ -16,7 +17,8 @@ class LogoImageTests < AppHelpersTestBase
     assert html.match("title='wibble'"), 'title: ' + html
   end
 
-  test "home_page_logo html" do
+  test '118CDC',
+  "home_page_logo html" do
     html = home_page_logo
     assert html.start_with?('<img '), '<img: ' + html
     assert html.match("alt='cyber-dojo'"), 'alt: ' + html

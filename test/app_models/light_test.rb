@@ -1,25 +1,28 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'model_test_base'
+require_relative 'AppModelTestBase'
 require_relative 'DeltaMaker'
 
-class LightTests < ModelTestBase
+class LightTests < AppModelTestBase
 
-  test 'colour is converted to a symbol' do
+  test 'AC96D0',
+  'colour is converted to a symbol' do
     light = make_light(:red,[2015,2,15,8,54,6],1)
     assert_equal :red, light.colour
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'colour was once stored as outcome' do
+  test 'B136BD',
+  'colour was once stored as outcome' do
     light = make_light(:red,[2015,2,15,8,54,6],1,'outcome')
     assert_equal :red, light.colour
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'time is read back as set' do
+  test 'B09D76',
+  'time is read back as set' do
     year,month,day,hh,mm,ss = 2015,2,15,8,54,6
     light = make_light(:red,[year,month,day,hh,mm,ss],1)
     time = light.time
@@ -33,7 +36,8 @@ class LightTests < ModelTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'number is read as set' do
+  test 'ED8954',
+  'number is read as set' do
     number = 7
     light = make_light(:red,[2015,2,15,8,54,6],number)
     assert_equal number, light.number
@@ -41,7 +45,8 @@ class LightTests < ModelTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'to_json' do
+  test '21DAC8',
+  'to_json' do
     colour = :red
     time = [2015,2,15,8,54,6]
     number = 7
@@ -55,7 +60,8 @@ class LightTests < ModelTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'each test creates a new light' do
+  test '8BE722',
+  'each test creates a new light' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])    
     maker = DeltaMaker.new(lion)

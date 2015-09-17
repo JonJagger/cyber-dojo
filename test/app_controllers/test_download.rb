@@ -1,8 +1,8 @@
-#!/usr/bin/env ruby
+#!/bin/bash ../test_wrapper.sh
 
-require_relative 'controller_test_base'
+require_relative 'AppControllerTestBase'
 
-class DownloadControllerTest < ControllerTestBase
+class DownloadControllerTest < AppControllerTestBase
 
 =begin
   test 'downloaded zip of empty dojo with no animals yet ' +

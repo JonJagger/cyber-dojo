@@ -1,18 +1,20 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'lib_test_base'
+require_relative 'LibTestBase'
 
 class UniqueIdTests < LibTestBase
 
   include UniqueId
 
-  test 'its a string' do
+  test 'ED2021',
+  'its a string' do
     assert_equal 'String', unique_id.class.name
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'its 10 chars long' do
+  test 'BFBC4B',
+  'its 10 chars long' do
     (0..25).each do
       assert_equal 10, unique_id.length
     end
@@ -20,7 +22,8 @@ class UniqueIdTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'it contains only [0-9 A-E] chars' do
+  test 'B69E40',
+  'it contains only [0-9 A-E] chars' do
     (0..25).each do |n|
       id = unique_id
       id.chars.each do |char|

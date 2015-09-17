@@ -1,10 +1,11 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'model_test_base'
+require_relative 'AppModelTestBase'
 
-class LightsTests < ModelTestBase
+class LightsTests < AppModelTestBase
 
-  test 'lights initially empty' do
+  test '881D3F',
+  'lights initially empty' do
     kata = make_kata
     lights = kata.start_avatar.lights
     assert_equal [ ], lights.to_a
@@ -16,7 +17,8 @@ class LightsTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - -
 
-  test 'lights not empty' do
+  test 'D1106F',
+  'lights not empty' do
     kata = make_kata
     avatar = kata.start_avatar
     incs =

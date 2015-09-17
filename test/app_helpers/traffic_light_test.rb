@@ -1,12 +1,13 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'app_helpers_test_base'
+require_relative 'AppHelpersTestBase'
 
 class TrafficLightTests < AppHelpersTestBase
 
   include TrafficLightHelper
 
-  test 'traffic_light_count' do
+  test 'CF667C',
+  'traffic_light_count' do
     kata = Object.new
     def kata.id; 'ABCD1234'; end
     avatar = Avatar.new(kata,'hippo')
@@ -46,7 +47,8 @@ class TrafficLightTests < AppHelpersTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  test 'traffic_light_image' do
+  test '94DE41',
+  'traffic_light_image' do
     color = 'red'
     expected = "<img src='/images/bulb_#{color}.png'" +
                " alt='red traffic-light'/>"
@@ -56,7 +58,8 @@ class TrafficLightTests < AppHelpersTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  test 'diff_avatar_image' do
+  test '0E4647',
+  'diff_avatar_image' do
     kata = Object.new
     def kata.id; 'ABCD1234'; end
     avatar = Avatar.new(kata,'hippo')
@@ -78,7 +81,8 @@ class TrafficLightTests < AppHelpersTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  test 'diff_traffic_light' do
+  test 'BF0442',
+  'diff_traffic_light' do
     diff_traffic_light_func({'colour' => 'red'})
     diff_traffic_light_func({'outcome' => 'red'})
   end

@@ -5,7 +5,7 @@ require_relative root + '/config/environment.rb'
 
 require_relative root + '/lib/DummyTestRunner'
 require_relative root + '/lib/Git'
-require_relative root + '/lib/OsDisk'
+require_relative root + '/lib/HostDisk'
 
 class RefactoringForksControllerTest  < ActionController::IntegrationTest
 
@@ -27,15 +27,15 @@ class RefactoringForksControllerTest  < ActionController::IntegrationTest
       :avatar => 'moose',
       :tag => '5'
 
-    assert_not_nil json, 'assert_not_nil json'
+    refute_nil json, 'assert_not_nil json'
     assert_equal true, json['forked'], json.inspect
     forked_kata_id = json['id']
 
     puts forked_kata_id
 
-    assert_not_nil forked_kata_id, json.inspect
+    refute_nil forked_kata_id, json.inspect
     assert_equal 10, forked_kata_id.length
-    assert_not_equal id, forked_kata_id
+    refute_equal id, forked_kata_id
     forked_kata = @dojo.katas[forked_kata_id]
     assert forked_kata.exists?, 'forked_kata.exists?'
 

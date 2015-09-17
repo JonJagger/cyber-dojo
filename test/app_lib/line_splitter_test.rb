@@ -1,6 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_lib_test_base'
+require_relative './AppLibTestBase'
 
 class LineSplitterTests < AppLibTestBase
 
@@ -10,25 +10,29 @@ class LineSplitterTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  test 'splitting nil is an empty array' do
+  test 'B2BCCA',
+  'splitting nil is an empty array' do
     assert_equal [ ], line_split(nil)
   end
 
   #- - - - - - - - - - - - - - - -
 
-  test 'splitting empty string is empty string in array' do
+  test '174C3D',
+  'splitting empty string is empty string in array' do
     assert_equal [ '' ], line_split('')
   end
 
   #- - - - - - - - - - - - - - - -
 
-  test 'splitting solitary newline is empty string in array' do
+  test 'ED2E21',
+  'splitting solitary newline is empty string in array' do
     assert_equal [''], line_split("\n")
   end
 
   #- - - - - - - - - - - - - - - -
 
-  test 'retains empty lines between newlines' do
+  test '545D41',
+  'retains empty lines between newlines' do
     # regular split doesn't do what I need...
     assert_equal [ ], "\n\n".split("\n")
     # So I have to roll my own...
@@ -39,7 +43,8 @@ class LineSplitterTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  test 'doesnt add extra empty line if string ends in newline' do
+  test '3D5AEB',
+  'doesnt add extra empty line if string ends in newline' do
     assert_equal ['a'], line_split('a')
     assert_equal ['a'], line_split('a'+"\n")
 

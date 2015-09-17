@@ -1,6 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'app_helpers_test_base'
+require_relative 'AppHelpersTestBase'
 
 class TipTests < AppHelpersTestBase
 
@@ -8,12 +8,13 @@ class TipTests < AppHelpersTestBase
 
   def setup
     super
-    set_one_self_class_name 'OneSelfDummy'
+    set_one_self_class 'OneSelfDummy'
   end
   
   #- - - - - - - - - - - - - - - - - -
   
-  test 'traffic light count tip' do
+  test 'FAE414',
+  'traffic light count tip' do
     params = {
       'avatar' => 'lion',
       'current_colour' => 'red',
@@ -35,9 +36,10 @@ class TipTests < AppHelpersTestBase
 
   #- - - - - - - - - - - - - - - - - -
 
-  test 'traffic light tip' do
-    set_runner_class_name('RunnerStub')
-    set_git_class_name('GitSpy')
+  test 'BDAD52',
+  'traffic light tip' do
+    set_runner_class('RunnerStub')
+    set_git_class('GitSpy')
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     

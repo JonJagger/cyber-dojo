@@ -1,21 +1,22 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'model_test_base'
+require_relative 'AppModelTestBase'
 require 'tempfile'
 
-class LanguageTests < ModelTestBase
+class LanguageTests < AppModelTestBase
 
-  test 'path(language) has correct format' do
+  test '43EACE',
+  "language's path has correct format" do
     language_dir,test_dir = 'C#','NUnit'    
     language = languages[language_dir + '-' + test_dir]
     assert language.path.match(language_dir + '/' + test_dir)
-    assert path_ends_in_slash?(language)
-    assert path_has_no_adjacent_separators?(language)
+    assert correct_path_format?(language)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'filename_extension defaults to empty string when not set' do
+  test '4A975D',
+  'filename_extension defaults to empty string when not set' do
     @language = languages['Ruby']
     spy_manifest({})
     assert_equal('', @language.filename_extension)
@@ -23,7 +24,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'filename_extension reads back as set' do
+  test '761534',
+  'filename_extension reads back as set' do
     @language = languages['Ruby']
     spy_manifest({ 'filename_extension' => '.rb' })
     assert_equal('.rb', @language.filename_extension)
@@ -31,19 +33,21 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'exists? is true only when dir and manifest exist' do
-    set_disk_class_name('DiskFake')
+  test 'F273BE',
+  'exists? is true only when dir and manifest exist' do
+    set_disk_class('DiskFake')
     @language = languages['Erlang']
-    assert !@language.exists?, '1'
+    refute @language.exists?, '1'
     @language.dir.make
-    assert !@language.exists?, '2'
+    refute @language.exists?, '2'
     spy_manifest({})
     assert @language.exists?, '3'
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when :visible_filenames is not in manifest ' +
+  test '3D9F75',
+    'when :visible_filenames is not in manifest' +
        'then visible_files is empty hash ' +
        'and visible_filenames is empty array' do
     @language = languages['Ruby']
@@ -54,7 +58,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when :visible_filenames is empty array in manifest ' +
+  test 'B426B4',
+    'when :visible_filenames is empty array in manifest' +
        'then visible_files is empty hash' +
        'and visible_filenames is empty array' do
     @language = languages['Ruby']
@@ -65,7 +70,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when :visible_filenames is non-empty array in manifest ' +
+  test 'EA1DCE',
+    'when :visible_filenames is non-empty array in manifest' +
        'then visible_files are loaded but not output and not instructions' do
     @language = languages['C']
     spy_manifest({ 'visible_filenames' => [ 'test_untitled.c' ] })
@@ -78,7 +84,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'highlight_filenames defaults to [ ] when not set' do
+  test 'A42D66',
+  'highlight_filenames defaults to [ ] when not set' do
     @language = languages['Ruby']
     spy_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
     assert_equal [ ], @language.highlight_filenames
@@ -86,7 +93,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'highlight_filenames reads back as set' do
+  test '861A75',
+  'highlight_filenames reads back as set' do
     @language = languages['C']
     visible_filenames = [ 'x.hpp', 'x.cpp' ]
     highlight_filenames = [ 'x.hpp' ]
@@ -99,7 +107,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "lowlight_filenames defaults to " +
+  test '7E3D8B',
+    "lowlight_filenames defaults to" +
        "['cyberdojo.sh','makefile','Makefile','unity.license.txt']" +
        "when there is no entry for highlight_filenames" do
     @language = languages['C']
@@ -113,7 +122,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'lowlight_filenames is visible_filenames - highlight_filenames ' +
+  test '829855',
+    'lowlight_filenames is visible_filenames - highlight_filenames' +
        'when there is an entry for highlight_filenames' do
     @language = languages['C']
     visible_filenames = [ 'wibble.hpp', 'wibble.cpp', 'fubar.hpp', 'fubar.cpp' ]
@@ -127,7 +137,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'display_name reads back as set when not renamed' do
+  test 'A74292',
+  'display_name reads back as set when not renamed' do
     name = 'C-assert'
     @language = languages[name]
     display_name = 'C, assert'
@@ -138,7 +149,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'display_test_name reads back as set' do
+  test '872123',
+  'display_test_name reads back as set' do
     name = 'Java-Mockito'
     @language = languages[name]
     expected = 'Mockito'
@@ -149,7 +161,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'display_test_name defaults to unit_test_framework when not set' do
+  test 'E8180F',
+  'display_test_name defaults to unit_test_framework when not set' do
     name = 'Java-Mockito'
     @language = languages[name]
     expected = 'JUnit'
@@ -159,7 +172,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'image_name is read back as set' do
+  test '229DC5',
+  'image_name is read back as set' do
     name = 'Ruby-Test::Unit'
     @language = languages[name]
     expected = 'cyberdojo/language_ruby-1.9.3_test_unit'
@@ -169,7 +183,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'unit_test_framework is read back as set' do
+  test '56CB2A',
+  'unit_test_framework is read back as set' do
     @language = languages['Ruby']
     unit_test_framework = 'Satchmo'
     spy_manifest({ 'unit_test_framework' => unit_test_framework })
@@ -178,7 +193,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'tab_size is read back as set' do
+  test '07290B',
+  'tab_size is read back as set' do
     @language = languages['Ruby']
     tab_size = 9
     spy_manifest({ 'tab_size' => tab_size })
@@ -187,7 +203,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'tab_size defaults to 4 when not set' do
+  test '60F690',
+  'tab_size defaults to 4 when not set' do
     @language = languages['Ruby']
     spy_manifest({})
     assert_equal 4, @language.tab_size
@@ -195,7 +212,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'tab is 7 spaces when tab_size is 7' do
+  test '7E38C3',
+  'tab is 7 spaces when tab_size is 7' do
     @language = languages['Ruby']
     tab_size = 7
     spy_manifest({ 'tab_size' => tab_size })
@@ -204,7 +222,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'tab defaults to 4 spaces when not set' do
+  test '227942',
+  'tab defaults to 4 spaces when not set' do
     @language = languages['Ruby']
     spy_manifest({})
     assert_equal ' '*4, @language.tab
@@ -212,7 +231,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'progress_regexs reads back as set' do
+  test 'F9DC8D',
+  'progress_regexs reads back as set' do
     @language = languages['Ruby']
     regexs = [
       "Errors \\((\\d)+ failures\\)",
@@ -228,7 +248,8 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'progress_regexs defaults to empty array' do
+  test '5EE3B5',
+  'progress_regexs defaults to empty array' do
     @language = languages['Ruby']
     spy_manifest({})
     assert_equal [], @language.progress_regexs
@@ -236,14 +257,16 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'language can be asked if it is runnable' do
+  test '397AB2',
+  'language can be asked if it is runnable' do
     runner.stub_runnable(true)
     assert languages['Ruby'].runnable?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'JSON.parse error raises exception naming the language' do
+  test 'CF389F',
+  'JSON.parse error raises exception naming the language' do
     name = 'Ruby'
     @language = languages[name]
     any_bad_json = '42'
@@ -259,12 +282,13 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'RunnerStub.runnable?(language) is false ' +
+  test '7F5CD6',
+    'RunnerStub.runnable?(language) is false' +
        'when language does not have image_name set in manifest' do
     runner.stub_runnable(false)
     ruby = languages['Ruby-TestUnit']
     ruby.dir.write(manifest_filename, { }) # this line has no effect
-    assert !ruby.runnable?
+    refute ruby.runnable?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

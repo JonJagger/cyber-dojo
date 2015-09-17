@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cyberDojoHome=/var/www/cyber-dojo
+
 if [ "$#" -eq 0 ]; then
   echo
   echo '  How to use test_wrapper.sh'
@@ -21,7 +22,16 @@ if [ "$#" -eq 0 ]; then
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# collect trailing arguments to pass to tests
+# make sure this is being run as www-data
+
+if [ $(whoami) != 'www-data' ]; then
+  cmd="sudo -E -u www-data ${0} $*"
+  $cmd
+  exit
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# collect trailing arguments to forward to tests
 
 while (( "$#" )); do
   if [[ $1 == *.rb ]]; then

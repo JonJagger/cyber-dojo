@@ -1,12 +1,13 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_lib_test_base'
+require_relative './AppLibTestBase'
 
 class GitDiffTests < AppLibTestBase
 
   include GitDiff
 
-  test 'empty file is deleted' do
+  test '74CA5C',
+  'empty file is deleted' do
 
     diff_lines =
     [
@@ -42,7 +43,8 @@ class GitDiffTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'non-empty file is deleted' do
+  test '2DE0C6',
+  'non-empty file is deleted' do
     diff_lines =
     [
       'diff --git a/sandbox/non-empty.h b/sandbox/non-empty.h',
@@ -109,7 +111,8 @@ class GitDiffTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "empty file is created" do
+  test '70DA2C',
+  "empty file is created" do
     diff_lines =
     [
       'diff --git a/sandbox/empty.h b/sandbox/empty.h',
@@ -144,7 +147,8 @@ class GitDiffTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "non-empty file is created" do
+  test '76CD09',
+  "non-empty file is created" do
     diff_lines =
     [
       "diff --git a/sandbox/non-empty.c b/sandbox/non-empty.c",
@@ -209,7 +213,8 @@ class GitDiffTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "existing file is changed" do
+  test '3D94D0',
+  "existing file is changed" do
     diff_lines =
     [
       "diff --git a/sandbox/non-empty.c b/sandbox/non-empty.c",
@@ -274,7 +279,8 @@ class GitDiffTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "unchanged file" do
+  test 'AF735C',
+  "unchanged file" do
     diff_lines = [].join("\n")
     actual_diffs = GitDiff::GitDiffParser.new(diff_lines).parse_all
     expected_diffs =

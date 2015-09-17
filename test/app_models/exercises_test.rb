@@ -1,31 +1,32 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'model_test_base'
+require_relative 'AppModelTestBase'
 
-class ExercisesTests < ModelTestBase
+class ExercisesTests < AppModelTestBase
 
-  test 'path is set from ENV' do
-    path = 'end_with_slash/'
+  test '14AD4C',
+  'exercises path has correct basic format when set with trailing slash' do
+    path = 'slashed/'
     set_exercises_root(path)
     assert_equal path, exercises.path
-    assert path_ends_in_slash?(exercises)
-    assert path_has_no_adjacent_separators?(exercises)    
+    assert correct_path_format?(exercises)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'path is forced to end in a slash' do
+  test 'B09C99',
+  'exercises path has correct basic format when set without trailing slash' do
     path = 'unslashed'
     set_exercises_root(path)
     assert_equal path+'/', exercises.path
-    assert path_ends_in_slash?(exercises)
-    assert path_has_no_adjacent_separators?(exercises)    
+    assert correct_path_format?(exercises)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test 'refresh_cache' do
-    set_disk_class_name('DiskFake')
+  test 'F027CB',
+  'refresh_cache' do
+    set_disk_class('DiskFake')
     disk[exercises.path + '100 doors'].write('instructions', 'imagine there are 100 doors...')    
     exercises.refresh_cache
     exercises_names = exercises.map {|exercise| exercise.name }.sort
@@ -35,15 +36,17 @@ class ExercisesTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'no exercises when cache is empty' do
-    set_disk_class_name('DiskFake')
+  test '3E277A',
+  'no exercises when cache is empty' do
+    set_disk_class('DiskFake')
     exercises.dir.write('cache.json', cache={})    
     assert_equal [], exercises.to_a
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'execises from cache when cache is not empty' do
+  test '52110A',
+  'execises from cache when cache is not empty' do
     cache = {
       '100 doors' => {
         :instructions => 'go here'

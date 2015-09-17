@@ -1,0 +1,17 @@
+{
+  "visible_filenames": [
+    "hiker-spec.js",
+    "hiker.js",
+    "cyber-dojo.sh",
+    "jasmine.json"
+  ],
+  "progress_regexs": [
+    "/(\d+) specs?, ([1-9]\d*) failures?/",
+    "/(\d+) specs?, (0) failures?/"
+  ],
+  "filename_extension": ".js",
+  "unit_test_framework": "jasmine",
+  "display_name": "Javascript, jasmine",
+  "image_name": "cyberdojofoundation/javascript-0.12.7_jasmine-2.3",
+  "tab_size": 2
+}

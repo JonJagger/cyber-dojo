@@ -1,23 +1,29 @@
 
-ENV['RAILS_ENV'] = 'test'
-#ENV['CYBER_DOJO_RUNNER_CLASS_NAME'] = 'DummyTestRunner'
+ENV['RAILS_ENV'] = 'test' # ????
+
+gem 'minitest'
+require 'minitest/autorun'
 
 root = '../..'
 
 require_relative root + '/test/test_coverage'
 require_relative root + '/test/all'
 require_relative root + '/config/environment'
-require_relative root + '/test/TestHelpers'
+require_relative root + '/test/TestDomainHelpers'
+require_relative root + '/test/TestExternalHelpers'
+require_relative root + '/test/TestHexIdHelpers'
   
-class ControllerTestBase < ActionDispatch::IntegrationTest
+class AppControllerTestBase < ActionDispatch::IntegrationTest
 
-  include TestHelpers
-  
+  include TestDomainHelpers
+  include TestExternalHelpers
+  include TestHexIdHelpers
+
   def setup
     super
     root = File.expand_path('../..', File.dirname(__FILE__)) 
     set_katas_root(root + '/tmp/katas')
-    set_one_self_class_name('OneSelfDummy')
+    set_one_self_class('OneSelfDummy')
   end
   
   def create_kata(language_name = random_language, exercise_name = random_exercise)

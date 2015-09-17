@@ -1,6 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_lib_test_base'
+require_relative './AppLibTestBase'
 
 class TdGapperTests < AppLibTestBase
 
@@ -13,7 +13,8 @@ class TdGapperTests < AppLibTestBase
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'number' do
+  test '449AC6',
+  'number' do
     # 0 : 2:30:00 - 2:30:20
     # 1 : 2:30:20 - 2:30:40
     # 2 : 2:30:40 - 2:31:00
@@ -29,7 +30,8 @@ class TdGapperTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'stats' do
+  test '236F5E',
+  'stats' do
     # 0 : 2:30:00 - 2:30:20
     # 1 : 2:30:20 - 2:30:40
     # 2 : 2:30:40 - 2:31:00
@@ -67,7 +69,8 @@ class TdGapperTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'vertical bleed' do
+  test 'E7FE42',
+  'vertical bleed' do
     all_lights =
     {
       'hippo' => [ t1=make_light(30,21), # 1
@@ -94,7 +97,8 @@ class TdGapperTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'collapsed table' do
+  test '807315',
+  'collapsed table' do
     # 30 mins = 30 x 3 x 20 secs = 90 tds
     td_nos = [0,1,4,5]
     expected =
@@ -119,7 +123,8 @@ class TdGapperTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'strip removes lightless tds from both ends' do
+  test '132634',
+  'strip removes lightless tds from both ends' do
     t1=make_light(30,21) # 1
     t2=make_light(31,33) # 4
     t3=make_light(30,25) # 1
@@ -143,7 +148,8 @@ class TdGapperTests < AppLibTestBase
     
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'fully gapped no traffic_lights yet' do
+  test '65B220',
+  'fully gapped no traffic_lights yet' do
     all_lights = { }
     now = [year,month,day+1,hour,32,23] #td 4327
     actual = gapper.fully_gapped(all_lights, now)
@@ -153,7 +159,8 @@ class TdGapperTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'fully gapped' do
+  test 'D4C9F3',
+  'fully gapped' do
     all_lights =
     {
       'hippo' => [ t1=make_light(30,21), # 1

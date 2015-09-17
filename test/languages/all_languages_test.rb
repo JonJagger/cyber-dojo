@@ -1,12 +1,13 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'languages_test_base'
+require_relative 'LanguagesTestBase'
 require_relative 'one_language_checker'
 
 class AllLanguagesTests < LanguagesTestBase
 
-  test 'red-amber-green initial 6*9 state' do
-    checker = OneLanguageChecker.new(verbose=false)
+  test '1B9010',
+  'red-amber-green initial 6*9 state' do
+    checker = OneLanguageChecker.new(verbose=true)
     results = {}
     dirs = Dir.glob("#{languages.path}*/*/manifest.json")
     languages = dirs.map { |file|

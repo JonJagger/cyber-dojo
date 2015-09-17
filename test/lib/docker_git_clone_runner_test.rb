@@ -1,6 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'lib_test_base'
+require_relative 'LibTestBase'
 require_relative 'DockerTestHelpers'
 
 class DockerGitCloneRunnerTests < LibTestBase
@@ -9,23 +9,33 @@ class DockerGitCloneRunnerTests < LibTestBase
 
   def setup
     super
-    set_disk_class_name     'DiskStub'
-    set_git_class_name      'GitSpy'
-    set_one_self_class_name 'OneSelfDummy'
+    set_disk_class     'DiskStub'
+    set_git_class      'GitSpy'
+    set_one_self_class 'OneSelfDummy'
     @lion = make_kata.start_avatar(['lion'])
     @bash = BashStub.new
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'initialize() raises RuntimeError when docker is not installed' do
+  def self.class_name
+    # TODO: test id defaults to name that does not include class name
+    #       this means if two different classes have a test with the
+    #       same name and no explicit hex-id then they will be appear
+    #       the same.
+    'DockerGitCloneRunner'
+  end
+  
+  test 'E60722',
+  "#{class_name}.initialize() raises RuntimeError when docker is not installed" do
     stub_docker_not_installed
     assert_raises(RuntimeError) { make_docker_runner }
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'initialize() uses [docker info] run as [sudo -u cyber-dojo]' do
+  test 'E07891',
+  "#{class_name}.initialize() uses [docker info] run as [sudo -u cyber-dojo]" do
     stub_docker_installed
     make_docker_runner
     assert_equal sudoi('docker info'), @bash.spied[0]
@@ -33,7 +43,8 @@ class DockerGitCloneRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'runnable?(language) uses [docker images] run as [sudo -u cyber-dojo]' do
+  test '639749',
+  'runnable?(language) uses [docker images] run as [sudo -u cyber-dojo]' do
     stub_docker_installed
     docker = make_docker_runner
     stub_docker_images_python_py_test
@@ -44,7 +55,8 @@ class DockerGitCloneRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'started(avatar) clones avatar repo and pushes it to git server' do
+  test 'E61850',
+  'started(avatar) clones avatar repo and pushes it to git server' do
     stub_docker_installed
     docker = make_docker_runner
     assert_equal 1, @bash.spied.size, 'before'
@@ -60,7 +72,8 @@ class DockerGitCloneRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'run() completes and does not timeout - exact bash cmd interaction' do
+  test '40EA5D',
+  "#{class_name}.run() completes and does not timeout - exact bash cmd interaction" do
     stub_docker_installed
     make_docker_runner
     stub_docker_run(completes)
@@ -71,7 +84,8 @@ class DockerGitCloneRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'run() times out - exact bash cmd interaction' do
+  test '9DE083',
+  'run() times out - exact bash cmd interaction' do
     stub_docker_installed
     make_docker_runner
     stub_docker_run(times_out)

@@ -10,7 +10,7 @@ dot_count = 0
 exceptions = [ ]
 dojo.katas.each do |kata|
   begin
-    if !exercises_names.include? kata.original_exercise.name
+    if !exercises_names.include? kata.exercise.name
       renamed[kata.original_exercise.name] ||= [ ]
       renamed[kata.original_exercise.name] << kata.id
     else
@@ -38,11 +38,6 @@ renamed.keys.sort.each do |name|
   count += n
   print number(n,5)
   print "  #{renamed[name].shuffle[0]}"
-  if name == dojo.exercises[name].new_name
-    print " --> MISSING new_name "
-  else
-    print " --> " + dojo.exercises[name].new_name
-  end
   puts
 end
 print ' ' * (33)
@@ -51,7 +46,7 @@ puts
 puts
 
 # - - - - - - - - - - - - - - - - - - - - - -
-print "Rest\n"
+print "Alphabetical\n"
 count = 0
 rest.keys.sort.each do |name|
   dots = '.' * (32 - name.length)
@@ -60,7 +55,6 @@ rest.keys.sort.each do |name|
   count += n
   print number(n,5)
   print "  #{rest[name].shuffle[0]}"
-  print " --> MISSING new_name " if name != dojo.exercises[name].new_name
   puts
 end
 print ' ' * (33)
@@ -69,7 +63,7 @@ puts
 puts
 
 # - - - - - - - - - - - - - - - - - - - - - -
-print "Totals\n"
+print "Popularity\n"
 totals.sort_by{|k,v| v}.reverse.each do |name,count|
   dots = '.' * (32 - name.length)
   print " #{name}#{dots}"

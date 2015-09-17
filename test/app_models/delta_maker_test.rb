@@ -1,9 +1,9 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'model_test_base'
+require_relative 'AppModelTestBase'
 require_relative 'DeltaMaker'
 
-class DeltaMakerTests < ModelTestBase
+class DeltaMakerTests < AppModelTestBase
 
   def setup
     super
@@ -16,34 +16,41 @@ class DeltaMakerTests < ModelTestBase
     refute @maker.now.keys.include?(@new_filename)
   end
 
-  test 'new_file(filename) raises RuntimeError if filename not new' do
+  test 'A63CD3',
+  'new_file(filename) raises RuntimeError if filename not new' do
     assert_raises(RuntimeError) { @maker.new_file(@existing_filename, '')}
   end
 
-  test 'new_file(filename) is then not new' do
+  test '2E2849',
+  'new_file(filename) is then not new' do
     @maker.new_file(@new_filename, content='any')    
     assert_raises(RuntimeError) { @maker.new_file(@new_filename, '')}
   end
     
-  test 'change_file(filename) raises RuntimeError if filename new' do
+  test 'E9D907',
+  'change_file(filename) raises RuntimeError if filename new' do
     assert_raises(RuntimeError) { @maker.change_file(@new_filename, '') }
   end
   
-  test 'change_file(filename) raises RuntimeError if content unchanged' do
+  test '507D76',
+  'change_file(filename) raises RuntimeError if content unchanged' do
     content = @maker.now[@existing_filename]
     assert_raises(RuntimeError) { @maker.change_file(@existing_filename,content) }
   end
 
-  test 'delete_file(filename) raises RuntimeError if filename new' do
+  test 'F7F137',
+  'delete_file(filename) raises RuntimeError if filename new' do
     assert_raises(RuntimeError) { @maker.delete_file(@new_filename) }
   end
   
-  test 'delete_file(filename) is then not present' do
+  test 'B839BC',
+  'delete_file(filename) is then not present' do
     @maker.delete_file(@existing_filename)    
     assert_raises(RuntimeError) { @maker.delete_file(@existing_filename)}
   end
   
-  test 'new_file(filename) succeeds if filename is new' +
+  test '6385D8',
+    'new_file(filename) succeeds if filename is new' +
        ', adds filename to visible_files' +
        ', delta[:new] includes filename' do
     content = 'Snaeda'
@@ -54,7 +61,8 @@ class DeltaMakerTests < ModelTestBase
     assert delta[:new].include?(@new_filename)
   end
 
-  test 'change_file(filename) succeeds if filename is not new and content is new' +
+  test 'AE99D7',
+    'change_file(filename) succeeds if filename is not new and content is new' +
        ", updates filename's content in visible_files" +
        ', delta[:changed] includes filename' do
     new_content = 'Snaeda'
@@ -65,7 +73,8 @@ class DeltaMakerTests < ModelTestBase
     assert delta[:changed].include?(@existing_filename)
   end
 
-  test 'delete_file(filename) succeeds if filename is not new' +
+  test '439B76',
+    'delete_file(filename) succeeds if filename is not new' +
        ', removes filename from visible_files' +
        ', delta[:deleted] includes filename' do
     @maker.delete_file(@existing_filename)

@@ -1,17 +1,18 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_lib_test_base'
+require_relative './AppLibTestBase'
 
 class OutputColourTests < AppLibTestBase
 
   def setup
     super
-    set_runner_class_name('RunnerStub')
+    set_runner_class('RunnerStub')
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
   
-  test 'terminated by the server after n seconds gives timed_out colour ' do
+  test '24C561',
+  'terminated by the server after n seconds gives timed_out colour' do
     [1,5,10].each do |n|
       assert_equal 'timed_out', OutputColour::of('ignored', terminated(n))
     end
@@ -19,7 +20,8 @@ class OutputColourTests < AppLibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
   
-  test 'all saved TestRunner outputs are correctly coloured red/amber/green' do
+  test '9DBD7D',
+  'all saved TestRunner outputs are correctly coloured red/amber/green' do
     root = test_output_path
     disk[root].each_dir do |unit_test_framework|
       ['red','amber','green'].each do |expected|
@@ -39,7 +41,8 @@ class OutputColourTests < AppLibTestBase
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test 'all saved TestRunner outputs have red cases & amber cases & green cases' do
+  test '04F165',
+  'all saved TestRunner outputs have red cases & amber cases & green cases' do
     root = test_output_path    
     disk[root].each_dir do |unit_test_framework|
       ['red','amber','green'].each do |colour|
@@ -52,7 +55,8 @@ class OutputColourTests < AppLibTestBase
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test 'all dojo.languages have corresponding test_output/unit_test_framework' do
+  test '9005E7',
+  'all dojo.languages have corresponding test_output/unit_test_framework' do
     set_languages_root('/var/www/cyber-dojo/languages')    
     runner.stub_runnable(true)
     root = test_output_path        

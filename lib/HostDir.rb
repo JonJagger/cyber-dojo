@@ -56,33 +56,6 @@ class HostDir
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def each_kata_id
-    return enum_for(:each_kata_id) unless block_given?    
-    @disk[path].each_dir do |outer_dir|
-      @disk[path + outer_dir].each_dir do |inner_dir|
-        yield outer_dir + inner_dir
-      end
-    end    
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  def complete_kata_id(id)
-    if !id.nil? && id.length >= 4
-      id.upcase!
-      inner_dir = @disk[path + id[0..1]]
-      if inner_dir.exists?
-        dirs = inner_dir.each_dir.select { |outer_dir|
-          outer_dir.start_with?(id[2..-1])
-        }
-        id = id[0..1] + dirs[0] if dirs.length === 1
-      end
-    end
-    id || ''
-  end
-    
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    
   def lock(&block)
     # io locking uses blocking call.
     # For example, when a player starts-coding then

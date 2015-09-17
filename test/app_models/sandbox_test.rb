@@ -1,21 +1,22 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'model_test_base'
+require_relative 'AppModelTestBase'
 
-class SandboxTests < ModelTestBase
+class SandboxTests < AppModelTestBase
 
-  test 'path(avatar)' do
+  test 'B7E4D5',
+  'sandbox has correct path format' do
     kata = make_kata
     avatar = kata.start_avatar(Avatars.names)
     sandbox = avatar.sandbox
-    assert path_ends_in_slash?(sandbox)
-    assert path_has_no_adjacent_separators?(sandbox)
+    assert correct_path_format?(sandbox)
     assert sandbox.path.include?('sandbox')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "avatar's sandbox == sandbox's avatar" do
+  test '721FF6',
+  "avatar's sandbox == sandbox's avatar" do
     kata = katas['45ED23A2F1']
     avatar = kata.avatars['hippo']
     sandbox = avatar.sandbox
@@ -24,11 +25,12 @@ class SandboxTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'dir is not initially created' do
+  test '2D9F15',
+  'dir is not initially created' do
     kata = katas['45ED23A2F1']
     avatar = kata.avatars['hippo']
     sandbox = avatar.sandbox
-    assert !sandbox.dir.exists?
+    refute sandbox.dir.exists?
   end
 
 end

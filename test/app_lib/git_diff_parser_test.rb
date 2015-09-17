@@ -1,19 +1,21 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_lib_test_base'
+require_relative './AppLibTestBase'
 
 class GitDiffParserTests < AppLibTestBase
 
   include GitDiff
 
-  test 'lines are split' do
+  test 'B5642B',
+  'lines are split' do
     lines = [ 'a', 'b' ]
     assert_equal lines, GitDiffParser.new(lines.join("\n")).lines
   end
 
   #-----------------------------------------------------
 
-  test 'parse diff for filename ending in tab removes the tab' do
+  test 'BD3E14',
+  'parse diff for filename ending in tab removes the tab' do
     was_line =  '--- a/sandbox/ab cd'
     assert_equal 'a/sandbox/ab cd',
       GitDiffParser.new(was_line + "\t").parse_was_filename
@@ -21,7 +23,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'parse diff for filename with space in its name' do
+  test 'F5FD5F',
+  'parse diff for filename with space in its name' do
     was_line =  '--- a/sandbox/ab cd'
     assert_equal 'a/sandbox/ab cd',
       GitDiffParser.new(was_line).parse_was_filename
@@ -29,7 +32,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'parse diff for deleted file' do
+  test '1AF8E3',
+  'parse diff for deleted file' do
     was_line =  '--- a/sandbox/xxx'
     assert_equal 'a/sandbox/xxx',
       GitDiffParser.new(was_line).parse_was_filename
@@ -41,7 +45,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'parse diff for new file' do
+  test 'A392A9',
+  'parse diff for new file' do
     was_line =  '--- /dev/null'
     assert_equal '/dev/null',
       GitDiffParser.new(was_line).parse_was_filename
@@ -53,7 +58,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'parse diff containing quoted filename with backslash' do
+  test '857808',
+  'parse diff containing quoted filename with backslash' do
     filename = '"\\\\was"'
     expected = '\\was'
     actual = GitDiffParser.new('').unescaped(filename)
@@ -62,7 +68,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'parse diff containing filename with backslash' do
+  test 'E9CE10',
+  'parse diff containing filename with backslash' do
 
     lines =
     [
@@ -118,7 +125,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'parse diff deleted file' do
+  test '5AD196',
+  'parse diff deleted file' do
 
     lines =
     [
@@ -151,7 +159,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'parse another diff-form of a deleted file' do
+  test '18B0FE',
+  'parse another diff-form of a deleted file' do
 
     lines =
     [
@@ -208,7 +217,7 @@ class GitDiffParserTests < AppLibTestBase
       actual['a/sandbox/untitled.rb'][:chunks][0][:sections][0][:deleted_lines]
 
     md = %r|^(.)/sandbox/(.*)|.match('a/sandbox/untitled.rb')
-    assert_not_nil md
+    refute_nil md
     assert_equal 'a', md[1]
     filename = md[2]
     assert_equal 'untitled.rb', filename
@@ -217,7 +226,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'parse diff for renamed but unchanged file and newname is quoted' do
+  test '0EED91',
+  'parse diff for renamed but unchanged file and newname is quoted' do
 
     lines =
     [
@@ -252,7 +262,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'parse diff for renamed but unchanged file' do
+  test '7DCE38',
+  'parse diff for renamed but unchanged file' do
 
     lines =
     [
@@ -287,7 +298,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test "parse diff for renamed and changed file" do
+  test '9EBA61',
+  "parse diff for renamed and changed file" do
 
     lines =
     [
@@ -353,7 +365,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'parse diffs for two files' do
+  test '48791D',
+  'parse diffs for two files' do
 
     lines =
     [
@@ -459,7 +472,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'parse range was-size and now-size defaulted' do
+  test '460D56',
+  'parse range was-size and now-size defaulted' do
     lines = '@@ -3 +5 @@'
     expected =
     {
@@ -471,7 +485,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'parse range was-size defaulted' do
+  test 'B8AAAA',
+  'parse range was-size defaulted' do
     lines = '@@ -3 +5,9 @@'
     expected =
     {
@@ -483,7 +498,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'parse range now-size defaulted' do
+  test 'EEC787',
+  'parse range now-size defaulted' do
     lines = '@@ -3,4 +5 @@'
     expected =
     {
@@ -495,7 +511,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'parse range nothing defaulted' do
+  test '08664D',
+  'parse range nothing defaulted' do
     lines = '@@ -3,4 +5,6 @@'
     expected =
     {
@@ -507,7 +524,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'parse no-newline-at-eof without leading backslash' do
+  test 'E17A14',
+  'parse no-newline-at-eof without leading backslash' do
     lines = ' No newline at eof'
     parser = GitDiffParser.new(lines)
 
@@ -518,7 +536,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'parse no-newline-at-eof with leading backslash' do
+  test 'B799B9',
+  'parse no-newline-at-eof with leading backslash' do
     lines = '\\ No newline at end of file'
     parser = GitDiffParser.new(lines)
 
@@ -529,7 +548,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'two chunks with no newline at end of file' do
+  test '3411BC',
+  'two chunks with no newline at end of file' do
 
     lines =
     [
@@ -607,7 +627,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'diff one chunk one section' do
+  test '04EB2C',
+  'diff one chunk one section' do
 
     lines =
     [
@@ -643,7 +664,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'diff one chunk two sections' do
+  test 'D05E9F',
+  'diff one chunk two sections' do
 
     lines =
     [
@@ -690,7 +712,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'standard diff' do
+  test '1D0A8A',
+  'standard diff' do
 
     lines =
     [
@@ -744,7 +767,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'find copies harder finds a rename' do
+  test '9E93B5',
+  'find copies harder finds a rename' do
 
     lines =
     [
@@ -761,7 +785,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'not an deleted line' do
+  test 'D0C2B9',
+  'not an deleted line' do
 
     lines =
     [
@@ -776,7 +801,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'not an added line' do
+  test '66A7A5',
+  'not an added line' do
 
     lines =
     [
@@ -791,7 +817,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'single deleted line' do
+  test '3AB6EE',
+  'single deleted line' do
 
     lines =
     [
@@ -809,7 +836,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'single added line' do
+  test '476B75',
+  'single added line' do
 
     lines =
     [
@@ -827,7 +855,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'single deleted line with trailing newline-at-eof' do
+  test '34D66D',
+  'single deleted line with trailing newline-at-eof' do
 
     lines =
     [
@@ -845,7 +874,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'single added line with trailing newline-at-eof' do
+  test '8E2439',
+  'single added line with trailing newline-at-eof' do
 
     lines =
     [
@@ -863,7 +893,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'two deleted lines' do
+  test 'F27956',
+  'two deleted lines' do
 
     lines =
     [
@@ -882,7 +913,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'two added lines' do
+  test 'D3F08A',
+  'two added lines' do
 
     lines =
     [
@@ -901,7 +933,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'two deleted lines with trailing newline-at-eof' do
+  test '455788',
+  'two deleted lines with trailing newline-at-eof' do
 
     lines =
     [
@@ -921,7 +954,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'two added lines with trailing newline-at-eof' do
+  test 'F81FD8',
+  'two added lines with trailing newline-at-eof' do
 
     lines =
     [
@@ -941,7 +975,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'diff two chunks' do
+  test 'CAEC10',
+  'diff two chunks' do
 
     lines =
     [
@@ -1008,7 +1043,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'when diffs are one line apart' do
+  test '013AD3',
+  'when diffs are one line apart' do
 
     lines =
     [
@@ -1070,7 +1106,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'when diffs are 2 lines apart' do
+  test 'BACD3C',
+  'when diffs are 2 lines apart' do
 
     lines =
     [
@@ -1133,7 +1170,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'when there is less than 7 unchanged lines' +
+  test '438922',
+    'when there is less than 7 unchanged lines' +
        'between 2 changed lines ' +
        'they are merged into one chunk' do
 
@@ -1200,7 +1238,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test '7 unchanged lines between two changed lines' +
+  test 'C1C274',
+    '7 unchanged lines between two changed lines' +
        'creates two chunks' do
 
     lines =
@@ -1280,7 +1319,8 @@ class GitDiffParserTests < AppLibTestBase
 
   #-----------------------------------------------------
 
-  test 'no-newline-at-end-of-file line at end of ' +
+  test '3F08E3',
+    'no-newline-at-end-of-file line at end of' +
        'common section is gobbled' do
 
     # James Grenning has built his own cyber-dojo server

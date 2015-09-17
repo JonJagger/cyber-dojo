@@ -1,6 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_lib_test_base'
+require_relative './AppLibTestBase'
 
 class ReviewFilePickerTests < AppLibTestBase
 
@@ -24,7 +24,8 @@ class ReviewFilePickerTests < AppLibTestBase
 
   #------------------------------------------------------------------
 
-  test 'when current_filename has diffs it is chosen if ' +
+  test '9EF3C0',
+    'when current_filename has diffs it is chosen if' +
        'another file has equal number of diffs' do
     @current_filename = 'hiker.h'
     @diffs = [ ] <<
@@ -37,7 +38,8 @@ class ReviewFilePickerTests < AppLibTestBase
 
   #------------------------------------------------------------------
 
-  test 'when current_filename has no diffs it is chosen if ' +
+  test '6E524A',
+    'when current_filename has no diffs it is chosen if' +
        'it is still exists and no other file has any diffs' do
     @current_filename = 'wibble.cs'
     @diffs = [ ] <<
@@ -48,7 +50,8 @@ class ReviewFilePickerTests < AppLibTestBase
 
   #------------------------------------------------------------------
 
-  test 'when current_filename has no diffs it is still chosen if ' +
+  test 'E45291',
+    'when current_filename has no diffs it is still chosen if' +
        'only other file with diffs is output' do
     @current_filename = 'fubar.cpp'
     @diffs = [ ] <<
@@ -59,7 +62,8 @@ class ReviewFilePickerTests < AppLibTestBase
 
   #------------------------------------------------------------------
 
-  test 'when current_filename has no diffs and another non-output file ' +
+  test '84253F',
+    'when current_filename has no diffs and another non-output file' +
        'has diffs the current_filename is not chosen' do
     @current_filename = 'def'
     @diffs = [ ] <<
@@ -70,7 +74,8 @@ class ReviewFilePickerTests < AppLibTestBase
 
   #------------------------------------------------------------------
 
-  test 'when current_filename is not present and a non output file ' +
+  test '80A6FB',
+    'when current_filename is not present and a non output file' +
        'has diffs then the one with the most diffs is chosen' do
     @current_filename = 'not-present'
     @diffs = [ ] <<
@@ -83,7 +88,8 @@ class ReviewFilePickerTests < AppLibTestBase
 
   #------------------------------------------------------------------
 
-  test 'when current_filename is not present and no non-output file ' +
+  test '8D0729',
+    'when current_filename is not present and no non-output file' +
        'has diffs then largest code file is chosen' do
     @current_filename = nil
     non_code_filenames = [ 'instructions','makefile','cyber-dojo.sh' ]
@@ -98,7 +104,8 @@ class ReviewFilePickerTests < AppLibTestBase
 
   #------------------------------------------------------------------
 
-  test 'when current_filename is not present and no non-output file ' +
+  test '7E59A3',
+    'when current_filename is not present and no non-output file' +
        'has diffs and no code files then pick cyber-dojo.sh' do
     @current_filename = nil
     @diffs = [ ] <<

@@ -1,12 +1,13 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_lib_test_base'
+require_relative './AppLibTestBase'
 
 class GitDiffViewTests < AppLibTestBase
 
   include GitDiff
 
-  test 'example' do
+  test '836292',
+  'example' do
     diffs =
     {
       'hiker.rb' =>

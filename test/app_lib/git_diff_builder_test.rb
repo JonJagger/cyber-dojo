@@ -1,10 +1,11 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_lib_test_base'
+require_relative './AppLibTestBase'
 
 class GitDiffBuilderTests < AppLibTestBase
 
-  test 'chunk with a space in its filename' do
+  test 'A332D7',
+  'chunk with a space in its filename' do
 
     @diff_lines =
     [
@@ -34,7 +35,8 @@ class GitDiffBuilderTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'chunk with defaulted now line info' do
+  test '45733C',
+  'chunk with defaulted now line info' do
 
     @diff_lines =
     [
@@ -63,7 +65,8 @@ class GitDiffBuilderTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'two chunks with leading and trailing same lines ' +
+  test 'D19F10',
+    'two chunks with leading and trailing same lines' +
        'and no newline at eof' do
 
     @diff_lines =
@@ -133,7 +136,8 @@ class GitDiffBuilderTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'diffs 7 lines apart are not merged ' +
+  test '2191C8',
+    'diffs 7 lines apart are not merged' +
        'into contiguous sections in one chunk' do
 
     @diff_lines =
@@ -191,7 +195,8 @@ class GitDiffBuilderTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'one chunk with two sections ' +
+  test '3F8C58',
+    'one chunk with two sections' +
        'each with one line added and one line deleted' do
 
     @diff_lines =
@@ -246,7 +251,8 @@ class GitDiffBuilderTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'one chunk with one section with only lines added' do
+  test '50C56A',
+  'one chunk with one section with only lines added' do
 
     @diff_lines =
     [
@@ -300,7 +306,8 @@ class GitDiffBuilderTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'one chunk with one section with only lines deleted' do
+  test '386FA0',
+  'one chunk with one section with only lines deleted' do
 
     @diff_lines =
     [
@@ -351,7 +358,8 @@ class GitDiffBuilderTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'one chunk with one section ' +
+  test '970ED0',
+    'one chunk with one section' +
        'with more lines deleted than added' do
 
     @diff_lines =
@@ -410,7 +418,8 @@ class GitDiffBuilderTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'one chunk with one section ' +
+  test '56BCAD',
+    'one chunk with one section' +
        'with more lines added than deleted' do
 
     @diff_lines =
@@ -474,7 +483,8 @@ class GitDiffBuilderTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'one chunk with one section ' +
+  test 'A42951',
+    'one chunk with one section' +
        'with one line deleted and one line added' do
 
     @diff_lines =

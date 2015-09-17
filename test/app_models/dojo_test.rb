@@ -1,42 +1,45 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'model_test_base'
+require_relative 'AppModelTestBase'
 
-class DojoTests < ModelTestBase
+class DojoTests < AppModelTestBase
 
-  test 'exercises' do
+  test '209EA1',
+  'exercises' do
     path = 'fake_exercises_path/'
     set_exercises_root(path)
     assert_equal path, exercises.path
   end
 
-  test 'languages' do
+  test '27A597',
+  'languages' do
     path = 'fake_languages_path/'
     set_languages_root(path)    
     assert_equal path, languages.path
   end
 
-  test 'katas' do
+  test 'B6CC06',
+  'katas' do
     path = 'fake_katas_path/'
     set_katas_root(path)    
     assert_equal path, katas.path
   end
 
-  test 'runner' do
-    name = 'RunnerStub'
-    set_runner_class_name(name)
+  test '055B3C',
+  'runner' do
+    set_runner_class(name = 'RunnerStub')
     assert_equal name, runner.class.name
   end
   
-  test 'disk' do
-    name = 'DiskStub'
-    set_disk_class_name(name)
+  test 'B9E496',
+  'disk' do
+    set_disk_class(name = 'DiskStub')
     assert_equal name, disk.class.name
   end
     
-  test 'git' do
-    name = 'GitSpy'
-    set_git_class_name(name)
+  test '8874E9',
+  'git' do
+    set_git_class(name = 'GitSpy')
     assert_equal name, git.class.name
   end
   

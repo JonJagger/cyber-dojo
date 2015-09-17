@@ -1,6 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'lib_test_base'
+require_relative 'LibTestBase'
 
 class FakeDirTests < LibTestBase
 
@@ -13,13 +13,15 @@ class FakeDirTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'path is as set in ctor' do
+  test '3DFFB4',
+  'path is as set in ctor' do
     assert_equal @path, @dir.path
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'exists? is false before make is called, true after' do
+  test '7EAB97',
+  'exists? is false before make is called, true after' do
     assert !@dir.exists?
     @dir.make
     assert @dir.exists?
@@ -27,7 +29,8 @@ class FakeDirTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'exists?(filename) is true after write(filename)' do
+  test '02667B',
+  'exists?(filename) is true after write(filename)' do
     filename = 'wibble.hpp'
     @dir.write(filename, '#include <iostream>')
     assert @dir.exists?(filename)
@@ -35,7 +38,8 @@ class FakeDirTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'after delete(filename) exists?(filename) is false' do
+  test '80386D',
+  'after delete(filename) exists?(filename) is false' do
     filename = 'wibble.hpp'
     @dir.write(filename, '#include <iostream>')
     assert @dir.exists?(filename)
@@ -45,7 +49,8 @@ class FakeDirTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'read(filename) raises if no file exists' do
+  test '23A00D',
+  'read(filename) raises if no file exists' do
     filename = 'wibble.rb'
     error = assert_raises(RuntimeError) { @dir.read(filename) }
     assert_equal "DirFake['#{@path}'].read('#{filename}') no file", error.message
@@ -53,7 +58,8 @@ class FakeDirTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'read(filename) returns previous write(filename,content)' do
+  test '7C2BC9',
+  'read(filename) returns previous write(filename,content)' do
     filename = 'fable.txt'
     content = 'once upon a time'
     @dir.write(filename, content)
@@ -62,7 +68,8 @@ class FakeDirTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'read(filename) raises if different filename stubbed' do
+  test 'AC06A5',
+  'read(filename) raises if different filename stubbed' do
     @dir.write('wibble.h', '#include <stdio.h>')
     filename = 'wibble.cpp'
     error = assert_raises(RuntimeError) { @dir.read(filename) }
@@ -71,7 +78,8 @@ class FakeDirTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'each_dir filters nested-sub-folders to immediate sub-folder only' do
+  test '5990F3',
+  'each_dir filters nested-sub-folders to immediate sub-folder only' do
     @disk[@path + 'a']
     @disk[@path + 'b']
     @disk[@path + 'b/c']
@@ -81,7 +89,8 @@ class FakeDirTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'each_file' do
+  test 'FB696A',
+  'each_file' do
     @disk[@path + 'a'].write('c.txt', 'content')
     @disk[@path + 'a'].write('d.txt', 'content')
     assert_equal ['c.txt','d.txt'], @disk[@path+'a'].each_file.entries.sort
@@ -90,7 +99,8 @@ class FakeDirTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'each_file.select' do
+  test 'B1277C',
+  'each_file.select' do
     @disk[@path + 'a'].write('b.cpp', 'content')
     @disk[@path + 'a'].write('c.txt', 'content')
     @disk[@path + 'a'].write('d.txt', 'content')
@@ -102,7 +112,8 @@ class FakeDirTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'write() raises if filename ends in .rb and content is string' do
+  test 'D7B4B9',
+  'write() raises if filename ends in .rb and content is string' do
     assert_raises RuntimeError do
       @dir.write('filename.rb', 'theory')
     end
@@ -110,14 +121,16 @@ class FakeDirTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'write(filename.rb,content) succeeds and can be read back as ruby object' do
+  test '1A7080',
+  'write(filename.rb,content) succeeds and can be read back as ruby object' do
     @dir.write('filename.rb', { :answer => 42 })
     assert_equal '{:answer=>42}', @dir.read('filename.rb')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'write() raises if filename ends in .json and content is string' do
+  test '69956C',
+  'write() raises if filename ends in .json and content is string' do
     assert_raises RuntimeError do
       @dir.write('filename.json', 'theory')
     end
@@ -125,21 +138,24 @@ class FakeDirTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'write(filename.json,content) succeeds and can be read back as json object' do
+  test 'A52C14',
+  'write(filename.json,content) succeeds and can be read back as json object' do
     @dir.write('filename.json', { :answer => 42 })
     assert_equal '{"answer":42}', @dir.read('filename.json')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'write(filename.txt,content) succeeds and can be read back' do
+  test 'E62D99',
+  'write(filename.txt,content) succeeds and can be read back' do
     @dir.write('filename.txt','hello, world')
     assert_equal 'hello, world', @dir.read('filename.txt')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'Dir.each_dir.select' do
+  test '613B86',
+  'Dir.each_dir.select' do
     @disk[@path + 'alpha'].make
     @disk[@path + 'alpha'].write('a.txt', 'a')
     @disk[@path + 'beta'].make
@@ -152,7 +168,8 @@ class FakeDirTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'lock(block) is executed' do
+  test '0C3F12',
+  'lock(block) is executed' do
     called = false
     @dir.lock do
       called = true

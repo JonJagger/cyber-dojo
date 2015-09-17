@@ -1,30 +1,34 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'model_test_base'
+require_relative 'AppModelTestBase'
 
-class AvatarsTests < ModelTestBase
+class AvatarsTests < AppModelTestBase
 
-  test 'there are 16 avatar names' do
+  test '631149',
+  'there are 16 avatar names' do
     assert_equal 16, Avatars.names.length
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'avatars names all begin with a different letter' do
+  test 'E7A60F',
+  'avatars names all begin with a different letter' do
     first_letters = Avatars.names.collect{|name| name[0]}.uniq
     assert_equal first_letters.length, Avatars.names.length
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'avatars.each is [] when empty' do
+  test 'B6F12F',
+  'avatars.each is [] when empty' do
     kata = make_kata
     assert_equal [], kata.avatars.to_a
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'avatars returns all avatars started in the kata' do
+  test 'B85F79',
+  'avatars returns all avatars started in the kata' do
     kata = make_kata
     kata.start_avatar([cheetah])
     kata.start_avatar([lion])
@@ -33,7 +37,8 @@ class AvatarsTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test 'avatars.map works' do
+  test 'B11555',
+  'avatars.map works' do
     kata = make_kata
     kata.start_avatar([cheetah])
     kata.start_avatar([lion])
@@ -43,7 +48,8 @@ class AvatarsTests < ModelTestBase
     
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'katas[id].avatars returns all avatars started in the kata with that id' do
+  test '1F9350',
+  'katas[id].avatars returns all avatars started in the kata with that id' do
     kata = make_kata
     kata.start_avatar([lion])
     kata.start_avatar([hippo])
@@ -54,7 +60,8 @@ class AvatarsTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'katas[id].avatars[panda] finds the panda' do
+  test '6A074D',
+  'katas[id].avatars[panda] finds the panda' do
     kata = make_kata
     kata.start_avatar([panda])
     assert_equal [panda], kata.avatars.map{|avatar| avatar.name}

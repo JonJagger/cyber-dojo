@@ -1,10 +1,11 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'controller_test_base'
+require_relative 'AppControllerTestBase'
 
-class TipperControllerTest < ControllerTestBase
+class TipperControllerTest < AppControllerTestBase
 
-  test 'traffic_light_tip' do
+  test '25E3D4',
+  'traffic_light_tip' do
     @id = create_kata    
     3.times { enter; 2.times { any_test } }
     get 'tipper/traffic_light_tip', 
@@ -16,7 +17,8 @@ class TipperControllerTest < ControllerTestBase
     assert_response :success
   end
 
-  test 'traffic_light_count_tip' do
+  test 'BB7C60',
+  'traffic_light_count_tip' do
     @id = create_kata    
     1.times { enter; }    
     get 'tipper/traffic_light_count_tip', 

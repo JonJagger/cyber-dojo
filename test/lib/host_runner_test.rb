@@ -1,14 +1,15 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'lib_test_base'
+require_relative 'LibTestBase'
 require 'tempfile'
 
-class HostRunnerTests < LibTestBase
-
-  test 'runnable? is false for Approval style tests' do
-    assert host_runner.runnable?(languages['Asm-assert'])
-    refute host_runner.runnable?(languages['Java-Approval'])
+class SandboxStub
+  def path
+    '.'
   end
+end
+
+class HostRunnerTests < LibTestBase
 
   test 'command executes within timeout and returns command output' do
     sandbox = SandboxStub.new
@@ -35,12 +36,6 @@ class HostRunnerTests < LibTestBase
     HostRunner.new
   end
   
-  class SandboxStub
-    def path
-      '.'
-    end
-  end
-
   def capture_all
     backup_stderr = STDERR.dup
     backup_stdout = STDOUT.dup

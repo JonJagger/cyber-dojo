@@ -4,7 +4,7 @@ class SetupController < ApplicationController
   def show
     @id = id
     @title = 'create'
-    @exercises_names,@instructions = read_exercises        
+    @exercises_names,@instructions = read_exercises
     @initial_exercise_index = choose_exercise(@exercises_names, id, dojo.katas)    
     languages_names = read_languages
     index = choose_language(languages_names, id, dojo.katas)    

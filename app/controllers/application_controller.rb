@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   def disk; dojo.disk; end
   def one_self; dojo.one_self; end
   
-  def id; @id ||= katas.dir.complete_kata_id(params[:id]); end
+  def id; @id ||= katas.complete(params[:id]); end
   def kata; katas[id]; end
   def avatars; kata.avatars; end
   def avatar_name; params[:avatar]; end

@@ -1,10 +1,11 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'controller_test_base'
+require_relative 'AppControllerTestBase'
 
-class DifferControllerTest < ControllerTestBase
+class DifferControllerTest < AppControllerTestBase
 
-  test 'no lines different in any files between successive tags' do
+  test '238AF6',
+  'no lines different in any files between successive tags' do
     @id = create_kata('C++, assert')
     enter # 0
     filename = 'hiker.cpp'
@@ -32,7 +33,8 @@ class DifferControllerTest < ControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'one line different in one file between successive tags' do
+  test 'BEC2BF',
+  'one line different in one file between successive tags' do
     @id = create_kata
     enter # 0
     filename = 'hiker.rb'
@@ -66,7 +68,8 @@ class DifferControllerTest < ControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'tag -1 gives last traffic-light' do
+  test '06FD09',
+  'tag -1 gives last traffic-light' do
     @id = create_kata
     enter     # 0
     any_test  # 1
@@ -79,7 +82,8 @@ class DifferControllerTest < ControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test 'nextAvatar and prevAvatar are empty string for dojo with one avatar' do
+  test '34D490',
+  'nextAvatar and prevAvatar are empty string for dojo with one avatar' do
     @id = create_kata
     enter     # 0
     any_test  # 1
@@ -91,7 +95,8 @@ class DifferControllerTest < ControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'nextAvatar and prevAvatar for dojo with two avatars' do
+  test '9FF76A',
+  'nextAvatar and prevAvatar for dojo with two avatars' do
     @id = create_kata
     firstAvatar = enter # 0
     any_test  # 1
