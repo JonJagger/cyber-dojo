@@ -124,6 +124,9 @@ private
       'Ruby-TestUnit'      => 'Ruby1.9.3-TestUnit',
       'Ruby-Rspec'         => 'Ruby1.9.3-Rspec',
       'Ruby-MiniTest'      => 'Ruby2.1.3-MiniTest',
+      
+      # multiple language versions
+      'Javascript-jasmine' => 'Javascript0.12.7-jasmine2.3'
     }
     (renames[name] || name).split('-')
   end
