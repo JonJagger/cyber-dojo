@@ -144,7 +144,7 @@ module OutputColour # mix-in
     return :green if /test result: ok/.match(output)
     return :amber
   end
-  
+
   def self.parse_go_testing(output)
     return :amber if /FAIL(\s*)_\/sandbox \[build failed\]/.match(output)
     return :red   if /FAIL/.match(output)
@@ -229,6 +229,15 @@ module OutputColour # mix-in
     jasmine_pattern = /(\d+) tests?, (\d+) assertions?, (\d+) failures?/
     if match = jasmine_pattern.match(output)
       match[3] === '0' ? :green : :red
+    else
+      :amber
+    end
+  end
+
+  def self.parse_jasmine2_3(output)
+    jasmine_pattern = /(\d+) specs?, (\d+) failures?/
+    if match = jasmine_pattern.match(output)
+      match[2] === '0' ? :green : :red
     else
       :amber
     end
