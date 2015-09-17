@@ -16,7 +16,9 @@ dojo.katas.each do |kata|
   ok    << kata.id.to_s if !is_empty
 end
 
-puts
+print "\n"
+print "#{ok.length} ok\n"
+print "#{empty.length} empty\n"
 
 dots = Dots.new('deleting')
 empty.each do |id|
@@ -26,6 +28,4 @@ empty.each do |id|
   `#{rm_cmd}`
 end
 
-2.times{puts}
-p "#{ok.length} ok"
-p "#{empty.length} empty"
+2.times { print "\n" }

@@ -8,6 +8,8 @@ def dojo
   Dojo.new
 end
 
+# - - - - - - - - - - - - - - - - - - - - - - - - -
+
 def number(value,width)
   spaces = ' ' * (width - value.to_s.length)
   "#{spaces}#{value.to_s}"
@@ -19,13 +21,20 @@ def dots(dot_count)
   dots + spaces + number(dot_count,5)
 end
 
+# - - - - - - - - - - - - - - - - - - - - - - - - -
+
 class Dots
   def initialize(prompt)
     @count,@prompt = 0,prompt
   end
   def line
-    @count += 1
-    "\r#{@prompt}" + dots
+    if @count % 25 == 0
+      @count += 1
+      return "\r#{@prompt}" + dots
+    else
+      @count += 1
+      return ''
+    end
   end
 private
   def dots
@@ -35,6 +44,8 @@ private
     dots + spaces + number(@count,5)    
   end
 end
+
+# - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def mention(exceptions)
   if exceptions != [ ]
@@ -46,6 +57,8 @@ def mention(exceptions)
     puts
   end
 end
+
+# - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def refactoring_ids
   ids = []
