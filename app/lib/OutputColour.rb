@@ -226,15 +226,6 @@ module OutputColour # mix-in
   end
 
   def self.parse_jasmine(output)
-    jasmine_pattern = /(\d+) tests?, (\d+) assertions?, (\d+) failures?/
-    if match = jasmine_pattern.match(output)
-      match[3] === '0' ? :green : :red
-    else
-      :amber
-    end
-  end
-
-  def self.parse_jasmine2_3(output)
     jasmine_pattern = /(\d+) specs?, (\d+) failures?/
     if match = jasmine_pattern.match(output)
       match[2] === '0' ? :green : :red

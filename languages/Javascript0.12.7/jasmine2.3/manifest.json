@@ -10,8 +10,8 @@
     "/(\d+) specs?, (0) failures?/"
   ],
   "filename_extension": ".js",
-  "unit_test_framework": "jasmine2_3",
-  "display_name": "Javascript, jasmine2.3",
+  "unit_test_framework": "jasmine",
+  "display_name": "Javascript, jasmine",
   "image_name": "cyberdojofoundation/javascript-0.12.7_jasmine-2.3",
   "tab_size": 2
 }
