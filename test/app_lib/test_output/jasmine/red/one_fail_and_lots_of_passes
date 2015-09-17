@@ -1,12 +1,13 @@
-..F
+Started
+F..
 
 Failures:
+1) answer to life the universe and everything
+  Message:
+    Expected 54 to equal 42.
+  Stack:
+    Error: Expected 54 to equal 42.
+        at Object.<anonymous> (/sandbox/hiker-spec.js:6:22)
 
-  1) should pass 2
-   Message:
-     Expected 42 to equal 54.
-   Stacktrace:
-     Error: Expected 42 to equal 54.
-
-Finished in 0.032 seconds
-3 tests, 3 assertions, 1 failure
+3 specs, 1 failure
+Finished in 0.035 seconds
