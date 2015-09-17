@@ -19,6 +19,23 @@ def dots(dot_count)
   dots + spaces + number(dot_count,5)
 end
 
+class Dots
+  def initialize(prompt)
+    @count,@prompt = 0,prompt
+  end
+  def line
+    @count += 1
+    "\r#{@prompt}" + dots
+  end
+private
+  def dots
+    n = 32 - @prompt.length
+    dots = '.' * (@count % n)
+    spaces = ' ' * (n - @count % n)
+    dots + spaces + number(@count,5)    
+  end
+end
+
 def mention(exceptions)
   if exceptions != [ ]
     puts
