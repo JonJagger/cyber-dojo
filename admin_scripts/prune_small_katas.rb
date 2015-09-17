@@ -24,19 +24,23 @@ def min_days_old; ARGV[1].to_i; end
 
 def do_delete; (ARGV[2] || "false"); end
 
+$exceptions = {}
+
 def prune_stats
+  dots = Dots.new('searching')
   stats = { }
   dojo.katas.select{|kata|
     !refactoring_ids.include?(kata.id.to_s)
   }.each do |kata|
     begin
+      print dots.line
       lights_count = kata.avatars.inject(0){|sum,avatar| sum += avatar.lights.length}
       days_old = (kata.age / 60 / 60 / 24).to_i
       #p "#{kata.id} #{lights_count} #{days_old}"    
       stats[lights_count] ||= [ ]
       stats[lights_count] << [kata.id,days_old]
-    rescue
-      puts "prune_small... Exception from #{kata.id.to_s}"      
+    rescue => error
+      $exceptions[kata.id.to_s] = error.message
     end
   end
   stats
@@ -80,3 +84,5 @@ end
 prune { |traffic_light_count,days_old|
   traffic_light_count <= max_traffic_light_count and days_old >= min_days_old
 }
+
+mention($exceptions)
