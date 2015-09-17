@@ -29,3 +29,23 @@ def mention(exceptions)
     puts
   end
 end
+
+def refactoring_ids
+  ids = []
+  ids << 'E2285E5C2B'  # Yahtzee C#-NUnit deer 9
+  ids << '9D5B580C30'  # Yahtzee Java-JUnit deer 9
+  ids << '76DD58DE08'  # Yahtzee C++-assert frog 18
+  ids << '5C5B71C765'  # Yahtzee Python-unittest hippo 42
+
+  # http://coding-is-like-cooking.info/2013/01/setting-up-a-new-code-kata-in-cyber-dojo/
+  ids << '672E047F5D'  # Tennis  C#-NUnit buffalo 11
+  ids << '3367E4B0E9'  # Tennis  Ruby-TestUnit raccoon 4
+  ids << 'B22DCD17C3'  # Tennis  Java-JUnit buffalo 13
+  ids << 'A06DCDA217'  # Tennis  C++-assert wolf 7
+  ids << '435E5C1C88'  # Tennis  Python-unittest moose 5
+  ids
+end
+
+def refactoring_tar_filename
+  'refactoring_dojos.tgz'
+end

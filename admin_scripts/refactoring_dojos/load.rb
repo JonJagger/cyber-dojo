@@ -4,4 +4,6 @@
 # of the refactoring dojos when unzipping them.
 # This is done with tar's p option.
 
-`tar -C /var/www/cyber-dojo -xvpf refactoring_dojos.tgz`
+require_relative '../lib_domain'
+
+`tar -C /var/www/cyber-dojo -xvpf #{refactoring_tar_filename}`
