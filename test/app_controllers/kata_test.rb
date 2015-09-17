@@ -4,7 +4,8 @@ require_relative 'AppControllerTestBase'
 
 class KataControllerTest  < AppControllerTestBase
 
-  test 'edit and then run-tests' do
+  test '9390F6',
+  'edit and then run-tests' do
     create_kata
     enter
     kata_edit

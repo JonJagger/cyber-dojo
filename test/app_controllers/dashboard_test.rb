@@ -9,7 +9,8 @@ class DashboardControllerTest < AppControllerTestBase
     create_kata
   end
   
-  test 'dashboard when no avatars' do
+  test '62A971',
+  'dashboard when no avatars' do
     dashboard
     options = [ false, true, 'xxx' ]
     options.each do |mc|
@@ -20,28 +21,33 @@ class DashboardControllerTest < AppControllerTestBase
     # How do I test @attributes in the controller object?
   end
 
-  test 'dashboard when avatars with no traffic-lights' do
+  test 'B4329E',
+  'dashboard when avatars with no traffic-lights' do
     4.times { enter }
     dashboard
   end
 
-  test 'dashboard when avatars with some traffic lights' do
+  test '20AE43',
+  'dashboard when avatars with some traffic lights' do
     3.times { enter; 2.times { any_test } }
     dashboard
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'heartbeat when no avatars' do
+  test '7906CB',
+  'heartbeat when no avatars' do
     heartbeat
   end
 
-  test 'heartbeat when avatars with no traffic-lights' do    
+  test '1AB1FB',
+  'heartbeat when avatars with no traffic-lights' do
     3.times { enter; 2.times { any_test } }
     heartbeat
   end
     
-  test 'heartbeat when some traffic-lights' do
+  test '674785',
+  'heartbeat when some traffic-lights' do
     enter     # 0
     any_test  # 1
     heartbeat
@@ -49,16 +55,19 @@ class DashboardControllerTest < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'progress when no avatars' do
+  test '904330',
+  'progress when no avatars' do
     progress
   end
 
-  test 'progress when avatars with no traffic-lights' do
+  test '220619',
+  'progress when avatars with no traffic-lights' do
     enter # 0
     progress
   end
   
-  test 'progress when avatar has only amber traffic-lights' do
+  test '3B04FE',
+  'progress when avatar has only amber traffic-lights' do
     set_runner_class('RunnerStub')
     enter                     # 0
     stub_test_output(:amber)  # 1

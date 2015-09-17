@@ -19,7 +19,8 @@ class ReverterControllerTest  < AppControllerTestBase
     super
   end
 
-  test 'revert' do
+  test '81F276',
+  'revert' do
     kata_edit
 
     filename = 'Hiker.java'
