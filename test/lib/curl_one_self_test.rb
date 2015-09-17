@@ -1,8 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
-require 'minitest/autorun'
-require_relative '../ideas/TestWithId'
-require_relative 'lib_test_base'
+require_relative 'LibTestBase'
 
 class BackgroundProcessSpy
   def initialize
@@ -18,20 +16,17 @@ end
 
 class CurlOneSelfTests < LibTestBase
 
-  def self.tests
-    @@tests ||= TestWithId.new(self)
-  end
-
   def setup
     super
-    set_disk_class_name     'DiskStub'
-    set_git_class_name      'GitSpy'
-    set_one_self_class_name 'OneSelfDummy'
+    set_disk_class     'DiskStub'
+    set_git_class      'GitSpy'
+    set_one_self_class 'OneSelfDummy'
     # important to use OneSelfDummy because
     # creating a new kata calls dojo.one_self.created
   end
 
-  tests['2ED22E'].is 'kata created' do
+  test '6B2BB0',
+  'kata created' do
     processes = BackgroundProcessSpy.new
     one_self = CurlOneSelf.new(disk, processes)
 #    kata = make_kata

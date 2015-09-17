@@ -1,16 +1,11 @@
 #!/bin/bash ../test_wrapper.sh
 
-require 'minitest/autorun'
-require_relative '../ideas/TestWithId'
-require_relative 'lib_test_base'
+require_relative 'LibTestBase'
 
-class CurlOneSelfTests < LibTestBase #MiniTest::Test
+class CurlOneSelfTests < LibTestBase
 
-  def self.tests
-    @@tests ||= TestWithId.new(self)
-  end
-
-  tests['F01E97'].is 'A process started in the background does not block' do
+  test 'D54BA5',
+  'A process started in the background does not block' do
     background_process = BackgroundProcess.new
 
     start_time = Time.now
