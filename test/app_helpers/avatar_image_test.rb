@@ -6,7 +6,8 @@ class AvatarImageTests < AppHelpersTestBase
 
   include AvatarImageHelper
 
-  test 'avatar_image html' do
+  test 'E30BAA',
+  'avatar_image html' do
     html = avatar_image(name='hippo', size=42, title='wibble')
     assert html.start_with?('<img '), '<img : ' + html
     assert html.match("height='#{size}'"), 'height: ' + html

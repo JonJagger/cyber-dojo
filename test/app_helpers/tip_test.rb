@@ -13,7 +13,8 @@ class TipTests < AppHelpersTestBase
   
   #- - - - - - - - - - - - - - - - - -
   
-  test 'traffic light count tip' do
+  test 'FAE414',
+  'traffic light count tip' do
     params = {
       'avatar' => 'lion',
       'current_colour' => 'red',
@@ -35,7 +36,8 @@ class TipTests < AppHelpersTestBase
 
   #- - - - - - - - - - - - - - - - - -
 
-  test 'traffic light tip' do
+  test 'BDAD52',
+  'traffic light tip' do
     set_runner_class('RunnerStub')
     set_git_class('GitSpy')
     kata = make_kata

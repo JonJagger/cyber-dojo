@@ -3,6 +3,12 @@
 require_relative 'LibTestBase'
 require 'tempfile'
 
+class SandboxStub
+  def path
+    '.'
+  end
+end
+
 class HostRunnerTests < LibTestBase
 
   test 'command executes within timeout and returns command output' do
@@ -30,12 +36,6 @@ class HostRunnerTests < LibTestBase
     HostRunner.new
   end
   
-  class SandboxStub
-    def path
-      '.'
-    end
-  end
-
   def capture_all
     backup_stderr = STDERR.dup
     backup_stdout = STDOUT.dup

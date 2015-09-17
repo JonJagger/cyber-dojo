@@ -6,7 +6,8 @@ class PieChartTests < AppHelpersTestBase
 
   include PieChartHelper
 
-  test 'pie-chart from avatar.lights' do
+  test '10E59E',
+  'pie-chart from avatar.lights' do
     set_disk_class('DiskStub')
     kata = make_kata
     lion = kata.avatars['lion']
@@ -43,7 +44,8 @@ class PieChartTests < AppHelpersTestBase
   
   #- - - - - - - - - - - - - - - - - - - -
 
-  test 'pie-chart from lights' do
+  test '3AF953',
+  'pie-chart from lights' do
     lights = [
       red_light,
       red_light,
@@ -70,7 +72,8 @@ class PieChartTests < AppHelpersTestBase
 
   #- - - - - - - - - - - - - - - - - - - -
 
-  test 'pie-chart from counts' do
+  test '490C54',
+  'pie-chart from counts' do
     counts = {
       :red => 5,
       :amber => 0,
