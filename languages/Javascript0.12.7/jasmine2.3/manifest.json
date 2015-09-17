@@ -11,7 +11,7 @@
   ],
   "filename_extension": ".js",
   "unit_test_framework": "jasmine2_3",
-  "display_name": "Javascript, jasmine2.3",
-  "image_name": "cyberdojo/javascript-0.12.7_jasmine-2.3",
+  "display_name": "Javascript0.12.7, jasmine2.3",
+  "image_name": "cyberdojofoundation/javascript-0.12.7_jasmine-2.3",
   "tab_size": 2
 }

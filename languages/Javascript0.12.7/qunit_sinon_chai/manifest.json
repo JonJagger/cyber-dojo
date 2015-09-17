@@ -1,0 +1,12 @@
+{
+  "visible_filenames": [
+    "hiker-spec.js",
+    "hiker.js",
+    "cyber-dojo.sh"
+  ],
+  "filename_extension": ".js",
+  "unit_test_framework": "qunit",
+  "display_name": "Javascript0.12.7, qunit_sinon_chai",
+  "image_name": "cyberdojo/javascript-0.12.7_qunit_sinon_chai",
+  "tab_size": 2
+}
