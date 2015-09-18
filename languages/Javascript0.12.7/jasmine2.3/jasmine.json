@@ -1,9 +1,5 @@
 {
     "spec_dir": ".",
-    "spec_files": [
-        "*[sS]pec.js"
-    ],
-    "helpers": [
-        "*helper.js"
-    ]
+    "spec_files": [ "*[sS]pec.js" ],
+    "helpers": [ "*helper.js" ]
 }

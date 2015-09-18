@@ -1,5 +1,10 @@
 #!/usr/bin/env ruby
 
+# script to delete empty katas.
+# running on 17th Sept 2015 deleted 7,553 empty katas
+# leavng 28,842 non empty.
+# It saved only 15389 inodes. Not worth doing.
+
 require_relative 'lib_domain'
 
 def empty?(avatar)
@@ -16,7 +21,9 @@ dojo.katas.each do |kata|
   ok    << kata.id.to_s if !is_empty
 end
 
-puts
+print "\n"
+print "#{ok.length} ok\n"
+print "#{empty.length} empty\n"
 
 dots = Dots.new('deleting')
 empty.each do |id|
@@ -26,6 +33,4 @@ empty.each do |id|
   `#{rm_cmd}`
 end
 
-2.times{puts}
-p "#{ok.length} ok"
-p "#{empty.length} empty"
+2.times { print "\n" }
