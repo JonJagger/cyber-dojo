@@ -33,7 +33,7 @@ setfacl -d -m group:www-data:rwx $cyberDojoHome/katas
 setfacl -m group:www-data:rwx $cyberDojoHome/katas
 
 # ensure all files have correct rights
-for folder in admin_scripts app config exercises languages lib log notes public script spec test
+for folder in admin_scripts app config coverage exercises languages lib log notes public script spec test
 do
   echo "chown www-data:www-data ${folder}"
   chown -R www-data:www-data $cyberDojoHome/$folder
@@ -57,14 +57,15 @@ chown -R www-data:www-data $cyberDojoHome/tmp
 echo "deleting the rails cache"
 rm -rf $cyberDojoHome/tmp/*
 
+echo "poking rails"
+rm $cyberDojoHome/Gemfile.lock
+bundle install
+
 echo "refreshing the languages/"
 $cyberDojoHome/languages/refresh_cache.rb
 
 echo "refreshing the exercises/"
 $cyberDojoHome/exercises/refresh_cache.rb
-
-echo "poking rails"
-bundle install
 
 echo "restarting apache"
 service apache2 restart

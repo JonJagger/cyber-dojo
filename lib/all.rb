@@ -6,6 +6,7 @@
   Stderr2Stdout
   Cleaner
   Bash
+  BackgroundProcess
   HttpRequester
   Runner
     DockerTimesOutRunner
