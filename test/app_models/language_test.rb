@@ -109,14 +109,14 @@ class LanguageTests < AppModelTestBase
 
   test '7E3D8B',
     "lowlight_filenames defaults to" +
-       "['cyberdojo.sh','makefile','Makefile','unity.license.txt']" +
+       "['cyberdojo.sh','makefile','Makefile','unity.license.txt','jasmine.json']" +
        "when there is no entry for highlight_filenames" do
     @language = languages['C']
     visible_filenames = [ 'wibble.hpp', 'wibble.cpp' ]
     spy_manifest({
         'visible_filenames' => visible_filenames,
       })
-    expected = ['cyber-dojo.sh','makefile','Makefile','unity.license.txt'].sort
+    expected = ['cyber-dojo.sh','makefile','Makefile','unity.license.txt','jasmine.json'].sort
     assert_equal expected, @language.lowlight_filenames.sort
   end
 
