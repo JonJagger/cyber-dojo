@@ -17,4 +17,11 @@ class CurlOneSelfTests < LibTestBase
     assert run_time < 1000, "Starting the background process took longer than 1 second to complete"
   end
 
+  test '4e78b26f',
+  'Starting a background process that does not exist does not crash the host process' do
+    background_process = BackgroundProcess.new
+
+    background_process.start("this-does-not-exist")
+  end
+
 end
