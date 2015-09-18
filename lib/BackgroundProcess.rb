@@ -5,6 +5,9 @@ require 'open4'
 
 class BackgroundProcess
   def start(cmd)
-    Open4::popen4(cmd)
+    begin
+      Open4::popen4(cmd)
+    rescue
+    end
   end
 end
