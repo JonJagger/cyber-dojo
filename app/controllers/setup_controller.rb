@@ -25,7 +25,7 @@ class SetupController < ApplicationController
       :latitude => latitude,
       :longtitude => longtitude
     }
-    one_self.created(hash)
+    #one_self.created(hash)
     render json: { id: kata.id.to_s }
   end
 
