@@ -177,6 +177,3 @@ DEPENDENCIES
   selenium-webdriver (>= 2.43.0)
   shoulda-matchers
   simplecov (>= 0.9.0)
-
-BUNDLED WITH
-   1.10.6
