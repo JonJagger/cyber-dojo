@@ -4,7 +4,7 @@
 %w{
   IdSplitter
   Stderr2Stdout
-  Cleaner  
+  Cleaner
   Bash
   HttpRequester
   Runner
@@ -12,12 +12,13 @@
     DockerGitCloneRunner
     DockerVolumeMountRunner
     HostRunner
-  HostDisk  
+  HostDisk
   HostDir
   HostGit
   TimeNow
   UniqueId
   LanguagesDisplayNamesSplitter
-  OneSelf  
+  OneSelf
   OneSelfDummy
+  CurlOneSelf
 }.each { |sourcefile| require_relative './' + sourcefile }
