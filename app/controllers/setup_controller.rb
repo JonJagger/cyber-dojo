@@ -13,45 +13,38 @@ class SetupController < ApplicationController
   end
 
   def save
+    language_name = params['language']
+    test_name     = params['test'    ]
+    exercise_name = params['exercise']
+    id = unique_id
+    now = time_now
+    #Thread.start { one_self_created(language_name,test_name,exercise_name,id,now) }
     language = languages[language_name + '-' + test_name]
     exercise = exercises[exercise_name]
-    kata = katas.create_kata(language, exercise)
-    hash = {
-      :now => time_now,      
-      :kata_id => kata.id,
-      :exercise_name => exercise_name,
-      :language_name => language_name,
-      :test_name => test_name,
-      :latitude => latitude,
-      :longtitude => longtitude
-    }
-    #one_self.created(hash)
-    render json: { id: kata.id.to_s }
+    katas.create_kata(language,exercise,id,now)
+    render json: { id: id }
   end
 
 private
 
+  include Chooser
   include SetupWorker
-  include TimeNow  
+  include TimeNow
+  include UniqueId
 
-  def language_name
-    params['language']
-  end
-  
-  def test_name
-    params['test']
-  end
-  
-  def exercise_name
-    params['exercise']
-  end
-  
-  def latitude
-    Float(params['latitude'].to_s) rescue ''
-  end
-  
-  def longtitude
-    Float(params['longtitude'].to_s) rescue ''
+  def one_self_created(language_name,test_name,exercise_name,id,now)
+    latitude   = Float(params['latitude'  ].to_s) rescue ''
+    longtitude = Float(params['longtitude'].to_s) rescue ''
+    hash = {
+      :kata_id       => id,
+      :now           => now,
+      :language_name => language_name,
+      :test_name     => test_name,
+      :exercise_name => exercise_name,
+      :latitude      => latitude,
+      :longtitude    => longtitude
+    }
+    one_self.created(hash)    
   end
 
 end

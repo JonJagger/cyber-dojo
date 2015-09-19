@@ -20,7 +20,7 @@ class OneSelf
         'long' => hash[:longtitude] 
       },
       'properties' => {
-        'dojo-id' => hash[:kata_id],
+        'dojo-id'       => hash[:kata_id],
         'exercise-name' => hash[:exercise_name],
         'language-name' => hash[:language_name],
         'test-name'     => hash[:test_name]

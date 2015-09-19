@@ -1,8 +1,8 @@
 
 module SetupWorker # mixin
   
-  include Chooser
-  
+  module_function
+
   def read_languages
     languages.select{ |language|
       language.runnable?
