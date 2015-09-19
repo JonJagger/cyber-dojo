@@ -38,8 +38,9 @@ class TipTests < AppHelpersTestBase
 
   test 'BDAD52',
   'traffic light tip' do
-    set_runner_class('RunnerStub')
-    set_git_class('GitSpy')
+    set_runner_class 'RunnerStub'
+    set_git_class    'GitSpy'
+    set_disk_class   'DiskStub'
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     
