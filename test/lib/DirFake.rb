@@ -72,11 +72,11 @@ class DirFake
 
   def write(filename, content)
     if filename.end_with?('.rb')
-      assert_not_string(content,filename)
+      #assert_not_string(content,filename)
       content = content.inspect
     end
     if filename.end_with?(".json")
-      assert_not_string(content,filename)
+      #assert_not_string(content,filename)
       content = JSON.unparse(content)
     end
     make

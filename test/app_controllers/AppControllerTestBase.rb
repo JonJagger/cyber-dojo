@@ -30,7 +30,7 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
     parts = language_name.split(',')
     params = { 
       :language => parts[0].strip,
-      :test => parts[1].strip,
+      :test     => parts[1].strip,
       :exercise => exercise_name
     }
     get 'setup/save', params
@@ -77,7 +77,7 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
     # todo: refactor
     #       copied from test/TestHelpers.rb stub_test_colours (private)
     avatar = katas[@id].avatars[@avatar_name]
-    disk = dojo.disk
+    disk = HostDisk.new
     root = File.expand_path(File.dirname(__FILE__) + '/..') + '/app_lib/test_output'
     assert [:red,:amber,:green].include? rag
     path = "#{root}/#{avatar.kata.language.unit_test_framework}/#{rag}"
