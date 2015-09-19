@@ -6,6 +6,11 @@ class SetupChooserTests < AppLibTestBase
 
   include SetupChooser
 
+  def setup
+    super
+    set_disk_class 'DiskStub'
+  end
+
   test 'CD36CB',
     'when no id is given then' +
        ' choose random known language and' +
