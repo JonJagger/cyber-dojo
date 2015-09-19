@@ -4,7 +4,7 @@
 %w{
   IdSplitter
   Stderr2Stdout
-  Cleaner
+  StringCleaner
   Bash
   BackgroundProcess
   HttpRequester

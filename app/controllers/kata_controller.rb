@@ -56,7 +56,7 @@ class KataController < ApplicationController
 
 private
 
-  include Cleaner
+  include StringCleaner
   include TimeNow
 
   def received_files

@@ -21,7 +21,7 @@ class HostGit
   
 private
 
-  include Cleaner
+  include StringCleaner
   include Stderr2Stdout
 
   def success

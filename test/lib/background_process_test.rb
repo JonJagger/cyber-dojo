@@ -2,7 +2,7 @@
 
 require_relative 'LibTestBase'
 
-class CurlOneSelfTests < LibTestBase
+class BackgrounProcessTests < LibTestBase
 
   def setup
     super

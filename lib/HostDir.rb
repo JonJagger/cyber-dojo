@@ -76,7 +76,7 @@ class HostDir
 
 private
 
-  include Cleaner
+  include StringCleaner
 
   def dot?(name)
     name.end_with?('/.') || name.end_with?('/..')
