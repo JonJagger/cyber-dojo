@@ -112,28 +112,10 @@ class FakeDirTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'D7B4B9',
-  'write() raises if filename ends in .rb and content is string' do
-    assert_raises RuntimeError do
-      @dir.write('filename.rb', 'theory')
-    end
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-
   test '1A7080',
   'write(filename.rb,content) succeeds and can be read back as ruby object' do
     @dir.write('filename.rb', { :answer => 42 })
     assert_equal '{:answer=>42}', @dir.read('filename.rb')
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-
-  test '69956C',
-  'write() raises if filename ends in .json and content is string' do
-    assert_raises RuntimeError do
-      @dir.write('filename.json', 'theory')
-    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -

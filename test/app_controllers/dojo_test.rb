@@ -1,8 +1,20 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'AppControllerTestBase'
+require_relative './AppControllerTestBase'
+require_relative './RailsDiskStubThreadAdapter'
+require_relative './RailsGitSpyThreadAdapter'
 
 class DojoControllerTest < AppControllerTestBase
+
+  def setup
+    super
+    root = File.expand_path('../..', File.dirname(__FILE__))
+    set_katas_root(root + '/katas')
+    set_disk_class('RailsDiskStubThreadAdapter')
+    RailsDiskStubThreadAdapter.reset
+    set_git_class('RailsGitSpyThreadAdapter')
+    RailsGitSpyThreadAdapter.reset
+  end
 
   test 'BF7103',
   'index without id' do

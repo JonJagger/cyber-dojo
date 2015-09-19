@@ -3,6 +3,7 @@
 require_relative './AppControllerTestBase'
 require_relative './RailsDiskStubThreadAdapter'
 require_relative './RailsGitSpyThreadAdapter'
+require_relative './RailsRunnerStubThreadAdapter'
 
 class DashboardControllerTest < AppControllerTestBase
 
@@ -14,6 +15,9 @@ class DashboardControllerTest < AppControllerTestBase
     RailsDiskStubThreadAdapter.reset
     set_git_class('RailsGitSpyThreadAdapter')
     RailsGitSpyThreadAdapter.reset
+    set_runner_class('RailsRunnerStubThreadAdapter')
+    RailsRunnerStubThreadAdapter.reset
+    runner.stub_output('sdssd')
     create_kata
   end
   
