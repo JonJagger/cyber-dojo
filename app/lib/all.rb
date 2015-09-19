@@ -1,6 +1,6 @@
 
 %w{
-  Chooser 
+  SetupChooser 
   FileDeltaMaker
   GitDiff 
   GitDiffBuilder 

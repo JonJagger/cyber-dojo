@@ -27,7 +27,7 @@ class SetupController < ApplicationController
 
 private
 
-  include Chooser
+  include SetupChooser
   include SetupWorker
   include TimeNow
   include UniqueId

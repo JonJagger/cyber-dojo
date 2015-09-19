@@ -1,5 +1,5 @@
 
-module SetupWorker # mixin
+module SetupWorker # mix-in
   
   module_function
 
