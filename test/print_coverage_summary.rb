@@ -100,9 +100,9 @@ def gather_stats
     h[:error_count]     = m[4].to_i
     #h[:skip_count]      = m[5].to_i
 
-    coverage_pattern = "Coverage = #{number}%"    
+    coverage_pattern = "Coverage of ([^\=]*) = #{number}%"
     m = log.match(Regexp.new(coverage_pattern))
-    h[:coverage] = f2(m[1])
+    h[:coverage] = f2(m[2])
   end
   stats
 end
