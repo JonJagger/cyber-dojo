@@ -2,9 +2,9 @@
 
 require_relative './AppLibTestBase'
 
-class ChooseTests < AppLibTestBase
+class SetupChooserTests < AppLibTestBase
 
-  include Chooser
+  include SetupChooser
 
   test 'CD36CB',
     'when no id is given then' +
