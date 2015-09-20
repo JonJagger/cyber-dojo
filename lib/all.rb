@@ -7,7 +7,6 @@
   StringCleaner
   Bash
   BackgroundProcess
-  HttpRequester
   Runner
     DockerTimesOutRunner
     DockerGitCloneRunner
@@ -19,7 +18,6 @@
   TimeNow
   UniqueId
   LanguagesDisplayNamesSplitter
-  OneSelf
   OneSelfDummy
   CurlOneSelf
 }.each { |sourcefile| require_relative './' + sourcefile }

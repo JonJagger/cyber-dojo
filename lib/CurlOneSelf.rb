@@ -59,10 +59,6 @@ private
       'ddbc8384eaf4b6f0e70d66b606ccbf7ad4bb22bfe113'
     end
 
-    def json_header
-      { 'Content-Type' =>'application/json', 'Authorization' => write_token }
-    end
-
     def streams_url
       'https://api.1self.co/v1/streams'
     end
