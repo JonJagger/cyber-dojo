@@ -31,7 +31,11 @@ class HostDir
   end
 
   def make
-    FileUtils.mkdir_p(path) # creates intermediate dirs as required
+    # Creates intermediate dirs as required.
+    # The filename could be pathed, eg a/b/c/def.hpp if I
+    # allowed pathed filenames to be entered from the browser
+    # (or via language manifests) which I currently don't.
+    FileUtils.mkdir_p(path)
   end
 
   def write_json(filename, object)
@@ -41,9 +45,6 @@ class HostDir
   end
 
   def write(filename, s)
-    # The filename could be pathed, eg a/b/c/def.hpp if I
-    # allowed pathed filenames to be entered from the browser
-    # (or via language manifests) which I currently don't.
     raise RuntimeError.new('not a string') if !s.is_a? String
     make
     pathed_filename = path + filename
@@ -59,8 +60,8 @@ class HostDir
 
   def lock(&block)
     # io locking uses blocking call.
-    # For example, when a player starts-coding then
-    # the controller needs to wait to acquire a lock on
+    # For example, when a player enters a dojo the
+    # controller needs to wait to acquire a lock on
     # the dojo folder before choosing an avatar.
     result = nil
     File.open(path + 'f.lock', 'w') do |fd|
