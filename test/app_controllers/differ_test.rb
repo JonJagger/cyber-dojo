@@ -1,6 +1,7 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'AppControllerTestBase'
+require_relative './AppControllerTestBase'
+require_relative './ParamsMaker'
 
 class DifferControllerTest < AppControllerTestBase
 
@@ -8,9 +9,12 @@ class DifferControllerTest < AppControllerTestBase
   'no lines different in any files between successive tags' do
     @id = create_kata('C++, assert')
     enter # 0
+    avatar = katas[@id].avatars[@avatar_name]
     filename = 'hiker.cpp'
-    kata_run_tests make_file_hash(filename,'#include <badname>',234234, -4545645678) #1
-    kata_run_tests make_file_hash(filename,'wibble',-4545645678,-4545645678 ) #2
+    params_maker = ParamsMaker.new(avatar)
+    params_maker.change_file(filename, 'wibble')
+    kata_run_tests params_maker.params # 1
+    kata_run_tests params_maker.params # 2
     @was_tag,@now_tag = 1,2
     differ
     lights = json['lights']
@@ -37,13 +41,17 @@ class DifferControllerTest < AppControllerTestBase
   'one line different in one file between successive tags' do
     @id = create_kata
     enter # 0
+    avatar = katas[@id].avatars[@avatar_name]
     filename = 'hiker.rb'
-    kata_run_tests file_content:         { filename => 'def fubar' },
-                   file_hashes_incoming: { filename => 234234 },
-                   file_hashes_outgoing: { filename => -4545645678 } #1
-    kata_run_tests file_content:         { filename => 'def snafu' },
-                   file_hashes_incoming: { filename => -4545645678 },
-                   file_hashes_outgoing: { filename => 654356 } #2
+
+    params_maker = ParamsMaker.new(avatar)
+    params_maker.change_file(filename, 'def fubar')
+    kata_run_tests params_maker.params # 1
+
+    params_maker = ParamsMaker.new(avatar)
+    params_maker.change_file(filename, 'def snafu')
+    kata_run_tests params_maker.params # 2
+
     @was_tag,@now_tag = 1,2
     differ
     lights = json['lights']
@@ -89,8 +97,8 @@ class DifferControllerTest < AppControllerTestBase
     any_test  # 1
     @was_tag,@now_tag = 0,1
     differ
-    assert_equal "", json['prevAvatar']
-    assert_equal "", json['nextAvatar']
+    assert_equal '', json['prevAvatar']
+    assert_equal '', json['nextAvatar']
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

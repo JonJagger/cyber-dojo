@@ -119,12 +119,17 @@ class Language
     #               ISBN 0-521-21965-5
 
     content = files['cyber-dojo.sh']
-    #TODO: !content.nil? hack (twice) is because test/app_model/avatar_tests.rb
-    #      are poor and have interactions with no cyber-dojo.sh file which is
+
+    #TODO: !content.nil? hack (twice) is because of
+    #      test/app_controllers/differ_tests.rb
+    #      test/app_controllers/dashboard_tests.rb
+    #
+    #      which are poor and have interactions with no cyber-dojo.sh file which is
     #      impossible in a real dojo. Invalid stub-data bites!
-    #      Maybe use ParamsMaker in test/app_controllers/reverter_test.rb
+    #      Use ParamsMaker to fix
     content = content.strip if !content.nil?
     needs_update = !content.nil? && !content.include?(cyber_dojo_sh) && !content.include?(commented_cyber_dojo_sh)
+
     if needs_update
       files['cyber-dojo.sh'] =
         content +
