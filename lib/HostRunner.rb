@@ -11,7 +11,7 @@ require_relative 'Runner'
 class HostRunner
 
   def runnable?(language)
-    !language.display_name.end_with? 'Approval'
+    true
   end
 
   def started(avatar); end

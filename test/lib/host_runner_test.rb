@@ -11,6 +11,10 @@ end
 
 class HostRunnerTests < LibTestBase
 
+  test 'says it can run anything' do
+    assert host_runner.runnable?(nil)
+  end
+    
   test 'command executes within timeout and returns command output' do
     sandbox = SandboxStub.new
     command = 'echo "Hello"'
