@@ -33,6 +33,7 @@ class Katas
     ].join("\n") + exercise.instructions
     manifest[:visible_files]['instructions'] = text
     kata = self[id]
+    kata.dir.make
     kata.dir.write_json('manifest.json', manifest)
     kata.dir.write_json('started_avatars.json', [])
     kata

@@ -44,6 +44,7 @@ class HostDiskDirTests < LibTestBase
   test '61FCE8',
   'disk[path].exists?(filename) false when file exists, true when it does' do
     `rm -rf #{path}`
+    dir.make
     filename = 'hello.txt'
     assert !dir.exists?(filename)
     dir.write(filename, "content")
@@ -150,9 +151,9 @@ class HostDiskDirTests < LibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '8F329F',
-  'write(filename,s) when s is a string [folder is automatically created]' do
+  'write(filename,s) succeeds when s is a string' do
     s = 'hello world'
-    check_save_file('manifest.rb', s, "hello world")
+    check_save_file('manifest.rb', s, s)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -250,9 +251,9 @@ class HostDiskDirTests < LibTestBase
   test '89211C',
   'disk[path].each_dir.select' do
     disk[path + 'alpha'].make
-    disk[path + 'beta'].make
+    disk[path + 'beta' ].make
     disk[path + 'alpha'].write('a.txt', 'a')
-    disk[path + 'beta'].write('b.txt', 'b')
+    disk[path + 'beta' ].write('b.txt', 'b')
     matches = disk[path].each_dir.select { |dir| dir.start_with?('a') }
     assert_equal ['alpha'], matches.sort
   end
@@ -261,6 +262,7 @@ class HostDiskDirTests < LibTestBase
 
   test '7CA54E',
   'disk[path].each_file' do
+    disk[path + 'a'].make
     disk[path + 'a'].write('c.txt', 'content')
     disk[path + 'a'].write('d.txt', 'content')
     assert_equal ['c.txt','d.txt'], disk[path+'a'].each_file.entries.sort
@@ -281,6 +283,7 @@ class HostDiskDirTests < LibTestBase
 
   test 'F569F8',
   'disk[path].each_file.select' do
+    disk[path + 'a'].make
     disk[path + 'a'].write('b.cpp', 'content')
     disk[path + 'a'].write('c.txt', 'content')
     disk[path + 'a'].write('d.txt', 'content')

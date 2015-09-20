@@ -31,22 +31,17 @@ class HostDir
   end
 
   def make
-    # Creates intermediate dirs as required.
-    # The filename could be pathed, eg a/b/c/def.hpp if I
-    # allowed pathed filenames to be entered from the browser
-    # (or via language manifests) which I currently don't.
+    # -p creates intermediate dirs as required.
     FileUtils.mkdir_p(path)
   end
 
   def write_json(filename, object)
     raise RuntimeError.new("#{filename} doesn't end in .json") if !filename.end_with? '.json'
-    make
     File.open(path + filename, 'w') { |file| file.write(JSON.unparse(object)) }
   end
 
   def write(filename, s)
     raise RuntimeError.new('not a string') if !s.is_a? String
-    make
     pathed_filename = path + filename
     File.open(pathed_filename, 'w') { |fd| fd.write(s) }
     File.chmod(execute=0755, pathed_filename) if pathed_filename.end_with?('.sh')

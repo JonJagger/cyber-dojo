@@ -16,6 +16,7 @@ class Sandbox
   end
 
   def start
+    dir.make
     avatar.visible_files.each { |filename,content| git_add(filename,content) }
   end
   
