@@ -69,6 +69,7 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
   end
     
   def any_test
+    # TODO: rework this hack
     filename = 'cyber-dojo.sh'
     kata_run_tests make_file_hash(filename,'',234234,-4545645678)
   end
@@ -85,10 +86,6 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
     filename = all_outputs.shuffle[0]
     output = disk[path].read(filename)
     dojo.runner.stub_output(output)      
-    delta = { :changed => [], :new => [], :deleted => [] }
-    files = { }
-    rags,_,_ = avatar.test(delta,files)
-    assert_equal rag, rags[-1]['colour'].to_sym
   end
         
   def json

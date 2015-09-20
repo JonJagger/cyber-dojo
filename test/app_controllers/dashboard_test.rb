@@ -1,6 +1,7 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative './AppControllerTestBase'
+require_relative './ParamsMaker'
 require_relative './RailsDiskStubThreadAdapter'
 require_relative './RailsGitSpyThreadAdapter'
 require_relative './RailsRunnerStubThreadAdapter'
@@ -80,9 +81,11 @@ class DashboardControllerTest < AppControllerTestBase
   
   test '3B04FE',
   'progress when avatar has only amber traffic-lights' do
-    set_runner_class('RunnerStub')
     enter                     # 0
-    stub_test_output(:amber)  # 1
+    avatar = katas[@id].avatars[@avatar_name]
+    stub_test_output(:amber)
+    params_maker = ParamsMaker.new(avatar)
+    kata_run_tests params_maker.params
     progress
   end
 
