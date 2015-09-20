@@ -39,7 +39,7 @@ class ExercisesTests < AppModelTestBase
   test '3E277A',
   'no exercises when cache is empty' do
     set_disk_class('DiskFake')
-    exercises.dir.write('cache.json', cache={})    
+    exercises.dir.write_json('cache.json', cache={})
     assert_equal [], exercises.to_a
   end
   
@@ -55,7 +55,7 @@ class ExercisesTests < AppModelTestBase
         :instructions => 'are here' 
       }
     }
-    exercises.dir.write('cache.json', cache)
+    exercises.dir.write_json('cache.json', cache)
     exercises_names = exercises.map {|exercise| exercise.name }.sort
 
     assert_equal ['100 doors', 'Bowling Game'], exercises_names, 'names'

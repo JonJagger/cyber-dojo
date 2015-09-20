@@ -11,7 +11,7 @@ class PieChartTests < AppHelpersTestBase
     set_disk_class('DiskStub')
     kata = make_kata
     lion = kata.avatars['lion']
-    lion.dir.write('increments.json', [
+    lion.dir.write_json('increments.json', [
       {
         'colour' => 'red',
         'time' => [2014, 2, 15, 8, 54, 6],

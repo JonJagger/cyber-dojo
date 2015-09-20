@@ -34,20 +34,21 @@ class HostDir
     FileUtils.mkdir_p(path) # creates intermediate dirs as required
   end
 
-  def write(filename, object)
+  def write_json(filename, object)
+    raise RuntimeError.new("#{filename} doesn't end in .json") if !filename.end_with? '.json'
+    make
+    File.open(path + filename, 'w') { |file| file.write(JSON.unparse(object)) }
+  end
+
+  def write(filename, s)
     # The filename could be pathed, eg a/b/c/def.hpp if I
     # allowed pathed filenames to be entered from the browser
     # (or via language manifests) which I currently don't.
+    raise RuntimeError.new('not a string') if !s.is_a? String
+    make
     pathed_filename = path + filename
-    FileUtils.mkdir_p(File.dirname(pathed_filename))
-    if object.is_a? String
-      File.open(pathed_filename, 'w') { |fd| fd.write(object) }
-      File.chmod(execute=0755, pathed_filename) if pathed_filename.end_with?('.sh')
-    else
-      File.open(pathed_filename, 'w') { |file|
-        file.write(JSON.unparse(object)) if filename.end_with?('.json')
-      }
-    end
+    File.open(pathed_filename, 'w') { |fd| fd.write(s) }
+    File.chmod(execute=0755, pathed_filename) if pathed_filename.end_with?('.sh')
   end
 
   def read(filename)

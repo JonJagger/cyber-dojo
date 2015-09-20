@@ -30,7 +30,7 @@ class Kata
         avatar.start
         if dir.exists?(filename)
           started << avatar.name
-          dir.write(filename, started)
+          dir.write_json(filename, started)
         end
       end
     end

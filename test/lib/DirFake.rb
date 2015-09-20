@@ -65,22 +65,16 @@ class DirFake
     return !@repo[filename].nil?
   end
 
-  def write_raw(filename,content)
+  def write_json(filename, object)
+    assert filename.end_with?('.json'), "#{filename}.end_with?('.json')"
     make
-    @repo[filename] = content
+    @repo[filename] = JSON.unparse(object)
   end
 
-  def write(filename, content)
-    if filename.end_with?('.rb')
-      #assert_not_string(content,filename)
-      content = content.inspect
-    end
-    if filename.end_with?(".json")
-      #assert_not_string(content,filename)
-      content = JSON.unparse(content)
-    end
+  def write(filename, s)
+    assert s.is_a?(String), "#write(#{filename},s) s.is_a?(String)"
     make
-    @repo[filename] = content
+    @repo[filename] = s
   end
 
   def read(filename)

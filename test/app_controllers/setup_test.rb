@@ -101,10 +101,10 @@ private
         :image_name => 'cyberdojofoundation/gpp-4.8.4_assert'
       }
     }
-    languages.dir.write('cache.json', languages_cache)
+    languages.dir.write_json('cache.json', languages_cache)
     languages_cache.each do |display_name,hash|
       key = get_language_from(display_name) + '-' + get_test_from(display_name)
-      languages[key].dir.write('manifest.json', {
+      languages[key].dir.write_json('manifest.json', {
         :display_name => display_name,
         :image_name => hash[:image_name]
       })
@@ -114,7 +114,7 @@ private
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def setup_exercises_cache
-    exercises.dir.write('cache.json', {
+    exercises.dir.write_json('cache.json', {
       print_diamond  => 'print diamond instructions',
       roman_numerals => 'roman numerals instructions'
     })

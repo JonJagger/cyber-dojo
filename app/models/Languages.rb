@@ -44,7 +44,7 @@ class Languages
         end
       end      
     end
-    dir.write(cache_filename,cache)    
+    dir.write_json(cache_filename,cache)
   end
   
 private

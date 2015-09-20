@@ -270,7 +270,7 @@ class LanguageTests < AppModelTestBase
     name = 'Ruby'
     @language = languages[name]
     any_bad_json = '42'
-    @language.dir.write_raw('manifest.json', any_bad_json)
+    @language.dir.write('manifest.json', any_bad_json)
     named = false
     begin
       @language.tab_size
@@ -287,14 +287,14 @@ class LanguageTests < AppModelTestBase
        'when language does not have image_name set in manifest' do
     runner.stub_runnable(false)
     ruby = languages['Ruby-TestUnit']
-    ruby.dir.write(manifest_filename, { }) # this line has no effect
+    ruby.dir.write_json(manifest_filename, { }) # this line has no effect
     refute ruby.runnable?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def spy_manifest(manifest)
-    @language.dir.write(manifest_filename, manifest)
+    @language.dir.write_json(manifest_filename, manifest)
   end
 
   def manifest_filename

@@ -441,7 +441,7 @@ class AvatarTests < AppModelTestBase
         'number' => 3
       }
     ]
-    avatar.dir.write('increments.json', incs)
+    avatar.dir.write_json('increments.json', incs)
   end
 
   #- - - - - - - - - - - - - - - - - - -

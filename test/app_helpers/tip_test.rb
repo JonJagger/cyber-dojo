@@ -48,7 +48,7 @@ class TipTests < AppHelpersTestBase
     was_tag_colour = 'red'
     now_tag = 2
     now_tag_colour = 'green'
-    lion.dir.write('increments.json',
+    lion.dir.write_json('increments.json',
       [
         { "colour" => was_tag_colour,
           "number" => was_tag,

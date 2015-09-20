@@ -28,11 +28,7 @@ class LanguagesTests < AppModelTestBase
   'refresh_cache requires manifest.json for each file to read display_name from' do
     set_disk_class('DiskFake')
     runey = languages['R-runey']
-    runey.dir.write('manifest.json',
-      {
-        'display_name' => 'R,Rooney'
-      }
-    )
+    runey.dir.write_json('manifest.json', { 'display_name' => 'R,Rooney' })
     languages.refresh_cache
     languages_names = languages.map {|language| language.name }.sort
     assert_equal ['R-Rooney'], languages_names
@@ -45,7 +41,7 @@ class LanguagesTests < AppModelTestBase
 
   test '15BD19',
   'no languages when cache is empty' do
-    languages.dir.write('cache.json', cache={})
+    languages.dir.write_json('cache.json', cache={})
     assert_equal [], languages.to_a
   end
 
@@ -63,7 +59,7 @@ class LanguagesTests < AppModelTestBase
         :test_dir_name => 'assert'        
       }
     }
-    languages.dir.write('cache.json', cache)
+    languages.dir.write_json('cache.json', cache)
     languages_names = languages.map {|language| language.name }.sort
 
     assert_equal ['Asm-assert', 'C++ (g++)-assert'], languages_names

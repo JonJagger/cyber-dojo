@@ -160,8 +160,8 @@ class KataTests < AppModelTestBase
         'number' => 2
       }
 
-    hippo.dir.write('increments.json', [second])
-    lion.dir.write('increments.json', [first])
+    hippo.dir.write_json('increments.json', [second])
+    lion.dir.write_json('increments.json', [first])
 
     assert kata.active?
     now = first['time']

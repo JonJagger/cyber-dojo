@@ -120,15 +120,11 @@ private
   end
 
   def write_manifest(files)
-    write(manifest_filename, files)
+    dir.write_json(manifest_filename, files)
   end
 
   def write_increments(increments)
-    write(increments_filename, increments)
-  end
-
-  def write(filename,content)
-    dir.write(filename,content)
+    dir.write_json(increments_filename, increments)
   end
 
   def increments

@@ -113,25 +113,34 @@ class FakeDirTests < LibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
   test '1A7080',
-  'write(filename.rb,content) succeeds and can be read back as ruby object' do
-    @dir.write('filename.rb', { :answer => 42 })
-    assert_equal '{:answer=>42}', @dir.read('filename.rb')
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'A52C14',
-  'write(filename.json,content) succeeds and can be read back as json object' do
-    @dir.write('filename.json', { :answer => 42 })
-    assert_equal '{"answer":42}', @dir.read('filename.json')
+  'write(filename,s) raises RuntimeError when s is not a string' do
+    assert_raises(RuntimeError) { @dir.write('filename.rb', { :answer => 42 }) }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'E62D99',
-  'write(filename.txt,content) succeeds and can be read back' do
-    @dir.write('filename.txt','hello, world')
-    assert_equal 'hello, world', @dir.read('filename.txt')
+  'write(filename,s) succeeds when s is a string' do
+    @dir.write(filename = 'hello.rb',s = 'hello, world')
+    assert_equal s, @dir.read(filename)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'E6DE33',
+  'write_json(filename,s) raises RuntimeError when filename does not end in .json' do
+    assert_raises(RuntimeError) { @dir.write_json('file.txt', 'hello') }
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'A52C14',
+  'write_json(filename,content) succeeds and can be read back as json object' do
+    @dir.write_json(filename = 'object.json', { :a => 1, :b => 2 })
+    json = @dir.read(filename)
+    o = JSON.parse(json)
+    assert_equal 1, o['a']
+    assert_equal 2, o['b']
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -

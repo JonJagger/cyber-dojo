@@ -27,7 +27,7 @@ class Exercises
       exercise = make_exercise(sub_dir)
       cache[exercise.name] = { :instructions => exercise.instructions }
     end
-    dir.write(cache_filename,cache)        
+    dir.write_json(cache_filename,cache)
   end
   
 private

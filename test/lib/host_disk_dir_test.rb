@@ -2,7 +2,7 @@
 
 require_relative 'LibTestBase'
 
-class HostDiskTests < LibTestBase
+class HostDiskDirTests < LibTestBase
 
   def setup
     super
@@ -143,32 +143,34 @@ class HostDiskTests < LibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '1C4A9F',
-    'save_file (json) for non-string is saved as JSON object' +
-       'and folder is automatically created' do
-    object = { :a => 1, :b => 2 }
-    check_save_file('manifest.json', object, '{"a":1,"b":2}')
+    'write(filename,s) raises RuntimeError when s is not a string' do
+    assert_raises(RuntimeError) { dir.write('any.txt', Object.new) }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '8F329F',
-  'save_file for string - folder is automatically created' do
-    object = 'hello world'
-    check_save_file('manifest.rb', object, "hello world")
+  'write(filename,s) when s is a string [folder is automatically created]' do
+    s = 'hello world'
+    check_save_file('manifest.rb', s, "hello world")
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '748F3B',
-    'saving a file with a folder creates the subfolder' +
-       'and the file in it' do
-    pathed_filename = 'f1/f2/wibble.txt'
-    content = 'Hello world'
-    dir.write(pathed_filename, content)
-    full_pathed_filename = path + pathed_filename
-    assert File.exists?(full_pathed_filename),
-          "File.exists?(#{full_pathed_filename})"
-    assert_equal content, IO.read(full_pathed_filename)
+  test '2BAC6D',
+  'write_json(filename,s) raises RuntimeError when filename does not end in .json' do
+    assert_raises(RuntimeError) { dir.write_json('file.txt', 'hello') }
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'F3B2F4',
+  'write_json(filename,o) saves JSON.unparse(o) in filename' do
+    dir.write_json(filename = 'object.json', { :a => 1, :b => 2 })
+    json = dir.read(filename)
+    o = JSON.parse(json)
+    assert_equal 1, o['a']
+    assert_equal 2, o['b']
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -229,9 +231,7 @@ class HostDiskTests < LibTestBase
   'dir.each_dir' do
     cwd = `pwd`.strip + '/../'
     dirs = disk[cwd].each_dir.entries
-    %w( app_helpers app_lib ).each { |dir_name|
-      assert dirs.include?(dir_name), dir_name
-    }
+    %w( app_helpers app_lib ).each { |dir_name| assert dirs.include?(dir_name), dir_name }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -253,9 +253,7 @@ class HostDiskTests < LibTestBase
     disk[path + 'beta'].make
     disk[path + 'alpha'].write('a.txt', 'a')
     disk[path + 'beta'].write('b.txt', 'b')
-    matches = disk[path].each_dir.select { |dir|
-      dir.start_with?('a')
-    }
+    matches = disk[path].each_dir.select { |dir| dir.start_with?('a') }
     assert_equal ['alpha'], matches.sort
   end
 
