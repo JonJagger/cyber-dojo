@@ -18,7 +18,7 @@ class SetupController < ApplicationController
     exercise_name = params['exercise']
     id = unique_id
     now = time_now
-    #Thread.start { one_self_created(language_name,test_name,exercise_name,id,now) }
+    one_self_created(language_name,test_name,exercise_name,id,now)
     language = languages[language_name + '-' + test_name]
     exercise = exercises[exercise_name]
     katas.create_kata(language,exercise,id,now)
