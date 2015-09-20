@@ -25,6 +25,9 @@ $(function() {
 		      <%= raw diff_traffic_light(light) %>
 		    </td>
 	    <% end %>
+      <td>
+        <%= render partial: 'avatar_image' %>
+      </td>
 	    <td>
 		    <%= raw traffic_light_count(@avatar) %>
 	    </td>
@@ -33,9 +36,6 @@ $(function() {
 	    </td>
     <% end %>
 
-	<td>
-	  <%= render partial: 'avatar_image' %>
-	</td>
 
   </tr>
 </table>

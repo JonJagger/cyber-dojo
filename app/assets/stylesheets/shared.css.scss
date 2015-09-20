@@ -69,18 +69,18 @@ a:link, a:visited
   margin : { left: 0px; right: 0px; }
   padding: { left: 0px; right: 0px; }
   img {
-    width: 19px;
-    height: 19px;
+    width: 22px;
+    height: 22px;
     padding: { left: 1px; right: 0px; }
     margin : { left: 0px; right: 0px; }
   }
 }
 
-.avatar-image img { width: 20px; height: 20px; }
+.avatar-image img { padding-left: 4px; width: 25px; height: 25px; }
 
 .traffic-light-count {
-  font-size: 18px;
-  padding: { left: 4px; bottom: 0px; }
+  font-size: 20px;
+  padding: { left: 1px; bottom: 0px; }
 }
 
 .avatar_name, #id { @include font-size-tiny(); text-align: right; }

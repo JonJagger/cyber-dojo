@@ -50,7 +50,23 @@
     overflow-y: hidden;
     margin-bottom: 0px;
     &::-webkit-scrollbar:horizontal { height: 1px; }
+    .diff-traffic-light {
+      margin : { left: 0px; right: 0px; }
+      padding: { left: 0px; right: 0px; }
+      img {
+        width: 28px;
+        height: 28px;
+        padding: { left: 1px; right: 0px; }
+        margin : { left: 0px; right: 0px; }
+      }
+    }
+    .traffic-light-count {
+      font-size: 30px;
+      padding: { left: 1px; bottom: 0px; }
+    }
   }
+
+  .avatar-image { padding-left: 1px; width: 28px; height: 28px; }
 
   .file_content { overflow-x: auto; overflow-y: scroll; }
 
