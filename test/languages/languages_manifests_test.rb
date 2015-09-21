@@ -45,21 +45,21 @@ class LanguagesManifestsTests < LanguagesTestBase
     assert manifest_file_exists?
     assert required_keys_exist?
     refute unknown_keys_exist?
+    assert all_visible_files_exist?
     refute duplicate_visible_filenames?
+    assert highlight_filenames_are_subset_of_visible_filenames?
     assert progress_regexs_valid?
     assert display_name_valid?
     refute filename_extension_starts_with_dot?
     assert cyberdojo_sh_exists?
     assert cyberdojo_sh_has_execute_permission?
-    assert all_visible_files_exist?
-    assert highlight_filenames_are_subset_of_visible_filenames?
     assert colour_method_for_unit_test_framework_output_exists?
     refute any_files_owner_is_root?
     refute any_files_group_is_root?
     refute any_file_is_unreadable?
     assert dockerfile_exists?
     assert build_docker_container_exists?
-    assert build_docker_container_starts_with_cyberdojo?
+    assert build_docker_container_starts_with_cyberdojofoundation?
     assert created_kata_manifests_language_entry_round_trips?
   end
 
@@ -207,11 +207,12 @@ class LanguagesManifestsTests < LanguagesTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def display_name_valid?
-    if display_name.count(',') != 1
+    parts = display_name.split(',').select{|part| part.strip != ''}
+    if parts.count != 2
       message = 
         alert +
-        " #{manifest_filename}'s 'display_name' entry is #{display_name} " +
-        " which does not contain a single comma"
+        " #{manifest_filename}'s 'display_name':'#{display_name}'" +
+        " is not in 'language,test' format"
       puts message
       return false
     end
@@ -409,13 +410,13 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def build_docker_container_starts_with_cyberdojo?
+  def build_docker_container_starts_with_cyberdojofoundation?
     filename = language_dir + '/' + 'build-docker-container.sh'
     content = IO.read(filename)
-    if !/docker build -t cyberdojo/.match(content)
+    if !/docker build -t cyberdojofoundation/.match(content)
       message =
         alert +
-        " #{filename} does not contain 'docker build -t cyberdojo/"
+        " #{filename} does not contain 'docker build -t cyberdojofoundation/"
       puts message
       return false
     end
@@ -471,7 +472,7 @@ private
   end
 
   def alert
-    "\n>>>>>>>#{language}<<<<<<<\n"
+    "\n>>>>>>> #{language} <<<<<<<\n"
   end
 
 end
