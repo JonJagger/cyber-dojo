@@ -48,11 +48,6 @@ are *not* part of the git repo. Neither is the executable.
 Only the source files are. Unless that changes and *all* files
 are part of the repo, then maintaining timestamps is secondary.
 
-Wikipedia says
-rsync can also operate in a daemon mode, serving files in the 
-native rsync protocol (using the "rsync://" syntax).
-
-uses port 873
 
 
 

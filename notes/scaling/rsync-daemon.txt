@@ -1,0 +1,114 @@
+
+Problem with using git-daemon to serve katas/ files to docker container is
+1) git-clone does not preserve file stamps
+2) I don't need the .git folder I only need avatar/sandbox
+
+So I'm looking into using rsync daemon instead.
+
+From the man page
+You can avoid the password prompt by setting the 
+environment variable RSYNC_PASSWORD to the password
+you want to use
+
+Reading
+http://www.jveweb.net/en/archives/2011/01/running-rsync-as-a-daemon.html
+
+$ nano /etc/rsyncd.conf
+
+lock file = /var/run/rsync.lock
+log file = /var/log/rsyncd.log
+pid file = /var/run/rsyncd.pid
+
+[katas]
+    path = /var/www/cyber-dojo/katas
+    uid = www-data
+    gid = www-data
+    read only = yes
+    list = false
+    auth users = rsyncclient
+    secrets file = /etc/rsyncd.secrets
+    hosts allow = 172.17.0.0/255.255.255.0
+
+
+(At first dropped last line [hosts allow = 192.168.1.0/255.255.255.0] to allow all access)
+
+Now to create the secrets file
+$ nano /etc/rsyncd.secrets
+
+rsyncclient:password
+
+$ chmod 600 /etc/rsyncd.secrets
+
+$ rsync --daemon
+
+To confirm it is working
+$ cat /var/log/rsyncd.log
+
+Enabled port 873 in Turnkey dashboard
+
+
+$ ip route show | grep docker0 | awk '{print $9}'
+172.17.42.1
+
+$ docker run -it --rm --user=www-data -e RSYNC_PASSWORD='password' cyberdojofoundation/gcc-4.8.4_assert /bin/bash
+$ cd tmp
+$ rsync -rt rsyncclient@172.17.42.1::katas/59/944533D0/buffalo/sandbox cyber-dojo/
+$ cd cyber-dojo/sandbox
+$ ls -al
+total 444
+drwxr-xr-x 2 www-data www-data   4096 Sep 22 12:01 .
+drwxr-xr-x 3 www-data www-data   4096 Sep 22 12:21 ..
+-rw------- 1 www-data www-data 401408 Sep 21 21:42 core
+-rwxr-xr-x 1 www-data www-data     25 Sep 22 12:01 cyber-dojo.sh
+-rw-r--r-- 1 www-data www-data     59 Sep 22 11:52 hiker.c
+-rw-r--r-- 1 www-data www-data    929 Sep 22 12:01 hiker.compiled_h
+-rw-r--r-- 1 www-data www-data     73 Sep 21 21:42 hiker.h
+-rw-r--r-- 1 www-data www-data    270 Sep 21 21:42 hiker.tests.c
+-rw-r--r-- 1 www-data www-data    574 Sep 21 21:42 instructions
+-rw-r--r-- 1 www-data www-data    671 Sep 22 11:57 makefile
+-rw-r--r-- 1 www-data www-data   1154 Sep 22 12:01 output
+-rwxr-xr-x 1 www-data www-data   8728 Sep 22 12:01 test
+$ ./cyber-dojo.sh
+gcc -x c -I. -Wall -Wextra -Werror -std=c11  -Wstrict-prototypes -Wmissing-prototypes -Wshadow -Wfloat-equal -O -c -o hiker.compiled_h hiker.h
+gcc -I. -Wall -Wextra -Werror -std=c11  -Wstrict-prototypes -Wmissing-prototypes -Wshadow -Wfloat-equal -O hiker.c hiker.tests.c -o test
+./test
+All tests passed
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+rsync options
+-r recursive   (not needed at present)
+-t preserve *times*
+
+Note: cyber-dojo as rsync target folder is unique-enough because this is inside the container!
+
+Okay. And restricting rsync to the docker containers.
+
+ssh into server and running two [docker run] commands. ifconfig says their IP addresses are
+172.17.0.10
+172.17.0.11
+$ nano /etc/rsyncd.conf
+ADD
+hosts allow = 172.17.0.0/255.255.255.0
+
+Kill rsync daemon
+$ kill `cat /var/run/rsyncd.pid`
+Restart it
+$ rsync --daemon
+
+Repeat rsync above from inside docker container. Works.
+
+Now to try it from terminal on macbook pro.
+IP of rails-server is 54.211.24.101
+$ rsync -rt rsyncclient@54.211.24.101::katas/59/944533D0/buffalo/sandbox cyber-dojo/
+@ERROR: Unknown module 'katas'
+rsync error: error starting client-server protocol (code 5) at /SourceCache/rsync/rsync-45/rsync/main.c(1398) [receiver=2.6.9]
+
+
+
+
+
+
+
+
+
