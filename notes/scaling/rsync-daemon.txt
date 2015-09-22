@@ -49,12 +49,11 @@ Enabled port 873 in Turnkey dashboard
 
 $ ip route show | grep docker0 | awk '{print $9}'
 172.17.42.1
-
 $ docker run -it --rm --user=www-data -e RSYNC_PASSWORD='password' cyberdojofoundation/gcc-4.8.4_assert /bin/bash
-$ cd tmp
-$ rsync -rt rsyncclient@172.17.42.1::katas/59/944533D0/buffalo/sandbox cyber-dojo/
-$ cd cyber-dojo/sandbox
-$ ls -al
+www-data@e5fd79b041aa: cd tmp
+www-data@e5fd79b041aa: rsync -rt rsyncclient@172.17.42.1::katas/59/944533D0/buffalo/sandbox cyber-dojo/
+www-data@e5fd79b041aa: cd cyber-dojo/sandbox
+www-data@e5fd79b041aa: ls -al
 total 444
 drwxr-xr-x 2 www-data www-data   4096 Sep 22 12:01 .
 drwxr-xr-x 3 www-data www-data   4096 Sep 22 12:21 ..
@@ -68,7 +67,7 @@ drwxr-xr-x 3 www-data www-data   4096 Sep 22 12:21 ..
 -rw-r--r-- 1 www-data www-data    671 Sep 22 11:57 makefile
 -rw-r--r-- 1 www-data www-data   1154 Sep 22 12:01 output
 -rwxr-xr-x 1 www-data www-data   8728 Sep 22 12:01 test
-$ ./cyber-dojo.sh
+www-data@e5fd79b041aa: ./cyber-dojo.sh
 gcc -x c -I. -Wall -Wextra -Werror -std=c11  -Wstrict-prototypes -Wmissing-prototypes -Wshadow -Wfloat-equal -O -c -o hiker.compiled_h hiker.h
 gcc -I. -Wall -Wextra -Werror -std=c11  -Wstrict-prototypes -Wmissing-prototypes -Wshadow -Wfloat-equal -O hiker.c hiker.tests.c -o test
 ./test
@@ -77,7 +76,7 @@ All tests passed
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 rsync options
--r recursive   (not needed at present)
+-r recursive  
 -t preserve *times*
 
 Note: cyber-dojo as rsync target folder is unique-enough because this is inside the container!
@@ -106,3 +105,49 @@ rsync error: error starting client-server protocol (code 5) at /SourceCache/rsyn
 
 Another advantage of using rsync is that I don't have to add
 git-daemon-export-ok to every existing kata.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Setting the daemon to start automatically.
+
+Kill rsync daemon
+$ kill `cat /var/run/rsyncd.pid`
+
+cd /etc/init.d
+already has an [rsync] file
+Changed line
+RSYNC_ENABLE=false
+to
+RSYNC_ENABLE=true
+
+$ /etc/init.d/rsync restart
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Optimize rsync
+-W copy files whole (w/o delta-xfer algorithm)
+
+
+$ ip route show | grep docker0 | awk '{print $9}'
+172.17.42.1
+$ docker run -it --rm --user=www-data -e RSYNC_PASSWORD='password' cyberdojofoundation/gcc-4.8.4_assert /bin/bash
+www-data@e5fd79b041aa: cd tmp
+www-data@e5fd79b041aa: rsync -rtW rsyncclient@172.17.42.1::katas/59/944533D0/buffalo/sandbox .
+www-data@e5fd79b041aa: cd sandbox
+www-data@e5fd79b041aa: ls -al
+total 444
+drwxr-xr-x 2 www-data www-data   4096 Sep 22 12:01 .
+drwxr-xr-x 3 www-data www-data   4096 Sep 22 12:21 ..
+-rw------- 1 www-data www-data 401408 Sep 21 21:42 core
+-rwxr-xr-x 1 www-data www-data     25 Sep 22 12:01 cyber-dojo.sh
+-rw-r--r-- 1 www-data www-data     59 Sep 22 11:52 hiker.c
+-rw-r--r-- 1 www-data www-data    929 Sep 22 12:01 hiker.compiled_h
+-rw-r--r-- 1 www-data www-data     73 Sep 21 21:42 hiker.h
+-rw-r--r-- 1 www-data www-data    270 Sep 21 21:42 hiker.tests.c
+-rw-r--r-- 1 www-data www-data    574 Sep 21 21:42 instructions
+-rw-r--r-- 1 www-data www-data    671 Sep 22 11:57 makefile
+-rw-r--r-- 1 www-data www-data   1154 Sep 22 12:01 output
+-rwxr-xr-x 1 www-data www-data   8728 Sep 22 12:01 test
+
+
+
