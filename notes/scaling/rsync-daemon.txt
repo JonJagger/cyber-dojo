@@ -149,5 +149,52 @@ drwxr-xr-x 3 www-data www-data   4096 Sep 22 12:21 ..
 -rw-r--r-- 1 www-data www-data   1154 Sep 22 12:01 output
 -rwxr-xr-x 1 www-data www-data   8728 Sep 22 12:01 test
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Now to simulate the rsync calls coming from another computer completely.
+
+digital-ocean node: eg  IP = 178.62.115.39
+
+On testBed which has rsync installed
+$ nano /etc/rsyncd.conf
+EDIT 
+hosts allow = 172.17.0.0/255.255.255.0, 178.62.115.39
+
+Restart rsync
+$ /etc/init.d/rsync restart
+
+On digital-ocean node (direct, not inside docker container)
+$ rsync -rtW rsyncclient@<IP_OF_TESTBED>::katas/59/944533D0/buffalo/sandbox cyber-dojo/
+Password
+And it works.
+
+Now to try on digital-ocean node inside a docker container
+$ docker run -it --rm --user=www-data -e RSYNC_PASSWORD='password' cyberdojofoundation/gcc-4.8.4_assert /bin/bash
+$.......: rsync -rtW rsyncclient@<IP_OF_TESTBED>::katas/59/944533D0/buffalo/sandbox .
+YES. That worked.
+
+
+Do I need to open 873 on Turnkey?
+Removed it from turnkey
+On testBed
+$ /etc/init.d/rsync restart
+
+Back on digital-ocean node
+$ rsync -rtW rsyncclient@<IP_OF_TESTBED>::katas/59/944533D0/buffalo/sandbox cyber-dojo/
+Password
+And it works.
+
+on digital-ocean node from inside docker container
+$ docker run -it --rm --user=www-data -e RSYNC_PASSWORD='password' cyberdojofoundation/gcc-4.8.4_assert /bin/bash
+$.......: rsync -rtW rsyncclient@<IP_OF_TESTBED>::katas/59/944533D0/buffalo/sandbox .
+YES. That worked.
+
+So I don't need a 873 (rsync) entry in the Turnkey firewall.
+Just need each of the computer nodes' IP addresses in 
+/etc/rsyncd.conf
+and then
+$ /etc/init.d/rsync restart
+
+
 
 
