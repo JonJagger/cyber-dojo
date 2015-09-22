@@ -104,11 +104,5 @@ $ rsync -rt rsyncclient@54.211.24.101::katas/59/944533D0/buffalo/sandbox cyber-d
 @ERROR: Unknown module 'katas'
 rsync error: error starting client-server protocol (code 5) at /SourceCache/rsync/rsync-45/rsync/main.c(1398) [receiver=2.6.9]
 
-
-
-
-
-
-
-
-
+Another advantage of using rsync is that I don't have to add
+git-daemon-export-ok to every existing kata.
