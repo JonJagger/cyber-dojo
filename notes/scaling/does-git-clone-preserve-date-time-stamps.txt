@@ -1,0 +1,131 @@
+
+
+Does git clone preserve date-time filestamps?
+$ cd /var/www/cyber-dojo/katas/59/944533D0/buffalo/sandbox
+$ ls -al
+total 176
+drwxrwsr-x+ 2 www-data www-data   4096 Sep 21 21:42 .
+drwxrwsr-x+ 4 www-data www-data   4096 Sep 21 21:42 ..
+-rw-------+ 1 www-data www-data 401408 Sep 21 21:42 core
+-rwxr-xr-x+ 1 www-data www-data     19 Sep 21 21:42 cyber-dojo.sh
+-rw-rw-r--+ 1 www-data www-data     59 Sep 21 21:42 hiker.c
+-rw-rw-r--+ 1 www-data www-data    929 Sep 21 21:42 hiker.compiled_h
+-rw-rw-r--+ 1 www-data www-data     73 Sep 21 21:42 hiker.h
+-rw-rw-r--+ 1 www-data www-data    270 Sep 21 21:42 hiker.tests.c
+-rw-rw-r--+ 1 www-data www-data    574 Sep 21 21:42 instructions
+-rw-rw-r--+ 1 www-data www-data    675 Sep 21 21:42 makefile
+-rw-rw-r--+ 1 www-data www-data     17 Sep 21 21:42 output
+-rwxrwxr-x+ 1 www-data www-data   8728 Sep 21 21:42 test
+
+$ docker run -it --rm --user=www-data cyberdojofoundation/gcc-4.8.4_assert /bin/bash
+Now it says kernel does not support memoey swappiness again?!
+root@971319505fd1:$ cd /tmp
+root@971319505fd1:$ git clone git://172.17.42.1/59/944533D0/buffalo/.git
+root@971319505fd1:$ cd buffalo/sandbox 
+root@971319505fd1:$ date
+Tue Sep 22 09:44:48 UTC 2015
+root@971319505fd1:$ ls -al
+total 36
+drwxr-xr-x 2 www-data www-data 4096 Sep 22 09:44 .
+drwxr-xr-x 4 www-data www-data 4096 Sep 22 09:44 ..
+-rwxr-xr-x 1 www-data www-data   19 Sep 22 09:44 cyber-dojo.sh
+-rw-r--r-- 1 www-data www-data   59 Sep 22 09:44 hiker.c
+-rw-r--r-- 1 www-data www-data   73 Sep 22 09:44 hiker.h
+-rw-r--r-- 1 www-data www-data  270 Sep 22 09:44 hiker.tests.c
+-rw-r--r-- 1 www-data www-data  574 Sep 22 09:44 instructions
+-rw-r--r-- 1 www-data www-data  675 Sep 22 09:44 makefile
+-rw-r--r-- 1 www-data www-data   17 Sep 22 09:44 output
+
+
+Answer is NO. Files get date-time stamp of the clone moment
+
+Is this worth investigating further?
+Eg rsync?
+I think not.
+Suppose I used rsync and the kata was C++ assert using custom makefiles
+The problem is that (currently) the intermediate files (.o .lib etc)
+are *not* part of the git repo. Neither is the executable.
+Only the source files are. Unless that changes and *all* files
+are part of the repo, then maintaining timestamps is secondary.
+
+Wikipedia says
+rsync can also operate in a daemon mode, serving files in the 
+native rsync protocol (using the "rsync://" syntax).
+
+uses port 873
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+http://stackoverflow.com/questions/27763340/docker-opts-do-not-work-in-config-file-etc-default-docker
+Suggests I need to edit this file...
+/lib/systemd/system/docker.service
+
+ExecStart=/usr/bin/docker daemon --icc=false 
+
+
+
+
+
+
+
+
+
+https://docs.docker.com/reference/run/#network-settings
+Says
+Publishing ports and linking to other containers will not work when --net is anything other than the default (bridge).
+So the default is --net=bridge
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Notes
+=====
+
+There is an option on git clone to specify the folder you want to clone into.
+Using that in cyber-dojo servers docker run command 
+
+Don' use git-daemon-export-all
+Stick to git-daemon-export-ok per repo.
+This is because on a rails-git shared server I want
+to ensure the repo for cyber-dojo itself is not
+available to clone from the cyber-dojo server!
+
+
