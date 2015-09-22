@@ -12,6 +12,7 @@ require_relative root + '/config/environment'
 require_relative root + '/test/TestDomainHelpers'
 require_relative root + '/test/TestExternalHelpers'
 require_relative root + '/test/TestHexIdHelpers'
+require_relative './ParamsMaker'
   
 class AppControllerTestBase < ActionDispatch::IntegrationTest
 
@@ -60,18 +61,10 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
     params = { :format => :js, :id => @id, :avatar => @avatar_name }
     post 'kata/run_tests', params.merge(file_hash)
   end
-
-  def make_file_hash(filename,content,incoming,outgoing)
-    { file_content:         { filename => content },
-      file_hashes_incoming: { filename => incoming },
-      file_hashes_outgoing: { filename => outgoing }
-    }
-  end
     
   def any_test
-    # TODO: rework this hack
-    filename = 'cyber-dojo.sh'
-    kata_run_tests make_file_hash(filename,'',234234,-4545645678)
+    avatar = katas[@id].avatars[@avatar_name]
+    kata_run_tests ParamsMaker.new(avatar).params
   end
 
   def stub_test_output(rag)
