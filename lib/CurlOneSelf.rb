@@ -38,11 +38,13 @@ class CurlOneSelf
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def started(avatar)
+    # TODO: from OneSelf.rb.dead
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def tested(avatar,hash)
+    # TODO: from OneSelf.rb.dead
   end
 
 private
