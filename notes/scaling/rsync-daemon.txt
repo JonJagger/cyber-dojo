@@ -194,6 +194,16 @@ Just need each of the computer nodes' IP addresses in
 and then
 $ /etc/init.d/rsync restart
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Notes
+
+1. Have to do this each time server is started
+   $ /etc/init.d/rsync restart
+
+2. When compute nodes are distributed, the create page will
+   need reworking to determine what images are available.
+   Can a docker-swarm solution do this?
+   An ssh solution can!
 
 
