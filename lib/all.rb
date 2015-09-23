@@ -11,7 +11,6 @@
     DockerTimesOutRunner
     DockerGitCloneRunner
     DockerVolumeMountRunner
-    HostRunner
   HostDisk
   HostDir
   HostGit

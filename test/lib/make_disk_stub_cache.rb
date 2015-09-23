@@ -11,8 +11,6 @@ dojo.exercises.each do |exercise|
   $cache[exercise.path + 'instructions'] = exercise.instructions
 end
 
-ENV['CYBER_DOJO_RUNNER_CLASS'] = 'HostRunner'
-
 dojo.languages.each do |language|
   $cache[language.path + 'manifest.json'] = dojo.disk[language.path].read('manifest.json')
   language.visible_files.each do |filename,content|

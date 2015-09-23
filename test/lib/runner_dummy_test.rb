@@ -19,10 +19,10 @@ class RunnerDummyTests < LibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B113E1',
-  'run tells you how to use HostTestRunner' do
+  'run tells you how to use DockerVolumeMountRunner' do
     output = @runner.run(nil,nil,nil)
     assert output.include?('to use DockerVolumeMountRunner')
-    assert output.include?('$ export CYBER_DOJO_RUNNER_CLASS_NAME=DockerVolumeMountRunner')
+    assert output.include?('$ export CYBER_DOJO_RUNNER_CLASS=DockerVolumeMountRunner')
   end
 
 end
