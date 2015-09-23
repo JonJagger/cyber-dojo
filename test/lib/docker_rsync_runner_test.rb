@@ -21,28 +21,6 @@ class DockerRsyncRunnerTests < LibTestBase
     @runner = DockerRsyncRunner.new(@bash,cid_filename)
   end
 
-
-  def assert_raises(klass,msg,&block)
-    begin
-      block.call
-      flunk "assert_raises(#{klass},#{msg}) did not raise"
-    rescue => e
-      diagnostic = "#{klass}.new() got #{e.class}.new()"
-      assert klass.class === e.class, "expecting #{diagnostic}"
-      diagnostic = "#{klass}.new(#{msg}) got #{klass}.new(#{e.message})"
-      assert msg === e.message, "expecting #{diagnostic}"
-    end
-  end
-
-  def good_ip; '192.168.1.72'; end
-  def bad_ip; '-bash: awk: command not found'; end
-
-  def stub_ip_address(ip)
-    ip_ok = (ip =~ Resolv::IPv4::Regex) === 0
-    exit_status = ip_ok ? 0 : 7
-    @bash.stub(ip, exit_status)
-  end
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '72C7DE',
@@ -112,13 +90,15 @@ class DockerRsyncRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def stub_docker_run(outcome)
-    stub_rm_cidfile
-    stub_timeout(outcome)
-    stub_cat_cidfile
-    stub_docker_stop
-    stub_docker_rm
+  def stub_ip_address(ip)
+    ip_ok = (ip =~ Resolv::IPv4::Regex) === 0
+    exit_status = ip_ok ? 0 : 7
+    @bash.stub(ip, exit_status)
   end
+
+  def good_ip; '192.168.1.72'; end
+
+  def bad_ip; '-bash: awk: command not found'; end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -153,6 +133,22 @@ class DockerRsyncRunnerTests < LibTestBase
         " -e RSYNC_PASSWORD='password'" +
         " #{@lion.kata.language.image_name}" +
         " /bin/bash -c #{quoted(rsync_cmd)} 2>&1"
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # MiniTest is documented to allow trailing string as message
+  # but I can't get it working so I've rolled my own
+
+  def assert_raises(klass,msg,&block)
+    begin
+      block.call
+      flunk "assert_raises(#{klass},#{msg}) did not raise"
+    rescue => e
+      diagnostic = "#{klass}.new() got #{e.class}.new()"
+      assert klass.class === e.class, "expecting #{diagnostic}"
+      diagnostic = "#{klass}.new(#{msg}) got #{klass}.new(#{e.message})"
+      assert msg === e.message, "expecting #{diagnostic}"
+    end
   end
 
 end

@@ -21,6 +21,14 @@ module DockerTestHelpers # mix-in
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  def stub_docker_run(outcome)
+    stub_rm_cidfile
+    stub_timeout(outcome)
+    stub_cat_cidfile
+    stub_docker_stop
+    stub_docker_rm
+  end
+
   def stub_rm_cidfile;  @bash.stub('',success);  end
   def stub_timeout(n);  @bash.stub('blah',n);    end
   def stub_cat_cidfile; @bash.stub(pid,success); end

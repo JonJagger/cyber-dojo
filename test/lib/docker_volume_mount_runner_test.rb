@@ -107,14 +107,4 @@ class DockerVolumeMountRunnerTests < LibTestBase
         " /bin/bash -c #{quoted(command)} 2>&1"
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def stub_docker_run(outcome)
-    stub_rm_cidfile
-    stub_timeout(outcome)
-    stub_cat_cidfile
-    stub_docker_stop
-    stub_docker_rm
-  end
-
 end
