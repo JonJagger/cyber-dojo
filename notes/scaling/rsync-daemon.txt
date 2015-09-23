@@ -206,4 +206,9 @@ Notes
    Can a docker-swarm solution do this?
    An ssh solution can!
 
+3. cyberdojofoundation/build-essential
+   has rsync in it. Fortunate!
+   
+4. Digital-Ocean nodes built from Docker app are 1.8+
+   and have full cgroup facilities for limiting eg memory.
 
