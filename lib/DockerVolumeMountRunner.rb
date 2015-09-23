@@ -16,8 +16,6 @@ class DockerVolumeMountRunner
     raise_if_docker_not_installed
   end
 
-  def started(avatar); end
-
   def run(sandbox, command, max_seconds)
     read_write = 'rw'
     sandbox_volume = "#{sandbox.path}:/sandbox:#{read_write}"

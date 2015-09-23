@@ -9,7 +9,6 @@
   BackgroundProcess
   Runner
     DockerTimesOutRunner
-    DockerGitCloneRunner
     DockerVolumeMountRunner
   HostDisk
   HostDir

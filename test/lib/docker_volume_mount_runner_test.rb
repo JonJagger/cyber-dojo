@@ -46,18 +46,6 @@ class DockerVolumeMountRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'D4BA23',
-  'started(avatar) is a no-op' do
-    stub_docker_installed
-    docker = make_docker_runner
-    before = @bash.spied.clone
-    docker.started(nil)
-    after = @bash.spied.clone
-    assert_equal before, after
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '6459A7',
   'run() completes and does not timeout - exact bash cmd interaction' do
     stub_docker_installed

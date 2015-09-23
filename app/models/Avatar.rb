@@ -28,7 +28,6 @@ class Avatar
     git.add(path,increments_filename)     
     sandbox.start
     git_commit(0)    
-    runner.started(self)
   end
   
   def path
