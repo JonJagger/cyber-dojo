@@ -50,7 +50,7 @@ Enabled port 873 in Turnkey dashboard
 $ ip route show | grep docker0 | awk '{print $9}'
 172.17.42.1
 $ docker run -it --rm --user=www-data -e RSYNC_PASSWORD='password' cyberdojofoundation/gcc-4.8.4_assert /bin/bash
-www-data@e5fd79b041aa: rsync -rt rsyncclient@172.17.42.1::katas/59/944533D0/buffalo/sandbox /tmp
+www-data@e5fd79b041aa: rsync -rtW rsyncclient@172.17.42.1::katas/59/944533D0/buffalo/sandbox /tmp
 www-data@e5fd79b041aa: cd /tmp/sandbox
 www-data@e5fd79b041aa: ls -al
 total 444
@@ -99,7 +99,7 @@ Repeat rsync above from inside docker container. Works.
 
 Now to try it from terminal on macbook pro.
 IP of rails-server is 54.211.24.101
-$ rsync -rt rsyncclient@54.211.24.101::katas/59/944533D0/buffalo/sandbox cyber-dojo/
+$ rsync -rtW rsyncclient@54.211.24.101::katas/59/944533D0/buffalo/sandbox /tmp
 @ERROR: Unknown module 'katas'
 rsync error: error starting client-server protocol (code 5) at /SourceCache/rsync/rsync-45/rsync/main.c(1398) [receiver=2.6.9]
 

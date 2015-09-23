@@ -15,6 +15,7 @@ class BashStub
   def exec(command)
     @spied << command
     stub = @stubbed[@index]
+    raise "no stub for command `#{command}`" if stub.nil?
     @index += 1
     return *stub
   end

@@ -21,7 +21,6 @@ module DockerTestHelpers # mix-in
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def stub_git_push;    @bash.stub('',success);  end
   def stub_rm_cidfile;  @bash.stub('',success);  end
   def stub_timeout(n);  @bash.stub('blah',n);    end
   def stub_cat_cidfile; @bash.stub(pid,success); end

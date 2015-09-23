@@ -10,6 +10,7 @@
   Runner
     DockerTimesOutRunner
     DockerVolumeMountRunner
+    DockerRsyncRunner
   HostDisk
   HostDir
   HostGit
