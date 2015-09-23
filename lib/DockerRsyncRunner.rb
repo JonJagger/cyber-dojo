@@ -26,7 +26,7 @@ class DockerRsyncRunner
     id = kata.id.to_s    
     kata_path = "#{outer(id)}/#{inner(id)}"
     cmds = [
-      "rsync -rtW rsyncclient@#{@ip_address}::katas/#{kata_path}/#{avatar.name}/sandbox /tmp",
+      "rsync -rtW cyber-dojo@#{@ip_address}::katas/#{kata_path}/#{avatar.name}/sandbox /tmp",
       "cd /tmp/sandbox && #{timeout(command,max_seconds)}"
     ].join(';')
 

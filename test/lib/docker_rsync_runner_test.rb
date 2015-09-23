@@ -122,7 +122,7 @@ class DockerRsyncRunnerTests < LibTestBase
 
     rsync_cmd =
       [
-        "rsync -rtW rsyncclient@#{good_ip}::katas/#{outer(id)}/#{inner(id)}/lion/sandbox /tmp",
+        "rsync -rtW cyber-dojo@#{good_ip}::katas/#{outer(id)}/#{inner(id)}/lion/sandbox /tmp",
         "cd /tmp/sandbox && timeout --signal=#{kill} #{max_seconds}s #{cyber_dojo_cmd} 2>&1"
       ].join(';')
 
