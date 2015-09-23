@@ -234,6 +234,15 @@ module OutputColour # mix-in
     end
   end
 
+  def self.parse_qunit(output)
+    qunit_pattern = /\W*\d+\W+\d+\W+\d+\W+(\d+)\W+(\d+)\W+\d+\W+/
+    if match = qunit_pattern.match(output)
+      match[1] === '0' ? :green : :red
+    else
+      :amber
+    end
+  end
+
   def self.parse_scala_test(output)
     scala_pattern = /Tests: succeeded (\d+), failed (\d+), canceled (\d+), ignored (\d+), pending (\d+)/
     if match = scala_pattern.match(output)
