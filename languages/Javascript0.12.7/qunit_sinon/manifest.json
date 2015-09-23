@@ -1,0 +1,17 @@
+{
+  "visible_filenames": [
+    "hiker-test.js",
+    "hiker.js",
+    "cyber-dojo.sh",
+    "config.js"
+  ],
+  "progress_regexs": [
+    "/\W*\d+\W+\d+\W+\d+\W+([1-9]\d*)\W+(\d+)\W+\d+\W+/",
+    "/\W*\d+\W+\d+\W+\d+\W+(0)\W+\d+\W+\d+\W+/"
+  ],
+  "filename_extension": ".js",
+  "unit_test_framework": "qunit",
+  "display_name": "Javascript, qunit+sinon",
+  "image_name": "cyberdojofoundation/javascript-0.12.7_qunit_sinon_chai",
+  "tab_size": 2
+}

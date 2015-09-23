@@ -14,7 +14,7 @@ class Language
     @parent.path + dir_name + '/' + test_dir_name + '/'
   end
 
-  def name    
+  def name
     display_name.split(',').map{ |s| s.strip }.join('-')
   end
 
@@ -84,7 +84,7 @@ class Language
 
   def filter(filename,content)
     # Cater for app/assets/javascripts/jquery-tabby.js plugin
-    # See app/lib/MakefileFilter.rb 
+    # See app/lib/MakefileFilter.rb
     MakefileFilter.filter(filename, content)
   end
 
@@ -197,7 +197,7 @@ end
 # Caters for two uses
 # 1. carefully constructed set of start files
 #    (like James Grenning uses)
-#    with explicitly set highlight_filenames entry 
+#    with explicitly set highlight_filenames entry
 #    in manifest
 # 2. default set of files direct from languages/
 #    viz, no highlight_filenames entry in manifest
