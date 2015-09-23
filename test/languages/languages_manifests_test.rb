@@ -130,7 +130,7 @@ class LanguagesManifestsTests < LanguagesTestBase
     if lang.count('-') != 1
       message = 
         alert +
-        " #{kata.id}'s 'language' entry is #{lang}" +
+        " #{kata.id}'s manifest 'language' entry is #{lang}" +
         " which does not contain a - "
         puts message
         return false
@@ -140,8 +140,9 @@ class LanguagesManifestsTests < LanguagesTestBase
     if !File.directory? round_tripped.path
       message = 
         alert +
-        " kata #{kata.id}'s 'language' entry is #{lang}" +
-        " which does not round-trip back to its own languages/sub/folder"
+        " kata #{kata.id}'s manifest 'language' entry is #{lang}" +
+        ' which does not round-trip back to its own languages/sub/folder.' +
+        ' Please check app/models/Languages.rb:new_name()'
         puts message
         return false
     end
@@ -317,7 +318,7 @@ class LanguagesManifestsTests < LanguagesTestBase
     if !has_parse_method
       message =
         alert +
-          "app/lib/OutputParser.rb does not contain a " +
+          "app/lib/OutputColour.rb does not contain a " +
           "parse_#{unit_test_framework}(output) method"
       puts message
       return false
