@@ -99,8 +99,6 @@ private
     git.init(path, '--quiet')
     git.config(path, 'user.name ' + user_name)
     git.config(path, 'user.email ' + user_email)
-    # Next line needed if runner=DockerGitCloneRunner (work in progress)
-    git.config(path, 'push.default current')
   end
 
   def git_commit(tag)
