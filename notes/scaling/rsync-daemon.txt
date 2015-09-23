@@ -50,9 +50,8 @@ Enabled port 873 in Turnkey dashboard
 $ ip route show | grep docker0 | awk '{print $9}'
 172.17.42.1
 $ docker run -it --rm --user=www-data -e RSYNC_PASSWORD='password' cyberdojofoundation/gcc-4.8.4_assert /bin/bash
-www-data@e5fd79b041aa: cd tmp
-www-data@e5fd79b041aa: rsync -rt rsyncclient@172.17.42.1::katas/59/944533D0/buffalo/sandbox cyber-dojo/
-www-data@e5fd79b041aa: cd cyber-dojo/sandbox
+www-data@e5fd79b041aa: rsync -rt rsyncclient@172.17.42.1::katas/59/944533D0/buffalo/sandbox /tmp
+www-data@e5fd79b041aa: cd /tmp/sandbox
 www-data@e5fd79b041aa: ls -al
 total 444
 drwxr-xr-x 2 www-data www-data   4096 Sep 22 12:01 .
@@ -92,6 +91,7 @@ hosts allow = 172.17.0.0/255.255.255.0
 
 Kill rsync daemon
 $ kill `cat /var/run/rsyncd.pid`
+
 Restart it
 $ rsync --daemon
 
@@ -131,9 +131,8 @@ Optimize rsync
 $ ip route show | grep docker0 | awk '{print $9}'
 172.17.42.1
 $ docker run -it --rm --user=www-data -e RSYNC_PASSWORD='password' cyberdojofoundation/gcc-4.8.4_assert /bin/bash
-www-data@e5fd79b041aa: cd tmp
-www-data@e5fd79b041aa: rsync -rtW rsyncclient@172.17.42.1::katas/59/944533D0/buffalo/sandbox .
-www-data@e5fd79b041aa: cd sandbox
+www-data@e5fd79b041aa: rsync -rtW rsyncclient@172.17.42.1::katas/59/944533D0/buffalo/sandbox /tmp
+www-data@e5fd79b041aa: cd /tmp/sandbox
 www-data@e5fd79b041aa: ls -al
 total 444
 drwxr-xr-x 2 www-data www-data   4096 Sep 22 12:01 .
@@ -170,7 +169,7 @@ And it works.
 
 Now to try on digital-ocean node inside a docker container
 $ docker run -it --rm --user=www-data -e RSYNC_PASSWORD='password' cyberdojofoundation/gcc-4.8.4_assert /bin/bash
-$.......: rsync -rtW rsyncclient@<IP_OF_TESTBED>::katas/59/944533D0/buffalo/sandbox .
+$.......: rsync -rtW rsyncclient@<IP_OF_TESTBED>::katas/59/944533D0/buffalo/sandbox /tmp
 YES. That worked.
 
 
@@ -180,13 +179,13 @@ On testBed
 $ /etc/init.d/rsync restart
 
 Back on digital-ocean node
-$ rsync -rtW rsyncclient@<IP_OF_TESTBED>::katas/59/944533D0/buffalo/sandbox cyber-dojo/
+$ rsync -rtW rsyncclient@<IP_OF_TESTBED>::katas/59/944533D0/buffalo/sandbox /tmp
 Password
 And it works.
 
 on digital-ocean node from inside docker container
 $ docker run -it --rm --user=www-data -e RSYNC_PASSWORD='password' cyberdojofoundation/gcc-4.8.4_assert /bin/bash
-$.......: rsync -rtW rsyncclient@<IP_OF_TESTBED>::katas/59/944533D0/buffalo/sandbox .
+$.......: rsync -rtW rsyncclient@<IP_OF_TESTBED>::katas/59/944533D0/buffalo/sandbox /tmp
 YES. That worked.
 
 So I don't need a 873 (rsync) entry in the Turnkey firewall.
