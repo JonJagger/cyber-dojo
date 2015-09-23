@@ -6,9 +6,8 @@ Problem with using git-daemon to serve katas/ files to docker container is
 So I'm looking into using rsync daemon instead.
 
 From the man page
-You can avoid the password prompt by setting the 
-environment variable RSYNC_PASSWORD to the password
-you want to use
+You can avoid the password prompt by setting the  environment variable 
+RSYNC_PASSWORD to the password you want to use
 
 Reading
 http://www.jveweb.net/en/archives/2011/01/running-rsync-as-a-daemon.html
@@ -201,14 +200,50 @@ Notes
 1. Have to do this each time server is started
    $ /etc/init.d/rsync restart
 
+   Started again from fresh server.
+   Script commands recorded below (updated as I go)
+
+   cd /var/www/cyber-dojo/admin_scripts/rsync
+   cp etc_rsyncd.conf     /etc/rsyncd.conf
+   cp etc_rsyncd.secrets  /etc/rsyncd.secrets
+   cd /etc/init.d
+   mv rsync rsync.original
+   sed 's/RSYNC_ENABLE=false/RSYNC_ENABLE=true/' < rsync.original > rsync
+   chmod +x rsync
+   systemctl enable rsync
+
+
+   Rebooted   
+   $ cat /var/run/rsyncd.pid
+   nope. Not there.
+   $ cat /var/log/rsyncd.log
+   nope. Not there either.
+   is the problem is that /etc/rsync is not executable?
+   $ chmod +x /etc/rsync
+   Now I can do
+   $ /etc/init.d/rsync restart
+   $ cat /var/run/rsyncd.pid
+   Yup its there.
+   Reboot again.
+   $ cat /var/run/rsyncd.pid
+   nope. Not there.
+   $ cat /var/log/rsyncd.log
+   Only shows lines from explict [/etc/init.d/rsync restart]
+   Googling
+   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=764616
+   $ systemctl enable rsync
+   Yup. Now it's there :-)
+   
+
 2. When compute nodes are distributed, the create page will
    need reworking to determine what images are available.
    Can a docker-swarm solution do this?
    An ssh solution can!
+   Simply run [ssh .... docker images] and collect the output
 
 3. cyberdojofoundation/build-essential
    has rsync in it. Fortunate!
    
 4. Digital-Ocean nodes built from Docker app are 1.8+
-   and have full cgroup facilities for limiting eg memory.
+   and have full cgroup facilities for limiting eg memory :-)
 
