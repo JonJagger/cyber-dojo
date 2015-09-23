@@ -1,4 +1,5 @@
-# See comments at end of file
+# This file is dead but its started() and tested() methods
+# are due to be added to CurlOneSelf.rb
 
 require 'net/http'
 require 'uri'
