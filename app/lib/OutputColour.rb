@@ -235,6 +235,8 @@ module OutputColour # mix-in
   end
 
   def self.parse_qunit(output)
+    died_pattern = /Died on test/
+    return :amber if died_pattern.match(output)
     qunit_pattern = /\W*\d+\W+\d+\W+\d+\W+(\d+)\W+(\d+)\W+\d+\W+/
     if match = qunit_pattern.match(output)
       match[1] === '0' ? :green : :red

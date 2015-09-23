@@ -1,5 +1,5 @@
 require('./hiker.js');
 
 test("answer", function() {
-    equal(answer(), 43, "to life the universe and everything");
+    equal(answer(), 42, "to life the universe and everything");
 });
