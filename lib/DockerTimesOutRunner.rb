@@ -33,7 +33,7 @@ module DockerTimesOutRunner # mix-in
 
   def read_image_names
     output,_ = bash(sudoi('docker images'))
-    lines = output.split("\n").select{|line| line.start_with?('cyberdojo')}
+    lines = output.split("\n").select{|line| line.start_with?('cyberdojofoundation')}
     image_names = lines.collect{|line| line.split[0]}
   end
 

@@ -1,8 +1,8 @@
 
 # test runner providing isolation/protection/security
 # via Docker containers https://www.docker.io/
-# and relying on volume mounts on local hard disk to
-# give state access to docker process containers.
+# and relying on docker volume mounts on host to
+# give /katas/ state access to docker process containers.
 #
 # Comments at end of file
 
@@ -28,9 +28,9 @@ class DockerVolumeMountRunner
     times_out_run(options, language.image_name, cmd, max_seconds)
   end
 
-  include DockerTimesOutRunner
-
 private
+
+  include DockerTimesOutRunner
 
   def sudoi(cmd)
     cmd

@@ -10,8 +10,8 @@ modules=(
   app_helpers 
   app_lib 
   app_models 
-  app_controllers 
   lib
+  app_controllers
 #  languages
 #  integration 
 )
