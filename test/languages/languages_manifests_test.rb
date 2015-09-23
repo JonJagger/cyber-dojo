@@ -217,6 +217,16 @@ class LanguagesManifestsTests < LanguagesTestBase
       puts message
       return false
     end
+    if display_name.each_char.select{|ch| '0123456789'.include? ch} != []
+      message =
+        alert +
+        " #{manifest_filename}'s 'display_name':'#{display_name}'" +
+        ' contains a digit'
+      if display_name != 'Bash, shunit2'
+        puts message
+        return false
+      end
+    end
     print '.'
     true
   end
