@@ -48,3 +48,29 @@ Rough notes now below are now captured in
 4) check log via [cat /var/log/rsyncd.log]
 5) reboot via [/etc/init.d/rsync restart]
 
+
+Ok. This gives a new DockerRunner that avoid volume-mounting.
+I could actually install that on cyber-dojo.org now as part
+of the migration.
+
+The next step would be to create a new DockerRunner that
+"federates" the docker-run calls to several docker-nodes. 
+I could use docker-swarm for this. However
+I can only go to docker 1.6 on the current cyber-dojo.org 
+server. Another option is simply to ssh to the nodes.
+How would this work?
+I would create a new user and allow www-data to sudo as that user. 
+That user would then setup ssh credentials and ssh-copy-id
+them to the nodes. It would then the ability to ssh into the nodes.
+Further, I could set a firewall and only allow SSH
+into the docker-nodes from cyber-dojo.org's IP address.
+
+DockerHostRsyncRunner
+DockerSshRsyncRunner
+
+
+
+
+
+
+

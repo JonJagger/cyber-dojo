@@ -1,7 +1,8 @@
 # test runner providing isolation/protection/security
 # via Docker containers https://www.docker.io/
 # and relying on rsync-daemon running the host server to
-# give /katas/ state access to docker process containers.
+# give /katas/ state access to docker process containers
+# *also* running on the host.
 #
 # Comments at end of file
 
@@ -9,7 +10,7 @@ require_relative 'DockerTimesOutRunner'
 require 'tempfile'
 require 'resolv'
 
-class DockerRsyncRunner
+class DockerHostRsyncRunner
 
   def initialize(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
     @bash,@cid_filename = bash,cid_filename

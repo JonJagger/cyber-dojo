@@ -4,7 +4,7 @@ require_relative './LibTestBase'
 require_relative './DockerTestHelpers'
 require 'resolv'
 
-class DockerRsyncRunnerTests < LibTestBase
+class DockerHostRsyncRunnerTests < LibTestBase
 
   include DockerTestHelpers
 
@@ -18,7 +18,7 @@ class DockerRsyncRunnerTests < LibTestBase
   end
 
   def make_docker_runner
-    @runner = DockerRsyncRunner.new(@bash,cid_filename)
+    @runner = DockerHostRsyncRunner.new(@bash,cid_filename)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
