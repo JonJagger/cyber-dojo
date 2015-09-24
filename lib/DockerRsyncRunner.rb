@@ -64,3 +64,16 @@ end
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# rsync -rtW cyber-dojo@#{@ip_address}::katas/#{kata_path}/#{avatar.name}/sandbox /tmp
+#
+# -r  recursive
+# -t  preserve times
+# -W  copy files whole (w/o delta-xfer algorithm)
+#
+# cyber-dojo  pseudo-user named in /etc/rsyncd.conf and /etc/rsyncd.secrets
+#
+# ::katas  [module] named in /etc/rsyncd.conf
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
