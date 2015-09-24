@@ -4,9 +4,10 @@ class Avatar
 
   include ExternalParentChain
 
-  def initialize(kata,name)
-    raise 'Invalid Avatar(name)' if !Avatars.valid?(name)
-    @parent,@name = kata,name
+  def initialize(kata, name)
+    raise 'Invalid Avatar(name)' unless Avatars.valid?(name)
+    @parent = kata
+    @name = name
   end
 
   attr_reader :name
@@ -14,7 +15,7 @@ class Avatar
   def kata
     @parent
   end
-  
+
   def exists?
     dir.exists?
   end
@@ -23,13 +24,13 @@ class Avatar
     dir.make
     git_setup
     write_manifest(kata.visible_files)
-    git.add(path,manifest_filename)
-    write_increments([ ])
-    git.add(path,increments_filename)     
+    git.add(path, manifest_filename)
+    write_increments([])
+    git.add(path, increments_filename)
     sandbox.start
     git_commit(0)    
   end
-  
+
   def path
     # The avatar's folder holds its manifest and increments caches
     kata.path + name + '/'
@@ -41,7 +42,7 @@ class Avatar
   end
 
   def active?
-    # Players sometimes start an extra avatar solely to read the 
+    # Players sometimes start an extra avatar solely to read the
     # instructions. I don't want these avatars appearing on the dashboard.
     # When forking a new kata you can enter as one animal to sanity check
     # it is ok (but not press [test])
@@ -49,11 +50,11 @@ class Avatar
   end
 
   def tags
-    (tag0 + increments).map{ |h| Tag.new(self,h) }
+    (tag0 + increments).map { |h| Tag.new(self, h) }
   end
 
   def lights
-    tags.select{ |tag| tag.light? }
+    tags.select { |tag| tag.light? }
   end
 
   def visible_filenames
@@ -66,10 +67,10 @@ class Avatar
 
   def test(delta, files, now = time_now, time_limit = 15)
     cyber_dojo_sh_updated = language.update_cyber_dojo_sh(files)
-    sandbox.save_files(delta,files)
+    sandbox.save_files(delta, files)
     output = sandbox.run_tests(time_limit)
     colour = language.colour(output)
-    output = language.update_output(output,cyber_dojo_sh_updated)
+    output = language.update_output(output, cyber_dojo_sh_updated)
 
     rags = increments
     tag = rags.length + 1
@@ -79,13 +80,13 @@ class Avatar
     files['output'] = output
     write_manifest(files)
 
-    git_commit(tag)    
-    [rags,output]    
+    git_commit(tag)
+    [rags, output]
   end
 
   def diff(n,m)
     command = "--ignore-space-at-eol --find-copies-harder #{n} #{m} sandbox"
-    diff_lines = git.diff(path,command)
+    diff_lines = git.diff(path, command)
     visible_files = tags[m].visible_files
     git_diff(diff_lines, visible_files)
   end
@@ -143,7 +144,7 @@ private
     "#{quoted(name + '_' + kata.id)}"
   end
 
-  def user_email 
+  def user_email
     "#{quoted(name)}@cyber-dojo.org"
   end
 
@@ -188,7 +189,7 @@ end
 #    o) renaming a file
 #    o) deleting a file
 #    o) opening a different file
-#    o) editing a file 
+#    o) editing a file
 #
 # If this happens the difference between tags and lights
 # will be more pronounced.
@@ -210,7 +211,3 @@ end
 #   avatar.tags[0] and avatar.tags[1]
 #
 # ------------------------------------------------------
-
-
-
-

@@ -3,14 +3,14 @@
   ExternalParentChain
   ManifestProperty
   Dojo
-  Language 
+  Language
   Languages
-  Exercise 
+  Exercise
   Exercises
-  Avatar 
+  Avatar
   Avatars
-  Kata 
+  Kata
   Katas
-  Sandbox 
+  Sandbox
   Tag
-}.each {|sourcefile| require_relative './' + sourcefile }
+}.each { |sourcefile| require_relative './' + sourcefile }
