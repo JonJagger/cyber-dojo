@@ -28,6 +28,8 @@ Notes
    and have full cgroup facilities for limiting eg memory :-)
 
 6. http://linux.about.com/library/cmd/blcmdl5_rsyncd.conf.htm
+   For rsyncd man/options
+   http://linux.about.com/library/cmd/blcmdl1_rsync.htm
    For rsync man/options
 
 
@@ -38,6 +40,67 @@ Rough notes now below are now captured in
   admin_scripts/rsync-daemon/setup_rsync.sh
   lib/DockerRsyncRunner.rb
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Trying it on testBed server.
+First problem was 
+  `ip route show | grep docker0 | awk '{print $9}'`
+has a trailing newline which has to be stripped (log message helped here :-)
+  `ip route show | grep docker0 | awk '{print $9}' | tr -d '\n'`
+
+Next problem was
+@ERROR: auth failed on module katas
+Checked IP address from ip route show grep above
+It was 172.17.42.1
+But etc/rsyncd.conf is set to
+    hosts allow = 172.17.0.0/255.255.255.0
+So edited that to
+    hosts allow = 172.17.42.0/255.255.255.0    
+Next problem is
+@ERROR: Unknown module 'katas'
+is it rights?
+$ chown www-data:www-data rsyncd.secrets
+Try again. Same unknown module
+Trying 
+    strict modes = false
+Try again. Same unknown module
+Perhaps I need to open the port explicitly after all?
+Opened 873 on Turnkey dashboard (all IPs)
+Rebooted server.
+Nope no good. Still.
+@ERROR: Unknown module 'katas'
+[cat /var/log/rsyncd.log] reveals
+rsync denied on module katas from ip-172-17-0-1.eu-west-1.compute.internal (172.17.0.1)
+Hmmmm. Trying this
+    hosts allow = 172.17.0.0/255.255.0.0
+Now it says
+@ERROR: auth failed on module katas
+log says
+auth failed on module katas from ip-172-17-0-2.eu-west-1.compute.internal (172.17.0.2) for rsyncclient: no matching rule
+Yup. Still has rsyncclient. Switched to cyber-dojo.
+AND WE ARE UP!
+Ok. Now to undo each of the previous steps to see if any are required.
+Remove strict mode.
+Failed!
+Put it back. Failed. Removed it. Failed! Eh?
+log says secrets file being ignored. Has to be owned by root when run as root.
+$ chown root:root /etc/rsyncd.secrets
+No strict mode.
+Reboot daemon
+$ /etc/init.d/rsync restart
+BACK AGAIN.
+Try with 
+    strict modes = true
+Still ok.
+Trying with
+    hosts allow = 172.17.42.0/255.255.255.0
+Nope.
+Back to
+    hosts allow = 172.17.0.0/255.255.0.0
+Remove 873 from Turnkey.
+
+
+
+
 
 
 

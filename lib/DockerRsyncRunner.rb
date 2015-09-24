@@ -14,7 +14,7 @@ class DockerRsyncRunner
   def initialize(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
     @bash,@cid_filename = bash,cid_filename
     raise_if_docker_not_installed
-    @ip_address,_ = bash("ip route show | grep docker0 | awk '{print $9}'")
+    @ip_address,_ = bash("ip route show | grep docker0 | awk '{print $9}' | tr -d '\n'")
     raise_if_bad_ip_address
   end
 
@@ -39,7 +39,7 @@ private
   include IdSplitter
 
   def raise_if_bad_ip_address
-    raise RuntimeError.new('bad ip address') if (@ip_address =~ Resolv::IPv4::Regex) != 0
+    raise RuntimeError.new("bad ip #{@ip_address}") if (@ip_address =~ Resolv::IPv4::Regex) != 0
   end
 
   def sudoi(cmd)

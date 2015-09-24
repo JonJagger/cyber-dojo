@@ -35,7 +35,7 @@ class DockerRsyncRunnerTests < LibTestBase
   'raises RuntimeError(bad ip address) when docker installed but bad ip address' do
     stub_docker_installed
     stub_ip_address(bad_ip)
-    assert_raises(RuntimeError,'bad ip address') { make_docker_runner }    
+    assert_raises(RuntimeError,"bad ip #{bad_ip}") { make_docker_runner }    
   end
   
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -45,7 +45,7 @@ class DockerRsyncRunnerTests < LibTestBase
     stub_docker_installed
     stub_ip_address(good_ip)
     make_docker_runner
-    determine_ip_cmd = "ip route show | grep docker0 | awk '{print $9}'" 
+    determine_ip_cmd = "ip route show | grep docker0 | awk '{print $9}' | tr -d '\n'" 
     assert_equal determine_ip_cmd, @bash.spied[1]
   end
 

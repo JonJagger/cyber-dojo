@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# as root
+
 cd /var/www/cyber-dojo/admin_scripts/rsync
 cp etc_rsyncd.conf     /etc/rsyncd.conf
 cp etc_rsyncd.secrets  /etc/rsyncd.secrets
