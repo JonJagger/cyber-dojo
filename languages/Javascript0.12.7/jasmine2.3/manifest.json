@@ -2,8 +2,7 @@
   "visible_filenames": [
     "hiker-spec.js",
     "hiker.js",
-    "cyber-dojo.sh",
-    "jasmine.json"
+    "cyber-dojo.sh"
   ],
   "progress_regexs": [
     "/(\d+) specs?, ([1-9]\d*) failures?/",

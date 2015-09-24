@@ -1,1 +1,3 @@
-qunit --code config.js --tests *-test.js
+qunitDummyConfigFile=config.js
+echo '' > $qunitDummyConfigFile
+qunit --code $qunitDummyConfigFile --tests *-test.js
