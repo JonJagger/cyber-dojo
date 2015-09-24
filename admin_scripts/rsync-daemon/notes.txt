@@ -1,9 +1,47 @@
 
-Problem with using git-daemon to serve katas/ files to docker container is
-1) git-clone does not preserve file stamps
-2) I don't need the .git folder I only need avatar/sandbox
+Notes
 
-So I'm looking into using rsync daemon instead.
+0. Getting rsync-daemon to auto start when server boots up
+   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=764616
+
+1. Problem with using git-daemon to serve katas/ files to docker container is
+   git-clone does not (easily) preserve file date-time-stamps.
+   Also I don't need the .git folder I only need avatar/sandbox
+
+2. When compute nodes are distributed, the create page will
+   need reworking to determine what images are available.
+   Can a docker-swarm solution do this?
+   An ssh solution can!
+   Simply run [ssh .... docker images] and collect the output
+
+3. Thinking about round-tripping, could the rsync-daemon
+   on the server accept an rsync call *back* to it from the
+   docker-container? This would then allow a second git-commit
+   on the main git repo, and new files could be fed back to the
+   browser. Would allow Approval/Mutation style tests and as
+   well as coverage files.
+
+4. cyberdojofoundation/build-essential
+   has rsync in it. Fortunate!
+   
+5. Digital-Ocean nodes built from Docker app are 1.8+
+   and have full cgroup facilities for limiting eg memory :-)
+
+6. http://linux.about.com/library/cmd/blcmdl5_rsyncd.conf.htm
+   For rsync man/options
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Rough notes now below are now captured in 
+  admin_scripts/rsync-daemon/etc_rsyncd.conf
+  admin_scripts/rsync-daemon/etc_rsyncd.secrets
+  admin_scripts/rsync-daemon/setup_rsync.sh
+  lib/DockerRsyncRunner.rb
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+I'm looking into using rsync daemon instead.
 
 From the man page
 You can avoid the password prompt by setting the  environment variable 
@@ -149,7 +187,7 @@ drwxr-xr-x 3 www-data www-data   4096 Sep 22 12:21 ..
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now to simulate the rsync calls coming from another computer completely.
+Now to simulate the rsync calls coming from a different computer.
 
 digital-ocean node: eg  IP = 178.62.115.39
 
@@ -194,56 +232,4 @@ and then
 $ /etc/init.d/rsync restart
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Notes
-
-1. Have to do this each time server is started
-   $ /etc/init.d/rsync restart
-
-   Started again from fresh server.
-   Script commands recorded below (updated as I go)
-
-   cd /var/www/cyber-dojo/admin_scripts/rsync
-   cp etc_rsyncd.conf     /etc/rsyncd.conf
-   cp etc_rsyncd.secrets  /etc/rsyncd.secrets
-   cd /etc/init.d
-   mv rsync rsync.original
-   sed 's/RSYNC_ENABLE=false/RSYNC_ENABLE=true/' < rsync.original > rsync
-   chmod +x rsync
-   systemctl enable rsync
-
-
-   Rebooted   
-   $ cat /var/run/rsyncd.pid
-   nope. Not there.
-   $ cat /var/log/rsyncd.log
-   nope. Not there either.
-   is the problem is that /etc/rsync is not executable?
-   $ chmod +x /etc/rsync
-   Now I can do
-   $ /etc/init.d/rsync restart
-   $ cat /var/run/rsyncd.pid
-   Yup its there.
-   Reboot again.
-   $ cat /var/run/rsyncd.pid
-   nope. Not there.
-   $ cat /var/log/rsyncd.log
-   Only shows lines from explict [/etc/init.d/rsync restart]
-   Googling
-   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=764616
-   $ systemctl enable rsync
-   Yup. Now it's there :-)
-   
-
-2. When compute nodes are distributed, the create page will
-   need reworking to determine what images are available.
-   Can a docker-swarm solution do this?
-   An ssh solution can!
-   Simply run [ssh .... docker images] and collect the output
-
-3. cyberdojofoundation/build-essential
-   has rsync in it. Fortunate!
-   
-4. Digital-Ocean nodes built from Docker app are 1.8+
-   and have full cgroup facilities for limiting eg memory :-)
 
