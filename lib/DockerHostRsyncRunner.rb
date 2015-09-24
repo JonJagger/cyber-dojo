@@ -6,7 +6,7 @@
 #
 # Comments at end of file
 
-require_relative 'DockerTimesOutRunner'
+require_relative './DockerTimesOutRunner'
 require 'tempfile'
 require 'resolv'
 
@@ -41,10 +41,6 @@ private
 
   def raise_if_bad_ip_address
     raise RuntimeError.new("bad ip #{@ip_address}") if (@ip_address =~ Resolv::IPv4::Regex) != 0
-  end
-
-  def sudoi(cmd)
-    cmd
   end
 
 end

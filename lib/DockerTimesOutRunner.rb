@@ -1,11 +1,10 @@
 
-require_relative 'Runner'
-require_relative 'Stderr2Stdout'
+require_relative './Runner'
+require_relative './Stderr2Stdout'
 
 # Assumes:
 #   @bash.exec(cmd)
 #   @cid_filename
-#   sudoi(cmd)
 
 module DockerTimesOutRunner # mix-in
 
@@ -23,7 +22,7 @@ module DockerTimesOutRunner # mix-in
   end
 
   def installed?
-    _,exit_status = bash(sudoi('docker info'))
+    _,exit_status = bash('docker info')
     exit_status === 0
   end
 
@@ -32,7 +31,7 @@ module DockerTimesOutRunner # mix-in
   end
 
   def read_image_names
-    output,_ = bash(sudoi('docker images'))
+    output,_ = bash('docker images')
     lines = output.split("\n").select{|line| line.start_with?('cyberdojofoundation')}
     image_names = lines.collect{|line| line.split[0]}
   end
@@ -48,10 +47,10 @@ module DockerTimesOutRunner # mix-in
       " /bin/bash -c #{quoted(cmd)}",
       max_seconds+5)
 
-    output,exit_status = bash(sudoi(outer_command))
+    output,exit_status = bash(outer_command)
     pid,_ = bash("cat #{@cid_filename}")
-    bash(sudoi("docker stop #{pid}"))
-    bash(sudoi("docker rm #{pid}"))
+    bash("docker stop #{pid}")
+    bash("docker rm #{pid}")
     exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
   end
 

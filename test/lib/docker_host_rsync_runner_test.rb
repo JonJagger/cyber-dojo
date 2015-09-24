@@ -41,7 +41,7 @@ class DockerHostRsyncRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'ED0EA2',
-  'initialize() uses [docker info] not run as sudo' do
+  'initialize() uses [docker info]' do
     stub_docker_installed
     stub_ip_address(good_ip)
     make_docker_runner
@@ -52,7 +52,7 @@ class DockerHostRsyncRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'EBB1D5',
-  'runnable?(language) uses [docker images] not run as sudo' do
+  'runnable?(language) uses [docker images]' do
     stub_docker_installed
     stub_ip_address(good_ip)
     docker = make_docker_runner

@@ -26,7 +26,7 @@ class DockerVolumeMountRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'E58A3B',
-  'initialize() uses [docker info] not run as sudo' do
+  'initialize() uses [docker info]' do
     stub_docker_installed
     make_docker_runner
     assert_equal 'docker info', @bash.spied[0]
@@ -35,7 +35,7 @@ class DockerVolumeMountRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '3813F9',
-  'runnable?() uses [docker images] not run as sudo' do
+  'runnable?() uses [docker images]' do
     stub_docker_installed
     docker = make_docker_runner
     stub_docker_images_python_py_test

@@ -6,7 +6,7 @@
 #
 # Comments at end of file
 
-require_relative 'DockerTimesOutRunner'
+require_relative './DockerTimesOutRunner'
 require 'tempfile'
 
 class DockerVolumeMountRunner
@@ -31,10 +31,6 @@ class DockerVolumeMountRunner
 private
 
   include DockerTimesOutRunner
-
-  def sudoi(cmd)
-    cmd
-  end
 
 end
 
