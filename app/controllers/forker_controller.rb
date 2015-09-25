@@ -50,7 +50,7 @@ class ForkerController < ApplicationController
       }
 
       kata = dojo.katas[id]
-      kata.dir.write('manifest.json', manifest)
+      kata.dir.write_json('manifest.json', manifest)
       result[:forked] = true
       result[:id] = id
     end
