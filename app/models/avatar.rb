@@ -71,15 +71,10 @@ class Avatar
     colour = language.colour(output)
     output = language.update_output(output, cyber_dojo_sh_updated)
 
-    rags = increments
-    tag = rags.length + 1
-    write_increments(rags << { 'colour' => colour, 'time' => now, 'number' => tag })
+    update_manifest(files, output)
+    rags = update_increments(colour, now)
+    git_commit(rags[-1]['number'])
 
-    sandbox.dir.write('output', output) # output is part of diff state
-    files['output'] = output
-    write_manifest(files)
-
-    git_commit(tag)
     [rags, output]
   end
 
@@ -120,8 +115,22 @@ class Avatar
     dir.write_json(manifest_filename, files)
   end
 
+  def update_manifest(files, output)
+    sandbox.dir.write('output', output) # output is part of diff state
+    files['output'] = output
+    write_manifest(files)
+  end
+
   def write_increments(increments)
     dir.write_json(increments_filename, increments)
+  end
+
+  def update_increments(colour, now)
+    rags = increments # Reds/Ambers/Greens
+    tag = rags.length + 1
+    rags << { 'colour' => colour, 'time' => now, 'number' => tag }
+    write_increments(rags)
+    rags
   end
 
   def increments

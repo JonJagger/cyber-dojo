@@ -40,7 +40,7 @@ class Sandbox
     write(filename, content)
     git.add(path, filename)
   end
-    
+
   def git_rm(filename)
     git.rm(path, filename)
   end

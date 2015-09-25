@@ -2,7 +2,7 @@
 class DifferController < ApplicationController
   
   def diff
-    @lights = avatar.lights.map{|light| light.to_json }
+    @lights = avatar.lights.map { |light| light.to_json }
     diffs = git_diff_view(avatar.diff(was_tag,now_tag))
     render json: {
 	      lights: @lights,

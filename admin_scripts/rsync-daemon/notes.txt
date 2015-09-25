@@ -81,7 +81,9 @@ test-runner user on docker-nodes would need to be member of docker group.
 test-runner user on cyber-dojo.org would setup ssh credentials 
 and ssh-copy-id them to all the docker-nodes. 
 
-Set a firewall on each docker-node to only allowed SSH from cyber-dojo.org's IP address.
+Set firewall on each docker-node to only allow access TO/FROM cyber-dojo.org's IP address.
+cyber-dojo.org --> ssh   --> docker
+docker         --> rsync --> cyber-dojo.org
 
 The rsync command retrieve katas/ subfolder from cyber-dojo.org using
 the rsync cyber-dojo pseudo-user.

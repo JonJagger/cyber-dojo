@@ -56,10 +56,9 @@ class Tag
   private
 
   attr_reader :hash
-  
+
   def path
     @parent.path
   end
-  
-end
 
+end
