@@ -4,12 +4,11 @@ class Avatars
   include Enumerable
 
   def self.names
-      %w(
-          alligator buffalo cheetah deer
-          elephant frog gorilla hippo
-          koala lion moose panda
-          raccoon snake wolf zebra
-        )
+    %w(alligator buffalo cheetah deer
+       elephant frog gorilla hippo
+       koala lion moose panda
+       raccoon snake wolf zebra
+    )
   end
 
   def self.valid?(name)
@@ -31,15 +30,15 @@ class Avatars
   end
 
   def [](name)
-    Avatar.new(@parent,name)
+    Avatar.new(@parent, name)
   end
 
   def active
-    select{ |avatar| avatar.active? }
+    select(&:active?)
   end
 
   def names
-    collect{ |avatar| avatar.name }
+    collect(&:name)
   end
-  
+
 end

@@ -4,16 +4,17 @@ class Katas
 
   include ExternalParentChain
   include Enumerable
-  
-  def initialize(dojo,path)
-    @parent,@path = dojo,path
-    @path += '/' if !@path.end_with? '/'
+
+  def initialize(dojo, path)
+    @parent = dojo
+    @path = path
+    @path += '/' unless @path.end_with? '/'
   end
 
   def dojo
     @parent
   end
-  
+
   attr_reader :path
 
   def create_kata(language, exercise, id = unique_id, now = time_now)
@@ -24,12 +25,12 @@ class Katas
     manifest[:visible_files] = language.visible_files
     manifest[:visible_files]['output'] = ''
     text = [
-      "Note: The initial code and test files form a",
-      "simple example to start you off.",
-      "They are *not* related to the chosen exercise,",
-      "whose instructions now follow...",
-      "- - - - - - - - - - - - - - - - - - - - - - -",
-      ""
+      'Note: The initial code and test files form a',
+      'simple example to start you off.',
+      'They are *not* related to the chosen exercise,',
+      'whose instructions now follow...',
+      '- - - - - - - - - - - - - - - - - - - - - - -',
+      ''
     ].join("\n") + exercise.instructions
     manifest[:visible_files]['instructions'] = text
     kata = self[id]
@@ -41,12 +42,12 @@ class Katas
 
   def create_kata_manifest(language, exercise, id, now)
     {
-      :created => now,
-      :id => id,
-      :language => language.name,
-      :exercise => exercise.name,
-      :unit_test_framework => language.unit_test_framework,
-      :tab_size => language.tab_size
+      created: now,
+      id: id,
+      language: language.name,
+      exercise: exercise.name,
+      unit_test_framework: language.unit_test_framework,
+      tab_size: language.tab_size
     }
   end
 
@@ -60,13 +61,13 @@ class Katas
   end
 
   def [](id)
-    Kata.new(self,id)
+    Kata.new(self, id)
   end
 
   def valid?(id)
-    id.class.name === 'String' &&
-      id.length === 10 &&
-        id.chars.all?{ |char| is_hex?(char) }
+    id.class.name == 'String' &&
+      id.length == 10 &&
+      id.chars.all? { |char| hex?(char) }
   end
 
   def exists?(id)
@@ -81,19 +82,19 @@ class Katas
       outer_dir = disk[path + outer(id)]
       if outer_dir.exists?
         dirs = outer_dir.each_dir.select { |inner_dir| inner_dir.start_with?(inner(id)) }
-        id = outer(id) + dirs[0] if dirs.length === 1
+        id = outer(id) + dirs[0] if dirs.length == 1
       end
     end
     id || ''
   end
 
-private
+  private
 
   include UniqueId
   include TimeNow
   include IdSplitter
 
-  def is_hex?(char)
+  def hex?(char)
     '0123456789ABCDEF'.include?(char)
   end
 

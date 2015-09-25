@@ -2,13 +2,15 @@
 class Exercise
 
   include ExternalParentChain
-  
-  def initialize(exercises,name,instructions=nil)
-    @parent,@name,@instructions = exercises,name,instructions
+
+  def initialize(exercises, name, instructions = nil)
+    @parent = exercises
+    @name = name
+    @instructions = instructions
   end
 
   attr_reader :name
-  
+
   def path
     @parent.path + name + '/'
   end
@@ -21,7 +23,7 @@ class Exercise
     @instructions || read(instructions_filename)
   end
 
-private
+  private
 
   def instructions_filename
     'instructions'

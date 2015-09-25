@@ -11,8 +11,8 @@ class Dojo
   def disk    ; @disk     ||= env_object('HostDisk'               ).new; end
   def git     ; @git      ||= env_object('HostGit'                ).new; end
   def one_self; @one_self ||= env_object('OneSelf').new(disk)          ; end
-  
-private
+
+  private
 
   def env_var
     default = "/var/www/cyber-dojo/#{name_of(caller)}"
@@ -25,7 +25,7 @@ private
   end
 
   def name_of(caller)
-    (caller[0] =~ /`([^']*)'/ and $1)
+    (caller[0] =~ /`([^']*)'/ && $1)
   end
 
 end
@@ -36,8 +36,8 @@ end
 #
 # The main reason for this arrangement is testability.
 # For example, I can run controller tests by setting the
-# environment variables, then run the test which issue 
-# a GET/POST, let the call work its way through the rails stack, 
+# environment variables, then run the test which issue
+# a GET/POST, let the call work its way through the rails stack,
 # eventually reaching Dojo.rb where it creates
 # Disk/Runner/Git/OneSelf objects as named in the ENV[]
 # I cannot see how how I do this using Parameterize-From-Above

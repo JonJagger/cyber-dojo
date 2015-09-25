@@ -28,7 +28,7 @@ class Avatar
     write_increments([])
     git.add(path, increments_filename)
     sandbox.start
-    git_commit(0)    
+    git_commit(0)
   end
 
   def path
@@ -54,7 +54,7 @@ class Avatar
   end
 
   def lights
-    tags.select { |tag| tag.light? }
+    tags.select(&:light?)
   end
 
   def visible_filenames
@@ -84,14 +84,14 @@ class Avatar
     [rags, output]
   end
 
-  def diff(n,m)
+  def diff(n, m)
     command = "--ignore-space-at-eol --find-copies-harder #{n} #{m} sandbox"
     diff_lines = git.diff(path, command)
     visible_files = tags[m].visible_files
     git_diff(diff_lines, visible_files)
   end
 
-private
+  private
 
   include GitDiff
   include TimeNow

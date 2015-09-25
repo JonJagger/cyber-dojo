@@ -3,10 +3,11 @@
 class Kata
 
   include ExternalParentChain
-  
-  def initialize(katas,id)
-    raise "Invalid Kata(id)" if !katas.valid?(id)
-    @parent,@id = katas,id
+
+  def initialize(katas, id)
+    fail 'Invalid Kata(id)' unless katas.valid?(id)
+    @parent = katas
+    @id = id
   end
 
   attr_reader :id
@@ -25,7 +26,7 @@ class Kata
       filename = 'started_avatars.json'
       started = dir.exists?(filename) ? JSON.parse(read(filename)) : avatars.names
       free_names = avatar_names - started
-      if free_names != [ ]
+      if free_names != []
         avatar = Avatar.new(self, free_names[0])
         avatar.start
         if dir.exists?(filename)
@@ -46,16 +47,16 @@ class Kata
   end
 
   def age(now = Time.now.to_a[0..5].reverse)
-    return 0 if !active?
+    return 0 unless active?
     return (Time.mktime(*now) - earliest_light).to_i
   end
 
   def finished?(now = Time.now.to_a[0..5].reverse)
-    return false if !active?
+    return false unless active?
     seconds_per_day = 60 * 60 * 24
     return age(now) >= seconds_per_day
   end
-  
+
   def created
     Time.mktime(*manifest_property)
   end
@@ -75,8 +76,8 @@ class Kata
   def manifest
     @manifest ||= JSON.parse(read(manifest_filename))
   end
-  
-private
+
+  private
 
   include ManifestProperty
   include IdSplitter
@@ -84,11 +85,9 @@ private
   def manifest_filename
     'manifest.json'
   end
-  
+
   def earliest_light
-    Time.mktime(*avatars.active.map{ |avatar|
-      avatar.lights[0].time
-    }.sort[0])
+    Time.mktime(*avatars.active.map { |avatar| avatar.lights[0].time }.sort[0])
   end
 
   def dojo

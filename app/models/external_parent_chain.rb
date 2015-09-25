@@ -11,8 +11,8 @@ module ExternalParentChain # mix-in
 
   module_function
 
-  def method_missing(command,*args)   
-    return @parent.send(command,*args) 
+  def method_missing(command, *args)   
+    @parent.send(command, *args)
   end
 
 end

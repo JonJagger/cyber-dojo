@@ -4,14 +4,15 @@ class Exercises
 
   include ExternalParentChain
   include Enumerable
-  
-  def initialize(dojo,path)
-    @parent,@path = dojo,path
-    @path += '/' if !@path.end_with? '/'
+
+  def initialize(dojo, path)
+    @parent = dojo
+    @path = path
+    @path += '/' unless @path.end_with? '/'
   end
-  
+
   attr_reader :path
-  
+
   def each
     return enum_for(:each) unless block_given?
     exercises.each { |exercise| yield exercise }
@@ -22,30 +23,30 @@ class Exercises
   end
 
   def refresh_cache
-    cache = { }
+    cache = {}
     dir.each_dir do |sub_dir|
       exercise = make_exercise(sub_dir)
-      cache[exercise.name] = { :instructions => exercise.instructions }
+      cache[exercise.name] = { instructions: exercise.instructions }
     end
-    dir.write_json(cache_filename,cache)
+    dir.write_json(cache_filename, cache)
   end
-  
-private
+
+  private
 
   def exercises
     @exercises ||= read_cache
   end
 
   def read_cache
-    cache = [ ]
-    JSON.parse(read(cache_filename)).each do |name,exercise|
-      cache << make_exercise(name,exercise['instructions'])
+    cache = []
+    JSON.parse(read(cache_filename)).each do |name, exercise|
+      cache << make_exercise(name, exercise['instructions'])
     end
     cache
   end
 
-  def make_exercise(name,instructions=nil)
-    Exercise.new(self,name,instructions)
+  def make_exercise(name, instructions = nil)
+    Exercise.new(self, name, instructions)
   end
 
   def cache_filename
@@ -64,4 +65,3 @@ end
 # but breaks lots of tests because they use DirFake
 # without an exercises cache.
 # - - - - - - - - - - - - - - - - - - - - - - - -
- 
