@@ -3,14 +3,14 @@
   external_parent_chain
   manifest_property
   dojo
-  language
+  language 
   languages
-  exercise
+  exercise 
   exercises
-  avatar
+  avatar 
   avatars
-  kata
+  kata 
   katas
-  sandbox
+  sandbox 
   tag
 ).each { |sourcefile| require_relative './' + sourcefile }
