@@ -15,7 +15,7 @@ module GitDiff
     attr_reader :lines, :n
 
     def parse_all
-      all = { }
+      all = {}
       while /^diff/.match(@lines[@n]) do
         one = parse_one
         if one[:now_filename] != '/dev/null'
@@ -31,10 +31,10 @@ module GitDiff
     def parse_one
       one =
       {
-        :prefix_lines => parse_prefix_lines,
-        :was_filename => parse_was_filename,
-        :now_filename => parse_now_filename,
-        :chunks => parse_chunk_all
+        prefix_lines: parse_prefix_lines,
+        was_filename: parse_was_filename,
+        now_filename: parse_now_filename,
+              chunks: parse_chunk_all
       }
       check_for_unchanged_rename_or_copy(one)
       check_for_deleted_file(one)
@@ -46,7 +46,7 @@ module GitDiff
 
     def check_for_unchanged_rename_or_copy(one)
       prefix = one[:prefix_lines]
-      if prefix.length == 4 and prefix[1] == 'similarity index 100%'
+      if prefix.length == 4 && prefix[1] == 'similarity index 100%'
         one[:was_filename] = 'a/' + unescaped(RENAME_OR_COPY_FROM_RE.match(prefix[2])[2])
         one[:now_filename] = 'b/' + unescaped(RENAME_OR_COPY_TO_RE.match(prefix[3])[2])
       end
@@ -60,7 +60,6 @@ module GitDiff
         re = DIFF_GIT_RE.match(prefix[0])
         if re
           both = re[1]
-          length = both.length
           # e.g. both = "a/sandbox/xx b/sandbox/xx"
           # -1 (space in middle) / 2 (to get one filename)
           was = both[0..both.length/2 - 1]
@@ -72,7 +71,7 @@ module GitDiff
     end
 
     def parse_chunk_all
-      chunks = [ ]
+      chunks = []
       while chunk = parse_chunk_one
         chunks << chunk
       end
@@ -81,11 +80,7 @@ module GitDiff
 
     def parse_chunk_one
       if range = parse_range
-        {
-          :range => range,
-          :before_lines => parse_common_lines,
-          :sections => parse_sections
-        }
+        { range: range, before_lines: parse_common_lines, sections: parse_sections }
       end
     end
 
@@ -94,15 +89,13 @@ module GitDiff
     def parse_range
       if range = RANGE_RE.match(@lines[@n])
         @n += 1
-        was = { :start_line => range[1].to_i,
-                :size => size_or_default(range[2])
+        was = { start_line: range[1].to_i,
+                size: size_or_default(range[2])
               }
-        now = { :start_line => range[3].to_i,
-                :size => size_or_default(range[4])
+        now = { start_line: range[3].to_i,
+                size: size_or_default(range[4])
               }
-        { :was => was, :now => now }
-      else
-        nil
+        { was: was, now: now }
       end
     end
 
@@ -118,8 +111,8 @@ module GitDiff
 
     def parse_sections
       parse_newline_at_eof
-      sections = [ ]
-      while DELETED_LINE_OR_ADDED_LINE_OR_COMMON_LINE_RE.match(@lines[@n]) do
+      sections = []
+      while DELETED_LINE_OR_ADDED_LINE_OR_COMMON_LINE_RE.match(@lines[@n])
         deleted_lines = parse_deleted_lines
         parse_newline_at_eof
 
@@ -130,9 +123,9 @@ module GitDiff
         parse_newline_at_eof
 
         sections << {
-          :deleted_lines => deleted_lines,
-          :added_lines => added_lines,
-          :after_lines => after_lines
+          deleted_lines: deleted_lines,
+          added_lines: added_lines,
+          after_lines: after_lines
         }
       end
       sections
@@ -190,15 +183,13 @@ module GitDiff
     def unescaped(filename)
       # If the filename contains a backslash, then the 'git diff'
       # command will escape the filename
-      if filename[0].chr == '"'
-        filename = eval(filename)
-      end
+      filename = eval(filename) if filename[0].chr == '"'
       filename
     end
 
     def parse_lines(re)
       lines = [ ]
-      while md = re.match(@lines[@n]) do
+      while md = re.match(@lines[@n])
         lines << md[1]
         @n += 1
       end
@@ -208,9 +199,7 @@ module GitDiff
     NEWLINE_AT_EOF_RE = /^\\ No newline at end of file/
 
     def parse_newline_at_eof
-      if NEWLINE_AT_EOF_RE.match(@lines[@n])
-        @n += 1
-      end
+      @n += 1 if NEWLINE_AT_EOF_RE.match(@lines[@n])
     end
 
   end

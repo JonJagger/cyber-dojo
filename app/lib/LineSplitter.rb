@@ -5,12 +5,12 @@ module LineSplitter # mix-in
 
   def self.line_split(source)
     if source.nil?
-      [ ]
-    elsif source === ""
-      [ "" ]
+      []
+    elsif source == ''
+      ['']
     else
-      lines = source.split(/\n/,-1)
-      lines.pop if lines.last === ""
+      lines = source.split(/\n/, -1)
+      lines.pop if lines.last == ''
       lines
     end
   end
@@ -28,4 +28,3 @@ end
 # This means that it is not guaranteed that
 # line_split(source).join("\n") == source
 # - - - - - - - - - - - - - - - - -
-

@@ -18,10 +18,10 @@ module SetupChooser # mix-in
   end
 
   def chooser(choices, id, katas)
-    choice = [*0...choices.length].shuffle[0]
+    choice = [*0...choices.length].sample
     if katas.exists?(id)
       index = choices.index(yield(katas[id]))
-      choice = index if !index.nil?
+      choice = index unless index.nil?
     end
     choice
   end

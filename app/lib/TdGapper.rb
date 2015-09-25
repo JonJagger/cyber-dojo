@@ -9,33 +9,33 @@ class TdGapper
     @max_seconds_uncollapsed = max_seconds_uncollapsed
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def fully_gapped(all_lights, now)
     s = stats(all_lights, now)
     vertical_bleed(s)
-    collapsed_table(s[:td_nos]).each do |td,gi|
+    collapsed_table(s[:td_nos]).each do |td, gi|
       count = gi[1]
-      s[:avatars].each do |name,td_map|
-        if gi[0] === :dont_collapse
-          count.times {|n| td_map[td+n+1] = [ ] }
-        end
-        if gi[0] === :collapse
-          td_map[td+1] = { :collapsed => count }
-        end
+      s[:avatars].each do |_name, td_map|
+        count.times { |n| td_map[td+n+1] = [] } if gi[0] == :dont_collapse
+        td_map[td + 1] = { collapsed: count } if gi[0] == :collapse
       end
     end
     strip(s[:avatars])
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def strip(gapped)
     return gapped if gapped == {}
     
-    empty_column = lambda {|td| gapped.all?{|_,h| h[td] == []} }
-    collapsed_column = lambda {|td| gapped.all?{|_,h| h[td].class == Hash} }
-    lightless_column = lambda {|td| empty_column.call(td) || collapsed_column.call(td) }
-    delete_column = lambda {|td| gapped.each {|_,h| h.delete(td)} } 
+        empty_column = ->(td) { gapped.all? { |_, h| h[td] == [] } }
+    collapsed_column = ->(td) { gapped.all? { |_, h| h[td].class == Hash } }
+    lightless_column = ->(td) { empty_column.call(td) || collapsed_column.call(td) }
+       delete_column = ->(td) { gapped.each { |_, h| h.delete(td) } }
     
     animal = gapped.keys[0]
-    gapped[animal].keys.sort.reverse.each do |td|
+    gapped[animal].keys.sort.reverse_each do |td|
       if lightless_column.call(td)
         delete_column.call(td)
       else
@@ -48,20 +48,19 @@ class TdGapper
       else
         break
       end
-    end    
+    end
     gapped
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def stats(all_lights, now)
-    obj = {
-      :avatars => { },
-      :td_nos  => [ 0, n(now) ]
-    }
+    obj = { avatars: {}, td_nos: [0, n(now)] }
     all_lights.each do |avatar_name, lights|
-      an = obj[:avatars][avatar_name] = { }
+      an = obj[:avatars][avatar_name] = {}
       lights.each do |light|
         tdn = number(light)
-        an[tdn] ||= [ ]
+        an[tdn] ||= []
         an[tdn] << light
         obj[:td_nos] << tdn
       end
@@ -70,24 +69,30 @@ class TdGapper
     obj
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def vertical_bleed(s)
     s[:td_nos].each do |n|
-      s[:avatars].each do |name,td_map|
-        td_map[n] ||= [ ]
+      s[:avatars].each do |_name, td_map|
+        td_map[n] ||= []
       end
     end
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def collapsed_table(td_nos)
     max_uncollapsed_tds = @max_seconds_uncollapsed / @seconds_per_td
-    obj = { }
+    obj = {}
     td_nos.each_cons(2) do |p|
       diff = p[1] - p[0]
       key = diff < max_uncollapsed_tds ? :dont_collapse : :collapse
-      obj[p[0]] = [ key, diff-1 ]
+      obj[p[0]] = [key, diff-1]
     end
     obj
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def number(light)
     ordinal(light.time)

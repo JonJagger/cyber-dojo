@@ -6,30 +6,30 @@ module GitDiff
   # for all files, for a given avatar, for a given tag.
 
   def git_diff(diff_lines, visible_files)
-      view = { }
-      diffs = GitDiffParser.new(diff_lines).parse_all
-      diffs.each do |sandbox_name,diff|
-        md = %r|^(.)/sandbox/(.*)|.match(sandbox_name)
-        if md
-          filename = md[2]
-          if deleted_file?(md[1])
-            file_content = [ ]
-            if diff[:chunks] != [ ] #[ ] indicates empty file was deleted
-              file_content = diff[:chunks][0][:sections][0][:deleted_lines]
-            end
-            view[filename] = deleteify(file_content)
-          else
-            file_content = visible_files[filename]
-            view[filename] = GitDiffBuilder.new().build(diff, LineSplitter.line_split(file_content))
+    view = {}
+    diffs = GitDiffParser.new(diff_lines).parse_all
+    diffs.each do |sandbox_name, diff|
+      md = %r{^(.)/sandbox/(.*)}.match(sandbox_name)
+      if md
+        filename = md[2]
+        if deleted_file?(md[1])
+          file_content = []
+          if diff[:chunks] != [] # [] indicates empty file was deleted
+            file_content = diff[:chunks][0][:sections][0][:deleted_lines]
           end
-          visible_files.delete(filename)
+          view[filename] = deleteify(file_content)
+        else
+          file_content = visible_files[filename]
+          view[filename] = GitDiffBuilder.new.build(diff, LineSplitter.line_split(file_content))
         end
+        visible_files.delete(filename)
       end
-      # other files have not changed...
-      visible_files.each do |filename,content|
-        view[filename] = sameify(content)
-      end
-      view
+    end
+    # other files have not changed...
+    visible_files.each do |filename, content|
+      view[filename] = sameify(content)
+    end
+    view
   end
 
   def deleted_file?(ch)
@@ -50,11 +50,7 @@ module GitDiff
 
   def ify(lines, type)
     lines.collect.each_with_index do |line, number|
-      {
-        :line => line,
-        :type => type,
-        :number => number + 1
-      }
+      { line: line, type: type, number: number + 1 }
     end
   end
 
@@ -62,25 +58,25 @@ module GitDiff
 
   def git_diff_view(diffed_files)
     n = 0
-    diffs = [ ]
-    diffed_files.sort.each do |filename,diff|
+    diffs = []
+    diffed_files.sort.each do |filename, diff|
       id = 'id_' + n.to_s
       n += 1
       diffs << {
-        :id => id,
-        :filename => filename,
-        :section_count      => diff.count { |line| line[:type] == :section },
-        :deleted_line_count => diff.count { |line| line[:type] == :deleted },
-        :added_line_count   => diff.count { |line| line[:type] == :added   },
-        :content  => git_diff_html_file(id, diff),
-        :line_numbers => git_diff_html_line_numbers(diff)
+                        id: id,
+                  filename: filename,
+             section_count: diff.count { |line| line[:type] == :section },
+        deleted_line_count: diff.count { |line| line[:type] == :deleted },
+          added_line_count: diff.count { |line| line[:type] == :added   },
+                   content: git_diff_html_file(id, diff),
+              line_numbers: git_diff_html_line_numbers(diff)
       }
     end
     diffs
   end
 
   def git_diff_html_file(id, diff)
-    lines = diff.map {|n| diff_htmlify(id, n) }.join('')
+    diff.map { |n| diff_htmlify(id, n) }.join('')
   end
 
   def diff_htmlify(id, n)
@@ -111,7 +107,7 @@ module GitDiff
     # In practice I've decided this is not worth worrying about
     # since the overwhelming feeling you get when switching files
     # is the change of content anyway.
-    line_numbers = diff.map {|n| diff_htmlify_line_numbers(n) }.join('')
+    diff.map { |n| diff_htmlify_line_numbers(n) }.join('')
   end
 
   def diff_htmlify_line_numbers(n)

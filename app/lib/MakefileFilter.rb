@@ -10,7 +10,7 @@ module MakefileFilter # mix-in
     # Hence this special filter, just for makefiles, to convert
     # leading spaces back to a tab character.
     if filename.downcase.split(File::SEPARATOR).last == 'makefile'
-      lines = [ ]
+      lines = []
       newline = Regexp.new('[\r]?[\n]')
       content.split(newline).each do |line|
         if stripped = line.lstrip!

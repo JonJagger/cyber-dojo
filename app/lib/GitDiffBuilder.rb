@@ -24,7 +24,7 @@ module GitDiff
   class GitDiffBuilder
 
     def build(diff, lines)
-      result = [ ]
+      result = []
       line_number = 1
       from = 0
       index = 0
@@ -48,17 +48,13 @@ module GitDiff
   private
 
     def fill_all(result, type, lines, line_number)
-      lines ||= [ ]
+      lines ||= []
       fill(result, type, lines, 0, lines.length, line_number)
     end
 
     def fill(into, type, lines, from, to, line_number)
       (from...to).each do |n|
-        into << {
-          :type => type,
-          :line => lines[n],
-          :number => line_number
-        }
+        into << { type: type, line: lines[n], number: line_number }
         line_number += 1
       end
       line_number

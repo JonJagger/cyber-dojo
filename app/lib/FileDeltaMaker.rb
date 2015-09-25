@@ -5,19 +5,14 @@ module FileDeltaMaker # mix-in
 
   # make_delta finds out which files are :new, :unchanged, :changed, or :deleted.
   # It ensures files deleted in the browser are correspondingly deleted under katas/
-  # It also allows unchanged files to *not* be (re)saved. 
+  # It also allows unchanged files to *not* be (re)saved.
   # Unfortunately using DockerGitCloneRunner each test event causes a git-clone
   # and Git does *not* record timestamps so it's not much of an optimization.
 
-  def make_delta(was, now)    
-    now_keys = now.keys.clone    
-    result =
-    {
-      :unchanged => [ ],
-      :changed   => [ ],
-      :deleted   => [ ]
-    }
-    was.each do |filename,hash|
+  def make_delta(was, now)
+    now_keys = now.keys.clone
+    result = { unchanged: [], changed: [], deleted: [] }
+    was.each do |filename, hash|
       if now[filename] == hash
         result[:unchanged] << filename
       elsif !now[filename].nil?
