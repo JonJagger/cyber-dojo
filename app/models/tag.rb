@@ -2,13 +2,13 @@
 # See comment at bottom of Avatar.rb
 
 class Tag
-
   include ExternalParentChain
-  
-  def initialize(avatar,hash)
-    @parent,@hash = avatar,hash
-  end  
-  
+
+  def initialize(avatar, hash)
+    @parent = avatar
+    @hash = hash
+  end
+
   def avatar
     @parent
   end
@@ -31,7 +31,7 @@ class Tag
     # Very early dojos used outcome
     hash.include?('colour') || hash.include?('outcome')
   end
-  
+
   def colour
     # if this is called on tag that is not a light
     # it will raise a NoMethodError
@@ -53,9 +53,9 @@ class Tag
     hash['number']
   end
 
-private
+  private
 
-  attr_reader :hash      
+  attr_reader :hash
   
   def path
     @parent.path

@@ -1,11 +1,13 @@
 # See comments at end of file
 
 class Language
-
   include ExternalParentChain
 
-  def initialize(languages,dir_name,test_dir_name,display_name=nil)
-    @parent,@dir_name,@test_dir_name,@display_name = languages,dir_name,test_dir_name,display_name
+  def initialize(languages, dir_name, test_dir_name, display_name = nil)
+    @parent = languages
+    @dir_name = dir_name
+    @test_dir_name = test_dir_name
+    @display_name = display_name
   end
 
   attr_reader :dir_name, :test_dir_name
@@ -15,7 +17,7 @@ class Language
   end
 
   def name
-    display_name.split(',').map{ |s| s.strip }.join('-')
+    display_name.split(',').map(&:strip).join('-')
   end
 
   def display_name
@@ -47,19 +49,19 @@ class Language
   end
 
   def visible_filenames
-    manifest_property || [ ]
+    manifest_property || []
   end
 
   def visible_files
-    Hash[visible_filenames.collect{ |filename| [ filename, read(filename) ] }]
+    Hash[visible_filenames.collect { |filename| [filename, read(filename)] }]
   end
 
   def highlight_filenames
-    manifest_property || [ ]
+    manifest_property || []
   end
 
   def progress_regexs
-    manifest_property || [ ]
+    manifest_property || []
   end
 
   def tab_size
@@ -82,7 +84,7 @@ class Language
     OutputColour.of(unit_test_framework, output)
   end
 
-  def filter(filename,content)
+  def filter(filename, content)
     # Cater for app/assets/javascripts/jquery-tabby.js plugin
     # See app/lib/MakefileFilter.rb
     MakefileFilter.filter(filename, content)
@@ -139,11 +141,11 @@ class Language
       '# lines in the master cyber-dojo.sh file (below this alert). If this file',
       '# is not working please examine the differences. Editing or removing the',
       '# master (below this alert) will re-trigger the alert!',
-      '# </ALERT>',
+      '# </ALERT>'
     ].join("\n")
   end
 
-  def update_output(output,cyber_dojo_sh_updated)
+  def update_output(output, cyber_dojo_sh_updated)
     # If the cyber-dojo.sh file has been modified (see above)
     # the output also contains an alert
     cyber_dojo_sh_updated ? output_alert + separator + output : output
@@ -151,14 +153,14 @@ class Language
 
   def output_alert
     [
-      "ALERT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-      "ALERT >>>          possible problem detected           >>>",
-      "ALERT >>>   examine cyber-dojo.sh for detailed info    >>>",
-      "ALERT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+      'ALERT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',
+      'ALERT >>>          possible problem detected           >>>',
+      'ALERT >>>   examine cyber-dojo.sh for detailed info    >>>',
+      'ALERT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
     ].join("\n")
   end
 
-private
+  private
 
   include ManifestProperty
 
@@ -167,7 +169,7 @@ private
   end
 
   def commented_cyber_dojo_sh
-    cyber_dojo_sh.split("\n").map{|line| '#' + line}.join("\n")
+    cyber_dojo_sh.split("\n").map { |line| '#' + line }.join("\n")
   end
 
   def separator
@@ -175,14 +177,12 @@ private
   end
 
   def manifest
-    begin
-      @manifest ||= JSON.parse(read(manifest_filename))
-    rescue Exception => e
-      message =  "JSON.parse(#{manifest_filename}) exception" + "\n" +
-        "language: " + path + "\n" +
-        " message: " + e.message
-      raise message
-    end
+    @manifest ||= JSON.parse(read(manifest_filename))
+  rescue StandardError => e
+    message = "JSON.parse(#{manifest_filename}) exception" + "\n" +
+      'language: ' + path + "\n" +
+      ' message: ' + e.message
+    raise message
   end
 
   def manifest_filename

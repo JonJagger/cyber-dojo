@@ -1,11 +1,10 @@
 # See comments at end of file
 
 class Avatar
-
   include ExternalParentChain
 
   def initialize(kata, name)
-    raise 'Invalid Avatar(name)' unless Avatars.valid?(name)
+    fail 'Invalid Avatar(name)' unless Avatars.valid?(name)
     @parent = kata
     @name = name
   end

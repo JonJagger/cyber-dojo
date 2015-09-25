@@ -1,6 +1,5 @@
 
 class Avatars
-
   include Enumerable
 
   def self.names

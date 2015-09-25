@@ -1,8 +1,7 @@
 
 class Sandbox
-
   include ExternalParentChain
-  
+
   def initialize(avatar)
     @parent = avatar
   end
@@ -10,16 +9,16 @@ class Sandbox
   def avatar
     @parent
   end
-  
+
   def path
     avatar.path + 'sandbox/'
   end
 
   def start
     dir.make
-    avatar.visible_files.each { |filename,content| git_add(filename,content) }
+    avatar.visible_files.each { |filename, content| git_add(filename, content) }
   end
-  
+
   def save_files(delta, files)
     delta[:deleted].each { |filename| git_rm(filename) }
     delta[:new    ].each { |filename| git_add(filename, filter(filename, files)) }
@@ -29,8 +28,8 @@ class Sandbox
   def run_tests(time_limit)
     runner.run(self, './cyber-dojo.sh', time_limit)
   end
-  
-private
+
+  private
 
   def filter(filename, files)
     content = avatar.kata.language.filter(filename, files[filename])
@@ -38,12 +37,12 @@ private
   end
 
   def git_add(filename, content)
-    write(filename,content)
-    git.add(path,filename)
+    write(filename, content)
+    git.add(path, filename)
   end
     
   def git_rm(filename)
-    git.rm(path,filename)
+    git.rm(path, filename)
   end
 
   def write(filename, content)

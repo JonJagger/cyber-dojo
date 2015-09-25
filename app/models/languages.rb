@@ -1,13 +1,13 @@
 # See comments at end of file
 
 class Languages
-
   include ExternalParentChain
   include Enumerable
 
-  def initialize(dojo,path)
-    @parent,@path = dojo,path
-    @path += '/' if !@path.end_with? '/'
+  def initialize(dojo, path)
+    @parent = dojo
+    @path = path
+    @path += '/' unless @path.end_with? '/'
   end
 
   attr_reader :path
@@ -18,36 +18,36 @@ class Languages
   end
 
   def [](name)
-    dir_name,test_dir_name = renamed(name)
-    make_language(dir_name,test_dir_name) # See comment below
+    dir_name, test_dir_name = renamed(name)
+    make_language(dir_name, test_dir_name) # See comment below
   end
 
   def renamed(was_name)
     loop do
       now_name = new_name(was_name).join('-')
-      break if now_name === was_name
+      break if now_name == was_name
       was_name = now_name
     end
     was_name.split('-')
   end
 
   def refresh_cache
-    cache = { }
+    cache = {}
     dir.each_dir do |dir_name|
       disk[path + dir_name].each_dir do |test_dir_name|
-        language = make_language(dir_name,test_dir_name)
+        language = make_language(dir_name, test_dir_name)
         if language.exists?
           cache[language.display_name] = {
-            :dir_name => language.dir_name,
-            :test_dir_name => language.test_dir_name
+            dir_name: language.dir_name,
+            test_dir_name: language.test_dir_name
           }
         end
       end
     end
-    dir.write_json(cache_filename,cache)
+    dir.write_json(cache_filename, cache)
   end
 
-private
+  private
 
   def new_name(name)
     # maps from a language&test display_name into a
@@ -137,15 +137,15 @@ private
   end
 
   def read_cache
-    cache = [ ]
-    JSON.parse(dir.read(cache_filename)).each do |display_name,language|
-      cache << make_language(language['dir_name'],language['test_dir_name'],display_name)
+    cache = []
+    JSON.parse(dir.read(cache_filename)).each do |display_name, language|
+      cache << make_language(language['dir_name'], language['test_dir_name'], display_name)
     end
     cache
   end
 
-  def make_language(dir_name,test_dir_name,display_name=nil)
-    Language.new(self,dir_name,test_dir_name,display_name)
+  def make_language(dir_name, test_dir_name, display_name = nil)
+    Language.new(self, dir_name, test_dir_name, display_name)
   end
 
   def cache_filename

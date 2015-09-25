@@ -1,7 +1,6 @@
 # See comments at end of file
 
 class Exercises
-
   include ExternalParentChain
   include Enumerable
 
