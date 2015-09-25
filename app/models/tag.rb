@@ -48,8 +48,6 @@ class Tag
   end
 
   def number
-    # badly named but dojos on disk have stored
-    # hash with 'number' as the key - make private?
     hash['number']
   end
 

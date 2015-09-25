@@ -15,6 +15,7 @@ class TagsTest < AppModelTestBase
     avatar = kata.start_avatar
     tags = avatar.tags
     assert_equal 1, tags.length
+    refute tags[0].light?
     n = 0
     tags.each { n += 1 }
     assert_equal 1, n
@@ -37,7 +38,7 @@ class TagsTest < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - -
 
   test '839D39',
-  'each [test]-event creates a new tag' do
+  'each [test]-event creates a new tag which is a light' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     assert_equal 1, lion.tags.length
@@ -47,7 +48,10 @@ class TagsTest < AppModelTestBase
     maker.run_test
     maker.run_test
     assert_equal 4, lion.tags.length
-    lion.tags.each_with_index{|tag,i| assert_equal i, tag.number }
+    lion.tags.each_with_index do |tag, i|
+      assert_equal i, tag.number
+      assert i == 0 || tag.light?
+    end
   end
   
   #- - - - - - - - - - - - - - - - - - -
@@ -62,7 +66,9 @@ class TagsTest < AppModelTestBase
     maker.run_test
     maker.run_test
     tags = lion.tags
-    (1..tags.length).each {|i| assert_equal tags.length-i, tags[-i].number }
+    (1..tags.length).each do |i|
+      assert_equal tags.length-i, tags[-i].number
+    end
   end
     
 end

@@ -49,7 +49,7 @@ class Avatar
   end
 
   def tags
-    (tag0 + increments).map { |h| Tag.new(self, h) }
+    ([tag0] + increments).map { |h| Tag.new(self, h) }
   end
 
   def lights
@@ -104,11 +104,11 @@ class Avatar
 
   def tag0
     @zeroth ||=
-    [
+    {
       'event' => 'created',
       'time' => time_now(kata.created),
       'number' => 0
-    ]
+    }
   end
 
   def write_manifest(files)
