@@ -1,16 +1,16 @@
 
-%w{
-  ExternalParentChain
-  ManifestProperty
-  Dojo
-  Language 
-  Languages
-  Exercise 
-  Exercises
-  Avatar 
-  Avatars
-  Kata 
-  Katas
-  Sandbox 
-  Tag
-}.each {|sourcefile| require_relative './' + sourcefile }
+%w(
+  external_parent_chain
+  manifest_property
+  dojo
+  language 
+  languages
+  exercise 
+  exercises
+  avatar 
+  avatars
+  kata 
+  katas
+  sandbox 
+  tag
+).each { |sourcefile| require_relative './' + sourcefile }
