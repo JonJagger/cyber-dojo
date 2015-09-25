@@ -1,7 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative './AppControllerTestBase'
-require_relative './ParamsMaker'
 
 class DifferControllerTest < AppControllerTestBase
 
@@ -10,10 +9,9 @@ class DifferControllerTest < AppControllerTestBase
     @id = create_kata('C++, assert')
     @avatar = enter # 0
     filename = 'hiker.cpp'
-    params_maker = ParamsMaker.new(@avatar)
-    params_maker.change_file(filename, 'wibble')
-    kata_run_tests params_maker.params # 1
-    kata_run_tests params_maker.params # 2
+    change_file(filename, content = '#include...')
+    run_tests
+    run_tests
     @was_tag,@now_tag = 1,2
     differ
     lights = json['lights']
@@ -30,7 +28,7 @@ class DifferControllerTest < AppControllerTestBase
     assert_equal 0, diffs[index]['section_count'], info
     assert_equal 0, diffs[index]['deleted_line_count'], info
     assert_equal 0, diffs[index]['added_line_count'], info
-    assert_equal '<same>wibble</same>', diffs[index]['content'], info
+    assert_equal "<same>#{content}</same>", diffs[index]['content'], info
     assert_equal '<same><ln>1</ln></same>', diffs[index]['line_numbers'], info
   end
 
@@ -41,15 +39,10 @@ class DifferControllerTest < AppControllerTestBase
     @id = create_kata
     @avatar = enter # 0
     filename = 'hiker.rb'
-
-    params_maker = ParamsMaker.new(@avatar)
-    params_maker.change_file(filename, 'def fubar')
-    kata_run_tests params_maker.params # 1
-
-    params_maker = ParamsMaker.new(@avatar)
-    params_maker.change_file(filename, 'def snafu')
-    kata_run_tests params_maker.params # 2
-
+    change_file(filename, 'def fubar')
+    run_tests
+    change_file(filename, 'def snafu')
+    run_tests
     @was_tag,@now_tag = 1,2
     differ
     lights = json['lights']
@@ -77,9 +70,9 @@ class DifferControllerTest < AppControllerTestBase
   test '06FD09',
   'tag -1 gives last traffic-light' do
     @id = create_kata
-    enter     # 0
-    any_test  # 1
-    any_test  # 2
+    enter      # 0
+    run_tests  # 1
+    run_tests  # 2
     @was_tag,@now_tag = -1,-1
     differ
     assert_equal 2, json['wasTag']
@@ -92,7 +85,7 @@ class DifferControllerTest < AppControllerTestBase
   'nextAvatar and prevAvatar are empty string for dojo with one avatar' do
     @id = create_kata
     enter     # 0
-    any_test  # 1
+    run_tests  # 1
     @was_tag,@now_tag = 0,1
     differ
     assert_equal '', json['prevAvatar']
@@ -104,10 +97,10 @@ class DifferControllerTest < AppControllerTestBase
   test '9FF76A',
   'nextAvatar and prevAvatar for dojo with two avatars' do
     @id = create_kata
-    firstAvatar = enter # 0
-    any_test            # 1
-    enter     # 0
-    any_test  # 1
+    firstAvatar = enter  # 0
+    run_tests            # 1
+    enter      # 0
+    run_tests  # 1
     @was_tag,@now_tag = 0,1
     differ
     assert_equal firstAvatar.name, json['prevAvatar']

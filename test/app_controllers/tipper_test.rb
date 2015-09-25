@@ -7,7 +7,7 @@ class TipperControllerTest < AppControllerTestBase
   test '25E3D4',
   'traffic_light_tip' do
     @id = create_kata    
-    3.times { enter; 2.times { any_test } }
+    3.times { enter; 2.times { run_tests } }
     get 'tipper/traffic_light_tip', 
       format: :js, 
       id: @id,

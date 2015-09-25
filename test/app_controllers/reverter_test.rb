@@ -1,7 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative './AppControllerTestBase'
-require_relative './ParamsMaker'
 require_relative './RailsRunnerStubThreadAdapter'
 
 class ReverterControllerTest  < AppControllerTestBase
@@ -21,22 +20,14 @@ class ReverterControllerTest  < AppControllerTestBase
   test '81F276',
   'revert' do
     kata_edit
-
     filename = 'Hiker.java'
-    assert @avatar.visible_files.keys.include?(filename)
-    # 1
-    params_maker = ParamsMaker.new(@avatar)
-    params_maker.change_file(filename, old_content='echo abc')
+    change_file(filename, old_content='echo abc')
     runner.stub_output('dummy')
-    kata_run_tests params_maker.params
-    assert_response :success
+    run_tests # 1
     assert_equal old_content, @avatar.visible_files[filename]
-    # 2
-    params_maker = ParamsMaker.new(@avatar)
-    params_maker.change_file(filename, new_content='something different')
+    change_file(filename, new_content='something different')
     runner.stub_output('dummy')
-    kata_run_tests params_maker.params
-    assert_response :success
+    run_tests # 2
     assert_equal new_content, @avatar.visible_files[filename]
 
     get 'reverter/revert', :format => :json,

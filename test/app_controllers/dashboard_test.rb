@@ -1,7 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative './AppControllerTestBase'
-require_relative './ParamsMaker'
 require_relative './RailsDiskStubThreadAdapter'
 require_relative './RailsGitSpyThreadAdapter'
 require_relative './RailsRunnerStubThreadAdapter'
@@ -42,7 +41,7 @@ class DashboardControllerTest < AppControllerTestBase
 
   test '20AE43',
   'dashboard when avatars with some traffic lights' do
-    3.times { enter; 2.times { any_test } }
+    3.times { enter; 2.times { run_tests } }
     dashboard
   end
 
@@ -55,14 +54,14 @@ class DashboardControllerTest < AppControllerTestBase
 
   test '1AB1FB',
   'heartbeat when avatars with no traffic-lights' do
-    3.times { enter; 2.times { any_test } }
+    3.times { enter; 2.times { run_tests } }
     heartbeat
   end
     
   test '674785',
   'heartbeat when some traffic-lights' do
-    enter     # 0
-    any_test  # 1
+    enter      # 0
+    run_tests  # 1
     heartbeat
   end
 
@@ -81,10 +80,9 @@ class DashboardControllerTest < AppControllerTestBase
   
   test '3B04FE',
   'progress when avatar has only amber traffic-lights' do
-    @avatar = enter # 0
+    enter # 0
     stub_test_output(:amber)
-    params_maker = ParamsMaker.new(@avatar)
-    kata_run_tests params_maker.params
+    run_tests
     progress
   end
 

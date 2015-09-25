@@ -29,10 +29,10 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
   
   def create_kata(language_name = random_language, exercise_name = random_exercise)
     parts = language_name.split(',')
-    params = { 
-      :language => parts[0].strip,
-      :test     => parts[1].strip,
-      :exercise => exercise_name
+    params = {
+      language: parts[0].strip,
+          test: parts[1].strip,
+      exercise: exercise_name
     }
     get 'setup/save', params
     @id = json['id']
@@ -45,6 +45,8 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
     avatar_name = json['avatar_name']
     assert_not_nil avatar_name
     @avatar = katas[@id].avatars[avatar_name]
+    @params_maker = ParamsMaker.new(@avatar)
+    @avatar
   end
     
   def enter_full
@@ -64,16 +66,16 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
     get 'kata/edit', params
     assert_response :success
   end
-    
-  def kata_run_tests(file_hash)
-    params = { :format => :js, :id => @id, :avatar => @avatar.name }
-    post 'kata/run_tests', params.merge(file_hash)
-    assert_response :success
+
+  def change_file(filename, content)
+    @params_maker.change_file(filename, content)
   end
-    
-  def any_test
-    avatar = katas[@id].avatars[@avatar.name]
-    kata_run_tests ParamsMaker.new(avatar).params
+
+  def run_tests
+    params = { :format => :js, :id => @id, :avatar => @avatar.name }
+    post 'kata/run_tests', params.merge(@params_maker.params)
+    @params_maker = ParamsMaker.new(@avatar)
+    assert_response :success
   end
 
   def stub_test_output(rag)
@@ -90,7 +92,7 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
   end
         
   def json
-    ActiveSupport::JSON.decode @response.body
+    ActiveSupport::JSON.decode html
   end
 
   def html
@@ -109,45 +111,5 @@ private
   def random_exercise
     'Yatzy' # todo
   end
-  
-=begin
-  def stub_setup
-    stub_dojo
-    stub_language('fake-C#','nunit')
-    stub_exercise('fake-Yatzy')
-    @id = create_kata('fake-C#','fake-Yatzy')
-  end
-
-  def stub_dojo
-    reset_external(:disk, DiskFake.new)
-    reset_external(:git, GitSpy.new)
-    reset_external(:runner, TestRunnerStub.new)
-    @dojo = Dojo.new
-  end
-
-  def stub_language(language_name, unit_test_framework)
-    language = @dojo.languages[language_name]
-    language.dir.write('manifest.json', 
-      { 
-        'unit_test_framework' => unit_test_framework,
-        'display_name' => language_name.gsub('-',',')
-      })
-  end
-
-  def stub_exercise(exercise_name)
-    exercise = @dojo.exercises[exercise_name]
-    exercise.dir.write('instructions', 'your task...')
-  end
-
-  def stub_kata(id, language_name, exercise_name)
-    kata = @dojo.katas[id]
-    kata.dir.write('manifest.json', { language:language_name,
-                                      exercise:exercise_name })
-  end
-
-  def root_path
-    File.absolute_path(File.dirname(__FILE__) + '/../../')
-  end
-=end
   
 end

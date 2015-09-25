@@ -1,7 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative './AppControllerTestBase'
-require_relative './ParamsMaker'
 require_relative './RailsRunnerStubThreadAdapter'
 
 class ForkerControllerTest < AppControllerTestBase
@@ -69,9 +68,8 @@ class ForkerControllerTest < AppControllerTestBase
     bad_tag_test('-1')      # tag <= 0
     bad_tag_test('0')       # tag <= 0
 
-    params_maker = ParamsMaker.new(@avatar)
     runner.stub_output('dummy')
-    kata_run_tests params_maker.params # 1
+    run_tests
     bad_tag_test('2')       # tag > avatar.lights.length
   end
 
@@ -90,12 +88,9 @@ class ForkerControllerTest < AppControllerTestBase
   'when id,language,avatar,tag are all ok ' +
     'format=json fork works ' +
       "and the new dojo's id is returned" do
-    @avatar = enter
-    @kata = @avatar.kata
-    
-    params_maker = ParamsMaker.new(@avatar)
+    @avatar = enter # 0
     runner.stub_output('dummy')
-    kata_run_tests params_maker.params # 1
+    run_tests       # 1
     
     fork(@id, @avatar.name, tag = 1)
     assert forked?
@@ -103,10 +98,11 @@ class ForkerControllerTest < AppControllerTestBase
     assert_not_equal @id, forked_kata_id
     forked_kata = katas[forked_kata_id]
     assert forked_kata.exists?
-    assert_equal @kata.language.name, forked_kata.language.name
-    assert_equal @kata.exercise.name, forked_kata.exercise.name
+    kata = @avatar.kata
+    assert_equal kata.language.name, forked_kata.language.name
+    assert_equal kata.exercise.name, forked_kata.exercise.name
     
-    assert_equal @kata.visible_files.tap{|hs| hs.delete('output')}, 
+    assert_equal kata.visible_files.tap{|hs| hs.delete('output')},
            forked_kata.visible_files.tap{|hs| hs.delete('output')}    
   end
 
@@ -117,10 +113,9 @@ class ForkerControllerTest < AppControllerTestBase
     'format=html fork works ' +
       'and you are redirected to the home page ' +
         "with the new dojo's id" do
-    @avatar = enter
-    params_maker = ParamsMaker.new(@avatar)
+    @avatar = enter # 0
     runner.stub_output('dummy')
-    kata_run_tests params_maker.params # 1
+    run_tests       # 1
     
     fork(@id, @avatar.name, tag = 1, :html)
 
