@@ -28,14 +28,12 @@ class Tag
   end
 
   def light?
-    # Very early dojos used outcome
-    hash.include?('colour') || hash.include?('outcome')
+    colour.to_s != ''
   end
 
   def colour
-    # if this is called on tag that is not a light
-    # it will raise a NoMethodError
-    (hash['colour'] || hash['outcome']).to_sym
+    # Very early dojos used outcome
+    (hash['colour'] || hash['outcome'] || '').to_sym
   end
 
   def to_json
