@@ -11,8 +11,7 @@ class ReverterControllerTest  < AppControllerTestBase
     set_runner_class('RailsRunnerStubThreadAdapter')
     RailsRunnerStubThreadAdapter.reset
     @id = create_kata('Java, JUnit')
-    enter
-    @avatar = katas[@id].avatars[@avatar_name]
+    @avatar = enter
   end
 
   def teardown
@@ -42,7 +41,7 @@ class ReverterControllerTest  < AppControllerTestBase
 
     get 'reverter/revert', :format => :json,
                            :id     => @id,
-                           :avatar => @avatar_name,
+                           :avatar => @avatar.name,
                            :tag    => 1
     assert_response :success
 

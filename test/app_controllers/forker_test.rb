@@ -63,16 +63,20 @@ class ForkerControllerTest < AppControllerTestBase
   'when tag is bad ' +
     'the fork fails ' +
       'and the reason given is traffic_light' do
-    enter         
+    @avatar = enter
     bad_tag_test('xx')      # !is_tag
     bad_tag_test('-14')     # tag <= 0
     bad_tag_test('-1')      # tag <= 0
     bad_tag_test('0')       # tag <= 0
-    #TODO: bad_tag_test('2',true)  # tag > avatar.lights.length
+
+    params_maker = ParamsMaker.new(@avatar)
+    runner.stub_output('dummy')
+    kata_run_tests params_maker.params # 1
+    bad_tag_test('2')       # tag > avatar.lights.length
   end
 
   def bad_tag_test(bad_tag)
-    fork(@id, @avatar_name, bad_tag)
+    fork(@id, @avatar.name, bad_tag)
     refute forked?
     assert_reason_is('traffic_light')
     assert_nil forked_kata_id
@@ -86,15 +90,14 @@ class ForkerControllerTest < AppControllerTestBase
   'when id,language,avatar,tag are all ok ' +
     'format=json fork works ' +
       "and the new dojo's id is returned" do
-    enter
-    @kata = katas[@id]
-    @avatar = @kata.avatars[@avatar_name]
+    @avatar = enter
+    @kata = @avatar.kata
     
     params_maker = ParamsMaker.new(@avatar)
     runner.stub_output('dummy')
     kata_run_tests params_maker.params # 1
     
-    fork(@id, @avatar_name, tag = 1)
+    fork(@id, @avatar.name, tag = 1)
     assert forked?
     assert_equal 10, forked_kata_id.length
     assert_not_equal @id, forked_kata_id
@@ -114,15 +117,12 @@ class ForkerControllerTest < AppControllerTestBase
     'format=html fork works ' +
       'and you are redirected to the home page ' +
         "with the new dojo's id" do
-    enter
-    @kata = katas[@id]
-    @avatar = @kata.avatars[@avatar_name]
-    
+    @avatar = enter
     params_maker = ParamsMaker.new(@avatar)
     runner.stub_output('dummy')
     kata_run_tests params_maker.params # 1
     
-    fork(@id, @avatar_name, tag = 1, :html)
+    fork(@id, @avatar.name, tag = 1, :html)
 
     assert_response :redirect
     url = /(.*)\/dojo\/index\/(.*)/

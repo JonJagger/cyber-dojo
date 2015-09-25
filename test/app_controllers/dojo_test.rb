@@ -69,7 +69,7 @@ class DojoControllerTest < AppControllerTestBase
     enter
     refute empty?
     refute full?
-    assert Avatars.names.include?(avatar_name)
+    assert Avatars.names.include?(@avatar.name)
   end
   
   test 'C0F2AE',
@@ -78,12 +78,12 @@ class DojoControllerTest < AppControllerTestBase
     Avatars.names.each do |avatar_name|
       enter
       refute full?
-      assert_not_nil avatar_name
+      assert_not_nil @avatar.name
     end
-    enter
+    enter_full
     refute empty?
     assert full?
-    assert_nil avatar_name
+    assert_nil json['avatar_name']
   end
 
   test '3B15BD',

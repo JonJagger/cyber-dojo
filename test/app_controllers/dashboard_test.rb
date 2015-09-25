@@ -81,10 +81,9 @@ class DashboardControllerTest < AppControllerTestBase
   
   test '3B04FE',
   'progress when avatar has only amber traffic-lights' do
-    enter                     # 0
-    avatar = katas[@id].avatars[@avatar_name]
+    @avatar = enter # 0
     stub_test_output(:amber)
-    params_maker = ParamsMaker.new(avatar)
+    params_maker = ParamsMaker.new(@avatar)
     kata_run_tests params_maker.params
     progress
   end

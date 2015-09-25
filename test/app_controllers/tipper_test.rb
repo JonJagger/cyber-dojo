@@ -11,7 +11,7 @@ class TipperControllerTest < AppControllerTestBase
     get 'tipper/traffic_light_tip', 
       format: :js, 
       id: @id,
-      avatar: @avatar_name,
+      avatar: @avatar.name,
       was_tag: 0,
       now_tag: 1      
     assert_response :success
@@ -23,7 +23,7 @@ class TipperControllerTest < AppControllerTestBase
     1.times { enter; }    
     get 'tipper/traffic_light_count_tip', 
       format: :js, 
-      avatar: @avatar_name,
+      avatar: @avatar.name,
       bulb_count: 0,
       current_colour: 'red',
       red_count: 3,

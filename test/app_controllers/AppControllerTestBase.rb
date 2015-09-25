@@ -39,42 +39,50 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
   end
     
   def enter
-    params = { :format => :json }
-    params[:id] = @id if !@id.nil?
+    params = { :format => :json, :id => @id }
     get 'dojo/enter', params
-    @avatar_name = avatar_name
+    assert_response :success
+    avatar_name = json['avatar_name']
+    assert_not_nil avatar_name
+    @avatar = katas[@id].avatars[avatar_name]
   end
     
+  def enter_full
+    params = { :format => :json, :id => @id }
+    get 'dojo/enter', params
+    assert_response :success
+  end
+
   def re_enter
     params = { :format => :json, :id => @id }
     get 'dojo/re_enter', params
-    assert_response :success    
+    assert_response :success
   end
 
   def kata_edit
-    params = { :id => @id, :avatar => @avatar_name }
+    params = { :id => @id, :avatar => @avatar.name }
     get 'kata/edit', params
     assert_response :success
   end
     
   def kata_run_tests(file_hash)
-    params = { :format => :js, :id => @id, :avatar => @avatar_name }
+    params = { :format => :js, :id => @id, :avatar => @avatar.name }
     post 'kata/run_tests', params.merge(file_hash)
+    assert_response :success
   end
     
   def any_test
-    avatar = katas[@id].avatars[@avatar_name]
+    avatar = katas[@id].avatars[@avatar.name]
     kata_run_tests ParamsMaker.new(avatar).params
   end
 
   def stub_test_output(rag)
     # todo: refactor
     #       copied from test/TestHelpers.rb stub_test_colours (private)
-    avatar = katas[@id].avatars[@avatar_name]
     disk = HostDisk.new
     root = File.expand_path(File.dirname(__FILE__) + '/..') + '/app_lib/test_output'
     assert [:red,:amber,:green].include? rag
-    path = "#{root}/#{avatar.kata.language.unit_test_framework}/#{rag}"
+    path = "#{root}/#{@avatar.kata.language.unit_test_framework}/#{rag}"
     all_outputs = disk[path].each_file.collect{|filename| filename}
     filename = all_outputs.shuffle[0]
     output = disk[path].read(filename)
@@ -87,10 +95,6 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
 
   def html
     @response.body
-  end
-  
-  def avatar_name
-    json['avatar_name']
   end
   
 private

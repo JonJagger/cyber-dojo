@@ -8,17 +8,16 @@ class DifferControllerTest < AppControllerTestBase
   test '238AF6',
   'no lines different in any files between successive tags' do
     @id = create_kata('C++, assert')
-    enter # 0
-    avatar = katas[@id].avatars[@avatar_name]
+    @avatar = enter # 0
     filename = 'hiker.cpp'
-    params_maker = ParamsMaker.new(avatar)
+    params_maker = ParamsMaker.new(@avatar)
     params_maker.change_file(filename, 'wibble')
     kata_run_tests params_maker.params # 1
     kata_run_tests params_maker.params # 2
     @was_tag,@now_tag = 1,2
     differ
     lights = json['lights']
-    info = " " + @id + ":" + @avatar_name
+    info = " " + @id + ":" + @avatar.name
     was_light = lights[@was_tag-1]
     assert_equal 'amber', was_light['colour'], info
     assert_equal @was_tag, was_light['number'], info
@@ -40,22 +39,21 @@ class DifferControllerTest < AppControllerTestBase
   test 'BEC2BF',
   'one line different in one file between successive tags' do
     @id = create_kata
-    enter # 0
-    avatar = katas[@id].avatars[@avatar_name]
+    @avatar = enter # 0
     filename = 'hiker.rb'
 
-    params_maker = ParamsMaker.new(avatar)
+    params_maker = ParamsMaker.new(@avatar)
     params_maker.change_file(filename, 'def fubar')
     kata_run_tests params_maker.params # 1
 
-    params_maker = ParamsMaker.new(avatar)
+    params_maker = ParamsMaker.new(@avatar)
     params_maker.change_file(filename, 'def snafu')
     kata_run_tests params_maker.params # 2
 
     @was_tag,@now_tag = 1,2
     differ
     lights = json['lights']
-    info = " " + @id + ':' + @avatar_name + ':'
+    info = " " + @id + ':' + @avatar.name + ':'
     was_light = lights[@was_tag-1]
     assert_equal 'amber', was_light['colour'], info
     assert_equal @was_tag, was_light['number'], info
@@ -107,23 +105,22 @@ class DifferControllerTest < AppControllerTestBase
   'nextAvatar and prevAvatar for dojo with two avatars' do
     @id = create_kata
     firstAvatar = enter # 0
-    any_test  # 1
-    secondAvatar = enter # 0
+    any_test            # 1
+    enter     # 0
     any_test  # 1
     @was_tag,@now_tag = 0,1
-    @avatar_name = firstAvatar
     differ
-    assert_equal secondAvatar, json['prevAvatar']
-    assert_equal secondAvatar, json['nextAvatar']
+    assert_equal firstAvatar.name, json['prevAvatar']
+    assert_equal firstAvatar.name, json['nextAvatar']
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def differ
     params = {
-      :format => :json,
-      :id => @id,
-      :avatar => @avatar_name,
+      :format  => :json,
+      :id      => @id,
+      :avatar  => @avatar.name,
       :was_tag => @was_tag,
       :now_tag => @now_tag
     }
