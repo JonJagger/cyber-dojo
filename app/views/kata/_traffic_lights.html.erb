@@ -25,15 +25,15 @@ $(function() {
 		      <%= raw diff_traffic_light(light) %>
 		    </td>
 	    <% end %>
-      <td>
-        <%= render partial: 'avatar_image' %>
-      </td>
 	    <td>
 		    <%= raw traffic_light_count(@avatar) %>
 	    </td>
 	    <td>
 		    <%= raw pie_chart(@avatar.lights, @avatar.name) %>
 	    </td>
+      <td>
+        <%= render partial: 'avatar_image' %>
+      </td>
     <% end %>
 
 

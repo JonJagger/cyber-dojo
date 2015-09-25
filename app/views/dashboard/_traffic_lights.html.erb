@@ -54,16 +54,16 @@ $(function() {
 
     <% avatar = @kata.avatars[name] %>
 
-	  <td class="align-left valign-center">
-		  <%= raw diff_avatar_image(avatar) %>
-	  </td>
-
 	  <td class="align-right">
 	    <%= raw traffic_light_count(avatar) %>
 	  </td>
 
 	  <td class="align-center">
 		  <%= raw pie_chart(avatar.lights, avatar.name) %>
+	  </td>
+
+	  <td class="align-left valign-center">
+		  <%= raw diff_avatar_image(avatar) %>
 	  </td>
 
 	</tr>
