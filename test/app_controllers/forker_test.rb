@@ -1,99 +1,162 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'AppControllerTestBase'
+require_relative './AppControllerTestBase'
+require_relative './ParamsMaker'
+require_relative './RailsRunnerStubThreadAdapter'
 
 class ForkerControllerTest < AppControllerTestBase
 
-  test 'when id is invalid ' +
-       'then fork fails ' +
-       'and the reason given is dojo' do
-    stub_dojo
-    fork('bad', 'hippo', 1)
-    refute forked?
-    assert_reason_is('dojo')
-    assert_nil forked_kata_id
-    assert_equal({ }, git.log)
+  def setup
+    super
+    set_runner_class('RailsRunnerStubThreadAdapter')
+    RailsRunnerStubThreadAdapter.reset
+    @id = create_kata('Java, JUnit')
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  test 'when language folder no longer exists ' +
-       'the fork fails ' +
-       'and the reason given is language' do
-    stub_dojo
-    id = '1234512345'
-    kata = @dojo.katas[id]
+
+  test '892AFE',
+  'when id is invalid ' +
+    'then fork fails ' +
+      'and the reason given is dojo' do
+    fork(id = 'bad-id', 'hippo', tag = 1)
+    refute forked?
+    assert_reason_is('dojo')
+    assert_nil forked_kata_id
+    assert_equal([], git.log)
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'EAE021',
+  'when language folder no longer exists ' +
+      'the fork fails ' +
+        'and the reason given is language' do
+    kata = katas[@id]
     language_name = 'doesNot-Exist'
-    kata.dir.write('manifest.json', { :language => language_name })
-    fork(id,'hippo',1)
+    kata.dir.write_json('manifest.json', { :language => language_name })
+    fork(@id, 'hippo', tag = 1)
     refute forked?
     assert_reason_is('language')
     assert_equal language_name, json['language']
     assert_nil forked_kata_id
-    assert_equal({ }, git.log)
+    assert_equal([], git.log)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when avatar not started ' +
-       'the fork fails ' +
-       'and the reason given is avatar' do
-    stub_dojo
-    language = @dojo.languages['Ruby-Approval']
-    language.dir.make
-    language.dir.write('manifest.json', {
-      :display_name => 'Ruby, Approval'
-    })
-    id = '1234512345'
-    kata = @dojo.katas[id]
-    kata.dir.write('manifest.json', { :language => language.name })
-    fork(id,'hippo',1)
+  test '67725B',
+  'when avatar not started ' +
+    'the fork fails ' +
+      'and the reason given is avatar' do
+    fork(@id, 'hippo', tag = 1)
     refute forked?
     assert_reason_is('avatar')
     assert_equal 'hippo', json['avatar']
     assert_nil forked_kata_id
-    assert_equal({ }, git.log)
+    assert_equal([], git.log)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when tag is bad ' +
-       'the fork fails ' +
-       'and the reason given is traffic_light' do
+  test '4CCCA7',
+  'when tag is bad ' +
+    'the fork fails ' +
+      'and the reason given is traffic_light' do
+    enter         
     bad_tag_test('xx')      # !is_tag
     bad_tag_test('-14')     # tag <= 0
     bad_tag_test('-1')      # tag <= 0
     bad_tag_test('0')       # tag <= 0
-    bad_tag_test('2',true)  # tag > avatar.lights.length
+    #TODO: bad_tag_test('2',true)  # tag > avatar.lights.length
   end
 
-  def bad_tag_test(bad_tag, more_than_number_of_lights = false)
-    stub_dojo
-    language_name = 'Ruby-Approval'
-    language = @dojo.languages[language_name]
-    language.dir.make
-    language.dir.write('manifest.json', {
-      :display_name => 'Ruby, Approval'
-    })
-    id = '1234512345'
-    kata = @dojo.katas[id]
-    kata.dir.make
-    kata.dir.write('manifest.json', { :language => language_name })
-    avatar_name = 'hippo'
-    avatar = kata.avatars[avatar_name]
-    avatar.dir.make
-    if more_than_number_of_lights
-      stub_traffic_lights(avatar, red)
-    end
-    fork(id,avatar_name,bad_tag)
+  def bad_tag_test(bad_tag)
+    fork(@id, @avatar_name, bad_tag)
     refute forked?
     assert_reason_is('traffic_light')
     assert_nil forked_kata_id
-    assert_equal({ }, git.log)
+    assert_equal([], git.log)
+  end
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '2C432F',
+  'when id,language,avatar,tag are all ok ' +
+    'format=json fork works ' +
+      "and the new dojo's id is returned" do
+    enter
+    @kata = katas[@id]
+    @avatar = @kata.avatars[@avatar_name]
+    
+    params_maker = ParamsMaker.new(@avatar)
+    runner.stub_output('dummy')
+    kata_run_tests params_maker.params # 1
+    
+    fork(@id, @avatar_name, tag = 1)
+    assert forked?
+    assert_equal 10, forked_kata_id.length
+    assert_not_equal @id, forked_kata_id
+    forked_kata = katas[forked_kata_id]
+    assert forked_kata.exists?
+    assert_equal @kata.language.name, forked_kata.language.name
+    assert_equal @kata.exercise.name, forked_kata.exercise.name
+    
+    assert_equal @kata.visible_files.tap{|hs| hs.delete('output')}, 
+           forked_kata.visible_files.tap{|hs| hs.delete('output')}    
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'F65835',
+  'when id,language,avatar,tag are all ok ' +
+    'format=html fork works ' +
+      'and you are redirected to the home page ' +
+        "with the new dojo's id" do
+    enter
+    @kata = katas[@id]
+    @avatar = @kata.avatars[@avatar_name]
+    
+    params_maker = ParamsMaker.new(@avatar)
+    runner.stub_output('dummy')
+    kata_run_tests params_maker.params # 1
+    
+    fork(@id, @avatar_name, tag = 1, :html)
+
+    assert_response :redirect
+    url = /(.*)\/dojo\/index\/(.*)/
+    m = url.match(@response.location)
+    forked_kata_id = m[2]
+    assert katas[forked_kata_id].exists?    
+  end
+
+  #- - - - - - - - - - - - - - - - - -
+
+  def fork(id, avatar, tag, format = :json)
+    get 'forker/fork', format:format, id:id, avatar:avatar, tag:tag
+  end
+  
+  def forked?
+    refute_nil json
+    json['forked']
+  end
+
+  def assert_reason_is(expected)
+    refute_nil json
+    assert_equal expected, json['reason']
+  end
+
+  def forked_kata_id
+    refute_nil json
+    json['id']
+  end
+
+
+=begin
+
+  #- - - - - - - - - - - - - - - - - -
+  
   test 'when the exercise no longer exists but everything else ' +
        "is ok then fork works and the new dojos id is returned" do
     stub_setup
@@ -145,36 +208,6 @@ class ForkerControllerTest < AppControllerTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when id,language,avatar,tag are all ok ' +
-       'format=json fork works ' +
-       "and the new dojo's id is returned" do
-    stub_setup
-    fork(@id,@avatar_name,@tag)
-    assert forked?
-    assert_equal 10, forked_kata_id.length
-    assert_not_equal @id, forked_kata_id
-    forked_kata = @dojo.katas[forked_kata_id]
-    assert forked_kata.exists?
-    assert_equal @kata.language.name, forked_kata.language.name
-    assert_equal @kata.exercise.name, forked_kata.exercise.name
-    assert_equal @visible_files, forked_kata.visible_files
-    assert_equal({@avatar.path => [ ['show', '2:manifest.json']]}, git.log)
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'when id,language,avatar,tag are all ok ' +
-       'format=html fork works ' +
-       'and you are redirected to the home page ' +
-       "with the new dojo's id" do
-    stub_setup
-    fork(@id,@avatar_name,@tag,:html)
-    assert_response :redirect
-    assert @response.location.include? '/dojo/index/'
-  end
-
-  #- - - - - - - - - - - - - - - - - -
-  
   def stub_setup
     stub_dojo
     @id = '1234512345'
@@ -183,7 +216,7 @@ class ForkerControllerTest < AppControllerTestBase
     exercise_name = 'fake-Yatzy'
     stub_kata(@id, language_name, exercise_name)
     language = @dojo.languages[language_name]
-    language.dir.write('manifest.json', { 
+    language.dir.write_json('manifest.json', { 
       :display_name => 'Ruby, TestUnit',
       :unit_test_framework => 'ruby_test_unit' 
     })
@@ -198,10 +231,6 @@ class ForkerControllerTest < AppControllerTestBase
     git.spy(@avatar.dir.path, 'show', "#{@tag}:#{filename}",manifest)
   end
 
-  def fork(id, avatar, tag,format = :json)
-    get 'forker/fork', format:format, id:id, avatar:avatar, tag:tag
-  end
-  
   def stub_traffic_lights(avatar, lights)
     avatar.dir.write('increments.json', lights)
   end
@@ -214,19 +243,6 @@ class ForkerControllerTest < AppControllerTestBase
     { 'colour' => 'green' }
   end
 
-  def forked?
-    refute_nil json
-    json['forked']
-  end
-
-  def forked_kata_id
-    refute_nil json
-    json['id']
-  end
-
-  def assert_reason_is(expected)
-    refute_nil json
-    assert_equal expected, json['reason']
-  end
-
+=end
+  
 end
