@@ -1,5 +1,0 @@
-435E5C1C88 is the ID for the Python Tennis refactoring kata.
-But it has a bug in it somewhere.
-I think one of the files has got corrupted.
-Probably while copy pasting into cyber-dojo editor.
-
