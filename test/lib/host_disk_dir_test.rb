@@ -110,8 +110,8 @@ class HostDiskDirTests < LibTestBase
           inner_run = true
         end
       }
-      max_seconds = 2
-      inner_thread.join(max_seconds);
+      max_wait = 1.0 / 50.0
+      inner_thread.join(max_wait)
       if !inner_thread.nil?
         Thread.kill(inner_thread)
       end
