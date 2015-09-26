@@ -5,6 +5,10 @@ module ExternalParentChain # mix-in
     disk[path]
   end
 
+  def exists?(filename = nil)
+    dir.exists?(filename)
+  end
+
   def read(filename)
     dir.read(filename)
   end
@@ -13,8 +17,8 @@ module ExternalParentChain # mix-in
     dir.read_json(filename)
   end
 
-  def write(filename, string)
-    dir.write(filename, string)
+  def write(filename, content)
+    dir.write(filename, content)
   end
 
   def write_json(filename, object)

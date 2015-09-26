@@ -23,22 +23,18 @@ class Kata
     avatar = nil
     dir.lock do
       filename = 'started_avatars.json'
-      started = dir.exists?(filename) ? read_json(filename) : avatars.names
+      started = exists?(filename) ? read_json(filename) : avatars.names
       free_names = avatar_names - started
       if free_names != []
         avatar = Avatar.new(self, free_names[0])
         avatar.start
-        if dir.exists?(filename)
+        if exists?(filename)
           started << avatar.name
           write_json(filename, started)
         end
       end
     end
     avatar
-  end
-
-  def exists?
-    dir.exists?
   end
 
   def active?

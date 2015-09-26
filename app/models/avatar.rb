@@ -15,10 +15,6 @@ class Avatar
     @parent
   end
 
-  def exists?
-    dir.exists?
-  end
-
   def start
     dir.make
     git_setup
