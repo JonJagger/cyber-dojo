@@ -23,7 +23,7 @@ class DifferControllerTest < AppControllerTestBase
     assert_equal 'amber', now_light['colour'], info
     assert_equal @now_tag, now_light['number'], info
     diffs = json['diffs']
-    index = diffs.find_index{|diff| diff['filename'] == filename }    
+    index = diffs.find_index{|diff| diff['filename'] == filename }
     assert_equal filename, diffs[index]['filename'], info
     assert_equal 0, diffs[index]['section_count'], info
     assert_equal 0, diffs[index]['deleted_line_count'], info
@@ -61,7 +61,7 @@ class DifferControllerTest < AppControllerTestBase
     assert_equal 1, diffs[index]['added_line_count'], info + "diffs[#{index}]['added_line_count']"
     assert diffs[index]['content'].include?('<deleted>def fubar</deleted>')
     assert diffs[index]['content'].include?('<added>def snafu</added>')
-    assert_equal '<deleted><ln>1</ln></deleted><added><ln>1</ln></added>', 
+    assert_equal '<deleted><ln>1</ln></deleted><added><ln>1</ln></added>',
         diffs[index]['line_numbers'], info + "diffs[0]['line_numbers']"
   end
 
@@ -80,7 +80,7 @@ class DifferControllerTest < AppControllerTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test '34D490',
   'nextAvatar and prevAvatar are empty string for dojo with one avatar' do
     @id = create_kata
@@ -106,7 +106,7 @@ class DifferControllerTest < AppControllerTestBase
     assert_equal firstAvatar.name, json['prevAvatar']
     assert_equal firstAvatar.name, json['nextAvatar']
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def differ
@@ -120,5 +120,5 @@ class DifferControllerTest < AppControllerTestBase
     get 'differ/diff', params
     assert_response :success
   end
-  
+
 end

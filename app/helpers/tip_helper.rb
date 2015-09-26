@@ -31,7 +31,7 @@ module TipHelper
     timed_out_count = params['timed_out_count'].to_i
     bulb_count = red_count + amber_count + green_count + timed_out_count
 
-    html = avatar_name + ' has ' + 
+    html = avatar_name + ' has ' +
       plural(bulb_count, 'traffic-light') + '<br/>' +
       plural_colour(  red_count, 'red'  ) +
       plural_colour(amber_count, 'amber') +

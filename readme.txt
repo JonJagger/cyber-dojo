@@ -12,6 +12,6 @@ Then point your browser at localhost:3000
 This sets the environment variable CYBER_DOJO_RUNNER_CLASS to HostRunner
 See end of /var/www/cyber-dojo/config/application.rb
 
-The cyber-dojo github repo assumes it will be cloned into 
+The cyber-dojo github repo assumes it will be cloned into
 the /var/www/cyber-dojo folder.
 

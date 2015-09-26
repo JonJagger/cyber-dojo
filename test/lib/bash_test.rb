@@ -10,7 +10,7 @@ class BashTests < LibTestBase
     assert_equal 'X', output.strip
     assert_equal 0, exit_status
   end
-  
+
   test 'AD833E',
   'bash exec command fails' do
     non_existent_command = 'eeeeeeeee'
@@ -18,5 +18,5 @@ class BashTests < LibTestBase
     assert output.include?(non_existent_command)
     refute_equal 0, exit_status
   end
-    
+
 end

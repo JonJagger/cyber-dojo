@@ -29,7 +29,7 @@ class SetupChooserTests < AppLibTestBase
     kata = dojo.katas[id]
     refute kata.exists?, "!kata.exists?"
     assert_is_randomly_chosen_language(test_languages_names, id, katas)
-    assert_is_randomly_chosen_exercise(test_exercises_names, id, katas)    
+    assert_is_randomly_chosen_exercise(test_exercises_names, id, katas)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -59,7 +59,7 @@ class SetupChooserTests < AppLibTestBase
       assert_is_randomly_chosen_exercise(exercises, kata.id, katas)
     end
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test '773616',
@@ -79,7 +79,7 @@ class SetupChooserTests < AppLibTestBase
 
   test 'D9C2F2',
     "when id is given and katas[id].exists? and kata's exercise is known" +
-       ' then choose that exercise' do         
+       ' then choose that exercise' do
     test_exercises_names.each_with_index do |exercise,n|
       kata = make_kata(unique_id, test_languages_names.shuffle[0], exercise)
       assert kata.exists?
@@ -88,7 +88,7 @@ class SetupChooserTests < AppLibTestBase
       end
     end
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   def assert_is_randomly_chosen_language(languages, id, katas)
@@ -118,7 +118,7 @@ class SetupChooserTests < AppLibTestBase
     end
     assert_equal exercises.length, counts.length
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   def test_languages_names
@@ -127,7 +127,7 @@ class SetupChooserTests < AppLibTestBase
       'Ruby-Test::Unit',
       'Java-JUnit'
     ].sort
-    
+
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -

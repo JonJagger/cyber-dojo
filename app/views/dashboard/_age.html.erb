@@ -5,7 +5,7 @@ $(function() {
   var age = <%= @kata.age %>; // in seconds
 
   var hoursPerDay = 24;
-  var minutesPerHour = 60  
+  var minutesPerHour = 60
   var secondsPerMinute = 60;
   var secondsPerHour = secondsPerMinute * minutesPerHour;
   var secondsPerDay = secondsPerHour * hoursPerDay;
@@ -14,9 +14,9 @@ $(function() {
     var n = function() {
       var value = Math.floor((age / div) % mod);
       return ('00' + value).slice(-2);
-    };    
+    };
     $('#' + name + '-label').html(name + '&thinsp;:&thinsp;');
-    $('#' + name).text(n());    
+    $('#' + name).text(n());
   };
 
   if (age >= secondsPerDay) {

@@ -23,11 +23,11 @@ class ExercisesTests < AppModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test 'F027CB',
   'refresh_cache' do
     set_disk_class('DiskFake')
-    disk[exercises.path + '100 doors'].write('instructions', 'imagine there are 100 doors...')    
+    disk[exercises.path + '100 doors'].write('instructions', 'imagine there are 100 doors...')
     exercises.refresh_cache
     exercises_names = exercises.map {|exercise| exercise.name }.sort
     assert_equal ['100 doors'], exercises_names
@@ -42,7 +42,7 @@ class ExercisesTests < AppModelTestBase
     exercises.dir.write_json('cache.json', cache={})
     assert_equal [], exercises.to_a
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '52110A',
@@ -52,20 +52,20 @@ class ExercisesTests < AppModelTestBase
         :instructions => 'go here'
       },
       'Bowling Game' => {
-        :instructions => 'are here' 
+        :instructions => 'are here'
       }
     }
     exercises.dir.write_json('cache.json', cache)
     exercises_names = exercises.map {|exercise| exercise.name }.sort
 
     assert_equal ['100 doors', 'Bowling Game'], exercises_names, 'names'
-    
+
     # exercises[name] does not use cache
     exercises['100 doors'].dir.write('instructions', 'XXX')
     exercises['Bowling Game'].dir.write('instructions', 'YYY')
-    
+
     assert_equal 'XXX', exercises['100 doors'].instructions, '100 doors'
     assert_equal 'YYY', exercises['Bowling Game'].instructions, 'Bowling Game'
   end
-    
+
 end

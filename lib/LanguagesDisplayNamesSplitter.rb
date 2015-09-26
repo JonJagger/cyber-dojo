@@ -4,24 +4,24 @@ class LanguagesDisplayNamesSplitter
   def initialize(display_names,selected_index)
     @display_names,@selected_index = display_names,selected_index
   end
-  
+
   def names
     @names ||= split(0)
   end
-  
+
   def selected_index
     name = @display_names[@selected_index].split(',')[0].strip
     names.index(name)
   end
-  
+
   def tests_names
     @tests_names ||= split(1)
   end
-  
+
   def tests_indexes
     names.map { |name| make_test_indexes(name) }
   end
-  
+
 private
 
   def split(n)
@@ -37,9 +37,9 @@ private
       end
     }
     result.shuffle
-    
+
     # if this is the tests index array for the selected-language
-    # then make sure the index for the selected-language's test 
+    # then make sure the index for the selected-language's test
     # is at position zero.
     # Why?
     # See /app/views/setup/_list_languages.hmtl.erb
@@ -51,7 +51,7 @@ private
     #
     # These ensure the initial selection of the language causes the correct
     # initial selection of the test for that language.
-    
+
     if language_name === names[selected_index]
       test_name = @display_names[@selected_index].split(',')[1].strip
       test_index = tests_names.index(test_name)
@@ -60,6 +60,6 @@ private
     end
 
     result
-  end  
-  
+  end
+
 end

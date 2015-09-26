@@ -1,6 +1,6 @@
 
 module MakefileFilter # mix-in
-  
+
   module_function
 
   def self.filter(filename, content)
@@ -22,5 +22,5 @@ module MakefileFilter # mix-in
     end
     content
   end
-  
+
 end

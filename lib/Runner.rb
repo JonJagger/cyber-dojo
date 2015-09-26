@@ -15,7 +15,7 @@ module Runner # mix-in
   def max_output_length
     50*1024
   end
-  
+
   def limited(output)
     output = clean(output)
     # for example, a C++ source file that #includes

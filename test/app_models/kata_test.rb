@@ -24,7 +24,7 @@ class KataTests < AppModelTestBase
   test '677A57',
   'id reads back as set' do
     id = unique_id
-    kata = katas[id]    
+    kata = katas[id]
     assert_equal id, kata.id
   end
 
@@ -46,7 +46,7 @@ class KataTests < AppModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test 'C11AFC',
   'exists? is false before dir is made' do
     kata = katas[unique_id]
@@ -84,7 +84,7 @@ class KataTests < AppModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test '9ECF8D',
   'start_avatar puts started avatars name into katas started_avatars.json file' do
     kata = make_kata
@@ -137,7 +137,7 @@ class KataTests < AppModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test 'F2CDD3',
     'when kata exists and at least one avatar has 1 or more traffic-lights' +
        ' then kata is active ' +
@@ -172,19 +172,19 @@ class KataTests < AppModelTestBase
     now = first['time']
     now[minutes=4] += 1
     refute kata.finished?(now), "!kata.finished?(one-minute-old)"
-    
+
     now = first['time']
     now[hours=3] += 1
     refute kata.finished?(now), "!kata.finished?(one-hour-old)"
-    
+
     now = first['time']
     now[days=2] += 1
     assert kata.finished?(now), "kata.finished?(one-day-old)"
-    
+
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test '78A205',
   'make_kata with default-now uses-time-now' do
     now = Time.now
@@ -245,7 +245,7 @@ class KataTests < AppModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    
+
   test '4C66C8',
     'start_avatar with specific avatar-names arg is used' +
        '(useful for testing)' do
@@ -262,12 +262,12 @@ class KataTests < AppModelTestBase
     assert_equal names.sort, avatars_names.sort
   end
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test '08141A',
   'start_avatar succeeds once for each avatar name then fails' do
     kata = make_kata
     created = [ ]
-    Avatars.names.length.times do |n|      
+    Avatars.names.length.times do |n|
       avatar = kata.start_avatar
       refute_nil avatar
       created << avatar
@@ -276,5 +276,5 @@ class KataTests < AppModelTestBase
     avatar = kata.start_avatar
     assert_nil avatar
   end
-     
+
 end

@@ -18,7 +18,7 @@ class ExerciseTests < AppModelTestBase
     exercise = exercises['wibble_XXX']
     refute exercise.exists?
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - -
 
   test '10EEF3',

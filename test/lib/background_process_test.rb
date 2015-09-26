@@ -6,7 +6,7 @@ class BackgrounProcessTests < LibTestBase
 
   def setup
     super
-    @background_process = BackgroundProcess.new  
+    @background_process = BackgroundProcess.new
   end
 
   test 'D54BA5',

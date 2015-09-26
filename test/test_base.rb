@@ -7,7 +7,7 @@ require_relative './TestExternalHelpers'
 require_relative './TestHexIdHelpers'
 
 class TestBase < MiniTest::Test
-  
+
   include TestDomainHelpers
   include TestExternalHelpers
   include TestHexIdHelpers

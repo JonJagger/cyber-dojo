@@ -9,7 +9,7 @@ class DashboardControllerTest < AppControllerTestBase
 
   def setup
     super
-    root = File.expand_path('../..', File.dirname(__FILE__)) 
+    root = File.expand_path('../..', File.dirname(__FILE__))
     set_katas_root(root + '/katas')
     set_disk_class('RailsDiskStubThreadAdapter')
     RailsDiskStubThreadAdapter.reset
@@ -20,7 +20,7 @@ class DashboardControllerTest < AppControllerTestBase
     runner.stub_output('sdssd')
     create_kata
   end
-  
+
   test '62A971',
   'dashboard when no avatars' do
     dashboard
@@ -57,7 +57,7 @@ class DashboardControllerTest < AppControllerTestBase
     3.times { enter; 2.times { run_tests } }
     heartbeat
   end
-    
+
   test '674785',
   'heartbeat when some traffic-lights' do
     enter      # 0
@@ -77,7 +77,7 @@ class DashboardControllerTest < AppControllerTestBase
     enter # 0
     progress
   end
-  
+
   test '3B04FE',
   'progress when avatar has only amber traffic-lights' do
     enter # 0
@@ -96,7 +96,7 @@ class DashboardControllerTest < AppControllerTestBase
 
   def heartbeat
     params = { :format => :js, :id => @id }
-    get 'dashboard/heartbeat', params    
+    get 'dashboard/heartbeat', params
     assert_response :success
   end
 
@@ -105,5 +105,5 @@ class DashboardControllerTest < AppControllerTestBase
     get 'dashboard/progress', params
     assert_response :success
   end
-  
+
 end

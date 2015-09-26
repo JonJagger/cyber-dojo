@@ -62,8 +62,8 @@ module TestExternalHelpers # mix-in
 
   def languages_key; root('LANGUAGES'); end
   def exercises_key; root('EXERCISES'); end
-  def     katas_key; root(    'KATAS'); end   
-  
+  def     katas_key; root(    'KATAS'); end
+
   def      disk_key; klass('DISK'    ); end
   def    runner_key; klass('RUNNER'  ); end
   def       git_key; klass('GIT'     ); end

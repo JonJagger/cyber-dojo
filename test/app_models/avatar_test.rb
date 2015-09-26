@@ -140,7 +140,7 @@ class AvatarTests < AppModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test 'BEB313',
     'test() on master cyber-dojo.sh results in standard output' +
        ' with no ALERT, and no modification to any cyber-dojo.sh' do

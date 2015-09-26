@@ -10,7 +10,7 @@ class DashboardController < ApplicationController
 
   def heartbeat
     gather
-    respond_to { |format| format.js }    
+    respond_to { |format| format.js }
   end
 
   def progress
@@ -20,5 +20,5 @@ class DashboardController < ApplicationController
 private
 
   include DashboardWorker
-  
+
 end

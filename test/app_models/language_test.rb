@@ -7,7 +7,7 @@ class LanguageTests < AppModelTestBase
 
   test '43EACE',
   "language's path has correct format" do
-    language_dir,test_dir = 'C#','NUnit'    
+    language_dir,test_dir = 'C#','NUnit'
     language = languages[language_dir + '-' + test_dir]
     assert language.path.match(language_dir + '/' + test_dir)
     assert correct_path_format?(language)
@@ -43,7 +43,7 @@ class LanguageTests < AppModelTestBase
     spy_manifest({})
     assert @language.exists?, '3'
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '3D9F75',

@@ -20,7 +20,7 @@ class ExceptionControllerTests < AppControllerTestBase
   # these pass when run
   #   $./test_exception.rb
   # but not when run
-  #   ./run_all.sh 
+  #   ./run_all.sh
   # ??
 
   test "bad path" do

@@ -1,6 +1,6 @@
 
 class DifferController < ApplicationController
-  
+
   def diff
     @lights = avatar.lights.map { |light| light.to_json }
     diffs = git_diff_view(avatar.diff(was_tag,now_tag))
@@ -13,11 +13,11 @@ class DifferController < ApplicationController
 	      currentFilenameId: pick_file_id(diffs, current_filename),
 	      wasTag: was_tag,
 	      nowTag: now_tag
-	    }    
+	    }
   end
 
 private
-  
+
   include DifferWorker
-  
+
 end

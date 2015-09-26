@@ -18,7 +18,7 @@ class AppModelTestBase < TestBase
   def teardown
     super
   end
-  
+
   def correct_path_format?(object)
     path = object.path
     ends_in_slash = path.end_with?('/')

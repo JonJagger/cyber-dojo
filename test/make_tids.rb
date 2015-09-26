@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-# script to help convert test files to use 
+# script to help convert test files to use
 # test 'HEX-ID',name BLOCK
 
 def tid

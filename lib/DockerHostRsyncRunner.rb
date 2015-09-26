@@ -24,7 +24,7 @@ class DockerHostRsyncRunner
     avatar = sandbox.avatar
     kata = avatar.kata
     language = kata.language
-    id = kata.id.to_s    
+    id = kata.id.to_s
     kata_path = "#{outer(id)}/#{inner(id)}"
     cmds = [
       "rsync -rtW cyber-dojo@#{@ip_address}::katas/#{kata_path}/#{avatar.name}/sandbox /tmp",

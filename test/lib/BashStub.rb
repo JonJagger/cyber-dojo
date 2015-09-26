@@ -1,6 +1,6 @@
 
 class BashStub
-  
+
   def initialize
     @stubbed,@spied = [],[]
     @index = 0
@@ -11,7 +11,7 @@ class BashStub
   def stub(output,exit_status)
     @stubbed << [output,exit_status]
   end
-  
+
   def exec(command)
     @spied << command
     stub = @stubbed[@index]
@@ -19,10 +19,10 @@ class BashStub
     @index += 1
     return *stub
   end
-  
+
   def dump
-    spied.each_with_index {|line,i| print "\n#{i}:" + line + "\n"}    
+    spied.each_with_index {|line,i| print "\n#{i}:" + line + "\n"}
   end
-  
+
 end
 

@@ -46,7 +46,7 @@ done
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Ruby (on my mac book) is *not* ignoring the first shebang line
 # in test/*.rb files. So I'm creating a temp file by stripping the
-# first shebang line. Yeuch! 
+# first shebang line. Yeuch!
 # This makes the line-number in any diagnostic off by one.
 # I fix that by putting an extra line at the top of the temp file.
 # It also makes the (temp) filename wrong in any diagnostics.
@@ -95,4 +95,4 @@ if [ "$gitUserNameBefore" != "$gitUserNameAfter" ]; then
   echo --------------------------------------
 fi
 
- 
+

@@ -91,7 +91,7 @@ class ForkerControllerTest < AppControllerTestBase
     @avatar = enter # 0
     runner.stub_output('dummy')
     run_tests       # 1
-    
+
     fork(@id, @avatar.name, tag = 1)
     assert forked?
     assert_equal 10, forked_kata_id.length
@@ -101,9 +101,9 @@ class ForkerControllerTest < AppControllerTestBase
     kata = @avatar.kata
     assert_equal kata.language.name, forked_kata.language.name
     assert_equal kata.exercise.name, forked_kata.exercise.name
-    
+
     assert_equal kata.visible_files.tap{|hs| hs.delete('output')},
-           forked_kata.visible_files.tap{|hs| hs.delete('output')}    
+           forked_kata.visible_files.tap{|hs| hs.delete('output')}
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -116,14 +116,14 @@ class ForkerControllerTest < AppControllerTestBase
     @avatar = enter # 0
     runner.stub_output('dummy')
     run_tests       # 1
-    
+
     fork(@id, @avatar.name, tag = 1, :html)
 
     assert_response :redirect
     url = /(.*)\/dojo\/index\/(.*)/
     m = url.match(@response.location)
     forked_kata_id = m[2]
-    assert katas[forked_kata_id].exists?    
+    assert katas[forked_kata_id].exists?
   end
 
   #- - - - - - - - - - - - - - - - - -
@@ -131,7 +131,7 @@ class ForkerControllerTest < AppControllerTestBase
   def fork(id, avatar, tag, format = :json)
     get 'forker/fork', format:format, id:id, avatar:avatar, tag:tag
   end
-  
+
   def forked?
     refute_nil json
     json['forked']
@@ -151,7 +151,7 @@ class ForkerControllerTest < AppControllerTestBase
 =begin
 
   #- - - - - - - - - - - - - - - - - -
-  
+
   test 'when the exercise no longer exists but everything else ' +
        "is ok then fork works and the new dojos id is returned" do
     stub_setup
@@ -176,9 +176,9 @@ class ForkerControllerTest < AppControllerTestBase
     kata.dir.write('manifest.json', { :language => old_language_name })
     new_language_name = 'C#-NUnit'
     language = @dojo.languages[new_language_name]
-    language.dir.write('manifest.json', { 
+    language.dir.write('manifest.json', {
       :display_name => 'C#, NUnit',
-      :unit_test_framework => 'fake' 
+      :unit_test_framework => 'fake'
     })
     avatar_name = 'hippo'
     avatar = kata.avatars[avatar_name]
@@ -211,14 +211,14 @@ class ForkerControllerTest < AppControllerTestBase
     exercise_name = 'fake-Yatzy'
     stub_kata(@id, language_name, exercise_name)
     language = @dojo.languages[language_name]
-    language.dir.write_json('manifest.json', { 
+    language.dir.write_json('manifest.json', {
       :display_name => 'Ruby, TestUnit',
-      :unit_test_framework => 'ruby_test_unit' 
+      :unit_test_framework => 'ruby_test_unit'
     })
     @avatar_name = 'hippo'
     @avatar = @kata.avatars[@avatar_name]
     stub_traffic_lights(@avatar, [ red, green ])
-    @visible_files = { 'Hiker.cs' => 'public class Hiker { }', 
+    @visible_files = { 'Hiker.cs' => 'public class Hiker { }',
                       'HikerTest.cs' => 'using NUnit.Framework;' }
     manifest = JSON.unparse(@visible_files)
     @tag = 2
@@ -239,5 +239,5 @@ class ForkerControllerTest < AppControllerTestBase
   end
 
 =end
-  
+
 end

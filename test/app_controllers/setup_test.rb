@@ -29,7 +29,7 @@ class SetupControllerTest < AppControllerTestBase
     assert /data-exercise\=\"#{print_diamond}/.match(html), print_diamond
     assert /data-exercise\=\"#{roman_numerals}/.match(html), roman_numerals
   end
-  
+
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test '9F4020',
@@ -47,7 +47,7 @@ class SetupControllerTest < AppControllerTestBase
     'setup/show chooses language and exercise of kata ' +
        'whose 10-char id is passed in URL ' +
        '(to encourage repetition)' do
-    setup_show(10)    
+    setup_show(10)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -56,34 +56,34 @@ class SetupControllerTest < AppControllerTestBase
     'setup/show chooses language and exercise of kata ' +
        'whose 6-char id is passed in URL ' +
        '(to encourage repetition) by using completion' do
-    setup_show(6)    
+    setup_show(6)
   end
-  
+
 private
-  
+
   def setup_show(n)
-    languages_display_names = languages.map {|language| language.display_name}.sort    
+    languages_display_names = languages.map {|language| language.display_name}.sort
     language_display_name = languages_display_names.shuffle[0]
-    
-    exercises_names = exercises.map {|exercise| exercise.name}.sort        
+
+    exercises_names = exercises.map {|exercise| exercise.name}.sort
     exercise_name = exercises_names.shuffle[0]
-    
+
     id = create_kata(language_display_name,exercise_name)
-        
+
     get 'setup/show', :id => id[0...n]
-    
+
     assert_response :success
-    
+
     md = /var selectedExercise = \$\('#exercise_' \+ (\d+)/.match(html)
-    selected_exercise = exercises_names[md[1].to_i]    
+    selected_exercise = exercises_names[md[1].to_i]
     assert_equal exercise_name, selected_exercise, 'exercise'
-    
-    # next bit is trickier than it should be because language.display_name 
+
+    # next bit is trickier than it should be because language.display_name
     # contains the name of the test framework too.
     md = /var selectedLanguage = \$\('#language_' \+ (\d+)/.match(html)
-    languages_names = languages_display_names.map {|name| get_language_from(name) }.uniq.sort     
+    languages_names = languages_display_names.map {|name| get_language_from(name) }.uniq.sort
     selected_language = languages_names[md[1].to_i]
-    assert_equal get_language_from(language_display_name), selected_language, 'language'    
+    assert_equal get_language_from(language_display_name), selected_language, 'language'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -108,7 +108,7 @@ private
         :display_name => display_name,
         :image_name => hash[:image_name]
       })
-    end    
+    end
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -123,14 +123,14 @@ private
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
-  
+
   def commad(s); s.split(','); end
   def get_language_from(name); commad(name)[0].strip; end
   def get_test_from(name); commad(name)[1].strip; end
-  
+
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def print_diamond; 'Print_Diamond'; end
   def roman_numerals; 'Roman_Numerals'; end
-  
+
 end

@@ -65,11 +65,11 @@ button[disabled] {
 #filename-list {
   display: block; // don't lose rhs of long filenames when scrolling
   max-height: 495px;
-  max-width: 250px;    
-  margin-top: 3px; 
+  max-width: 250px;
+  margin-top: 3px;
   margin-right: 2px;
   overflow: auto;
-  &::-webkit-scrollbar:horizontal { height: 8px; }      
+  &::-webkit-scrollbar:horizontal { height: 8px; }
 }
 
 .filename_div {
@@ -87,7 +87,7 @@ div[class~='filename'] {
   white-space: nowrap;
   @include rounded-corner(4px);
   max-width: 1200px;
-  overflow: none;  
+  overflow: none;
 
   &[class~='selected'] {
     // See app/assets/javascripts/cyber-dojo_file_load.js
@@ -104,7 +104,7 @@ div[class~="filename"]:hover, button:hover {
 }
 
 div[class~="filename"], button[disabled]:hover {
-  border: $filename_and_button_border_size solid lighten($darker-color,6%);  
+  border: $filename_and_button_border_size solid lighten($darker-color,6%);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -118,8 +118,8 @@ div[class~="filename"], button[disabled]:hover {
   margin: 0px;
   padding: 0px;
   display: block;
-  overflow: auto;  
-  &::-webkit-scrollbar:vertical { width: 8px; }  
+  overflow: auto;
+  &::-webkit-scrollbar:vertical { width: 8px; }
 }
 
 .line_numbers {

@@ -1,74 +1,74 @@
 
 @mixin gradient-lighten($color, $p1, $p2, $p3)
 {
-  // chrome 2+, safari 4+; multiple color stops 
+  // chrome 2+, safari 4+; multiple color stops
   background-image:-webkit-gradient(linear, left bottom, left top,
     color-stop(0.32, lighten($color, $p1)),
     color-stop(0.66, lighten($color, $p2)),
     color-stop(0.83, lighten($color, $p3))
   );
-  
-  // chrome 10+, safari 5.1+ 
+
+  // chrome 10+, safari 5.1+
   background-image: -webkit-linear-gradient(
     lighten($color, $p1),
     lighten($color, $p2),
     lighten($color, $p3)
   );
-  
+
   // firefox; multiple color stops
   background-image: -moz-linear-gradient(top,
     lighten($color, $p1),
     lighten($color, $p2),
     lighten($color, $p3)
   );
-  
-  // ie 6+ 
+
+  // ie 6+
   filter: progid:DXImageTransform.Microsoft.gradient(
     startColorstr='#{lighten($color, $p1)}',
     endColorstr='#{lighten($color, $p2)}'
   );
-  
-  // ie8 + 
+
+  // ie8 +
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#{lighten($color, $p1)}', endColorstr='#{lighten($color, $p2)}')";
-  
-  // ie10 
+
+  // ie10
   background-image: -ms-linear-gradient(
     lighten($color, $p1),
     lighten($color, $p2),
     lighten($color, $p3)
   );
-  
-  // opera 11.1 
+
+  // opera 11.1
   background-image: -o-linear-gradient(
     lighten($color, $p1),
     lighten($color, $p2),
     lighten($color, $p3)
   );
-  
-  // The "standard" 
+
+  // The "standard"
   background-image: linear-gradient(
     lighten($color, $p1),
     lighten($color, $p2),
     lighten($color, $p3)
-  );  
+  );
 }
 
 @mixin gradient-darken($color, $p1, $p2, $p3)
 {
-  // chrome 2+, safari 4+; multiple color stops 
+  // chrome 2+, safari 4+; multiple color stops
   background-image:-webkit-gradient(linear, left bottom, left top,
     color-stop(0.32, darken($color, $p1)),
     color-stop(0.66, darken($color, $p2)),
     color-stop(0.83, darken($color, $p3))
   );
-  
-  // chrome 10+, safari 5.1+ 
+
+  // chrome 10+, safari 5.1+
   background-image: -webkit-linear-gradient(
     darken($color, $p1),
     darken($color, $p2),
     darken($color, $p3)
   );
-  
+
   // firefox; multiple color stops
   background-image: -moz-linear-gradient(top,
     darken($color, $p1),
@@ -76,35 +76,35 @@
     darken($color, $p3)
   );
 
-  // ie 6+ 
+  // ie 6+
   filter: progid:DXImageTransform.Microsoft.gradient(
     startColorstr = '#{darken($color, $p1)}',
     endColorstr = '#{darken($color, $p2)}'
   );
-  
-  // ie8 + 
+
+  // ie8 +
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#{darken($color, $p1)}', endColorstr='#{darken($color, $p2)}')";
-  
-  // ie10 
+
+  // ie10
   background-image: -ms-linear-gradient(
     darken($color, $p1),
     darken($color, $p2),
     darken($color, $p3)
   );
-  
-  // opera 11.1 
+
+  // opera 11.1
   background-image: -o-linear-gradient(
     darken($color, $p1),
     darken($color, $p2),
     darken($color, $p3)
   );
-  
-  // The "standard" 
+
+  // The "standard"
   background-image: linear-gradient(
     darken($color, $p1),
     darken($color, $p2),
     darken($color, $p3)
-  );    
+  );
 }
 
 // From http://davidwalsh.name/css-gradients

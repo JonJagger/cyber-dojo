@@ -13,7 +13,7 @@ require_relative root + '/test/TestDomainHelpers'
 require_relative root + '/test/TestExternalHelpers'
 require_relative root + '/test/TestHexIdHelpers'
 require_relative './ParamsMaker'
-  
+
 class AppControllerTestBase < ActionDispatch::IntegrationTest
 
   include TestDomainHelpers
@@ -22,11 +22,11 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
 
   def setup
     super
-    root = File.expand_path('../..', File.dirname(__FILE__)) 
+    root = File.expand_path('../..', File.dirname(__FILE__))
     set_katas_root(root + '/tmp/katas')
     set_one_self_class('OneSelfDummy')
   end
-  
+
   def create_kata(language_name = random_language, exercise_name = random_exercise)
     parts = language_name.split(',')
     params = {
@@ -37,7 +37,7 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
     get 'setup/save', params
     @id = json['id']
   end
-    
+
   def enter
     params = { :format => :json, :id => @id }
     get 'dojo/enter', params
@@ -48,7 +48,7 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
     @params_maker = ParamsMaker.new(@avatar)
     @avatar
   end
-    
+
   def enter_full
     params = { :format => :json, :id => @id }
     get 'dojo/enter', params
@@ -88,9 +88,9 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
     all_outputs = disk[path].each_file.collect{|filename| filename}
     filename = all_outputs.shuffle[0]
     output = disk[path].read(filename)
-    dojo.runner.stub_output(output)      
+    dojo.runner.stub_output(output)
   end
-        
+
   def json
     ActiveSupport::JSON.decode html
   end
@@ -98,7 +98,7 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
   def html
     @response.body
   end
-  
+
 private
 
   def random_language
@@ -107,9 +107,9 @@ private
     # which means I can't later Stub a different TestRunner...
     'Ruby, TestUnit'  # todo
   end
-  
+
   def random_exercise
     'Yatzy' # todo
   end
-  
+
 end

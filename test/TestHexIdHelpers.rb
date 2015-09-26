@@ -1,11 +1,11 @@
 require 'digest/md5'
 
 module TestHexIdHelpers # mix-in
-  
+
   def self.included(base)
     base.extend(ClassMethods)
   end
-  
+
   module ClassMethods
 
     @@args = ARGV.sort.uniq - ['--']

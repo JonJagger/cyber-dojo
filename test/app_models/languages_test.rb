@@ -7,7 +7,7 @@ class LanguagesTests < AppModelTestBase
   test '743810',
   'languages path has correct format when set with trailing slash' do
     path = 'slashed/'
-    set_languages_root(path)  
+    set_languages_root(path)
     assert_equal path, languages.path
     assert correct_path_format?(languages)
   end
@@ -17,11 +17,11 @@ class LanguagesTests < AppModelTestBase
   test '8D3BB5',
   'languages path has correct format when set without trailing slash' do
     path = 'unslashed'
-    set_languages_root(path)  
+    set_languages_root(path)
     assert_equal path+'/', languages.path
     assert correct_path_format?(languages)
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - -
 
   test '7D53C5',
@@ -51,12 +51,12 @@ class LanguagesTests < AppModelTestBase
   'languages from cache when cache is not empty' do
     cache = {
       'Asm, assert' => {
-        :dir_name => 'Asm', 
+        :dir_name => 'Asm',
         :test_dir_name => 'assert'
       },
       'C++ (g++), assert' => {
         :dir_name => 'g++4.8.4',
-        :test_dir_name => 'assert'        
+        :test_dir_name => 'assert'
       }
     }
     languages.dir.write_json('cache.json', cache)
@@ -67,10 +67,10 @@ class LanguagesTests < AppModelTestBase
     assert_equal 'Asm, assert', languages['Asm-assert'].display_name
     assert_equal 'Asm',         languages['Asm-assert'].dir_name
     assert_equal 'assert',      languages['Asm-assert'].test_dir_name
-    
+
     assert_equal 'C++ (g++), assert', languages['C++ (g++)-assert'].display_name
     assert_equal 'g++4.8.4',          languages['C++ (g++)-assert'].dir_name
-    assert_equal 'assert',            languages['C++ (g++)-assert'].test_dir_name    
+    assert_equal 'assert',            languages['C++ (g++)-assert'].test_dir_name
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
@@ -89,11 +89,11 @@ class LanguagesTests < AppModelTestBase
     historical_language_names do |old_name|
       new_name = languages.renamed(old_name)
       assert exists?(*new_name), old_name
-    end    
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
-  
+
   def historical_language_names
     # these names harvested from cyber-dojo.org using
     # admin_scripts/show_kata_language_names.rb
@@ -102,7 +102,7 @@ class LanguagesTests < AppModelTestBase
     # Also listed are count of occurences on cyber-dojo.org
     # and ID of one occurrence on cyber-dojo.org
     [
-      "Asm-assert 25 010E66019D",  
+      "Asm-assert 25 010E66019D",
       "BCPL 3 DF9A083C0F",
       "BCPL-all_tests_passed 18 C411C2351E",
       "C 479 54529AA3BE",
@@ -173,7 +173,7 @@ class LanguagesTests < AppModelTestBase
 
   def exists?(lang,test)
     File.directory?("#{cyber_dojo_root}/languages/#{lang}/#{test}") ||
-    File.directory?("#{cyber_dojo_root}/languages_offline/#{lang}/#{test}")        
+    File.directory?("#{cyber_dojo_root}/languages_offline/#{lang}/#{test}")
   end
 
   def cyber_dojo_root

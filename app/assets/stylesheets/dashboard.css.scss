@@ -26,9 +26,9 @@
     width: 1000px;
     overflow-x: scroll;
     overflow-y: auto;
-    .column      { 
-      padding: 0px; 
-      border-bottom: dotted lighten(black,40%) 1px; 
+    .column      {
+      padding: 0px;
+      border-bottom: dotted lighten(black,40%) 1px;
       &.odd  { background: lighten($darker-color,3%); }
       &.even { background: lighten($darker-color,6%); }
     }

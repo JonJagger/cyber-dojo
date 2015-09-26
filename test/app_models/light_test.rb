@@ -63,7 +63,7 @@ class LightTests < AppModelTestBase
   test '8BE722',
   'each test creates a new light' do
     kata = make_kata
-    lion = kata.start_avatar(['lion'])    
+    lion = kata.start_avatar(['lion'])
     maker = DeltaMaker.new(lion)
     runner.stub_output('xxxxx')
     maker.run_test
@@ -75,9 +75,9 @@ class LightTests < AppModelTestBase
     assert_equal :amber, lights[1].colour
     assert_equal :amber, lights[2].colour    # TODO :green
   end
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   def make_light(rgb, time, n, key = 'colour')
     Tag.new(dummy_avatar, {
       key => rgb.to_sym,

@@ -15,7 +15,7 @@ dojo.languages.each do |language|
   $cache[language.path + 'manifest.json'] = dojo.disk[language.path].read('manifest.json')
   language.visible_files.each do |filename,content|
     $cache["#{language.path}#{filename}"] = content
-  end  
+  end
 end
 
 File.write('/var/www/cyber-dojo/test/lib/disk_stub_cache.json', JSON.unparse($cache.sort))

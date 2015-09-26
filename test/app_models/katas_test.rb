@@ -96,7 +96,7 @@ class KatasTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # katas.complete(id)
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test 'B652EC',
   'complete(id=nil) is empty string' do
     assert_equal '', katas.complete(nil)
@@ -140,7 +140,7 @@ class KatasTests < AppModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test '0934BF',
   'complete(id): completes (and uppercases) when 6+ chars and 1 match' do
     id = 'A1B2C3D4E5'

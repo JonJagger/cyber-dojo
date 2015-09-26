@@ -113,7 +113,7 @@ class ReviewFilePickerTests < AppLibTestBase
       (@picked = diff('cyber-dojo.sh',0,0,'145345'))
     assert_picked
   end
-  
+
   #------------------------------------------------------------------
 
   def diff(filename,dc,ac,content='')

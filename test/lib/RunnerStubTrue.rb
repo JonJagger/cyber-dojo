@@ -17,7 +17,7 @@ end
 # - - - - - - - - - - - - - - - - - - - - - - - - -
 # In test/app_controllers/setup_test.rb I originally
 # had a test that did this
-# 
+#
 #       set_runner_class_name('RunnerStubTrue')
 #       runner.stub_runnable(true)
 #       ...

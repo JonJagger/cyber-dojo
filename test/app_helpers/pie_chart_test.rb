@@ -41,7 +41,7 @@ class PieChartTests < AppHelpersTestBase
 
     assert_equal expected, actual
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - -
 
   test '3AF953',

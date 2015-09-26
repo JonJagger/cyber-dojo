@@ -11,7 +11,7 @@ class DojoController < ApplicationController
   end
 
   def enter
-    avatar = kata.start_avatar    
+    avatar = kata.start_avatar
     full = avatar.nil?
     #one_self.started(avatar) if !full
     render json: {

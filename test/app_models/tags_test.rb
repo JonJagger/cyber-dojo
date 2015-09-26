@@ -19,22 +19,22 @@ class TagsTest < AppModelTestBase
     n = 0
     tags.each { n += 1 }
     assert_equal 1, n
-    
+
     stub_manifest = {
       'output' => '',
       'instructions' => exercise.instructions
     }
-    language.visible_files.each do |filename,content| 
+    language.visible_files.each do |filename,content|
       stub_manifest[filename] = content
-    end        
+    end
     git.spy(avatar.path, 'show', '0:manifest.json', JSON.unparse(stub_manifest))
-    
+
     visible_files = tags[0].visible_files
     filenames = ['hiker.h', 'hiker.c', 'instructions','cyber-dojo.sh','makefile','output']
     filenames.each { |filename| assert visible_files.keys.include?(filename), filename }
     assert_equal '', tags[0].output
   end
-  
+
   #- - - - - - - - - - - - - - - - - - -
 
   test '839D39',
@@ -53,7 +53,7 @@ class TagsTest < AppModelTestBase
       assert i == 0 || tag.light?
     end
   end
-  
+
   #- - - - - - - - - - - - - - - - - - -
 
   test '8F2A42',
@@ -70,5 +70,5 @@ class TagsTest < AppModelTestBase
       assert_equal tags.length-i, tags[-i].number
     end
   end
-    
+
 end

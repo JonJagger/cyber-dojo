@@ -44,15 +44,15 @@ end
 #- - - - - - - - - - - - - - - - - - - - -
 
 def column_names
-  [ 
-    :test_count, 
-    :assertion_count, 
-    :failure_count, 
-    :error_count, 
+  [
+    :test_count,
+    :assertion_count,
+    :failure_count,
+    :error_count,
     #:skip_count,
-    :time, 
-    :tests_per_sec, 
-    :assertions_per_sec, 
+    :time,
+    :tests_per_sec,
+    :assertions_per_sec,
     :coverage
   ]
 end
@@ -79,9 +79,9 @@ end
 
 def gather_stats
   stats = { }
-  number = '([\.|\d]+)'  
+  number = '([\.|\d]+)'
   modules.each do |module_name|
-        
+
     log = `cat #{module_name}/#{wrapper_test_log}`
     `rm #{module_name}/#{wrapper_test_log}`
     h = stats[module_name] = { }

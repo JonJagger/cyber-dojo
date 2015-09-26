@@ -5,13 +5,13 @@ require_relative 'LibTestBase'
 class HostGitTests < LibTestBase
 
   include ExternalParentChain
-  
+
   class StubDojo
     def git(*args)
       @git ||= HostGit.new
     end
   end
-  
+
   def setup
     super
     mkdir = "mkdir -p #{tmp_dir}"
@@ -21,12 +21,12 @@ class HostGitTests < LibTestBase
     # (LibTestBase has git helper method)
     undef :git if respond_to? :git
     # ExternalParentChain requires @parent
-    set_path tmp_dir    
+    set_path tmp_dir
     @parent = StubDojo.new
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
- 
+
   test '62653B',
     '[git] with no arguments returns' +
        'externally the set :git object ' +
@@ -38,7 +38,7 @@ class HostGitTests < LibTestBase
   'all git commands raise exception if path names a dir that does not exist' do
     set_path 'dir_that_does_not_exist'
     [:init,:config,:add,:rm,:commit,:gc,:tag,:show,:diff].each do |cmd|
-      error = assert_raises(Errno::ENOENT) { 
+      error = assert_raises(Errno::ENOENT) {
         args = ''
         git.send(cmd, path, args)
       }
@@ -54,12 +54,12 @@ class HostGitTests < LibTestBase
     assert uk_git_init_message || us_git_init_message
     assert message.end_with?("empty Git repository in #{path}.git/\n")
   end
-  
+
   test '44858F',
   '[git config] succeeds silently' do
     ok { git.init(path, '') }
     silent_ok { git.config(path, 'user.name "Fred Flintsone"') }
-    # sometimes the above git.config command somehow has the 
+    # sometimes the above git.config command somehow has the
     # following effect on .git/config on the main cyber-dojo repo?!
     #
     # [user]
@@ -144,17 +144,17 @@ class HostGitTests < LibTestBase
     ok { git.init(path, '') }
     silent_ok { git.gc(path, '--auto --quiet') }
   end
-  
+
   # - - - - - - - - - - - - - - - - - -
 
   def path
     @path
   end
-  
+
   def set_path(value)
     @path = value
   end
-    
+
   def ok(&block)
     message = block.call
     assert_equal 0, $?.exitstatus
@@ -165,26 +165,26 @@ class HostGitTests < LibTestBase
     message = ok(&block)
     assert_equal '', message
   end
-  
+
   def fails(&block)
     message = block.call
     refute_equal 0, $?.exitstatus
     git.log.inspect
   end
-  
+
   def tmp_dir
-    root_path = File.expand_path('../..', File.dirname(__FILE__)) + '/'    
+    root_path = File.expand_path('../..', File.dirname(__FILE__)) + '/'
     root_path + 'tmp/'
   end
-  
+
   def filename
     'hello.txt'
   end
-    
+
   def write_file(content = 'anything')
     File.open(path + filename, 'w') do |fd|
       fd.write(content)
     end
   end
-  
+
 end

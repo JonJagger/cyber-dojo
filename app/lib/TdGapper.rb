@@ -28,12 +28,12 @@ class TdGapper
 
   def strip(gapped)
     return gapped if gapped == {}
-    
+
         empty_column = ->(td) { gapped.all? { |_, h| h[td] == [] } }
     collapsed_column = ->(td) { gapped.all? { |_, h| h[td].class == Hash } }
     lightless_column = ->(td) { empty_column.call(td) || collapsed_column.call(td) }
        delete_column = ->(td) { gapped.each { |_, h| h.delete(td) } }
-    
+
     animal = gapped.keys[0]
     gapped[animal].keys.sort.reverse_each do |td|
       if lightless_column.call(td)

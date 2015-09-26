@@ -1,6 +1,6 @@
 
 module SetupWorker # mix-in
-  
+
   module_function
 
   def read_languages
@@ -13,7 +13,7 @@ module SetupWorker # mix-in
 
   def read_exercises
     # I avoid doing
-    #     exercises[name].instructions 
+    #     exercises[name].instructions
     # as that currently bypasses the exercises cache
     exercises_names = []
     instructions_hash =  {}

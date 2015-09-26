@@ -13,11 +13,11 @@ class HostDiskDirTests < LibTestBase
   def disk
     @disk ||= HostDisk.new
   end
-  
+
   def path
     File.expand_path('../..', File.dirname(__FILE__)) + '/tmp/'
   end
-  
+
   def dir
     disk[path]
   end
@@ -308,8 +308,8 @@ class HostDiskDirTests < LibTestBase
       filename.end_with?('.txt')
     }
     assert_equal ['c.txt','d.txt'], matches.sort
-  end  
-  
+  end
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def check_save_file(filename, content, expected_content, executable = false)
@@ -331,5 +331,5 @@ class HostDiskDirTests < LibTestBase
   def make_dir_with_split_id(id)
     disk[path + split(id)].make
   end
-  
+
 end

@@ -7,18 +7,18 @@ class HostGit
     Dir.chdir(path) do
       git_cmd = stderr2stdout("git #{cmd} #{options}")
       log << git_cmd
-      output = `#{git_cmd}` 
+      output = `#{git_cmd}`
       log << output if output != ""
       status = $?.exitstatus
       log << "$?.exitstatus=#{status}" if status != success
-      clean(output)       
-    end        
+      clean(output)
+    end
   end
 
   def log
     @log ||= [ ]
   end
-  
+
 private
 
   include StringCleaner
@@ -31,5 +31,5 @@ private
   def single_quoted(s)
     "'" + s + "'"
   end
-  
+
 end

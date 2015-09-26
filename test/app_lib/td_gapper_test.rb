@@ -6,11 +6,11 @@ class TdGapperTests < AppLibTestBase
 
   def setup
     super
-    @gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)    
+    @gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
   end
 
   attr_reader :gapper
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '449AC6',
@@ -130,7 +130,7 @@ class TdGapperTests < AppLibTestBase
     t3=make_light(30,25) # 1
     t4=make_light(31,37) # 4
     t5=make_light(31,39) # 4
-    t6=make_light(31,42) # 5    
+    t6=make_light(31,42) # 5
     unstripped =
     {
       'hippo' => { 0 => [ ], 1 => [ t1 ], 2 => [ ], 3 => [ ], 4 => [ t2    ], 5 => [    ], 6 => { :collapsed => 4321 }, 4327 => [ ] },
@@ -145,7 +145,7 @@ class TdGapperTests < AppLibTestBase
     }
     assert_equal stripped, gapper.strip(unstripped)
   end
-    
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '65B220',
@@ -198,7 +198,7 @@ class TdGapperTests < AppLibTestBase
   def max_seconds_uncollapsed
     30 * 60
   end
-  
+
   def seconds_per_td
     20
   end

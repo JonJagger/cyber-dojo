@@ -1,7 +1,7 @@
 
 class DirFake
 
-  def initialize(disk,dir)    
+  def initialize(disk,dir)
     @disk,@dir = disk,dir
   end
 
@@ -29,7 +29,7 @@ class DirFake
       @disk[path + outer_dir].each_dir do |inner_dir|
         yield outer_dir + inner_dir
       end
-    end    
+    end
   end
 
   def complete_kata_id(id)
@@ -46,7 +46,7 @@ class DirFake
     end
     id || ''
   end
-  
+
   def make
     @repo ||= { }
   end

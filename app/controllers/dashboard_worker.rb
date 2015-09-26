@@ -1,6 +1,6 @@
 
 module DashboardWorker # mixin
-  
+
   include TimeNow
 
   def animals_progress
@@ -13,7 +13,7 @@ module DashboardWorker # mixin
     end
     animals
   end
-  
+
   def gather
     @kata = kata
     @minute_columns = bool('minute_columns')
@@ -44,7 +44,7 @@ module DashboardWorker # mixin
     regexs = avatar.kata.language.progress_regexs
     non_amber = avatar.lights.reverse.find{ |light|
       [:red,:green].include?(light.colour)
-    }    
+    }
     output = (non_amber != nil) ? non_amber.output : ''
     matches = regexs.map{|regex| Regexp.new(regex).match(output)}
     return {

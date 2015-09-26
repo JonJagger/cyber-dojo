@@ -65,16 +65,16 @@ class DojoControllerTest < AppControllerTestBase
 
   test '812BEE',
   'enter with id that does exist => !full,avatar_name' do
-    create_kata    
+    create_kata
     enter
     refute empty?
     refute full?
     assert Avatars.names.include?(@avatar.name)
   end
-  
+
   test 'C0F2AE',
   'enter succeeds once for each avatar name, then dojo is full' do
-    create_kata    
+    create_kata
     Avatars.names.each do |avatar_name|
       enter
       refute full?
@@ -88,7 +88,7 @@ class DojoControllerTest < AppControllerTestBase
 
   test '3B15BD',
   're_enter with id that exists but is empty' do
-    create_kata    
+    create_kata
     re_enter
     assert empty?
     refute full?
@@ -96,19 +96,19 @@ class DojoControllerTest < AppControllerTestBase
 
   test 'CFFDEB',
   're_enter with id that exists and is not empty' do
-    create_kata    
+    create_kata
     enter
     re_enter
     refute empty?
     refute full?
   end
-  
+
 private
-  
+
   def check_id
     params = { :format => :json, :id => @id }
     get 'dojo/check', params
-    assert_response :success    
+    assert_response :success
   end
 
   def empty?
@@ -118,5 +118,5 @@ private
   def full?
     json['full']
   end
-  
+
 end

@@ -8,7 +8,7 @@ class AppLibTestBase < TestBase
   def setup
     super
   end
-  
+
   def teardown
     super
   end

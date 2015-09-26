@@ -36,16 +36,16 @@ class AvatarsTests < AppModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test 'B11555',
   'avatars.map works' do
     kata = make_kata
     kata.start_avatar([cheetah])
     kata.start_avatar([lion])
-    assert_equal [cheetah,lion], kata.avatars.map{|avatar| avatar.name}.sort    
+    assert_equal [cheetah,lion], kata.avatars.map{|avatar| avatar.name}.sort
     assert_equal 2, kata.avatars.to_a.length
   end
-    
+
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '1F9350',
@@ -74,5 +74,5 @@ class AvatarsTests < AppModelTestBase
   def lion; 'lion'; end
   def hippo; 'hippo'; end
   def panda; 'panda'; end
-  
+
 end

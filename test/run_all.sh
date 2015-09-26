@@ -6,21 +6,21 @@
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 
-modules=( 
-  app_helpers 
-  app_lib 
-  app_models 
+modules=(
+  app_helpers
+  app_lib
+  app_models
   lib
   app_controllers
 #  languages
-#  integration 
+#  integration
 )
 
 echo
 for module in ${modules[*]}
 do
     echo
-    echo "======$module======"  
+    echo "======$module======"
     cd $module
     ./run_all.sh $*
     cd ..

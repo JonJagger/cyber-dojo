@@ -20,9 +20,9 @@ $(function() {
         longtitude: longtitude
       }, function(dojo) {
         var url = '/dojo/index/' + dojo.id;
-        page.removeClass('busy');                            
+        page.removeClass('busy');
         window.location = url;
-      });      
+      });
     };
 
     var geoSuccess = function(position) {
@@ -34,7 +34,7 @@ $(function() {
       saveAndRedirect();
     };
 
-    page.addClass('busy'); 
+    page.addClass('busy');
     var geo = navigator.geolocation;
     if (geo) {
       var fourSeconds = 4*1000;

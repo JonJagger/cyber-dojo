@@ -401,24 +401,24 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 
 .ui-dialog-titlebar { padding: 0px; }
 
-.large.dialog.title 
+.large.dialog.title
 {
   color: $lighter-color;
-  background: $darker-color;  
+  background: $darker-color;
   table { border-collapse: collapse; }
   th, td { padding: 0; }
 }
 
-.ui-dialog .ui-dialog-buttonpane 
+.ui-dialog .ui-dialog-buttonpane
 {
   color: $lighter-color;
   background: $darker-color;
   border: 1px solid $darker-color;
-  button 
+  button
   {
     background: $lighter-color;
     color: $darker-color;
-    border: 1px solid $darker-color;    
+    border: 1px solid $darker-color;
   }
 }
 

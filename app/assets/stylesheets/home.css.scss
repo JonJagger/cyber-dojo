@@ -5,14 +5,14 @@
 
   margin-top: 25px;
   margin-left: 0px;
-  
+
   #globe-container, #custom-container {
     position: absolute;
-    left: 875px;    
+    left: 875px;
   }
   #globe-container  { top:  50px; #globe { border: 0; } }
   #custom-container { top: 350px; }
-  
+
   #cyber-dojo {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     font-size: 7.4em;
@@ -32,7 +32,7 @@
   }
 
   #the-place-to-practice-programming {
-    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;    
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     font-size: 1.15em;
     color: lighten($text-color, 5%);
     position: relative;
@@ -44,8 +44,8 @@
     width: 240px;
     padding-right: 20px;
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    color: $darker-color;    
-    text-align: right;  
+    color: $darker-color;
+    text-align: right;
     font-size: 0.87em;
     position: relative;
     top: -25px;
@@ -80,7 +80,7 @@
     @include rounded-corner(10px);
     background: lighten($darker-color, 20%);
   }
-  
+
   #enter-id-info {
     color: lighten($green, 30%);
   }
@@ -98,7 +98,7 @@
     position: relative;
     right: -1px;
   }
-  #create-button, #enter-button, #reenter-button,  #review-button, 
+  #create-button, #enter-button, #reenter-button,  #review-button,
   #charity-button, #donate-button {
     width: 240px;
     padding-right: 20px;
@@ -112,39 +112,39 @@
 
   #charity-container, #donate-container, #jon-jagger-container, #accu-container {
     font-size: 1em;
-    font-size: 0.8em;    
+    font-size: 0.8em;
     @include edged-panel();
-    margin: 10px;    
+    margin: 10px;
     width: 280px;
-    text-align: right;    
+    text-align: right;
   }
 
   #charity-container {
-    #charity-button { 
+    #charity-button {
       width: 100px;
       font-size: 1.30em;
       padding: 6px;
       padding-right: 7px;
-    }    
+    }
   }
 
   #donate-container {
-    #donate-button { 
+    #donate-button {
       width: 82px;
       font-size: 1.70em;
       padding: 6px;
       padding-right: 7px;
-    }    
+    }
   }
-  
+
   #jon-jagger-container {
     #jon-jagger-image {
       width: 70px;
       border: 5px solid lighten($darker-color, 15%);
       margin-left: 10px;
-    }  
+    }
   }
-  
+
   #accu-container {
     #accu-image {
       padding: 7px;
@@ -154,5 +154,5 @@
       margin-left: 10px;
     }
   }
-  
+
 }

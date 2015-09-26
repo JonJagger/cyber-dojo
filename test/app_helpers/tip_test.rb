@@ -10,9 +10,9 @@ class TipTests < AppHelpersTestBase
     super
     set_one_self_class 'OneSelfDummy'
   end
-  
+
   #- - - - - - - - - - - - - - - - - -
-  
+
   test 'FAE414',
   'traffic light count tip includes time-out when there is a time-out' do
     params = {
@@ -65,7 +65,7 @@ class TipTests < AppHelpersTestBase
     set_disk_class   'DiskStub'
     kata = make_kata
     lion = kata.start_avatar(['lion'])
-    
+
     was_tag = 1
     was_tag_colour = 'red'
     now_tag = 2

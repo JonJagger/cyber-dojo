@@ -9,8 +9,8 @@ class OutputColourTests < AppLibTestBase
     set_runner_class('RunnerStub')
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
-  
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test '24C561',
   'terminated by the server after n seconds gives timed_out colour' do
     [1,5,10].each do |n|
@@ -18,8 +18,8 @@ class OutputColourTests < AppLibTestBase
     end
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
-  
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test '9DBD7D',
   'all saved TestRunner outputs are correctly coloured red/amber/green' do
     root = test_output_path
@@ -36,14 +36,14 @@ class OutputColourTests < AppLibTestBase
           assert_equal expected, actual, diagnostic
         end
       end
-    end    
+    end
   end
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test '04F165',
   'all saved TestRunner outputs have red cases & amber cases & green cases' do
-    root = test_output_path    
+    root = test_output_path
     disk[root].each_dir do |unit_test_framework|
       ['red','amber','green'].each do |colour|
         path = "#{root}/#{unit_test_framework}/#{colour}"
@@ -52,15 +52,15 @@ class OutputColourTests < AppLibTestBase
       end
     end
   end
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test '9005E7',
   'all dojo.languages have corresponding test_output/unit_test_framework' do
-    set_languages_root('/var/www/cyber-dojo/languages')    
+    set_languages_root('/var/www/cyber-dojo/languages')
     runner.stub_runnable(true)
-    root = test_output_path        
-    count = 0    
+    root = test_output_path
+    count = 0
     dojo.languages.each do |language|
       count += 1
       path = root + '/' + language.unit_test_framework
@@ -72,7 +72,7 @@ class OutputColourTests < AppLibTestBase
     end
     assert count > 0, "no languages"
   end
-    
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def terminated(n)
@@ -80,8 +80,8 @@ class OutputColourTests < AppLibTestBase
   end
 
   def test_output_path
-    File.expand_path(File.dirname(__FILE__)) + '/test_output'    
-  end  
+    File.expand_path(File.dirname(__FILE__)) + '/test_output'
+  end
 
 end
 

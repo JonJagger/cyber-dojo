@@ -13,5 +13,5 @@ class KataControllerTest  < AppControllerTestBase
     change_file('hiker.h', 'syntax-error')
     run_tests
   end
-  
+
 end

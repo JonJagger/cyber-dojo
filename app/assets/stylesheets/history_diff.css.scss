@@ -21,7 +21,7 @@
   margin: 0px;
 
   .ui-dialog-titlebar { padding: 0px; }
-  
+
   #title { font-size: 24px; margin-left: 5px; position: relative; top: 5px; left: 2px; }
 
   label { position: relative; top: 10px; }
@@ -42,8 +42,8 @@
 }
 
 .navigate-control {
-  
-  @include edged-panel();  
+
+  @include edged-panel();
 
   #avatar { width: 28px; height: 28px; padding: 0px; margin: { left: 3px; right: 3px; } }
   button#prev-avatar, button#next-avatar {
@@ -51,11 +51,11 @@
     margin: 0px;
     border: 1px solid lighten($darker-color,6%);
   }
-  button#prev-avatar:hover, button#next-avatar:hover { 
-    border: 1px dotted lighten($darker-color,20%); 
+  button#prev-avatar:hover, button#next-avatar:hover {
+    border: 1px dotted lighten($darker-color,20%);
     &[disabled]:hover { border: 1px solid lighten($darker-color,6%); }
   }
-  
+
   #prev-avatar img, #next-avatar img {
     width: 20px;
     height: 20px;
@@ -74,16 +74,16 @@
 
   #first-button img, #last-button img { width: 15px; height: 15px; }
   #prev-button  img, #next-button img { width: 20px; height: 20px; }
-  
+
   #first-button img { padding: { left: 2px; right: 1px; } }
   #last-button  img { padding: { left: 1px; right: 2px; } }
   #prev-button  img { padding: { left: 1px; right: 4px; } }
   #next-button  img { padding: { left: 4px; right: 1px; } }
-  
+
   .triangle.button { border: 1px solid lighten($darker-color,6%); margin: 2px; }
   .triangle.button:hover { border: 1px dotted lighten($darker-color,20%); }
   .triangle.button[disabled]:hover { border: 1px solid lighten($darker-color,6%); }
-  
+
   #now-tag-number {
     font-size: 15px;
     background: $lighter-color;
@@ -107,15 +107,15 @@
 
   overflow-y: hidden;
   overflow-x: hidden;
-  
+
   &.ui-dialog-content { padding: { top: 0px; bottom: 0px; } }
-  
+
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   background: $darker-color;
   color     : $lighter-color;
   padding: none !important;
   margin: 0px;
-  
+
   .filename { text-align: left; font-size: 16px; }
 
   #diff-filenames, .diff-line-numbers, .diff-sheet { height: 480px; }
@@ -124,14 +124,14 @@
     width: 287px;
     overflow-y: none;
     overflow-x: auto;
-    &::-webkit-scrollbar:vertical { width: 8px; }    
-    &::-webkit-scrollbar:horizontal { height: 8px; }    
+    &::-webkit-scrollbar:vertical { width: 8px; }
+    &::-webkit-scrollbar:horizontal { height: 8px; }
     font-size: 11pt;
     text-align: left;
     border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;     
-    .filename { max-width: 1200px; }    
-    tbody { @include edged-panel(); max-width: 670px; }   
+    border-bottom-right-radius: 5px;
+    .filename { max-width: 1200px; }
+    tbody { @include edged-panel(); max-width: 670px; }
   }
 
   .diff-line-numbers, .diff-sheet {
@@ -156,9 +156,9 @@
     border-right: none;
     border-bottom: none;
     position: relative; // lose 1px gap to file-content
-    left: 2px;    
+    left: 2px;
     border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;         
+    border-bottom-left-radius: 5px;
   }
 
   .diff-sheet {
@@ -186,36 +186,36 @@
     color: $darker-color;
     border: 1px solid lighten($darker-color,6%);
     &:hover { border: 1px dotted lighten($darker-color,6%); }
-    &[disabled]:hover { border: 1px solid lighten($darker-color,6%); }    
+    &[disabled]:hover { border: 1px solid lighten($darker-color,6%); }
     @include rounded-corner(4px);
     @include right-align(0px);
     @include diff-line-count;
     cursor: pointer;
-    
+
     &.none { background: lighten($darker-color,10%); }
     &[disabled] {
       background: lighten($darker-color,10%);
       cursor: default;
     }
-    &[disabled].some { background: lighten($darker-color,25%); }        
+    &[disabled].some { background: lighten($darker-color,25%); }
   }
-  
-  .diff-deleted-line-count { 
-    background: $diff-deleted-color; 
+
+  .diff-deleted-line-count {
+    background: $diff-deleted-color;
     &[disabled].some { color: lighten($diff-deleted-color,5%); }
   }
-  .diff-added-line-count { 
-    background: $diff-added-color;   
+  .diff-added-line-count {
+    background: $diff-added-color;
     &[disabled].some { color: lighten($diff-added-color,5%); }
-  }   
+  }
 }
-  
+
 .history-button {
-  margin-top: 0px !important; 
+  margin-top: 0px !important;
   margin-left: 0px !important;
   .ui-button-text { font-size: 10pt !important; }
   position: relative;
   left: -3px;
 }
-  
+
 
