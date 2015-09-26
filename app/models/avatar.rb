@@ -45,7 +45,7 @@ class Avatar
     # instructions. I don't want these avatars appearing on the dashboard.
     # When forking a new kata you can enter as one animal to sanity check
     # it is ok (but not press [test])
-    exists? && lights.count > 0
+    exists? && !lights.empty?
   end
 
   def tags
@@ -105,8 +105,8 @@ class Avatar
   def tag0
     @zeroth ||=
     {
-      'event' => 'created',
-      'time' => time_now(kata.created),
+      'event'  => 'created',
+      'time'   => time_now(kata.created),
       'number' => 0
     }
   end

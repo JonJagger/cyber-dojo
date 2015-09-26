@@ -52,7 +52,6 @@ class Kata
 
   def finished?(now = Time.now.to_a[0..5].reverse)
     return false unless active?
-    seconds_per_day = 60 * 60 * 24
     return age(now) >= seconds_per_day
   end
 
@@ -91,6 +90,10 @@ class Kata
 
   def dojo
     @parent.dojo
+  end
+
+  def seconds_per_day
+    60 * 60 * 24
   end
 
 end
