@@ -29,8 +29,9 @@ module TestExternalHelpers # mix-in
 
   def store_env_vars
     @store_env_vars_called = true
-    @exported,@unset = {},[]
-    env_vars.each do |var,default|
+    @exported = {}
+    @unset = []
+    env_vars.each do |var, default|
       if ENV[var].nil?
         @unset << var
       else
@@ -40,8 +41,8 @@ module TestExternalHelpers # mix-in
   end
 
   def restore_env_vars
-    raise "store_env_vars() not called" if @store_env_vars_called.nil?
-    @exported.each { |var,value| ENV[var] = @exported[var] }
+    fail "store_env_vars() not called" if @store_env_vars_called.nil?
+    @exported.each { |var, value| ENV[var] = @exported[var] }
     @exported = {}
     @unset.each { |var| ENV.delete(var) }
     @unset = []
