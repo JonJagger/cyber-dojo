@@ -145,6 +145,23 @@ class FakeDirTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
+  test '26423F',
+  'read_json(filename) raises RuntimeError when filename does not end in .json' do
+    assert_raises(RuntimeError) { @dir.read_json('file.txt') }
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'D769CF',
+  'o=read_json(filename) after write_json(filename,o) round-strips ok' do
+    @dir.write_json(filename = 'object.json', { :a => 1, :b => 2 })
+    o = @dir.read_json(filename)
+    assert_equal 1, o['a']
+    assert_equal 2, o['b']
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test '613B86',
   'Dir.each_dir.select' do
     @disk[@path + 'alpha'].make

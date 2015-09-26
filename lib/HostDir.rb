@@ -36,8 +36,8 @@ class HostDir
   end
 
   def write_json(filename, object)
-    raise RuntimeError.new("#{filename} doesn't end in .json") if !filename.end_with? '.json'
-    File.open(path + filename, 'w') { |file| file.write(JSON.unparse(object)) }
+    fail RuntimeError.new("#{filename} doesn't end in .json") unless filename.end_with? '.json'
+    write(filename, JSON.unparse(object))
   end
 
   def write(filename, s)
@@ -45,6 +45,11 @@ class HostDir
     pathed_filename = path + filename
     File.open(pathed_filename, 'w') { |fd| fd.write(s) }
     File.chmod(execute=0755, pathed_filename) if pathed_filename.end_with?('.sh')
+  end
+
+  def read_json(filename)
+    fail RuntimeError.new("#{filename} doesn't end in .json") unless filename.end_with? '.json'
+    JSON.parse(read(filename))
   end
 
   def read(filename)

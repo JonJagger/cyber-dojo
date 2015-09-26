@@ -1,12 +1,24 @@
 
 module ExternalParentChain # mix-in
 
+  def dir
+    disk[path]
+  end
+
   def read(filename)
     dir.read(filename)
   end
 
-  def dir
-    disk[path]
+  def read_json(filename)
+    dir.read_json(filename)
+  end
+
+  def write(filename, string)
+    dir.write(filename, string)
+  end
+
+  def write_json(filename, object)
+    dir.write_json(filename, object)
   end
 
   module_function

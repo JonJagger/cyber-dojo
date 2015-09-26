@@ -44,7 +44,7 @@ class Languages
         end
       end
     end
-    dir.write_json(cache_filename, cache)
+    write_json(cache_filename, cache)
   end
 
   private
@@ -138,7 +138,7 @@ class Languages
 
   def read_cache
     cache = []
-    JSON.parse(dir.read(cache_filename)).each do |display_name, language|
+    read_json(cache_filename).each do |display_name, language|
       cache << make_language(language['dir_name'], language['test_dir_name'], display_name)
     end
     cache

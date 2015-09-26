@@ -45,8 +45,4 @@ class Sandbox
     git.rm(path, filename)
   end
 
-  def write(filename, content)
-    dir.write(filename, content)
-  end
-
 end

@@ -67,14 +67,18 @@ class DirFake
 
   def write_json(filename, object)
     assert filename.end_with?('.json'), "#{filename}.end_with?('.json')"
-    make
-    @repo[filename] = JSON.unparse(object)
+    write(filename, JSON.unparse(object))
   end
 
   def write(filename, s)
     assert s.is_a?(String), "#write(#{filename},s) s.is_a?(String)"
     make
     @repo[filename] = s
+  end
+
+  def read_json(filename)
+    assert filename.end_with?('.json'), "#{filename}.end_with?('.json')"
+    JSON.parse(read(filename))
   end
 
   def read(filename)

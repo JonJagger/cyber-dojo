@@ -61,7 +61,7 @@ class Avatar
   end
 
   def visible_files
-    JSON.parse(read(manifest_filename))
+    read_json(manifest_filename)
   end
 
   def test(delta, files, now = time_now, time_limit = 15)
@@ -112,7 +112,7 @@ class Avatar
   end
 
   def write_manifest(files)
-    dir.write_json(manifest_filename, files)
+    write_json(manifest_filename, files)
   end
 
   def update_manifest(files, output)
@@ -122,7 +122,7 @@ class Avatar
   end
 
   def write_increments(increments)
-    dir.write_json(increments_filename, increments)
+    write_json(increments_filename, increments)
   end
 
   def update_increments(colour, now)
@@ -134,7 +134,7 @@ class Avatar
   end
 
   def increments
-    JSON.parse(read(increments_filename))
+    read_json(increments_filename)
   end
 
   def manifest_filename

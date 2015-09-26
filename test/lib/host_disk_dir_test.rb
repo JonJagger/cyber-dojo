@@ -160,7 +160,14 @@ class HostDiskDirTests < LibTestBase
 
   test '2BAC6D',
   'write_json(filename,s) raises RuntimeError when filename does not end in .json' do
-    assert_raises(RuntimeError) { dir.write_json('file.txt', 'hello') }
+    assert_raises(RuntimeError) { dir.write_json('file.txt', 'any') }
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '3356EE',
+  'read_json(filename) raises RuntimeError when filename does not end in .json' do
+    assert_raises(RuntimeError) { dir.read_json('file.txt') }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -170,6 +177,16 @@ class HostDiskDirTests < LibTestBase
     dir.write_json(filename = 'object.json', { :a => 1, :b => 2 })
     json = dir.read(filename)
     o = JSON.parse(json)
+    assert_equal 1, o['a']
+    assert_equal 2, o['b']
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'B9939D',
+  'o=read_json(filename) after write_json(filename,o) round-strips ok' do
+    dir.write_json(filename = 'object.json', { :a => 1, :b => 2 })
+    o = dir.read_json(filename)
     assert_equal 1, o['a']
     assert_equal 2, o['b']
   end

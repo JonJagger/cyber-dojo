@@ -177,9 +177,9 @@ class Language
   end
 
   def manifest
-    @manifest ||= JSON.parse(read(manifest_filename))
+    @manifest ||= read_json(manifest_filename)
   rescue StandardError => e
-    message = "JSON.parse(#{manifest_filename}) exception" + "\n" +
+    message = "read_json(#{manifest_filename}) exception" + "\n" +
       'language: ' + path + "\n" +
       ' message: ' + e.message
     raise message
