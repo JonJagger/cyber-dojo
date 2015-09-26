@@ -175,6 +175,7 @@ class HostGitTests < LibTestBase
   def tmp_dir
     root_path = File.expand_path('../..', File.dirname(__FILE__)) + '/'
     root_path + 'tmp/'
+    #'/mnt/ramdisk/katas/tmp/'
   end
 
   def filename

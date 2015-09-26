@@ -1,16 +1,19 @@
 
-o) make a ramdisk and use that for *all* tests.
-  ramdisk = '/mnt/ramdisk'
-  `umount #{ramdisk}`
-  `rm -rf #{ramdisk}`
-  `mkdir #{ramdisk}`
-  `mount -t tmpfs -o size=1m tmpfs #{ramdisk}`
-  `mkdir #{ramdisk}/katas`
-
-o) export CYBER_DOJO_KATAS_ROOT=/mnt/katas
-   rework tests
+o) use ramdisk for *all* tests.
+   lib first
+   app_controllers second
+   export CYBER_DOJO_KATAS_ROOT=/mnt/katas
+   rework tests so CYBER_DOJO_KATAS_ROOT must be set or it is an error.
 
 o) delete test code that is now redundant
+
+o) rework exercises/ and languages/ caches.
+   See comment about not using obvious code
+   because some code uses DiskFake
+
+o) app/models/external_parent_chain.rb
+   move module_function to top so all a private inside included class.
+   If any test does, eg, kata.dir I can instead do disk[kata.path]
 
 o) assuming git running on /mnt/ramdisk/katas is fast enough
    there would appear to be scope to refactor the git class
@@ -18,15 +21,12 @@ o) assuming git running on /mnt/ramdisk/katas is fast enough
    Then drop path argument from all git methods.
 
 o) cache the result of
-   $docker images
-   in the ramdisk to speed up the opening page.
+   `docker images`
+   in the ramdisk to speed up the opening page?
    /mnt/ramdisk/languages/docker_images.cache
    chown www-data:www-data it too
    Do this as part of admin_scripts/pull.sh
-
-o) app/models/external_parent_chain.rb
-   move module_function to top so all a private inside included class.
-   If any test does, eg, kata.dir I can instead do disk[kata.path]
+   Does this mean RUNNER should have its own env var ROOT?
 
 o) test/app_lib has lots of assertions. Check it.
 

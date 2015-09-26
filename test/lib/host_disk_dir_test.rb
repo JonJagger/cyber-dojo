@@ -16,6 +16,7 @@ class HostDiskDirTests < LibTestBase
 
   def path
     File.expand_path('../..', File.dirname(__FILE__)) + '/tmp/'
+    #'/mnt/ramdisk/katas/tmp/'
   end
 
   def dir
