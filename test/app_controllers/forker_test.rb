@@ -7,6 +7,7 @@ class ForkerControllerTest < AppControllerTestBase
 
   def setup
     super
+    #set_katas_root('/mnt/ramdisk/katas/')
     set_runner_class('RailsRunnerStubThreadAdapter')
     RailsRunnerStubThreadAdapter.reset
     @id = create_kata('Java, JUnit')

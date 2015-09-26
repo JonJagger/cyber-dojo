@@ -1,0 +1,60 @@
+
+o) make a ramdisk and use that for *all* tests.
+   $ mkdir /mnt/ramdisk
+   $ mount -t tmpfs -o size=50m tmpfs /mnt/ramdisk
+   $ mkdir /mnt/ramdisk/katas
+   $ cp -R /var/www/cyber-dojo/exercises /mnt/ramdisk/exercises
+   $ cp -R /var/www/cyber-dojo/languages /mnt/ramdisk/languages
+   $ chmod -R 444 /mnt/ramdisk/exercises
+   $ chmod -R 444 /mnt/ramdisk/languages
+
+o) in all test code this will make dead.
+   set CYBER_DOJO_KATAS_ROOT
+   CYBER_DOJO_LANGUAGES_ROOT
+   CYBER_DOJO_LANGUAGES_ROOT
+   Eg tests/app_controllers/Rails...Adapater.rb
+
+o) delete test code that is now redundant
+
+o) write a script to copy /var/www/cyber-dojo/languages
+   to ramdisk but not copy files only needed to build docker image.
+   Use
+   $ du -h /mnt/ramdisk/languages
+   $ du -h /mnt/ramdisk/exercises
+   to see how big ramdisk needs to be
+
+o) use ramdisk for exercises/ and languages/ in *production*
+   export CYBER_DOJO_KATAS_ROOT=     (disk)
+   export CYBER_DOJO_EXERCISES_ROOT= (ramdisk)
+   export CYBER_DOJO_LANGUAGES_ROOT= (ramdisk)
+
+o) drop exercises/cache.json and associated code
+   drop languages/cache.json and associated code
+
+o) assuming git running on /mnt/ramdisk/katas is fast enough
+   there would appear to be scope to refactor the git class
+   so it is passed the folder it is associated with in initialize()
+   Then drop path argument from all git methods.
+
+o) cache the result of
+   $docker images
+   in the ramdisk to speed up the opening page.
+   /mnt/ramdisk/languages/docker_images.cache
+   chown www-data:www-data it too
+   Do this as part of admin_scripts/pull.sh
+
+o) app/models/external_parent_chain.rb
+   move module_function to top so all a private inside included class.
+   If any test does, eg, kata.dir I can instead do disk[kata.path]
+
+o) test/app_lib has lots of assertions. Check it.
+
+o) in setup_controller.rb
+   maybe...
+    language = dojo.languages[params['language'] + '-' + params['test']]
+   ...becomes...
+    language = dojo.languages[params['language'], params['test']]
+
+
+
+
