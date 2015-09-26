@@ -8,7 +8,7 @@ class FakeDirTests < LibTestBase
     super
     @disk = DiskFake.new
     @path = 'fake/'
-    @dir = DirFake.new(@disk,@path)
+    @dir = DirFake.new(@disk, @path)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -22,7 +22,7 @@ class FakeDirTests < LibTestBase
 
   test '7EAB97',
   'exists? is false before make is called, true after' do
-    assert !@dir.exists?
+    refute @dir.exists?
     @dir.make
     assert @dir.exists?
   end
@@ -31,8 +31,7 @@ class FakeDirTests < LibTestBase
 
   test '02667B',
   'exists?(filename) is true after write(filename)' do
-    filename = 'wibble.hpp'
-    @dir.write(filename, '#include <iostream>')
+    @dir.write(filename = 'wibble.hpp', '#include <iostream>')
     assert @dir.exists?(filename)
   end
 
@@ -40,11 +39,10 @@ class FakeDirTests < LibTestBase
 
   test '80386D',
   'after delete(filename) exists?(filename) is false' do
-    filename = 'wibble.hpp'
-    @dir.write(filename, '#include <iostream>')
+    @dir.write(filename = 'wibble.hpp', '#include <iostream>')
     assert @dir.exists?(filename)
     @dir.delete(filename)
-    assert !@dir.exists?(filename)
+    refute @dir.exists?(filename)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -168,9 +166,7 @@ class FakeDirTests < LibTestBase
     @disk[@path + 'alpha'].write('a.txt', 'a')
     @disk[@path + 'beta'].make
     @disk[@path + 'beta'].write('b.txt', 'b')
-    matches = @disk[@path].each_dir.select { |dir|
-      dir.start_with?('a')
-    }
+    matches = @disk[@path].each_dir.select { |dir| dir.start_with?('a') }
     assert_equal ['alpha'], matches.sort
   end
 
@@ -179,9 +175,7 @@ class FakeDirTests < LibTestBase
   test '0C3F12',
   'lock(block) is executed' do
     called = false
-    @dir.lock do
-      called = true
-    end
+    @dir.lock { called = true }
     assert called
   end
 

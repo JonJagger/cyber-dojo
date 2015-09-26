@@ -19,7 +19,7 @@ class AvatarTests < AppModelTestBase
   test '3D8638',
   'attempting to create an Avatar with an invalid name raises RuntimeError' do
     kata = make_kata
-    invalid_name = 'mobilephone'
+    invalid_name = 'mobile-phone'
     refute Avatars.names.include?(invalid_name)
     assert_raises(RuntimeError) { kata.avatars[invalid_name] }
   end

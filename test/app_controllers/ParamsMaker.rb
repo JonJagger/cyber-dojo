@@ -32,9 +32,9 @@ class ParamsMaker
 
   def params
     {
-      :file_content => @visible_files,
-      :file_hashes_incoming => @incoming,
-      :file_hashes_outgoing => @outgoing
+      file_content: @visible_files,
+      file_hashes_incoming: @incoming,
+      file_hashes_outgoing: @outgoing
     }
   end
 
@@ -45,11 +45,11 @@ private
   end
 
   def assert(&block)
-    raise RuntimeError.new('DeltaMaker.assert') if !block.call
+    fail RuntimeError.new('DeltaMaker.assert') unless block.call
   end
 
   def refute(&block)
-    raise RuntimeError.new('DeltaMaker.refute') if block.call
+    fail RuntimeError.new('DeltaMaker.refute') if block.call
   end
 
 end

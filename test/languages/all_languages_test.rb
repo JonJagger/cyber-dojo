@@ -10,15 +10,13 @@ class AllLanguagesTests < LanguagesTestBase
     checker = OneLanguageChecker.new(verbose=true)
     results = {}
     dirs = Dir.glob("#{languages.path}*/*/manifest.json")
-    languages = dirs.map { |file|
-      File.dirname(file).split('/')[-2..-1]
-    }
+    languages = dirs.map { |file| File.dirname(file).split('/')[-2..-1] }
     languages.sort.each do |array|
       rag = checker.check(*array)
-      results[array] = rag if !rag.nil?
+      results[array] = rag unless rag.nil?
     end
     expected = ['red','amber','green']
-    fails  = results.select{|language,rag| rag != expected }
+    fails  = results.select { |language, rag| rag != expected }
     assert fails == {}, fails.inspect
   end
 

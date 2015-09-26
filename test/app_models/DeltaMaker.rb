@@ -47,11 +47,11 @@ private
   end
 
   def assert(&pred)
-    raise RuntimeError.new('DeltaMaker.assert') if !pred.call
+    fail RuntimeError.new('DeltaMaker.assert') unless pred.call
   end
 
   def refute(&pred)
-    raise RuntimeError.new('DeltaMaker.refute') if pred.call
+    fail RuntimeError.new('DeltaMaker.refute') if pred.call
   end
 
 end

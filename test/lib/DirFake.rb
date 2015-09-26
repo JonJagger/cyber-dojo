@@ -82,8 +82,8 @@ class DirFake
   end
 
   def read(filename)
-    assert !@repo.nil?, "read('#{filename}') no file"
-    assert !@repo[filename].nil?, "read('#{filename}') no file"
+    refute @repo.nil?, "read('#{filename}') no file"
+    refute @repo[filename].nil?, "read('#{filename}') no file"
     content = @repo[filename]
     content
   end
@@ -100,7 +100,11 @@ private
   end
 
   def assert(truth, message)
-    raise "DirFake['#{@dir}'].#{message}" if !truth
+    fail "DirFake['#{@dir}'].#{message}" unless truth
+  end
+
+  def refute(truth, message)
+    fail "DirFake['#{@dir}'].#{message}" if truth
   end
 
 end
