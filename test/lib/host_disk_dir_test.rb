@@ -26,7 +26,7 @@ class HostDiskDirTests < LibTestBase
 
   test '437EB1',
   'disk[...].path always ends in /' do
-    assert_equal "ABC/", disk['ABC'].path
+    assert_equal 'ABC/', disk['ABC'].path
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -34,7 +34,7 @@ class HostDiskDirTests < LibTestBase
   test '0DB5F3',
   'disk[path].exists? false when path does not exist, true when it does' do
     `rm -rf #{path}`
-    assert !dir.exists?
+    refute dir.exists?
     dir.make
     assert dir.exists?
   end
@@ -42,12 +42,11 @@ class HostDiskDirTests < LibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '61FCE8',
-  'disk[path].exists?(filename) false when file exists, true when it does' do
+  'disk[path].exists?(filename) false when file does not exist, true when it does' do
     `rm -rf #{path}`
     dir.make
-    filename = 'hello.txt'
-    assert !dir.exists?(filename)
-    dir.write(filename, "content")
+    refute dir.exists?(filename = 'hello.txt')
+    dir.write(filename, 'content')
     assert dir.exists?(filename)
   end
 
@@ -55,29 +54,26 @@ class HostDiskDirTests < LibTestBase
 
   test '247EAB',
   'disk[path].read() reads back what was written' do
-    expected = "content"
-    dir.write('filename', expected)
-    actual = dir.read('filename')
-    assert_equal expected, actual
+    dir.write('filename', expected = 'content')
+    assert_equal expected, dir.read('filename')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '7B7E1A',
-    'disk.lock throws exception, does not execute block,' +
-       'and result is nil, when path does not exist' do
+    'disk.lock(path) when path does not exist:' +
+      ' throws exception,' +
+      ' does not execute block,' +
+      ' result is nil' do
     block_run = false
     exception_thrown = false
     begin
-      result = disk.lock('path_does_not_exist') do
-        block_run = true
-      end
+      result = disk.lock('path_does_not_exist') { block_run = true }
     rescue
       exception_thrown = true
     end
-
     assert exception_thrown
-    assert !block_run
+    refute block_run
     assert_nil result
   end
 
@@ -85,15 +81,11 @@ class HostDiskDirTests < LibTestBase
 
   test 'BE0ED2',
     'when dir.lock is obtained block is executed' +
-       'and result is result of block' do
+       ' and result is result of block' do
     block_run = false
-    begin
-      result = dir.lock {
-        block_run = true; 'Hello'
-      }
-      assert block_run, 'block_run'
-      assert_equal 'Hello', result
-    end
+    result = dir.lock { block_run = true; 'Hello' }
+    assert block_run, 'block_run'
+    assert_equal 'Hello', result
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -104,20 +96,13 @@ class HostDiskDirTests < LibTestBase
     inner_run = false
     dir.lock do
       outer_run = true
-
-      inner_thread = Thread.new {
-        dir.lock do
-          inner_run = true
-        end
-      }
+      inner_thread = Thread.new { dir.lock { inner_run = true } }
       max_wait = 1.0 / 50.0
       inner_thread.join(max_wait)
-      if !inner_thread.nil?
-        Thread.kill(inner_thread)
-      end
+      Thread.kill(inner_thread) unless inner_thread.nil?
     end
     assert outer_run
-    assert !inner_run
+    refute inner_run
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -133,9 +118,7 @@ class HostDiskDirTests < LibTestBase
     child_run = false
     disk[parent_path].lock do
       parent_run = true
-      disk[child_path].lock do
-        child_run = true
-      end
+      disk[child_path].lock { child_run = true }
     end
     assert parent_run
     assert child_run
@@ -202,8 +185,7 @@ class HostDiskDirTests < LibTestBase
 
   test 'B5C931',
   'save file for executable file' do
-    executable = true
-    check_save_file('file.sh', 'ls', 'ls', executable)
+    check_save_file('file.sh', 'ls', 'ls', executable = true)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -233,7 +215,7 @@ class HostDiskDirTests < LibTestBase
 
   test '73E40A',
   'disk.dir?(not-a-dir) is false' do
-    assert !disk.dir?('blah-blah')
+    refute disk.dir?('blah-blah')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -304,9 +286,9 @@ class HostDiskDirTests < LibTestBase
     disk[path + 'a'].write('b.cpp', 'content')
     disk[path + 'a'].write('c.txt', 'content')
     disk[path + 'a'].write('d.txt', 'content')
-    matches = disk[path+'a'].each_file.select {|filename|
+    matches = disk[path+'a'].each_file.select do |filename|
       filename.end_with?('.txt')
-    }
+    end
     assert_equal ['c.txt','d.txt'], matches.sort
   end
 
