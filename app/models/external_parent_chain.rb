@@ -35,10 +35,11 @@ end
 
 #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 # All the model classes include this module.
-# method_missing assumes the including class has three things
+# method_missing assumes the including class has
+#
 #   @parent
-#   disk 
 #   path (a string)
+#
 # Its effect is to pass calls (to externals) up
 # the child->parent chain all the way to the root
 # Dojo object where the externals are held.

@@ -182,7 +182,7 @@ class Language
     message = "read_json(#{manifest_filename}) exception" + "\n" +
       'language: ' + path + "\n" +
       ' message: ' + e.message
-    raise message
+    fail message
   end
 
   def manifest_filename
