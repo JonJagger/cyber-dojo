@@ -6,27 +6,23 @@ class HostGitTests < LibTestBase
 
   include ExternalParentChain
 
+  def setup
+    super
+    # force external_parent_chain.method_missing
+    # (LibTestBase has git helper method)
+    undef :git if respond_to? :git
+    # external_parent_chain requires @parent
+    @parent = StubDojo.new
+  end
+
   class StubDojo
     def git(*args)
       @git ||= HostGit.new
     end
   end
 
-  def tmp_dir
+  def path
     self.class.tmp_root
-  end
-
-  def setup
-    super
-    mkdir = "mkdir -p #{tmp_dir}"
-    rmgit = "rm -rf #{tmp_dir}/.git"
-    `#{mkdir} && #{rmgit}`
-    # force external_parent_chain.method_missing
-    # (LibTestBase has git helper method)
-    undef :git if respond_to? :git
-    # external_parent_chain requires @parent
-    set_path tmp_dir
-    @parent = StubDojo.new
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -40,9 +36,9 @@ class HostGitTests < LibTestBase
 
   test 'E779D6',
   'all git commands raise exception if path names a dir that does not exist' do
-    set_path 'dir_that_does_not_exist'
+    bad_path = 'dir_that_does_not_exist'
     [:init,:config,:add,:rm,:commit,:gc,:tag,:show,:diff].each do |cmd|
-      error = assert_raises(Errno::ENOENT) { git.send(cmd, path, args = '') }
+      error = assert_raises(Errno::ENOENT) { git.send(cmd, bad_path, args = '') }
       assert error.message.start_with?("No such file or directory")
     end
   end
@@ -147,14 +143,6 @@ class HostGitTests < LibTestBase
   end
 
   # - - - - - - - - - - - - - - - - - -
-
-  def path
-    @path
-  end
-
-  def set_path(value)
-    @path = value
-  end
 
   def ok(&block)
     message = block.call
