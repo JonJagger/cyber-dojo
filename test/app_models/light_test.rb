@@ -1,7 +1,7 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative 'AppModelTestBase'
-require_relative 'DeltaMaker'
+require_relative './delta_maker'
 
 class LightTests < AppModelTestBase
 

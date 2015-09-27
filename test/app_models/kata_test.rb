@@ -93,7 +93,7 @@ class KataTests < AppModelTestBase
     assert_equal ['hippo'], started
     kata.start_avatar(['lion'])
     started = JSON.parse(kata.read('started_avatars.json'))
-    assert_equal ['hippo','lion'], started.sort
+    assert_equal %w(hippo lion), started.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -101,24 +101,24 @@ class KataTests < AppModelTestBase
   test '9A1C97',
     'start_avatar on old dojo that as no started_avatars.json file' +
        ' reverts to doing dir.exists? for each avatar' do
-   kata = make_kata
-   animals = ['lion','hippo','cheetah'].sort
-   3.times { kata.start_avatar(animals) }
-   filename = 'started_avatars.json'
-   started = JSON.parse(kata.read(filename))
-   assert_equal animals, started.sort
-   # now delete started_avatars.json to simulate old dojo
-   # with started avatars and no started_avatars.json file
-   kata.dir.delete(filename)
-   refute kata.dir.exists?(filename)
-   (Avatars.names.size - 3).times do
-     avatar = kata.start_avatar
-     refute_nil avatar
-     refute kata.dir.exists?(filename)
-   end
-   avatar = kata.start_avatar
-   assert_nil avatar
-   refute kata.dir.exists?(filename)
+    kata = make_kata
+    animals = %w(lion hippo cheetah).sort
+    3.times { kata.start_avatar(animals) }
+    filename = 'started_avatars.json'
+    started = JSON.parse(kata.read(filename))
+    assert_equal animals, started.sort
+    # now delete started_avatars.json to simulate old dojo
+    # with started avatars and no started_avatars.json file
+    kata.dir.delete(filename)
+    refute kata.dir.exists?(filename)
+    (Avatars.names.size - 3).times do
+      avatar = kata.start_avatar
+      refute_nil avatar
+      refute kata.dir.exists?(filename)
+    end
+    avatar = kata.start_avatar
+    assert_nil avatar
+    refute kata.dir.exists?(filename)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -165,21 +165,21 @@ class KataTests < AppModelTestBase
 
     assert kata.active?
     now = first['time']
-    now[seconds=5] += 17
-    refute kata.finished?(now), "!kata.finished?(one-second-old)"
+    now[seconds = 5] += 17
+    refute kata.finished?(now), '!kata.finished?(one-second-old)'
     assert_equal 17, kata.age(now)
 
     now = first['time']
-    now[minutes=4] += 1
-    refute kata.finished?(now), "!kata.finished?(one-minute-old)"
+    now[minutes = 4] += 1
+    refute kata.finished?(now), '!kata.finished?(one-minute-old)'
 
     now = first['time']
-    now[hours=3] += 1
+    now[hours = 3] += 1
     refute kata.finished?(now), "!kata.finished?(one-hour-old)"
 
     now = first['time']
-    now[days=2] += 1
-    assert kata.finished?(now), "kata.finished?(one-day-old)"
+    now[days = 2] += 1
+    assert kata.finished?(now), 'kata.finished?(one-day-old)'
 
   end
 
@@ -211,7 +211,7 @@ class KataTests < AppModelTestBase
        'all read from manifest' do
     language = languages['Java-JUnit']
     exercise = exercises['Fizz_Buzz']
-    now = [2014,7,17,21,15,45]
+    now = [2014, 7, 17, 21, 15, 45]
     id = unique_id
     kata = katas.create_kata(language, exercise, id, now)
     assert_equal id, kata.id.to_s
@@ -230,7 +230,7 @@ class KataTests < AppModelTestBase
     kata = make_kata
     hippo = kata.start_avatar(['hippo'])
     assert_equal 'hippo', hippo.name
-    assert_equal ['hippo'], kata.avatars.map {|avatar| avatar.name}
+    assert_equal ['hippo'], kata.avatars.map(&:name)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -239,7 +239,7 @@ class KataTests < AppModelTestBase
     'start_avatar with specific avatar-name' +
        ' (useful for testing) fails if avatar has already started' do
     kata = make_kata
-    hippo = kata.start_avatar(['hippo'])
+    kata.start_avatar(['hippo'])
     avatar = kata.start_avatar(['hippo'])
     assert_nil avatar
   end
@@ -250,7 +250,7 @@ class KataTests < AppModelTestBase
     'start_avatar with specific avatar-names arg is used' +
        '(useful for testing)' do
     kata = make_kata
-    names = [ 'panda', 'lion', 'cheetah' ]
+    names = %w(panda lion cheetah)
     panda = kata.start_avatar(names)
     assert_equal 'panda', panda.name
     lion = kata.start_avatar(names)
@@ -258,7 +258,7 @@ class KataTests < AppModelTestBase
     cheetah = kata.start_avatar(names)
     assert_equal 'cheetah', cheetah.name
     assert_nil kata.start_avatar(names)
-    avatars_names = kata.avatars.map {|avatar| avatar.name}
+    avatars_names = kata.avatars.map(&:name)
     assert_equal names.sort, avatars_names.sort
   end
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -266,13 +266,13 @@ class KataTests < AppModelTestBase
   test '08141A',
   'start_avatar succeeds once for each avatar name then fails' do
     kata = make_kata
-    created = [ ]
-    Avatars.names.length.times do |n|
+    created = []
+    Avatars.names.length.times do
       avatar = kata.start_avatar
       refute_nil avatar
       created << avatar
     end
-    assert_equal Avatars.names.sort, created.collect{|avatar| avatar.name}.sort
+    assert_equal Avatars.names.sort, created.collect(&:name).sort
     avatar = kata.start_avatar
     assert_nil avatar
   end

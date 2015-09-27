@@ -22,7 +22,7 @@ class KatasTests < AppModelTestBase
   'katas path has correct format when set without trailing slash' do
     path = 'unslashed'
     set_katas_root(path)
-    assert_equal path+'/', katas.path
+    assert_equal path + '/', katas.path
     assert correct_path_format?(katas)
   end
 
@@ -70,7 +70,7 @@ class KatasTests < AppModelTestBase
   'katas.each() with two unrelated ids' do
     kata1 = make_kata
     kata2 = make_kata
-    assert_equal all_ids([kata1,kata2]).sort, all_ids(katas).sort
+    assert_equal all_ids([kata1, kata2]).sort, all_ids(katas).sort
   end
 
   test '29DFD1',
@@ -79,18 +79,18 @@ class KatasTests < AppModelTestBase
     kata1 = make_kata(id + '1')
     kata2 = make_kata(id + '2')
     kata3 = make_kata(id + '3')
-    assert_equal all_ids([kata1,kata2,kata3]).sort, all_ids(katas).sort
+    assert_equal all_ids([kata1, kata2, kata3]).sort, all_ids(katas).sort
   end
 
   test 'F71C21',
   'is Enumerable: so each not needed if doing map' do
     kata1 = make_kata
     kata2 = make_kata
-    assert_equal all_ids([kata1,kata2]).sort, all_ids(katas).sort
+    assert_equal all_ids([kata1, kata2]).sort, all_ids(katas).sort
   end
 
   def all_ids(k)
-    k.each.map{|kata| kata.id.to_s}
+    k.each.map { |kata| kata.id.to_s }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -144,7 +144,7 @@ class KatasTests < AppModelTestBase
   test '0934BF',
   'complete(id): completes (and uppercases) when 6+ chars and 1 match' do
     id = 'A1B2C3D4E5'
-    kata = make_kata(id)
+    make_kata(id)
     assert_equal id, katas.complete(id.downcase[0..5])
   end
 

@@ -1,15 +1,15 @@
 
 %w(
-  SetupChooser
-  FileDeltaMaker
-  GitDiff
-  GitDiffBuilder
-  GitDiffParser
-  LineSplitter
-  ReviewFilePicker
-  PrevNextRing
-  MakefileFilter
-  OutputColour
-  TdGapper
+  setup_chooser
+  file_delta_maker
+  git_diff
+  git_diff_builder
+  git_diff_parser
+  line_splitter
+  review_file_picker
+  prev_next_ring
+  makefile_filter
+  output_colour
+  td_gapper
 ).each { |sourcefile| require_relative './' + sourcefile }
 

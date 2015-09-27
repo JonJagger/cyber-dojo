@@ -13,7 +13,7 @@ class AvatarsTests < AppModelTestBase
 
   test 'E7A60F',
   'avatars names all begin with a different letter' do
-    first_letters = Avatars.names.collect{|name| name[0]}.uniq
+    first_letters = Avatars.names.collect { |name| name[0] }.uniq
     assert_equal first_letters.length, Avatars.names.length
   end
 
@@ -32,7 +32,7 @@ class AvatarsTests < AppModelTestBase
     kata = make_kata
     kata.start_avatar([cheetah])
     kata.start_avatar([lion])
-    assert_equal [cheetah,lion], kata.avatars.map{|avatar| avatar.name}.sort
+    assert_equal [cheetah, lion], kata.avatars.map(&:name).sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
@@ -42,7 +42,7 @@ class AvatarsTests < AppModelTestBase
     kata = make_kata
     kata.start_avatar([cheetah])
     kata.start_avatar([lion])
-    assert_equal [cheetah,lion], kata.avatars.map{|avatar| avatar.name}.sort
+    assert_equal [cheetah, lion], kata.avatars.map(&:name).sort
     assert_equal 2, kata.avatars.to_a.length
   end
 
@@ -54,7 +54,7 @@ class AvatarsTests < AppModelTestBase
     kata.start_avatar([lion])
     kata.start_avatar([hippo])
     expected_names = [lion, hippo]
-    names = katas[kata.id.to_s].avatars.map{|avatar| avatar.name}
+    names = katas[kata.id.to_s].avatars.map(&:name)
     assert_equal expected_names.sort, names.sort
   end
 
@@ -64,7 +64,7 @@ class AvatarsTests < AppModelTestBase
   'katas[id].avatars[panda] finds the panda' do
     kata = make_kata
     kata.start_avatar([panda])
-    assert_equal [panda], kata.avatars.map{|avatar| avatar.name}
+    assert_equal [panda], kata.avatars.map(&:name)
     assert_equal panda, katas[kata.id.to_s].avatars[panda].name
   end
 

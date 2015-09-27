@@ -5,7 +5,7 @@ require_relative 'AppModelTestBase'
 class ExerciseTests < AppModelTestBase
 
   test '2DDD85',
-  "exercise path has correct basic format" do
+  'exercise path has correct basic format' do
     exercise = exercises['Fizz_Buzz']
     assert exercise.path.match(exercise.name)
     assert correct_path_format?(exercise)

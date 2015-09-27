@@ -1,7 +1,7 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'AppModelTestBase'
-require_relative 'DeltaMaker'
+require_relative './AppModelTestBase'
+require_relative './delta_maker'
 
 class AvatarTests < AppModelTestBase
 
@@ -39,7 +39,7 @@ class AvatarTests < AppModelTestBase
   'after avatar is created its sandbox contains each visible_file' do
     kata = make_kata
     avatar = kata.start_avatar
-    kata.language.visible_files.each do |filename,content|
+    kata.language.visible_files.each do |filename, content|
       assert_equal content, avatar.sandbox.read(filename)
     end
   end
@@ -60,7 +60,7 @@ class AvatarTests < AppModelTestBase
   'avatar is not active? when it has zero traffic-lights' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
-    assert_equal [ ], lion.lights
+    assert_equal [], lion.lights
     refute lion.active?
   end
 
@@ -89,7 +89,7 @@ class AvatarTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test'F70D2B',
+  test 'F70D2B',
     'after avatar is started its visible_files are:' +
        ' 1. the language visible_files,' +
        ' 2. the exercse instructions,' +
@@ -97,28 +97,28 @@ class AvatarTests < AppModelTestBase
     kata = make_kata
     language = kata.language
     avatar = kata.start_avatar
-    language.visible_files.each do |filename,content|
+    language.visible_files.each do |filename, content|
       assert avatar.visible_filenames.include?(filename)
       assert_equal avatar.visible_files[filename], content
     end
     assert avatar.visible_filenames.include? 'instructions'
     assert avatar.visible_files['instructions'].include? kata.exercise.instructions
     assert avatar.visible_filenames.include? 'output'
-    assert_equal '',avatar.visible_files['output']
+    assert_equal '', avatar.visible_files['output']
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '000667',
     'avatar creation saves' +
-          ' each visible_file into sandbox/,' +
-          ' and empty increments.json into avatar/' do
+      ' each visible_file into sandbox/,' +
+      ' and empty increments.json into avatar/' do
     kata = make_kata
     avatar = kata.start_avatar
-    kata.language.visible_files.each do |filename,content|
+    kata.language.visible_files.each do |filename, content|
       assert_equal content, avatar.sandbox.read(filename)
     end
-    assert_equal [ ], JSON.parse(avatar.read('increments.json'))
+    assert_equal [], JSON.parse(avatar.read('increments.json'))
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
@@ -130,10 +130,10 @@ class AvatarTests < AppModelTestBase
     @avatar = kata.start_avatar
     visible_files = @avatar.visible_files
     assert visible_files.keys.include?('output')
-    assert_equal '',visible_files['output']
+    assert_equal '', visible_files['output']
 
     runner.stub_output(expected = 'helloWorld')
-    _,@visible_files,@output = DeltaMaker.new(@avatar).run_test
+    _, @visible_files, @output = DeltaMaker.new(@avatar).run_test
 
     assert @visible_files.keys.include?('output')
     assert_file 'output', expected
@@ -149,7 +149,7 @@ class AvatarTests < AppModelTestBase
     master = @avatar.visible_files[cyber_dojo_sh]
 
     runner.stub_output(expected = 'no alarms and no surprises')
-    _,@visible_files,@output = DeltaMaker.new(@avatar).run_test
+    _, @visible_files, @output = DeltaMaker.new(@avatar).run_test
 
     assert_file 'output', expected
     assert_file cyber_dojo_sh, master
@@ -167,7 +167,7 @@ class AvatarTests < AppModelTestBase
     maker.change_file(cyber_dojo_sh, commented_master)
 
     runner.stub_output(expected = 'no alarms and no surprises')
-    _,@visible_files,@output = maker.run_test
+    _, @visible_files, @output = maker.run_test
 
     assert_file 'output', expected
     assert_file cyber_dojo_sh, commented_master
@@ -189,7 +189,7 @@ class AvatarTests < AppModelTestBase
     maker = DeltaMaker.new(@avatar)
     maker.change_file(cyber_dojo_sh, first_content = "hello\nworld")
     runner.stub_output(radiohead = 'no alarms and no surprises')
-    _,@visible_files,@output = maker.run_test
+    _, @visible_files, @output = maker.run_test
 
     separator = "\n\n"
     expected_output = @avatar.kata.language.output_alert + separator + radiohead
@@ -207,7 +207,7 @@ class AvatarTests < AppModelTestBase
     # --- only once ---
 
     runner.stub_output(radiohead)
-    _,@visible_files,@output = DeltaMaker.new(@avatar).run_test
+    _, @visible_files, @output = DeltaMaker.new(@avatar).run_test
 
     assert_file 'output', radiohead
     assert_file cyber_dojo_sh, appended_commented_master
@@ -221,16 +221,15 @@ class AvatarTests < AppModelTestBase
        ' stripped version of one-liner' do
     kata = make_kata(unique_id, 'C (gcc)-assert')
     @avatar = kata.start_avatar
-    language = @avatar.kata.language
     master = @avatar.visible_files[cyber_dojo_sh]
-    assert master.split.size === 2
+    assert master.split.size == 2
     stripped_master = master.strip
-    assert stripped_master.split("\n").size === 1
+    assert stripped_master.split("\n").size == 1
 
     runner.stub_output(radiohead = 'no alarms and no surprises')
     maker = DeltaMaker.new(@avatar)
     maker.change_file(cyber_dojo_sh, stripped_master)
-    _,@visible_files,@output = maker.run_test
+    _, @visible_files, @output = maker.run_test
 
     assert_file 'output', radiohead
     assert_file cyber_dojo_sh, stripped_master
@@ -248,7 +247,7 @@ class AvatarTests < AppModelTestBase
     runner.stub_output('hello')
     maker = DeltaMaker.new(@avatar)
     maker.change_file(makefile, makefile_with_leading_spaces)
-    _,@visible_files,_ = maker.run_test
+    _, @visible_files, _ = maker.run_test
 
     assert_file makefile, makefile_with_leading_tab
   end
@@ -265,12 +264,12 @@ class AvatarTests < AppModelTestBase
     runner.stub_output('hello')
     maker = DeltaMaker.new(@avatar)
     maker.delete_file(makefile)
-    _,@visible_files,_ = maker.run_test
+    _, @visible_files, _ = maker.run_test
 
     runner.stub_output('hello')
     maker = DeltaMaker.new(@avatar)
     maker.new_file(makefile, makefile_with_leading_spaces)
-    _,@visible_files,_ = maker.run_test
+    _, @visible_files, _ = maker.run_test
 
     assert_file makefile, makefile_with_leading_tab
   end
@@ -285,10 +284,10 @@ class AvatarTests < AppModelTestBase
     test_filename = 'hiker.tests.c'
 
     maker = DeltaMaker.new(@avatar)
-    maker.change_file(code_filename, new_code='changed content for code file')
-    maker.change_file(test_filename, new_test='changed content for test file')
+    maker.change_file(code_filename, new_code = 'changed content for code file')
+    maker.change_file(test_filename, new_test = 'changed content for test file')
     runner.stub_output('')
-    _,@visible_files,_ = maker.run_test
+    _, @visible_files, _ = maker.run_test
 
     assert_file code_filename, new_code
     assert_file test_filename, new_test
@@ -327,7 +326,7 @@ class AvatarTests < AppModelTestBase
     runner.stub_output('')
     maker = DeltaMaker.new(@avatar)
     maker.new_file(new_filename, new_content = 'content for new file')
-    _,@visible_files,_ = maker.run_test
+    _, @visible_files, _ = maker.run_test
 
     assert git_log_include?(@avatar.sandbox.path, ['add', "#{new_filename}"])
     assert_file new_filename, new_content
@@ -342,9 +341,9 @@ class AvatarTests < AppModelTestBase
     runner.stub_output('')
     maker = DeltaMaker.new(@avatar)
     maker.delete_file(makefile)
-    _,@visible_files,_ = maker.run_test
+    _, @visible_files, _ = maker.run_test
 
-    assert git_log_include?(@avatar.sandbox.path, [ 'rm', makefile ])
+    assert git_log_include?(@avatar.sandbox.path, ['rm', makefile])
     refute @visible_files.keys.include? makefile
   end
 
@@ -358,10 +357,10 @@ class AvatarTests < AppModelTestBase
     manifest = JSON.unparse({
       'hiker.c' => '#include "hiker.h"',
       'hiker.h' => '#ifndef HIKER_INCLUDED_H\n#endif',
-      'output' => 'unterminated conditional directive'
+      'output'  => 'unterminated conditional directive'
     })
     filename = 'manifest.json'
-    git.spy(lion.dir.path,'show',"#{3}:#{filename}",manifest)
+    git.spy(lion.dir.path, 'show', "3:#{filename}", manifest)
     stub_diff = [
       "diff --git a/sandbox/hiker.h b/sandbox/hiker.h",
       "index e69de29..f28d463 100644",
@@ -379,16 +378,15 @@ class AvatarTests < AppModelTestBase
       '--ignore-space-at-eol --find-copies-harder 2 3 sandbox',
       stub_diff)
 
-    tags = lion.tags
-    actual = lion.diff(2,3) #tags[2].diff(3)
+    actual = lion.diff(2, 3) # tags[2].diff(3)
     expected =
     {
       "hiker.h" =>
       [
         { :type => :section, :index => 0 },
-        { :type => :deleted, :line => "#ifndef HIKER_INCLUDED", :number => 1 },
-        { :type => :added,   :line => "#ifndef HIKER_INCLUDED_H", :number => 1 },
-        { :type => :added,   :line => "#endif", :number => 2 }
+        { :type => :deleted, :line => '#ifndef HIKER_INCLUDED',   :number => 1 },
+        { :type => :added,   :line => '#ifndef HIKER_INCLUDED_H', :number => 1 },
+        { :type => :added,   :line => '#endif', :number => 2 }
       ],
       "hiker.c" =>
       [
@@ -427,17 +425,17 @@ class AvatarTests < AppModelTestBase
     [
       {
         'colour' => 'red',
-        'time' => [2014, 2, 15, 8, 54, 6],
+        'time'   => [2014, 2, 15, 8, 54, 6],
         'number' => 1
       },
       {
         'colour' => 'green',
-        'time' => [2014, 2, 15, 8, 54, 34],
+        'time'   => [2014, 2, 15, 8, 54, 34],
         'number' => 2
       },
       {
         'colour' => 'green',
-        'time' => [2014, 2, 15, 8, 55, 7],
+        'time'   => [2014, 2, 15, 8, 55, 7],
         'number' => 3
       }
     ]
@@ -459,7 +457,7 @@ class AvatarTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def assert_file(filename, expected)
-    assert_equal(expected, @output) if filename === 'output'
+    assert_equal(expected, @output) if filename == 'output'
     assert_equal expected, @visible_files[filename], 'returned_to_browser'
     assert_equal expected, @avatar.visible_files[filename], 'saved_to_manifest'
     assert_equal expected, @avatar.sandbox.read(filename), 'saved_to_sandbox'

@@ -18,7 +18,7 @@ class ExercisesTests < AppModelTestBase
   'exercises path has correct basic format when set without trailing slash' do
     path = 'unslashed'
     set_exercises_root(path)
-    assert_equal path+'/', exercises.path
+    assert_equal path + '/', exercises.path
     assert correct_path_format?(exercises)
   end
 
@@ -29,7 +29,7 @@ class ExercisesTests < AppModelTestBase
     set_disk_class('DiskFake')
     disk[exercises.path + '100 doors'].write('instructions', 'imagine there are 100 doors...')
     exercises.refresh_cache
-    exercises_names = exercises.map {|exercise| exercise.name }.sort
+    exercises_names = exercises.map(&:name).sort
     assert_equal ['100 doors'], exercises_names
     assert_equal 'imagine there are 100 doors...', exercises['100 doors'].instructions
   end
@@ -39,7 +39,7 @@ class ExercisesTests < AppModelTestBase
   test '3E277A',
   'no exercises when cache is empty' do
     set_disk_class('DiskFake')
-    exercises.dir.write_json('cache.json', cache={})
+    exercises.dir.write_json('cache.json', {})
     assert_equal [], exercises.to_a
   end
 
@@ -48,15 +48,11 @@ class ExercisesTests < AppModelTestBase
   test '52110A',
   'execises from cache when cache is not empty' do
     cache = {
-      '100 doors' => {
-        :instructions => 'go here'
-      },
-      'Bowling Game' => {
-        :instructions => 'are here'
-      }
+      '100 doors' => { instructions: 'go here' },
+      'Bowling Game' => { instructions: 'are here' }
     }
     exercises.dir.write_json('cache.json', cache)
-    exercises_names = exercises.map {|exercise| exercise.name }.sort
+    exercises_names = exercises.map(&:name).sort
 
     assert_equal ['100 doors', 'Bowling Game'], exercises_names, 'names'
 

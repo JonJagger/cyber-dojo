@@ -1,5 +1,5 @@
 
-require_relative '../../app/lib/FileDeltaMaker'
+require_relative '../../app/lib/file_delta_maker'
 
 class DeltaMaker
 
@@ -11,9 +11,9 @@ class DeltaMaker
     @now = avatar.visible_files
   end
 
-  attr_reader :was,:now
+  attr_reader :was, :now
 
-  def new_file(filename,content)
+  def new_file(filename, content)
     refute { file?(filename) }
     @now[filename] = content
   end
@@ -23,24 +23,24 @@ class DeltaMaker
     @now.delete(filename)
   end
 
-  def change_file(filename,content)
+  def change_file(filename, content)
     assert { file?(filename) }
     refute { @now[filename] == content }
     @now[filename] = content
   end
 
   def run_test
-    delta = make_delta(@was,@now)
+    delta = make_delta(@was, @now)
     visible_files = now
-    _,output = @avatar.test(delta, visible_files)
-    [delta,visible_files,output]
+    _, output = @avatar.test(delta, visible_files)
+    [delta, visible_files, output]
   end
 
   def test_args
-    [make_delta(@was,@now),now]
+    [make_delta(@was, @now), now]
   end
 
-private
+  private
 
   def file?(filename)
     @now.keys.include?(filename)
