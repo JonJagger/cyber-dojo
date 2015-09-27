@@ -7,7 +7,8 @@ class LanguageTests < AppModelTestBase
 
   test '43EACE',
   "language's path has correct format" do
-    language_dir,test_dir = 'C#','NUnit'
+    language_dir = 'C#'
+    test_dir = 'NUnit'
     language = languages[language_dir + '-' + test_dir]
     assert language.path.match(language_dir + '/' + test_dir)
     assert correct_path_format?(language)
@@ -63,7 +64,7 @@ class LanguageTests < AppModelTestBase
        'then visible_files is empty hash' +
        'and visible_filenames is empty array' do
     @language = languages['Ruby']
-    spy_manifest({ 'visible_filenames' => [ ] })
+    spy_manifest({ 'visible_filenames' => [] })
     assert_equal({}, @language.visible_files)
     assert_equal([], @language.visible_filenames)
   end
@@ -77,7 +78,7 @@ class LanguageTests < AppModelTestBase
     spy_manifest({ 'visible_filenames' => [ 'test_untitled.c' ] })
     @language.dir.write('test_untitled.c', 'content')
     visible_files = @language.visible_files
-    assert_equal( { 'test_untitled.c' => 'content' }, visible_files)
+    assert_equal({ 'test_untitled.c' => 'content' }, visible_files)
     assert_nil visible_files['output']
     assert_nil visible_files['instructions']
   end
@@ -85,10 +86,10 @@ class LanguageTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'A42D66',
-  'highlight_filenames defaults to [ ] when not set' do
+  'highlight_filenames defaults to [] when not set' do
     @language = languages['Ruby']
-    spy_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
-    assert_equal [ ], @language.highlight_filenames
+    spy_manifest({ 'visible_filenames' => ['test_untitled.rb'] })
+    assert_equal [], @language.highlight_filenames
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -96,12 +97,12 @@ class LanguageTests < AppModelTestBase
   test '861A75',
   'highlight_filenames reads back as set' do
     @language = languages['C']
-    visible_filenames = [ 'x.hpp', 'x.cpp' ]
-    highlight_filenames = [ 'x.hpp' ]
+    visible_filenames = ['x.hpp', 'x.cpp']
+    highlight_filenames = ['x.hpp']
     spy_manifest({
-        'visible_filenames' => visible_filenames,
-        'highlight_filenames' => highlight_filenames
-      })
+        'visible_filenames' =>   visible_filenames,
+      'highlight_filenames' => highlight_filenames
+    })
     assert_equal highlight_filenames, @language.highlight_filenames
   end
 
@@ -112,11 +113,11 @@ class LanguageTests < AppModelTestBase
        "['cyberdojo.sh','makefile','Makefile','unity.license.txt']" +
        "when there is no entry for highlight_filenames" do
     @language = languages['C']
-    visible_filenames = [ 'wibble.hpp', 'wibble.cpp' ]
+    visible_filenames = ['wibble.hpp', 'wibble.cpp']
     spy_manifest({
-        'visible_filenames' => visible_filenames,
-      })
-    expected = ['cyber-dojo.sh','makefile','Makefile','unity.license.txt'].sort
+      'visible_filenames' => visible_filenames,
+    })
+    expected = ['cyber-dojo.sh', 'makefile', 'Makefile', 'unity.license.txt'].sort
     assert_equal expected, @language.lowlight_filenames.sort
   end
 
@@ -126,13 +127,13 @@ class LanguageTests < AppModelTestBase
     'lowlight_filenames is visible_filenames - highlight_filenames' +
        'when there is an entry for highlight_filenames' do
     @language = languages['C']
-    visible_filenames = [ 'wibble.hpp', 'wibble.cpp', 'fubar.hpp', 'fubar.cpp' ]
-    highlight_filenames = [ 'wibble.hpp', 'wibble.cpp' ]
+    visible_filenames = ['wibble.hpp', 'wibble.cpp', 'fubar.hpp', 'fubar.cpp']
+    highlight_filenames = ['wibble.hpp', 'wibble.cpp']
     spy_manifest({
-        'visible_filenames' => visible_filenames,
-        'highlight_filenames' => highlight_filenames
-      })
-    assert_equal ['fubar.cpp','fubar.hpp'], @language.lowlight_filenames.sort
+        'visible_filenames' =>   visible_filenames,
+      'highlight_filenames' => highlight_filenames
+    })
+    assert_equal ['fubar.cpp', 'fubar.hpp'], @language.lowlight_filenames.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -274,7 +275,7 @@ class LanguageTests < AppModelTestBase
     named = false
     begin
       @language.tab_size
-    rescue Exception => ex
+    rescue StandardError => ex
       named = ex.to_s.include?(name)
     end
     assert named
@@ -287,7 +288,7 @@ class LanguageTests < AppModelTestBase
        'when language does not have image_name set in manifest' do
     runner.stub_runnable(false)
     ruby = languages['Ruby-TestUnit']
-    ruby.dir.write_json(manifest_filename, { }) # this line has no effect
+    ruby.dir.write_json(manifest_filename, {}) # this line has no effect
     refute ruby.runnable?
   end
 

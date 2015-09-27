@@ -24,13 +24,13 @@ class TagsTest < AppModelTestBase
       'output' => '',
       'instructions' => exercise.instructions
     }
-    language.visible_files.each do |filename,content|
+    language.visible_files.each do |filename, content|
       stub_manifest[filename] = content
     end
     git.spy(avatar.path, 'show', '0:manifest.json', JSON.unparse(stub_manifest))
 
     visible_files = tags[0].visible_files
-    filenames = ['hiker.h', 'hiker.c', 'instructions','cyber-dojo.sh','makefile','output']
+    filenames = ['hiker.h', 'hiker.c', 'instructions', 'cyber-dojo.sh', 'makefile', 'output']
     filenames.each { |filename| assert visible_files.keys.include?(filename), filename }
     assert_equal '', tags[0].output
   end
@@ -67,7 +67,7 @@ class TagsTest < AppModelTestBase
     maker.run_test
     tags = lion.tags
     (1..tags.length).each do |i|
-      assert_equal tags.length-i, tags[-i].number
+      assert_equal tags.length - i, tags[-i].number
     end
   end
 

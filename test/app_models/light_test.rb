@@ -7,7 +7,7 @@ class LightTests < AppModelTestBase
 
   test 'AC96D0',
   'colour is converted to a symbol' do
-    light = make_light(:red,[2015,2,15,8,54,6],1)
+    light = make_light(:red, [2015, 2, 15, 8, 54, 6], 1)
     assert_equal :red, light.colour
   end
 
@@ -15,7 +15,7 @@ class LightTests < AppModelTestBase
 
   test 'B136BD',
   'colour was once stored as outcome' do
-    light = make_light(:red,[2015,2,15,8,54,6],1,'outcome')
+    light = make_light(:red, [2015, 2, 15, 8, 54, 6], 1, 'outcome')
     assert_equal :red, light.colour
   end
 
@@ -23,8 +23,13 @@ class LightTests < AppModelTestBase
 
   test 'B09D76',
   'time is read back as set' do
-    year,month,day,hh,mm,ss = 2015,2,15,8,54,6
-    light = make_light(:red,[year,month,day,hh,mm,ss],1)
+    year = 2015
+    month = 2
+    day = 15
+    hh = 8
+    mm = 54
+    ss = 6
+    light = make_light(:red, [year, month, day, hh, mm, ss], 1)
     time = light.time
     assert_equal year,  time.year,  'year'
     assert_equal month, time.month, 'month'
@@ -39,7 +44,7 @@ class LightTests < AppModelTestBase
   test 'ED8954',
   'number is read as set' do
     number = 7
-    light = make_light(:red,[2015,2,15,8,54,6],number)
+    light = make_light(:red, [2015, 2, 15, 8, 54, 6], number)
     assert_equal number, light.number
   end
 
@@ -48,12 +53,12 @@ class LightTests < AppModelTestBase
   test '21DAC8',
   'to_json' do
     colour = :red
-    time = [2015,2,15,8,54,6]
+    time = [2015, 2, 15, 8, 54, 6]
     number = 7
-    light = make_light(colour,time,number)
+    light = make_light(colour, time, number)
     assert_equal({
       'colour' => colour,
-      'time' => Time.mktime(*time),
+      'time'   => Time.mktime(*time),
       'number' => number
     }, light.to_json)
   end
@@ -71,9 +76,9 @@ class LightTests < AppModelTestBase
     maker.run_test
     lights = lion.lights
     assert_equal 3, lights.length
-    assert_equal :amber, lights[0].colour    # TODO :red
+    assert_equal :amber, lights[0].colour    # TODO: red
     assert_equal :amber, lights[1].colour
-    assert_equal :amber, lights[2].colour    # TODO :green
+    assert_equal :amber, lights[2].colour    # TODO: green
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - -
@@ -82,8 +87,8 @@ class LightTests < AppModelTestBase
 
   def make_light(rgb, time, n, key = 'colour')
     Tag.new(dummy_avatar, {
-      key => rgb.to_sym,
-      'time' => time,
+      key      => rgb.to_sym,
+      'time'   => time,
       'number' => n
     })
   end

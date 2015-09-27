@@ -8,7 +8,7 @@ class LightsTests < AppModelTestBase
   'lights initially empty' do
     kata = make_kata
     lights = kata.start_avatar.lights
-    assert_equal [ ], lights.to_a
+    assert_equal [], lights.to_a
     assert_equal 0, lights.count
     n = 0
     lights.each { n += 1 }
@@ -23,19 +23,19 @@ class LightsTests < AppModelTestBase
     avatar = kata.start_avatar
     incs =
     [
-      red={
+      red = {
         'colour' => 'red',
-        'time' => [2014, 2, 15, 8, 54, 6],
+        'time'   => [2014, 2, 15, 8, 54, 6],
         'number' => 1
       },
-      amber={
+      amber = {
         'colour' => 'green',
-        'time' => [2014, 2, 15, 8, 54, 34],
+        'time'   => [2014, 2, 15, 8, 54, 34],
         'number' => 2
       },
-      green={
+      green = {
         'colour' => 'green',
-        'time' => [2014, 2, 15, 8, 55, 7],
+        'time'   => [2014, 2, 15, 8, 55, 7],
         'number' => 3
       }
     ]
@@ -43,15 +43,15 @@ class LightsTests < AppModelTestBase
     lights = avatar.lights
     assert_equal 3, lights.count
 
-    assert_equal_light(Tag.new(avatar,red  ), lights[0])
-    assert_equal_light(Tag.new(avatar,amber), lights[1])
-    assert_equal_light(Tag.new(avatar,green), lights[2])
+    assert_equal_light(Tag.new(avatar, red  ), lights[0])
+    assert_equal_light(Tag.new(avatar, amber), lights[1])
+    assert_equal_light(Tag.new(avatar, green), lights[2])
 
     n = 0
-    lights.each { |light|
+    lights.each do |light|
       n += 1
       assert_equal avatar, light.avatar
-    }
+    end
     assert_equal 3, n
 
     assert_equal 3, lights.to_a.length
