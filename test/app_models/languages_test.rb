@@ -4,6 +4,13 @@ require_relative 'AppModelTestBase'
 
 class LanguagesTests < AppModelTestBase
 
+  test '71C327',
+  'languages[name] is nil if name is not an existing language' do
+    assert_nil languages['wibble_XXX']
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - -
+
   test '743810',
   'languages path has correct format when set with trailing slash' do
     path = 'slashed/'
@@ -24,6 +31,7 @@ class LanguagesTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
+=begin
   test '7D53C5',
   'refresh_cache requires manifest.json for each file to read display_name from' do
     set_disk_class('DiskFake')
@@ -36,11 +44,13 @@ class LanguagesTests < AppModelTestBase
     assert_equal 'runey',    runey.test_dir_name
     assert_equal 'R,Rooney', runey.display_name
   end
+=end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
   test '15BD19',
   'no languages when cache is empty' do
+    set_disk_class('DiskFake')
     languages.dir.write_json('cache.json', {})
     assert_equal [], languages.to_a
   end
@@ -49,6 +59,7 @@ class LanguagesTests < AppModelTestBase
 
   test '09A1D4',
   'languages from cache when cache is not empty' do
+    set_disk_class('DiskFake')
     cache = {
       'Asm, assert' => {
              dir_name: 'Asm',
@@ -77,7 +88,7 @@ class LanguagesTests < AppModelTestBase
 
   test '69110F',
   'languages[X] is language named X' do
-    ['C (gcc)-assert', 'C#-NUnit'].each do |name|
+    ['C (clang)-assert', 'C#-NUnit'].each do |name|
       assert_equal name, languages[name].name
     end
   end

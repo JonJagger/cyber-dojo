@@ -89,10 +89,10 @@ class KataTests < AppModelTestBase
   'start_avatar puts started avatars name into katas started_avatars.json file' do
     kata = make_kata
     kata.start_avatar(['hippo'])
-    started = JSON.parse(kata.read('started_avatars.json'))
+    started = kata.read_json('started_avatars.json')
     assert_equal ['hippo'], started
     kata.start_avatar(['lion'])
-    started = JSON.parse(kata.read('started_avatars.json'))
+    started = kata.read_json('started_avatars.json')
     assert_equal %w(hippo lion), started.sort
   end
 
@@ -105,20 +105,19 @@ class KataTests < AppModelTestBase
     animals = %w(lion hippo cheetah).sort
     3.times { kata.start_avatar(animals) }
     filename = 'started_avatars.json'
-    started = JSON.parse(kata.read(filename))
+    started = kata.read_json(filename)
     assert_equal animals, started.sort
+
     # now delete started_avatars.json to simulate old dojo
     # with started avatars and no started_avatars.json file
-    kata.dir.delete(filename)
+    File.delete(kata.path + filename)
     refute kata.dir.exists?(filename)
-    (Avatars.names.size - 3).times do
+
+    2.times do
       avatar = kata.start_avatar
       refute_nil avatar
       refute kata.dir.exists?(filename)
     end
-    avatar = kata.start_avatar
-    assert_nil avatar
-    refute kata.dir.exists?(filename)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -265,6 +264,7 @@ class KataTests < AppModelTestBase
 
   test '08141A',
   'start_avatar succeeds once for each avatar name then fails' do
+    set_git_class 'GitSpy'
     kata = make_kata
     created = []
     Avatars.names.length.times do

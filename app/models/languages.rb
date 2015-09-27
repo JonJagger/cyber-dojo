@@ -19,7 +19,10 @@ class Languages
 
   def [](name)
     dir_name, test_dir_name = renamed(name)
-    make_language(dir_name, test_dir_name) # See comment below
+    languages.find { |language|
+      language.dir_name == dir_name &&
+        language.test_dir_name == test_dir_name
+    }
   end
 
   def renamed(was_name)

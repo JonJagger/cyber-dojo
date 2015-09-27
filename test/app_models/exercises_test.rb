@@ -47,21 +47,16 @@ class ExercisesTests < AppModelTestBase
 
   test '52110A',
   'execises from cache when cache is not empty' do
+    set_disk_class('DiskFake')
     cache = {
-      '100 doors' => { instructions: 'go here' },
-      'Bowling Game' => { instructions: 'are here' }
+      '100 doors'    => { instructions: doors_instructions = 'go here'  },
+      'Bowling Game' => { instructions: bowling_instructions = 'are here' }
     }
     exercises.dir.write_json('cache.json', cache)
     exercises_names = exercises.map(&:name).sort
-
     assert_equal ['100 doors', 'Bowling Game'], exercises_names, 'names'
-
-    # exercises[name] does not use cache
-    exercises['100 doors'].dir.write('instructions', 'XXX')
-    exercises['Bowling Game'].dir.write('instructions', 'YYY')
-
-    assert_equal 'XXX', exercises['100 doors'].instructions, '100 doors'
-    assert_equal 'YYY', exercises['Bowling Game'].instructions, 'Bowling Game'
+    assert_equal doors_instructions, exercises['100 doors'].instructions, '100 doors'
+    assert_equal bowling_instructions, exercises['Bowling Game'].instructions, 'Bowling Game'
   end
 
 end

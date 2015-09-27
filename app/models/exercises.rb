@@ -18,7 +18,7 @@ class Exercises
   end
 
   def [](name)
-    make_exercise(name) # See comment below
+    exercises.find { |exercise| exercise.name == name }
   end
 
   def refresh_cache
@@ -57,7 +57,7 @@ end
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # Refactoring [](name) to...
 #
-#    exercises.find {|exercise| exercise.name == name}
+#    exercises.find { |exercise| exercise.name == name }
 #
 # would be nice since it would make use of the cache in
 #    exercises[name].instructions

@@ -35,7 +35,7 @@ class KatasTests < AppModelTestBase
     kata = make_kata
     filename = 'started_avatars.json'
     assert kata.dir.exists?(filename), 'exists'
-    started = JSON.parse(kata.read(filename))
+    started = kata.read_json(filename)
     assert_equal [],started
   end
 
@@ -57,6 +57,7 @@ class KatasTests < AppModelTestBase
 
   test '603735',
   'katas.each() yields nothing when there are no katas' do
+    katas.dir.make
     assert_equal [], all_ids(katas)
   end
 

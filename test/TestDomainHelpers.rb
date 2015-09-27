@@ -15,7 +15,7 @@ module TestDomainHelpers # mix-in
   def git;       dojo.git;       end
   def one_self;  dojo.one_self;  end
 
-  def make_kata(id = unique_id, language_name = 'C-assert', exercise_name = 'Fizz_Buzz')
+  def make_kata(id = unique_id, language_name = 'C (clang)-assert', exercise_name = 'Fizz_Buzz')
     language = languages[language_name]
     exercise = exercises[exercise_name]
     katas.create_kata(language, exercise, id)

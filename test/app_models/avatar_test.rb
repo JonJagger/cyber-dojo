@@ -118,7 +118,7 @@ class AvatarTests < AppModelTestBase
     kata.language.visible_files.each do |filename, content|
       assert_equal content, avatar.sandbox.read(filename)
     end
-    assert_equal [], JSON.parse(avatar.read('increments.json'))
+    assert_equal [], avatar.read_json('increments.json')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
@@ -219,12 +219,12 @@ class AvatarTests < AppModelTestBase
     'test() does NOT append commented master version to cyber-dojo.sh' +
        ' nor prepends an alert to the output when cyber-dojo.sh is' +
        ' stripped version of one-liner' do
-    kata = make_kata(unique_id, 'C (gcc)-assert')
+    kata = make_kata(unique_id, 'C (clang)-assert')
     @avatar = kata.start_avatar
     master = @avatar.visible_files[cyber_dojo_sh]
-    assert master.split.size == 2
+    assert_equal 4, master.split.size
     stripped_master = master.strip
-    assert stripped_master.split("\n").size == 1
+    assert_equal 2, stripped_master.split("\n").size
 
     runner.stub_output(radiohead = 'no alarms and no surprises')
     maker = DeltaMaker.new(@avatar)
@@ -302,8 +302,8 @@ class AvatarTests < AppModelTestBase
     assert avatar.visible_filenames.include? hiker_c
     assert avatar.sandbox.dir.exists? hiker_c
 
-    # dir.delete(filename) only exists on DirFake not on HostDir
-    avatar.sandbox.dir.delete(hiker_c)
+    # There is no dir.delete(filename)
+    File.delete(avatar.sandbox.path + hiker_c)
     refute avatar.sandbox.dir.exists? hiker_c
 
     runner.stub_output('')
@@ -320,7 +320,9 @@ class AvatarTests < AppModelTestBase
     @avatar = kata.start_avatar
     new_filename = 'ab.c'
 
-    refute git_log_include?(@avatar.sandbox.path, ['add', "#{new_filename}"])
+    evidence = "git add '#{new_filename}' 2>&1"
+    refute git_log_include?(@avatar.sandbox.path, evidence)
+
     refute @avatar.sandbox.dir.exists?(new_filename)
 
     runner.stub_output('')
@@ -328,7 +330,8 @@ class AvatarTests < AppModelTestBase
     maker.new_file(new_filename, new_content = 'content for new file')
     _, @visible_files, _ = maker.run_test
 
-    assert git_log_include?(@avatar.sandbox.path, ['add', "#{new_filename}"])
+    evidence = "git add '#{new_filename}' 2>&1"
+    assert git_log_include?(@avatar.sandbox.path, evidence)
     assert_file new_filename, new_content
   end
 
@@ -343,12 +346,14 @@ class AvatarTests < AppModelTestBase
     maker.delete_file(makefile)
     _, @visible_files, _ = maker.run_test
 
-    assert git_log_include?(@avatar.sandbox.path, ['rm', makefile])
+    evidence = "git rm 'makefile' 2>&1"
+    assert git_log_include?(@avatar.sandbox.path, evidence)
     refute @visible_files.keys.include? makefile
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
+=begin
   test '464F65',
   'tag.diff' do
     kata = make_kata
@@ -399,6 +404,7 @@ class AvatarTests < AppModelTestBase
     }
     assert_equal expected, actual
   end
+=end
 
   #- - - - - - - - - - - - - - - - - - -
 
@@ -463,8 +469,12 @@ class AvatarTests < AppModelTestBase
     assert_equal expected, @avatar.sandbox.read(filename), 'saved_to_sandbox'
   end
 
-  def git_log_include?(path,find)
-    git.log[path].include?(find)
+  def git_log_include?(path, find)
+    #p '---------'
+    #p find
+    #p git.log
+    #git.log[path].include?(find)
+    git.log.include?(find)
   end
 
 end

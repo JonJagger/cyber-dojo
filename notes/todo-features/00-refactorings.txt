@@ -8,9 +8,42 @@ o) use ramdisk for *all* tests.
 
 o) delete test code that is now redundant
 
+o) note duplication now in
+   test/app_controller/AppControllerTestBase.rb and
+   test/lib/LibTestBase.rb
+
 o) rework exercises/ and languages/ caches.
    See comment about not using obvious code
    because some code uses DiskFake
+   test/app_models/
+     avatar  ok
+     avatars ok
+     delta_maker ok
+     dojo ok
+     exercises ok
+     exercise ok
+     katas ok
+     kata ok
+     languages ok
+     language 8 errors <------
+     lights ok
+     light ok
+     sandbox ok
+     tag ok
+
+o) languages cache has scope for improvement
+   the cache could be
+     { display_name -> Language object }
+   that way the [] indexer can do
+   def [](name)
+     display_name = new_name(name)
+     languages[display_name]
+   end
+   or
+   def [](language_name, test_name)
+     languages[display_name(language_name, test_name)]
+   end
+
 
 o) app/models/external_parent_chain.rb
    move module_function to top so all a private inside included class.
