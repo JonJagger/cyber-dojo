@@ -18,10 +18,6 @@ cyberDojo.db
 *.tmp
 *.WRAPPED
 
-test/cyber-dojo/katas/*
-test/cyber-dojo/languages
-test/cyber-dojo/exercises
-
 admin_scripts/stats/exceptions.log
 
 exercises/cache.json

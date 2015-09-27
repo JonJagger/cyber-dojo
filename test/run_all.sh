@@ -7,6 +7,7 @@
 ramDisk=/mnt/ram_disk
 sudo ../admin_scripts/make_ram_disk.sh $ramDisk
 export CYBER_DOJO_TMP_ROOT=$ramDisk/tmp
+sudo chmod 777 ./test-summary.txt
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 
