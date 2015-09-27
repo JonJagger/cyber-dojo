@@ -21,7 +21,7 @@ class HostDir
     return enum_for(:each_file) unless block_given?
     Dir.entries(path).each do |entry|
       pathed = path + entry
-      yield entry if !@disk.dir?(pathed)
+      yield entry unless @disk.dir?(pathed)
     end
   end
 
@@ -44,7 +44,7 @@ class HostDir
     fail RuntimeError.new('not a string') unless s.is_a? String
     pathed_filename = path + filename
     File.open(pathed_filename, 'w') { |fd| fd.write(s) }
-    File.chmod(execute=0755, pathed_filename) if pathed_filename.end_with?('.sh')
+    File.chmod(execute = 0755, pathed_filename) if pathed_filename.end_with?('.sh')
   end
 
   def read_json(filename)
@@ -67,7 +67,7 @@ class HostDir
     File.open(path + 'f.lock', 'w') do |fd|
       if fd.flock(File::LOCK_EX)
         begin
-          result = block.call()
+          result = block.call
         ensure
           fd.flock(File::LOCK_UN)
         end
