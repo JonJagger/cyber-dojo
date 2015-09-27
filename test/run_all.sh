@@ -4,6 +4,10 @@
 ../exercises/refresh_cache.rb
 ./lib/make_disk_stub_cache.rb
 
+ramDisk=/mnt/ram_disk
+sudo ../admin_scripts/make_ram_disk.sh $ramDisk
+export CYBER_DOJO_TMP_ROOT=$ramDisk/tmp
+
 # - - - - - - - - - - - - - - - - - - - - - - - -
 
 modules=(

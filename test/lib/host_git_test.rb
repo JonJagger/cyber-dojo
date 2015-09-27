@@ -12,15 +12,19 @@ class HostGitTests < LibTestBase
     end
   end
 
+  def tmp_dir
+    self.class.tmp_root
+  end
+
   def setup
     super
     mkdir = "mkdir -p #{tmp_dir}"
     rmgit = "rm -rf #{tmp_dir}/.git"
     `#{mkdir} && #{rmgit}`
-    # force ExternalParentChain.method_missing
+    # force external_parent_chain.method_missing
     # (LibTestBase has git helper method)
     undef :git if respond_to? :git
-    # ExternalParentChain requires @parent
+    # external_parent_chain requires @parent
     set_path tmp_dir
     @parent = StubDojo.new
   end
@@ -38,10 +42,7 @@ class HostGitTests < LibTestBase
   'all git commands raise exception if path names a dir that does not exist' do
     set_path 'dir_that_does_not_exist'
     [:init,:config,:add,:rm,:commit,:gc,:tag,:show,:diff].each do |cmd|
-      error = assert_raises(Errno::ENOENT) {
-        args = ''
-        git.send(cmd, path, args)
-      }
+      error = assert_raises(Errno::ENOENT) { git.send(cmd, path, args = '') }
       assert error.message.start_with?("No such file or directory")
     end
   end
@@ -59,15 +60,15 @@ class HostGitTests < LibTestBase
   '[git config] succeeds silently' do
     ok { git.init(path, '') }
     silent_ok { git.config(path, 'user.name "Fred Flintsone"') }
-    # sometimes the above git.config command somehow has the
-    # following effect on .git/config on the main cyber-dojo repo?!
+    # sometimes, somehow, the above git.config command has the
+    # following effect on .git/config on the *main* cyber-dojo repo?!
     #
     # [user]
 	  #         name = Jon Jagger
     #         name = Fred
     #
     fred = `grep Fred /var/www/cyber-dojo/.git/config`
-    assert fred==='', "Fred is back in /var/www/cyber-dojo/.git/config"
+    assert fred == '', "Fred is back in /var/www/cyber-dojo/.git/config"
   end
 
   test '67EF14',
@@ -172,20 +173,12 @@ class HostGitTests < LibTestBase
     git.log.inspect
   end
 
-  def tmp_dir
-    root_path = File.expand_path('../..', File.dirname(__FILE__)) + '/'
-    root_path + 'tmp/'
-    #'/mnt/ramdisk/katas/tmp/'
-  end
-
   def filename
     'hello.txt'
   end
 
   def write_file(content = 'anything')
-    File.open(path + filename, 'w') do |fd|
-      fd.write(content)
-    end
+    File.open(path + filename, 'w') { |fd| fd.write(content) }
   end
 
 end

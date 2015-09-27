@@ -41,7 +41,7 @@ class HostDir
   end
 
   def write(filename, s)
-    raise RuntimeError.new('not a string') if !s.is_a? String
+    fail RuntimeError.new('not a string') unless s.is_a? String
     pathed_filename = path + filename
     File.open(pathed_filename, 'w') { |fd| fd.write(s) }
     File.chmod(execute=0755, pathed_filename) if pathed_filename.end_with?('.sh')

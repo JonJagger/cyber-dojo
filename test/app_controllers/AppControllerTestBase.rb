@@ -4,7 +4,7 @@ ENV['RAILS_ENV'] = 'test' # ????
 gem 'minitest'
 require 'minitest/autorun'
 
-root = '../..'
+root = './../..'
 
 require_relative root + '/test/test_coverage'
 require_relative root + '/test/all'

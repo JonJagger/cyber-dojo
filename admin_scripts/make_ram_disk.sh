@@ -1,10 +1,10 @@
 #!/bin/bash
 
-ramDisk='/mnt/ramdisk'
+ramDisk=$1
 
 umount $ramDisk
 rm -rf $ramDisk
 mkdir $ramDisk
-mount -t tmpfs -o size=2m tmpfs $ramDisk
+mount -t tmpfs -o size=200k tmpfs $ramDisk
 chmod -R 777 $ramDisk
 chown -R www-data:www-data $ramDisk

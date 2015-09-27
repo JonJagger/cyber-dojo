@@ -4,6 +4,7 @@ o) use ramdisk for *all* tests.
    app_controllers second
    export CYBER_DOJO_KATAS_ROOT=/mnt/katas
    rework tests so CYBER_DOJO_KATAS_ROOT must be set or it is an error.
+   Some tests such as hostdisk tests can always use the ramdisk.
 
 o) delete test code that is now redundant
 

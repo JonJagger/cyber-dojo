@@ -10,9 +10,8 @@ class DockerHostRsyncRunnerTests < LibTestBase
 
   def setup
     super
-    #set_disk_class     'HostDisk'
-    #set_katas_root     '/mnt/ramdisk/katas/'
-    set_disk_class     'DiskStub'
+    set_katas_root     self.class.tmp_root
+    set_disk_class     'HostDisk'
     set_git_class      'GitSpy'
     set_one_self_class 'OneSelfDummy'
     @lion = make_kata.start_avatar(['lion'])

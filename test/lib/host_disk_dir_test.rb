@@ -4,19 +4,12 @@ require_relative 'LibTestBase'
 
 class HostDiskDirTests < LibTestBase
 
-  def setup
-    super
-    `rm -rf #{path}`
-    `mkdir -p #{path}`
-  end
-
   def disk
     @disk ||= HostDisk.new
   end
 
   def path
-    File.expand_path('../..', File.dirname(__FILE__)) + '/tmp/'
-    #'/mnt/ramdisk/katas/tmp/'
+    self.class.tmp_root
   end
 
   def dir
@@ -44,7 +37,6 @@ class HostDiskDirTests < LibTestBase
 
   test '61FCE8',
   'disk[path].exists?(filename) false when file does not exist, true when it does' do
-    `rm -rf #{path}`
     dir.make
     refute dir.exists?(filename = 'hello.txt')
     dir.write(filename, 'content')
@@ -100,7 +92,7 @@ class HostDiskDirTests < LibTestBase
       inner_thread = Thread.new { dir.lock { inner_run = true } }
       max_wait = 1.0 / 50.0
       inner_thread.join(max_wait)
-      Thread.kill(inner_thread) unless inner_thread.nil?
+      Thread.kill(inner_thread)
     end
     assert outer_run
     refute inner_run
