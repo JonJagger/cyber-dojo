@@ -70,6 +70,8 @@ class AvatarsTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
+  private
+
   def cheetah; 'cheetah'; end
   def lion; 'lion'; end
   def hippo; 'hippo'; end

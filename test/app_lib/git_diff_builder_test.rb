@@ -545,6 +545,8 @@ class GitDiffBuilderTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  private
+
   def assert_equal_builder
     diff = GitDiff::GitDiffParser.new(@diff_lines.join("\n")).parse_one
     builder = GitDiff::GitDiffBuilder.new()

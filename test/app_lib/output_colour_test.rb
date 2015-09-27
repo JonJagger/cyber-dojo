@@ -75,6 +75,8 @@ class OutputColourTests < AppLibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  private
+
   def terminated(n)
     "Unable to complete the test in #{n} seconds"
   end

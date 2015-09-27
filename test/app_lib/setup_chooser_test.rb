@@ -91,6 +91,8 @@ class SetupChooserTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
+  private
+
   def assert_is_randomly_chosen_language(languages, id, katas)
     counts = {}
     (1..100).each do

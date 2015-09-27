@@ -151,6 +151,8 @@ class GitDiffHtmlTests <  AppLibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
+  private
+
   def assert_equal_diff_html(id = 'unused')
 
     assert_equal @expected_lines.join,

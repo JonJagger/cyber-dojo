@@ -171,6 +171,8 @@ class LanguagesTests < AppModelTestBase
     end
   end
 
+  private
+
   def exists?(lang,test)
     File.directory?("#{cyber_dojo_root}/languages/#{lang}/#{test}") ||
     File.directory?("#{cyber_dojo_root}/languages_offline/#{lang}/#{test}")

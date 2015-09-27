@@ -109,6 +109,8 @@ class DifferControllerTest < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  private
+
   def differ
     params = {
       :format  => :json,

@@ -24,6 +24,7 @@ class SetupControllerTest < AppControllerTestBase
     assert_response :success
     assert /data-exercise\=\"#{stub_print_diamond}/.match(html), stub_print_diamond
     assert /data-exercise\=\"#{stub_roman_numerals}/.match(html), stub_roman_numerals
+    refute /data-exercise\=\"Bowling_Game/.match(html), 'Bowling_Game'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -

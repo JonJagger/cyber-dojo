@@ -11,12 +11,16 @@ class DojoTests < AppModelTestBase
     assert_equal path, dojo.exercises.path
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
+
   test '27A597',
   'languages' do
     path = '/fake_languages_path/'
     set_languages_root(path)
     assert_equal path, dojo.languages.path
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B6CC06',
   'katas' do
@@ -25,17 +29,23 @@ class DojoTests < AppModelTestBase
     assert_equal path, dojo.katas.path
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
+
   test '055B3C',
   'runner' do
     set_runner_class(name = 'RunnerStub')
     assert_equal name, dojo.runner.class.name
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'B9E496',
   'disk' do
     set_disk_class(name = 'DiskStub')
     assert_equal name, dojo.disk.class.name
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '8874E9',
   'git' do

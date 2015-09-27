@@ -13,9 +13,7 @@ class ReverterControllerTest  < AppControllerTestBase
     @avatar = enter
   end
 
-  def teardown
-    super
-  end
+  # - - - - - - - - - - - - - - - - - - - - -
 
   test '81F276',
   'revert' do

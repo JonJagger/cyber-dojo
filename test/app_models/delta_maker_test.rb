@@ -16,10 +16,14 @@ class DeltaMakerTests < AppModelTestBase
     refute @maker.now.keys.include?(@new_filename)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'A63CD3',
   'new_file(filename) raises RuntimeError if filename not new' do
     assert_raises(RuntimeError) { @maker.new_file(@existing_filename, '')}
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '2E2849',
   'new_file(filename) is then not new' do
@@ -27,10 +31,14 @@ class DeltaMakerTests < AppModelTestBase
     assert_raises(RuntimeError) { @maker.new_file(@new_filename, '')}
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'E9D907',
   'change_file(filename) raises RuntimeError if filename new' do
     assert_raises(RuntimeError) { @maker.change_file(@new_filename, '') }
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '507D76',
   'change_file(filename) raises RuntimeError if content unchanged' do
@@ -38,16 +46,22 @@ class DeltaMakerTests < AppModelTestBase
     assert_raises(RuntimeError) { @maker.change_file(@existing_filename,content) }
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'F7F137',
   'delete_file(filename) raises RuntimeError if filename new' do
     assert_raises(RuntimeError) { @maker.delete_file(@new_filename) }
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B839BC',
   'delete_file(filename) is then not present' do
     @maker.delete_file(@existing_filename)
     assert_raises(RuntimeError) { @maker.delete_file(@existing_filename)}
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '6385D8',
     'new_file(filename) succeeds if filename is new' +
@@ -61,6 +75,8 @@ class DeltaMakerTests < AppModelTestBase
     assert delta[:new].include?(@new_filename)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'AE99D7',
     'change_file(filename) succeeds if filename is not new and content is new' +
        ", updates filename's content in visible_files" +
@@ -72,6 +88,8 @@ class DeltaMakerTests < AppModelTestBase
     assert_equal new_content,now[@existing_filename]
     assert delta[:changed].include?(@existing_filename)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '439B76',
     'delete_file(filename) succeeds if filename is not new' +

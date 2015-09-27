@@ -12,6 +12,8 @@ class MakefileFilterTests < AppLibTestBase
     check('notMakefile', "\tabc", "\tabc")
   end
 
+  #- - - - - - - - - - - - - - - -
+
   test '19B19D',
   "makefile converts all leading whitespace on a line to a single tab" do
     check('makefile', "            abc", "\tabc")
@@ -20,6 +22,8 @@ class MakefileFilterTests < AppLibTestBase
     check('makefile', "\tabc", "\tabc")
   end
 
+  #- - - - - - - - - - - - - - - -
+
   test '0AE03C',
   "Makefile converts all leading whitespace on a line to a single tab" do
     check('Makefile', "            abc", "\tabc")
@@ -27,6 +31,8 @@ class MakefileFilterTests < AppLibTestBase
     check('Makefile', "    abc", "\tabc")
     check('Makefile', "\tabc", "\tabc")
   end
+
+  #- - - - - - - - - - - - - - - -
 
   test '0A602B',
   "makefile converts all leading whitespace to single tab for all lines in any line format" do
@@ -49,6 +55,8 @@ class MakefileFilterTests < AppLibTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  private
 
   def check(filename, content, expected)
     assert_equal expected, MakefileFilter.filter(filename,content)

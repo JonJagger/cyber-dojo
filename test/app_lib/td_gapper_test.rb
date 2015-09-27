@@ -186,6 +186,8 @@ class TdGapperTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  private
+
   def year; 2011; end
   def month;   5; end
   def day;    18; end

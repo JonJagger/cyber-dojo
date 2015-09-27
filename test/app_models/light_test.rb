@@ -78,6 +78,8 @@ class LightTests < AppModelTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - -
 
+  private
+
   def make_light(rgb, time, n, key = 'colour')
     Tag.new(dummy_avatar, {
       key => rgb.to_sym,

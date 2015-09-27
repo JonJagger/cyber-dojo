@@ -62,6 +62,8 @@ class PrevNextRingTests < AppLibTestBase
 
   #------------------------------------------------------------------
 
+  private
+
   def assert_prev(arg,entries,expected)
     clone = entries.clone
     assert_equal expected, prev_ring(clone,arg)

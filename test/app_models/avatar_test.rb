@@ -446,6 +446,8 @@ class AvatarTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - -
 
+  private
+
   def commented(lines)
     lines.split("\n").map{ |line| '#' + line }.join("\n")
   end

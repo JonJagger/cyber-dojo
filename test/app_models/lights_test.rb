@@ -64,6 +64,8 @@ class LightsTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - -
 
+  private
+
   def assert_equal_light(expected, actual)
     assert_equal expected.colour, actual.colour, '.colour'
     assert_equal expected.time, actual.time, '.time'

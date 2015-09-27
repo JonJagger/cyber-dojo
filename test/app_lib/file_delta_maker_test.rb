@@ -69,6 +69,8 @@ class FileDeltaMakerTests < AppLibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
+  private
+
   def make_delta#(was, now)
     @delta = FileDeltaMaker.make_delta(@was,@now)
   end

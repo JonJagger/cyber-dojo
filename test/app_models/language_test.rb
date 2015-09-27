@@ -293,6 +293,8 @@ class LanguageTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  private
+
   def spy_manifest(manifest)
     @language.dir.write_json(manifest_filename, manifest)
   end

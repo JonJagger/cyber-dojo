@@ -116,6 +116,8 @@ class ReviewFilePickerTests < AppLibTestBase
 
   #------------------------------------------------------------------
 
+  private
+
   def diff(filename,dc,ac,content='')
     @n += 1
     {
