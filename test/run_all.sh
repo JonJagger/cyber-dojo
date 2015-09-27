@@ -21,7 +21,6 @@ modules=(
 #  integration
 )
 
-echo
 for module in ${modules[*]}
 do
     echo
@@ -30,7 +29,5 @@ do
     ./run_all.sh $*
     cd ..
 done
-echo
-echo
 
 sudo -E -u www-data ./print_coverage_summary.rb ${modules[*]} | tee test-summary.txt
