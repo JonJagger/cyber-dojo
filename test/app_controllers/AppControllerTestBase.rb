@@ -16,16 +16,34 @@ require_relative './ParamsMaker'
 
 class AppControllerTestBase < ActionDispatch::IntegrationTest
 
-  include TestDomainHelpers
-  include TestExternalHelpers
-  include TestHexIdHelpers
+  def self.tmp_key
+    'CYBER_DOJO_TMP_ROOT'
+  end
+
+  def self.tmp_root
+    root = ENV[tmp_key]
+    root.end_with?('/') ? root : (root + '/')
+  end
+
+  fail RuntimeError.new("#ENV[#{tmp_key}] not set") if tmp_root.nil?
+  FileUtils.mkdir_p(tmp_root)
+  fail RuntimeError.new("#{tmp_root} does not exist") unless File.directory?(tmp_root)
 
   def setup
     super
-    root = File.expand_path('../..', File.dirname(__FILE__))
-    set_katas_root(root + '/tmp/katas')
+    tmp_root = self.class.tmp_root
+    `rm -rf #{tmp_root}/*`
+    `rm -rf #{tmp_root}/.git`
+    `mkdir -p #{tmp_root}`
+    set_katas_root(tmp_root + 'katas')
     set_one_self_class('OneSelfDummy')
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  include TestDomainHelpers
+  include TestExternalHelpers
+  include TestHexIdHelpers
 
   def create_kata(language_name = random_language, exercise_name = random_exercise)
     parts = language_name.split(',')

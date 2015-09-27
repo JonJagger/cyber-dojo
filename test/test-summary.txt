@@ -1,0 +1,19 @@
+t == number of tests
+a == number of assertions
+f == number of failures
+e == number of errors
+secs == time in seconds
+t/sec == tests per second
+a/sec == assertions per second
+cov == coverage %
+
+                    t      a  f  e   secs    t/sec     a/sec      cov
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+app_helpers        15     33  0  0   0.03   587.12   1291.67   100.00
+app_lib           112   4880  0  0   0.84   133.42   5813.32   100.00
+app_models        137    472  0  0   1.05   130.57    449.85   100.00
+lib                83    483  0  0   0.97    85.46    497.29   100.00
+app_controllers    39    329  0  0   8.88     4.39     37.06   100.00
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+total             386   6197  0  0  11.77    32.80    526.51
+

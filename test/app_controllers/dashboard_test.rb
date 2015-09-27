@@ -1,7 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative './AppControllerTestBase'
-require_relative './RailsDiskStubThreadAdapter'
 require_relative './RailsGitSpyThreadAdapter'
 require_relative './RailsRunnerStubThreadAdapter'
 
@@ -9,10 +8,6 @@ class DashboardControllerTest < AppControllerTestBase
 
   def setup
     super
-    root = File.expand_path('../..', File.dirname(__FILE__))
-    set_katas_root(root + '/katas')
-    set_disk_class('RailsDiskStubThreadAdapter')
-    RailsDiskStubThreadAdapter.reset
     set_git_class('RailsGitSpyThreadAdapter')
     RailsGitSpyThreadAdapter.reset
     set_runner_class('RailsRunnerStubThreadAdapter')

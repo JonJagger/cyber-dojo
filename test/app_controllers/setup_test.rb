@@ -59,7 +59,7 @@ class SetupControllerTest < AppControllerTestBase
     setup_show(6)
   end
 
-private
+  private
 
   def setup_show(n)
     languages_display_names = languages.map {|language| language.display_name}.sort

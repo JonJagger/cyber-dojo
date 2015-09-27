@@ -6,9 +6,9 @@ class DifferControllerTest < AppControllerTestBase
 
   test '238AF6',
   'no lines different in any files between successive tags' do
-    @id = create_kata('C++, assert')
+    @id = create_kata('Java, JUnit')
     @avatar = enter # 0
-    filename = 'hiker.cpp'
+    filename = 'Hiker.java'
     change_file(filename, content = '#include...')
     run_tests
     run_tests

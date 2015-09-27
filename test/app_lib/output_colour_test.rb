@@ -70,7 +70,7 @@ class OutputColourTests < AppLibTestBase
         "...#{path}/ does not exist"
       assert disk[path].exists?, diagnostic
     end
-    assert count > 0, "no languages"
+    assert count > 0, 'no languages'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

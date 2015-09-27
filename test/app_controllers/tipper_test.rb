@@ -1,13 +1,13 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'AppControllerTestBase'
+require_relative './AppControllerTestBase'
 
 class TipperControllerTest < AppControllerTestBase
 
   test '25E3D4',
   'traffic_light_tip' do
     @id = create_kata
-    3.times { enter; 2.times { run_tests } }
+    1.times { enter; 2.times { run_tests } }
     get 'tipper/traffic_light_tip',
       format: :js,
       id: @id,
@@ -16,6 +16,8 @@ class TipperControllerTest < AppControllerTestBase
       now_tag: 1
     assert_response :success
   end
+
+  # - - - - - - - - - - - - - - - -
 
   test 'BB7C60',
   'traffic_light_count_tip' do

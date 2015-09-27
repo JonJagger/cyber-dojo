@@ -14,7 +14,7 @@ class Languages
 
   def each
     return enum_for(:each) unless block_given?
-    languages.each { |language| yield language }
+    languages.each { |language| yield language  }
   end
 
   def [](name)
