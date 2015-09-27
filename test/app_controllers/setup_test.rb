@@ -16,18 +16,14 @@ class SetupControllerTest < AppControllerTestBase
     setup_languages_cache
   end
 
-  def teardown
-    super
-  end
-
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'BB9967',
   'setup page uses cached exercises' do
     get 'setup/show'
     assert_response :success
-    assert /data-exercise\=\"#{print_diamond}/.match(html), print_diamond
-    assert /data-exercise\=\"#{roman_numerals}/.match(html), roman_numerals
+    assert /data-exercise\=\"#{stub_print_diamond}/.match(html), stub_print_diamond
+    assert /data-exercise\=\"#{stub_roman_numerals}/.match(html), stub_roman_numerals
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -36,8 +32,8 @@ class SetupControllerTest < AppControllerTestBase
   'setup page uses cached languages' do
     get 'setup/show'
     assert_response :success
-    assert /data-language\=\"C++/.match(html), 'C++'
-    assert /data-language\=\"Asm/.match(html), 'Asm'
+    assert /data-language\=\"#{stub_cpp}/.match(html), stub_cpp
+    assert /data-language\=\"#{stub_asm}/.match(html), stub_asm
     refute /data-language\=\"Java/.match(html), 'Java'
   end
 
@@ -62,26 +58,22 @@ class SetupControllerTest < AppControllerTestBase
   private
 
   def setup_show(n)
-    languages_display_names = languages.map {|language| language.display_name}.sort
-    language_display_name = languages_display_names.shuffle[0]
-
-    exercises_names = exercises.map {|exercise| exercise.name}.sort
-    exercise_name = exercises_names.shuffle[0]
-
+    languages_display_names = languages.map { |language| language.display_name }.sort
+    language_display_name = languages_display_names.sample
+    exercises_names = exercises.map { |exercise| exercise.name }.sort
+    exercise_name = exercises_names.sample
     id = create_kata(language_display_name,exercise_name)
 
     get 'setup/show', :id => id[0...n]
 
     assert_response :success
-
     md = /var selectedExercise = \$\('#exercise_' \+ (\d+)/.match(html)
     selected_exercise = exercises_names[md[1].to_i]
     assert_equal exercise_name, selected_exercise, 'exercise'
-
     # next bit is trickier than it should be because language.display_name
     # contains the name of the test framework too.
     md = /var selectedLanguage = \$\('#language_' \+ (\d+)/.match(html)
-    languages_names = languages_display_names.map {|name| get_language_from(name) }.uniq.sort
+    languages_names = languages_display_names.map { |name| get_language_from(name) }.uniq.sort
     selected_language = languages_names[md[1].to_i]
     assert_equal get_language_from(language_display_name), selected_language, 'language'
   end
@@ -90,23 +82,23 @@ class SetupControllerTest < AppControllerTestBase
 
   def setup_languages_cache
     languages_cache = {
-      'Asm, assert' => {
-        :dir_name => 'Asm',
-        :test_dir_name => 'assert',
-        :image_name => 'cyberdojofoundation/nasm-2.10.09_assert'
+      "#{stub_asm}, assert" => {
+             dir_name: 'Asm',
+        test_dir_name: 'assert',
+           image_name: 'cyberdojofoundation/nasm-2.10.09_assert'
       },
-      'C++ (g++), assert' => {
-        :dir_name => 'g++4.8.4',
-        :test_dir_name => 'assert',
-        :image_name => 'cyberdojofoundation/gpp-4.8.4_assert'
+      "#{stub_cpp} (g++), assert" => {
+             dir_name: 'g++4.8.4',
+        test_dir_name: 'assert',
+           image_name: 'cyberdojofoundation/gpp-4.8.4_assert'
       }
     }
     languages.dir.write_json('cache.json', languages_cache)
-    languages_cache.each do |display_name,hash|
+    languages_cache.each do |display_name, hash|
       key = get_language_from(display_name) + '-' + get_test_from(display_name)
       languages[key].dir.write_json('manifest.json', {
-        :display_name => display_name,
-        :image_name => hash[:image_name]
+        display_name: display_name,
+          image_name: hash[:image_name]
       })
     end
   end
@@ -115,22 +107,25 @@ class SetupControllerTest < AppControllerTestBase
 
   def setup_exercises_cache
     exercises.dir.write_json('cache.json', {
-      print_diamond  => 'print diamond instructions',
-      roman_numerals => 'roman numerals instructions'
+      stub_print_diamond  => 'stub print diamond instructions',
+      stub_roman_numerals => 'stub roman numerals instructions'
     })
-    exercises[print_diamond].dir.write('instructions', 'aaa')
-    exercises[roman_numerals].dir.write('instructions', 'bbb')
+    exercises[stub_print_diamond ].dir.write('instructions', 'aaa')
+    exercises[stub_roman_numerals].dir.write('instructions', 'bbb')
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def commad(s); s.split(','); end
   def get_language_from(name); commad(name)[0].strip; end
-  def get_test_from(name); commad(name)[1].strip; end
+  def get_test_from(name)    ; commad(name)[1].strip; end
+  def commad(s); s.split(','); end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def print_diamond; 'Print_Diamond'; end
-  def roman_numerals; 'Roman_Numerals'; end
+  def stub_print_diamond ; 'Stub_Print_Diamond' ; end
+  def stub_roman_numerals; 'Stub_Roman_Numerals'; end
+
+  def stub_cpp; 'Fake_C++'; end
+  def stub_asm; 'Fake_Asm'; end
 
 end
