@@ -44,18 +44,18 @@ class SetupControllerTest < AppControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'D79BA3',
-    'setup/show chooses language and exercise of kata ' +
-       'whose 10-char id is passed in URL ' +
-       '(to encourage repetition)' do
+  'setup/show chooses language and exercise of kata ' +
+    'whose 10-char id is passed in URL ' +
+    '(to encourage repetition)' do
     setup_show(10)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test '82562A',
-    'setup/show chooses language and exercise of kata ' +
-       'whose 6-char id is passed in URL ' +
-       '(to encourage repetition) by using completion' do
+  'setup/show chooses language and exercise of kata ' +
+    'whose 6-char id is passed in URL ' +
+    '(to encourage repetition) by using completion' do
     setup_show(6)
   end
 
