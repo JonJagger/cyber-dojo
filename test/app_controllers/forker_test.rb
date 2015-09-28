@@ -33,6 +33,7 @@ class ForkerControllerTest < AppControllerTestBase
         'and the reason given is language' do
     kata = katas[@id]
     language_name = 'doesNot-Exist'
+    kata.dir.make
     kata.dir.write_json('manifest.json', { :language => language_name })
     fork(@id, 'hippo', tag = 1)
     refute forked?
