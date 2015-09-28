@@ -53,14 +53,3 @@ class Exercises
   end
 
 end
-
-# - - - - - - - - - - - - - - - - - - - - - - - -
-# Refactoring [](name) to...
-#
-#    exercises.find { |exercise| exercise.name == name }
-#
-# would be nice since it would make use of the cache in
-#    exercises[name].instructions
-# but breaks lots of tests because they use DirFake
-# without an exercises cache.
-# - - - - - - - - - - - - - - - - - - - - - - - -

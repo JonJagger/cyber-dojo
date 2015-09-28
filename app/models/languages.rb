@@ -158,21 +158,9 @@ class Languages
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
-# Refactoring [](name) to ...
-#
-#    dir_name,test_dir_name = renamed(name)
-#    languages.find {|language|
-#      language.dir_name == dir_name &&
-#      language.test_dir_name == test_dir_name
-#    }
-#
-# would be nice since it would make use of the cache
-# but breaks lots of tests because they use DirFake
-# without a languages cache.
-#
-# Note too that ideally the languages cache would
-# include the image_name since that is used for
-# setup page filtering.
+# Note that ideally the languages cache would
+# include each languages' image_name since that is
+# used for setup page filtering.
 # I'd like for setup page to only need to read
 # the single cache file.
 # - - - - - - - - - - - - - - - - - - - - - - - -

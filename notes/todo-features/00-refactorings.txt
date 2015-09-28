@@ -22,7 +22,18 @@ o) rework exercises/ and languages/ caches.
    test/app_lib  ok
    lib ok
    test/app_controllers ok
-   test/languages ?????
+   test/languages
+     ./check_one_language.rb ok
+     ./all_languages_test.rb fails on 'C (gcc)' CppUTest gives
+        Error response from daemon: no such id: cat:
+        Error response from daemon: no such id: No
+        Error response from daemon: no such id: such
+        Error response from daemon: no such id: file
+        Error response from daemon: no such id: or
+        Error response from daemon: no such id: directory
+     get the same failure from
+     sudo -E -u www-data ./check_one_language.rb 'C (gcc)' CppUTest verbose
+     This appears to be because it does not check if the docker-image is installed.
 
 o) forker_controller now does not do
      !kata.language.exists?

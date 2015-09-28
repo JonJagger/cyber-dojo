@@ -4,10 +4,10 @@ require File.dirname(__FILE__) + '/one_language_checker'
 
 def show_use(message = "")
   puts
-  puts 'USE: sudo -E -u www-data check_one_language.rb <languageDir> <testDir> [verbose]'
-  puts 
-  puts '   E.g.  check_one_language.rb C assert verbose'
-  puts '         will check cyber-dojo/languages/C/assert/'
+  puts 'USE: sudo -E -u www-data ./check_one_language.rb <languageDir> <testDir> [verbose]'
+  puts
+  puts "   E.g.  sudo -E -u www-data ./check_one_language.rb 'C (gcc)' assert verbose"
+  puts '         will check cyber-dojo/languages/C (gcc)/assert/'
   puts
   puts "   ERROR: #{message}" if message != ''
   puts
