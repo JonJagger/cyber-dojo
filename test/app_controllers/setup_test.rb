@@ -8,6 +8,9 @@ class SetupControllerTest < AppControllerTestBase
 
   def setup
     super
+    tmp_root = self.class.tmp_root
+    set_exercises_root tmp_root + 'exercises'
+    set_languages_root tmp_root + 'languages'
     set_disk_class('RailsDiskFakeThreadAdapter')
     RailsDiskFakeThreadAdapter.reset
     set_runner_class('RailsRunnerStubTrueThreadAdapter')
@@ -22,8 +25,8 @@ class SetupControllerTest < AppControllerTestBase
   'setup page uses cached exercises' do
     get 'setup/show'
     assert_response :success
-    assert /data-exercise\=\"#{stub_print_diamond}/.match(html), stub_print_diamond
-    assert /data-exercise\=\"#{stub_roman_numerals}/.match(html), stub_roman_numerals
+    assert /data-exercise\=\"#{print_diamond}/.match(html), print_diamond
+    assert /data-exercise\=\"#{roman_numerals}/.match(html), roman_numerals
     refute /data-exercise\=\"Bowling_Game/.match(html), 'Bowling_Game'
   end
 
@@ -33,8 +36,8 @@ class SetupControllerTest < AppControllerTestBase
   'setup page uses cached languages' do
     get 'setup/show'
     assert_response :success
-    assert /data-language\=\"#{stub_cpp}/.match(html), stub_cpp
-    assert /data-language\=\"#{stub_asm}/.match(html), stub_asm
+    assert /data-language\=\"#{get_language_from(cpp_assert)}/.match(html), cpp_assert
+    assert /data-language\=\"#{get_language_from(asm_assert)}/.match(html), asm_assert
     refute /data-language\=\"Java/.match(html), 'Java'
   end
 
@@ -59,11 +62,11 @@ class SetupControllerTest < AppControllerTestBase
   private
 
   def setup_show(n)
-    languages_display_names = languages.map { |language| language.display_name }.sort
+    languages_display_names = languages.map(&:display_name).sort
     language_display_name = languages_display_names.sample
-    exercises_names = exercises.map { |exercise| exercise.name }.sort
+    exercises_names = exercises.map(&:name).sort
     exercise_name = exercises_names.sample
-    id = create_kata(language_display_name,exercise_name)
+    id = create_kata(language_display_name, exercise_name)
 
     get 'setup/show', :id => id[0...n]
 
@@ -83,17 +86,18 @@ class SetupControllerTest < AppControllerTestBase
 
   def setup_languages_cache
     languages_cache = {
-      "#{stub_asm}, assert" => {
+      "#{asm_assert}" => {
              dir_name: 'Asm',
         test_dir_name: 'assert',
            image_name: 'cyberdojofoundation/nasm-2.10.09_assert'
       },
-      "#{stub_cpp} (g++), assert" => {
+      "#{cpp_assert}" => {
              dir_name: 'g++4.8.4',
         test_dir_name: 'assert',
            image_name: 'cyberdojofoundation/gpp-4.8.4_assert'
       }
     }
+    languages.dir.make
     languages.dir.write_json('cache.json', languages_cache)
     languages_cache.each do |display_name, hash|
       key = get_language_from(display_name) + '-' + get_test_from(display_name)
@@ -107,12 +111,11 @@ class SetupControllerTest < AppControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def setup_exercises_cache
+    exercises.dir.make
     exercises.dir.write_json('cache.json', {
-      stub_print_diamond  => 'stub print diamond instructions',
-      stub_roman_numerals => 'stub roman numerals instructions'
+      print_diamond  => 'stub print diamond instructions',
+      roman_numerals => 'stub roman numerals instructions'
     })
-    exercises[stub_print_diamond ].dir.write('instructions', 'aaa')
-    exercises[stub_roman_numerals].dir.write('instructions', 'bbb')
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -123,10 +126,10 @@ class SetupControllerTest < AppControllerTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def stub_print_diamond ; 'Stub_Print_Diamond' ; end
-  def stub_roman_numerals; 'Stub_Roman_Numerals'; end
+  def print_diamond ; 'Print_Diamond' ; end
+  def roman_numerals; 'Roman_Numerals'; end
 
-  def stub_cpp; 'Fake_C++'; end
-  def stub_asm; 'Fake_Asm'; end
+  def cpp_assert; 'C++, assert'; end
+  def asm_assert; 'Asm, assert'    ; end
 
 end

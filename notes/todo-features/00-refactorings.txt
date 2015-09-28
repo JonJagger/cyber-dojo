@@ -17,7 +17,10 @@ o) rework exercises/ and languages/ caches.
    because some code uses DiskFake
    test/app_models/ ok
    test/app_helpers ok
-   test/app_lib  4 errors all in setup_chooser
+   test/app_lib  ok
+   lib ok
+   test/app_controllers
+      forker EAE021 1 error
 
 o) languages cache has scope for improvement
    the cache could be
