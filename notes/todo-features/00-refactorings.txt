@@ -19,8 +19,14 @@ o) rework exercises/ and languages/ caches.
    test/app_helpers ok
    test/app_lib  ok
    lib ok
-   test/app_controllers
-      forker EAE021 1 error
+   test/app_controllers ok
+   test/languages ?????
+
+o) forker_controller now does not do
+     !kata.language.exists?
+   instead does
+     kat.language.nil?
+   can language.exists? be dropped?
 
 o) languages cache has scope for improvement
    the cache could be
