@@ -44,6 +44,11 @@ o) languages cache has scope for improvement
      languages[display_name(language_name, test_name)]
    end
 
+o) create a new caches folder to go with exercises/ languages/ and katas/
+   this will hold exercises.cache languages.cache and
+   docker_images.cache
+   location set via CYBER_DOJO_CACHES_ROOT
+   point this to small ramdisk.
 
 o) app/models/external_parent_chain.rb
    move module_function to top so all a private inside included class.
@@ -63,6 +68,9 @@ o) cache the result of
    Does this mean RUNNER should have its own env var ROOT?
 
 o) test/app_lib has lots of assertions. Check it.
+   It's because of randomness checks. In big loop randomly
+   select, eg, an exercise. At end of loop all languages should
+   have been selected at least once.
 
 o) in setup_controller.rb
    maybe...
