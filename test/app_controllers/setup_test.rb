@@ -59,6 +59,8 @@ class SetupControllerTest < AppControllerTestBase
     setup_show(6)
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - -
+
   private
 
   def setup_show(n)

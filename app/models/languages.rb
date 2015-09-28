@@ -98,12 +98,12 @@ class Languages
       # replaced
       'R-stopifnot' => 'R-RUnit',
 
-      # rename to distinguish from [C (clang)]
+      # renamed to distinguish from [C (clang)]
       'C-assert'   => 'C (gcc)-assert',
       'C-Unity'    => 'C (gcc)-Unity',
       'C-CppUTest' => 'C (gcc)-CppUTest',
 
-      # rename to distinguish from [C++ (clang++)]
+      # renamed to distinguish from [C++ (clang++)]
       'C++-assert'     => 'C++ (g++)-assert',
       'C++-Boost.Test' => 'C++ (g++)-Boost.Test',
       'C++-Catch'      => 'C++ (g++)-Catch',
@@ -129,7 +129,7 @@ class Languages
       'Ruby-MiniTest'      => 'Ruby2.1.3-MiniTest',
 
       # multiple language versions
-      'Javascript-jasmine' => 'Javascript0.12.7-jasmine2.3',
+      'Javascript-jasmine'     => 'Javascript0.12.7-jasmine2.3',
       'Javascript-qunit+sinon' => 'Javascript0.12.7-qunit_sinon'
     }
     (renames[name] || name).split('-')
@@ -142,7 +142,9 @@ class Languages
   def read_cache
     cache = []
     read_json(cache_filename).each do |display_name, language|
-      cache << make_language(language['dir_name'], language['test_dir_name'], display_name)
+      dir_name = language['dir_name']
+      test_dir_name = language['test_dir_name']
+      cache << make_language(dir_name, test_dir_name, display_name)
     end
     cache
   end
@@ -193,7 +195,7 @@ end
 # Many people will have built their own cyber-dojo servers and might *not* want
 # or need to upgrade their servers to use the latest docker containers for
 # the latest language/test even if it exists.
-# This means the cyberdojo docker index needs to keep old versions of
+# This means the cyberdojofoundation docker index needs to keep old versions of
 # language/test docker containers even when newer ones exist.
 # Viz, a docker container name needs to have a version number in it.
 
