@@ -2,7 +2,7 @@
 o) use ramdisk for *all* tests.
    lib first
    app_controllers second
-   export CYBER_DOJO_KATAS_ROOT=/mnt/katas
+   export CYBER_DOJO_KATAS_ROOT=/mnt/ram_disk/katas
    rework tests so CYBER_DOJO_KATAS_ROOT must be set or it is an error.
    Some tests such as hostdisk tests can always use the ramdisk.
 
@@ -10,7 +10,9 @@ o) delete test code that is now redundant
 
 o) note duplication now in
    test/app_controller/AppControllerTestBase.rb and
-   test/lib/LibTestBase.rb
+   test/app_models/AppModelTestBase.rb and
+   test/app_helpers/AppHelpersTestBase.rb
+   test/lib/LibTestBase.rb and
 
 o) rework exercises/ and languages/ caches.
    See comment about not using obvious code
@@ -58,22 +60,11 @@ o) assuming git running on /mnt/ramdisk/katas is fast enough
 
 o) cache the result of
    `docker images`
-   in the ramdisk to speed up the opening page?
+   in the ramdisk cache to speed up the opening page?
    /mnt/ramdisk/languages/docker_images.cache
    chown www-data:www-data it too
    Do this as part of admin_scripts/pull.sh
    Does this mean RUNNER should have its own env var ROOT?
-
-o) test/app_lib has lots of assertions. Check it.
-   It's because of randomness checks. In big loop randomly
-   select, eg, an exercise. At end of loop all languages should
-   have been selected at least once.
-
-o) in setup_controller.rb
-   maybe...
-    language = dojo.languages[params['language'] + '-' + params['test']]
-   ...becomes...
-    language = dojo.languages[params['language'], params['test']]
 
 
 
