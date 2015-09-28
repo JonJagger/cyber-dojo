@@ -153,15 +153,12 @@ class LanguageTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  # TODO: GOT TO HERE
-
   test '872123',
   'display_test_name reads back as set' do
-    name = 'Java-Mockito'
-    @language = languages[name]
+    @language = Language.new(languages, 'Java', 'JUnit')
     expected = 'Mockito'
     spy_manifest({ 'display_test_name' => expected,
-                   'unit_test_framework' => 'JUnit' })
+                   'unit_test_framework' => 'junit' })
     assert_equal expected, @language.display_test_name
   end
 
@@ -169,16 +166,17 @@ class LanguageTests < AppModelTestBase
 
   test 'E8180F',
   'display_test_name defaults to unit_test_framework when not set' do
-    assert_equal 'junit', languages['Java-Mockito'].display_test_name
+    @language = Language.new(languages, 'Java', 'JUnit')
+    spy_manifest({ 'unit_test_framework' => 'junit' })
+    assert_equal 'junit', @language.display_test_name
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '229DC5',
   'image_name is read back as set' do
-    name = 'Ruby-Test::Unit'
-    @language = languages[name]
-    expected = 'cyberdojo/language_ruby-1.9.3_test_unit'
+    @language = Language.new(languages, 'Ruby', 'Test::Unit')
+    expected = 'cyberdojofoundation/language_ruby-1.9.3_test_unit'
     spy_manifest({ 'image_name' => expected })
     assert_equal expected, @language.image_name
   end
@@ -187,7 +185,7 @@ class LanguageTests < AppModelTestBase
 
   test '56CB2A',
   'unit_test_framework is read back as set' do
-    @language = languages['Ruby']
+    @language = Language.new(languages, 'Ruby', 'Test::Unit')
     unit_test_framework = 'Satchmo'
     spy_manifest({ 'unit_test_framework' => unit_test_framework })
     assert_equal unit_test_framework, @language.unit_test_framework
@@ -197,7 +195,7 @@ class LanguageTests < AppModelTestBase
 
   test '07290B',
   'tab_size is read back as set' do
-    @language = languages['Ruby']
+    @language = Language.new(languages, 'Ruby', 'Test::Unit')
     tab_size = 9
     spy_manifest({ 'tab_size' => tab_size })
     assert_equal tab_size, @language.tab_size
@@ -207,7 +205,7 @@ class LanguageTests < AppModelTestBase
 
   test '60F690',
   'tab_size defaults to 4 when not set' do
-    @language = languages['Ruby']
+    @language = Language.new(languages, 'Ruby', 'Test::Unit')
     spy_manifest({})
     assert_equal 4, @language.tab_size
   end
@@ -216,26 +214,26 @@ class LanguageTests < AppModelTestBase
 
   test '7E38C3',
   'tab is 7 spaces when tab_size is 7' do
-    @language = languages['Ruby']
+    @language = Language.new(languages, 'Ruby', 'Test::Unit')
     tab_size = 7
     spy_manifest({ 'tab_size' => tab_size })
-    assert_equal ' '*tab_size, @language.tab
+    assert_equal ' ' * tab_size, @language.tab
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '227942',
   'tab defaults to 4 spaces when not set' do
-    @language = languages['Ruby']
+    @language = Language.new(languages, 'Ruby', 'Test::Unit')
     spy_manifest({})
-    assert_equal ' '*4, @language.tab
+    assert_equal ' ' * 4, @language.tab
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'F9DC8D',
   'progress_regexs reads back as set' do
-    @language = languages['Ruby']
+    @language = Language.new(languages, 'Ruby', 'Test::Unit')
     regexs = [
       "Errors \\((\\d)+ failures\\)",
       "OK \\((\\d)+ tests\\)"
@@ -252,7 +250,7 @@ class LanguageTests < AppModelTestBase
 
   test '5EE3B5',
   'progress_regexs defaults to empty array' do
-    @language = languages['Ruby']
+    @language = Language.new(languages, 'Ruby', 'Test::Unit')
     spy_manifest({})
     assert_equal [], @language.progress_regexs
   end
@@ -262,24 +260,25 @@ class LanguageTests < AppModelTestBase
   test '397AB2',
   'language can be asked if it is runnable' do
     runner.stub_runnable(true)
-    assert languages['Ruby'].runnable?
+    @language = Language.new(languages, 'Ruby', 'Test::Unit')
+    assert @language.runnable?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'CF389F',
   'JSON.parse error raises exception naming the language' do
-    name = 'Ruby'
-    @language = languages[name]
-    any_bad_json = '42'
-    #@language.dir.write('manifest.json', any_bad_json)
-    named = false
+    @language = Language.new(languages, 'Ruby', 'Test::Unit')
+    @language.dir.make
+    @language.dir.write('manifest.json', any_bad_json = '42')
+    message = ''
     begin
       @language.tab_size
     rescue StandardError => ex
-      named = ex.to_s.include?(name)
+      message = ex.message
     end
-    assert named
+    assert message.include?('Ruby')
+    assert message.include?('Test::Unit')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

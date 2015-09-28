@@ -25,7 +25,7 @@ o) rework exercises/ and languages/ caches.
      katas ok
      kata ok
      languages ok
-     language 8 errors <------
+     language 1 error <------
      lights ok
      light ok
      sandbox ok

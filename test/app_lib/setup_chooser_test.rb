@@ -14,10 +14,9 @@ class SetupChooserTests < AppLibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test '773616',
-    "when id is given and katas[id].exists? and kata's language is known" +
-       ' then choose that language' do
+  'when id is given and katas[id].language.exists? then choose that language' do
     cmd = test_languages_names.map{ |name| name.split('-').join(', ') }
-    test_languages_names.each_with_index do |language,n|
+    test_languages_names.each_with_index do |language, n|
       kata = make_kata(unique_id, language, test_exercises_names.sample)
       assert kata.exists?
       #(1..42).each do
@@ -29,9 +28,8 @@ class SetupChooserTests < AppLibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test 'D9C2F2',
-    "when id is given and katas[id].exists? and kata's exercise is known" +
-       ' then choose that exercise' do
-    test_exercises_names.each_with_index do |exercise,n|
+  'when id is given and katas[id].exercise.exists? then choose that exercise' do
+    test_exercises_names.each_with_index do |exercise, n|
       kata = make_kata(unique_id, test_languages_names.shuffle[0], exercise)
       assert kata.exists?
       #(1..42).each do
@@ -43,21 +41,21 @@ class SetupChooserTests < AppLibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test 'CD36CB',
-    'when no id is given then choose random language' do
+  'when no id is given then choose random language' do
     assert_is_randomly_chosen_language(test_languages_names, id = nil, katas)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test '42D488',
-    'when no id is given then choose random exercise' do
+  'when no id is given then choose random exercise' do
     assert_is_randomly_chosen_exercise(test_exercises_names, id = nil, katas)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test '41EB67',
-    'when id is given and !katas[id].exists? then choose random language' do
+  'when id is given and _!_katas[id].exists? then choose random language' do
     id = unique_id
     kata = dojo.katas[id]
     refute kata.exists?, '!kata.exists?'
@@ -67,7 +65,7 @@ class SetupChooserTests < AppLibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test '35A56C',
-    'when id is given and !katas[id].exists? then choose random exercise' do
+  'when id is given and _!_katas[id].exists? then choose random exercise' do
     id = unique_id
     kata = dojo.katas[id]
     refute kata.exists?, '!kata.exists?'
@@ -77,8 +75,8 @@ class SetupChooserTests < AppLibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test '9671E1',
-    "when id is given and katas[id].exists? but kata's language is unknown" +
-       ' then choose random language' do
+  'when id is given and _!_katas[id].language.exists? then choose random language' do
+    # TODO: rework
     test_languages_names.each do |unknown_language|
       languages = test_languages_names - [unknown_language]
       refute languages.include?(unknown_language)
@@ -91,8 +89,8 @@ class SetupChooserTests < AppLibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test '8D0F94',
-    "when id is given and katas[id].exists? but kata's exercise is unknown" +
-       ' then choose random exercise' do
+  'when id is given and _!_katas[id].exercise.exists? then choose random exercise' do
+    # TODO: rework
     test_exercises_names.each do |unknown_exercise|
       exercises = test_exercises_names - [unknown_exercise]
       refute exercises.include?(unknown_exercise)

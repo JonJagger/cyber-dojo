@@ -22,6 +22,7 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
 
   def self.tmp_root
     root = ENV[tmp_key]
+    fail RuntimeError.new("ENV['#{tmp_key}'] not exported") if root.nil?
     root.end_with?('/') ? root : (root + '/')
   end
 

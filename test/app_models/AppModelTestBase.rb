@@ -13,10 +13,10 @@ class AppModelTestBase < TestBase
 
   def self.tmp_root
     root = ENV[tmp_key]
+    fail RuntimeError.new("ENV['#{tmp_key}'] not exported") if root.nil?
     root.end_with?('/') ? root : (root + '/')
   end
 
-  fail RuntimeError.new("#ENV[#{tmp_key}] not set") if tmp_root.nil?
   FileUtils.mkdir_p(tmp_root)
   fail RuntimeError.new("#{tmp_root} does not exist") unless File.directory?(tmp_root)
 
