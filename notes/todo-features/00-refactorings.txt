@@ -15,21 +15,7 @@ o) note duplication now in
 o) rework exercises/ and languages/ caches.
    See comment about not using obvious code
    because some code uses DiskFake
-   test/app_models/
-     avatar  ok
-     avatars ok
-     delta_maker ok
-     dojo ok
-     exercises ok
-     exercise ok
-     katas ok
-     kata ok
-     languages ok
-     language 1 error <------
-     lights ok
-     light ok
-     sandbox ok
-     tag ok
+   test/app_models/ ok
 
 o) languages cache has scope for improvement
    the cache could be

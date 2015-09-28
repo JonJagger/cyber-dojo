@@ -258,16 +258,19 @@ class LanguageTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '397AB2',
-  'language can be asked if it is runnable' do
+  'language.runnable? delegates to runner' do
     runner.stub_runnable(true)
     @language = Language.new(languages, 'Ruby', 'Test::Unit')
     assert @language.runnable?
+    runner.stub_runnable(false)
+    @language = Language.new(languages, 'Ruby', 'Test::Unit')
+    refute @language.runnable?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'CF389F',
-  'JSON.parse error raises exception naming the language' do
+  'bad JSON in manifest raises exception naming the language' do
     @language = Language.new(languages, 'Ruby', 'Test::Unit')
     @language.dir.make
     @language.dir.write('manifest.json', any_bad_json = '42')
@@ -279,17 +282,6 @@ class LanguageTests < AppModelTestBase
     end
     assert message.include?('Ruby')
     assert message.include?('Test::Unit')
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test '7F5CD6',
-    'RunnerStub.runnable?(language) is false' +
-       'when language does not have image_name set in manifest' do
-    runner.stub_runnable(false)
-    ruby = languages['Ruby-TestUnit']
-    #ruby.dir.write_json(manifest_filename, {}) # this line has no effect
-    refute ruby.runnable?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
