@@ -17,6 +17,7 @@ o) rework exercises/ and languages/ caches.
    because some code uses DiskFake
    test/app_models/ ok
    test/app_helpers ok
+   test/app_lib  4 errors all in setup_chooser
 
 o) languages cache has scope for improvement
    the cache could be

@@ -6,22 +6,13 @@ class SetupChooserTests < AppLibTestBase
 
   include SetupChooser
 
-  def setup
-    super
-    set_disk_class 'DiskStub'
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - -
-
   test '773616',
   'when id is given and katas[id].language.exists? then choose that language' do
     cmd = test_languages_names.map{ |name| name.split('-').join(', ') }
     test_languages_names.each_with_index do |language, n|
       kata = make_kata(unique_id, language, test_exercises_names.sample)
       assert kata.exists?
-      #(1..42).each do
-        assert_equal n, choose_language(cmd, kata.id, katas), language
-      #end
+      assert_equal n, choose_language(cmd, kata.id, katas), language
     end
   end
 
@@ -30,11 +21,9 @@ class SetupChooserTests < AppLibTestBase
   test 'D9C2F2',
   'when id is given and katas[id].exercise.exists? then choose that exercise' do
     test_exercises_names.each_with_index do |exercise, n|
-      kata = make_kata(unique_id, test_languages_names.shuffle[0], exercise)
+      kata = make_kata(unique_id, test_languages_names.sample, exercise)
       assert kata.exists?
-      #(1..42).each do
-        assert_equal n, choose_exercise(test_exercises_names, kata.id, katas)
-      #end
+      assert_equal n, choose_exercise(test_exercises_names, kata.id, katas)
     end
   end
 
@@ -108,9 +97,6 @@ class SetupChooserTests < AppLibTestBase
     counts = {}
     (1..100).each do
       n = choose_language(languages, id, katas)
-      #assert n.is_a?(Numeric), 'n.is_a?(Numeric)'
-      #assert n >= 0, "n(#{n}) >= 0"
-      #assert n < languages.length, "n(#{n}) < languages.length"
       counts[n] ||= 0
       counts[n] += 1
     end
@@ -123,9 +109,6 @@ class SetupChooserTests < AppLibTestBase
     counts = {}
     (1..100).each do
       n = choose_exercise(exercises, id, katas)
-      #assert n.is_a?(Numeric), 'n.is_a?(Numeric)'
-      #assert n >= 0, "n(#{n}) >= 0"
-      #assert n < exercises.length, "n(#{n}) < exercises.length"
       counts[n] ||= 0
       counts[n] += 1
     end
