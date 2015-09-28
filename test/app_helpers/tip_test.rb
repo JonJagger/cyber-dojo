@@ -60,9 +60,7 @@ class TipTests < AppHelpersTestBase
 
   test 'BDAD52',
   'traffic light tip' do
-    set_runner_class 'RunnerStub'
     set_git_class    'GitSpy'
-    set_disk_class   'DiskStub'
     kata = make_kata
     lion = kata.start_avatar(['lion'])
 
@@ -70,6 +68,7 @@ class TipTests < AppHelpersTestBase
     was_tag_colour = 'red'
     now_tag = 2
     now_tag_colour = 'green'
+    lion.dir.make
     lion.dir.write_json('increments.json',
       [
         { 'colour' => was_tag_colour,

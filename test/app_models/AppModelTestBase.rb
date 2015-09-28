@@ -33,14 +33,6 @@ class AppModelTestBase < TestBase
     set_git_class      'HostGit'
   end
 
-  def XXX_setup
-    super
-    set_runner_class   'RunnerStub'
-    set_disk_class     'DiskStub'      # DiskFake would be faster but lots of tests
-    set_git_class      'GitSpy'        # fail because they don't Stub specific files.
-    set_one_self_class 'OneSelfDummy'
-  end
-
   def teardown
     super
   end

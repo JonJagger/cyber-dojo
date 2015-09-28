@@ -16,6 +16,7 @@ o) rework exercises/ and languages/ caches.
    See comment about not using obvious code
    because some code uses DiskFake
    test/app_models/ ok
+   test/app_helpers ok
 
 o) languages cache has scope for improvement
    the cache could be
