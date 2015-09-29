@@ -127,7 +127,9 @@ class Languages
 
       # multiple language versions
       'Javascript-jasmine' => 'Javascript0.12.7-jasmine2.3',
-      'Javascript-qunit+sinon' => 'Javascript0.12.7-qunit_sinon'
+      'Javascript-qunit+sinon' => 'Javascript0.12.7-qunit_sinon',
+      'Javascript-jasmine' => 'Javascript-jasmine2.3'
+
     }
     (renames[name] || name).split('-')
   end

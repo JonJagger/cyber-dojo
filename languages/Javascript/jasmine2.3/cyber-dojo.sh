@@ -7,5 +7,5 @@
 #NODE_VERSION=0.12.7
 NODE_VERSION=4.1.1
 #
-# Use npm package 'n' to get bin path to 'node' with selected node version:
-`n bin $NODE_VERSION` *Test*.js
+# Use npm package 'n' to call jasmine with selected node version:
+n use $NODE_VERSION /usr/local/lib/node_modules/jasmine/bin/jasmine JASMINE_CONFIG_PATH=./jasmine.json

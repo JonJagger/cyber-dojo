@@ -1,7 +1,9 @@
-require('./hiker.js');
+'use strict';
+
+Hiker = require('./hiker.js');
 
 assert = require('assert');
 
-assert.equal( answer(), 42 );
+assert.equal(new Hiker().answer(), 42 );
 
 console.log('All tests passed');
