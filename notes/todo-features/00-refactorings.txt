@@ -1,14 +1,8 @@
 
-o) Aaaag. Some tests are filling up the /katas folder
-
 o) use ramdisk for *all* tests.
-   lib first
-   app_controllers second
-   export CYBER_DOJO_KATAS_ROOT=/mnt/ram_disk/katas
-   rework tests so CYBER_DOJO_KATAS_ROOT must be set or it is an error.
-   Some tests such as hostdisk tests can always use the ramdisk.
+   rework tests so CYBER_DOJO_KATAS_ROOT must be set or it is an error?
 
-o) delete test code that is now redundant
+o) delete test code that is now redundant?
 
 o) note duplication now in
    test/app_controller/AppControllerTestBase.rb and

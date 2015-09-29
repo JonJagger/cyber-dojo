@@ -31,20 +31,24 @@ class LanguagesTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-=begin
   test '7D53C5',
-  'refresh_cache requires manifest.json for each file to read display_name from' do
+  'refresh_cache requires manifest.json for each file to read display_name from' +
+    ' but use of cached info does not reaccess manifest.json' do
     set_disk_class('DiskFake')
-    runey = languages['R-runey']
-    runey.dir.write_json('manifest.json', { 'display_name' => 'R,Rooney' })
+    cpp_assert = Language.new(languages, 'g++4.8.4', 'assert')
+    cpp_assert.dir.make
+    cpp_assert.dir.write_json('manifest.json', { 'display_name' => 'C++ (g++), assert' })
     languages.refresh_cache
+    cpp_assert.dir.delete('manifest.json')
     languages_names = languages.map(&:name).sort
-    assert_equal ['R-Rooney'], languages_names
-    assert_equal 'R',        runey.dir_name
-    assert_equal 'runey',    runey.test_dir_name
-    assert_equal 'R,Rooney', runey.display_name
+    assert_equal ['C++ (g++)-assert'], languages_names
+    # get from cache
+    cpp_assert = languages['C++ (g++)-assert']
+    assert_equal 'g++4.8.4',  cpp_assert.dir_name
+    assert_equal 'assert',    cpp_assert.test_dir_name
+    assert_equal 'C++ (g++), assert', cpp_assert.display_name
+    #assert_equal 'XX', cpp_assert.image_name
   end
-=end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
