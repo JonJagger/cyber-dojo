@@ -63,6 +63,13 @@ o) create a new caches folder to go with exercises/ languages/ and katas/
 o) app/models/external_parent_chain.rb
    move module_function to top so all a private inside included class.
    If any test does, eg, kata.dir I can instead do disk[kata.path]
+   move include ExternalParentChain
+   into the private section of each class
+
+o) move avatar.diff() into module app_lib/git_diff.rb
+
+o) lib/*.rb classes need to be converted to a_b_c.rb file format
+   and rubocop'd
 
 o) assuming git running on /mnt/ramdisk/katas is fast enough
    there would appear to be scope to refactor the git class
