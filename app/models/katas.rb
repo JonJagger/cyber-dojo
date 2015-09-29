@@ -1,7 +1,6 @@
 # See comments at end of file
 
 class Katas
-  include ExternalParentChain
   include Enumerable
 
   def initialize(dojo, path)
@@ -89,9 +88,10 @@ class Katas
 
   private
 
-  include UniqueId
-  include TimeNow
+  include ExternalParentChain
   include IdSplitter
+  include TimeNow
+  include UniqueId
 
   def hex?(char)
     '0123456789ABCDEF'.include?(char)

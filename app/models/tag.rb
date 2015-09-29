@@ -2,7 +2,6 @@
 # See comment at bottom of Avatar.rb
 
 class Tag
-  include ExternalParentChain
 
   def initialize(avatar, hash)
     @parent = avatar
@@ -50,6 +49,8 @@ class Tag
   end
 
   private
+
+  include ExternalParentChain
 
   attr_reader :hash
 

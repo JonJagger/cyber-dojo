@@ -1,7 +1,6 @@
 # See comments at end of file
 
 class Languages
-  include ExternalParentChain
   include Enumerable
 
   def initialize(dojo, path)
@@ -52,6 +51,8 @@ class Languages
   end
 
   private
+
+  include ExternalParentChain
 
   def new_name(name)
     # maps from a language&test display_name into a

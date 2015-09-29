@@ -1,7 +1,6 @@
 # See comments at end of file
 
 class Avatar
-  include ExternalParentChain
 
   def initialize(kata, name)
     fail 'Invalid Avatar(name)' unless Avatars.valid?(name)
@@ -83,6 +82,7 @@ class Avatar
 
   private
 
+  include ExternalParentChain
   include GitDiff
   include TimeNow
 

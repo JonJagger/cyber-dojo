@@ -1,7 +1,6 @@
 # See comments at end of file
 
 class Language
-  include ExternalParentChain
 
   def initialize(languages, dir_name, test_dir_name, display_name = nil, image_name = nil)
     @parent = languages
@@ -163,6 +162,7 @@ class Language
 
   private
 
+  include ExternalParentChain
   include ManifestProperty
 
   def cyber_dojo_sh

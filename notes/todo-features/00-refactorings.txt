@@ -10,15 +10,7 @@ o) note duplication now in
    test/app_helpers/AppHelpersTestBase.rb
    test/lib/LibTestBase.rb and
 
-o) rework exercises/ and languages/ caches.
-   See comment about not using obvious code
-   because some code uses DiskFake
-   test/app_models/ ok
-   test/app_helpers ok
-   test/app_lib  ok
-   lib ok
-   test/app_controllers ok
-   test/languages
+o) test/languages
      ./check_one_language.rb ok
      ./all_languages_test.rb fails on 'C (gcc)' CppUTest gives
         Error response from daemon: no such id: cat:
@@ -66,8 +58,6 @@ o) create a new caches folder to go with exercises/ languages/ and katas/
 o) app/models/external_parent_chain.rb
    move module_function to top so all a private inside included class.
    If any test does, eg, kata.dir I can instead do disk[kata.path]
-   move include ExternalParentChain
-   into the private section of each class
 
 o) move avatar.diff() into module app_lib/git_diff.rb
 

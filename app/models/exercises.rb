@@ -1,7 +1,6 @@
 # See comments at end of file
 
 class Exercises
-  include ExternalParentChain
   include Enumerable
 
   def initialize(dojo, path)
@@ -31,6 +30,8 @@ class Exercises
   end
 
   private
+
+  include ExternalParentChain
 
   def exercises
     @exercises ||= read_cache
