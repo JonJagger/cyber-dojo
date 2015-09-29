@@ -41,8 +41,9 @@ class Languages
         language = make_language(dir_name, test_dir_name)
         if language.exists?
           cache[language.display_name] = {
-            dir_name: language.dir_name,
-            test_dir_name: language.test_dir_name
+                 dir_name: language.dir_name,
+            test_dir_name: language.test_dir_name,
+               image_name: language.image_name
           }
         end
       end
@@ -142,15 +143,16 @@ class Languages
   def read_cache
     cache = []
     read_json(cache_filename).each do |display_name, language|
-      dir_name = language['dir_name']
+           dir_name = language['dir_name']
       test_dir_name = language['test_dir_name']
-      cache << make_language(dir_name, test_dir_name, display_name)
+         image_name = language['image_name']
+      cache << make_language(dir_name, test_dir_name, display_name, image_name)
     end
     cache
   end
 
-  def make_language(dir_name, test_dir_name, display_name = nil)
-    Language.new(self, dir_name, test_dir_name, display_name)
+  def make_language(dir_name, test_dir_name, display_name = nil, image_name = nil)
+    Language.new(self, dir_name, test_dir_name, display_name, image_name)
   end
 
   def cache_filename
@@ -158,15 +160,6 @@ class Languages
   end
 
 end
-
-# - - - - - - - - - - - - - - - - - - - - - - - -
-# Note that ideally the languages cache would
-# include each languages' image_name since that is
-# used for setup page filtering.
-# I'd like for setup page to only need to read
-# the single cache file.
-# - - - - - - - - - - - - - - - - - - - - - - - -
-
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # Upgrading? Multiple language versions?

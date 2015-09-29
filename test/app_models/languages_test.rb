@@ -35,19 +35,28 @@ class LanguagesTests < AppModelTestBase
   'refresh_cache requires manifest.json for each file to read display_name from' +
     ' but use of cached info does not reaccess manifest.json' do
     set_disk_class('DiskFake')
-    cpp_assert = Language.new(languages, 'g++4.8.4', 'assert')
+    dir_name = 'g++4.8.4'
+    test_dir_name = 'assert'
+    cpp_assert = Language.new(languages, dir_name, test_dir_name)
+    language_display_name = 'C++ (g++)'
+    display_name = language_display_name + ', ' + test_dir_name
+    image_name = 'cyberdojofoundation/gpp-4.8.4_assert'
+    manifest_filename = 'manifest.json'
     cpp_assert.dir.make
-    cpp_assert.dir.write_json('manifest.json', { 'display_name' => 'C++ (g++), assert' })
+    cpp_assert.dir.write_json(manifest_filename, {
+      'display_name' => display_name,
+      'image_name'   => image_name
+    })
     languages.refresh_cache
-    cpp_assert.dir.delete('manifest.json')
+    cpp_assert.dir.delete(manifest_filename)
     languages_names = languages.map(&:name).sort
-    assert_equal ['C++ (g++)-assert'], languages_names
+    assert_equal [language_display_name + '-assert'], languages_names
     # get from cache
-    cpp_assert = languages['C++ (g++)-assert']
-    assert_equal 'g++4.8.4',  cpp_assert.dir_name
-    assert_equal 'assert',    cpp_assert.test_dir_name
-    assert_equal 'C++ (g++), assert', cpp_assert.display_name
-    #assert_equal 'XX', cpp_assert.image_name
+    cpp_assert = languages[language_display_name + '-assert']
+    assert_equal dir_name,      cpp_assert.dir_name
+    assert_equal test_dir_name, cpp_assert.test_dir_name
+    assert_equal display_name,  cpp_assert.display_name
+    assert_equal image_name,    cpp_assert.image_name
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
