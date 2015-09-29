@@ -4,7 +4,7 @@ class Exercises
   include Enumerable
 
   def self.cache_filename
-    'cache.json'
+    'exercises_cache.json'
   end
 
   def initialize(dojo, path)

@@ -4,7 +4,7 @@ class Languages
   include Enumerable
 
   def self.cache_filename
-    'cache.json'
+    'languages_cache.json'
   end
 
   def initialize(dojo, path)

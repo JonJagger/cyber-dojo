@@ -100,7 +100,7 @@ class SetupControllerTest < AppControllerTestBase
       }
     }
     languages.dir.make
-    languages.dir.write_json('cache.json', languages_cache)
+    languages.dir.write_json(Languages.cache_filename, languages_cache)
     languages_cache.each do |display_name, hash|
       key = get_language_from(display_name) + '-' + get_test_from(display_name)
       languages[key].dir.write_json('manifest.json', {
@@ -114,7 +114,7 @@ class SetupControllerTest < AppControllerTestBase
 
   def setup_exercises_cache
     exercises.dir.make
-    exercises.dir.write_json('cache.json', {
+    exercises.dir.write_json(Exercises.cache_filename, {
       print_diamond  => 'stub print diamond instructions',
       roman_numerals => 'stub roman numerals instructions'
     })
