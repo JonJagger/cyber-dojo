@@ -1,9 +1,6 @@
 FROM      cyberdojofoundation/build-essential
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-ENV http_proxy "http://192.168.100.129:3128/"
-ENV https_proxy "http://192.168.100.129:3128/"
-
 RUN apt-get update
 RUN apt-get install --yes curl
 RUN curl --silent --location https://deb.nodesource.com/setup_4.x | bash -
