@@ -6,6 +6,14 @@ class SetupChooserTests < AppLibTestBase
 
   include SetupChooser
 
+  def setup
+   super
+    tmp_root = self.class.tmp_root
+    set_katas_root(tmp_root + 'katas')
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - -
+
   test '773616',
   'when id is given and katas[id].language.exists? then choose that language' do
     cmd = test_languages_names.map{ |name| name.split('-').join(', ') }

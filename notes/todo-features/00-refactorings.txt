@@ -1,4 +1,6 @@
 
+o) Aaaag. Some tests are filling up the /katas folder
+
 o) use ramdisk for *all* tests.
    lib first
    app_controllers second
@@ -53,6 +55,13 @@ o) languages cache has scope for improvement
    def [](language_name, test_name)
      languages[display_name(language_name, test_name)]
    end
+   If I use this [,] careful about forking. Comes to kata.language
+   which does this
+   dojo.languages[manifest_property]
+   language property of kata manifest is language.name
+   which does this
+     display_name.split(',').map(&:strip).join('-')
+
 
 o) create a new caches folder to go with exercises/ languages/ and katas/
    this will hold exercises.cache languages.cache and
