@@ -3,6 +3,10 @@
 class Exercises
   include Enumerable
 
+  def self.cache_filename
+    'cache.json'
+  end
+
   def initialize(dojo, path)
     @parent = dojo
     @path = path
@@ -26,7 +30,7 @@ class Exercises
       exercise = make_exercise(sub_dir)
       cache[exercise.name] = { instructions: exercise.instructions }
     end
-    write_json(cache_filename, cache)
+    write_json(self.class.cache_filename, cache)
   end
 
   private
@@ -39,7 +43,7 @@ class Exercises
 
   def read_cache
     cache = []
-    read_json(cache_filename).each do |name, exercise|
+    read_json(self.class.cache_filename).each do |name, exercise|
       cache << make_exercise(name, exercise['instructions'])
     end
     cache
@@ -47,10 +51,6 @@ class Exercises
 
   def make_exercise(name, instructions = nil)
     Exercise.new(self, name, instructions)
-  end
-
-  def cache_filename
-    'cache.json'
   end
 
 end

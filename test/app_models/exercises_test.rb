@@ -39,7 +39,7 @@ class ExercisesTests < AppModelTestBase
   test '3E277A',
   'no exercises when cache is empty' do
     set_disk_class('DiskFake')
-    exercises.dir.write_json('cache.json', {})
+    exercises.dir.write_json(cache_filename, {})
     assert_equal [], exercises.to_a
   end
 
@@ -52,11 +52,17 @@ class ExercisesTests < AppModelTestBase
       '100 doors'    => { instructions: doors_instructions = 'go here'  },
       'Bowling Game' => { instructions: bowling_instructions = 'are here' }
     }
-    exercises.dir.write_json('cache.json', cache)
+    exercises.dir.write_json(cache_filename, cache)
     exercises_names = exercises.map(&:name).sort
     assert_equal ['100 doors', 'Bowling Game'], exercises_names, 'names'
     assert_equal doors_instructions, exercises['100 doors'].instructions, '100 doors'
     assert_equal bowling_instructions, exercises['Bowling Game'].instructions, 'Bowling Game'
+  end
+
+  private
+
+  def cache_filename
+    Exercises.cache_filename
   end
 
 end

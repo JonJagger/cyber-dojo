@@ -3,6 +3,10 @@
 class Languages
   include Enumerable
 
+  def self.cache_filename
+    'cache.json'
+  end
+
   def initialize(dojo, path)
     @parent = dojo
     @path = path
@@ -47,7 +51,7 @@ class Languages
         end
       end
     end
-    write_json(cache_filename, cache)
+    write_json(self.class.cache_filename, cache)
   end
 
   private
@@ -143,7 +147,7 @@ class Languages
 
   def read_cache
     cache = []
-    read_json(cache_filename).each do |display_name, language|
+    read_json(self.class.cache_filename).each do |display_name, language|
            dir_name = language['dir_name']
       test_dir_name = language['test_dir_name']
          image_name = language['image_name']
@@ -154,10 +158,6 @@ class Languages
 
   def make_language(dir_name, test_dir_name, display_name = nil, image_name = nil)
     Language.new(self, dir_name, test_dir_name, display_name, image_name)
-  end
-
-  def cache_filename
-    'cache.json'
   end
 
 end

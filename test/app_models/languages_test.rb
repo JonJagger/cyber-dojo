@@ -50,9 +50,9 @@ class LanguagesTests < AppModelTestBase
     languages.refresh_cache
     cpp_assert.dir.delete(manifest_filename)
     languages_names = languages.map(&:name).sort
-    assert_equal [language_display_name + '-assert'], languages_names
+    assert_equal [language_display_name + '-' + test_dir_name], languages_names
     # get from cache
-    cpp_assert = languages[language_display_name + '-assert']
+    cpp_assert = languages[language_display_name + '-' + test_dir_name]
     assert_equal dir_name,      cpp_assert.dir_name
     assert_equal test_dir_name, cpp_assert.test_dir_name
     assert_equal display_name,  cpp_assert.display_name
@@ -64,7 +64,7 @@ class LanguagesTests < AppModelTestBase
   test '15BD19',
   'no languages when cache is empty' do
     set_disk_class('DiskFake')
-    languages.dir.write_json('cache.json', {})
+    languages.dir.write_json(cache_filename, {})
     assert_equal [], languages.to_a
   end
 
@@ -83,7 +83,7 @@ class LanguagesTests < AppModelTestBase
         test_dir_name: 'assert'
       }
     }
-    languages.dir.write_json('cache.json', cache)
+    languages.dir.write_json(cache_filename, cache)
     languages_names = languages.map(&:name).sort
 
     assert_equal ['Asm-assert', 'C++ (g++)-assert'], languages_names
@@ -204,6 +204,10 @@ class LanguagesTests < AppModelTestBase
 
   def cyber_dojo_root
     Dir.pwd + '/../..'
+  end
+
+  def cache_filename
+    Languages.cache_filename
   end
 
 end

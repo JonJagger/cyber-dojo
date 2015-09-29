@@ -1,7 +1,7 @@
 #!/bin/bash
 
-../languages/refresh_cache.rb
-../exercises/refresh_cache.rb
+sudo ../languages/refresh_cache.rb
+sudo ../exercises/refresh_cache.rb
 ./lib/make_disk_stub_cache.rb
 
 ramDisk=/mnt/ram_disk
