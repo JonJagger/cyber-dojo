@@ -61,6 +61,10 @@ o) app/models/external_parent_chain.rb
 
 o) move avatar.diff() into module app_lib/git_diff.rb
 
+o) test/lib/DirFake.rb
+   has [make] call in write(filename, s) that does not match
+   write(filename, s) in HostDir.rb
+
 o) lib/*.rb classes need to be converted to a_b_c.rb file format
    and rubocop'd
 
