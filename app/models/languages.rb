@@ -28,6 +28,10 @@ class Languages
     end
   end
 
+  def indexer(name)
+    languages2[map_to_display_name(name)]
+  end
+
   def renamed(was_name)
     loop do
       now_name = new_name(was_name).join('-')
@@ -50,6 +54,65 @@ class Languages
       end
     end
     write_json(self.class.cache_filename, cache)
+  end
+
+  def map_to_display_name(name)
+    simplest = languages2[name.split('-').join(', ')]
+    return simplest.display_name unless simplest.nil?
+    renames = {
+      # from way back when test name was _not_ part of language name
+      ['BCPL']         => ['BCPL',         'all_tests_passed'],
+      ['C']            => ['C (gcc)',      'assert'],
+      ['C++']          => ['C++ (g++)',    'assert'],
+      ['C#']           => ['C#',           'NUnit'],
+      ['Clojure']      => ['Clojure',      '.test'],
+      ['CoffeeScript'] => ['CoffeeScript', 'jasmine'],
+      ['Erlang']       => ['Erlang',       'eunit'],
+      ['Go']           => ['Go',           'testing'],
+      ['Haskell']      => ['Haskell',      'hunit'],
+      ['Java']         => ['Java',         'JUnit'],
+      ['Javascript']   => ['Javascript',   'assert'],
+      ['Perl']         => ['Perl',         'Test::Simple'],
+      ['PHP']          => ['PHP',          'PHPUnit'],
+      ['Python']       => ['Python',       'unittest'],
+      ['Ruby']         => ['Ruby',         'Test::Unit'],
+      ['Scala']        => ['Scala',        'scalatest'],
+      # renamed
+      ['C++',        'catch']            => ['C++ (g++)' , 'Catch'],
+      ['Java',       'ApprovalTests']    => ['Java',       'Approval'],  # offline
+      ['Java',       'JUnit','Mockito']  => ['Java',       'Mockito'],
+      ['Javascript', 'mocha_chai_sinon'] => ['Javascript', 'Mocha+chai+sinon'],
+      ['Perl',       'TestSimple']       => ['Perl',       'Test::Simple'],
+      ['Ruby',       'Rspec']            => ['Ruby',       'RSpec'],     # capital S
+      ['Ruby',       'TestUnit']         => ['Ruby',       'Test::Unit'],
+      ['Python',     'pytest']           => ['Python',     'py.test'],   # dot
+      # - in the wrong place
+      ['Java', '1.8_Approval']     => ['Java', 'Approval'],  # offline
+      ['Java', '1.8_Cucumber']     => ['Java', 'Cucumber'],
+      ['Java', '1.8_JMock']        => ['Java', 'JMock'],
+      ['Java', '1.8_JUnit']        => ['Java', 'JUnit'],
+      ['Java', '1.8_Mockito']      => ['Java', 'Mockito'],
+      ['Java', '1.8_Powermockito'] => ['Java', 'PowerMockito'],
+      # replaced
+      ['R', 'stopifnot'] => ['R', 'RUnit'],
+      # renamed to distinguish from [C (clang)]
+      ['C', 'assert']   => ['C (gcc)', 'assert'],
+      ['C', 'Unity']    => ['C (gcc)', 'Unity'],
+      ['C', 'CppUTest'] => ['C (gcc)', 'CppUTest'],
+      # renamed to distinguish from [C++ (clang++)]
+      ['C++', 'assert']     => ['C++ (g++)', 'assert'],
+      ['C++', 'Boost.Test'] => ['C++ (g++)', 'Boost.Test'],
+      ['C++', 'Catch']      => ['C++ (g++)', 'Catch'],
+      ['C++', 'CppUTest']   => ['C++ (g++)', 'CppUTest'],
+      ['C++', 'GoogleTest'] => ['C++ (g++)', 'GoogleTest'],
+      ['C++', 'Igloo']      => ['C++ (g++)', 'Igloo'],
+      ['C++', 'GoogleMock'] => ['C++ (g++)', 'GoogleMock'],
+
+    }
+    split = renames[name.split('-')]
+    return nil if split.nil?
+    tricky = split.join(', ')
+    return tricky unless languages2[tricky].nil?
   end
 
   private
@@ -86,9 +149,7 @@ class Languages
 
       # display name is different to folder name
       'C++-catch'                   => 'C++-Catch',
-      'Javascript-jasmine'          => 'Javascript-jasmine2.3',
       'Javascript-Mocha+chai+sinon' => 'Javascript-mocha_chai_sinon',
-      'Javascript-qunit+sinon'      => 'Javascript-qunit_sinon',
       'Perl-Test::Simple'           => 'Perl-TestSimple',
       'Python-py.test'              => 'Python-pytest',
       'Ruby-RSpec'                  => 'Ruby-Rspec',
@@ -133,12 +194,20 @@ class Languages
       'Ruby-TestUnit'      => 'Ruby1.9.3-TestUnit',
       'Ruby-Rspec'         => 'Ruby1.9.3-Rspec',
       'Ruby-MiniTest'      => 'Ruby2.1.3-MiniTest',
+
+      # multiple language versions
+      'Javascript-jasmine'     => 'Javascript-jasmine2.3',
+      'Javascript-qunit+sinon' => 'Javascript-qunit_sinon'
     }
     (renames[name] || name).split('-')
   end
 
   def languages
     @languages ||= read_cache
+  end
+
+  def languages2
+    @languages2 ||= read_cache2
   end
 
   def read_cache
@@ -148,6 +217,17 @@ class Languages
       test_dir_name = language['test_dir_name']
          image_name = language['image_name']
       cache << make_language(dir_name, test_dir_name, display_name, image_name)
+    end
+    cache
+  end
+
+  def read_cache2
+    cache = {}
+    read_json(self.class.cache_filename).each do |display_name, language|
+           dir_name = language['dir_name']
+      test_dir_name = language['test_dir_name']
+         image_name = language['image_name']
+      cache[display_name] = make_language(dir_name, test_dir_name, display_name, image_name)
     end
     cache
   end

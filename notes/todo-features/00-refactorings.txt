@@ -67,10 +67,6 @@ o) create a new caches folder to go with exercises/ languages/ and katas/
    location set via CYBER_DOJO_CACHES_ROOT
    point this to small ramdisk.
 
-o) rename languages/cache.json -> languages_cache.json
-   rename exercises/cache.json -> exercises_cache.json
-   ready for both caches to go to CACHE folder.
-
 o) app/models/external_parent_chain.rb
    move module_function to top so all methods are private inside included class?
    If any test does, eg, kata.dir I can instead do disk[kata.path]
