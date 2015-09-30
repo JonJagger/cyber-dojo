@@ -4,7 +4,7 @@
   manifest_property
   dojo
   language
-  languages_names
+  languages_rename
   languages
   exercise
   exercises

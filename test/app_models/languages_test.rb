@@ -103,26 +103,25 @@ class LanguagesTests < AppModelTestBase
   test 'C61BBE',
   'name is translated when katas manifest.json language entry has been renamed' do
     historical_language_names do |old_name|
-      new_name = languages.renamed(old_name)
-      refute_nil languages[new_name], old_name unless old_name.include? 'Approval'
+      refute_nil languages[old_name], old_name unless old_name.include? 'Approval'
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
   test '083518',
-  'new indexer, simple case of lang-test where lang,_test is valid display_name' do
+  '[name] when  of lang-test where lang,_test is valid display_name' do
     simple_case = 'C++ (g++)-assert'
     simple_display_name = 'C++ (g++), assert'
     found = languages.find { |language| language.display_name == simple_display_name }
     refute_nil found
-    assert_equal simple_display_name, languages.renamed(simple_case)
+    assert_equal simple_display_name, languages[simple_case].display_name
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
   test '9E1B38',
-  'new indexer, case where incoming string has no - at all and was renamed' do
+  '[name] when name has no - and was renamed' do
     [
        # from way back when test name was not part of language name
       'BCPL', 'C', 'C++', 'C#', 'Clojure', 'CoffeeScript','Erlang','Go',
@@ -133,7 +132,7 @@ class LanguagesTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - -
 
   test '931D03',
-  'new indexer, cases where incoming string has - and was renamed' do
+  '[name] when name has - and was renamed' do
     [
       # renamed
       # 'Java-ApprovalTests', # offline
@@ -175,11 +174,9 @@ class LanguagesTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - -
 
   test 'F64017',
-  'new indexer on historical_language_names' do
+  '[name] on historical_language_names' do
     historical_language_names do |name|
-      if !name.include? 'Approval'
-        refute_nil languages[name], name
-      end
+      refute_nil languages[name], name unless name.include? 'Approval'
     end
   end
 

@@ -39,14 +39,10 @@ class Languages
     write_json(self.class.cache_filename, cache)
   end
 
-  def renamed(name)
-    LanguagesNames.new_name(languages, name)
-  end
-
   private
 
   include ExternalParentChain
-  include LanguagesNames
+  include LanguagesRename
 
   def languages
     @languages ||= read_cache

@@ -1,10 +1,10 @@
 # See comments at end of file
 
-module LanguagesNames # mix-in
+module LanguagesRename # mix-in
 
   module_function
 
-  def new_name(languages, name)
+  def renamed(name)
     # maps from old display_name to new display_name
     # see comment at bottom of file.
     simplest = languages[name.split('-').join(', ')]
