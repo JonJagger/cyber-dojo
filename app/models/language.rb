@@ -39,10 +39,6 @@ class Language
     manifest_property
   end
 
-  def display_test_name
-    manifest_property || unit_test_framework
-  end
-
   def filename_extension
     manifest_property || ''
   end

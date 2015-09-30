@@ -153,26 +153,6 @@ class LanguageTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '872123',
-  'display_test_name reads back as set' do
-    @language = make_language('Java', 'JUnit')
-    expected = 'Mockito'
-    spy_manifest({ 'display_test_name' => expected,
-                   'unit_test_framework' => 'junit' })
-    assert_equal expected, @language.display_test_name
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'E8180F',
-  'display_test_name defaults to unit_test_framework when not set' do
-    @language = make_language('Java', 'JUnit')
-    spy_manifest({ 'unit_test_framework' => 'junit' })
-    assert_equal 'junit', @language.display_test_name
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '229DC5',
   'image_name is read back as set' do
     @language = make_language('Ruby', 'Test::Unit')

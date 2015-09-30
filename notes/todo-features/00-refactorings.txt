@@ -3,8 +3,6 @@ o) names of folders are now decoupled
    s/g++4.8.4/C++ (g++4.8.4)/
    s/g++4.9/C++ (g++4.9)/
 
-o) what uses language.display_test_name?
-
 o) move avatar.diff() into module app_lib/git_diff.rb
 
 o) move language - cyber-dojo update code into dedicated class/module
