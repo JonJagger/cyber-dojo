@@ -23,9 +23,6 @@ o) move avatar.diff() into module app_lib/git_diff.rb
 
 o) move languages.rename() into dedicated class/module
 
-o) lib/*.rb classes need to be converted to a_b.rb file format
-   and rubocop'd
-
 o) cache the result of
    `docker images`
    in the ram_disk cache to speed up the opening page?
