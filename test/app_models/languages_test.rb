@@ -53,8 +53,6 @@ class LanguagesTests < AppModelTestBase
     assert_equal [language_display_name + '-' + test_dir_name], languages_names
     # get from cache
     cpp_assert = languages[language_display_name + '-' + test_dir_name]
-    assert_equal dir_name,      cpp_assert.dir_name
-    assert_equal test_dir_name, cpp_assert.test_dir_name
     assert_equal display_name,  cpp_assert.display_name
     assert_equal image_name,    cpp_assert.image_name
   end
@@ -87,14 +85,8 @@ class LanguagesTests < AppModelTestBase
     languages_names = languages.map(&:name).sort
 
     assert_equal ['Asm-assert', 'C++ (g++)-assert'], languages_names
-
     assert_equal 'Asm, assert', languages['Asm-assert'].display_name
-    assert_equal 'Asm',         languages['Asm-assert'].dir_name
-    assert_equal 'assert',      languages['Asm-assert'].test_dir_name
-
     assert_equal 'C++ (g++), assert', languages['C++ (g++)-assert'].display_name
-    assert_equal 'g++4.8.4',          languages['C++ (g++)-assert'].dir_name
-    assert_equal 'assert',            languages['C++ (g++)-assert'].test_dir_name
   end
 
   #- - - - - - - - - - - - - - - - - - - - -

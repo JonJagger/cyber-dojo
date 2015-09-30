@@ -1,11 +1,10 @@
 
-o) language.dir_name
-      make private?
-   language.test_dir_name
-      make private?
-
 o) language.name
    can this be dropped?
+
+o) names of folders are now decoupled
+   s/g++4.8.4/C++ (g++4.8.4)/
+   s/g++4.9/C++ (g++4.9)/
 
 o) forker_controller now does not do
      !kata.language.exists?
