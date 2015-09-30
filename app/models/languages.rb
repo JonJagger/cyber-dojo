@@ -40,12 +40,13 @@ class Languages
   end
 
   def renamed(name)
-    return LanguagesNames.new(languages).new_name(name)
+    LanguagesNames.new_name(languages, name)
   end
 
   private
 
   include ExternalParentChain
+  include LanguagesNames
 
   def languages
     @languages ||= read_cache

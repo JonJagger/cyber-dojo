@@ -4,8 +4,8 @@
   manifest_property
   dojo
   language
-  languages
   languages_names
+  languages
   exercise
   exercises
   avatar

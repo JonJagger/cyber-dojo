@@ -1,15 +1,13 @@
 # See comments at end of file
 
-class LanguagesNames
+module LanguagesNames # mix-in
 
-  def initialize(languages)
-    @languages = languages
-  end
+  module_function
 
-  def new_name(name)
+  def new_name(languages, name)
     # maps from old display_name to new display_name
     # see comment at bottom of file.
-    simplest = @languages[name.split('-').join(', ')]
+    simplest = languages[name.split('-').join(', ')]
     return simplest.display_name unless simplest.nil?
     renames = {
       # from way back when test name was _not_ part of language name
@@ -64,7 +62,7 @@ class LanguagesNames
     split = renames[name.split('-')]
     return nil if split.nil?
     tricky = split.join(', ')
-    return tricky unless @languages[tricky].nil?
+    return tricky unless languages[tricky].nil?
   end
 
 end
