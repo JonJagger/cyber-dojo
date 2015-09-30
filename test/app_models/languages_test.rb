@@ -48,7 +48,7 @@ class LanguagesTests < AppModelTestBase
       'image_name'   => image_name
     })
     languages.refresh_cache
-    cpp_assert.dir.delete(manifest_filename)
+    cpp_assert.dir.delete(manifest_filename) # DiskFake.delete is implemented
     languages_names = languages.map(&:name).sort
     assert_equal [language_display_name + '-' + test_dir_name], languages_names
     # get from cache
@@ -112,7 +112,7 @@ class LanguagesTests < AppModelTestBase
   'name is translated when katas manifest.json language entry has been renamed' do
     historical_language_names do |old_name|
       new_name = languages.renamed(old_name)
-      assert exists?(*new_name), old_name
+      refute_nil languages[new_name], old_name unless old_name.include? 'Approval'
     end
   end
 
@@ -124,7 +124,7 @@ class LanguagesTests < AppModelTestBase
     simple_display_name = 'C++ (g++), assert'
     found = languages.find { |language| language.display_name == simple_display_name }
     refute_nil found
-    assert_equal simple_display_name, languages.map_to_display_name(simple_case)
+    assert_equal simple_display_name, languages.renamed(simple_case)
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
@@ -135,7 +135,7 @@ class LanguagesTests < AppModelTestBase
        # from way back when test name was not part of language name
       'BCPL', 'C', 'C++', 'C#', 'Clojure', 'CoffeeScript','Erlang','Go',
       'Haskell', 'Java', 'Javascript', 'Perl', 'PHP', 'Python', 'Ruby', 'Scala',
-    ].each { |name| refute_nil languages.indexer(name), name }
+    ].each { |name| refute_nil languages[name], name }
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
@@ -177,7 +177,7 @@ class LanguagesTests < AppModelTestBase
       #
       'Ruby-Rspec',
       'Ruby-TestUnit',
-    ].each { |name| refute_nil languages.indexer(name), name }
+    ].each { |name| refute_nil languages[name], name }
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
@@ -186,10 +186,8 @@ class LanguagesTests < AppModelTestBase
   'new indexer on historical_language_names' do
     historical_language_names do |name|
       if !name.include? 'Approval'
-        refute_nil languages.indexer(name), name
+        refute_nil languages[name], name
       end
-      #new_name = languages.renamed(old_name)
-      #assert exists?(*new_name), old_name
     end
   end
 

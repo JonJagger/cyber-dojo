@@ -17,28 +17,11 @@ class Languages
 
   def each
     return enum_for(:each) unless block_given?
-    languages.each { |language| yield language  }
+    languages.each { |_,language| yield language }
   end
 
   def [](name)
-    dir_name, test_dir_name = renamed(name)
-    languages.find do |language|
-      language.dir_name == dir_name &&
-        language.test_dir_name == test_dir_name
-    end
-  end
-
-  def indexer(name)
-    languages2[map_to_display_name(name)]
-  end
-
-  def renamed(was_name)
-    loop do
-      now_name = new_name(was_name).join('-')
-      break if now_name == was_name
-      was_name = now_name
-    end
-    was_name.split('-')
+    languages[renamed(name)]
   end
 
   def refresh_cache
@@ -56,8 +39,10 @@ class Languages
     write_json(self.class.cache_filename, cache)
   end
 
-  def map_to_display_name(name)
-    simplest = languages2[name.split('-').join(', ')]
+  def renamed(name)
+    # maps from old display_name to new display_name
+    # see comment at bottom of file.
+    simplest = languages[name.split('-').join(', ')]
     return simplest.display_name unless simplest.nil?
     renames = {
       # from way back when test name was _not_ part of language name
@@ -112,116 +97,18 @@ class Languages
     split = renames[name.split('-')]
     return nil if split.nil?
     tricky = split.join(', ')
-    return tricky unless languages2[tricky].nil?
+    return tricky unless languages[tricky].nil?
   end
 
   private
 
   include ExternalParentChain
 
-  def new_name(name)
-    # maps from a language&test display_name into a
-    # Language-Test name corresponding to its Language/Test/ *folder*
-    # See comment at bottom of file.
-    renames = {
-      # from way back when test name was not part of language name
-      'BCPL'         => 'BCPL-all_tests_passed',
-      'C'            => 'C-assert',
-      'C++'          => 'C++-assert',
-      'C#'           => 'C#-NUnit',
-      'Clojure'      => 'Clojure-.test',
-      'CoffeeScript' => 'CoffeeScript-jasmine',
-      'Erlang'       => 'Erlang-eunit',
-      'Go'           => 'Go-testing',
-      'Haskell'      => 'Haskell-hunit',
-      'Java'         => 'Java-JUnit',
-      'Javascript'   => 'Javascript-assert',
-      'Perl'         => 'Perl-TestSimple',
-      'PHP'          => 'PHP-PHPUnit',
-      'Python'       => 'Python-unittest',
-      'Ruby'         => 'Ruby-TestUnit',
-      'Scala'        => 'Scala-scalatest',
-
-      # renamed
-      'Java-ApprovalTests' => 'Java-Approval',
-      'Java-JUnit-Mockito' => 'Java-Mockito',
-      'Ruby-Test::Unit'    => 'Ruby-TestUnit',
-
-      # display name is different to folder name
-      'C++-catch'                   => 'C++-Catch',
-      'Javascript-Mocha+chai+sinon' => 'Javascript-mocha_chai_sinon',
-      'Perl-Test::Simple'           => 'Perl-TestSimple',
-      'Python-py.test'              => 'Python-pytest',
-      'Ruby-RSpec'                  => 'Ruby-Rspec',
-
-      # - in the wrong place
-      'Java-1.8_Approval'      => 'Java-Approval',
-      'Java-1.8_Cucumber'      => 'Java-Cucumber',
-      'Java-1.8_JMock'         => 'Java-JMock',
-      'Java-1.8_JUnit'         => 'Java-JUnit',
-      'Java-1.8_Mockito'       => 'Java-Mockito',
-      'Java-1.8_Powermockito'  => 'Java-PowerMockito',
-
-      # replaced
-      'R-stopifnot' => 'R-RUnit',
-
-      # renamed to distinguish from [C (clang)]
-      'C-assert'   => 'C (gcc)-assert',
-      'C-Unity'    => 'C (gcc)-Unity',
-      'C-CppUTest' => 'C (gcc)-CppUTest',
-
-      # renamed to distinguish from [C++ (clang++)]
-      'C++-assert'     => 'C++ (g++)-assert',
-      'C++-Boost.Test' => 'C++ (g++)-Boost.Test',
-      'C++-Catch'      => 'C++ (g++)-Catch',
-      'C++-CppUTest'   => 'C++ (g++)-CppUTest',
-      'C++-GoogleTest' => 'C++ (g++)-GoogleTest',
-      'C++-Igloo'      => 'C++ (g++)-Igloo',
-      'C++-GoogleMock' => 'C++ (g++)-GoogleMock',
-
-      # multiple language versions (4.8.4 & 4.9)
-      'C++ (g++)-assert'     => 'g++4.8.4-assert',
-      'C++ (g++)-Boost.Test' => 'g++4.8.4-Boost.Test',
-      'C++ (g++)-Catch'      => 'g++4.8.4-Catch',
-      'C++ (g++)-CppUTest'   => 'g++4.8.4-CppUTest',
-      'C++ (g++)-GoogleTest' => 'g++4.8.4-GoogleTest',
-      'C++ (g++)-Igloo'      => 'g++4.8.4-Igloo',
-      'C++ (g++)-GoogleMock' => 'g++4.9-GoogleMock',
-
-      # multiple language versions (1.9.3 & 2.1.3)
-      'Ruby-Approval'      => 'Ruby1.9.3-Approval',
-      'Ruby-Cucumber'      => 'Ruby1.9.3-Cucumber',
-      'Ruby-TestUnit'      => 'Ruby1.9.3-TestUnit',
-      'Ruby-Rspec'         => 'Ruby1.9.3-Rspec',
-      'Ruby-MiniTest'      => 'Ruby2.1.3-MiniTest',
-
-      # multiple language versions
-      'Javascript-jasmine'     => 'Javascript-jasmine2.3',
-      'Javascript-qunit+sinon' => 'Javascript-qunit_sinon'
-    }
-    (renames[name] || name).split('-')
-  end
-
   def languages
     @languages ||= read_cache
   end
 
-  def languages2
-    @languages2 ||= read_cache2
-  end
-
   def read_cache
-    cache = []
-    read_json(self.class.cache_filename).each do |display_name, language|
-           dir_name = language['dir_name']
-      test_dir_name = language['test_dir_name']
-         image_name = language['image_name']
-      cache << make_language(dir_name, test_dir_name, display_name, image_name)
-    end
-    cache
-  end
-
-  def read_cache2
     cache = {}
     read_json(self.class.cache_filename).each do |display_name, language|
            dir_name = language['dir_name']
@@ -276,15 +163,8 @@ end
 # So what is stored in the kata's manifest is *not* the docker container's
 # image_name but the display_name.
 #
-# The renamed() function above maps the display_name
-# into a name in the form "Language-Test" which corresponds to its
-# Language/Test folder which in turn contains its manifest.json file.
-#
-# It's a bit fiddly because historically the language-&-test
+# rename() is a bit fiddly because historically the language-&-test
 # were *not* separated into distinct nested folders.
-# You can still see the remnants of this in the language/test/manifest.json's
-# display_name which contains the display name of the *both* the language
-# *and* the test-framework (separated by a comma).
 #
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # Some languages/ sub-folders have been renamed.
@@ -292,17 +172,4 @@ end
 # before the rename that you now wish to review or
 # fork from. Particularly for sessions with
 # well known id's such as the refactoring dojos.
-# For example...
-# Suppose an old practice-session was done with a
-# language name of 'Java' then in Kata.rb
-# manifest['language'] will be 'Java'
-# However kata.language  is defined as
-#   dojo.languages[manifest['language']]
-# And Languages' [] index operator (above)
-# maps the incoming name to the latest name.
-# Thus
-#    old_name = kata.manifest['language']
-#    language = dojo.languages[old_name]
-#    new_name = language.name
-#    assert_sometimes old_name != new_name
 # - - - - - - - - - - - - - - - - - - - - - - - -
