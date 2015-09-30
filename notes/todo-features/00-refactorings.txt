@@ -30,9 +30,8 @@ o) forker_controller now does not do
    can language.exists? be dropped?
    can all .exists? be dropped?
 
-o) I think dir_name and test_dir_name can be dropped from Language.rb
-   They are only used in refresh_cache but that's where the dirs are
-   iterated over and the dir names are directly available.
+o) I think dir_name and test_dir_name can be made private in Language.rb
+   once they are no longer used in []
 
 o) languages cache has scope for improvement
    the cache could be
