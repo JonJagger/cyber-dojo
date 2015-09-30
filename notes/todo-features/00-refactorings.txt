@@ -3,6 +3,12 @@ o) names of folders are now decoupled
    s/g++4.8.4/C++ (g++4.8.4)/
    s/g++4.9/C++ (g++4.9)/
 
+o) what uses language.display_test_name?
+
+o) move avatar.diff() into module app_lib/git_diff.rb
+
+o) move language - cyber-dojo update code into dedicated class/module
+
 o) forker_controller now does not do
      !kata.language.exists?
    instead does
@@ -18,10 +24,6 @@ o) note duplication now in
    test/app_models/AppModelTestBase.rb and
    test/app_helpers/AppHelpersTestBase.rb
    test/lib/LibTestBase.rb and
-
-o) move avatar.diff() into module app_lib/git_diff.rb
-
-o) move languages.rename() into dedicated class/module
 
 o) cache the result of
    `docker images`
