@@ -1,6 +1,5 @@
 
 class Avatars
-  include Enumerable
 
   def self.names
     %w(alligator buffalo cheetah deer
@@ -39,5 +38,9 @@ class Avatars
   def names
     collect(&:name)
   end
+
+  private
+
+  include Enumerable
 
 end

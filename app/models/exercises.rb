@@ -1,8 +1,11 @@
 # See comments at end of file
 
 class Exercises
-  include ExternalParentChain
   include Enumerable
+
+  def self.cache_filename
+    'exercises_cache.json'
+  end
 
   def initialize(dojo, path)
     @parent = dojo
@@ -18,7 +21,7 @@ class Exercises
   end
 
   def [](name)
-    make_exercise(name) # See comment below
+    exercises.find { |exercise| exercise.name == name }
   end
 
   def refresh_cache
@@ -27,10 +30,12 @@ class Exercises
       exercise = make_exercise(sub_dir)
       cache[exercise.name] = { instructions: exercise.instructions }
     end
-    write_json(cache_filename, cache)
+    write_json(self.class.cache_filename, cache)
   end
 
   private
+
+  include ExternalParentChain
 
   def exercises
     @exercises ||= read_cache
@@ -38,7 +43,7 @@ class Exercises
 
   def read_cache
     cache = []
-    read_json(cache_filename).each do |name, exercise|
+    read_json(self.class.cache_filename).each do |name, exercise|
       cache << make_exercise(name, exercise['instructions'])
     end
     cache
@@ -48,19 +53,4 @@ class Exercises
     Exercise.new(self, name, instructions)
   end
 
-  def cache_filename
-    'cache.json'
-  end
-
 end
-
-# - - - - - - - - - - - - - - - - - - - - - - - -
-# Refactoring [](name) to...
-#
-#    exercises.find {|exercise| exercise.name == name}
-#
-# would be nice since it would make use of the cache in
-#    exercises[name].instructions
-# but breaks lots of tests because they use DirFake
-# without an exercises cache.
-# - - - - - - - - - - - - - - - - - - - - - - - -

@@ -9,7 +9,7 @@ class TagsTest < AppModelTestBase
     'tag zero exists after avatar is started' +
        'and before first [test] is run ' +
        'and contains all visible files' do
-    language = languages['C-assert']
+    language = languages['C (clang)-assert']
     exercise = exercises['Fizz_Buzz']
     kata = make_kata(unique_id, language.name, exercise.name)
     avatar = kata.start_avatar

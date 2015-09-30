@@ -1,8 +1,9 @@
 
 class DirFake
 
-  def initialize(disk,dir)
-    @disk,@dir = disk,dir
+  def initialize(disk, dir)
+    @disk = disk
+    @dir = dir
   end
 
   def path
@@ -41,7 +42,7 @@ class DirFake
         dirs = inner_dir.each_dir.select { |outer_dir|
           outer_dir.start_with?(id[2..-1])
         }
-        id = id[0..1] + dirs[0] if dirs.length === 1
+        id = id[0..1] + dirs[0] if dirs.length == 1
       end
     end
     id || ''
@@ -57,7 +58,7 @@ class DirFake
   end
 
   def exists?(filename = nil)
-    matches = @disk.dirs.keys.select {|d| d != path && d.start_with?(path) }
+    matches = @disk.dirs.keys.select { |d| d != path && d.start_with?(path) }
     return true  if filename.nil? && !@repo.nil?
     return true  if filename.nil? && !matches.empty?
     return false if filename.nil?
@@ -84,8 +85,7 @@ class DirFake
   def read(filename)
     refute @repo.nil?, "read('#{filename}') no file"
     refute @repo[filename].nil?, "read('#{filename}') no file"
-    content = @repo[filename]
-    content
+    @repo[filename]
   end
 
   def lock(&block)
@@ -94,9 +94,8 @@ class DirFake
 
 private
 
-  def assert_not_string(content,filename)
-    assert content.class != String,
-      "write('#{filename}',content.class != String)"
+  def assert_not_string(content, filename)
+    assert content.class != String, "write('#{filename}',content.class != String)"
   end
 
   def assert(truth, message)

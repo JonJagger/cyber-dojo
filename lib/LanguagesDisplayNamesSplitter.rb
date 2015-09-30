@@ -2,7 +2,8 @@
 class LanguagesDisplayNamesSplitter
 
   def initialize(display_names,selected_index)
-    @display_names,@selected_index = display_names,selected_index
+    @display_names = display_names
+    @selected_index = selected_index
   end
 
   def names
@@ -25,17 +26,17 @@ class LanguagesDisplayNamesSplitter
 private
 
   def split(n)
-    @display_names.map{|name| name.split(',')[n].strip }.sort.uniq
+    @display_names.map { |name| name.split(',')[n].strip }.sort.uniq
   end
 
   def make_test_indexes(language_name)
-    result = [ ]
-    @display_names.each { |name|
+    result = []
+    @display_names.each do |name|
       if name.start_with?(language_name + ',')
         test_name = name.split(',')[1].strip
         result << tests_names.index(test_name)
       end
-    }
+    end
     result.shuffle
 
     # if this is the tests index array for the selected-language
@@ -52,7 +53,7 @@ private
     # These ensure the initial selection of the language causes the correct
     # initial selection of the test for that language.
 
-    if language_name === names[selected_index]
+    if language_name == names[selected_index]
       test_name = @display_names[@selected_index].split(',')[1].strip
       test_index = tests_names.index(test_name)
       result.delete(test_index)

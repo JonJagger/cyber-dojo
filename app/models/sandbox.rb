@@ -1,6 +1,5 @@
 
 class Sandbox
-  include ExternalParentChain
 
   def initialize(avatar)
     @parent = avatar
@@ -30,6 +29,8 @@ class Sandbox
   end
 
   private
+
+  include ExternalParentChain
 
   def filter(filename, files)
     content = avatar.kata.language.filter(filename, files[filename])

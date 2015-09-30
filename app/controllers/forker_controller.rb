@@ -11,7 +11,7 @@ class ForkerController < ApplicationController
       result[:dojo] = id
     end
 
-    if !error && !kata.language.exists?
+    if !error && kata.language.nil?
       error = true
       result[:reason] = 'language'
       result[:language] = kata.manifest['language']

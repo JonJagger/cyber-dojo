@@ -5,7 +5,7 @@
 
 require_relative '../../admin_scripts/lib_domain'
 
-$cache = { }
+$cache = {}
 
 dojo.exercises.each do |exercise|
   $cache[exercise.path + 'instructions'] = exercise.instructions

@@ -1,20 +1,85 @@
 
 o) use ramdisk for *all* tests.
-   lib first
-   app_controllers second
-   export CYBER_DOJO_KATAS_ROOT=/mnt/katas
-   rework tests so CYBER_DOJO_KATAS_ROOT must be set or it is an error.
-   Some tests such as hostdisk tests can always use the ramdisk.
+   rework tests so CYBER_DOJO_KATAS_ROOT must be set or it is an error?
 
-o) delete test code that is now redundant
+o) delete test code that is now redundant?
 
-o) rework exercises/ and languages/ caches.
-   See comment about not using obvious code
-   because some code uses DiskFake
+o) note duplication now in
+   test/app_controller/AppControllerTestBase.rb and
+   test/app_models/AppModelTestBase.rb and
+   test/app_helpers/AppHelpersTestBase.rb
+   test/lib/LibTestBase.rb and
+
+o) test/languages
+     ./check_one_language.rb ok
+     ./all_languages_test.rb fails on 'C (gcc)' CppUTest gives
+        Error response from daemon: no such id: cat:
+        Error response from daemon: no such id: No
+        Error response from daemon: no such id: such
+        Error response from daemon: no such id: file
+        Error response from daemon: no such id: or
+        Error response from daemon: no such id: directory
+     get the same failure from
+     sudo -E -u www-data ./check_one_language.rb 'C (gcc)' CppUTest verbose
+     This appears to be because it does not check if the docker-image is installed.
+
+o) forker_controller now does not do
+     !kata.language.exists?
+   instead does
+     kat.language.nil?
+   can language.exists? be dropped?
+   can all .exists? be dropped?
+
+o) I think dir_name and test_dir_name can be made private in Language.rb
+   once they are no longer used in []
+
+o) languages cache has scope for improvement
+   the cache could be
+     { display_name -> Language object }
+   that way the [] indexer can do
+   def [](name)
+     display_name = new_name(name)
+     languages[display_name]
+   end
+   or
+   def [](language_name, test_name)
+     languages[display_name(language_name, test_name)]
+   end
+   If I use this [,] careful about forking. Comes to kata.language
+   which does this
+   dojo.languages[manifest_property]
+   language property of kata manifest is language.name
+   which does this
+     display_name.split(',').map(&:strip).join('-')
+   Should be able to do
+     cache[display_name] || cache[renamed(dislay_name)]
+   And refactor the rename table so it works on display names and
+   not on folder names.
+   Possibly update all display-names on cyber-dojo so I don't need
+   the renamed() function at all.
+
+o) create a new caches folder to go with exercises/ languages/ and katas/
+   this will hold exercises.cache languages.cache and
+   docker_images.cache
+   location set via CYBER_DOJO_CACHES_ROOT
+   point this to small ramdisk.
+
+o) rename languages/cache.json -> languages_cache.json
+   rename exercises/cache.json -> exercises_cache.json
+   ready for both caches to go to CACHE folder.
 
 o) app/models/external_parent_chain.rb
-   move module_function to top so all a private inside included class.
+   move module_function to top so all methods are private inside included class?
    If any test does, eg, kata.dir I can instead do disk[kata.path]
+
+o) move avatar.diff() into module app_lib/git_diff.rb
+
+o) test/lib/DirFake.rb
+   has [make] call in write(filename, s) that does not match
+   write(filename, s) in HostDir.rb
+
+o) lib/*.rb classes need to be converted to a_b.rb file format
+   and rubocop'd
 
 o) assuming git running on /mnt/ramdisk/katas is fast enough
    there would appear to be scope to refactor the git class
@@ -23,19 +88,11 @@ o) assuming git running on /mnt/ramdisk/katas is fast enough
 
 o) cache the result of
    `docker images`
-   in the ramdisk to speed up the opening page?
-   /mnt/ramdisk/languages/docker_images.cache
+   in the ram_disk cache to speed up the opening page?
+   /mnt/ram_disk/languages/docker_images.cache
    chown www-data:www-data it too
    Do this as part of admin_scripts/pull.sh
    Does this mean RUNNER should have its own env var ROOT?
-
-o) test/app_lib has lots of assertions. Check it.
-
-o) in setup_controller.rb
-   maybe...
-    language = dojo.languages[params['language'] + '-' + params['test']]
-   ...becomes...
-    language = dojo.languages[params['language'], params['test']]
 
 
 

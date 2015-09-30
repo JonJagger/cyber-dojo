@@ -1,13 +1,13 @@
 # See comments at end of file
 
 class Language
-  include ExternalParentChain
 
-  def initialize(languages, dir_name, test_dir_name, display_name = nil)
+  def initialize(languages, dir_name, test_dir_name, display_name = nil, image_name = nil)
     @parent = languages
     @dir_name = dir_name
     @test_dir_name = test_dir_name
     @display_name = display_name
+    @image_name = image_name
   end
 
   attr_reader :dir_name, :test_dir_name
@@ -33,7 +33,7 @@ class Language
   end
 
   def image_name
-    manifest_property
+    @image_name ||= manifest_property
   end
 
   def unit_test_framework
@@ -162,6 +162,7 @@ class Language
 
   private
 
+  include ExternalParentChain
   include ManifestProperty
 
   def cyber_dojo_sh

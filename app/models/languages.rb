@@ -86,9 +86,9 @@ class Languages
 
       # display name is different to folder name
       'C++-catch'                   => 'C++-Catch',
+      'Javascript-jasmine'          => 'Javascript-jasmine2.3',
       'Javascript-Mocha+chai+sinon' => 'Javascript-mocha_chai_sinon',
       'Javascript-qunit+sinon'      => 'Javascript-qunit_sinon',
-      'Javascript-jasmine'          => 'Javascript-jasmine2.3',
       'Perl-Test::Simple'           => 'Perl-TestSimple',
       'Python-py.test'              => 'Python-pytest',
       'Ruby-RSpec'                  => 'Ruby-Rspec',

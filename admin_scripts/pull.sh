@@ -39,12 +39,6 @@ do
   chown -R www-data:www-data $cyberDojoHome/$folder
 done
 
-# tests create folders under tests/cyber-dojo/katas
-echo "chown www-data test/cyber-dojo"
-chmod g+rwsx $cyberDojoHome/test/cyber-dojo
-setfacl -d -m group:www-data:rwx $cyberDojoHome/test/cyber-dojo
-setfacl -m group:www-data:rwx $cyberDojoHome/test/cyber-dojo
-
 echo "chown www-data:www-data *"
 chown www-data:www-data $cyberDojoHome/*
 

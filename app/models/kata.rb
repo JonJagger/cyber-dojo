@@ -1,7 +1,6 @@
 # See comments at end of file
 
 class Kata
-  include ExternalParentChain
 
   def initialize(katas, id)
     fail 'Invalid Kata(id)' unless katas.valid?(id)
@@ -73,6 +72,7 @@ class Kata
 
   private
 
+  include ExternalParentChain
   include ManifestProperty
   include IdSplitter
 

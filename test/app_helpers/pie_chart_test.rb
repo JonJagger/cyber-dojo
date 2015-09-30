@@ -8,9 +8,9 @@ class PieChartTests < AppHelpersTestBase
 
   test '10E59E',
   'pie-chart from avatar.lights' do
-    set_disk_class('DiskStub')
     kata = make_kata
     lion = kata.avatars['lion']
+    lion.dir.make
     lion.dir.write_json('increments.json', [
       {
         'colour' => 'red',
@@ -96,6 +96,8 @@ class PieChartTests < AppHelpersTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - -
+
+  private
 
   def       red_light; Tag.new(nil,{'colour' => :red      }); end
   def     amber_light; Tag.new(nil,{'colour' => :amber    }); end

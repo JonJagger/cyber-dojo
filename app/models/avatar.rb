@@ -1,7 +1,6 @@
 # See comments at end of file
 
 class Avatar
-  include ExternalParentChain
 
   def initialize(kata, name)
     fail 'Invalid Avatar(name)' unless Avatars.valid?(name)
@@ -83,6 +82,7 @@ class Avatar
 
   private
 
+  include ExternalParentChain
   include GitDiff
   include TimeNow
 
@@ -98,52 +98,6 @@ class Avatar
     git.tag(path, "-m '#{tag}' #{tag} HEAD")
   end
 
-  def tag0
-    @zeroth ||=
-    {
-      'event'  => 'created',
-      'time'   => time_now(kata.created),
-      'number' => 0
-    }
-  end
-
-  def write_manifest(files)
-    write_json(manifest_filename, files)
-  end
-
-  def update_manifest(files, output)
-    sandbox.dir.write('output', output) # output is part of diff state
-    files['output'] = output
-    write_manifest(files)
-  end
-
-  def write_increments(increments)
-    write_json(increments_filename, increments)
-  end
-
-  def update_increments(colour, now)
-    rags = increments # Reds/Ambers/Greens
-    tag = rags.length + 1
-    rags << { 'colour' => colour, 'time' => now, 'number' => tag }
-    write_increments(rags)
-    rags
-  end
-
-  def increments
-    read_json(increments_filename)
-  end
-
-  def manifest_filename
-    # Stores cache of avatar's current visible files - filenames and contents.
-    'manifest.json'
-  end
-
-  def increments_filename
-    # Stores cache of colours and time-stamps for all avatar's current [test]s
-    # Helps optimize the review dashboard.
-    'increments.json'
-  end
-
   def user_name
     "#{quoted(name + '_' + kata.id)}"
   end
@@ -154,6 +108,61 @@ class Avatar
 
   def quoted(s)
     '"' + s + '"'
+  end
+
+  # - - - - - - - - - - - - - - - - -
+
+  def write_manifest(files)
+    # The manifest stores a cache of the avatar's
+    # current visible files - filenames and contents.
+    write_json(manifest_filename, files)
+  end
+
+  def update_manifest(files, output)
+    # output is part of diff state
+    sandbox.dir.write('output', output)
+    files['output'] = output
+    write_manifest(files)
+  end
+
+  def manifest_filename
+    'manifest.json'
+  end
+
+  # - - - - - - - - - - - - - - - - -
+
+  def write_increments(increments)
+    # Stores a cache of colours and time-stamps for all the
+    # avatar's current [test]s. Helps optimize the review dashboard.
+    write_json(increments_filename, increments)
+  end
+
+  def update_increments(colour, now)
+    # rags = Reds/Ambers/Greens
+    rags = increments
+    tag = rags.length + 1
+    rags << { 'colour' => colour, 'time' => now, 'number' => tag }
+    write_increments(rags)
+    rags
+  end
+
+  def increments
+    read_json(increments_filename)
+  end
+
+  def increments_filename
+    'increments.json'
+  end
+
+  # - - - - - - - - - - - - - - - - -
+
+  def tag0
+    @zeroth ||=
+    {
+      'event'  => 'created',
+      'time'   => time_now(kata.created),
+      'number' => 0
+    }
   end
 
   def language

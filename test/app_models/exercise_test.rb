@@ -4,19 +4,18 @@ require_relative 'AppModelTestBase'
 
 class ExerciseTests < AppModelTestBase
 
+  test '73C3A7',
+  'exercises[name] is nil if name is not an existing exercise' do
+    assert_nil exercises['wibble_XXX']
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test '2DDD85',
   'exercise path has correct basic format' do
     exercise = exercises['Fizz_Buzz']
     assert exercise.path.match(exercise.name)
     assert correct_path_format?(exercise)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - -
-
-  test '73C3A7',
-  'exists? is false if exercise does not exist' do
-    exercise = exercises['wibble_XXX']
-    refute exercise.exists?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - -

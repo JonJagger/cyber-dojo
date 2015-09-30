@@ -1,6 +1,5 @@
 
 class Exercise
-  include ExternalParentChain
 
   def initialize(exercises, name, instructions = nil)
     @parent = exercises
@@ -23,6 +22,8 @@ class Exercise
   end
 
   private
+
+  include ExternalParentChain
 
   def instructions_filename
     'instructions'

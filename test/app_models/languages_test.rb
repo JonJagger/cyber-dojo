@@ -4,6 +4,13 @@ require_relative 'AppModelTestBase'
 
 class LanguagesTests < AppModelTestBase
 
+  test '71C327',
+  'languages[name] is nil if name is not an existing language' do
+    assert_nil languages['wibble_XXX']
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - -
+
   test '743810',
   'languages path has correct format when set with trailing slash' do
     path = 'slashed/'
@@ -25,23 +32,39 @@ class LanguagesTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - -
 
   test '7D53C5',
-  'refresh_cache requires manifest.json for each file to read display_name from' do
+  'refresh_cache requires manifest.json for each file to read display_name from' +
+    ' but use of cached info does not reaccess manifest.json' do
     set_disk_class('DiskFake')
-    runey = languages['R-runey']
-    runey.dir.write_json('manifest.json', { 'display_name' => 'R,Rooney' })
+    dir_name = 'g++4.8.4'
+    test_dir_name = 'assert'
+    cpp_assert = Language.new(languages, dir_name, test_dir_name)
+    language_display_name = 'C++ (g++)'
+    display_name = language_display_name + ', ' + test_dir_name
+    image_name = 'cyberdojofoundation/gpp-4.8.4_assert'
+    manifest_filename = 'manifest.json'
+    cpp_assert.dir.make
+    cpp_assert.dir.write_json(manifest_filename, {
+      'display_name' => display_name,
+      'image_name'   => image_name
+    })
     languages.refresh_cache
+    cpp_assert.dir.delete(manifest_filename)
     languages_names = languages.map(&:name).sort
-    assert_equal ['R-Rooney'], languages_names
-    assert_equal 'R',        runey.dir_name
-    assert_equal 'runey',    runey.test_dir_name
-    assert_equal 'R,Rooney', runey.display_name
+    assert_equal [language_display_name + '-' + test_dir_name], languages_names
+    # get from cache
+    cpp_assert = languages[language_display_name + '-' + test_dir_name]
+    assert_equal dir_name,      cpp_assert.dir_name
+    assert_equal test_dir_name, cpp_assert.test_dir_name
+    assert_equal display_name,  cpp_assert.display_name
+    assert_equal image_name,    cpp_assert.image_name
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
   test '15BD19',
   'no languages when cache is empty' do
-    languages.dir.write_json('cache.json', {})
+    set_disk_class('DiskFake')
+    languages.dir.write_json(cache_filename, {})
     assert_equal [], languages.to_a
   end
 
@@ -49,6 +72,7 @@ class LanguagesTests < AppModelTestBase
 
   test '09A1D4',
   'languages from cache when cache is not empty' do
+    set_disk_class('DiskFake')
     cache = {
       'Asm, assert' => {
              dir_name: 'Asm',
@@ -59,7 +83,7 @@ class LanguagesTests < AppModelTestBase
         test_dir_name: 'assert'
       }
     }
-    languages.dir.write_json('cache.json', cache)
+    languages.dir.write_json(cache_filename, cache)
     languages_names = languages.map(&:name).sort
 
     assert_equal ['Asm-assert', 'C++ (g++)-assert'], languages_names
@@ -77,7 +101,7 @@ class LanguagesTests < AppModelTestBase
 
   test '69110F',
   'languages[X] is language named X' do
-    ['C (gcc)-assert', 'C#-NUnit'].each do |name|
+    ['C (clang)-assert', 'C#-NUnit'].each do |name|
       assert_equal name, languages[name].name
     end
   end
@@ -180,6 +204,10 @@ class LanguagesTests < AppModelTestBase
 
   def cyber_dojo_root
     Dir.pwd + '/../..'
+  end
+
+  def cache_filename
+    Languages.cache_filename
   end
 
 end
