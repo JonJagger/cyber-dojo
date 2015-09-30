@@ -11,6 +11,6 @@
   "filename_extension": ".js",
   "unit_test_framework": "qunit",
   "display_name": "Javascript, qunit+sinon",
-  "image_name": "cyberdojofoundation/javascript-0.12.7_qunit_sinon_chai",
+  "image_name": "cyberdojofoundation/javascript-node_qunit_sinon",
   "tab_size": 2
 }
