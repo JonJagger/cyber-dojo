@@ -1,8 +1,11 @@
 # See comments at end of file
 
 class Languages
-  include ExternalParentChain
   include Enumerable
+
+  def self.cache_filename
+    'languages_cache.json'
+  end
 
   def initialize(dojo, path)
     @parent = dojo
@@ -19,7 +22,10 @@ class Languages
 
   def [](name)
     dir_name, test_dir_name = renamed(name)
-    make_language(dir_name, test_dir_name) # See comment below
+    languages.find do |language|
+      language.dir_name == dir_name &&
+        language.test_dir_name == test_dir_name
+    end
   end
 
   def renamed(was_name)
@@ -36,18 +42,19 @@ class Languages
     dir.each_dir do |dir_name|
       disk[path + dir_name].each_dir do |test_dir_name|
         language = make_language(dir_name, test_dir_name)
-        if language.exists?
-          cache[language.display_name] = {
-            dir_name: language.dir_name,
-            test_dir_name: language.test_dir_name
-          }
-        end
+        cache[language.display_name] = {
+               dir_name: dir_name,
+          test_dir_name: test_dir_name,
+             image_name: language.image_name
+        }
       end
     end
-    write_json(cache_filename, cache)
+    write_json(self.class.cache_filename, cache)
   end
 
   private
+
+  include ExternalParentChain
 
   def new_name(name)
     # maps from a language&test display_name into a
@@ -80,6 +87,8 @@ class Languages
       # display name is different to folder name
       'C++-catch'                   => 'C++-Catch',
       'Javascript-Mocha+chai+sinon' => 'Javascript-mocha_chai_sinon',
+      'Javascript-qunit+sinon'      => 'Javascript-qunit_sinon',
+      'Javascript-jasmine'          => 'Javascript-jasmine2.3',
       'Perl-Test::Simple'           => 'Perl-TestSimple',
       'Python-py.test'              => 'Python-pytest',
       'Ruby-RSpec'                  => 'Ruby-Rspec',
@@ -95,12 +104,12 @@ class Languages
       # replaced
       'R-stopifnot' => 'R-RUnit',
 
-      # rename to distinguish from [C (clang)]
+      # renamed to distinguish from [C (clang)]
       'C-assert'   => 'C (gcc)-assert',
       'C-Unity'    => 'C (gcc)-Unity',
       'C-CppUTest' => 'C (gcc)-CppUTest',
 
-      # rename to distinguish from [C++ (clang++)]
+      # renamed to distinguish from [C++ (clang++)]
       'C++-assert'     => 'C++ (g++)-assert',
       'C++-Boost.Test' => 'C++ (g++)-Boost.Test',
       'C++-Catch'      => 'C++ (g++)-Catch',
@@ -124,12 +133,6 @@ class Languages
       'Ruby-TestUnit'      => 'Ruby1.9.3-TestUnit',
       'Ruby-Rspec'         => 'Ruby1.9.3-Rspec',
       'Ruby-MiniTest'      => 'Ruby2.1.3-MiniTest',
-
-      # multiple language versions
-      'Javascript-jasmine' => 'Javascript0.12.7-jasmine2.3',
-      'Javascript-qunit+sinon' => 'Javascript0.12.7-qunit_sinon',
-      'Javascript-jasmine' => 'Javascript-jasmine2.3'
-
     }
     (renames[name] || name).split('-')
   end
@@ -140,42 +143,20 @@ class Languages
 
   def read_cache
     cache = []
-    read_json(cache_filename).each do |display_name, language|
-      cache << make_language(language['dir_name'], language['test_dir_name'], display_name)
+    read_json(self.class.cache_filename).each do |display_name, language|
+           dir_name = language['dir_name']
+      test_dir_name = language['test_dir_name']
+         image_name = language['image_name']
+      cache << make_language(dir_name, test_dir_name, display_name, image_name)
     end
     cache
   end
 
-  def make_language(dir_name, test_dir_name, display_name = nil)
-    Language.new(self, dir_name, test_dir_name, display_name)
-  end
-
-  def cache_filename
-    'cache.json'
+  def make_language(dir_name, test_dir_name, display_name = nil, image_name = nil)
+    Language.new(self, dir_name, test_dir_name, display_name, image_name)
   end
 
 end
-
-# - - - - - - - - - - - - - - - - - - - - - - - -
-# Refactoring [](name) to ...
-#
-#    dir_name,test_dir_name = renamed(name)
-#    languages.find {|language|
-#      language.dir_name == dir_name &&
-#      language.test_dir_name == test_dir_name
-#    }
-#
-# would be nice since it would make use of the cache
-# but breaks lots of tests because they use DirFake
-# without a languages cache.
-#
-# Note too that ideally the languages cache would
-# include the image_name since that is used for
-# setup page filtering.
-# I'd like for setup page to only need to read
-# the single cache file.
-# - - - - - - - - - - - - - - - - - - - - - - - -
-
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # Upgrading? Multiple language versions?
@@ -204,7 +185,7 @@ end
 # Many people will have built their own cyber-dojo servers and might *not* want
 # or need to upgrade their servers to use the latest docker containers for
 # the latest language/test even if it exists.
-# This means the cyberdojo docker index needs to keep old versions of
+# This means the cyberdojofoundation docker index needs to keep old versions of
 # language/test docker containers even when newer ones exist.
 # Viz, a docker container name needs to have a version number in it.
 
