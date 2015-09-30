@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/javascript-0.10.25_assert  .
+docker build -t cyberdojofoundation/javascript-node_assert  .

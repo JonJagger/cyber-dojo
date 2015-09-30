@@ -7,5 +7,9 @@
 #NODE_VERSION=0.12.7
 NODE_VERSION=4.1.1
 #
-# Use npm package 'n' to get bin path to 'node' with selected node version:
-`n bin $NODE_VERSION` *Test*.js
+# Create a dummy file config.js for qunit call --code needs a js file
+qunitDummyConfigFile=config.js
+echo '' > $qunitDummyConfigFile
+#
+# Use npm package 'n' to call qunitwith selected node version:
+n use $NODE_VERSION /usr/local/bin/qunit --code $qunitDummyConfigFile --tests *-test.js

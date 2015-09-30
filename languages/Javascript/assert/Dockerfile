@@ -1,3 +1,2 @@
-FROM       cyberdojofoundation/javascript-0.10.25
+FROM       cyberdojofoundation/javascript-node
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
-

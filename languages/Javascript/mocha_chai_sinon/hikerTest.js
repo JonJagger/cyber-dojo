@@ -1,6 +1,6 @@
 'use strict';
 
-var the = require('./hiker.js');
+let Hiker = require('./hiker.js');
 
 //----------------------------------------------------
 // This test has nothing to do with the chosen exercise.
@@ -9,6 +9,6 @@ var the = require('./hiker.js');
 
 describe('Should Style: Answer', function () {
   it('to life the universe and everything', function () {
-    the.answer().should.equal(42);
+    new Hiker().answer().should.equal(42);
   });
 });

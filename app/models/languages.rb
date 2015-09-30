@@ -86,7 +86,9 @@ class Languages
 
       # display name is different to folder name
       'C++-catch'                   => 'C++-Catch',
+      'Javascript-jasmine'          => 'Javascript-jasmine2.3',
       'Javascript-Mocha+chai+sinon' => 'Javascript-mocha_chai_sinon',
+      'Javascript-qunit+sinon'      => 'Javascript-qunit_sinon',
       'Perl-Test::Simple'           => 'Perl-TestSimple',
       'Python-py.test'              => 'Python-pytest',
       'Ruby-RSpec'                  => 'Ruby-Rspec',
@@ -131,10 +133,6 @@ class Languages
       'Ruby-TestUnit'      => 'Ruby1.9.3-TestUnit',
       'Ruby-Rspec'         => 'Ruby1.9.3-Rspec',
       'Ruby-MiniTest'      => 'Ruby2.1.3-MiniTest',
-
-      # multiple language versions
-      'Javascript-jasmine'     => 'Javascript0.12.7-jasmine2.3',
-      'Javascript-qunit+sinon' => 'Javascript0.12.7-qunit_sinon'
     }
     (renames[name] || name).split('-')
   end
