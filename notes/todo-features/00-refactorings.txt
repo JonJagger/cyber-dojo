@@ -1,14 +1,47 @@
 
-o) use ramdisk for *all* tests.
-   rework tests so CYBER_DOJO_KATAS_ROOT must be set or it is an error?
+o) language.dir_name
+      make private?
+   language.test_dir_name
+      make private?
 
-o) delete test code that is now redundant?
+o) language.name
+   can this be dropped?
+
+o) forker_controller now does not do
+     !kata.language.exists?
+   instead does
+     kat.language.nil?
+   can language.exists? be dropped?
+   can all .exists? be dropped?
+
+o) languages[] idea
+     cache[display_name] || cache[renamed(display_name)]
 
 o) note duplication now in
    test/app_controller/AppControllerTestBase.rb and
    test/app_models/AppModelTestBase.rb and
    test/app_helpers/AppHelpersTestBase.rb
    test/lib/LibTestBase.rb and
+
+o) move avatar.diff() into module app_lib/git_diff.rb
+
+o) move languages.rename() into dedicated class/module
+
+o) lib/*.rb classes need to be converted to a_b.rb file format
+   and rubocop'd
+
+o) cache the result of
+   `docker images`
+   in the ram_disk cache to speed up the opening page?
+   /mnt/ram_disk/languages/docker_images.cache
+   chown www-data:www-data it too
+   Do this as part of admin_scripts/pull.sh
+   Does this mean RUNNER should have its own env var ROOT?
+
+o) use ramdisk for *all* tests.
+   rework tests so CYBER_DOJO_KATAS_ROOT must be set or it is an error?
+
+o) delete test code that is now redundant?
 
 o) test/languages
      ./check_one_language.rb ok
@@ -23,27 +56,9 @@ o) test/languages
      sudo -E -u www-data ./check_one_language.rb 'C (gcc)' CppUTest verbose
      This appears to be because it does not check if the docker-image is installed.
 
-o) forker_controller now does not do
-     !kata.language.exists?
-   instead does
-     kat.language.nil?
-   can language.exists? be dropped?
-   can all .exists? be dropped?
-
-o) I think dir_name and test_dir_name can be made private in Language.rb
-   once they are no longer used in []
-
-o) languages cache has scope for improvement
-   the cache could be
-     { display_name -> Language object }
-   that way the [] indexer can do
-   def [](name)
-     display_name = new_name(name)
-     languages[display_name]
-   end
-   or
+o) languages [] idea
    def [](language_name, test_name)
-     languages[display_name(language_name, test_name)]
+     ...
    end
    If I use this [,] careful about forking. Comes to kata.language
    which does this
@@ -51,12 +66,6 @@ o) languages cache has scope for improvement
    language property of kata manifest is language.name
    which does this
      display_name.split(',').map(&:strip).join('-')
-   Should be able to do
-     cache[display_name] || cache[renamed(dislay_name)]
-   And refactor the rename table so it works on display names and
-   not on folder names.
-   Possibly update all display-names on cyber-dojo so I don't need
-   the renamed() function at all.
 
 o) reinstate app_controllers/download tests
    should be fast now I'm using ram_disk
@@ -71,27 +80,15 @@ o) app/models/external_parent_chain.rb
    move module_function to top so all methods are private inside included class?
    If any test does, eg, kata.dir I can instead do disk[kata.path]
 
-o) move avatar.diff() into module app_lib/git_diff.rb
-
 o) test/lib/DirFake.rb
    has [make] call in write(filename, s) that does not match
    write(filename, s) in HostDir.rb
-
-o) lib/*.rb classes need to be converted to a_b.rb file format
-   and rubocop'd
 
 o) assuming git running on /mnt/ramdisk/katas is fast enough
    there would appear to be scope to refactor the git class
    so it is passed the folder it is associated with in initialize()
    Then drop path argument from all git methods.
 
-o) cache the result of
-   `docker images`
-   in the ram_disk cache to speed up the opening page?
-   /mnt/ram_disk/languages/docker_images.cache
-   chown www-data:www-data it too
-   Do this as part of admin_scripts/pull.sh
-   Does this mean RUNNER should have its own env var ROOT?
 
 
 
