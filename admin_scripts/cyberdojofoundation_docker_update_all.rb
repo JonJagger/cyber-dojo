@@ -81,10 +81,14 @@ def conversion
     foundation("java-1.8_mockito"),
     foundation("java-1.8_powermockito"),
 # Javascript
-    foundation("javascript-0.10.15",              "javascript-0.10.25"),
-    foundation("javascript-0.10.15_assert",       "javascript-0.10.25_assert"),
-    foundation("javascript-0.10.15_jasmine",      "javascript-0.12.7_jasmine-2.3"),
-    foundation("javascript-mocha",                "javascript-0.10.25_mocha_chai_sinon"),
+    foundation("javascript-0.10.15",                  "javascript-0.10.25"),
+    foundation("javascript-0.10.15_assert",           "javascript-node_assert"),
+    foundation("javascript-0.10.25_assert",           "javascript-node_assert"),
+    foundation("javascript-0.10.15_jasmine",          "javascript-node_jasmine-2.3"),
+    foundation("javascript-0.12.7_jasmine-2.3 ",      "javascript-node_jasmine-2.3"),
+    foundation("javascript-mocha",                    "javascript-node_mocha_chai_sinon"),
+    foundation("javascript-0.10.25_mocha_chai_sinon", "javascript-node_mocha_chai_sinon"),
+    foundation("javascript-0.12.7_qunit_sinon_chai",  "javascript-node_qunit_sinon"),
 # Perl
     foundation("perl-5.14.2",                     "perl-5.18.2"),
     foundation("perl-5.14.2_test_simple",         "perl-5.18.2_test_simple"),
