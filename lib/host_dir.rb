@@ -3,7 +3,8 @@ require 'fileutils'
 class HostDir
 
   def initialize(disk,path)
-    @disk,@path = disk,path
+    @disk = disk
+    @path = path
     @path += separator unless @path.end_with?(separator)
   end
 
@@ -44,7 +45,7 @@ class HostDir
     fail RuntimeError.new('not a string') unless s.is_a? String
     pathed_filename = path + filename
     File.open(pathed_filename, 'w') { |fd| fd.write(s) }
-    File.chmod(execute = 0755, pathed_filename) if pathed_filename.end_with?('.sh')
+    File.chmod(0755, pathed_filename) if pathed_filename.end_with?('.sh')
   end
 
   def read_json(filename)
@@ -76,7 +77,7 @@ class HostDir
     result
   end
 
-private
+  private
 
   include StringCleaner
 

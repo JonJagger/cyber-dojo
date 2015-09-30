@@ -6,7 +6,7 @@ class Bash
     return output, $?.exitstatus
   end
 
-private
+  private
 
   include Stderr2Stdout
 

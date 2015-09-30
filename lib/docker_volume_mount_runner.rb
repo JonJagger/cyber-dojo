@@ -6,13 +6,14 @@
 #
 # Comments at end of file
 
-require_relative './DockerTimesOutRunner'
+require_relative './docker_times_out_runner'
 require 'tempfile'
 
 class DockerVolumeMountRunner
 
   def initialize(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
-    @bash,@cid_filename = bash,cid_filename
+    @bash = bash
+    @cid_filename = cid_filename
     raise_if_docker_not_installed
   end
 
@@ -24,11 +25,11 @@ class DockerVolumeMountRunner
         " -v #{quoted(sandbox_volume)}" +
         ' -w /sandbox'
     language = sandbox.avatar.kata.language
-    cmd = timeout(command,max_seconds)
+    cmd = timeout(command, max_seconds)
     times_out_run(options, language.image_name, cmd, max_seconds)
   end
 
-private
+  private
 
   include DockerTimesOutRunner
 

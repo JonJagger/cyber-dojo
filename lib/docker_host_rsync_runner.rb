@@ -6,16 +6,17 @@
 #
 # Comments at end of file
 
-require_relative './DockerTimesOutRunner'
+require_relative './docker_times_out_runner'
 require 'tempfile'
 require 'resolv'
 
 class DockerHostRsyncRunner
 
   def initialize(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
-    @bash,@cid_filename = bash,cid_filename
+    @bash = bash
+    @cid_filename = cid_filename
     raise_if_docker_not_installed
-    @ip_address,_ = bash("ip route show | grep docker0 | awk '{print $9}' | tr -d '\n'")
+    @ip_address, _ = bash("ip route show | grep docker0 | awk '{print $9}' | tr -d '\n'")
     raise_if_bad_ip_address
   end
 
@@ -28,19 +29,19 @@ class DockerHostRsyncRunner
     kata_path = "#{outer(id)}/#{inner(id)}"
     cmds = [
       "rsync -rtW cyber-dojo@#{@ip_address}::katas/#{kata_path}/#{avatar.name}/sandbox /tmp",
-      "cd /tmp/sandbox && #{timeout(command,max_seconds)}"
+      "cd /tmp/sandbox && #{timeout(command, max_seconds)}"
     ].join(';')
 
     times_out_run(options, language.image_name, cmds, max_seconds)
   end
 
-private
+  private
 
   include DockerTimesOutRunner
   include IdSplitter
 
   def raise_if_bad_ip_address
-    raise RuntimeError.new("bad ip #{@ip_address}") if (@ip_address =~ Resolv::IPv4::Regex) != 0
+    fail RuntimeError.new("bad ip #{@ip_address}") if (@ip_address =~ Resolv::IPv4::Regex) != 0
   end
 
 end

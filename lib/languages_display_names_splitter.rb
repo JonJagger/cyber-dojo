@@ -1,7 +1,7 @@
 
 class LanguagesDisplayNamesSplitter
 
-  def initialize(display_names,selected_index)
+  def initialize(display_names, selected_index)
     @display_names = display_names
     @selected_index = selected_index
   end

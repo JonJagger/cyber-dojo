@@ -2,21 +2,21 @@
 # this list has order dependencies
 
 %w{
-  IdSplitter
+  id_splitter
   Stderr2Stdout
-  StringCleaner
-  Bash
-  BackgroundProcess
-  Runner
-    DockerTimesOutRunner
-    DockerVolumeMountRunner
-    DockerHostRsyncRunner
-  HostDisk
-  HostDir
-  HostGit
-  TimeNow
-  UniqueId
-  LanguagesDisplayNamesSplitter
-  OneSelfDummy
-  CurlOneSelf
+  string_cleaner
+  bash
+  background_process
+  runner
+    docker_times_out_runner
+    docker_volume_mount_runner
+    docker_host_rsync_runner
+  host_disk
+  host_dir
+  host_git
+  time_now
+  unique_id
+  languages_display_names_splitter
+  one_self_dummy
+  curl_one_self
 }.each { |sourcefile| require_relative './' + sourcefile }

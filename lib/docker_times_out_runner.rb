@@ -1,5 +1,5 @@
 
-require_relative './Runner'
+require_relative './runner'
 require_relative './Stderr2Stdout'
 
 # Assumes:
@@ -18,12 +18,12 @@ module DockerTimesOutRunner # mix-in
   include Stderr2Stdout
 
   def raise_if_docker_not_installed
-    raise RuntimeError.new('Docker not installed') if !installed?
+    fail RuntimeError.new('Docker not installed') unless installed?
   end
 
   def installed?
-    _,exit_status = bash('docker info')
-    exit_status === 0
+    _, exit_status = bash('docker info')
+    exit_status == 0
   end
 
   def image_names
@@ -31,9 +31,9 @@ module DockerTimesOutRunner # mix-in
   end
 
   def read_image_names
-    output,_ = bash('docker images')
-    lines = output.split("\n").select{|line| line.start_with?('cyberdojofoundation')}
-    image_names = lines.collect{|line| line.split[0]}
+    output, _ = bash('docker images')
+    lines = output.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
+    lines.collect { |line| line.split[0] }
   end
 
   def times_out_run(options, image_name, cmd, max_seconds)
@@ -45,10 +45,10 @@ module DockerTimesOutRunner # mix-in
       " #{options.strip}" +
       " #{image_name}" +
       " /bin/bash -c #{quoted(cmd)}",
-      max_seconds+5)
+      max_seconds + 5)
 
-    output,exit_status = bash(outer_command)
-    pid,_ = bash("cat #{@cid_filename}")
+    output, exit_status = bash(outer_command)
+    pid, _ = bash("cat #{@cid_filename}")
     bash("docker stop #{pid}")
     bash("docker rm #{pid}")
     exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
@@ -62,7 +62,7 @@ module DockerTimesOutRunner # mix-in
     '"' + arg + '"'
   end
 
-  def timeout(command,secs)
+  def timeout(command, secs)
     "timeout --signal=#{kill} #{secs}s #{stderr2stdout(command)}"
   end
 
