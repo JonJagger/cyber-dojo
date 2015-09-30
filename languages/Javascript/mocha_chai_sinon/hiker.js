@@ -1,9 +1,10 @@
+'use strict';
 
-//----------------------------------------------------
-// This code has nothing to do with the chosen exercise.
-// It's only to help you get started.
-//----------------------------------------------------
+module.exports =
+class Hiker {
+  constructor() {}
 
-exports.answer = function () {
-  return 6 * 9;
-};
+  answer() {
+    return 6 * 9;
+  }
+}
