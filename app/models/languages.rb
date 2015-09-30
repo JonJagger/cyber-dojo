@@ -42,13 +42,11 @@ class Languages
     dir.each_dir do |dir_name|
       disk[path + dir_name].each_dir do |test_dir_name|
         language = make_language(dir_name, test_dir_name)
-        if language.exists?
-          cache[language.display_name] = {
-                 dir_name: language.dir_name,
-            test_dir_name: language.test_dir_name,
-               image_name: language.image_name
-          }
-        end
+        cache[language.display_name] = {
+               dir_name: dir_name,
+          test_dir_name: test_dir_name,
+             image_name: language.image_name
+        }
       end
     end
     write_json(self.class.cache_filename, cache)

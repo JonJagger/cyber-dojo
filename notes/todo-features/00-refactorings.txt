@@ -28,6 +28,11 @@ o) forker_controller now does not do
    instead does
      kat.language.nil?
    can language.exists? be dropped?
+   can all .exists? be dropped?
+
+o) I think dir_name and test_dir_name can be dropped from Language.rb
+   They are only used in refresh_cache but that's where the dirs are
+   iterated over and the dir names are directly available.
 
 o) languages cache has scope for improvement
    the cache could be
@@ -47,7 +52,12 @@ o) languages cache has scope for improvement
    language property of kata manifest is language.name
    which does this
      display_name.split(',').map(&:strip).join('-')
-
+   Should be able to do
+     cache[display_name] || cache[renamed(dislay_name)]
+   And refactor the rename table so it works on display names and
+   not on folder names.
+   Possibly update all display-names on cyber-dojo so I don't need
+   the renamed() function at all.
 
 o) create a new caches folder to go with exercises/ languages/ and katas/
    this will hold exercises.cache languages.cache and
@@ -69,7 +79,7 @@ o) test/lib/DirFake.rb
    has [make] call in write(filename, s) that does not match
    write(filename, s) in HostDir.rb
 
-o) lib/*.rb classes need to be converted to a_b_c.rb file format
+o) lib/*.rb classes need to be converted to a_b.rb file format
    and rubocop'd
 
 o) assuming git running on /mnt/ramdisk/katas is fast enough
