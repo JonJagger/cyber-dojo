@@ -5,6 +5,7 @@
   dojo
   language
   languages
+  languages_names
   exercise
   exercises
   avatar
