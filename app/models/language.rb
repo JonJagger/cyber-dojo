@@ -15,6 +15,7 @@ class Language
   end
 
   def name
+    # as stored in the kata's manifest
     display_name.split(',').map(&:strip).join('-')
   end
 

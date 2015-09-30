@@ -1,7 +1,4 @@
 
-o) language.name
-   can this be dropped?
-
 o) names of folders are now decoupled
    s/g++4.8.4/C++ (g++4.8.4)/
    s/g++4.9/C++ (g++4.9)/
