@@ -11,7 +11,7 @@ class Language
   end
 
   def path
-    @parent.path + dir_name + '/' + test_dir_name + '/'
+    @parent.path + @dir_name + '/' + @test_dir_name + '/'
   end
 
   def name
@@ -162,8 +162,6 @@ class Language
 
   include ExternalParentChain
   include ManifestProperty
-
-  attr_reader :dir_name, :test_dir_name
 
   def cyber_dojo_sh
     visible_files['cyber-dojo.sh'].strip
