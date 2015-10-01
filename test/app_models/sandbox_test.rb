@@ -17,8 +17,8 @@ class SandboxTests < AppModelTestBase
 
   test '721FF6',
   "avatar's sandbox == sandbox's avatar" do
-    kata = katas['45ED23A2F1']
-    avatar = kata.avatars['hippo']
+    kata = make_kata
+    avatar = kata.start_avatar(['hippo'])
     sandbox = avatar.sandbox
     assert_equal avatar, sandbox.avatar
   end
@@ -26,11 +26,11 @@ class SandboxTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '2D9F15',
-  'dir is not initially created' do
-    kata = katas['45ED23A2F1']
-    avatar = kata.avatars['hippo']
+  'dir is initially created' do
+    kata = make_kata
+    avatar = kata.start_avatar(['hippo'])
     sandbox = avatar.sandbox
-    refute sandbox.dir.exists?
+    assert disk[sandbox.path].exists?
   end
 
 end

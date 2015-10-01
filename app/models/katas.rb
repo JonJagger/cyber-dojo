@@ -31,7 +31,7 @@ class Katas
       ''
     ].join("\n") + exercise.instructions
     manifest[:visible_files]['instructions'] = text
-    kata = self[id]
+    kata = Kata.new(self, id)
     kata.dir.make
     kata.dir.write_json('manifest.json', manifest)
     kata.dir.write_json('started_avatars.json', [])
@@ -59,17 +59,8 @@ class Katas
   end
 
   def [](id)
-    Kata.new(self, id)
-  end
-
-  def valid?(id)
-    id.class.name == 'String' &&
-      id.length == 10 &&
-      id.chars.all? { |char| hex?(char) }
-  end
-
-  def exists?(id)
-    valid?(id) && self[id].exists?
+    kata = Kata.new(self, id)
+    valid?(id) && disk[kata.path].exists? ? kata : nil
   end
 
   def complete(id)
@@ -92,6 +83,12 @@ class Katas
   include IdSplitter
   include TimeNow
   include UniqueId
+
+  def valid?(id)
+    id.class.name == 'String' &&
+      id.length == 10 &&
+        id.chars.all? { |char| hex?(char) }
+  end
 
   def hex?(char)
     '0123456789ABCDEF'.include?(char)

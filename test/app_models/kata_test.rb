@@ -5,7 +5,7 @@ require_relative 'AppModelTestBase'
 class KataTests < AppModelTestBase
 
   test 'F3B8B1',
-  'attempting to create a Kata with an invalid id raises a RuntimeError' do
+  'attempting to access a Kata with an invalid is nil' do
     bad_ids = [
       nil,          # not string
       Object.new,   # not string
@@ -15,7 +15,11 @@ class KataTests < AppModelTestBase
       '123456789S'  # not 0-9A-F
     ]
     bad_ids.each do |bad_id|
-      assert_raises(RuntimeError) { katas[bad_id] }
+      begin
+        kata = katas[bad_id]
+        assert_nil kata
+      rescue StandardError
+      end
     end
   end
 
@@ -24,7 +28,7 @@ class KataTests < AppModelTestBase
   test '677A57',
   'id reads back as set' do
     id = unique_id
-    kata = katas[id]
+    kata = make_kata(id)
     assert_equal id, kata.id
   end
 
@@ -32,7 +36,7 @@ class KataTests < AppModelTestBase
 
   test '6F3999',
   "kata's path has correct format" do
-    kata = katas[unique_id]
+    kata = make_kata
     assert correct_path_format?(kata)
   end
 
@@ -40,31 +44,9 @@ class KataTests < AppModelTestBase
 
   test '1E4B7A',
   'path is split ala git' do
-    kata = katas[unique_id]
+    kata = make_kata
     split = kata.id[0..1] + '/' + kata.id[2..-1]
     assert kata.path.include?(split)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'C11AFC',
-  'exists? is false before dir is made' do
-    kata = katas[unique_id]
-    refute kata.exists?
-    kata.dir.make
-    assert kata.exists?
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test '8EA395',
-    'when kata does not exist' +
-       ' then it is not active' +
-       ' and its age is zero' do
-    kata = katas[unique_id]
-    refute kata.exists?
-    refute kata.active?
-    assert_equal 0, kata.age
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

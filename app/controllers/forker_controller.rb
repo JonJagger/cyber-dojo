@@ -5,7 +5,7 @@ class ForkerController < ApplicationController
     result = { forked: false }
     error = false
 
-    if !error && !katas.exists?(id)
+    if !error && katas[id].nil?
       error = true
       result[:reason] = 'dojo'
       result[:dojo] = id
@@ -49,7 +49,7 @@ class ForkerController < ApplicationController
               visible_files: avatar.tags[tag].visible_files
       }
 
-      kata = dojo.katas[id]
+      kata = Kata.new(dojo.katas, id)
       kata.dir.make
       kata.dir.write_json('manifest.json', manifest)
       result[:forked] = true

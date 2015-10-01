@@ -51,6 +51,8 @@ class KatasTests < AppModelTestBase
     assert_equal k.id.to_s, kata.id.to_s
   end
 
+  # TODO: put commented out tests below here
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # katas.each()
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -149,6 +151,7 @@ class KatasTests < AppModelTestBase
     assert_equal id, katas.complete(id.downcase[0..5])
   end
 
+=begin
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # katas.valid?(id)
   # katas.exists?(id)
@@ -197,5 +200,6 @@ class KatasTests < AppModelTestBase
     assert katas.valid?(id)
     assert katas.exists?(id)
   end
+=end
 
 end

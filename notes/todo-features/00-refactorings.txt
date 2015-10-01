@@ -17,6 +17,11 @@ o) can language.exists? be dropped?
      id_path = path + outer(id) + inner(id)
      disk[id_path].exists? ? Kata.new(self, id) : nil
    end
+   or
+   def [](id)
+    kata = Kata.new(self, id)
+    disk[kata.path].exists? ? kata : nil
+   end
 
 o) app/models/external_parent_chain.rb
    move module_function to top so all methods are private inside included class?

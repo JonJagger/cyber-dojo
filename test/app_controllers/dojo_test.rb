@@ -53,24 +53,24 @@ class DojoControllerTest < AppControllerTestBase
   #- - - - - - - - - - - - - - - -
 
   test 'AF2F15',
-  'enter with no id raises RuntimeError' do
-    assert_raises(RuntimeError) { enter }
+  'enter with no id raises' do
+    assert_raises { enter }
   end
 
   #- - - - - - - - - - - - - - - -
 
   test '9AFB84',
-  'enter with empty string id raises RuntimeError' do
+  'enter with empty string id raises' do
     @id = ''
-    assert_raises(RuntimeError) { enter }
+    assert_raises { enter }
   end
 
   #- - - - - - - - - - - - - - - -
 
   test 'E16A79',
-  'enter with id that does not exist raises RuntimeError' do
+  'enter with id that does not exist raises' do
     @id = 'ab00ab11ab'
-    assert_raise(RuntimeError) { enter }
+    assert_raise { enter }
   end
 
   #- - - - - - - - - - - - - - - -

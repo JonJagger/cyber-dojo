@@ -3,7 +3,8 @@
 class Kata
 
   def initialize(katas, id)
-    fail 'Invalid Kata(id)' unless katas.valid?(id)
+    # Does *not* validate id.
+    # All access to kata object must come through katas[id]
     @parent = katas
     @id = id
   end
