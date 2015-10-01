@@ -18,10 +18,6 @@ o) can language.exists? be dropped?
      disk[id_path].exists? ? Kata.new(self, id) : nil
    end
 
-o) names of folders are now decoupled
-   s/g++4.8.4/C++ (g++) 4.8.4/
-   s/g++4.9/C++ (g++) 4.9/
-
 o) app/models/external_parent_chain.rb
    move module_function to top so all methods are private inside included class?
    If any test does, eg, kata.dir I can instead do disk[kata.path]
@@ -38,7 +34,7 @@ o) move avatar.diff() into module app_lib/git_diff.rb
      visible_files = avatar.tags[m].visible_files
      git_diff(diff_lines, visible_files)
 
-o) move language - cyber-dojo update code into dedicated class/module
+o) move language - cyber-dojo.sh update code into dedicated class/module
 
 o) note duplication now in
    test/app_controller/AppControllerTestBase.rb and
