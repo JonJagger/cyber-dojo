@@ -3,16 +3,17 @@ o) forker_controller now does not do
      !kata.language.exists?
    instead does
      kata.language.nil?
-   can language.exists? be dropped?
+   but can actually do language.exists?
+   because external_parent_chain provides that! (for now)
+   make exists? private (move module_function) and see what breaks.
+
+o) can language.exists? be dropped?
    can all .exists? be dropped?
    I think this will involve mapping, eg
      katas.exists?(id) into
      !katas[id].nil?
    An in each case making sure the "indexer" does now
    throw but returns nil instead.
-   Clashes with external_parent_chain.rb !!!
-   exercise.exists?
-   language.exists?
    katas.exists?(id)
 
 o) kata.finished?

@@ -23,10 +23,6 @@ class Language
     @display_name ||= manifest_property
   end
 
-  def exists?
-    dir.exists?(manifest_filename)
-  end
-
   def runnable?
     runner.runnable?(self)
   end

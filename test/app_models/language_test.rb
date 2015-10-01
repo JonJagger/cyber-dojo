@@ -40,13 +40,11 @@ class LanguageTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'F273BE',
-  'exists? is true only when dir and manifest exist' do
+  'exists? is true only when dir exists' do
     @language = make_language('C#', 'NUnit')
     refute @language.exists?, '1'
     @language.dir.make
-    refute @language.exists?, '2'
-    spy_manifest({})
-    assert @language.exists?, '3'
+    assert @language.exists?, '2'
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

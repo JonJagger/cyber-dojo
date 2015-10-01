@@ -13,10 +13,6 @@ class Exercise
     @parent.path + name + '/'
   end
 
-  def exists?
-    dir.exists?(instructions_filename)
-  end
-
   def instructions
     @instructions || read(instructions_filename)
   end
