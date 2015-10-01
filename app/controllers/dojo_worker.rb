@@ -1,5 +1,7 @@
 
-module DojoWorker
+module DojoWorker # mix-in
+
+  module_function
 
   def dojo_exists
     @dojo_exists ||= katas.exists?(id)

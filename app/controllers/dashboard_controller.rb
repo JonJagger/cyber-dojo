@@ -17,7 +17,7 @@ class DashboardController < ApplicationController
     render json: { animals: animals_progress }
   end
 
-private
+  private
 
   include DashboardWorker
 

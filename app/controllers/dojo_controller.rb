@@ -29,7 +29,7 @@ class DojoController < ApplicationController
     }
   end
 
-private
+  private
 
   include DojoWorker
 

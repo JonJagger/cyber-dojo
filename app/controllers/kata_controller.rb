@@ -54,7 +54,7 @@ class KataController < ApplicationController
     end
   end
 
-private
+  private
 
   include StringCleaner
   include TimeNow

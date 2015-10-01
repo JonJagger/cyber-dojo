@@ -7,7 +7,7 @@ class ReverterController < ApplicationController
     }
   end
 
-private
+  private
 
   def tag
     params[:tag].to_i

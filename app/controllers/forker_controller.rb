@@ -68,7 +68,7 @@ class ForkerController < ApplicationController
     end
   end
 
-private
+  private
 
   include UniqueId
   include TimeNow

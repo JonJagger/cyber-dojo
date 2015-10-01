@@ -1,9 +1,7 @@
 
 module DifferWorker
 
-  include GitDiff
-  include ReviewFilePicker
-  include PrevNextRing
+  module_function
 
   def was_tag
     tag(:was_tag)
@@ -29,5 +27,9 @@ module DifferWorker
   def prune(array)
     array.map { |hash| { :id => hash[:id], :section_count => hash[:section_count] } }
   end
+
+  include GitDiff
+  include ReviewFilePicker
+  include PrevNextRing
 
 end

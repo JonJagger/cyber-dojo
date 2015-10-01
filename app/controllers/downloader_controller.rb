@@ -15,7 +15,7 @@ class DownloaderController < ApplicationController
     # `rm_cmd`
   end
 
-private
+  private
 
   include IdSplitter
 

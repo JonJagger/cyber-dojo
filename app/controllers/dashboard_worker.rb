@@ -1,13 +1,13 @@
 
 module DashboardWorker # mixin
 
-  include TimeNow
+  module_function
 
   def animals_progress
-    animals = { }
+    animals = {}
     avatars.active.each do |avatar|
       animals[avatar.name] = {
-        colour: avatar.lights[-1].colour,
+          colour: avatar.lights[-1].colour,
         progress: most_recent_progress(avatar)
       }
     end
@@ -25,7 +25,7 @@ module DashboardWorker # mixin
     gapper = TdGapper.new(@kata.created, seconds_per_column, max_seconds_uncollapsed)
     @gapped = gapper.fully_gapped(all_lights, time_now)
     @progress = @kata.language.progress_regexs != [ ]
-    @avatar_names = @kata.avatars.active.map{|avatar| avatar.name}.sort
+    @avatar_names = @kata.avatars.active.map { |avatar| avatar.name }.sort
   end
 
   def bool(attribute)
@@ -46,11 +46,13 @@ module DashboardWorker # mixin
       [:red,:green].include?(light.colour)
     }
     output = (non_amber != nil) ? non_amber.output : ''
-    matches = regexs.map{|regex| Regexp.new(regex).match(output)}
+    matches = regexs.map { |regex| Regexp.new(regex).match(output) }
     return {
-      text: matches.join,
+        text: matches.join,
       colour: (matches[0] != nil ? 'red' : 'green')
     }
   end
+
+  include TimeNow
 
 end
