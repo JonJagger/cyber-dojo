@@ -8,20 +8,24 @@ o) forker_controller now does not do
    make exists? private (move module_function) and see what breaks.
 
 o) can language.exists? be dropped?
-   can all .exists? be dropped?
    I think this will involve mapping, eg
      katas.exists?(id) into
      !katas[id].nil?
-   An in each case making sure the "indexer" does now
+   An in each case making sure [] does not
    throw but returns nil instead.
-   katas.exists?(id)
-
-o) kata.finished?
-   not used
+   def [](id)
+     id_path = path + outer(id) + inner(id)
+     disk[id_path].exists? ? Kata.new(self, id) : nil
+   end
 
 o) names of folders are now decoupled
-   s/g++4.8.4/C++ (g++4.8.4)/
-   s/g++4.9/C++ (g++4.9)/
+   s/g++4.8.4/C++ (g++) 4.8.4/
+   s/g++4.9/C++ (g++) 4.9/
+
+o) app/models/external_parent_chain.rb
+   move module_function to top so all methods are private inside included class?
+   If any test does, eg, kata.dir I can instead do disk[kata.path]
+   Possibly  def dir_of(object); disk[object.path]; end
 
 o) move avatar.diff() into module app_lib/git_diff.rb
    So in app_controllers/differ_controller.rb
@@ -35,9 +39,6 @@ o) move avatar.diff() into module app_lib/git_diff.rb
      git_diff(diff_lines, visible_files)
 
 o) move language - cyber-dojo update code into dedicated class/module
-
-o) languages[] idea
-     cache[display_name] || cache[renamed(display_name)]
 
 o) note duplication now in
    test/app_controller/AppControllerTestBase.rb and
@@ -90,11 +91,6 @@ o) languages [] idea
 
 o) reinstate app_controllers/download tests
    should be fast now I'm using ram_disk
-
-o) app/models/external_parent_chain.rb
-   move module_function to top so all methods are private inside included class?
-   If any test does, eg, kata.dir I can instead do disk[kata.path]
-   Possibly  def dir_of(object); disk[object.path]; end
 
 o) test/lib/DirFake.rb
    has [make] call in write(filename, s) that does not match

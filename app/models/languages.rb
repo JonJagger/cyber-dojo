@@ -21,7 +21,7 @@ class Languages
   end
 
   def [](name)
-    languages[renamed(name)]
+    languages[commad(name)] || languages[renamed(name)]
   end
 
   def refresh_cache
@@ -61,6 +61,10 @@ class Languages
 
   def make_language(dir_name, test_dir_name, display_name = nil, image_name = nil)
     Language.new(self, dir_name, test_dir_name, display_name, image_name)
+  end
+
+  def commad(name)
+    name.split('-').join(', ')
   end
 
 end

@@ -7,8 +7,6 @@ module LanguagesRename # mix-in
   def renamed(name)
     # maps from old display_name to new display_name
     # see comment at bottom of file.
-    simplest = languages[name.split('-').join(', ')]
-    return simplest.display_name unless simplest.nil?
     renames = {
       # from way back when test name was _not_ part of language name
       ['BCPL']         => ['BCPL',         'all_tests_passed'],
@@ -59,10 +57,7 @@ module LanguagesRename # mix-in
       ['C++', 'GoogleMock'] => ['C++ (g++)', 'GoogleMock'],
 
     }
-    split = renames[name.split('-')]
-    return nil if split.nil?
-    tricky = split.join(', ')
-    return tricky unless languages[tricky].nil?
+    (renames[name.split('-')] || []).join(', ')
   end
 
 end
