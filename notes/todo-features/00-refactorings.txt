@@ -1,4 +1,14 @@
 
+o) forker_controller now does not do
+     !kata.language.exists?
+   instead does
+     kat.language.nil?
+   can language.exists? be dropped?
+   can all .exists? be dropped?
+
+o) kata.finished?
+   not used
+
 o) names of folders are now decoupled
    s/g++4.8.4/C++ (g++4.8.4)/
    s/g++4.9/C++ (g++4.9)/
@@ -14,15 +24,7 @@ o) move avatar.diff() into module app_lib/git_diff.rb
      visible_files = avatar.tags[m].visible_files
      git_diff(diff_lines, visible_files)
 
-
 o) move language - cyber-dojo update code into dedicated class/module
-
-o) forker_controller now does not do
-     !kata.language.exists?
-   instead does
-     kat.language.nil?
-   can language.exists? be dropped?
-   can all .exists? be dropped?
 
 o) languages[] idea
      cache[display_name] || cache[renamed(display_name)]

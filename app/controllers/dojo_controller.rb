@@ -13,18 +13,18 @@ class DojoController < ApplicationController
   def enter
     avatar = kata.start_avatar
     full = avatar.nil?
-    #one_self.started(avatar) if !full
+    #one_self.started(avatar) unless full
     render json: {
-      avatar_name: !full ? avatar.name : nil,
-      full: full,
+            avatar_name: !full ? avatar.name : nil,
+                   full: full,
       enter_dialog_html: !full ? enter_dialog_html(avatar.name) : '',
-      full_dialog_html: full ? full_dialog_html : ''
+       full_dialog_html: full ? full_dialog_html : ''
     }
   end
 
   def re_enter
     render json: {
-      empty: empty,
+                     empty: empty,
       re_enter_dialog_html: dojo_exists ? re_enter_dialog_html : ''
     }
   end

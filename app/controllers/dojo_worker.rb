@@ -8,11 +8,11 @@ module DojoWorker # mix-in
   end
 
   def started_avatar_names
-    @started_avatar_names ||= avatars.each.collect{ |avatar| avatar.name}
+    @started_avatar_names ||= avatars.each.collect { |avatar| avatar.name }
   end
 
   def empty
-    started_avatar_names == [ ]
+    started_avatar_names == []
   end
 
   def enter_dialog_html(avatar_name)

@@ -40,13 +40,13 @@ class ForkerController < ApplicationController
       id = unique_id
 
       manifest = {
-        created: time_now,
-        id: id,
-        language: kata.language.name,
-        exercise: kata.exercise.name,
+                    created: time_now,
+                         id: id,
+                   language: kata.language.name,
+                   exercise: kata.exercise.name,
         unit_test_framework: language.unit_test_framework,
-        tab_size: language.tab_size,
-        visible_files: avatar.tags[tag].visible_files
+                   tab_size: language.tab_size,
+              visible_files: avatar.tags[tag].visible_files
       }
 
       kata = dojo.katas[id]
@@ -62,8 +62,8 @@ class ForkerController < ApplicationController
       }
       format.html {
         redirect_to controller: 'dojo',
-                    action: 'index',
-                    id: result[:id]
+                        action: 'index',
+                            id: result[:id]
       }
     end
   end

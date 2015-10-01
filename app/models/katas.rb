@@ -40,12 +40,12 @@ class Katas
 
   def create_kata_manifest(language, exercise, id, now)
     {
-      created: now,
-      id: id,
-      language: language.name,
-      exercise: exercise.name,
+                  created: now,
+                       id: id,
+                 language: language.name,
+                 exercise: exercise.name,
       unit_test_framework: language.unit_test_framework,
-      tab_size: language.tab_size
+                 tab_size: language.tab_size
     }
   end
 

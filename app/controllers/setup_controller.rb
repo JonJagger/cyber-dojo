@@ -14,7 +14,7 @@ class SetupController < ApplicationController
 
   def save
     language_name = params['language']
-    test_name     = params['test'    ]
+        test_name = params['test'    ]
     exercise_name = params['exercise']
     id = unique_id
     now = time_now
