@@ -2,9 +2,18 @@
 o) forker_controller now does not do
      !kata.language.exists?
    instead does
-     kat.language.nil?
+     kata.language.nil?
    can language.exists? be dropped?
    can all .exists? be dropped?
+   I think this will involve mapping, eg
+     katas.exists?(id) into
+     !katas[id].nil?
+   An in each case making sure the "indexer" does now
+   throw but returns nil instead.
+   Clashes with external_parent_chain.rb !!!
+   exercise.exists?
+   language.exists?
+   katas.exists?(id)
 
 o) kata.finished?
    not used
@@ -84,6 +93,7 @@ o) reinstate app_controllers/download tests
 o) app/models/external_parent_chain.rb
    move module_function to top so all methods are private inside included class?
    If any test does, eg, kata.dir I can instead do disk[kata.path]
+   Possibly  def dir_of(object); disk[object.path]; end
 
 o) test/lib/DirFake.rb
    has [make] call in write(filename, s) that does not match
@@ -93,6 +103,17 @@ o) assuming git running on /mnt/ramdisk/katas is fast enough
    there would appear to be scope to refactor the git class
    so it is passed the folder it is associated with in initialize()
    Then drop path argument from all git methods.
+   Where is GitSpy still used?
+    app_helpers
+      tip_test
+    app_models
+      dojo_test
+      kata_test
+    lib
+      curl_one_self_test
+      docker_host_rsync_runner_test
+      docker_volume_mount_runner_test
+
 
 
 

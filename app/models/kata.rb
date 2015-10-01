@@ -45,11 +45,6 @@ class Kata
     return (Time.mktime(*now) - earliest_light).to_i
   end
 
-  def finished?(now = Time.now.to_a[0..5].reverse)
-    return false unless active?
-    return age(now) >= seconds_per_day
-  end
-
   def created
     Time.mktime(*manifest_property)
   end

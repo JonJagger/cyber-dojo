@@ -188,7 +188,7 @@ end
 # [
 #   {
 #     'colour' => 'red',
-#     'time' => [2014, 2, 15, 8, 54, 6],
+#     'time'   => [2014, 2, 15, 8, 54, 6],
 #     'number' => 1
 #   },
 # ]
@@ -219,8 +219,7 @@ end
 #
 # The inclusive lower bound for n in avatar.tags[n] is
 # zero. When an animal does a diff of [1] what is run is
-#   avatar.diff(0,1)
-# which is a diff between
+# a diff between
 #   avatar.tags[0] and avatar.tags[1]
 #
 # ------------------------------------------------------
