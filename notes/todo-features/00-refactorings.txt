@@ -1,28 +1,4 @@
 
-o) forker_controller now does not do
-     !kata.language.exists?
-   instead does
-     kata.language.nil?
-   but can actually do language.exists?
-   because external_parent_chain provides that! (for now)
-   make exists? private (move module_function) and see what breaks.
-
-o) can language.exists? be dropped?
-   I think this will involve mapping, eg
-     katas.exists?(id) into
-     !katas[id].nil?
-   An in each case making sure [] does not
-   throw but returns nil instead.
-   def [](id)
-     id_path = path + outer(id) + inner(id)
-     disk[id_path].exists? ? Kata.new(self, id) : nil
-   end
-   or
-   def [](id)
-    kata = Kata.new(self, id)
-    disk[kata.path].exists? ? kata : nil
-   end
-
 o) app/models/external_parent_chain.rb
    move module_function to top so all methods are private inside included class?
    If any test does, eg, kata.dir I can instead do disk[kata.path]
