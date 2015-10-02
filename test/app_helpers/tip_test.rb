@@ -102,7 +102,7 @@ class TipTests < AppHelpersTestBase
       " end"
     ].join("\n")
 
-    git.spy(lion.path,'diff',options,stub)
+    git.spy(lion.path, 'diff', options, stub)
 
     stub_manifest = JSON.unparse(
     { "hiker.rb" =>
@@ -115,7 +115,7 @@ class TipTests < AppHelpersTestBase
         ].join("\n")
     })
 
-    git.spy(lion.path,'show',"#{now_tag}:manifest.json", stub_manifest)
+    git.spy(lion.path, 'show', "#{now_tag}:manifest.json", stub_manifest)
 
     expected =
       "Click to review lion's " +
@@ -125,7 +125,7 @@ class TipTests < AppHelpersTestBase
       "<div>&bull; 1 added line</div>" +
       "<div>&bull; 1 deleted line</div>"
 
-    actual = traffic_light_tip_html(lion,was_tag,now_tag)
+    actual = traffic_light_tip_html(lion, was_tag, now_tag)
 
     assert_equal expected, actual
   end

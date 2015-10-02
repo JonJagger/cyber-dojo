@@ -1,9 +1,17 @@
 
-module GitDiff
+module GitDiff # mix-in
 
-  # Top level functions used by diff_controller.rb to create
+  # Top level functions used by differ_controller.rb to create
   # data structure (to build view from) containing diffs
   # for all files, for a given avatar, for a given tag.
+
+  def avatar_git_diff(avatar, n, m)
+    command = "--ignore-space-at-eol --find-copies-harder #{n} #{m} sandbox"
+    git = avatar.kata.dojo.git
+    diff_lines = git.diff(avatar.path, command)
+    visible_files = avatar.tags[m].visible_files
+    git_diff(diff_lines, visible_files)
+  end
 
   def git_diff(diff_lines, visible_files)
     view = {}

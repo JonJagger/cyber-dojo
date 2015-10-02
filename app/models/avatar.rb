@@ -73,17 +73,9 @@ class Avatar
     [rags, output]
   end
 
-  def diff(n, m)
-    command = "--ignore-space-at-eol --find-copies-harder #{n} #{m} sandbox"
-    diff_lines = git.diff(path, command)
-    visible_files = tags[m].visible_files
-    git_diff(diff_lines, visible_files)
-  end
-
   private
 
   include ExternalParentChain
-  include GitDiff
   include TimeNow
 
   def git_setup

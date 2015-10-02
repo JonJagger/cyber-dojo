@@ -15,9 +15,9 @@ class KataController < ApplicationController
     # https://atom.io/packages/cyber-dojo
     render :json => {
       'visible_files' => avatar.visible_files,
-      'avatar' => avatar.name,
-      'csrf_token' => form_authenticity_token,
-      'lights' => avatar.lights.map { |light| light.to_json }
+             'avatar' => avatar.name,
+         'csrf_token' => form_authenticity_token,
+             'lights' => avatar.lights.map { |light| light.to_json }
     }
   end
 
@@ -49,7 +49,7 @@ class KataController < ApplicationController
     #one_self.tested(@avatar,hash)
 
     respond_to do |format|
-      format.js { render layout: false }
+      format.js   { render layout: false }
       format.json { show_json }
     end
   end
@@ -60,7 +60,7 @@ class KataController < ApplicationController
   include TimeNow
 
   def received_files
-    seen = { }
+    seen = {}
     (params[:file_content] || {}).each do |filename,content|
       content = clean(content)
       # Cater for windows line endings from windows browser

@@ -1,4 +1,7 @@
 
+o) app/helpers need # mix-in comment and
+   module_function
+
 o) setup page needs an explicit cancel button.
    What if you're running the browser in presentation mode!
    In that case you can't see the browsers address bar back button.

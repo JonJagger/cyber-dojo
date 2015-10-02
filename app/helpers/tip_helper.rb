@@ -1,5 +1,9 @@
 
-module TipHelper
+require_relative './../lib/git_diff'
+
+module TipHelper # mix-in
+
+  include GitDiff
 
   def traffic_light_tip_html(avatar, was_tag, now_tag)
     was_tag = was_tag.to_i
@@ -15,8 +19,8 @@ module TipHelper
     tip += light_colour_tag(lights, now_tag)   # 14
     tip += ' '
     tip += 'diff'
-    diff = avatar.diff(was_tag,now_tag)
-    added_count,deleted_count = line_counts(diff)
+    diff = avatar_git_diff(avatar, was_tag, now_tag)
+    added_count, deleted_count = line_counts(diff)
     tip += "<div>&bull; #{plural(added_count, 'added line')}</div>"
     tip += "<div>&bull; #{plural(deleted_count, 'deleted line')}</div>"
     tip
@@ -40,28 +44,28 @@ module TipHelper
     html
   end
 
-  def light_colour_tag(lights,tag)
+  def light_colour_tag(lights, tag)
     colour = (tag == 0) ? 'none' : lights[tag-1].colour
     colour_tag(colour, tag)
   end
 
-  def plural_colour(count,colour)
-    word = plural_word(colour,count)
+  def plural_colour(count, colour)
+    word = plural_word(colour, count)
     "<div>" +
-      "&bull; #{count} #{colour_tag(colour,word)}" +
+      "&bull; #{count} #{colour_tag(colour, word)}" +
     "</div>"
   end
 
   def plural(count, text)
-    count.to_s + ' ' + plural_word(text,count)
+    count.to_s + ' ' + plural_word(text, count)
   end
 
-  def plural_word(word,count)
+  def plural_word(word, count)
     word = 'timeout' if word == 'timed_out'
     word + (count == 1 ? '' : 's')
   end
 
-  def colour_tag(colour,tag)
+  def colour_tag(colour, tag)
     "<span class='#{colour}'>#{tag}</span>"
   end
 
@@ -70,7 +74,8 @@ module TipHelper
   end
 
   def line_counts(diffed_files)
-    added_count,deleted_count = 0,0
+    added_count = 0
+    deleted_count = 0
     diffed_files.each do |filename, diff|
       if filename != 'output'
         added_count   += diff.count { |line| line[:type] == :added   }
