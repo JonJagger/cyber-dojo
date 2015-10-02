@@ -1,8 +1,6 @@
 
 o) app/models/external_parent_chain.rb
    move module_function to top so all methods are private inside included class?
-   If any test does, eg, kata.dir I can instead do disk[kata.path]
-   Possibly  def dir_of(object); disk[object.path]; end
 
 o) move avatar.diff() into module app_lib/git_diff.rb
    So in app_controllers/differ_controller.rb

@@ -51,20 +51,43 @@ class KatasTests < AppModelTestBase
     assert_equal k.id.to_s, kata.id.to_s
   end
 
-  # TODO: put commented out tests below here
+  test 'D0A1F6',
+  'katas[id] for id that is not a string is nil' do
+    not_string = Object.new
+    assert_nil katas[not_string]
+    nine = unique_id[0..-2]
+    assert_equal 9, nine.length
+    assert_nil katas[nine]
+  end
+
+  test 'A0DF10',
+  'katas[id] for 10 digit id with non hex-chars is nil' do
+    has_a_g = '123456789G'
+    assert_equal 10, has_a_g.length
+    assert_nil katas[has_a_g]
+  end
+
+  #- - - - - - - - - - - - - - - -
+
+  test '64F53B',
+  'katas[id] for non-existing id is nil' do
+    id = '123456789A'
+    assert_equal 10, id.length
+    assert_nil katas[id]
+  end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # katas.each()
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '603735',
-  'katas.each() yields nothing when there are no katas' do
+  'katas.each() yields empty array when there are no katas' do
     katas.dir.make
     assert_equal [], all_ids(katas)
   end
 
   test '5A2932',
-  'katas.each() when there is one kata' do
+  'katas.each() yields array with the one kata-id when there is one kata' do
     kata = make_kata
     assert_equal [kata.id.to_s], all_ids(katas)
   end
@@ -86,7 +109,7 @@ class KatasTests < AppModelTestBase
   end
 
   test 'F71C21',
-  'is Enumerable: so each not needed if doing map' do
+  'is Enumerable: so .each not needed if doing map' do
     kata1 = make_kata
     kata2 = make_kata
     assert_equal all_ids([kata1, kata2]).sort, all_ids(katas).sort
@@ -150,56 +173,5 @@ class KatasTests < AppModelTestBase
     make_kata(id)
     assert_equal id, katas.complete(id.downcase[0..5])
   end
-
-=begin
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # katas.valid?(id)
-  # katas.exists?(id)
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'D0A1F6',
-  'valid?(id) and exists?(id) is false when id not a string' do
-    not_string = Object.new
-    refute katas.valid?(not_string)
-    refute katas.exists?(not_string)
-  end
-
-  #- - - - - - - - - - - - - - - -
-
-  test '384C56',
-  'valid?(id) and exists?(id) is false when string is not 10 chars long' do
-    nine = unique_id[0..-2]
-    assert_equal 9, nine.length
-    refute katas.valid?(nine)
-    refute katas.exists?(nine)
-  end
-
-  #- - - - - - - - - - - - - - - -
-
-  test 'A0DF10',
-  'valid?(id) and exists?(id) is false when string has non-hex chars' do
-    has_a_g = '123G56789'
-    refute katas.valid?(has_a_g)
-    refute katas.exists?(has_a_g)
-  end
-
-  #- - - - - - - - - - - - - - - -
-
-  test '64F53B',
-  'valid?(id) but !exists?(id)' do
-    id = '123456789A'
-    assert katas.valid?(id)
-    refute katas.exists?(id)
-  end
-
-  #- - - - - - - - - - - - - - - -
-
-  test '115759',
-  'valid?(id) and exists?(id)' do
-    id = make_kata.id
-    assert katas.valid?(id)
-    assert katas.exists?(id)
-  end
-=end
 
 end
