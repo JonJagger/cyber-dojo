@@ -83,7 +83,7 @@ class AvatarTests < AppModelTestBase
     kata = make_kata
     lion = kata.avatars['lion']
     refute dir_of(lion).exists?
-    lion.dir.make
+    dir_of(lion).make
     assert dir_of(lion).exists?
   end
 
@@ -300,16 +300,16 @@ class AvatarTests < AppModelTestBase
     kata = make_kata
     avatar = kata.start_avatar
     assert avatar.visible_filenames.include? hiker_c
-    assert avatar.sandbox.dir.exists? hiker_c
+    assert dir_of(avatar.sandbox).exists? hiker_c
 
     # There is no dir.delete(filename)
     File.delete(avatar.sandbox.path + hiker_c)
-    refute avatar.sandbox.dir.exists? hiker_c
+    refute dir_of(avatar.sandbox).exists? hiker_c
 
     runner.stub_output('')
     avatar.test(*DeltaMaker.new(avatar).test_args)
 
-    refute avatar.sandbox.dir.exists? hiker_c
+    refute dir_of(avatar.sandbox).exists? hiker_c
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

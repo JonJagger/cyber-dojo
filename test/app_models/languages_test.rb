@@ -42,13 +42,13 @@ class LanguagesTests < AppModelTestBase
     display_name = language_display_name + ', ' + test_dir_name
     image_name = 'cyberdojofoundation/gpp-4.8.4_assert'
     manifest_filename = 'manifest.json'
-    cpp_assert.dir.make
-    cpp_assert.dir.write_json(manifest_filename, {
+    dir_of(cpp_assert).make
+    dir_of(cpp_assert).write_json(manifest_filename, {
       'display_name' => display_name,
       'image_name'   => image_name
     })
     languages.refresh_cache
-    cpp_assert.dir.delete(manifest_filename) # DiskFake.delete is implemented
+    dir_of(cpp_assert).delete(manifest_filename) # DiskFake.delete is implemented
     languages_names = languages.map(&:name).sort
     assert_equal [language_display_name + '-' + test_dir_name], languages_names
     # get from cache
@@ -62,7 +62,7 @@ class LanguagesTests < AppModelTestBase
   test '15BD19',
   'no languages when cache is empty' do
     set_disk_class('DiskFake')
-    languages.dir.write_json(cache_filename, {})
+    dir_of(languages).write_json(cache_filename, {})
     assert_equal [], languages.to_a
   end
 
@@ -81,7 +81,7 @@ class LanguagesTests < AppModelTestBase
         test_dir_name: 'assert'
       }
     }
-    languages.dir.write_json(cache_filename, cache)
+    dir_of(languages).write_json(cache_filename, cache)
     languages_names = languages.map(&:name).sort
 
     assert_equal ['Asm-assert', 'C++ (g++)-assert'], languages_names

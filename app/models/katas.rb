@@ -32,9 +32,9 @@ class Katas
     ].join("\n") + exercise.instructions
     manifest[:visible_files]['instructions'] = text
     kata = Kata.new(self, id)
-    kata.dir.make
-    kata.dir.write_json('manifest.json', manifest)
-    kata.dir.write_json('started_avatars.json', [])
+    disk[kata.path].make
+    disk[kata.path].write_json('manifest.json', manifest)
+    disk[kata.path].write_json('started_avatars.json', [])
     kata
   end
 

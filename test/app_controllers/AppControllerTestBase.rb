@@ -118,6 +118,10 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
     @response.body
   end
 
+  def dir_of(object)
+    disk[object.path]
+  end
+
 private
 
   def random_language

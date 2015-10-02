@@ -134,8 +134,8 @@ class KataTests < AppModelTestBase
         'number' => 2
       }
 
-    hippo.dir.write_json('increments.json', [second])
-    lion.dir.write_json('increments.json', [first])
+    dir_of(hippo).write_json('increments.json', [second])
+    dir_of(lion).write_json('increments.json', [first])
 
     assert kata.active?
     now = first['time']
@@ -160,7 +160,7 @@ class KataTests < AppModelTestBase
   test 'CE9083',
   'make_kata saves manifest in kata dir' do
     kata = make_kata
-    assert kata.dir.exists?('manifest.json')
+    assert dir_of(kata).exists?('manifest.json')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -84,10 +84,6 @@ class Kata
     @parent.dojo
   end
 
-  def seconds_per_day
-    60 * 60 * 24
-  end
-
 end
 
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -10,8 +10,8 @@ class PieChartTests < AppHelpersTestBase
   'pie-chart from avatar.lights' do
     kata = make_kata
     lion = kata.avatars['lion']
-    lion.dir.make
-    lion.dir.write_json('increments.json', [
+    dir_of(lion).make
+    dir_of(lion).write_json('increments.json', [
       {
         'colour' => 'red',
           'time' => [2014, 2, 15, 8, 54, 6],

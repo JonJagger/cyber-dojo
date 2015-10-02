@@ -79,7 +79,7 @@ class LanguageTests < AppModelTestBase
     @language = make_language('C#', 'NUnit')
     filename = 'test_untitled.cs'
     spy_manifest({ 'visible_filenames' => [filename] })
-    @language.dir.write(filename, 'content')
+    dir_of(@language).write(filename, 'content')
     visible_files = @language.visible_files
     assert_equal({ filename => 'content' }, visible_files)
     assert_nil visible_files['output']
@@ -270,8 +270,8 @@ class LanguageTests < AppModelTestBase
   end
 
   def spy_manifest(manifest)
-    @language.dir.make
-    @language.dir.write_json(manifest_filename, manifest)
+    dir_of(@language).make
+    dir_of(@language).write_json(manifest_filename, manifest)
   end
 
   def manifest_filename

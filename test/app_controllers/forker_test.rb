@@ -33,8 +33,8 @@ class ForkerControllerTest < AppControllerTestBase
         'and the reason given is language' do
     kata = katas[@id]
     language_name = 'doesNot-Exist'
-    kata.dir.make
-    kata.dir.write_json('manifest.json', { :language => language_name })
+    dir_of(kata).make
+    dir_of(kata).write_json('manifest.json', { language: language_name })
     fork(@id, 'hippo', tag = 1)
     refute forked?
     assert_reason_is('language')
@@ -98,7 +98,7 @@ class ForkerControllerTest < AppControllerTestBase
     assert_equal 10, forked_kata_id.length
     assert_not_equal @id, forked_kata_id
     forked_kata = katas[forked_kata_id]
-    assert forked_kata.exists?
+    assert_not_nil forked_kata
     kata = @avatar.kata
     assert_equal kata.language.name, forked_kata.language.name
     assert_equal kata.exercise.name, forked_kata.exercise.name

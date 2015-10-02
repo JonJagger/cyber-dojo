@@ -39,7 +39,7 @@ class LightsTests < AppModelTestBase
         'number' => 3
       }
     ]
-    avatar.dir.write_json('increments.json', incs)
+    dir_of(avatar).write_json('increments.json', incs)
     lights = avatar.lights
     assert_equal 3, lights.count
 
