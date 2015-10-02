@@ -7,8 +7,8 @@ class LogoImageTests < AppHelpersTestBase
   include LogoImageHelper
 
   test '27DC8E',
-  "logo_image html" do
-    html = logo_image(size=42, title='wibble')
+  'logo_image html' do
+    html = logo_image(size = 42, title = 'wibble')
     assert html.start_with?('<img '), '<img : ' + html
     assert html.match("alt='cyber-dojo yin-yang logo'"), 'alt: ' + html
     assert html.match("height='42'"), 'height: ' + html
@@ -18,7 +18,7 @@ class LogoImageTests < AppHelpersTestBase
   end
 
   test '118CDC',
-  "home_page_logo html" do
+  'home_page_logo html' do
     html = home_page_logo
     assert html.start_with?('<img '), '<img: ' + html
     assert html.match("alt='cyber-dojo'"), 'alt: ' + html

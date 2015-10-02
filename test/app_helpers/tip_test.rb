@@ -73,11 +73,11 @@ class TipTests < AppHelpersTestBase
       [
         { 'colour' => was_tag_colour,
           'number' => was_tag,
-          'time'   => [2015,2,5,9,28,21]
+          'time'   => [2015, 2, 5, 9, 28, 21]
         },
         { 'colour' => now_tag_colour,
           'number' => now_tag,
-          'time'   => [2015,2,5,9,29,15]
+          'time'   => [2015, 2, 5, 9, 29, 15]
         }
       ]
     )

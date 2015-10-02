@@ -22,11 +22,11 @@ class PieChartTests < AppHelpersTestBase
           'time' => [2014, 2, 15, 8, 54, 34],
         'number' => 2
       }
-      ])
+    ])
 
     size = 34
-    expected = "" +
-      "<canvas" +
+    expected = '' +
+      '<canvas' +
       " class='pie'" +
       " data-red-count='1'" +
       " data-amber-count='0'" +
@@ -35,7 +35,7 @@ class PieChartTests < AppHelpersTestBase
       " data-key='lion'" +
       " width='#{size}'" +
       " height='#{size}'>" +
-      "</canvas>"
+      '</canvas>'
 
     actual = pie_chart(lion.lights, 'lion')
 
@@ -55,8 +55,8 @@ class PieChartTests < AppHelpersTestBase
       timed_out_light,
     ]
     size = 34
-    expected = "" +
-      "<canvas" +
+    expected = '' +
+      '<canvas' +
       " class='pie'" +
       " data-red-count='2'" +
       " data-amber-count='2'" +
@@ -65,7 +65,7 @@ class PieChartTests < AppHelpersTestBase
       " data-key='alligator'" +
       " width='#{size}'" +
       " height='#{size}'>" +
-      "</canvas>"
+      '</canvas>'
     actual = pie_chart(lights, 'alligator')
     assert_equal expected, actual
   end
@@ -80,8 +80,8 @@ class PieChartTests < AppHelpersTestBase
           green: 6,
       timed_out: 1
     }
-    expected = "" +
-      "<canvas" +
+    expected = '' +
+      '<canvas' +
       " class='pie'" +
       " data-red-count='5'" +
       " data-amber-count='0'" +
@@ -90,7 +90,7 @@ class PieChartTests < AppHelpersTestBase
       " data-key='lion'" +
       " width='42'" +
       " height='42'>" +
-      "</canvas>"
+      '</canvas>'
     actual = pie_chart_from_counts(counts, 42, 'lion')
     assert_equal expected, actual
   end
@@ -99,9 +99,9 @@ class PieChartTests < AppHelpersTestBase
 
   private
 
-  def       red_light; Tag.new(nil,{'colour' => :red      }); end
-  def     amber_light; Tag.new(nil,{'colour' => :amber    }); end
-  def     green_light; Tag.new(nil,{'colour' => :green    }); end
-  def timed_out_light; Tag.new(nil,{'colour' => :timed_out}); end
+  def       red_light; Tag.new(nil, {'colour' => :red      }); end
+  def     amber_light; Tag.new(nil, {'colour' => :amber    }); end
+  def     green_light; Tag.new(nil, {'colour' => :green    }); end
+  def timed_out_light; Tag.new(nil, {'colour' => :timed_out}); end
 
 end

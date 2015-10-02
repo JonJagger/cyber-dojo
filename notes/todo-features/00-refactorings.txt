@@ -1,15 +1,9 @@
 
-o) app/helpers need # mix-in comment and
-   module_function
-
 o) setup page needs an explicit cancel button.
    What if you're running the browser in presentation mode!
    In that case you can't see the browsers address bar back button.
 
-o) app/models/external_parent_chain.rb
-   move module_function to top so all methods are private inside included class?
-
-  coverage of this was poor
+o) coverage of this was poor
   def avatar.update_manifest(files, output)
     # output is part of diff state
     # sandbox.dir.write('output', output)    BECOMING...
@@ -18,17 +12,6 @@ o) app/models/external_parent_chain.rb
 
 o) make avatars[name] return nil
    to match exercises[] languages[] katas[]
-
-o) move avatar.diff() into module app_lib/git_diff.rb
-   So in app_controllers/differ_controller.rb
-    diffs = git_diff_view(avatar.diff(was_tag,now_tag))
-   becomes
-    diffs = git_diff_view(avatar, was_tag, now_tag))
-   and the first three lines of that become
-     command = "--ignore-space-at-eol --find-copies-harder #{n} #{m} sandbox"
-     diff_lines = git.diff(avatar.path, command)
-     visible_files = avatar.tags[m].visible_files
-     git_diff(diff_lines, visible_files)
 
 o) move language - cyber-dojo.sh update code into dedicated class/module
 
