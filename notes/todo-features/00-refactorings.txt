@@ -1,15 +1,4 @@
 
-o) setup page needs an explicit cancel button.
-   What if you're running the browser in presentation mode!
-   In that case you can't see the browsers address bar back button.
-
-o) coverage of this was poor
-  def avatar.update_manifest(files, output)
-    # output is part of diff state
-    # sandbox.dir.write('output', output)    BECOMING...
-    disk[sandbox.path].write('output', output)
-  end
-
 o) make avatars[name] return nil
    to match exercises[] languages[] katas[]
 
@@ -20,6 +9,20 @@ o) note duplication now in
    test/app_models/AppModelTestBase.rb and
    test/app_helpers/AppHelpersTestBase.rb and
    test/lib/LibTestBase.rb
+
+o) app_lib coverage is 99%
+   missing avatar_git_diff
+
+o) setup page needs an explicit cancel button.
+   What if you're running the browser in presentation mode!
+   In that case you can't see the browsers address bar back button.
+
+o) coverage of this was poor
+  def avatar.update_manifest(files, output)
+    # output is part of diff state
+    # sandbox.dir.write('output', output)    BECOMING...
+    disk[sandbox.path].write('output', output)
+  end
 
 o) cache the result of
    `docker images`
