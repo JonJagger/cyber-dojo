@@ -69,8 +69,8 @@ def columns
     names[n += 1] => [  3, 'e',      'number of errors'      ],
     #names[n += 1] => [  3, 's',      'number of skips'       ],
     names[n += 1] => [  7, 'secs',   'time in seconds'       ],
-    names[n += 1] => [  9, 't/sec',  'tests per second'      ],
-    names[n += 1] => [ 10, 'a/sec',  'assertions per second' ],
+    names[n += 1] => [  7, 't/sec',  'tests per second'      ],
+    names[n += 1] => [  7, 'a/sec',  'assertions per second' ],
     names[n += 1] => [  9, 'cov',    'coverage %'            ],
   }
 end
@@ -89,8 +89,8 @@ def gather_stats
     finished_pattern = "Finished in #{number}s, #{number} runs/s, #{number} assertions/s"
     m = log.match(Regexp.new(finished_pattern))
     h[:time]               = f2(m[1])
-    h[:tests_per_sec]      = f2(m[2])
-    h[:assertions_per_sec] = f2(m[3])
+    h[:tests_per_sec]      = m[2].to_i
+    h[:assertions_per_sec] = m[3].to_i
 
     summary_pattern = %w(runs assertions failures errors skips).map{ |s| "#{number} #{s}" }.join(', ')
     m = log.match(Regexp.new(summary_pattern))
@@ -140,14 +140,14 @@ def print_totals(stats)
   pr = lambda { |key,value| print_right(columns[key][0], value) }
   stat = lambda { |key| stats.map{|_,h| h[key].to_i}.reduce(:+) }
   print_left(indent, 'total')
-  pr.call(name=:test_count, c=stat.call(name))
-  pr.call(name=:assertion_count, a=stat.call(name))
+  pr.call(name=:test_count, c = stat.call(name))
+  pr.call(name=:assertion_count, a = stat.call(name))
   pr.call(name=:failure_count, stat.call(name))
   pr.call(name=:error_count, stat.call(name))
   #pr.call(name=:skip_count, stat.call(name))
-  pr.call(name=:time, t=f2(stats.map{|_,h| h[name].to_f}.reduce(:+)))
-  pr.call(:tests_per_sec,        f2(c / t.to_f))
-  pr.call(:assertions_per_sec,   f2(a / t.to_f))
+  pr.call(name=:time, t = f2(stats.map { |_,h| h[name].to_f }.reduce(:+)))
+  pr.call(:tests_per_sec,        (c / t.to_f).to_i)
+  pr.call(:assertions_per_sec,   (a / t.to_f).to_i)
 end
 
 #- - - - - - - - - - - - - - - - - - - - -
