@@ -34,8 +34,8 @@ class KatasTests < AppModelTestBase
   'create_kata saves empty started_avatars.json file' do
     kata = make_kata
     filename = 'started_avatars.json'
-    assert kata.dir.exists?(filename), 'exists'
-    started = kata.read_json(filename)
+    assert dir_of(kata).exists?(filename)
+    started = dir_of(kata).read_json(filename)
     assert_equal [],started
   end
 
@@ -44,7 +44,7 @@ class KatasTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'DFB053',
-  'katas[id] is kata with given id' do
+  'katas[id] is kata with existing id' do
     kata = make_kata
     k = katas[kata.id.to_s]
     refute_nil k

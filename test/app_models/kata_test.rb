@@ -67,10 +67,10 @@ class KataTests < AppModelTestBase
   'start_avatar puts started avatars name into katas started_avatars.json file' do
     kata = make_kata
     kata.start_avatar(['hippo'])
-    started = kata.read_json('started_avatars.json')
+    started = dir_of(kata).read_json('started_avatars.json')
     assert_equal ['hippo'], started
     kata.start_avatar(['lion'])
-    started = kata.read_json('started_avatars.json')
+    started = dir_of(kata).read_json('started_avatars.json')
     assert_equal %w(hippo lion), started.sort
   end
 
@@ -83,18 +83,18 @@ class KataTests < AppModelTestBase
     animals = %w(lion hippo cheetah).sort
     3.times { kata.start_avatar(animals) }
     filename = 'started_avatars.json'
-    started = kata.read_json(filename)
+    started = dir_of(kata).read_json(filename)
     assert_equal animals, started.sort
 
     # now delete started_avatars.json to simulate old dojo
     # with started avatars and no started_avatars.json file
     File.delete(kata.path + filename)
-    refute kata.dir.exists?(filename)
+    refute dir_of(kata).exists?(filename)
 
     2.times do
       avatar = kata.start_avatar
       refute_nil avatar
-      refute kata.dir.exists?(filename)
+      refute dir_of(kata).exists?(filename)
     end
   end
 

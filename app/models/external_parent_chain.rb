@@ -9,6 +9,8 @@ module ExternalParentChain # mix-in
     dir.exists?(filename)
   end
 
+  module_function
+
   def read(filename)
     dir.read(filename)
   end
@@ -24,8 +26,6 @@ module ExternalParentChain # mix-in
   def write_json(filename, object)
     dir.write_json(filename, object)
   end
-
-  module_function
 
   def method_missing(command, *args)
     @parent.send(command, *args)

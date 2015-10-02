@@ -40,7 +40,7 @@ class AvatarTests < AppModelTestBase
     kata = make_kata
     avatar = kata.start_avatar
     kata.language.visible_files.each do |filename, content|
-      assert_equal content, avatar.sandbox.read(filename)
+      assert_equal content, dir_of(avatar.sandbox).read(filename)
     end
   end
 
@@ -116,9 +116,9 @@ class AvatarTests < AppModelTestBase
     kata = make_kata
     avatar = kata.start_avatar
     kata.language.visible_files.each do |filename, content|
-      assert_equal content, avatar.sandbox.read(filename)
+      assert_equal content, dir_of(avatar.sandbox).read(filename)
     end
-    assert_equal [], avatar.read_json('increments.json')
+    assert_equal [], dir_of(avatar).read_json('increments.json')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
@@ -466,14 +466,10 @@ class AvatarTests < AppModelTestBase
     assert_equal(expected, @output) if filename == 'output'
     assert_equal expected, @visible_files[filename], 'returned_to_browser'
     assert_equal expected, @avatar.visible_files[filename], 'saved_to_manifest'
-    assert_equal expected, @avatar.sandbox.read(filename), 'saved_to_sandbox'
+    assert_equal expected, dir_of(@avatar.sandbox).read(filename), 'saved_to_sandbox'
   end
 
   def git_log_include?(path, find)
-    #p '---------'
-    #p find
-    #p git.log
-    #git.log[path].include?(find)
     git.log.include?(find)
   end
 
