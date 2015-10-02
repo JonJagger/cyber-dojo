@@ -17,7 +17,7 @@ class ForkerController < ApplicationController
       result[:language] = kata.manifest['language']
     end
 
-    if !error && !avatar.exists?
+    if !error && !disk[avatar.path].exists?('increments.json') # TODO: avatar.nil?
       error = true
       result[:reason] = 'avatar'
       result[:avatar] = avatar_name

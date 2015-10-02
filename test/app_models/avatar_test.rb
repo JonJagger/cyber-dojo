@@ -50,7 +50,7 @@ class AvatarTests < AppModelTestBase
   'avatar is not active? when it does not exist' do
     kata = make_kata
     lion = kata.avatars['lion']
-    refute lion.exists?
+    refute dir_of(lion).exists?
     refute lion.active?
   end
 
@@ -82,9 +82,9 @@ class AvatarTests < AppModelTestBase
   'exists? is true when dir exists and name is in Avatar.names' do
     kata = make_kata
     lion = kata.avatars['lion']
-    refute lion.exists?
+    refute dir_of(lion).exists?
     lion.dir.make
-    assert lion.exists?
+    assert dir_of(lion).exists?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

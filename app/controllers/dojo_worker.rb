@@ -4,7 +4,7 @@ module DojoWorker # mix-in
   module_function
 
   def dojo_exists
-    @dojo_exists ||= katas.exists?(id)
+    @dojo_exists ||= !katas[id].nil?
   end
 
   def started_avatar_names

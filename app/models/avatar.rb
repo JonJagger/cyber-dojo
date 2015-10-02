@@ -120,7 +120,7 @@ class Avatar
 
   def update_manifest(files, output)
     # output is part of diff state
-    sandbox.dir.write('output', output)
+    disk[sandbox.path].write('output', output)
     files['output'] = output
     write_manifest(files)
   end

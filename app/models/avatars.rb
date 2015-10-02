@@ -23,7 +23,7 @@ class Avatars
     # and use that if it exists
     Avatars.names.each do |name|
       avatar = self[name]
-      yield avatar if avatar.exists?
+      yield avatar if disk[avatar.path].exists?
     end
   end
 
@@ -42,5 +42,6 @@ class Avatars
   private
 
   include Enumerable
+  include ExternalParentChain
 
 end

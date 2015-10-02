@@ -5,11 +5,11 @@ module ExternalParentChain # mix-in
     disk[path]
   end
 
+  module_function
+
   def exists?(filename = nil)
     dir.exists?(filename)
   end
-
-  module_function
 
   def read(filename)
     dir.read(filename)

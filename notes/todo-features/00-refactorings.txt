@@ -2,6 +2,16 @@
 o) app/models/external_parent_chain.rb
    move module_function to top so all methods are private inside included class?
 
+  coverage of this was poor
+  def avatar.update_manifest(files, output)
+    # output is part of diff state
+    # sandbox.dir.write('output', output)
+    disk[sandbox.path].write('output', output)
+  end
+
+o) make avatars[name] return nil
+   to match exercises[] languages[] katas[]
+
 o) move avatar.diff() into module app_lib/git_diff.rb
    So in app_controllers/differ_controller.rb
     diffs = git_diff_view(avatar.diff(was_tag,now_tag))
