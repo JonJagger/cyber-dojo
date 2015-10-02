@@ -13,7 +13,7 @@ Dir.glob("#{cyber_dojo_root}/languages/*/*/manifest.json") do |file|
 end
 
 puts "this may take a while..."
-image_names.each do |image_name|
+image_names.sort.each do |image_name|
   cmd = "docker pull #{image_name}"
   print cmd + "\n"
   `#{cmd}`
