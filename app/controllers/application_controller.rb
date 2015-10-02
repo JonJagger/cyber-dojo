@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   def exercises; dojo.exercises; end
   def katas    ; dojo.katas    ; end
   def disk     ; dojo.disk     ; end
+  def git      ; dojo.git      ; end
   def one_self ; dojo.one_self ; end
 
   def id         ; @id ||= katas.complete(params[:id]); end

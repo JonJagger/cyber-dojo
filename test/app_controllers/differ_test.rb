@@ -12,7 +12,8 @@ class DifferControllerTest < AppControllerTestBase
     change_file(filename, content = '#include...')
     run_tests
     run_tests
-    @was_tag,@now_tag = 1,2
+    @was_tag = 1
+    @now_tag = 2
     differ
     lights = json['lights']
     info = " " + @id + ":" + @avatar.name
@@ -43,7 +44,8 @@ class DifferControllerTest < AppControllerTestBase
     run_tests
     change_file(filename, 'def snafu')
     run_tests
-    @was_tag,@now_tag = 1,2
+    @was_tag = 1
+    @now_tag = 2
     differ
     lights = json['lights']
     info = " " + @id + ':' + @avatar.name + ':'
@@ -73,7 +75,8 @@ class DifferControllerTest < AppControllerTestBase
     enter      # 0
     run_tests  # 1
     run_tests  # 2
-    @was_tag,@now_tag = -1,-1
+    @was_tag = -1
+    @now_tag = -1
     differ
     assert_equal 2, json['wasTag']
     assert_equal 2, json['nowTag']
@@ -84,9 +87,10 @@ class DifferControllerTest < AppControllerTestBase
   test '34D490',
   'nextAvatar and prevAvatar are empty string for dojo with one avatar' do
     @id = create_kata
-    enter     # 0
+    enter      # 0
     run_tests  # 1
-    @was_tag,@now_tag = 0,1
+    @was_tag = 0
+    @now_tag = 1
     differ
     assert_equal '', json['prevAvatar']
     assert_equal '', json['nextAvatar']
@@ -101,7 +105,8 @@ class DifferControllerTest < AppControllerTestBase
     run_tests            # 1
     enter      # 0
     run_tests  # 1
-    @was_tag,@now_tag = 0,1
+    @was_tag = 0
+    @now_tag = 1
     differ
     assert_equal firstAvatar.name, json['prevAvatar']
     assert_equal firstAvatar.name, json['nextAvatar']
@@ -113,11 +118,11 @@ class DifferControllerTest < AppControllerTestBase
 
   def differ
     params = {
-      :format  => :json,
-      :id      => @id,
-      :avatar  => @avatar.name,
-      :was_tag => @was_tag,
-      :now_tag => @now_tag
+       format: :json,
+           id: @id,
+       avatar: @avatar.name,
+      was_tag: @was_tag,
+      now_tag: @now_tag
     }
     get 'differ/diff', params
     assert_response :success
