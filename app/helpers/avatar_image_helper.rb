@@ -1,5 +1,7 @@
 
-module AvatarImageHelper
+module AvatarImageHelper # mix-in
+
+  module_function
 
   def avatar_image(name, size, title = name)
     name = name.downcase

@@ -1,5 +1,7 @@
 
-module TrafficLightHelper
+module TrafficLightHelper # mix-in
+
+  module_function
 
   # The data-id, data-avatar-name, data-was-tag, data-now-tag
   # properties are used to create click handlers that open a diff-dialog

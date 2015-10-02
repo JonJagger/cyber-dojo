@@ -1,12 +1,14 @@
 
-module PieChartHelper
+module PieChartHelper # mix-in
+
+  module_function
 
   def pie_chart(lights, key)
      # key is the traffic-light's avatar's name
      pie_chart_from_counts({
-        red: count(lights, :red),
-        amber: count(lights, :amber),
-        green: count(lights, :green),
+              red: count(lights, :red),
+            amber: count(lights, :amber),
+            green: count(lights, :green),
         timed_out: count(lights, :timed_out)
      }, 34, key)
   end
@@ -24,10 +26,8 @@ module PieChartHelper
       "</canvas>"
   end
 
-private
-
   def count(lights, colour)
-     lights.entries.count{|light| light.colour === colour }
+     lights.entries.count{ |light| light.colour == colour }
   end
 
 end
