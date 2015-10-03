@@ -39,11 +39,15 @@ class ForkerController < ApplicationController
       tag = params['tag'].to_i
       id = unique_id
 
+      # don't use kata.exercise.name because
+      # exercise might have been renamed
+      exercise_name = kata.manifest['exercise']
+
       manifest = {
                     created: time_now,
                          id: id,
-                   language: kata.language.name,
-                   exercise: kata.exercise_name,
+                   language: language.name,
+                   exercise: exercise_name,
         unit_test_framework: language.unit_test_framework,
                    tab_size: language.tab_size,
               visible_files: avatar.tags[tag].visible_files

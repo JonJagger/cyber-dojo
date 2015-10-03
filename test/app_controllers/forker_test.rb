@@ -130,17 +130,34 @@ class ForkerControllerTest < AppControllerTestBase
   #- - - - - - - - - - - - - - - - - -
 
   test '5EA04E',
-  'when the exercise no longer exists but everything else ' +
+  'when the exercise no longer exists and everything else ' +
      'is ok then fork works and the new dojos id is returned' do
     @avatar = enter # 0
     runner.stub_output('dummy')
     run_tests       # 1
-
     dir = disk[katas[@id].path]
     json = dir.read_json('manifest.json')
-    not_exercise = 'exercise-name-that-does-not-exist'
-    assert_nil exercises[not_exercise]
-    json['exercise'] = not_exercise
+    not_exercise_name = 'exercise-name-that-does-not-exist'
+    assert_nil exercises[not_exercise_name]
+    json['exercise'] = not_exercise_name
+    dir.write_json('manifest.json', json)
+    fork(@id, @avatar.name, tag = 1)
+    assert forked?
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '9D85BF',
+  'when language has been renamed and everything else ' +
+    'is ok then fork works and the new dojos id is returned' do
+    @avatar = enter # 0
+    runner.stub_output('dummy')
+    run_tests       # 1
+    dir = disk[katas[@id].path]
+    json = dir.read_json('manifest.json')
+    old_language_name = 'C#'
+    assert_not_nil languages[old_language_name]
+    json['language'] = old_language_name
     dir.write_json('manifest.json', json)
     fork(@id, @avatar.name, tag = 1)
     assert forked?
@@ -168,85 +185,5 @@ class ForkerControllerTest < AppControllerTestBase
     refute_nil json
     json['id']
   end
-
-
-=begin
-
-  #- - - - - - - - - - - - - - - - - -
-
-  test 'when language has been renamed but new-name-language exists ' +
-       'and id,avatar,tag are all ok ' +
-       'the fork works ' +
-       "and the new dojo's id is returned" do
-    stub_dojo
-    id = '1234512345'
-    kata = @dojo.katas[id]
-    old_language_name = 'C#'
-    kata.dir.write('manifest.json', { :language => old_language_name })
-    new_language_name = 'C#-NUnit'
-    language = @dojo.languages[new_language_name]
-    language.dir.write('manifest.json', {
-      :display_name => 'C#, NUnit',
-      :unit_test_framework => 'fake'
-    })
-    avatar_name = 'hippo'
-    avatar = kata.avatars[avatar_name]
-    stub_traffic_lights(avatar, [ red, green ])
-    visible_files = { 'Hiker.cs' => 'public class Hiker { }',
-                      'HikerTest.cs' => 'using NUnit.Framework;' }
-    manifest = JSON.unparse(visible_files)
-    tag = 2
-    filename = 'manifest.json'
-    git.spy(avatar.dir.path,'show',"#{tag}:#{filename}",manifest)
-    fork(id,avatar_name,tag)
-    assert forked?
-    assert_equal 10, forked_kata_id.length
-    assert_not_equal id, forked_kata_id
-    forked_kata = @dojo.katas[forked_kata_id]
-    assert forked_kata.exists?
-    assert_equal kata.language.name, forked_kata.language.name
-    assert_equal kata.exercise.name, forked_kata.exercise.name
-    assert_equal visible_files, forked_kata.visible_files
-    assert_equal({avatar.path => [['show', '2:manifest.json']]}, git.log)
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def stub_setup
-    stub_dojo
-    @id = '1234512345'
-    @kata = @dojo.katas[@id]
-    language_name = 'Ruby-TestUnit'
-    exercise_name = 'fake-Yatzy'
-    stub_kata(@id, language_name, exercise_name)
-    language = @dojo.languages[language_name]
-    language.dir.write_json('manifest.json', {
-      :display_name => 'Ruby, TestUnit',
-      :unit_test_framework => 'ruby_test_unit'
-    })
-    @avatar_name = 'hippo'
-    @avatar = @kata.avatars[@avatar_name]
-    stub_traffic_lights(@avatar, [ red, green ])
-    @visible_files = { 'Hiker.cs' => 'public class Hiker { }',
-                      'HikerTest.cs' => 'using NUnit.Framework;' }
-    manifest = JSON.unparse(@visible_files)
-    @tag = 2
-    filename = 'manifest.json'
-    git.spy(@avatar.dir.path, 'show', "#{@tag}:#{filename}",manifest)
-  end
-
-  def stub_traffic_lights(avatar, lights)
-    avatar.dir.write('increments.json', lights)
-  end
-
-  def red
-    { 'colour' => 'red' }
-  end
-
-  def green
-    { 'colour' => 'green' }
-  end
-
-=end
 
 end

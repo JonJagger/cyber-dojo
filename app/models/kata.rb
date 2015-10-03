@@ -62,10 +62,6 @@ class Kata
     dojo.exercises[manifest_property]
   end
 
-  def exercise_name
-    manifest['exercise']
-  end
-
   def manifest
     @manifest ||= read_json(manifest_filename)
   end
