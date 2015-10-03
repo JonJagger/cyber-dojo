@@ -15,9 +15,8 @@ class Languages
 
   attr_reader :path
 
-  def each
-    return enum_for(:each) unless block_given?
-    languages.values.each { |language| yield language }
+  def each(&block)
+    languages.values.each(&block)
   end
 
   def [](name)

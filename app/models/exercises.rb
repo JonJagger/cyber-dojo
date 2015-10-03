@@ -15,9 +15,8 @@ class Exercises
 
   attr_reader :path
 
-  def each
-    return enum_for(:each) unless block_given?
-    exercises.values.each { |exercise| yield exercise }
+  def each(&block)
+    exercises.values.each(&block)
   end
 
   def [](name)

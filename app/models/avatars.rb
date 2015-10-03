@@ -13,9 +13,8 @@ class Avatars
     @parent = kata
   end
 
-  def each
-    return enum_for(:each) unless block_given?
-    avatars.values.each { |avatar| yield avatar }
+  def each(&block)
+    avatars.values.each(&block)
   end
 
   def [](name)
