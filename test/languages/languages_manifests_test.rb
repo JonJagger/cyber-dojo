@@ -67,11 +67,9 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   def manifest_file_exists?
     unless File.exists? manifest_filename
-      puts_alert "#{manifest_filename} does not exist"
-      return false
+      return false_puts_alert "#{manifest_filename} does not exist"
     end
-    print '.'
-    true
+    true_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -80,34 +78,30 @@ class LanguagesManifestsTests < LanguagesTestBase
     required_keys = %w( visible_filenames display_name unit_test_framework )
     required_keys.each do |key|
       unless manifest.keys.include? key
-        puts_alert "#{manifest_filename} must contain key '#{key}'"
-        return false
+        return false_puts_alert "#{manifest_filename} must contain key '#{key}'"
       end
     end
-    print '.'
-    true
+    true_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def unknown_keys_exist?
-    known = %w( visible_filenames
-               progress_regexs
-               filename_extension
-               highlight_filenames
-               unit_test_framework
-               tab_size
-               display_name
-               image_name
-              )
+    known_keys = %w( visible_filenames
+                     progress_regexs
+                     filename_extension
+                     highlight_filenames
+                     unit_test_framework
+                     tab_size
+                     display_name
+                     image_name
+                   )
     manifest.keys.each do |key|
-      unless known.include? key
-        puts_alert "#{manifest_filename} contains unknown key '#{key}'"
-        return true
+      unless known_keys.include? key
+        return true_puts_alert "#{manifest_filename} contains unknown key '#{key}'"
       end
     end
-    print '.'
-    false
+    false_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -118,14 +112,13 @@ class LanguagesManifestsTests < LanguagesTestBase
     exercise = exercises['Print_Diamond']
     assert !exercise.nil?, '!exercise.nil?'
     kata = katas.create_kata(language, exercise)
-    manifest = JSON.parse(disk[kata.path].read('manifest.json'))
+    manifest = disk[kata.path].read_json('manifest.json')
     lang = manifest['language']
     if lang.count('-') != 1
       message =
         "#{kata.id}'s manifest 'language' entry is #{lang}" +
         ' which does not contain a - '
-      puts_alert message
-      return false
+      return false_puts_alert message
     end
     print '.'
     round_tripped = languages[lang]
@@ -134,18 +127,15 @@ class LanguagesManifestsTests < LanguagesTestBase
         "kata #{kata.id}'s manifest 'language' entry is #{lang}" +
         ' which does not round-trip back to its own languages/sub/folder.' +
         ' Please check app/models/Languages.rb:new_name()'
-      puts_alert message
-      return false
+      return false_puts_alert message
     end
     print '.'
     if lang != 'Bash-shunit2' && lang.each_char.any? { |ch| '0123456789'.include?(ch) }
       message = "#{kata.id}'s manifest 'language' entry is #{lang}" +
                 ' which contains digits and looks like it contains a version number'
-      puts_alert message
-      return false
+      return false_puts_alert message
     end
-    print '.'
-    true
+    true_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -155,12 +145,10 @@ class LanguagesManifestsTests < LanguagesTestBase
       if visible_filenames.count(filename) > 1
         message = "#{manifest_filename}'s 'visible_filenames' contains" +
                   " #{filename} more than once"
-        puts_alert message
-        return true
+        return false_puts_alert message
       end
     end
-    print '.'
-    false
+    false_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -168,24 +156,20 @@ class LanguagesManifestsTests < LanguagesTestBase
   def progress_regexs_valid?
     if progress_regexs.class.name != 'Array'
       message = "#{manifest_filename}'s progress_regexs entry is not an array"
-      puts_alert message
-      return false
+      return false_puts_alert message
     end
     if progress_regexs.length != 0 && progress_regexs.length != 2
       message = "#{manifest_filename}'s 'progress_regexs' entry does not contain 2 entries"
-      puts_alert message
-      return false
+      return false_puts_alert message
     end
     progress_regexs.each do |s|
       begin
         Regexp.new(s)
       rescue
-        puts_alert "#{manifest_filename} cannot create a Regexp from #{s}"
-        return false
+        return false_puts_alert "#{manifest_filename} cannot create a Regexp from #{s}"
       end
     end
-    print '.'
-    true
+    true_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -195,11 +179,9 @@ class LanguagesManifestsTests < LanguagesTestBase
     if parts.count != 2
       message = "#{manifest_filename}'s 'display_name':'#{display_name}'" +
                 " is not in 'language,test' format"
-      puts_alert message
-      return false
+      return false_puts_alert message
     end
-    print '.'
-    true
+    true_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -207,11 +189,9 @@ class LanguagesManifestsTests < LanguagesTestBase
   def filename_extension_starts_with_dot?
     if manifest['filename_extension'][0] != '.'
       message = "#{manifest_filename}'s 'filename_extension' does not start with a ."
-      puts_alert message
-      return true
+      return true_puts_alert message
     end
-    print '.'
-    false
+    false_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -228,12 +208,10 @@ class LanguagesManifestsTests < LanguagesTestBase
         message =
           "#{manifest_filename} contains a '#{symbol}' entry [#{filename}]\n" +
           " but the #{language_dir}/ dir does not contain a file called #{filename}"
-        puts_alert message
-        return false
+        return false_puts_alert message
       end
     end
-    print '.'
-    true
+    true_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -246,12 +224,10 @@ class LanguagesManifestsTests < LanguagesTestBase
         message =
           "#{manifest_filename} contains a 'highlight_filenames' entry ['#{filename}'] " +
           " but visible_filenames does not include '#{filename}'"
-        puts_alert message
-        return false
+        return false_puts_alert message
       end
     end
-    print '.'
-    true
+    true_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -259,22 +235,18 @@ class LanguagesManifestsTests < LanguagesTestBase
   def cyberdojo_sh_exists?
     if visible_filenames.select { |filename| filename == 'cyber-dojo.sh' } == []
       message = "#{manifest_filename} must contain ['cyber-dojo.sh'] in 'visible_filenames'"
-      puts_alert message
-      return false
+      return false_puts_alert message
     end
-    print '.'
-    true
+    true_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def cyberdojo_sh_has_execute_permission?
     unless File.stat(language_dir + '/' + 'cyber-dojo.sh').executable?
-      puts_alert 'cyber-dojo.sh does not have execute permission'
-      return false
+      return false_puts_alert 'cyber-dojo.sh does not have execute permission'
     end
-    print '.'
-    true
+    true_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -289,11 +261,9 @@ class LanguagesManifestsTests < LanguagesTestBase
     unless has_parse_method
       message = "app/lib/OutputColour.rb does not contain a " +
                 "parse_#{unit_test_framework}(output) method"
-      puts_alert message
-      return false
+      return false_puts_alert message
     end
-    print '.'
-    true
+    true_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -304,12 +274,10 @@ class LanguagesManifestsTests < LanguagesTestBase
       uid = File.stat(language_dir + '/' + filename).uid
       owner = Etc.getpwuid(uid).name
       if owner == 'root'
-        puts_alert "owner of #{language_dir}/#{filename} is root"
-        return true
+        return true_puts_alert "owner of #{language_dir}/#{filename} is root"
       end
     end
-    print '.'
-    false
+    false_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -320,12 +288,10 @@ class LanguagesManifestsTests < LanguagesTestBase
       gid = File.stat(language_dir + '/' + filename).gid
       owner = Etc.getgrgid(gid).name
       if owner == 'root'
-        puts_alert "owner of #{language_dir}/#{filename} is root"
-        return true
+        return true_puts_alert "owner of #{language_dir}/#{filename} is root"
       end
     end
-    print '.'
-    false
+    false_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -333,23 +299,19 @@ class LanguagesManifestsTests < LanguagesTestBase
   def any_file_is_unreadable?
     (visible_filenames + ['manifest.json']).each do |filename|
       unless File.stat(language_dir + '/' + filename).world_readable?
-        puts_alert "#{language_dir}/#{filename} is not world-readable"
-        return true
+        return true_puts_alert "#{language_dir}/#{filename} is not world-readable"
       end
     end
-    print '.'
-    false
+    false_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def dockerfile_exists?
     unless File.exists?(language_dir + '/' + 'Dockerfile')
-      puts_alert "#{language_dir}/ dir does not contain a file called Dockerfile"
-      return false
+      return false_puts_alert "#{language_dir}/ dir does not contain a file called Dockerfile"
     end
-    print '.'
-    true
+    true_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -357,11 +319,9 @@ class LanguagesManifestsTests < LanguagesTestBase
   def build_docker_container_exists?
     unless File.exists?(language_dir + '/' + 'build-docker-container.sh')
       message = "#{language_dir}/ dir does not contain a file called build-docker-container.sh"
-      puts_alert message
-      return false
+      return false_puts_alert message
     end
-    print '.'
-    true
+    true_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -371,12 +331,12 @@ class LanguagesManifestsTests < LanguagesTestBase
     content = IO.read(filename)
     unless /docker build -t cyberdojofoundation/.match(content)
       message = "#{filename} does not contain 'docker build -t cyberdojofoundation/"
-      puts_alert message
-      return false
+      return false_puts_alert message
     end
-    print '.'
-    true
+    true_dot
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   private
 
@@ -429,8 +389,28 @@ class LanguagesManifestsTests < LanguagesTestBase
     "\n>>>>>>> #{language} <<<<<<<\n"
   end
 
+  def false_puts_alert(message)
+    puts_alert message
+    false
+  end
+
+  def true_puts_alert(message)
+    puts_alert message
+    true
+  end
+
   def puts_alert(message)
     puts alert + '  ' + message
+  end
+
+  def false_dot
+    print '.'
+    false
+  end
+
+  def true_dot
+    print '.'
+    true
   end
 
 end
