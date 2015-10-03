@@ -9,26 +9,17 @@ class Avatars
     )
   end
 
-  def self.valid?(name)
-    names.include?(name)
-  end
-
   def initialize(kata)
     @parent = kata
   end
 
   def each
     return enum_for(:each) unless block_given?
-    # Could do kata.exists?('started_avatars.json')
-    # and use that if it exists
-    Avatars.names.each do |name|
-      avatar = self[name]
-      yield avatar if disk[avatar.path].exists?
-    end
+    avatars.each { |_name, avatar| yield avatar }
   end
 
   def [](name)
-    Avatar.new(@parent, name)
+    avatars[name]
   end
 
   def active
@@ -43,5 +34,16 @@ class Avatars
 
   include Enumerable
   include ExternalParentChain
+
+  def avatars
+    # Could do disk[kata.path].exists?('started_avatars.json')
+    # and use that if it exists
+    all = {}
+    Avatars.names.each do |name|
+      avatar = Avatar.new(@parent, name) #self[name]
+      all[name] = avatar if disk[avatar.path].exists?
+    end
+    all
+  end
 
 end

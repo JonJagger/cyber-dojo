@@ -35,7 +35,7 @@ class AvatarsTests < AppModelTestBase
     assert_equal [cheetah, lion], kata.avatars.map(&:name).sort
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B11555',
   'avatars.map works' do
@@ -46,35 +46,51 @@ class AvatarsTests < AppModelTestBase
     assert_equal 2, kata.avatars.to_a.length
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '1F9350',
-  'katas[id].avatars returns all avatars started in the kata with that id' do
+  test '3D8638',
+  'avatars[invalid-name] is nil' do
     kata = make_kata
-    kata.start_avatar([lion])
-    kata.start_avatar([hippo])
-    expected_names = [lion, hippo]
-    names = katas[kata.id.to_s].avatars.map(&:name)
-    assert_equal expected_names.sort, names.sort
+    assert_nil kata.avatars[invalid_name = 'mobile-phone']
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '299429',
+  'avatars[cheetah] is nil when cheetah has not started' do
+    kata = make_kata
+    assert_nil kata.avatars[cheetah]
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '6A074D',
-  'katas[id].avatars[panda] finds the panda' do
+  'avatars[panda] is the panda when the panda has started' do
     kata = make_kata
     kata.start_avatar([panda])
     assert_equal [panda], kata.avatars.map(&:name)
     assert_equal panda, katas[kata.id.to_s].avatars[panda].name
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '1F9350',
+  'avatars returns all avatars started in the kata with that id' do
+    kata = make_kata
+    kata.start_avatar([lion])
+    kata.start_avatar([hippo])
+    expected_names = [lion, hippo]
+    names = kata.avatars.map(&:name)
+    assert_equal expected_names.sort, names.sort
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   private
 
   def cheetah; 'cheetah'; end
-  def lion; 'lion'; end
-  def hippo; 'hippo'; end
-  def panda; 'panda'; end
+  def lion   ; 'lion'   ; end
+  def hippo  ; 'hippo'  ; end
+  def panda  ; 'panda'  ; end
 
 end

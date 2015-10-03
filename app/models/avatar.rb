@@ -3,7 +3,6 @@
 class Avatar
 
   def initialize(kata, name)
-    fail 'Invalid Avatar(name)' unless Avatars.valid?(name)
     @parent = kata
     @name = name
   end

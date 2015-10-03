@@ -16,16 +16,6 @@ class AvatarTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '3D8638',
-  'attempting to create an Avatar with an invalid name raises RuntimeError' do
-    kata = make_kata
-    invalid_name = 'mobile-phone'
-    refute Avatars.names.include?(invalid_name)
-    assert_raises(RuntimeError) { kata.avatars[invalid_name] }
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '4C9E81',
   'avatar returns kata it was created with' do
     kata = make_kata
@@ -42,16 +32,6 @@ class AvatarTests < AppModelTestBase
     kata.language.visible_files.each do |filename, content|
       assert_equal content, dir_of(avatar.sandbox).read(filename)
     end
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test '0F5216',
-  'avatar is not active? when it does not exist' do
-    kata = make_kata
-    lion = kata.avatars['lion']
-    refute dir_of(lion).exists?
-    refute lion.active?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -74,17 +54,6 @@ class AvatarTests < AppModelTestBase
     DeltaMaker.new(lion).run_test
     assert_equal 1, lion.lights.length
     assert lion.active?
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test '39CCCC',
-  'exists? is true when dir exists and name is in Avatar.names' do
-    kata = make_kata
-    lion = kata.avatars['lion']
-    refute dir_of(lion).exists?
-    dir_of(lion).make
-    assert dir_of(lion).exists?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -474,3 +443,4 @@ class AvatarTests < AppModelTestBase
   end
 
 end
+

@@ -17,7 +17,7 @@ class ForkerController < ApplicationController
       result[:language] = kata.manifest['language']
     end
 
-    if !error && !disk[avatar.path].exists?('increments.json') # TODO: avatar.nil?
+    if !error && avatar.nil?
       error = true
       result[:reason] = 'avatar'
       result[:avatar] = avatar_name
@@ -61,14 +61,10 @@ class ForkerController < ApplicationController
     end
 
     respond_to do |format|
-      format.json {
-        render json: result
-      }
-      format.html {
-        redirect_to controller: 'dojo',
-                        action: 'index',
-                            id: result[:id]
-      }
+      format.json { render json: result }
+      format.html { redirect_to controller: 'dojo',
+                                    action: 'index',
+                                        id: result[:id] }
     end
   end
 
