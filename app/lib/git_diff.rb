@@ -13,6 +13,8 @@ module GitDiff # mix-in
     git_diff(diff_lines, visible_files)
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - -
+
   def git_diff(diff_lines, visible_files)
     view = {}
     diffs = GitDiffParser.new(diff_lines).parse_all
@@ -40,6 +42,29 @@ module GitDiff # mix-in
     view
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  def git_diff_view(diffed_files)
+    n = 0
+    diffs = []
+    diffed_files.sort.each do |filename, diff|
+      id = 'id_' + n.to_s
+      n += 1
+      diffs << {
+                        id: id,
+                  filename: filename,
+             section_count: diff.count { |line| line[:type] == :section },
+        deleted_line_count: diff.count { |line| line[:type] == :deleted },
+          added_line_count: diff.count { |line| line[:type] == :added   },
+                   content: git_diff_html_file(id, diff),
+              line_numbers: git_diff_html_line_numbers(diff)
+      }
+    end
+    diffs
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
   def deleted_file?(ch)
     # GitDiffParser uses names beginning with
     # a/... to indicate a deleted file
@@ -63,25 +88,6 @@ module GitDiff # mix-in
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
-
-  def git_diff_view(diffed_files)
-    n = 0
-    diffs = []
-    diffed_files.sort.each do |filename, diff|
-      id = 'id_' + n.to_s
-      n += 1
-      diffs << {
-                        id: id,
-                  filename: filename,
-             section_count: diff.count { |line| line[:type] == :section },
-        deleted_line_count: diff.count { |line| line[:type] == :deleted },
-          added_line_count: diff.count { |line| line[:type] == :added   },
-                   content: git_diff_html_file(id, diff),
-              line_numbers: git_diff_html_line_numbers(diff)
-      }
-    end
-    diffs
-  end
 
   def git_diff_html_file(id, diff)
     diff.map { |n| diff_htmlify(id, n) }.join('')

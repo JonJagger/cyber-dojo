@@ -17,11 +17,11 @@ class Exercises
 
   def each
     return enum_for(:each) unless block_given?
-    exercises.each { |exercise| yield exercise }
+    exercises.values.each { |exercise| yield exercise }
   end
 
   def [](name)
-    exercises.find { |exercise| exercise.name == name }
+    exercises[name]
   end
 
   def refresh_cache
@@ -42,9 +42,9 @@ class Exercises
   end
 
   def read_cache
-    cache = []
+    cache = {}
     read_json(self.class.cache_filename).each do |name, exercise|
-      cache << make_exercise(name, exercise['instructions'])
+      cache[name] = make_exercise(name, exercise['instructions'])
     end
     cache
   end

@@ -15,7 +15,7 @@ class Avatars
 
   def each
     return enum_for(:each) unless block_given?
-    avatars.each { |_name, avatar| yield avatar }
+    avatars.values.each { |avatar| yield avatar }
   end
 
   def [](name)

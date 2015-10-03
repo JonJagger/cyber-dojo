@@ -2,7 +2,7 @@
 module GitDiff
 
   # Parses the output of 'git diff' command.
-  # Specfically, the one in GitDiffParser.rb git_diff_view()
+  # Used in app/lib/git_diff_parser.rb git_diff()
   # See test/lib/git_diff_parser_tests.rb
 
   class GitDiffParser
@@ -90,10 +90,10 @@ module GitDiff
       if range = RANGE_RE.match(@lines[@n])
         @n += 1
         was = { start_line: range[1].to_i,
-                size: size_or_default(range[2])
+                      size: size_or_default(range[2])
               }
         now = { start_line: range[3].to_i,
-                size: size_or_default(range[4])
+                      size: size_or_default(range[4])
               }
         { was: was, now: now }
       end

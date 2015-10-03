@@ -385,10 +385,6 @@ class LanguagesManifestsTests < LanguagesTestBase
     File.expand_path('../..', File.dirname(__FILE__)) + '/'
   end
 
-  def alert
-    "\n>>>>>>> #{language} <<<<<<<\n"
-  end
-
   def false_puts_alert(message)
     puts_alert message
     false
@@ -401,6 +397,10 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   def puts_alert(message)
     puts alert + '  ' + message
+  end
+
+  def alert
+    "\n>>>>>>> #{language} <<<<<<<\n"
   end
 
   def false_dot
