@@ -129,6 +129,25 @@ class ForkerControllerTest < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - - - -
 
+  test '5EA04E',
+  'when the exercise no longer exists but everything else ' +
+     'is ok then fork works and the new dojos id is returned' do
+    @avatar = enter # 0
+    runner.stub_output('dummy')
+    run_tests       # 1
+
+    dir = disk[katas[@id].path]
+    json = dir.read_json('manifest.json')
+    not_exercise = 'exercise-name-that-does-not-exist'
+    assert_nil exercises[not_exercise]
+    json['exercise'] = not_exercise
+    dir.write_json('manifest.json', json)
+    fork(@id, @avatar.name, tag = 1)
+    assert forked?
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   private
 
   def fork(id, avatar, tag, format = :json)
@@ -154,19 +173,6 @@ class ForkerControllerTest < AppControllerTestBase
 =begin
 
   #- - - - - - - - - - - - - - - - - -
-
-  test 'when the exercise no longer exists but everything else ' +
-       "is ok then fork works and the new dojos id is returned" do
-    stub_setup
-    fork(@id,@avatar_name,@tag)
-    assert forked?
-    exercise = @dojo.exercises['fake-Yatzy']
-    exercise.dir.delete('instructions')
-    fork(@id,@avatar_name,@tag)
-    assert forked?
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'when language has been renamed but new-name-language exists ' +
        'and id,avatar,tag are all ok ' +
@@ -201,7 +207,7 @@ class ForkerControllerTest < AppControllerTestBase
     assert_equal kata.language.name, forked_kata.language.name
     assert_equal kata.exercise.name, forked_kata.exercise.name
     assert_equal visible_files, forked_kata.visible_files
-    assert_equal({avatar.path => [ ['show', '2:manifest.json']]}, git.log)
+    assert_equal({avatar.path => [['show', '2:manifest.json']]}, git.log)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -

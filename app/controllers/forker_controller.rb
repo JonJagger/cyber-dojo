@@ -5,7 +5,7 @@ class ForkerController < ApplicationController
     result = { forked: false }
     error = false
 
-    if !error && katas[id].nil?
+    if !error && kata.nil?
       error = true
       result[:reason] = 'dojo'
       result[:dojo] = id
@@ -43,15 +43,15 @@ class ForkerController < ApplicationController
                     created: time_now,
                          id: id,
                    language: kata.language.name,
-                   exercise: kata.exercise.name,
+                   exercise: kata.exercise_name,
         unit_test_framework: language.unit_test_framework,
                    tab_size: language.tab_size,
               visible_files: avatar.tags[tag].visible_files
       }
 
-      kata = Kata.new(dojo.katas, id)
-      disk[kata.path].make
-      disk[kata.path].write_json('manifest.json', manifest)
+      forked_kata = Kata.new(katas, id)
+      disk[forked_kata.path].make
+      disk[forked_kata.path].write_json('manifest.json', manifest)
       result[:forked] = true
       result[:id] = id
     end
