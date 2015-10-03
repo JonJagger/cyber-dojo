@@ -3,6 +3,8 @@ o) make avatars[name] return nil
    to match exercises[] languages[] katas[]
 
 o) move language - cyber-dojo.sh update code into dedicated class/module
+   rework it so it adds a file called cyber-dojo.sh.new
+   instead of adding commented version to cyber-dojo.sh
 
 o) note duplication now in
    test/app_controller/AppControllerTestBase.rb and
