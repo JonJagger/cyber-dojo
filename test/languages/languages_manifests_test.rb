@@ -122,13 +122,15 @@ class LanguagesManifestsTests < LanguagesTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def created_kata_manifests_language_entry_round_trips?
-    language = languages[@language]
+    language = languages[display_name]
+    assert !language.nil?, '!language.nil?'
     exercise = exercises['Print_Diamond']
+    assert !exercise.nil?, '!exercise.nil?'
     kata = katas.create_kata(language, exercise)
-    manifest = JSON.parse(kata.dir.read('manifest.json'))
+    manifest = JSON.parse(disk[kata.path].read('manifest.json'))
     lang = manifest['language']
     if lang.count('-') != 1
-      message = 
+      message =
         alert +
         " #{kata.id}'s manifest 'language' entry is #{lang}" +
         " which does not contain a - "
@@ -138,7 +140,7 @@ class LanguagesManifestsTests < LanguagesTestBase
     print '.'
     round_tripped = languages[lang]
     if !File.directory? round_tripped.path
-      message = 
+      message =
         alert +
         " kata #{kata.id}'s manifest 'language' entry is #{lang}" +
         ' which does not round-trip back to its own languages/sub/folder.' +
@@ -153,14 +155,14 @@ class LanguagesManifestsTests < LanguagesTestBase
         " #{kata.id}'s manifest 'language' entry is #{lang}" +
         " which contains digits and looks like it contains a version number"
         puts message
-        return false        
-    end    
+        return false
+    end
     print '.'
     true
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   def duplicate_visible_filenames?
     visible_filenames.each do |filename|
       if visible_filenames.count(filename) > 1
@@ -210,7 +212,7 @@ class LanguagesManifestsTests < LanguagesTestBase
   def display_name_valid?
     parts = display_name.split(',').select{|part| part.strip != ''}
     if parts.count != 2
-      message = 
+      message =
         alert +
         " #{manifest_filename}'s 'display_name':'#{display_name}'" +
         " is not in 'language,test' format"
@@ -430,7 +432,7 @@ private
   def display_name
     manifest_property
   end
-  
+
   def visible_filenames
     manifest_property || [ ]
   end
@@ -446,7 +448,7 @@ private
   def unit_test_framework
     manifest_property || [ ]
   end
-  
+
   def manifest_property
     property_name = (caller[0] =~ /`([^']*)'/ and $1)
     manifest[property_name]
@@ -463,7 +465,7 @@ private
   def language_dir
     root_path + '/languages/' + language
   end
-  
+
   def language
     @language.split('-').join('/')
   end
