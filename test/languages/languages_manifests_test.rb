@@ -75,7 +75,7 @@ class LanguagesManifestsTests < LanguagesTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def required_keys_exist?
-    required_keys = %w( visible_filenames display_name unit_test_framework )
+    required_keys = %w( display_name image_name unit_test_framework visible_filenames )
     required_keys.each do |key|
       unless manifest.keys.include? key
         return false_puts_alert "#{manifest_filename} must contain key '#{key}'"
@@ -87,14 +87,14 @@ class LanguagesManifestsTests < LanguagesTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def unknown_keys_exist?
-    known_keys = %w( visible_filenames
-                     progress_regexs
+    known_keys = %w( display_name
                      filename_extension
                      highlight_filenames
-                     unit_test_framework
-                     tab_size
-                     display_name
                      image_name
+                     progress_regexs
+                     tab_size
+                     unit_test_framework
+                     visible_filenames
                    )
     manifest.keys.each do |key|
       unless known_keys.include? key

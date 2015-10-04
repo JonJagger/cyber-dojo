@@ -1,6 +1,9 @@
 
+o) why is   def filter(filename, content)
+   in language.rb and why is it Makefile.filter() without an include
+
 o) move language - cyber-dojo.sh update code into dedicated class/module
-   rework it so it adds a file called cyber-dojo.sh.new
+   rework it so it adds a new file called cyber-dojo.sh.new
    instead of adding commented version to cyber-dojo.sh
 
 o) note duplication now in
@@ -10,7 +13,7 @@ o) note duplication now in
    test/lib/LibTestBase.rb
 
 o) app_lib coverage is 99%
-   missing avatar_git_diff
+   missing avatar_git_diff()
 
 o) setup page needs an explicit cancel button.
    What if you're running the browser in presentation mode!

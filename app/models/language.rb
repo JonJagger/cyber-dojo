@@ -14,17 +14,10 @@ class Language
     @parent.path + @dir_name + '/' + @test_dir_name + '/'
   end
 
-  def name
-    # as stored in the kata's manifest
-    display_name.split(',').map(&:strip).join('-')
-  end
+  # required properties
 
   def display_name
     @display_name ||= manifest_property
-  end
-
-  def runnable?
-    runner.runnable?(self)
   end
 
   def image_name
@@ -35,16 +28,18 @@ class Language
     manifest_property
   end
 
-  def filename_extension
-    manifest_property || ''
-  end
-
   def visible_filenames
     manifest_property || []
   end
 
   def visible_files
     Hash[visible_filenames.collect { |filename| [filename, read(filename)] }]
+  end
+
+  # optional properties
+
+  def filename_extension
+    manifest_property || ''
   end
 
   def highlight_filenames
@@ -64,11 +59,22 @@ class Language
   end
 
   def lowlight_filenames
-    if !highlight_filenames.empty?
-      return visible_filenames - highlight_filenames
-    else
+    if highlight_filenames.empty?
       return ['cyber-dojo.sh', 'makefile', 'Makefile', 'unity.license.txt']
+    else
+      return visible_filenames - highlight_filenames
     end
+  end
+
+  # not manifest properties
+
+  def name
+    # as stored in the kata's manifest
+    display_name.split(',').map(&:strip).join('-')
+  end
+
+  def runnable?
+    runner.runnable?(self)
   end
 
   def colour(output)
