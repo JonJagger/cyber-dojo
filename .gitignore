@@ -2,7 +2,6 @@
 log/*
 db/*.sqlite3
 tmp
-coverage
 
 .DS_Store
 .sass-cache/

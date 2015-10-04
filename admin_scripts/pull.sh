@@ -24,29 +24,27 @@ fi
 # store the time-stamp of this file after the git-pull
 MY_TIME_STAMP_AFTER=`stat -c %y $cyberDojoHome/admin_scripts/pull.sh`
 
-apt-get install -y acl
-
 # cyber-dojo creates folders under katas
+apt-get install -y acl
 echo "chown/chgrp www-data katas"
 chmod g+rwsx katas
 setfacl -d -m group:www-data:rwx $cyberDojoHome/katas
 setfacl -m group:www-data:rwx $cyberDojoHome/katas
 
-# ensure all files have correct rights
-for folder in admin_scripts app config coverage exercises languages lib log notes public script spec test
+# ensure all folders have correct rights
+folders=(admin_scripts app config coverage exercises languages lib log notes public script spec test tmp)
+for folder in ${folders[*]}
 do
   echo "chown www-data:www-data ${folder}"
   chown -R www-data:www-data $cyberDojoHome/$folder
 done
 
+# ensure all files have correct rights
 echo "chown www-data:www-data *"
 chown www-data:www-data $cyberDojoHome/*
 
 echo "chown www-data:www-data .*"
 chown www-data:www-data $cyberDojoHome/.*
-
-echo "chown -R www-data:www-data tmp"
-chown -R www-data:www-data $cyberDojoHome/tmp
 
 echo "deleting the rails cache"
 rm -rf $cyberDojoHome/tmp/*
@@ -55,10 +53,10 @@ echo "poking rails"
 rm $cyberDojoHome/Gemfile.lock
 bundle install
 
-echo "refreshing the languages/"
+echo "refreshing languages/ and ensuring latest docker containers"
 $cyberDojoHome/languages/refresh_cache.rb
 
-echo "refreshing the exercises/"
+echo "refreshing exercises/"
 $cyberDojoHome/exercises/refresh_cache.rb
 
 echo "restarting apache"
