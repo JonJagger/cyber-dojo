@@ -20,8 +20,8 @@ class Sandbox
 
   def save_files(delta, files)
     delta[:deleted].each { |filename| git_rm(filename) }
-    delta[:new    ].each { |filename| git_add(filename, filter(filename, files)) }
-    delta[:changed].each { |filename|   write(filename, filter(filename, files)) }
+    delta[:new    ].each { |filename| git_add(filename, files[filename]) }
+    delta[:changed].each { |filename|   write(filename, files[filename]) }
   end
 
   def run_tests(time_limit)
@@ -31,11 +31,6 @@ class Sandbox
   private
 
   include ExternalParentChain
-
-  def filter(filename, files)
-    content = avatar.kata.language.filter(filename, files[filename])
-    files[filename] = content
-  end
 
   def git_add(filename, content)
     write(filename, content)

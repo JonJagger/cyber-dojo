@@ -81,12 +81,6 @@ class Language
     OutputColour.of(unit_test_framework, output)
   end
 
-  def filter(filename, content)
-    # Cater for app/assets/javascripts/jquery-tabby.js plugin
-    # See app/lib/MakefileFilter.rb
-    MakefileFilter.filter(filename, content)
-  end
-
   def update_cyber_dojo_sh(files)
     # The base docker containers were refactored to avoid volume-mounting
     # as part of the docker-swarm re-architect work. The support_files

@@ -90,6 +90,14 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
     @params_maker.change_file(filename, content)
   end
 
+  def delete_file(filename)
+    @params_maker.delete_file(filename)
+  end
+
+  def new_file(filename, content)
+    @params_maker.new_file(filename, content)
+  end
+
   def run_tests
     params = { :format => :js, :id => @id, :avatar => @avatar.name }
     post 'kata/run_tests', params.merge(@params_maker.params)
@@ -136,3 +144,4 @@ private
   end
 
 end
+

@@ -4,6 +4,8 @@ require_relative './AppLibTestBase'
 
 class MakefileFilterTests < AppLibTestBase
 
+  include MakefileFilter
+
   test 'C88333',
   "not makefile leaves leading whitespace untouched" do
     check('notMakefile', "            abc", "            abc")
@@ -59,7 +61,7 @@ class MakefileFilterTests < AppLibTestBase
   private
 
   def check(filename, content, expected)
-    assert_equal expected, MakefileFilter.filter(filename,content)
+    assert_equal expected, makefile_filter(filename,content)
   end
 
 end

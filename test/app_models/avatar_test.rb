@@ -206,45 +206,6 @@ class AvatarTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'D0E7FD',
-    'test() saves changed makefile with leading spaces converted to tabs' +
-       ' and these changes are made to the visible_files parameter too' +
-       ' so they also occur in the manifest file' do
-    kata = make_kata
-    @avatar = kata.start_avatar
-
-    runner.stub_output('hello')
-    maker = DeltaMaker.new(@avatar)
-    maker.change_file(makefile, makefile_with_leading_spaces)
-    _, @visible_files, _ = maker.run_test
-
-    assert_file makefile, makefile_with_leading_tab
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'B547AF',
-    'test() saves *new* makefile with leading spaces converted to tabs' +
-       ' and these changes are made to the visible_files parameter too' +
-       ' so they also occur in the manifest file' do
-    kata = make_kata
-    @avatar = kata.start_avatar
-
-    runner.stub_output('hello')
-    maker = DeltaMaker.new(@avatar)
-    maker.delete_file(makefile)
-    _, @visible_files, _ = maker.run_test
-
-    runner.stub_output('hello')
-    maker = DeltaMaker.new(@avatar)
-    maker.new_file(makefile, makefile_with_leading_spaces)
-    _, @visible_files, _ = maker.run_test
-
-    assert_file makefile, makefile_with_leading_tab
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '37E925',
   'test():delta[:changed] files are saved' do
     kata = make_kata
@@ -321,79 +282,6 @@ class AvatarTests < AppModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
-
-=begin
-  test '464F65',
-  'tag.diff' do
-    kata = make_kata
-    lion = kata.start_avatar(['lion'])
-    fake_three_tests(lion)
-    manifest = JSON.unparse({
-      'hiker.c' => '#include "hiker.h"',
-      'hiker.h' => '#ifndef HIKER_INCLUDED_H\n#endif',
-      'output'  => 'unterminated conditional directive'
-    })
-    filename = 'manifest.json'
-    git.spy(lion.dir.path, 'show', "3:#{filename}", manifest)
-    stub_diff = [
-      "diff --git a/sandbox/hiker.h b/sandbox/hiker.h",
-      "index e69de29..f28d463 100644",
-      "--- a/sandbox/hiker.h",
-      "+++ b/sandbox/hiker.h",
-      "@@ -1 +1,2 @@",
-      "-#ifndef HIKER_INCLUDED",
-      "\\ No newline at end of file",
-      "+#ifndef HIKER_INCLUDED_H",
-      "+#endif",
-      "\\ No newline at end of file"
-    ].join("\n")
-    git.spy(lion.dir.path,
-      'diff',
-      '--ignore-space-at-eol --find-copies-harder 2 3 sandbox',
-      stub_diff)
-
-    actual = lion.diff(2, 3) # tags[2].diff(3)
-    expected =
-    {
-      "hiker.h" =>
-      [
-        { :type => :section, :index => 0 },
-        { :type => :deleted, :line => '#ifndef HIKER_INCLUDED',   :number => 1 },
-        { :type => :added,   :line => '#ifndef HIKER_INCLUDED_H', :number => 1 },
-        { :type => :added,   :line => '#endif', :number => 2 }
-      ],
-      "hiker.c" =>
-      [
-        { :line => "#include \"hiker.h\"", :type => :same, :number => 1 }
-      ],
-      "output" =>
-      [
-        { :line => "unterminated conditional directive", :type => :same, :number => 1 }
-      ]
-    }
-    assert_equal expected, actual
-  end
-=end
-
-  #- - - - - - - - - - - - - - - - - - -
-
-  def makefile_with_leading_tab
-    makefile_with_leading("\t")
-  end
-
-  def makefile_with_leading_spaces
-    makefile_with_leading(' ' + ' ')
-  end
-
-  def makefile_with_leading(s)
-    [
-      "CFLAGS += -I. -Wall -Wextra -Werror -std=c11",
-      "test: makefile $(C_FILES) $(COMPILED_H_FILES)",
-      s + "@gcc $(CFLAGS) $(C_FILES) -o $@"
-    ].join("\n")
-  end
-
-  #- - - - - - - - - - - - - - - - - - -
 
   def fake_three_tests(avatar)
     incs =

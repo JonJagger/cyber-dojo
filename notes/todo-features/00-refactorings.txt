@@ -1,7 +1,4 @@
 
-o) why is   def filter(filename, content)
-   in language.rb and why is it Makefile.filter() without an include
-
 o) move language - cyber-dojo.sh update code into dedicated class/module
    rework it so it adds a new file called cyber-dojo.sh.new
    instead of adding commented version to cyber-dojo.sh

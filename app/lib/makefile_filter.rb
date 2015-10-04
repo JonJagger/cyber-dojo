@@ -3,7 +3,7 @@ module MakefileFilter # mix-in
 
   module_function
 
-  def self.filter(filename, content)
+  def makefile_filter(filename, content)
     # The jquery-tabby.js plugin intercepts tab key presses in the
     # textarea editor and converts them to spaces for a better
     # code editing experience. However, makefiles are tab sensitive...
