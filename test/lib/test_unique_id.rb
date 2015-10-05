@@ -1,6 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'LibTestBase'
+require_relative './lib_test_base'
 
 class UniqueIdTests < LibTestBase
 
