@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative './app_controller_test_base'
-require_relative './RailsDiskFakeThreadAdapter'
-require_relative './RailsRunnerStubTrueThreadAdapter'
+require_relative './rails_disk_fake_thread_adapter'
+require_relative './rails_runner_stub_true_thread_adapter'
 
 class SetupControllerTest < AppControllerTestBase
 

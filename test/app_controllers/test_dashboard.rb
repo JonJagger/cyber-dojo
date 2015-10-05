@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative './app_controller_test_base'
-require_relative './RailsGitSpyThreadAdapter'
-require_relative './RailsRunnerStubThreadAdapter'
+require_relative './rails_git_spy_thread_adapter'
+require_relative './rails_runner_stub_thread_adapter'
 
 class DashboardControllerTest < AppControllerTestBase
 

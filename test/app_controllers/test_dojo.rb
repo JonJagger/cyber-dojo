@@ -1,7 +1,7 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative './app_controller_test_base'
-require_relative './RailsGitSpyThreadAdapter'
+require_relative './rails_git_spy_thread_adapter'
 
 class DojoControllerTest < AppControllerTestBase
 

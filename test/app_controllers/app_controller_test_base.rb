@@ -12,7 +12,7 @@ require_relative root + '/config/environment'
 require_relative root + '/test/TestDomainHelpers'
 require_relative root + '/test/TestExternalHelpers'
 require_relative root + '/test/TestHexIdHelpers'
-require_relative './ParamsMaker'
+require_relative './params_maker'
 
 class AppControllerTestBase < ActionDispatch::IntegrationTest
 
