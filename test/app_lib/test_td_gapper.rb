@@ -1,6 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './AppLibTestBase'
+require_relative './app_lib_test_base'
 
 class TdGapperTests < AppLibTestBase
 

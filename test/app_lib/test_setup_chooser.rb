@@ -1,13 +1,13 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './AppLibTestBase'
+require_relative './app_lib_test_base'
 
 class SetupChooserTests < AppLibTestBase
 
   include SetupChooser
 
   def setup
-   super
+    super
     tmp_root = self.class.tmp_root
     set_katas_root(tmp_root + 'katas')
   end
