@@ -1,0 +1,11 @@
+{
+  "visible_filenames": [
+     "hiker_testbench.vhdl",
+     "hiker.vhdl",
+     "cyber-dojo.sh"
+  ],
+  "filename_extension" : ".vhdl",
+  "display_name": "vhdl - ghdl (assert)",
+  "unit_test_framework": "vhdl_assert",
+  "image_name": "cyberdojofoundation/vhdl_assert"
+}
