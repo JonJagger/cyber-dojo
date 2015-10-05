@@ -1,6 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'AppHelpersTestBase'
+require_relative './app_helpers_test_base'
 
 class ParityTests < AppHelpersTestBase
 
