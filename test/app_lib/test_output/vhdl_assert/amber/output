@@ -1,0 +1,3 @@
+hiker.vhdl:13:1: '<=' is expected instead of 'end'
+ghdl: importation has failed due to compilation error
+hiker.vhdl:13:1: '<=' is expected instead of 'end'

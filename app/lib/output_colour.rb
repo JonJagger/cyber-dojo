@@ -88,6 +88,12 @@ module OutputColour # mix-in
     return :amber
   end
 
+  def self.parse_vhdl_assert(output)
+   return :red   if /assertion failed/.match(output)
+   return :amber if /compilation error/.match(output)
+   return :green
+  end
+
   def self.parse_cassert(output)
     return :red   if /(.*)Assertion(.*)failed./.match(output)
     return :green if /(All|\d*) tests passed/.match(output)
