@@ -4,7 +4,6 @@ root = './..'
 require_relative root + '/test_coverage'
 require_relative root + '/all'
 require_relative root + '/test_base'
-require_relative root + '/TestExternalHelpers'
 
 class LibTestBase < TestBase
 

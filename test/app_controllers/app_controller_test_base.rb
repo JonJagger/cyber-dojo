@@ -9,9 +9,9 @@ root = './../..'
 require_relative root + '/test/test_coverage'
 require_relative root + '/test/all'
 require_relative root + '/config/environment'
-require_relative root + '/test/TestDomainHelpers'
-require_relative root + '/test/TestExternalHelpers'
-require_relative root + '/test/TestHexIdHelpers'
+require_relative root + '/test/test_domain_helpers'
+require_relative root + '/test/test_external_helpers'
+require_relative root + '/test/test_hex_id_helpers'
 require_relative './params_maker'
 
 class AppControllerTestBase < ActionDispatch::IntegrationTest
@@ -130,7 +130,7 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
     disk[object.path]
   end
 
-private
+  private
 
   def random_language
     # languages.collect....

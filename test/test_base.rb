@@ -2,9 +2,9 @@
 gem 'minitest'
 require 'minitest/autorun'
 
-require_relative './TestDomainHelpers'
-require_relative './TestExternalHelpers'
-require_relative './TestHexIdHelpers'
+require_relative './test_domain_helpers'
+require_relative './test_external_helpers'
+require_relative './test_hex_id_helpers'
 
 class TestBase < MiniTest::Test
 
