@@ -5,7 +5,7 @@
      "cyber-dojo.sh"
   ],
   "filename_extension" : ".vhdl",
-  "display_name": "Vhdl, assert",
+  "display_name": "VHDL, assert",
   "unit_test_framework": "vhdl_assert",
   "image_name": "cyberdojofoundation/vhdl_assert"
 }
