@@ -1,7 +1,7 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative './lib_test_base'
-require_relative 'DockerTestHelpers'
+require_relative './docker_test_helpers'
 
 class DockerVolumeMountRunnerTests < LibTestBase
 
