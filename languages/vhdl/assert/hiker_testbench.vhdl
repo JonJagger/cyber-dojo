@@ -16,6 +16,7 @@ begin
 
    process 
    begin
+       wait for 1 ns; -- Signal propagation
        assert (meaning_of_life_test = "00001010") -- 42
                report "Meaning of life value incorrect"
                severity failure;
