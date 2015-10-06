@@ -17,7 +17,7 @@ modules=(
   app_models
   lib
   app_controllers
-#  languages
+  languages
 #  integration
 )
 

@@ -1,6 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'LanguagesTestBase'
+require_relative './languages_test_base'
 
 class LanguagesManifestsTests < LanguagesTestBase
 
