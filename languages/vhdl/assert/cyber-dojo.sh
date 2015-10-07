@@ -20,8 +20,7 @@ fi
 
 # Simulation step
 simulation_successful=true
-for file in *.vhdl; do
-   entity=${file%.*};
+for entity in $entities; do
    if ! ghdl -r $entity; then
       simulation_successful=false
    fi
