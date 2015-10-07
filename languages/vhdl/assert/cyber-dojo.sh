@@ -1,10 +1,13 @@
-#!/bin/bash
-
+# Imports all vhdl files into workspace
 ghdl -i *.vhdl
 
+# Scrapes the workspace file for all entity names
+entities=$(grep entity work-obj93.cf | cut -d \  -f 4)
+echo $entities;
+
+# Compilation step
 compilation_successful=true
-for file in *.vhdl; do
-   entity=${file%.*}
+for entity in $entities; do
    if ! ghdl -m $entity; then
       compilation_successful=false
    fi
@@ -15,6 +18,7 @@ if [ "$compilation_successful" = false ] ; then
    exit 1
 fi
 
+# Simulation step
 simulation_successful=true
 for file in *.vhdl; do
    entity=${file%.*};
