@@ -24,10 +24,6 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def dir_of(object)
-    disk[object.path]
-  end
-
   def setup
     super
     `rm -rf #{tmp_root}/*`

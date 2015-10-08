@@ -17,8 +17,4 @@ class AppHelpersTestBase < TestBase
     set_git_class      'HostGit'
   end
 
-  def dir_of(object)
-    disk[object.path]
-  end
-
 end

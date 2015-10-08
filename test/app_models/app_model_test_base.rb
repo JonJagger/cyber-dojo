@@ -30,8 +30,4 @@ class AppModelTestBase < TestBase
     ends_in_slash && !has_doubled_separator
   end
 
-  def dir_of(object)
-    disk[object.path]
-  end
-
 end
