@@ -12,27 +12,24 @@ require_relative root + '/config/environment'
 require_relative root + '/test/test_domain_helpers'
 require_relative root + '/test/test_external_helpers'
 require_relative root + '/test/test_hex_id_helpers'
+require_relative root + '/test/test_tmp_root_helpers'
 require_relative './params_maker'
 
 class AppControllerTestBase < ActionDispatch::IntegrationTest
 
-  def self.tmp_key
-    'CYBER_DOJO_TMP_ROOT'
-  end
+  include TestDomainHelpers
+  include TestExternalHelpers
+  include TestHexIdHelpers
+  include TestTmpRootHelpers
 
-  def self.tmp_root
-    root = ENV[tmp_key]
-    fail RuntimeError.new("ENV['#{tmp_key}'] not exported") if root.nil?
-    root.end_with?('/') ? root : (root + '/')
-  end
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  fail RuntimeError.new("#ENV[#{tmp_key}] not set") if tmp_root.nil?
-  FileUtils.mkdir_p(tmp_root)
-  fail RuntimeError.new("#{tmp_root} does not exist") unless File.directory?(tmp_root)
+  def dir_of(object)
+    disk[object.path]
+  end
 
   def setup
     super
-    tmp_root = self.class.tmp_root
     `rm -rf #{tmp_root}/*`
     `rm -rf #{tmp_root}/.git`
     `mkdir -p #{tmp_root}`
@@ -41,10 +38,6 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  include TestDomainHelpers
-  include TestExternalHelpers
-  include TestHexIdHelpers
 
   def create_kata(language_name = random_language, exercise_name = random_exercise)
     parts = language_name.split(',')
@@ -124,10 +117,6 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
 
   def html
     @response.body
-  end
-
-  def dir_of(object)
-    disk[object.path]
   end
 
   private

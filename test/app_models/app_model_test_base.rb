@@ -7,22 +7,8 @@ class AppModelTestBase < TestBase
 
   include UniqueId
 
-  def self.tmp_key
-    'CYBER_DOJO_TMP_ROOT'
-  end
-
-  def self.tmp_root
-    root = ENV[tmp_key]
-    fail RuntimeError.new("ENV['#{tmp_key}'] not exported") if root.nil?
-    root.end_with?('/') ? root : (root + '/')
-  end
-
-  FileUtils.mkdir_p(tmp_root)
-  fail RuntimeError.new("#{tmp_root} does not exist") unless File.directory?(tmp_root)
-
   def setup
     super
-    tmp_root = self.class.tmp_root
     `rm -rf #{tmp_root}/*`
     `rm -rf #{tmp_root}/.git`
     `mkdir -p #{tmp_root}`

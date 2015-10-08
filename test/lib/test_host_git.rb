@@ -9,7 +9,7 @@ class HostGitTests < LibTestBase
   end
 
   def path
-    self.class.tmp_root
+    tmp_root
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -

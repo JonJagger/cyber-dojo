@@ -7,7 +7,7 @@ class LanguageTests < AppModelTestBase
 
   def setup
     super
-    set_languages_root(self.class.tmp_root + 'languages')
+    set_languages_root(tmp_root + 'languages')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -6,7 +6,7 @@ module TestExternalHelpers # mix-in
 
   module_function
 
-  def setup   ;   store_env_vars; end
+  def setup   ;   store_env_vars; check_tmp_root_exists; end
   def teardown; restore_env_vars; end
 
   def set_languages_root(value); cd_set(languages_key,value); end

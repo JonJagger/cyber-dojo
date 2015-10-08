@@ -10,7 +10,7 @@ class DockerHostRsyncRunnerTests < LibTestBase
 
   def setup
     super
-    set_katas_root     self.class.tmp_root
+    set_katas_root     tmp_root
     set_disk_class     'HostDisk'
     set_git_class      'GitSpy'
     set_one_self_class 'OneSelfDummy'

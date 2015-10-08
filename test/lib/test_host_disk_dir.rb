@@ -9,7 +9,7 @@ class HostDiskDirTests < LibTestBase
   end
 
   def path
-    self.class.tmp_root
+    tmp_root
   end
 
   def dir

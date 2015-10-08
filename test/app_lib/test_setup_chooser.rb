@@ -8,7 +8,6 @@ class SetupChooserTests < AppLibTestBase
 
   def setup
     super
-    tmp_root = self.class.tmp_root
     set_katas_root(tmp_root + 'katas')
   end
 

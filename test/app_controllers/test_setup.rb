@@ -8,7 +8,6 @@ class SetupControllerTest < AppControllerTestBase
 
   def setup
     super
-    tmp_root = self.class.tmp_root
     set_exercises_root tmp_root + 'exercises'
     set_languages_root tmp_root + 'languages'
     set_disk_class('RailsDiskFakeThreadAdapter')
