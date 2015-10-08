@@ -4,35 +4,6 @@ module UpdateCyberDojoSh # mix-in
   module_function
 
   def update_cyber_dojo_sh(files)
-    # The base docker containers were refactored to avoid volume-mounting
-    # as part of the docker-swarm re-architect work. The support_files
-    # were moved *inside* their docker containers by ADD'ing them to the
-    # appropriate Dockerfile. This often required a path-related change to
-    # the cyber-dojo.sh file. This is no problem for dojos started after
-    # the re-architecture but it is for test/fork/revert in a dojo
-    # started *before* the re-architecture.
-    #
-    # To help in this situation the new master cyber-dojo.sh is appended
-    # (in # comments) to the end of the existing cyber-dojo.sh file.
-    # There are two reasons for doing it this way rather than the old
-    # cyber-dojo.sh file being commented out and the new master pre-pended
-    # to it.
-    #
-    # 1. Suppose the users cyber-dojo.sh has some custom mods and they
-    #    tweak it in light of new info (eg new paths).
-    #    The next [test] would set these back to comments!
-    #
-    # 2. It follows the philosophy of cyber-dojo, that the user is in charge.
-    #    To quote Martin Richards, of BCPL fame
-    #      "The philosophy of BCPL is not one of the tyrant who thinks
-    #       he knows best and lays down the law on what is and what is
-    #       not allowed; rather BCPL acts more as a servant offering
-    #       his services to the best of his ability without complaint,
-    #       even when confronted with apparant nonsense."
-    #               BCPL the language and its compiler
-    #               Martin Richards and Colin Whitby-Strevens
-    #               ISBN 0-521-21965-5
-
     content = files['cyber-dojo.sh'].strip
     needs_update = !content.include?(cyber_dojo_sh) && !content.include?(commented_cyber_dojo_sh)
     if needs_update
@@ -86,3 +57,31 @@ module UpdateCyberDojoSh # mix-in
 
 end
 
+# The base docker containers were refactored to avoid volume-mounting
+# as part of the docker-swarm re-architect work. The support_files
+# were moved *inside* their docker containers by ADD'ing them to the
+# appropriate Dockerfile. This often required a path-related change to
+# the cyber-dojo.sh file. This is no problem for dojos started after
+# the re-architecture but it is for test/fork/revert in a dojo
+# started *before* the re-architecture.
+#
+# To help in this situation the new master cyber-dojo.sh is appended
+# (in # comments) to the end of the existing cyber-dojo.sh file.
+# There are two reasons for doing it this way rather than the old
+# cyber-dojo.sh file being commented out and the new master pre-pended
+# to it.
+#
+# 1. Suppose the users cyber-dojo.sh has some custom mods and they
+#    tweak it in light of new info (eg new paths).
+#    The next [test] would set these back to comments!
+#
+# 2. It follows the philosophy of cyber-dojo, that the user is in charge.
+#    To quote Martin Richards, of BCPL fame
+#      "The philosophy of BCPL is not one of the tyrant who thinks
+#       he knows best and lays down the law on what is and what is
+#       not allowed; rather BCPL acts more as a servant offering
+#       his services to the best of his ability without complaint,
+#       even when confronted with apparant nonsense."
+#               BCPL the language and its compiler
+#               Martin Richards and Colin Whitby-Strevens
+#               ISBN 0-521-21965-5
