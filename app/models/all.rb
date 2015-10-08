@@ -8,6 +8,7 @@
   languages
   exercise
   exercises
+  update_cyber_dojo_sh
   avatar
   avatars
   kata

@@ -144,6 +144,26 @@ class AvatarTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  def output_alert
+  [
+    'ALERT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',
+    'ALERT >>>          possible problem detected           >>>',
+    'ALERT >>>   examine cyber-dojo.sh for detailed info    >>>',
+    'ALERT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+  ].join("\n")
+  end
+
+  def cyber_dojo_sh_alert
+    [
+      '# <ALERT>',
+      '# The lines in this cyber-dojo.sh file (above this alert) differ from the',
+      '# lines in the master cyber-dojo.sh file (below this alert). If this file',
+      '# is not working please examine the differences. Editing or removing the',
+      '# master (below this alert) will re-trigger the alert!',
+      '# </ALERT>'
+    ].join("\n")
+  end
+
   test 'C718B2',
     'test() sees changed cyber-dojo.sh file and appends' +
        ' info plus commented master version to cyber-dojo.sh' +
@@ -161,13 +181,13 @@ class AvatarTests < AppModelTestBase
     _, @visible_files, @output = maker.run_test
 
     separator = "\n\n"
-    expected_output = @avatar.kata.language.output_alert + separator + radiohead
+    expected_output = output_alert + separator + radiohead
     assert_file 'output', expected_output
 
     appended_commented_master =
       first_content +
       separator +
-      language.cyber_dojo_sh_alert +
+      cyber_dojo_sh_alert +
       separator +
       commented(master)
 
