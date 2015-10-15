@@ -1,0 +1,18 @@
+
+It seems reasonable for digital-ocean nodes to not necessarily all have
+the same set of docker-containers installed.
+So I'm thinking not to use docker-swarm.
+Instead cache the docker-containers per IP address.
+And select a digital-ocean node at random.
+
+Also, why issue the rsync command from *inside* the
+docker container. Why not instead
+o) ssh in
+o) rsync from the front-page-server to get katas sub-folder
+o) docker-run with volume-mount for katas and have no network!
+
+Consider too the option of rsync'ing *back* to the main-server.
+
+If I do this I think I will gain the benefits of incremental
+makefiles (for example) whilst at the same time only putting
+text files in the katas/ git repos.
