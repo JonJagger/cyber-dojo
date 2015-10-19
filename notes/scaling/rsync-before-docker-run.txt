@@ -395,8 +395,39 @@ Worked... tmp/... folder on node-00 has executable in it.
 Output came back to server. Excellent.
 
 
->>>>>>>>>>>>>>How will I delete the tmp folder????
->>>>>>>>>>>>>>Need to do this because of volume mount.
+How will I delete the tmp folder????
+Need to do this because of the volume mount.
+Can it just be && after ./cyber-dojo.sh
+No, because that command is executed *inside* the container.
+Ah.... but it is volume mounted. With read-write permission!
+So I can delete the mapped volume! Alas no. Because the
+volume is still live. I can delete the files in it though...
+... /bin/bash -c "./cyber-dojo.sh; rm /sandbox/*"
+Note too that if I am rsyncing the files back to the server
+*afterwards* then I don't want to delete them anyway.
+At least not until I've rsync'd them back to the server.
+How about... putting a new file inside the avatar folder
+which executes-around sandbox/cyber-dojo.sh
+This does the rsync from the inside.
+Then can do the rsync back if wanted.
+And the copied files are naturally deleted when the
+docker container is removed.
+But this implies I will need networking!
+Coming to the conclusion that what I need is
+an rsync before the docker run and an rsync
+after the docker run. And the second rsync
+deletes after itself? Does rsync have an option for that?
+Also, I think using the kata-id+avatar as the tmp
+folder name on the node is not a good idea. I want
+something unique for each test event. Perhaps based
+on date/time.
+That way I could maybe create a cron job the nodes that simply
+deletes tmp folders whose datestamp is 30 seconds old.
+http://unix.stackexchange.com/questions/136804/cron-job-to-delete-files-older-than-3-days
+http://www.thegeekstuff.com/2013/10/tmpreaper-examples/
+
+
+
 
 
 Created a sh file for commands...
