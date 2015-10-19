@@ -1,18 +1,605 @@
 
-It seems reasonable for digital-ocean nodes to not necessarily all have
-the same set of docker-containers installed.
-So I'm thinking not to use docker-swarm.
-Instead cache the docker-containers per IP address.
-And select a digital-ocean node at random.
-
-Also, why issue the rsync command from *inside* the
+Why issue the rsync command from *inside* the
 docker container. Why not instead
 o) ssh in
-o) rsync from the front-page-server to get katas sub-folder
-o) docker-run with volume-mount for katas and have no network!
+o) rsync from the front-page-server to get katas sub-folder into /tmp
+o) docker-run with volume-mounted /tmp and have no network!
+o) note this means I will need to delete the /tmp folder on the docker node
+o) also note its the sandbox folder that is rsync'd so .git folder is not copied.
 
-Consider too the option of rsync'ing *back* to the main-server.
+
+Suppose I used rsync and the kata was C++ assert using custom makefiles
+The problem is that (currently) the intermediate files (.o .lib etc)
+are *not* part of the git repo. Neither is the executable.
+Only the source files are. Unless that changes and *all* files
+are part of the repo, then maintaining timestamps is secondary.
+But of course I can rsync *back* to the main-server....
 
 If I do this I think I will gain the benefits of incremental
 makefiles (for example) whilst at the same time only putting
 text files in the katas/ git repos.
+
+I think I should use docker-swarm and accept that all
+docker-nodes need to have the same set of containers installed.
+Simplest.
+Now, as I recall, docker-swarm works by you issuing a regular
+'docker run' command it uses environment variables to determine
+which node to run on. This means I need to create a new user
+which the www-data sudo's as to run the command. This allows
+the correct environment variables to be set for the new user.
+
+
+
+Shutdown local VirtualBox cyber-dojo-server
+Restarted it with NAT network.
+Did all steps below.
+Installed docker on both nodes. Following instructions at
+https://docs.docker.com/installation/ubuntulinux/
+
+Also Built two docker-nodes in VirtualBox from ubuntu-14.04.3-server-amd64.iso
+username=jon
+password=usual
+Changed the macaddress of one of them.
+Set both their networking to Host-only adapter
+Their IP addresses are 192.168.59.104, 192.168.59.105
+
+
+step 1. Installed docker-machine
+$ cd ~
+$ sudo curl -L https://github.com/docker/machine/releases/download/v0.4.0/docker-machine_linux-amd64 > docker-machine
+$ chmod +x docker-machine
+$ sudo cp docker-machine /usr/local/bin
+
+$ docker-machine scp --help
+Only option listed is recursive.
+https://docs.docker.com/machine/reference/scp/ Says
+In the case of transferring files from machine to machine, they go through the local host’s filesystem first (using scp’s -3 flag).
+man scp
+reveals regular scp has -p options to preserve modification times, access times, and modes.
+If docker-machine scp does not preserive date-stamps I can use rsync of course.
+
+step 2. Fixed keyboard
+$ sudo dpkg-reconfigure keyboard-configuration
+On 1st step look for AppleLaptop option in list but then select UK
+And *also* look for apple option in subsequent list.
+
+step 3. Added docker group
+$ sudo usermod -aG docker jon
+
+step 4. Pulled a cyberdojo image onto both nodes.
+$ docker pull cyberdojofoundation/clang-3.6.1_assert
+
+$ docker info
+reveals there is no swap-limit support
+
+
+Can server and both nodes see each other?
+
+Server's IP address is 192.168.59.103
+Docker node's IP address is 192.168.59.105
+They can both ping each other.
+
+$ docker version
+server: 1.7.1
+node: 1.8.3
+
+Fixed. Both now 1.8.3 and same build.
+Using bridged-adapter Network setting on VirtualBox settings.
+For both cyber-dojo-server and for docker-node-00 and docker-node-01
+
+Check cyber-dojo runs on server.
+ifconfig says 192.168.1.78
+In browser I get fail
+$ bundle install
+Now its ok
+
+
+Next step...
+http://docs.docker.com/swarm/install-manual/
+
+On cyber-dojo-server
+$ docker pull swarm
+
+$ docker run --rm swarm create
+TOKEN
+
+That is my unique cluster-id
+
+Now to setup the swarm-nodes.
+
+On docker-node-00
+$ sudo docker daemon -H tcp://0.0.0.0:2375 &
+$ sudo docker run -d swarm join --addr=192.168.1.79:2375 token://TOKEN
+
+On docker-node-01
+$ sudo docker daemon -H tcp://0.0.0.0:2375 &
+$ sudo docker run -d swarm join --addr=192.168.1.80:2375 token://TOKEN
+
+
+Now to setup the swarm manager
+On cyber-dojo-server
+$ docker run -d -p 2375:2375 swarm manage token://TOKEN
+
+On cyber-dojo-server
+$ docker -H tcp://0.0.0.0:2375 info
+Confirms docker-node-00 and docker-node-01 listed.
+
+$ docker -H tcp://0.0.0.0:2375 images
+lists two for cyberdojofoundation/clang-3.6.1_assert
+
+$ docker run --rm swarm list token://45bdd6541e5f26cba41a9b25b0235350
+192.168.1.80:2375
+192.168.1.79:2375
+
+
+On cyber-dojo-server.
+$ export DOCKER_HOST=192.168.1.78:2375
+$ docker info
+Lists node-00 and node-01
+$ docker images
+Shows clang on node-00 and node-01
+
+Just to be sure
+$ unset DOCKER_HOST
+$ docker images
+Shows containers physically on the server. Includes clang
+$ docker rmi cyberdojofoundation/clang-3.6.1_assert
+$ docker images
+Its not there
+
+$ export DOCKER_HOST=192.168.1.78:2375
+$ docker images
+Shows clang on node-00 and node-01 again
+
+On cyber-dojo server
+$ export DOCKER_HOST=192.168.1.78:2375
+$ docker run --rm -it cyberdojofoundation/clang-3.6.1_assert /bin/bash
+Comes straight up and node-00 responds with log messages.
+Repeat and sometimes node-00 responds, sometimes node-01.
+
+
+$ docker ps -aq
+Fine
+
+Now to build up command lines to
+1) rsync files across
+2) docker run
+Hmmm. I don't know which node will be picked! So I can't rsync.
+Can I set DOCKER_HOST explicitly?
+
+On server
+$ export DOCKER_HOST=192.168.1.79:2375
+$ docker run --rm -it cyberdojofoundation/clang-3.6.1_assert /bin/bash
+Do docker run repeatedly and each time node-00 (ip 79) responds
+
+$ export DOCKER_HOST=192.168.1.80:2375
+$ docker run --rm -it cyberdojofoundation/clang-3.6.1_assert /bin/bash
+Do docker run repeatedly and each time node-01 (ip 80) responds
+
+So assuming apache2 issues each www-data response in a child process
+(surely it must) this is feasible.
+Note this reopens the ability to have a container cache per ip address.
+
+Or maybe I can do this without an environment variable via docker -H
+
+$ unset DOCKER_HOST
+
+$ docker -H tcp://192.168.1.79:2375 run --rm -it cyberdojofoundation/clang-3.6.1_assert /bin/bash
+run repeatedly and each time node-00 (ip 79) responds
+
+$ docker -H tcp://192.168.1.80:2375 run --rm -it cyberdojofoundation/clang-3.6.1_assert /bin/bash
+run repeatedly and each time node-00 (ip 80) responds
+
+$ docker --help
+-H daemon socket to connect to
+
+So I'm guessing I don't need the swarm-manager for this!
+Do I also not need to register the node with the manager?
+Logged out of server and nodes.
+Logged back in. On server and nodes
+$ docker rm $(docker ps -aq)
+I can still do
+$ docker -H tcp://192.168.1.80:2375 run --rm -it cyberdojofoundation/clang-3.6.1_assert /bin/bash
+But if I docker pull a new image and try to run that it fails.
+$ on node-01  (ip 80)
+$ docker pull cyberdojofoundation/gcc-4.8.4_assert
+On server
+$ docker -H tcp://192.168.1.80:2375 run --rm -it cyberdojofoundation/gcc-4.8.4_assert /bin/bash
+Fails
+But. on node-01
+$ ps -aux|grep docker
+$ sudo kill -9 DOCKER_DAEMON_PID
+$ docker daemon -H tcp://0.0.0.0:2375
+
+And try again on the server.
+$ docker -H tcp://192.168.1.80:2375 run --rm -it cyberdojofoundation/gcc-4.8.4_assert /bin/bash
+Then it works!
+
+So it seems I don't need swarm at all.
+I just need the docker daemon running on each node and to stop and restart if
+each time there is a change to the containers.
+But then again, swarm is handy to find out the node's IP addresses...
+And this is probably ignoring security.
+
+Hmm. On node-01
+$ docker ps -a
+swarm   /swarm join --addr="1"
+Where did that come from? From the docker daemon?
+Let's see.
+Shutdown node 01 completely.
+Restarted it.
+$ docker rm $(docker ps -aq)
+
+On the server.
+$ docker -H tcp://192.168.1.80:2375 run --rm -it cyberdojofoundation/gcc-4.8.4_assert /bin/bash
+Fails. Says it cannot connect to 80 is docker daemon running...
+
+On node-01
+$ docker daemon -H tcp://0.0.0.0:2375 &
+$ docker ps -a
+Nothing
+
+On node-01
+$ kill docker daemon
+$ sudo docker daemon --tls -H tcp://0.0.0.0:2375 &
+Fails with certificate errors.
+$ sudo docker daemon --tls=false -H tcp://0.0.0.0:2375 &
+Works. So TLS is off at the moment...
+
+TLS
+https://docs.docker.com/swarm/install-manual/
+Swarm supports TLS authentication between the CLI and Swarm but also between Swarm and the Docker nodes. However, all the Docker daemon certificates and client certificates must be signed using the same CA-certificate.
+
+In order to enable TLS for both client and server, the same command line options as Docker can be specified:
+
+swarm manage --tlsverify --tlscacert=<CACERT> --tlscert=<CERT> --tlskey=<KEY> [...]
+
+Note: Swarm certificates must be generated with extendedKeyUsage = clientAuth,serverAuth.
+
+
+Protecting the Docker daemon socket
+https://docs.docker.com/articles/https/
+
+On server
+$ hostname
+ubuntu-server
+
+On server. When it asks for a password I entered the same one each time obviously...
+
+$ openssl genrsa -aes256 -out ca-key.pem 4096
+$ openssl req -new -x509 -days 365 -key ca-key.pem -sha256 -out ca.pem
+$ openssl genrsa -out server-key.pem 4096
+$ openssl req -subj "/CN=ubuntu-server" -sha256 -new -key server-key.pem -out server.csr
+
+$ echo subjectAltName = IP:192.168.1.78,IP:192.168.1.79,IP:192.168.1.80 > extfile.cnf
+$ openssl x509 -req -days 365 -sha256 -in server.csr -CA ca.pem -CAkey ca-key.pem \
+  -CAcreateserial -out server-cert.pem -extfile extfile.cnf
+
+$ openssl genrsa -out key.pem 4096
+$ openssl req -subj '/CN=client' -new -key key.pem -out client.csr
+
+$ echo extendedKeyUsage = clientAuth,serverAuth > extfile.cnf
+$ openssl x509 -req -days 365 -sha256 -in client.csr -CA ca.pem -CAkey ca-key.pem \
+  -CAcreateserial -out cert.pem -extfile extfile.cnf
+
+$ chmod -v 0400 ca-key.pem key.pem server-key.pem
+$ chmod -v 0444 ca.pem server-cert.pem cert.pem
+
+
+So have to transfer pem files to node-00 (79)
+From server
+$ scp ca.pem jon@192.168.1.79:/home/jon
+$ scp server-cert.pem jon@192.168.1.79:/home/jon
+$ scp server-key.pem jon@192.168.1.79:/home/jon
+
+On node-00, after killing existing docker daemon
+$ sudo docker daemon --tlsverify --tlscacert=ca.pem --tlscert=server-cert.pem --tlskey=server-key.pem \
+  -H=0.0.0.0:2376 &
+
+
+On server
+$ mkdir -pv ~/.docker
+$ cp -v ca.pem   ~/.docker
+$ cp -v cert.pem ~/.docker
+$ cp -v key.pem  ~/.docker
+
+And now to try...
+
+$ docker --tlsverify -H tcp://192.168.1.79:2376 run --rm -it cyberdojofoundation/clang-3.6.1_assert /bin/bash
+
+And it worked.
+
+Repeat copying pem files to node-01 (IP 80)
+Note shorter version of -H
+$ docker --tlsverify -H=192.168.1.80:2376 run --rm -it cyberdojofoundation/clang-3.6.1_assert /bin/bash
+
+And it worked.
+Noticeably slower though...
+Could I skip the tls certification and have minimal security by simply
+restricting port 2376 traffic to the known nodes?
+
+Note that this sets all options as command line args.
+No need for a cyber-dojo user.
+
+But it worked. So now I can work on the commands needed.
+1. rsync files to node. To node host, not docker inside the host.
+2. issue the docker run command with volume-mount for rsync'd folder.
+
+Can I rsync the files from the server to the node by issuing
+a command on the server? Viz do a push instead of a pull?
+I guess I can if the *node* has rsync daemon running?
+This would actually be easier in the sense that the config
+would all be the same and have the servers IP address in the conf file.
+
+So. Get rsync set up on node-00 (IP = 79)
+Setup files as per below. But switches [katas] to [tmp]
+$ sudo rsync --daemon
+
+Created a dojo on server: C (gcc), assert, 5D713F8675, alligator
+$ man rsync
+rsync option src user@host::dest
+
+before (on previous exploration) I did this
+$ rsync -rtW cyber-dojo@#{@ip_address}::katas/#{kata_path}/#{avatar.name}/sandbox /tmp
+Trying this...
+
+$ rsync -rtW /var/www/cyber-dojo/katas/5D/713F8675/alligator/sandbox cyber-dojo@192.168.1.79::tmp
+Asked for password
+Then says auth failed on module tmp
+/var/log/rsyncd.log says "no secrets file"
+A s/secrets-file/secrets file/ in /etc/rsyncd.conf file
+Next fails because /etc/rsyncd.secrets has to be chmod 600 (not readable 644)
+Still fails: read error. Connection reset by peer (104)
+log file says module is readonly. Yup.
+s/read only = yes/read only = no/
+And it worked.
+cd /tmp shows sandbox folder.
+$ export RSYNC_PASSWORD=password
+man rsync shows there is also a --password-file option.
+
+Ok. So now how do I save it to a folder name that is unique?
+Does rsync have an option for that?
+$ man rsync
+has some interesting options
+ --max-size=SIZE   don't transfer any file larger than SIZE
+No. no option. So just doing
+
+$ rsync -rtW /var/www/cyber-dojo/katas/5D/713F8675/alligator/sandbox cyber-dojo@192.168.1.79::tmp/5D713F8675_alligator
+
+And that works.
+So now to issue the docker run command
+
+$ docker
+  --tlsverify
+  -H=192.168.1.79:2376
+  run
+  --cidfile=/tmp/5D713F8675_alligator.cid
+  --user=www-data
+  --net=none
+  -v '/tmp/5D713F8675_alligator/sandbox:/sandbox:rw' +
+  -w /sandbox
+  cyberdojofoundation/gcc-4.8.4_assert
+  /bin/bash -c ./cyber-dojo.sh
+
+And that blipped on 192.168.1.79 and says it cannot find the image
+Old daemon running on port 2375
+Killed old daemon
+Renamed ~/start-docker-swarm-agent.sh to ~/start-docker-daemon.sh
+docker daemon --tlsverify --tlscacert=ca.pem --tlscert=server-cert.pem --tlskey=server-key.pem \
+  -H=0.0.0.0:2376 &
+$ sudo ./start-docker-daemon.sh
+
+Trying it again with
+   cyberdojofoundation/gcc-4.8.4_assert
+Worked... tmp/... folder on node-00 has executable in it.
+Output came back to server. Excellent.
+
+
+>>>>>>>>>>>>>>How will I delete the tmp folder????
+>>>>>>>>>>>>>>Need to do this because of volume mount.
+
+
+Created a sh file for commands...
+--------------
+<BEGIN>
+export RSYNC_PASSWORD=password
+
+rsync \
+  -rtW \
+  /var/www/cyber-dojo/katas/5D/713F8675/alligator/sandbox \
+  cyber-dojo@192.168.1.79::tmp/5D713F8675_alligator
+
+unset RSYNC_PASSWORD
+
+rm /tmp/5D713F8675_alligator.cid
+
+docker \
+  --tlsverify \
+  -H=192.168.1.79:2376 \
+  run \
+  --cidfile=/tmp/5D713F8675_alligator.cid \
+  --user=www-data \
+  --net=none \
+  -v '/tmp/5D713F8675_alligator/sandbox:/sandbox:rw' \
+  -w /sandbox \
+  cyberdojofoundation/gcc-4.8.4_assert \
+  /bin/bash -c ./cyber-dojo.sh
+<END>
+----------------
+
+
+Refactored
+<BEGIN>
+outerId=5D
+innerId=713F8675
+avatar=alligator
+avatarId=${outerId}${innerId}_${avatar}
+
+export RSYNC_PASSWORD=password
+
+rsync \
+  -rtW \
+  /var/www/cyber-dojo/katas/${outerId}/${innerId}/${avatar}/sandbox \
+  cyber-dojo@192.168.1.79::tmp/${avatarId}
+
+unset RSYNC_PASSWORD
+
+rm /tmp/${avatarId}.cid
+
+docker \
+  --tlsverify \
+  -H=192.168.1.79:2376 \
+  run \
+  --cidfile=/tmp/${avatarId}.cid \
+  --user=www-data \
+  --net=none \
+  -v '/tmp/'${avatarId}'/sandbox:/sandbox:rw' \
+  -w /sandbox \
+  cyberdojofoundation/gcc-4.8.4_assert \
+  /bin/bash -c ./cyber-dojo.sh
+<END>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------rsync------------------
+
+VirtualBox cyber-dojo server needs to have rsync daemon installed and running.
+http://www.jveweb.net/en/archives/2011/01/running-rsync-as-a-daemon.html
+Checking on backup AWS server
+
+$ cat /etc/rsyncd.conf
+lock file = /var/run/rsync.lock
+log file = /var/log/rsyncd.log
+pid file = /var/run/rsyncd.pid
+
+[katas]
+    path = /var/www/cyber-dojo/katas
+    uid = www-data
+    gid = www-data
+    read only = yes
+    list = false
+    strict modes = true
+    auth users = cyber-dojo
+    secrets file = /etc/rsyncd.secrets
+    hosts allow = 172.17.0.0/255.255.0.0
+
+
+$ cat /etc/rsyncd.secrets
+cyber-dojo:password
+
+$ cat /etc/init.d/rsync
+...
+RSYNC_ENABLE=true
+...
+
+$ cat /etc/services | grep rsync
+rsync		873/tcp
+rsync		873/udp
+
+
+
+
+----------old notes---------------------
+
+
+Created a virtual docker-machine on cyber-dojo-server
+$ docker-machine ls
+none
+
+$ docker-machine create --driver virtualbox cyber-dojo-docker-swarm-node-00
+Error creating machine: exec: "VBoxManage": executable file not found in $PATH
+$ docker-machine rm -f cyber-dojo-docker-swarm-node-00
+
+Adding debug info
+$ docker-machine -D create --driver virtualbox cyber-dojo-docker-swarm-node-00
+no help
+
+$ sudo usermod -aG docker jon
+$ docker-machine create --driver virtualbox cyber-dojo-docker-swarm-node-00
+Same.
+
+
+Installed Docker-Toolbox on my Macbook Pro
+http://docs.docker.com/mac/step_one/
+
+From LaunchPad found
+Docker QuickStart Terminal. Started it. Inside it...
+$ docker-machine ls
+default *  .... tcp://192.168.99.100:2376
+
+$ docker-machine create --driver virtualbox cyber-dojo-docker-swarm-node-00
+Creating VirtualBox VM...
+Creating SSH key...
+Starting VirtualBox VM...
+Starting VM...
+To see how to connect Docker to this machine, run: docker-machine env cyber-dojo-docker-swarm-node-00
+
+$ docker-machine ls
+cyber-dojo-docker-swarm-node-00   .... tcp://192.168.99.101:2376
+default *                         .... tcp://192.168.99.100:2376
+
+$ docker-machine env cyber-dojo-docker-swarm-node-00
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.101:2376"
+export DOCKER_CERT_PATH="/Users/jonjagger/.docker/machine/machines/cyber-dojo-docker-swarm-node-00"
+export DOCKER_MACHINE_NAME="cyber-dojo-docker-swarm-node-00"
+# Run this command to configure your shell:
+# eval "$(docker-machine env cyber-dojo-docker-swarm-node-00)"
+
+Installed one cyberdojo container into the node
+$ docker-machine ssh cyber-dojo-docker-swarm-node-00 'docker pull cyberdojofoundation/gcc-4.8.4_assert'
+
+Hmmm. To run this I'm going to need cyberdojo installed inside the
+Docker QuickStart Terminal. But it does not have a www-data user.
+
