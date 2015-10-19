@@ -5,7 +5,11 @@
 #
 # set the version to use:
 #NODE_VERSION=0.12.7
-NODE_VERSION=4.1.1
+NODE_VERSION=4.2.1
 #
 # Use npm package 'n' to get bin path to 'node' with selected node version:
+if [ -f .jshintrc ]
+  then
+    n use $NODE_VERSION /usr/lib/node_modules/jshint/bin/jshint --config .jshintrc *.js
+fi
 `n bin $NODE_VERSION` *Test*.js
