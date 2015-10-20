@@ -329,7 +329,8 @@ Can I rsync the files from the server to the node by issuing
 a command on the server? Viz do a push instead of a pull?
 I guess I can if the *node* has rsync daemon running?
 This would actually be easier in the sense that the config
-would all be the same and have the servers IP address in the conf file.
+would all be the same on all nodes and have the servers IP
+address in the conf file.
 
 So. Get rsync set up on node-00 (IP = 79)
 Setup files as per below. But switches [katas] to [tmp]
@@ -398,96 +399,108 @@ Output came back to server. Excellent.
 How will I delete the tmp folder????
 Need to do this because of the volume mount.
 Can it just be && after ./cyber-dojo.sh
-No, because that command is executed *inside* the container.
+No, because that command is executed *inside* the container!
 Ah.... but it is volume mounted. With read-write permission!
 So I can delete the mapped volume! Alas no. Because the
 volume is still live. I can delete the files in it though...
 ... /bin/bash -c "./cyber-dojo.sh; rm /sandbox/*"
 Note too that if I am rsyncing the files back to the server
 *afterwards* then I don't want to delete them anyway.
-At least not until I've rsync'd them back to the server.
-How about... putting a new file inside the avatar folder
-which executes-around sandbox/cyber-dojo.sh
-This does the rsync from the inside.
-Then can do the rsync back if wanted.
-And the copied files are naturally deleted when the
-docker container is removed.
-But this implies I will need networking!
 Coming to the conclusion that what I need is
 an rsync before the docker run and an rsync
-after the docker run. And the second rsync
-deletes after itself? Does rsync have an option for that?
+after the docker run.
+
 Also, I think using the kata-id+avatar as the tmp
 folder name on the node is not a good idea. I want
-something unique for each test event. Perhaps based
-on date/time.
-That way I could maybe create a cron job the nodes that simply
+something unique for each test event. uuidgen.
+  tmpFolder=`uuidgen`
+
+
+Then on nodes I can create a cron job that simply
 deletes tmp folders whose datestamp is 30 seconds old.
 http://unix.stackexchange.com/questions/136804/cron-job-to-delete-files-older-than-3-days
 http://www.thegeekstuff.com/2013/10/tmpreaper-examples/
+tmpreaper is interesting. It provides a form of security.
+
+$ sudo apt-get install tmpreaper
+
+Seems minimum cron granularity is minutes.
+Hang on. There are two times. tmpreaper time setting which is
+how long files have to not have been touched. And cron setting.
+I need to alter the cron setting.
+$ crontab -l
+nothing for user jon
+$ sudo crontab -l
+nothing for root either
+Googling suggests to use full path for cron task
+$ what tmpreaper
+/usr/sbin/tmpreaper
+
+Need to work out how to setup crontask in a script.
+$ cd ~
+$ sudo crontab -l > crontab.root
+$ echo "*/1 * * * * /usr/sbin/tmpreaper -f 30s /tmp" >> crontab.root
+$ sudo crontab crontab.root
+$ rm crontab.root
+
+Can probably do this in one command...
+$ cd ~
+$ (sudo crontab -l ; echo "*/1 * * * * /usr/sbin/tmpreaper -f 30s /tmp") | sudo crontab -
+Yup. That worked.
+
+
+Now to repeat on 2nd node and make ip-address a parameter.
+Note I don't have timeouts yet either.
 
 
 
 
 
-Created a sh file for commands...
---------------
+Created a sh file for Docker bash commands...
 <BEGIN>
-export RSYNC_PASSWORD=password
 
-rsync \
-  -rtW \
-  /var/www/cyber-dojo/katas/5D/713F8675/alligator/sandbox \
-  cyber-dojo@192.168.1.79::tmp/5D713F8675_alligator
-
-unset RSYNC_PASSWORD
-
-rm /tmp/5D713F8675_alligator.cid
-
-docker \
-  --tlsverify \
-  -H=192.168.1.79:2376 \
-  run \
-  --cidfile=/tmp/5D713F8675_alligator.cid \
-  --user=www-data \
-  --net=none \
-  -v '/tmp/5D713F8675_alligator/sandbox:/sandbox:rw' \
-  -w /sandbox \
-  cyberdojofoundation/gcc-4.8.4_assert \
-  /bin/bash -c ./cyber-dojo.sh
-<END>
-----------------
-
-
-Refactored
-<BEGIN>
-outerId=5D
-innerId=713F8675
+# parameters
+ipAddress=$1       # eg 192.168.1.79
+kataId=5D713F8675
 avatar=alligator
-avatarId=${outerId}${innerId}_${avatar}
+
+# local variables
+outerId=${kataId:0:2}
+innerId=${kataId:2:8}
+avatarId=${kataId}_${avatar}
+tmpFolder=`uuidgen`
+cidfile=/tmp/${avatarId}.cid
 
 export RSYNC_PASSWORD=password
 
 rsync \
   -rtW \
   /var/www/cyber-dojo/katas/${outerId}/${innerId}/${avatar}/sandbox \
-  cyber-dojo@192.168.1.79::tmp/${avatarId}
+  cyber-dojo@${ipAddress}::tmp/${tmpFolder}
 
-unset RSYNC_PASSWORD
-
-rm /tmp/${avatarId}.cid
+rm ${cidfile}
 
 docker \
   --tlsverify \
-  -H=192.168.1.79:2376 \
+  -H=${ipAddress}:2376 \
   run \
-  --cidfile=/tmp/${avatarId}.cid \
+  --cidfile=${cidfile} \
   --user=www-data \
   --net=none \
-  -v '/tmp/'${avatarId}'/sandbox:/sandbox:rw' \
+  -v '/tmp/'${tmpFolder}'/sandbox:/sandbox:rw' \
   -w /sandbox \
   cyberdojofoundation/gcc-4.8.4_assert \
   /bin/bash -c ./cyber-dojo.sh
+
+#could rsync back here...
+#
+#rsync \
+#  -rtW \
+#  cyber-dojo@${ipAddress}::tmp/${tmpFolder} \
+#  /var/www/cyber-dojo/katas/${outerId}/${innerId}/${avatar}/sandbox
+
+unset RSYNC_PASSWORD
+
 <END>
 
 
