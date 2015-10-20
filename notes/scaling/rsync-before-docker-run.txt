@@ -333,7 +333,7 @@ would all be the same on all nodes and have the servers IP
 address in the conf file.
 
 So. Get rsync set up on node-00 (IP = 79)
-Setup files as per below. But switches [katas] to [tmp]
+Setup files as per below. But switched [katas] to [tmp]
 $ sudo rsync --daemon
 
 Created a dojo on server: C (gcc), assert, 5D713F8675, alligator
@@ -448,13 +448,73 @@ $ cd ~
 $ (sudo crontab -l ; echo "*/1 * * * * /usr/sbin/tmpreaper -f 30s /tmp") | sudo crontab -
 Yup. That worked.
 
+=============================================================
 
 Now to repeat on 2nd node and make ip-address a parameter.
+
+1. have already copied across tls pem files
+
+2. cat ~/start-docker-daemon.sh
+
+   docker daemon \
+     --tlsverify \
+     --tlscacert=ca.pem \
+     --tlscert=server-cert.pem \
+     --tlskey=server-key.pem \
+      -H=0.0.0.0:2376 &
+
+   $ sudo ./start-docker-daemon.sh
+
+3. setup crontab
+
+   $ (sudo crontab -l ; echo "*/1 * * * * /usr/sbin/tmpreaper -f 30s /tmp") | sudo crontab -
+
+4. setup rsync
+
+$ cat ~/rsyncd.conf
+lock file = /var/run/rsyncd.lock
+log file = /var/log/rsyncd.log
+pid file = /var/run/rsyncd.pid
+
+[tmp]
+    path = /tmp
+    uid = www-data
+    gid = www-data
+    read only = no
+    list = false
+    strict modes = true
+    auth users = cyber-dojo
+    secrets file = /etc/rsyncd.secrets
+    hosts allow = 192.168.0.0/255.255.0.0
+
+$ sudo cp ~/rsyncd.conf /etc
+$ sudo chown root:root /etc/rsyncd.conf
+$ sudo chmod 644 /etc/rsyncd.conf
+
+$ cat ~/rsyncd.secrets
+cyber-dojo:password
+
+$ sudo cp ~/rsyncd.secrets /etc
+$ sudo chown root:root /etc/rsyncd.secrets
+$ sudo chmod 600 /etc/rsyncd.secrets
+
+$ sudo sed -i 's/RSYNC_ENABLE=false/RSYNC_ENABLE=true/' /etc/init.d/rsync
+
+$ cat /etc/services | grep rsync
+rsync		873/tcp
+rsync		873/udp
+
+All ok. Nothing to do.
+
+$ sudo rsync --daemon
+
+
+And now I can run docker shell on either node.
+
 Note I don't have timeouts yet either.
 
 
-
-
+=============================================================
 
 Created a sh file for Docker bash commands...
 <BEGIN>
@@ -482,13 +542,13 @@ rm ${cidfile}
 
 docker \
   --tlsverify \
-  -H=${ipAddress}:2376 \
+  --host=${ipAddress}:2376 \
   run \
   --cidfile=${cidfile} \
   --user=www-data \
   --net=none \
-  -v '/tmp/'${tmpFolder}'/sandbox:/sandbox:rw' \
-  -w /sandbox \
+  --volume='/tmp/'${tmpFolder}'/sandbox:/sandbox:rw' \
+  --workdir=/sandbox \
   cyberdojofoundation/gcc-4.8.4_assert \
   /bin/bash -c ./cyber-dojo.sh
 
@@ -591,6 +651,7 @@ $ cat /etc/services | grep rsync
 rsync		873/tcp
 rsync		873/udp
 
+$ sudo rsync --daemon
 
 
 
