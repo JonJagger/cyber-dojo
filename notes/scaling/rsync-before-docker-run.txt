@@ -377,7 +377,7 @@ $ docker
   --cidfile=/tmp/5D713F8675_alligator.cid
   --user=www-data
   --net=none
-  -v '/tmp/5D713F8675_alligator/sandbox:/sandbox:rw' +
+  -v '/tmp/5D713F8675_alligator/sandbox:/sandbox:rw'
   -w /sandbox
   cyberdojofoundation/gcc-4.8.4_assert
   /bin/bash -c ./cyber-dojo.sh
@@ -511,7 +511,255 @@ $ sudo rsync --daemon
 
 And now I can run docker shell on either node.
 
+Returning to
+$ cat ~/start-docker-daemon.sh
+docker daemon --tlsverify --tlscacert=ca.pem --tlscert=server-cert.pem --tlskey=server-key.pem \
+  -H=0.0.0.0:2376 &
+
+What does the 0.0.0.0 mean?
+It's related to the local network.
+So I'm wondering if what I have just built will work
+on a proper networked environment...
+
 Note I don't have timeouts yet either.
+
+=======================================================================
+=======================================================================
+
+
+Ok. Next step is to investigate using docker-machine.
+On my standard server I have a mount+bindfs drive mapped to my macos /var/www/cyber-dojo folder.
+Can I do the same for the Docker Quickstart Terminal?
+This feels like a way to try and be able to manually test.
+On the server ~/.profile has these entries
+  sudo mount -t vboxfs cyber-dojo /var/www/cyber-dojo-bindfs-this
+  sudo bindfs -u www-data -g www-data /var/www/cyber-dojo-bindfs-this /var/www/cyber-dojo
+
+On VirtualBox, server, Settings, Shared-Folders
+  Name         Path                 Auto-mount  Access
+  cyber-dojo   /var/www/cyber-dojo  Yes         Full
+
+Docker Quickstart Terminal uses default VirtualBox image.
+How do I stop it so I can add a shared-folder?
+Double click on it in VirtualBox.
+Terminal comes up. Click top-left red close icon. Choose send shutdown signal.
+Added same shared-folder to default.
+Ok. Now have /var/www/cyber-dojo
+$ docker-machine ls
+Some warning messages. Let's clear things out first.
+$ docker-machine rm cyber-dojo-docker-swarm-node-00
+$ docker-machine ls
+Now lists just default
+
+$ docker-machine create --driver virtualbox machine-node-00
+Building it... Listed in virtualbox already...
+Finished.
+$ docker-machine env machine-node-00
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.102:2376"
+export DOCKER_CERT_PATH="/Users/jonjagger/.docker/machine/machines/machine-node-00"
+export DOCKER_MACHINE_NAME="machine-node-00"
+# Run this command to configure your shell:
+# eval "$(docker-machine env machine-node-00)"
+
+A quick ls in /Users/jonjagger/.docker/machine/machines/machine-node-00
+reveals lots of pem files.
+I wonder if you can find out how long the certificates are set for?
+Note that DOCKER_CERT_PATH is user-based. So for cyber-dojo can I use
+www-data? I guess it doesn't really matter as long as the .docker folder
+containing the config files is readable.
+
+$ docker-machine ip machine-node-00
+192.168.99.102
+
+$ eval "$(docker-machine env machine-node-00)"
+$ docker pull cyberdojofoundation/clang-3.6.1_assert
+
+Then setup rsync. Hmmm. If I can docker-machine ssh into the node
+I can rsync from the server. So I only need rsync on the server.
+But first I should check if docker-machine scp retains dates/times/permissions.
+
+$ docker-machine scp -r /var/www/cyber-dojo/katas/5D/713F8675/alligator/sandbox machine-node-00:/tmp/5D713F8675_alligator
+$ docker-machine ssh machine-node-00
+Ok. The files are there. But not as www-data
+But lets try doing a docker-run
+$ eval "$(docker-machine env machine-node-00)"
+
+$ docker run --rm --user=www-data --net=none -v '/tmp/5D713F8675_alligator:/sandbox:rw' -w /sandbox  cyberdojofoundation/clang-3.6.1_assert /bin/bash -c ./cyber-dojo.sh
+
+Fatal error: can't create hiker.compiled_h: Permission denied
+make: *** [hiker.compiled_h] Error 1
+
+Yes. That's because of the permissions.
+
+$ docker-machine ssh machine-node-00
+$ sudo chown -R www-data:www-data 5D713F8675_alligator/
+$ exit
+
+Back on default
+$ eval "$(docker-machine env machine-node-00)"
+$ docker run --rm --user=www-data --net=none -v '/tmp/5D713F8675_alligator:/sandbox:rw' -w /sandbox  cyberdojofoundation/clang-3.6.1_assert /bin/bash -c ./cyber-dojo.sh
+And that worked....
+Note I did chown -R on 5D713F8675_alligator/ and not 5D713F8675_alligator/sandbox
+I think the sandbox folder has to be owned by 33/www-data
+
+Ok. What if files are already owned by 33?
+(mount and bindfs could be confusing things)
+Copied /var/www/katas/5D/713F8675/alligator/sandbox to
+~/katas/5D/713F8675/alligator/sandbox
+
+$ docker-machine scp -r ~/katas/5D/713F8675/alligator/sandbox machine-node-00:/tmp/5D713F8675_alligator
+Nope. scp does not preserve owners
+
+$ docker-machine ssh machine-node-00 -- sudo chown -R www-data:www-data /tmp/5D713F8675_alligator
+Yes. That works. All files in /tmp/5D713F8675_alligator are www-data:www-data
+
+$ docker run --rm --user=www-data --net=none -v '/tmp/5D713F8675_alligator:/sandbox:rw' -w /sandbox  cyberdojofoundation/clang-3.6.1_assert /bin/bash -c ./cyber-dojo.sh
+
+That worked. But second scp will fail. Can't overwrite. Need to delete afterwards.
+And should probably use uuidgen instead of kataId+avatar
+
+
+Script...
+<BEGIN>
+# parameters
+node=machine-node-00
+kataId=5D713F8675
+avatar=alligator
+outerId=${kataId:0:2}
+innerId=${kataId:2:8}
+tmpFolder=/tmp/${kataId}_${avatar}
+user=www-data
+
+docker-machine scp -r /var/www/cyber-dojo/katas/${outerId}/${innerId}/${avatar}/sandbox ${node}:${tmpFolder} > /dev/null
+
+docker-machine ssh ${node} -- sudo chown -R ${user}:${user} ${tmpFolder}
+
+eval "$(docker-machine env ${node})"
+docker run \
+  --rm \
+  --user=${user} \
+  --net=none \
+  --volume=${tmpFolder}:/sandbox:rw \
+  --workdir=/sandbox  \
+  cyberdojofoundation/clang-3.6.1_assert \
+  /bin/bash -c ./cyber-dojo.sh
+
+docker-machine ssh ${node} -- sudo rm -rf ${tmpFolder}
+<END>
+
+
+Ok. Now to make a second machine-node
+$ docker-machine create --driver virtualbox machine-node-01
+
+$ docker-machine ip machine-node-01
+192.168.99.103
+
+Create www-data user and group?
+
+$ docker-machine ssh machine-node-01 -- sudo addgroup -g 33 www-data
+$ docker-machine ssh machine-node-01 -- sudo adduser -D -H -G www-data -s /bin/sh -u 33 www-data
+# -D == no password
+# -H == no home directory
+# -s shell
+# -g group
+# -u user id
+
+$ eval "$(docker-machine env machine-node-01)"
+$ docker pull cyberdojofoundation/clang-3.6.1_assert
+
+Now can I can try the script on node-01
+
+Yup. Works.
+
+
+
+
+
+
+
+
+
+=================================================================================================
+
+So now setup rsync on default
+Created /etc/rsyncd.conf  changed IP to 192.168.0.0
+Created /etc/rsyncd.secrets
+$ sudo chmod 644 /etc/rsyncd.conf
+$ sudo chmod 600 /etc/rsyncd.secrets
+
+
+On server
+$ ifconfig
+192.168.1.66
+
+Now to try an rsync via ssh
+$ docker-machine ssh machine-node-00
+$ rsync -rtW cyber-dojo@192.168.1.66::katas/5D/713F8675/alligator/sandbox /tmp
+
+And it appears rsync is not installed on machine-node.
+And cat /etc/passwd shows me it does not have a www-data user either. Not surprising.
+
+http://stackoverflow.com/questions/26621810/boot2docker-on-windows-missing-apt-get-package-manager
+Seems boot2docker uses Tiny Linux which has its own package manager called "tce-load".
+There's a list of packages for it here:
+http://distro.ibiblio.org/tinycorelinux/tcz_2x.html
+
+$ tce-load -wi rsync
+$ rsync -rtW cyber-dojo@192.168.1.66::katas/5D/713F8675/alligator/sandbox /tmp
+Password:
+@ERROR: invalid uid www-data
+rsync error: error starting client-server protocol (code 5) at main.c(1635) [Receiver=3.1.1]
+
+Yup that makes sense.
+So I need to create a www-user.
+On cyber-dojo.org /etc/passwd has this
+www-data:x:33:33:www-data:/var/www:/bin/sh
+
+username=www-data
+x=encrypted password is stored in /etc/shadow file
+33=user id (uid)
+33=group id (gid)
+www-data=comment field
+/var/www=home directory
+/bin/sh=command shell
+
+$ sudo addgroup -g 33 www-data
+$ sudo adduser -h /var/www -G www-data -s /bin/sh -u 33 www-data
+
+Try again...
+$ rsync -rtW cyber-dojo@192.168.1.66::katas/5D/713F8675/alligator/sandbox /tmp
+Same error.
+Hmmm. I guess I also need a www-data user on the server!
+Hang on. Let's just use a numeric id.
+On server.
+s/www-data/33/ in /etc/rsyncd.conf
+$ docker-machine ssh machine-node-00
+$ rsync -rtW cyber-dojo@192.168.1.66::katas/5D/713F8675/alligator/sandbox /tmp
+Asks for password
+Yes. Now see /tmp/sandbox
+But files not owned by 33 www-data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 =============================================================
@@ -623,7 +871,7 @@ http://www.jveweb.net/en/archives/2011/01/running-rsync-as-a-daemon.html
 Checking on backup AWS server
 
 $ cat /etc/rsyncd.conf
-lock file = /var/run/rsync.lock
+lock file = /var/run/rsyncd.lock
 log file = /var/log/rsyncd.log
 pid file = /var/run/rsyncd.pid
 
