@@ -1,0 +1,11 @@
+
+The default mirror for tce-load (like apt-get/yum) was down so I had to change it
+
+$ sudo cp /opt/tcemirror /opt/tcemirror.original
+$ sudo echo 'http://distro.ibiblio.org/tinycorelinux' > /opt/tcemirror
+
+To get nano working...
+
+$ tce-load -wi nano
+$ echo 'export TERM=xterm' >> /home/docker/.profile
+$ source .profile

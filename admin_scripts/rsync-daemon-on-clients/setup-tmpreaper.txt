@@ -21,4 +21,10 @@ $ docker-machine ssh ${node} -- sudo rm -rf /tmp/${tmpFolder}
 
 to remove the tmp folder
 It will reduce network traffic and the load on the server.
+It is also a bit of extra security in case anyone somehow manages
+to rsync files to /tmp
+
+
+
+
 

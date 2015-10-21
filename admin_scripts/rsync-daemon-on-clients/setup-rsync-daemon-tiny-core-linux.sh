@@ -1,5 +1,7 @@
 # run as sudo
 
+tce-load -wi rsync
+
 cp /home/docker/rsyncd.conf /etc
 chown root:root /etc/rsyncd.conf
 chmod 644 /etc/rsyncd.conf
