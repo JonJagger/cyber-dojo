@@ -35,9 +35,11 @@ module OutputColour # mix-in
   end
 
   def self.parse_mocha(output)
-    return :red   if /AssertionError/.match(output)
-    return :green if /(\d+) passing \((\d+)ms\)/.match(output)
-    return :amber
+    return :red   if /AssertionError:/.match(output)
+    return :amber if /SyntaxError:/.match(output)
+    return :amber if /ReferenceError:/.match(output)
+    return :amber if /TypeError:/.match(output)
+    return :green
   end
 
   def self.parse_cpputest(output)
