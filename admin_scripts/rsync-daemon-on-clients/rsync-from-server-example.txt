@@ -1,0 +1,21 @@
+# where we're rsync'ing to
+ipNode=192.168.1.79
+
+# what we're rsync'ing
+kataId=5D713F8675
+avatar=alligator
+
+# local variables
+outerId=${kataId:0:2}
+innerId=${kataId:2:8}
+tmpFolder=`uuidgen`
+
+export RSYNC_PASSWORD=password
+
+rsync \
+  -rtW \
+  /var/www/cyber-dojo/katas/${outerId}/${innerId}/${avatar}/sandbox/ \
+  cyber-dojo@${ipNode}::tmp/${tmpFolder}
+
+unset RSYNC_PASSWORD
+

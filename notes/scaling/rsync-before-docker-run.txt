@@ -672,6 +672,158 @@ Now can I can try the script on node-01
 
 Yup. Works.
 
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Virtual Box images
+cyber-dojo-server
+  docker-node-00  # hand-built
+  docker-node-01  # hand-built
+
+default # Docker Quickstart Terminal
+  machine-node-00 # docker-machine create --driver virtualbox
+  machine-node-01 # docker-machine create --driver virtualbox
+
+Next step would be to stay on the standard server and use docker-machine
+in combination with rsync. But on cyber-dojo-server I cant use
+docker-machine create with virtualbox for some reason.
+
+
+One option is to build some machines on digital-ocean....
+One could be proper server.
+One could be docker-machine created...
+
+Another option is to create a new cyber-dojo-server on VirtualBox.
+
+Another option is to use the "generic" driver.
+Blurb says
+This is useful if you are using a provider that Machine does not
+support directly or if you would like to import an existing host
+to allow Docker Machine to manage.
+
+Trying that...
+$ docker-machine create --driver generic --generic-ip-address=192.168.1.85 node-00
+Says Importing SSH key...
+Stuck there. ip address is wrong. has to be an existing host. Aha.
+$ docker-machine rm -f node-00
+$ docker-machine create --driver generic --generic-ip-address=192.168.1.79 docker-node-00
+Same.
+$ docker-machine rm -f docker-node-00
+$ ssh jon@192.168.1.79
+Asking for password. have to copy ssh credentials to host.
+$ ssh-copy-id jon@192.168.1.79
+Installed.
+Trying again...
+$ docker-machine create --driver generic \
+  --generic-ip-address=192.168.1.79 \
+  --generic-ssh-user=jon \
+  docker-node-00
+
+Says I got an SSH error. But docker-machine ls says its running.
+$ docker-machine ssh docker-node-00
+I'm in...
+
+$ ssh-copy-id jon@192.168.1.80
+$ docker-machine create --driver generic \
+  --generic-ip-address=192.168.1.80 \
+  --generic-ssh-user=jon \
+  docker-node-01
+
+And I can docker-machine ssh into that too...
+Ok.
+So I now I want to use
+$ docker-machine ssh docker-node-00 -- rsync.....
+
+Ok. So rsync is not installed on main cyber-dojo server.
+Wrote scripts for that. Ran them.
+
+
+
+
+Struggling to get rsync working.
+Take it step by step.
+docker-machine ssh into node and then try to rsync back from server.
+Nope fails.
+Is port open. ip address of server=192.168.1.78  rsync port=873
+From node
+$ telnet 192.168.1.78 873
+No its closed.
+Ok. How to I open it?
+First confirm its closed on server
+$ sudo ufw status verbose
+Yes 873 its closed.
+$ sudo ufw allow 873/tcp
+Now its open.
+Retry rsync command on docker-node-00
+Now I get a failure message
+change-dir "/5D/713F8675/alligator" (in katas) failed. No such file or dir.
+Yes. [katas] module needs to end in .../katas
+$ docker-machine ssh docker-node-00 -- rsync is copying
+But received files are not www-data owned.
+Definitely www-data on server.
+www-data is on docker-node-00 too. But it has no login
+$ sudo userdel www-data
+$ sudo groupadd -g 33 www-data
+$ sudo useradd -d /var/www -g www-data -s /bin/sh -u 33 www-data
+Do I need to set www-data with no password.
+$ sudo userdel www-data
+
+$ sudo addgroup --gid 33 www-data
+$ sudo adduser --home /var/www --gid 33 --shell /bin/sh --uid 33 --disabled-password www-data
+
+Oops. I still have tmpreaper installed.
+Removed it.
+$ cd ~
+$ sudo crontab -l > crontab.txt
+Removed entry in crontab.txt
+$ sudo crontab crontab.txt
+$ rm crontab.txt
+
+Still not working.
+Perhaps rsync has to be on the node?
+Stopped rsync daemon on server
+Started rsync daemon on docker-node-00
+Yes. That works. files are owned by www-data.
+And they have times!
+What about time-stamps? Are they retained?
+Hmmm. It's not clear.
+Before
+hiker.c Oct 20 11:34
+After
+hiker.c Oct 20 2015
+Why is the date not retained? I think it is. Just formatting is different.
+$ ls --full-time
+Yes. rsync is working.
+
+
+Next get the docker run working!
+hardwired the
+$ eval "$(docker-machine env docker-node-00)"
+Getting the SSH cmd error!
+command: sudo hostname docker-node-00 && echo "docker-node-00" | sudo tee /etc/hostname
+err    : exit status 1
+output : sudo: no tty present and no askpass program specified
+
+Googling suggests this could be a sudoers issue.
+Do I need to add jon to docker group?
+Hmm. And now when I log out and back in I get
+jon@docker-node-00
+$ sudo hostname ubuntu-server
+Ach its got fouled up.
+Will start again in the morning with a fresh server 15.04
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -682,7 +834,7 @@ Yup. Works.
 
 =================================================================================================
 
-So now setup rsync on default
+So now setup rsync on *default*
 Created /etc/rsyncd.conf  changed IP to 192.168.0.0
 Created /etc/rsyncd.secrets
 $ sudo chmod 644 /etc/rsyncd.conf
@@ -738,10 +890,10 @@ $ docker-machine ssh machine-node-00
 $ rsync -rtW cyber-dojo@192.168.1.66::katas/5D/713F8675/alligator/sandbox /tmp
 Asks for password
 Yes. Now see /tmp/sandbox
-But files not owned by 33 www-data
+But files still not owned by 33 www-data
 
-
-
+But perhaps the mount+bindfs is interfering.
+Need to create copy of katas in ~ ensure that is www-data:www-data before starting.
 
 
 
