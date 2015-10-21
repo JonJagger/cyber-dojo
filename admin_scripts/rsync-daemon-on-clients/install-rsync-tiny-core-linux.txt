@@ -1,0 +1,16 @@
+
+The default mirror was down so I had to
+$ vi /opt/tcemirror
+And change it to
+http://distro.ibiblio.org/tinycorelinux
+
+Then I could
+$ tce-load -wi rsync
+
+And then
+$ sudo ./setup-rsync-daemon-tiny-core-linux.sh
+
+To get nano working...
+$ tce-load -wi nano
+$ export TERM=xterm
+$ echo 'export TERM=xterm' >> /home/docker/.profile

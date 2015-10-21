@@ -1,0 +1,5 @@
+
+# run as sudo
+
+addgroup -g 33 www-data
+adduser -D -H -G www-data -s /bin/sh -u 33 www-data
