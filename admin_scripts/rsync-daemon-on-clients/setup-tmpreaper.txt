@@ -1,0 +1,14 @@
+
+# run as sudo
+
+http://www.thegeekstuff.com/2013/10/tmpreaper-examples/
+$ sudo apt-get install tmpreaper
+Googling suggests to use full path for cron task
+$ what tmpreaper
+/usr/sbin/tmpreaper
+$ cd ~
+$ (sudo crontab -l ; echo "*/1 * * * * /usr/sbin/tmpreaper -f 30s /tmp") | sudo crontab -
+
+This runs tmpreaper every minute (*/1) and deletes all files/folders
+under /tmp that have not been accessed for 30 seconds or more.
+
