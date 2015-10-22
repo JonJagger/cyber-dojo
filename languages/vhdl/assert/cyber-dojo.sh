@@ -1,4 +1,5 @@
 # Imports all vhdl files into workspace
+rm work-obj93.cf
 ghdl -i *.vhdl
 
 # Scrapes the workspace file for all entity names
