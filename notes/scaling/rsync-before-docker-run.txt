@@ -743,7 +743,7 @@ Struggling to get rsync working.
 Take it step by step.
 docker-machine ssh into node and then try to rsync back from server.
 Nope fails.
-Is port open. ip address of server=192.168.1.78  rsync port=873
+Is port open? ip address of server=192.168.1.78  rsync port=873
 From node
 $ telnet 192.168.1.78 873
 No its closed.
@@ -920,56 +920,91 @@ Created a sh file for Docker bash commands...
 <BEGIN>
 
 # parameters
-ipAddress=$1       # eg 192.168.1.79
+node=$1              # eg machine-node-00
 kataId=5D713F8675
 avatar=alligator
 
 # local variables
+ipNode=`docker-machine ip ${node}`    # eg 192.168.1.79
 outerId=${kataId:0:2}
 innerId=${kataId:2:8}
-avatarId=${kataId}_${avatar}
-tmpFolder=`uuidgen`
-cidfile=/tmp/${avatarId}.cid
+tmpName=`uuidgen`
 
-export RSYNC_PASSWORD=password
+# - - - - - - - - - - - - - -
+# 1. rsync avatar's files to node
 
 rsync \
-  -rtW \
-  /var/www/cyber-dojo/katas/${outerId}/${innerId}/${avatar}/sandbox \
-  cyber-dojo@${ipAddress}::tmp/${tmpFolder}
+  --archive \
+  --password-file=/var/www/rsyncd.password \
+  /var/www/cyber-dojo/katas/${outerId}/${innerId}/${avatar}/sandbox/ \
+  cyber-dojo@${ipNode}::tmp/${tmpName}
 
-rm ${cidfile}
+# - - - - - - - - - - - - - -
+# 2. run avatar's test on node
 
+eval "$(docker-machine env ${node})"
 docker \
-  --tlsverify \
-  --host=${ipAddress}:2376 \
   run \
-  --cidfile=${cidfile} \
+  --rm
   --user=www-data \
   --net=none \
-  --volume='/tmp/'${tmpFolder}'/sandbox:/sandbox:rw' \
+  --volume=/tmp/${tmpName}:/sandbox:rw \
   --workdir=/sandbox \
   cyberdojofoundation/gcc-4.8.4_assert \
-  /bin/bash -c ./cyber-dojo.sh
+  /bin/bash -c 'timeout --signal=9 10s ./cyber-dojo.sh 2>&1'
 
-#could rsync back here...
-#
-#rsync \
-#  -rtW \
-#  cyber-dojo@${ipAddress}::tmp/${tmpFolder} \
-#  /var/www/cyber-dojo/katas/${outerId}/${innerId}/${avatar}/sandbox
+# - - - - - - - - - - - - - -
+# 3. rsync avatar's files back from node
 
-unset RSYNC_PASSWORD
+rsync \
+  --archive \
+  --password-file=/var/www/rsyncd.password \
+  cyber-dojo@${ipNode}::tmp/${tmpName}/ \
+  /var/www/cyber-dojo/katas/${outerId}/${innerId}/${avatar}/sandbox/
 
+# - - - - - - - - - - - - - -
+# 4. tidy up temporary files on node
+
+docker-machine ssh ${node} -- sudo rm -rf /tmp/${tmpName} &
 <END>
 
 
+Note that rsync'ing the files across
+1) always goes into a new folder.
+2) so there is no need to use the rsync algorithm
+   (hence --whole-file)
+However, the executable created on the node is not
+rsync'd back to the server. This means that for the
+next test even if no files have changed and you are
+using an incremental makefile then the executable
+will be rebuilt. Viz I really need to rsync *back*
+to the server to maintain the illusion. This opens
+up approval/mutation style testing and coverage.
+How big are executable files?
+Is it worth adding a max-file size limit on rsync?
+
+Reading the man rsync it looks like I might be able
+to use a remote shell instead of the rsync daemon.
+Using :: means the daemon. Use : means remote shell
+which in turn relies on ssh.
+
+=============================================================
+# automate setting up rsync on server and docker-machine nodes
+
+# setup-rsync-password-on-server.sh
+uuidgen > /var/www/rsyncd.password
+echo -n 'cyber-dojo:' > /var/www/rsyncd.secrets
+cat /var/www/rsyncd.password >> /var/www/rsyncd.secrets
+chmod 400 /var/www/rsyncd.*
+
+# setup-rsync-on-node.sh   $1 == docker-machine name
+docker-machine scp /var/www/rsyncd.secrets $1:/home/docker/rsyncd.secrets
+docker-machine ssh $1 -- sudo chown root:root /home/docker/rsyncd.secrets
+docker-machine ssh $1 -- sudo chmod 400 /home/docker/rsyncd.secrets
+docker-machine ssh $1 -- sudo mv /home/docker/rsyncd.secrets /etc
 
 
-
-
-
-
+=============================================================
 
 
 
