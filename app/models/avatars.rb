@@ -13,9 +13,8 @@ class Avatars
     @parent = kata
   end
 
-  def each
-    return enum_for(:each) unless block_given?
-    avatars.each { |_name, avatar| yield avatar }
+  def each(&block)
+    avatars.values.each(&block)
   end
 
   def [](name)
@@ -37,10 +36,11 @@ class Avatars
 
   def avatars
     # Could do disk[kata.path].exists?('started_avatars.json')
-    # and use that if it exists
+    # and use that if it exists. When number of avatars increases
+    # that will become more important
     all = {}
     Avatars.names.each do |name|
-      avatar = Avatar.new(@parent, name) #self[name]
+      avatar = Avatar.new(@parent, name)
       all[name] = avatar if disk[avatar.path].exists?
     end
     all

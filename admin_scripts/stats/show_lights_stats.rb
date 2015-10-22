@@ -18,11 +18,11 @@ def explain_output
   lines.each{|line| puts '# ' + line}
 end
 
-$stats = { }
+$stats = {}
 
 def collect_light_stats(kata)
-  count = kata.avatars.inject(0){|sum,avatar| sum + avatar.lights.length }
-  $stats[count] ||= [ ]
+  count = kata.avatars.inject(0) { |sum,avatar| sum + avatar.lights.length }
+  $stats[count] ||= []
   $stats[count] << kata.avatars.entries.length
 end
 

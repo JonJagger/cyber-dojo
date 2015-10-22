@@ -1,0 +1,7 @@
+Using a ram-disk for a particular folder on the client, eg
+/katas
+is an obvious optimization. 
+No reason I couldn't also run tmpreaper on the client too
+incase the rm -rf doesn't get run for some reason.
+
+

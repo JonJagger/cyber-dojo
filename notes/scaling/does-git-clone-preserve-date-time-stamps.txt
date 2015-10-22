@@ -21,7 +21,7 @@ $ docker run -it --rm --user=www-data cyberdojofoundation/gcc-4.8.4_assert /bin/
 Now it says kernel does not support memoey swappiness again?!
 root@971319505fd1:$ cd /tmp
 root@971319505fd1:$ git clone git://172.17.42.1/59/944533D0/buffalo/.git
-root@971319505fd1:$ cd buffalo/sandbox 
+root@971319505fd1:$ cd buffalo/sandbox
 root@971319505fd1:$ date
 Tue Sep 22 09:44:48 UTC 2015
 root@971319505fd1:$ ls -al
@@ -38,16 +38,6 @@ drwxr-xr-x 4 www-data www-data 4096 Sep 22 09:44 ..
 
 
 Answer is NO. Files get date-time stamp of the clone moment
-
-Is this worth investigating further?
-Eg rsync?
-I think not.
-Suppose I used rsync and the kata was C++ assert using custom makefiles
-The problem is that (currently) the intermediate files (.o .lib etc)
-are *not* part of the git repo. Neither is the executable.
-Only the source files are. Unless that changes and *all* files
-are part of the repo, then maintaining timestamps is secondary.
-
 
 
 
@@ -83,7 +73,7 @@ http://stackoverflow.com/questions/27763340/docker-opts-do-not-work-in-config-fi
 Suggests I need to edit this file...
 /lib/systemd/system/docker.service
 
-ExecStart=/usr/bin/docker daemon --icc=false 
+ExecStart=/usr/bin/docker daemon --icc=false
 
 
 
@@ -115,7 +105,7 @@ Notes
 =====
 
 There is an option on git clone to specify the folder you want to clone into.
-Using that in cyber-dojo servers docker run command 
+Using that in cyber-dojo servers docker run command
 
 Don' use git-daemon-export-all
 Stick to git-daemon-export-ok per repo.

@@ -12,9 +12,12 @@ require_relative '../lib_domain'
 show_ids = (ARGV[0] || "false")
 
 puts
-days,weekdays,languages,exercises = { },{ },{ },{ }
+days = {}
+weekdays = {}
+languages = {}
+exercises = {}
 dot_count = 0
-exceptions = [ ]
+exceptions = []
 dojo.katas.each do |kata|
   begin
     id = kata.id.to_s
@@ -25,10 +28,10 @@ dojo.katas.each do |kata|
     weekdays[ymd[3]] ||= 0
     weekdays[ymd[3]] += 1
     language = kata.language.name
-    languages[language] ||= [ ]
+    languages[language] ||= []
     languages[language] << id
     exercise = kata.exercise.name
-    exercises[exercise] ||= [ ]
+    exercises[exercise] ||= []
     exercises[exercise] << id
   rescue Exception => error
     exceptions << error.message

@@ -56,6 +56,7 @@ class KataController < ApplicationController
 
   private
 
+  include MakefileFilter
   include StringCleaner
   include TimeNow
 
@@ -65,7 +66,7 @@ class KataController < ApplicationController
       content = clean(content)
       # Cater for windows line endings from windows browser
       content = content.gsub(/\r\n/, "\n")
-      seen[filename] = content
+      seen[filename] = makefile_filter(filename, content)
     end
     seen
   end

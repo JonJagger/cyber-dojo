@@ -8,7 +8,7 @@ Pointed it to the iso image I downloaded.
 Responded to all the questions to setup the server.
 Created a user called jon with usual password (sudoer)
 
-Kept network settings as NAT (to enable downloads)   
+Kept network settings as NAT (to enable downloads)
 //need Host-only-adapter for local network.
 
 First fixed keyboard
@@ -22,3 +22,5 @@ In VirtualBox on MacBook Pro to get the git-server and the cyber-dojo
 server both running with host-only-adapter and not have the same IP
 address I had to tweak one of them so its apparent mac address
 was different to the other one. I cloned one server from the other.
+
+

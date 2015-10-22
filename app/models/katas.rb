@@ -39,8 +39,7 @@ class Katas
   end
 
   def create_kata_manifest(language, exercise, id, now)
-    {
-                  created: now,
+    {             created: now,
                        id: id,
                  language: language.name,
                  exercise: exercise.name,

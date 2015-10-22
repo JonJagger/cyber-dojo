@@ -1,16 +1,10 @@
 
-o) move language - cyber-dojo.sh update code into dedicated class/module
-   rework it so it adds a file called cyber-dojo.sh.new
+o) rework app/models/update_cyber_dojo_sh
+   so it *adds* a new file called cyber-dojo.sh.new
    instead of adding commented version to cyber-dojo.sh
 
-o) note duplication now in
-   test/app_controller/AppControllerTestBase.rb and
-   test/app_models/AppModelTestBase.rb and
-   test/app_helpers/AppHelpersTestBase.rb and
-   test/lib/LibTestBase.rb
-
 o) app_lib coverage is 99%
-   missing avatar_git_diff
+   missing avatar_git_diff()
 
 o) setup page needs an explicit cancel button.
    What if you're running the browser in presentation mode!

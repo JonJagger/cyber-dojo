@@ -59,11 +59,11 @@ class Avatar
   end
 
   def test(delta, files, now = time_now, time_limit = 15)
-    cyber_dojo_sh_updated = language.update_cyber_dojo_sh(files)
+    cyber_dojo_sh_updated = update_cyber_dojo_sh(files)
     sandbox.save_files(delta, files)
     output = sandbox.run_tests(time_limit)
     colour = language.colour(output)
-    output = language.update_output(output, cyber_dojo_sh_updated)
+    output = update_output(output, cyber_dojo_sh_updated)
 
     update_manifest(files, output)
     rags = update_increments(colour, now)
@@ -76,6 +76,7 @@ class Avatar
 
   include ExternalParentChain
   include TimeNow
+  include UpdateCyberDojoSh
 
   def git_setup
     git.init(path, '--quiet')

@@ -1,6 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative 'AppControllerTestBase'
+require_relative './app_controller_test_base'
 
 class DownloadControllerTest < AppControllerTestBase
 
