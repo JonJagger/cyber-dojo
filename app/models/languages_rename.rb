@@ -86,27 +86,14 @@ end
 # It is the display_name that governs the language/test's names as they appear
 # on the create page. Not the folder names. Not the docker container image_name.
 #
-# Many people will have built their own cyber-dojo servers and might *not* want
-# or need to upgrade their servers to use the latest docker containers for
-# the latest language/test even if it exists.
-# This means the cyberdojofoundation docker index needs to keep old versions of
-# language/test docker containers even when newer ones exist.
-# Viz, a docker container name needs to have a version number in it.
-
 # Further, if you upgrade a language/test to a newer version
 # and delete the old version of the docker container from your server,
-# you still want to be able to fork from a kata done in the old version.
+# you still want to be able to fork from a kata done in the old version
+# (particularly for well known katas's such as the refactoring ones).
 # And when you do such a fork you want the new kata to use the new version.
 # So what is stored in the kata's manifest is *not* the docker container's
 # image_name but the display_name.
 #
 # rename() is a bit fiddly because historically the language-&-test
 # were *not* separated into distinct nested folders.
-#
-# - - - - - - - - - - - - - - - - - - - - - - - -
-# Some languages/ sub-folders have been renamed.
-# This creates a problem for practice-sessions done
-# before the rename that you now wish to review or
-# fork from. Particularly for sessions with
-# well known id's such as the refactoring dojos.
 # - - - - - - - - - - - - - - - - - - - - - - - -

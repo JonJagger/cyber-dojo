@@ -12,10 +12,6 @@ module Runner # mix-in
     "Please try again."
   end
 
-  def max_output_length
-    50*1024
-  end
-
   def limited(output)
     output = clean(output)
     # for example, a C++ source file that #includes
@@ -26,6 +22,10 @@ module Runner # mix-in
       output += "output truncated by cyber-dojo server"
     end
     output
+  end
+
+  def max_output_length
+    50*1024
   end
 
 end

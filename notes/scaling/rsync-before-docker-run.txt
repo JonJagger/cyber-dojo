@@ -895,79 +895,7 @@ But files still not owned by 33 www-data
 But perhaps the mount+bindfs is interfering.
 Need to create copy of katas in ~ ensure that is www-data:www-data before starting.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 =============================================================
-
-Created a sh file for Docker bash commands...
-<BEGIN>
-
-# parameters
-node=$1              # eg machine-node-00
-kataId=5D713F8675
-avatar=alligator
-
-# local variables
-ipNode=`docker-machine ip ${node}`    # eg 192.168.1.79
-outerId=${kataId:0:2}
-innerId=${kataId:2:8}
-tmpName=`uuidgen`
-
-# - - - - - - - - - - - - - -
-# 1. rsync avatar's files to node
-
-rsync \
-  --archive \
-  --password-file=/var/www/rsyncd.password \
-  /var/www/cyber-dojo/katas/${outerId}/${innerId}/${avatar}/sandbox/ \
-  cyber-dojo@${ipNode}::tmp/${tmpName}
-
-# - - - - - - - - - - - - - -
-# 2. run avatar's test on node
-
-eval "$(docker-machine env ${node})"
-docker \
-  run \
-  --rm
-  --user=www-data \
-  --net=none \
-  --volume=/tmp/${tmpName}:/sandbox:rw \
-  --workdir=/sandbox \
-  cyberdojofoundation/gcc-4.8.4_assert \
-  /bin/bash -c 'timeout --signal=9 10s ./cyber-dojo.sh 2>&1'
-
-# - - - - - - - - - - - - - -
-# 3. rsync avatar's files back from node
-
-rsync \
-  --archive \
-  --password-file=/var/www/rsyncd.password \
-  cyber-dojo@${ipNode}::tmp/${tmpName}/ \
-  /var/www/cyber-dojo/katas/${outerId}/${innerId}/${avatar}/sandbox/
-
-# - - - - - - - - - - - - - -
-# 4. tidy up temporary files on node
-
-docker-machine ssh ${node} -- sudo rm -rf /tmp/${tmpName} &
-<END>
-
 
 Note that rsync'ing the files across
 1) always goes into a new folder.
@@ -1004,8 +932,131 @@ docker-machine ssh $1 -- sudo chmod 400 /home/docker/rsyncd.secrets
 docker-machine ssh $1 -- sudo mv /home/docker/rsyncd.secrets /etc
 
 
+lib/docker_machine_runner.rb
+=============================================================
+class DockerMachineRunner
+
+  def self.cache_filename
+    'docker_machine_runner_cache.json'
+    # (self.class.name + 'Cache').split(/(?=[A-Z])/).join('_').downcase
+  end
+
+  def initialize(dojo, bash = Bash.new)
+    @dojo = dojo
+    @bash = bash
+  end
+
+  def runnable?(language)
+    !node_map[language.image_name].nil?
+  end
+
+  def run(sandbox, command, max_seconds)
+    avatar = sandbox.avatar
+    kata = avatar.kata
+    image_name = kata.language.image_name
+    node = node_map[image_name].sample
+
+    # TODO: script needs to return the exit-code of docker-run.
+    # TODO: pass command to script? No. (initially yes)
+    # TODO: pass max_seconds to script? Yes. Also used in sanitized()
+    output,exit_code = bash.exec(
+      ???script??? +
+        " #{node}" +
+        " #{avatar.name}" +
+        " #{kata.id}" +
+        " #{image_name}")
+
+    # TODO: this processing can be hoisted into Runner mix-in sanitized(output, exit_code)
+    #       which can include fatal_error() and kill
+    exit_status != fatal_error(kill) ? limited(output) : didnt_complete(max_seconds)
+  end
+
+  private
+
+  include ExternalParentChain
+  include Runner
+
+  def node_map
+    @node_map ||= dojo.cache.read_json(self.class.cache_filename)
+  end
+
+end
+
+
+
+languages/refresh_caches.rb
+=============================================================
+#!/usr/bin/env ruby
+
+# TODO: add caches to dojo. has path and ExternalParentChain
+#       path set from ENV['CYBER_DOJO_CACHES_ROOT']
+require_relative '../admin_scripts/lib_domain'
+
+def cdf_image_names(output)
+  lines = output.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
+  lines.collect { |line| line.split[0] }
+end
+
+def refresh(filename, cache)
+  dojo.cache.write_json(filename, cache)
+  `chown www-data:www-data #{dojo.cache.path + filename}`
+  `chmod 400 #{dojo.cache.path + filename}`
+end
+
+# - - - - - - - - - - - - - - - - - - - - - -
+# 1. refresh Languages cache
+
+cache = {}
+dojo.disk[dojo.languages.path].each_dir do |dir_name|
+  dojo.disk[path + dir_name].each_dir do |test_dir_name|
+    language = make_language(dir_name, test_dir_name)
+    cache[language.display_name] = {
+           dir_name: dir_name,
+      test_dir_name: test_dir_name,
+         image_name: language.image_name
+    }
+  end
+end
+refresh(Languages.cache_filename, cache)
+
+# - - - - - - - - - - - - - - - - - - - - - -
+# 2. refresh DockerRunner cache
+# (was DockerVolumeMountRunner but drop VolumeMount bit)
+
+refresh(DockerRunner.cache_filename, cdf_image_names(`docker images`))
+
+# - - - - - - - - - - - - - - - - - - - - - -
+# 3. refresh DockerMachineRunner cache
+
+# TODO: exit here if docker-machine is not installed
+
+cache = {}
+nodes = `docker-machine ls -q`.split
+nodes.each do |node|
+  output = `docker-machine ssh #{node} -- docker images`
+  cdf_image_names(output).each do |image_name|
+    cache[image_name] ||= []
+    cache[image_name] << node
+  end
+end
+refresh(DockerMachineRunner.cache_filename, cache)
+
 =============================================================
 
+
+
+
+DockerVolumeMountRunner does not have a cache. Use a cache
+
+  def image_names
+    @image_name ||= dojo.cache.read_json(self.class.cache_filename)
+  end
+
+=============================================================
+
+
+
+=============================================================
 
 
 
