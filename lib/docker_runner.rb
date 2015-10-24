@@ -9,7 +9,7 @@
 require_relative './docker_times_out_runner'
 require 'tempfile'
 
-class DockerVolumeMountRunner
+class DockerRunner
 
   def initialize(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
     @bash = bash

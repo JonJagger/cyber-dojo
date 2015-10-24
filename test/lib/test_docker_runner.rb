@@ -3,7 +3,7 @@
 require_relative './lib_test_base'
 require_relative './docker_test_helpers'
 
-class DockerVolumeMountRunnerTests < LibTestBase
+class DockerRunnerTests < LibTestBase
 
   include DockerTestHelpers
 
@@ -74,7 +74,7 @@ class DockerVolumeMountRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def make_docker_runner
-    DockerVolumeMountRunner.new(@bash,cid_filename)
+    DockerRunner.new(@bash,cid_filename)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

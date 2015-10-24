@@ -9,8 +9,7 @@
   background_process
   runner
     docker_times_out_runner
-    docker_volume_mount_runner
-    docker_host_rsync_runner
+    docker_runner
   host_disk
   host_dir
   host_git

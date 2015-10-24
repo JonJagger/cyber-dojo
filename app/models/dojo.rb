@@ -8,10 +8,10 @@ class Dojo
   def katas    ; @katas     ||=     Katas.new(self, env_var); end
   def caches   ; @caches    ||=    Caches.new(self, env_var); end
 
-  def runner  ; @runner   ||= env_object('DockerVolumeMountRunner').new; end
-  def disk    ; @disk     ||= env_object('HostDisk'               ).new; end
-  def git     ; @git      ||= env_object('HostGit'                ).new; end
-  def one_self; @one_self ||= env_object('OneSelf').new(disk)          ; end
+  def runner  ; @runner   ||= env_object('DockerRunner').new;       end
+  def disk    ; @disk     ||= env_object('HostDisk'    ).new;       end
+  def git     ; @git      ||= env_object('HostGit'     ).new;       end
+  def one_self; @one_self ||= env_object('OneSelf'     ).new(disk); end
 
   private
 
