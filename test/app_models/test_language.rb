@@ -236,24 +236,22 @@ class LanguageTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-=begin
-  # FAILS
   test 'CF389F',
   'bad JSON in manifest raises exception naming the language' do
-    @language = make_language('Ruby', 'Test::Unit')
+    set_disk_class('DiskFake')
+    @language = make_language('Ruby', 'TestUnit')
     @language.dir.make
     @language.dir.write(manifest_filename, any_bad_json = '42')
+    @language.refresh_cache
     message = ''
     begin
-      #@language.tab_size
-      @language.refresh_cache  # permission denied
+      @language.tab_size
     rescue StandardError => ex
       message = ex.message
     end
-    assert message.include?('Ruby')
-    assert message.include?('Test::Unit')
+    assert message.include?('Ruby'), message
+    assert message.include?('TestUnit'), message
   end
-=end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
