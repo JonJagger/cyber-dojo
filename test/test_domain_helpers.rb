@@ -10,6 +10,7 @@ module TestDomainHelpers # mix-in
   def languages; dojo.languages; end
   def exercises; dojo.exercises; end
   def katas;     dojo.katas;     end
+  def caches;    dojo.caches;    end
   def disk;      dojo.disk;      end
   def runner;    dojo.runner;    end
   def git;       dojo.git;       end

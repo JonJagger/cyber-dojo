@@ -5,7 +5,8 @@ class Dojo
 
   def languages; @languages ||= Languages.new(self, env_var); end
   def exercises; @exercises ||= Exercises.new(self, env_var); end
-  def katas    ; @katas     ||= Katas    .new(self, env_var); end
+  def katas    ; @katas     ||=     Katas.new(self, env_var); end
+  def caches   ; @caches    ||=    Caches.new(self, env_var); end
 
   def runner  ; @runner   ||= env_object('DockerVolumeMountRunner').new; end
   def disk    ; @disk     ||= env_object('HostDisk'               ).new; end

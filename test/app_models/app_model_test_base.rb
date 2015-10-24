@@ -11,8 +11,10 @@ class AppModelTestBase < TestBase
     super
     `rm -rf #{tmp_root}/*`
     `rm -rf #{tmp_root}/.git`
-    `mkdir -p #{tmp_root}`
+    `mkdir -p #{tmp_root}/katas`
+    `mkdir -p #{tmp_root}/caches`
     set_katas_root(tmp_root + 'katas')
+    set_caches_root(tmp_root + 'caches')
     set_one_self_class('OneSelfDummy')
     set_runner_class   'RunnerStub'
     set_disk_class     'HostDisk'

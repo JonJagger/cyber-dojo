@@ -12,6 +12,7 @@ module TestExternalHelpers # mix-in
   def set_languages_root(value); cd_set(languages_key,value); end
   def set_exercises_root(value); cd_set(exercises_key,value); end
   def     set_katas_root(value); cd_set(    katas_key,value); end
+  def    set_caches_root(value); cd_set(   caches_key,value); end
   def   set_runner_class(value); cd_set(   runner_key,value); end
   def     set_disk_class(value); cd_set(     disk_key,value); end
   def      set_git_class(value); cd_set(      git_key,value); end
@@ -20,6 +21,7 @@ module TestExternalHelpers # mix-in
   def get_languages_root; cd_get(languages_key); end
   def get_exercises_root; cd_get(exercises_key); end
   def     get_katas_root; cd_get(    katas_key); end
+  def    get_caches_root; cd_get(   caches_key); end
   def   get_runner_class; cd_get(   runner_key); end
   def     get_disk_class; cd_get(     disk_key); end
   def      get_git_class; cd_get(      git_key); end
@@ -54,6 +56,7 @@ module TestExternalHelpers # mix-in
       languages_key => root_dir + '/languages',
       exercises_key => root_dir + '/exercises',
       katas_key     => root_dir + '/katas',
+      caches_key    => root_dir + '/caches',
       disk_key      => 'HostDisk',
       runner_key    => 'DockerVolumeMountRunner',
       git_key       => 'HostGit',
@@ -64,6 +67,7 @@ module TestExternalHelpers # mix-in
   def languages_key; root('LANGUAGES'); end
   def exercises_key; root('EXERCISES'); end
   def     katas_key; root(    'KATAS'); end
+  def    caches_key; root(   'CACHES'); end
 
   def      disk_key; klass('DISK'    ); end
   def    runner_key; klass('RUNNER'  ); end

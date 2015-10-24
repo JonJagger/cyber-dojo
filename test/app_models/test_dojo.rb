@@ -31,6 +31,15 @@ class DojoTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'A3131F',
+  'caches' do
+    path = '/fake_caches_path/'
+    set_caches_root(path)
+    assert_equal path, dojo.caches.path
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
+
   test '055B3C',
   'runner' do
     set_runner_class(name = 'RunnerStub')

@@ -3,6 +3,7 @@
   external_parent_chain
   manifest_property
   dojo
+  caches
   language
   languages_rename
   languages
