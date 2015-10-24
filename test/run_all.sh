@@ -5,9 +5,12 @@ sudo ../exercises/refresh_cache.rb
 sudo ./lib/make_disk_stub_cache.rb
 
 ramDisk=/mnt/ram_disk
-sudo ../admin_scripts/make_ram_disk.sh $ramDisk
+sudo ../admin_scripts/make_ram_disk.sh $ramDisk 1m
 export CYBER_DOJO_TMP_ROOT=$ramDisk/tmp
 sudo chmod 777 ./test-summary.txt
+mkdir $ramDisk/caches
+export CYBER_DOJO_CACHES_ROOT=$ramDisk/caches
+cp ../caches/* $ramDisk/caches
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 

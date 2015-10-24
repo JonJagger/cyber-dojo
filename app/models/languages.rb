@@ -35,7 +35,7 @@ class Languages
         }
       end
     end
-    write_json(self.class.cache_filename, cache)
+    caches.write_json(self.class.cache_filename, cache)
   end
 
   private
@@ -49,7 +49,7 @@ class Languages
 
   def read_cache
     cache = {}
-    read_json(self.class.cache_filename).each do |display_name, language|
+    caches.read_json(self.class.cache_filename).each do |display_name, language|
            dir_name = language['dir_name']
       test_dir_name = language['test_dir_name']
          image_name = language['image_name']
@@ -64,6 +64,10 @@ class Languages
 
   def commad(name)
     name.split('-').join(', ')
+  end
+
+  def caches
+    @parent.caches
   end
 
 end

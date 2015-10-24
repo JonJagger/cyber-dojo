@@ -98,8 +98,7 @@ class SetupControllerTest < AppControllerTestBase
            image_name: 'cyberdojofoundation/gpp-4.8.4_assert'
       }
     }
-    dir_of(languages).make
-    dir_of(languages).write_json(Languages.cache_filename, languages_cache)
+    caches.write_json(Languages.cache_filename, languages_cache)
     languages_cache.each do |display_name, hash|
       key = get_language_from(display_name) + '-' + get_test_from(display_name)
       dir_of(languages[key]).write_json('manifest.json', {
@@ -112,8 +111,7 @@ class SetupControllerTest < AppControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def setup_exercises_cache
-    dir_of(exercises).make
-    dir_of(exercises).write_json(Exercises.cache_filename, {
+    caches.write_json(Exercises.cache_filename, {
       print_diamond  => 'stub print diamond instructions',
       roman_numerals => 'stub roman numerals instructions'
     })

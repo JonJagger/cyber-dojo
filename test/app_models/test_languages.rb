@@ -35,6 +35,7 @@ class LanguagesTests < AppModelTestBase
   'refresh_cache requires manifest.json for each file to read display_name from' +
     ' but use of cached info does not reaccess manifest.json' do
     set_disk_class('DiskFake')
+
     dir_name = 'g++4.8.4'
     test_dir_name = 'assert'
     cpp_assert = Language.new(languages, dir_name, test_dir_name)
@@ -47,14 +48,20 @@ class LanguagesTests < AppModelTestBase
       'display_name' => display_name,
       'image_name'   => image_name
     })
+
+    refute disk[caches.path].exists?(Languages.cache_filename)
     languages.refresh_cache
+    assert disk[caches.path].exists?(Languages.cache_filename)
+
     dir_of(cpp_assert).delete(manifest_filename) # DiskFake.delete is implemented
+
     languages_names = languages.map(&:name).sort
     assert_equal [language_display_name + '-' + test_dir_name], languages_names
     # get from cache
     cpp_assert = languages[language_display_name + '-' + test_dir_name]
-    assert_equal display_name,  cpp_assert.display_name
-    assert_equal image_name,    cpp_assert.image_name
+    assert_equal display_name, cpp_assert.display_name
+    assert_equal image_name,   cpp_assert.image_name
+
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
@@ -62,6 +69,7 @@ class LanguagesTests < AppModelTestBase
   test '15BD19',
   'no languages when cache is empty' do
     set_disk_class('DiskFake')
+    caches.write_json(cache_filename, {})
     dir_of(languages).write_json(cache_filename, {})
     assert_equal [], languages.to_a
   end
@@ -81,7 +89,7 @@ class LanguagesTests < AppModelTestBase
         test_dir_name: 'assert'
       }
     }
-    dir_of(languages).write_json(cache_filename, cache)
+    caches.write_json(cache_filename, cache)
     languages_names = languages.map(&:name).sort
 
     assert_equal ['Asm-assert', 'C++ (g++)-assert'], languages_names

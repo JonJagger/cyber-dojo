@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # traverses languages/ and exercises/ and creates
-# cache.json file on disk for use in unit-tests
+# disk_stub_cache.json file on disk for use in unit-tests
 
 require_relative '../../admin_scripts/lib_domain'
 

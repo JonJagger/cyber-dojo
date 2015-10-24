@@ -29,7 +29,7 @@ class Exercises
       exercise = make_exercise(sub_dir)
       cache[exercise.name] = { instructions: exercise.instructions }
     end
-    write_json(self.class.cache_filename, cache)
+    caches.write_json(self.class.cache_filename, cache)
   end
 
   private
@@ -42,7 +42,7 @@ class Exercises
 
   def read_cache
     cache = {}
-    read_json(self.class.cache_filename).each do |name, exercise|
+    caches.read_json(self.class.cache_filename).each do |name, exercise|
       cache[name] = make_exercise(name, exercise['instructions'])
     end
     cache
@@ -50,6 +50,10 @@ class Exercises
 
   def make_exercise(name, instructions = nil)
     Exercise.new(self, name, instructions)
+  end
+
+  def caches
+    @parent.caches
   end
 
 end

@@ -30,6 +30,7 @@ class CachesTests < AppModelTestBase
 
   test '2177BF',
   'write_json, read_json round-trips' do
+    set_caches_root(tmp_root)
     cache_filename = 'test_cache.json'
     caches.write_json(cache_filename, [0,1,2,3,4])
     array = caches.read_json(cache_filename)
