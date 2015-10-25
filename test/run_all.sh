@@ -1,20 +1,8 @@
 #!/bin/bash
 
-. ../admin_scripts/setup_env_vars.sh
-
 sudo -E ../languages/refresh_cache.rb
 sudo -E ../exercises/refresh_cache.rb
 sudo -E ./lib/make_disk_stub_cache.rb
-
-unset CYBER_DOJO_EXERCISES_ROOT
-unset CYBER_DOJO_LANGUAGES_ROOT
-unset CYBER_DOJO_KATAS_ROOT
-unset CYBER_DOJO_CACHES_ROOT
-
-unset CYBER_DOJO_RUNNER_CLASS
-unset CYBER_DOJO_DISK_CLASS
-unset CYBER_DOJO_GIT_CLASS
-unset CYBER_DOJO_ONE_SELF_CLASS
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 

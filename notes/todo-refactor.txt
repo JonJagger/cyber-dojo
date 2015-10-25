@@ -1,10 +1,5 @@
 
 --------------------------------------
-Have .sh script to set environment variables.
-Call it in pull.sh before updating caches.
-Remove defaults from application.rb
->>>>>>Check apache
---------------------------------------
 pull.sh could take argument to set the runner env var.
 --------------------------------------
 explicit cyber-dojo root folder in

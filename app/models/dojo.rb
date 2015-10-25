@@ -3,26 +3,29 @@
 
 class Dojo
 
+  def root; '/var/www/cyber-dojo'; end
+
   def languages; @languages ||= Languages.new(self, env_root); end
   def exercises; @exercises ||= Exercises.new(self, env_root); end
   def katas    ; @katas     ||=     Katas.new(self, env_root); end
   def caches   ; @caches    ||=    Caches.new(self, env_root); end
 
-  def runner  ; @runner   ||= env_object.new      ; end
-  def disk    ; @disk     ||= env_object.new      ; end
-  def git     ; @git      ||= env_object.new      ; end
-  def one_self; @one_self ||= env_object.new(disk); end
+  def runner  ; @runner   ||= env_object('DockerRunner').new      ; end
+  def disk    ; @disk     ||= env_object('HostDisk'    ).new      ; end
+  def git     ; @git      ||= env_object('HostGit'     ).new      ; end
+  def one_self; @one_self ||= env_object('CurlOneSelf' ).new(disk); end
 
   private
 
   def env_root
-    root = ENV['CYBER_DOJO_' + name_of(caller).upcase + '_ROOT']
+    default = "/var/www/cyber-dojo/#{name_of(caller)}"
+    root = ENV['CYBER_DOJO_' + name_of(caller).upcase + '_ROOT'] || default
     root + (root.end_with?('/') ? '' : '/')
   end
 
-  def env_object
+  def env_object(default)
     var = 'CYBER_DOJO_' + name_of(caller).upcase + '_CLASS'
-    Object.const_get(ENV[var])
+    Object.const_get(ENV[var] || default)
   end
 
   def name_of(caller)
