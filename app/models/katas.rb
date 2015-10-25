@@ -6,7 +6,6 @@ class Katas
   def initialize(dojo, path)
     @parent = dojo
     @path = path
-    @path += '/' unless @path.end_with? '/'
   end
 
   def dojo

@@ -17,27 +17,6 @@ app/config/application.rb does this
       root_dir = '/var/www/cyber-dojo'
 make it use its own folder ../..
 --------------------------------------
-app/models/languages.rb refactor to...
-
-class Languages
-
-  def initialize(dojo,@path)
-    @parent = dojo
-    @path = path
-  end
-  ...
-end
-
-and
-Dojo.rb does this
-  def env_var
-    default = "/var/www/cyber-dojo/#{name_of(caller)}"
-    path = ENV['CYBER_DOJO_' + name_of(caller).upcase + '_ROOT'] || default
-    path + (path.end_with?('/') ? '' : '/')
-  end
-end
-same idea for Exercises, Katas, Caches, Runners.
---------------------------------------
 Dojo.rb does this
   def env_var
     default = "/var/www/cyber-dojo/#{name_of(caller)}"

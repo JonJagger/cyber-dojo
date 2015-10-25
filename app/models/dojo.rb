@@ -3,10 +3,10 @@
 
 class Dojo
 
-  def languages; @languages ||= Languages.new(self, env_var); end
-  def exercises; @exercises ||= Exercises.new(self, env_var); end
-  def katas    ; @katas     ||=     Katas.new(self, env_var); end
-  def caches   ; @caches    ||=    Caches.new(self, env_var); end
+  def languages; @languages ||= Languages.new(self, env_root); end
+  def exercises; @exercises ||= Exercises.new(self, env_root); end
+  def katas    ; @katas     ||=     Katas.new(self, env_root); end
+  def caches   ; @caches    ||=    Caches.new(self, env_root); end
 
   def runner  ; @runner   ||= env_object('DockerRunner').new;       end
   def disk    ; @disk     ||= env_object('HostDisk'    ).new;       end
@@ -15,9 +15,10 @@ class Dojo
 
   private
 
-  def env_var
+  def env_root
     default = "/var/www/cyber-dojo/#{name_of(caller)}"
-    ENV['CYBER_DOJO_' + name_of(caller).upcase + '_ROOT'] || default
+    root = ENV['CYBER_DOJO_' + name_of(caller).upcase + '_ROOT'] || default
+    root + (root.end_with?('/') ? '' : '/')
   end
 
   def env_object(default)
