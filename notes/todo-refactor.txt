@@ -1,7 +1,5 @@
 
 --------------------------------------
-pull.sh could take argument to set the runner env var.
---------------------------------------
 explicit cyber-dojo root folder in
 admin_scripts/show_docker_repo_names.rb
 --------------------------------------
@@ -34,14 +32,8 @@ Idea is that runners will hold the new script files called by
 DockerRunner and DockerMachineRunner (and HostRunner).
 Should it also hold the .rb files for the runners themselves?
 --------------------------------------
-Reinstate HostRunner.rb
---------------------------------------
 Move installed? test from DockerRunner
-and put it after setting the ENV vars in
-config/application.rb
-Only do this if way Rails works is that
-application.rb is run only once and not
-each time request comes in from a browser.
+and put it into config/application.rb
 --------------------------------------
 On test page move avatar image to left of test button
 and increase its size. No need to redraw it on each test.
