@@ -61,7 +61,7 @@ module TestExternalHelpers # mix-in
       katas_key     => root_dir + '/katas',
       caches_key    => root_dir + '/caches',
       disk_key      => 'HostDisk',
-      runner_key    => 'DockerVolumeMountRunner',
+      runner_key    => 'DockerRunner',
       git_key       => 'HostGit',
       one_self_key  => 'OneSelf'
     }

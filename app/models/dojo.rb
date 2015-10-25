@@ -8,10 +8,10 @@ class Dojo
   def katas    ; @katas     ||=     Katas.new(self, env_root); end
   def caches   ; @caches    ||=    Caches.new(self, env_root); end
 
-  def runner  ; @runner   ||= env_object('DockerRunner').new;       end
-  def disk    ; @disk     ||= env_object('HostDisk'    ).new;       end
-  def git     ; @git      ||= env_object('HostGit'     ).new;       end
-  def one_self; @one_self ||= env_object('OneSelf'     ).new(disk); end
+  def runner  ; @runner   ||= env_object.new      ; end
+  def disk    ; @disk     ||= env_object.new      ; end
+  def git     ; @git      ||= env_object.new      ; end
+  def one_self; @one_self ||= env_object.new(disk); end
 
   private
 
@@ -20,9 +20,9 @@ class Dojo
     root + (root.end_with?('/') ? '' : '/')
   end
 
-  def env_object(default)
+  def env_object
     var = 'CYBER_DOJO_' + name_of(caller).upcase + '_CLASS'
-    Object.const_get(ENV[var] || default)
+    Object.const_get(ENV[var])
   end
 
   def name_of(caller)

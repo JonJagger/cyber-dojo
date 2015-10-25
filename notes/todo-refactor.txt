@@ -1,5 +1,10 @@
 
 --------------------------------------
+Have .sh script to set environment variables.
+Call it in pull.sh before updating caches.
+Remove defaults from application.rb
+>>>>>>Check apache
+--------------------------------------
 make DockerRunner take caches object in ctor and use it
 call dojo.runner.refresh_cache from pull.sh
 
@@ -12,17 +17,6 @@ call dojo.runner.refresh_cache from pull.sh
     cache = lines.collect { |line| line.split[0] }
     dojo.caches.write_json(self.class.cache_filename, cache)
   end
---------------------------------------
-Dojo.rb does this
-  def env_var
-    default = "/var/www/cyber-dojo/#{name_of(caller)}"
-Why does it have a default?
-Shouldn't it insist the env var is set?
---------------------------------------
-Dojo.rb does this
-  def runner  ; @runner   ||= env_object('DockerRunner').new;       end
-why does it have a default?
-Shouldn't it insist the env var is set?
 --------------------------------------
 Put these root folders into /config/
 /languages/

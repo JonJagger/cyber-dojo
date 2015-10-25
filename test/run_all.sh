@@ -1,10 +1,6 @@
 #!/bin/bash
 
-rootDir=/var/www/cyber-dojo
-export CYBER_DOJO_LANGUAGES_ROOT=${rootDir}/languages
-export CYBER_DOJO_EXERCISES_ROOT=${rootDir}/exercises
-export CYBER_DOJO_KATAS_ROOT=${rootDir}/katas
-export CYBER_DOJO_CACHES_ROOT=${rootDir}/caches
+. ../admin_scripts/setup_env_vars.sh
 
 sudo -E ../languages/refresh_cache.rb
 sudo -E ../exercises/refresh_cache.rb
@@ -14,6 +10,11 @@ unset CYBER_DOJO_EXERCISES_ROOT
 unset CYBER_DOJO_LANGUAGES_ROOT
 unset CYBER_DOJO_KATAS_ROOT
 unset CYBER_DOJO_CACHES_ROOT
+
+unset CYBER_DOJO_RUNNER_CLASS
+unset CYBER_DOJO_DISK_CLASS
+unset CYBER_DOJO_GIT_CLASS
+unset CYBER_DOJO_ONE_SELF_CLASS
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -36,7 +37,6 @@ modules=(
   lib
   app_controllers
   languages
-#  integration
 )
 
 for module in ${modules[*]}
