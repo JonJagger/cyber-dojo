@@ -34,7 +34,16 @@ end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # External paths/class-names can be set via environment variables.
-# See config/application.rb (config.before_configuration)
+#
+# CYBER_DOJO_LANGUAGES_ROOT
+# CYBER_DOJO_EXERCISES_ROOT
+# CYBER_DOJO_KATAS_ROOT
+# CYBER_DOJO_CACHES_ROOT
+#
+# CYBER_DOJO_RUNNER_CLASS
+# CYBER_DOJO_DISK_CLASS
+# CYBER_DOJO_GIT_CLASS
+# CYBER_DOJO_ONE_SELF_CLASS
 #
 # The main reason for this arrangement is testability.
 # For example, I can run controller tests by setting the
@@ -48,7 +57,4 @@ end
 #
 # It also allows me to do polymorphic testing, viz to rerun
 # the *same* test under different environments.
-# For example, I could run a test with all the externals mocked
-# out (a true unit test) and then run the same test again with
-# the true externals in place (an integration/system test).
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
