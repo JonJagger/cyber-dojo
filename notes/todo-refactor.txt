@@ -5,6 +5,8 @@ Call it in pull.sh before updating caches.
 Remove defaults from application.rb
 >>>>>>Check apache
 --------------------------------------
+pull.sh could take argument to set the runner env var.
+--------------------------------------
 explicit cyber-dojo root folder in
 admin_scripts/show_docker_repo_names.rb
 --------------------------------------
@@ -18,8 +20,13 @@ call dojo.runner.refresh_cache from pull.sh
   def refresh_cache
     lines = `docker images`.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
     cache = lines.collect { |line| line.split[0] }
-    dojo.caches.write_json(self.class.cache_filename, cache)
+    caches.write_json(self.class.cache_filename, cache)
   end
+
+  def caches
+    @parent.caches
+  end
+
 --------------------------------------
 Put these root folders into /config/
 /languages/
