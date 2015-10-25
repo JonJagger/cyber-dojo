@@ -10,6 +10,7 @@
   runner
     docker_times_out_runner
     docker_runner
+    host_runner
   host_disk
   host_dir
   host_git
