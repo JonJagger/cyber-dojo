@@ -38,6 +38,7 @@ module TestExternalHelpers # mix-in
     env_vars.each do |var, default|
       if ENV[var].nil?
         @unset << var
+        ENV[var] = default
       else
         @exported[var] = ENV[var]
       end
