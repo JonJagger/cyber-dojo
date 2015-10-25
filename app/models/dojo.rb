@@ -3,8 +3,6 @@
 
 class Dojo
 
-  def root; '/var/www/cyber-dojo'; end
-
   def languages; @languages ||= Languages.new(self, env_root); end
   def exercises; @exercises ||= Exercises.new(self, env_root); end
   def katas    ; @katas     ||=     Katas.new(self, env_root); end
