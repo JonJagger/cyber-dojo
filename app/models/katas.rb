@@ -63,9 +63,9 @@ class Katas
   end
 
   def complete(id)
-    # If at least 6 characters of the id are provided attempt to do id-completion.
-    # Doing completion with fewer characters would likely result in a lot of
-    # disk activity and no unique outcome.
+    # If at least 6 characters of the id are provided attempt to complete
+    # it into the full 10 character id. Doing completion with fewer characters
+    # would likely result in a lot of disk activity and no unique outcome.
     if !id.nil? && id.length >= 6
       outer_dir = disk[path + outer(id)]
       if outer_dir.exists?

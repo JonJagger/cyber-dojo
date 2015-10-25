@@ -1,7 +1,126 @@
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Have separate tests? list for each language on setup page.
-Swap in the chosen one by manipulating the dom when the language is chosen.
+--------------------------------------
+make DockerRunner take caches object in ctor and use it
+call dojo.runner.refresh_cache from pull.sh
+
+  def self.cache_filename
+    'docker_runner_cache.json'
+  end
+
+  def refresh_cache
+    lines = `docker images`.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
+    cache = lines.collect { |line| line.split[0] }
+    dojo.caches.write_json(self.class.cache_filename, cache)
+  end
+--------------------------------------
+app/config/application.rb does this
+      root_dir = '/var/www/cyber-dojo'
+make it use its own folder ../..
+--------------------------------------
+app/models/languages.rb refactor to...
+
+class Languages
+
+  def initialize(dojo,@path)
+    @parent = dojo
+    @path = path
+  end
+  ...
+end
+
+and
+Dojo.rb does this
+  def env_var
+    default = "/var/www/cyber-dojo/#{name_of(caller)}"
+    path = ENV['CYBER_DOJO_' + name_of(caller).upcase + '_ROOT'] || default
+    path + (path.end_with?('/') ? '' : '/')
+  end
+end
+same idea for Exercises, Katas, Caches, Runners.
+--------------------------------------
+Dojo.rb does this
+  def env_var
+    default = "/var/www/cyber-dojo/#{name_of(caller)}"
+Why does it have a default?
+Shouldn't it insist the env var is set?
+--------------------------------------
+Dojo.rb does this
+  def runner  ; @runner   ||= env_object('DockerRunner').new;       end
+why does it have a default?
+Shouldn't it insist the env var is set?
+--------------------------------------
+Put these root folders into /config/
+/languages/
+/languages_offline/
+/exercises/
+/caches/
+/runners/
+
+Idea is that runners will hold the new script files called by
+DockerRunner and DockerMachineRunner (and HostRunner).
+Should it also hold the .rb files for the runners themselves?
+--------------------------------------
+Katas.rb has this
+  def create_kata(language, exercise, id = unique_id, now = time_now)
+    disk[kata.path].make
+    disk[kata.path].write_json('manifest.json', manifest)
+    disk[kata.path].write_json('started_avatars.json', [])
+why isn't this
+    dir.make
+    dir.write_json('manifest.json', manifest)
+    dir.write_json('started_avatars.json', [])
+Also
+  def [](id)
+    kata = Kata.new(self, id)
+    valid?(id) && disk[kata.path].exists? ? kata : nil
+Why not
+  def [](id)
+    valid?(id) && dir.exists? ? Kata.new(self, id) : nil
+--------------------------------------
+Reinstate HostRunner.rb
+--------------------------------------
+Move installed? test from DockerRunner
+and put it after setting the ENV vars in
+config/application.rb
+Only do this if way Rails works is that
+application.rb is run only once and not
+each time request comes in from a browser.
+--------------------------------------
+On test page move avatar image to left of test button
+and increase its size. No need to redraw it on each test.
+Have only images that change redrawn on test.
+--------------------------------------
+Try and make lighter background for these avatar images
+antelope, bat, bear, eagle, elephant, fox, gopher,
+heron, hyena, lizard, ostrich, porcupine, rhino,
+tuna, turtle,
+--------------------------------------
+Great new avatars 38
+6 bat, bee, beetle, butterfly, crab, dolphin,
+5 eagle, fox, flamingo, heron, hummingbird,
+4 hyena, jellyfish, kingfisher, leopard,
+6 lobster, mouse, ostrich, owl, parrot, puffin,
+6 peacock, penguin, rabbit, ray, rhino, seal,
+6 shark, spider, squid, squirrel, starfish, swan,
+5 tiger, toucan, tuna, tuna, vulture,
+
+Others 10
+antelope, bear, gopher, kangaroo, lizard,
+porcupine, salmon, skunk, walrus, whale,
+
+38+10=48
+48+16=64
+
+4x4=16
+5x5=25
+6x6=36
+7x7=49
+8x8=64
+
+16+38=54
+2x27
+6x9
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 Cut from http://blog.cyber-dojo.org/2014/09/adding-new-language-and-unit-test-to-cyber-dojo.html
@@ -33,7 +152,7 @@ o) files with common suffixes would appear next to each other
    and if they were right aligned it would appear as
    eg          Shape.java
         GroupedShape.java
-        
+
 my_sort = function(array) {
   return array.sort(function(lhs,rhs) {
     return reverse(lhs).localeCompare(reverse(rhs));
@@ -42,14 +161,14 @@ my_sort = function(array) {
 
 reverse = function(s) {
   return s.split('').reverse().join('');
-};        
+};
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      
+
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 If there is an error in the colour.of(output) then the error
-is set into the increments.json file and even if it is 
+is set into the increments.json file and even if it is
 corrected the correction is not seen in finished dojos
 traffic lights (on test and dashboard and history)
 Eg http://cyber-dojo.org/dashboard/show/952426
@@ -85,14 +204,15 @@ and
     def log
       @log ||= []
     end
-  end  
+  end
 and model code changes from
   git.commit(path, "-a -m '#{tag}' --quiet")
 to
   git[path].commit("-a -m '#{tag}' --quiet")
+to mimic disk[path] => dir
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Provide one_self secrets via ENV[]
-Use ram-disk and drop FakeDir FakeDir?
+Use ram-disk and drop FakeDir?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 When you resize the edit textarea you cannot (manually) resize the line-numbers
 textarea to its left. You used to be able to do this. Why is the line-numbers
@@ -116,7 +236,7 @@ kata filename: very long filename: when not selected you can scroll
 move tweet button to lhs of test button?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Having the starting files called Hiker.rb is not ideal.
-Rename starting files as starter.* 
+Rename starting files as starter.*
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
@@ -140,7 +260,7 @@ not when the cyberdojo is created, but when the test button is
 pressed. Hmmm, another alternative is the time the first avatar
 enters the cyberdojo.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Where should the "claim" button go? To the right of the 
+Where should the "claim" button go? To the right of the
 traffic-light trail? On the test page and/or the dashboard page?
 Needs to be clear that the claim also finishes. So
 "finish and claim" button?
@@ -193,12 +313,12 @@ test/integration/integration_test_base.rb
 test/integration/test_approval.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Think about switching away from fake Disk/Dir and using a ram-disk/tmp-fs
-instead. This would allow me to use the real Git. 
+instead. This would allow me to use the real Git.
 This would mean that setting the paths would be all I'd need to do
 to switch to the ram-disk.
 The main external affecting test times would be the DockerTestRunner.
 I could copy some of exercises/languages onto the ram-disk
-and make exercises/languages readonly, and katas/ read-write. 
+and make exercises/languages readonly, and katas/ read-write.
 MacOs
 $ diskutil erasevolume HFS+ 'RAM Disk' `hdiutil attach -nomount ram://XXXXX`
 For a 1GB ram disk, XXXXX is 1024 * 2048 == 2097152. So
@@ -230,11 +350,11 @@ app_controller tests can all use DiskFake DirFake
  DONE test_setup     0.16s
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dojo.rb Katas.rb Kata.rb
-Do I use kata as a noun (the name of the exercise) 
+Do I use kata as a noun (the name of the exercise)
 or kata as a verb (the exercise performed by an animal).
-I think I prefer the former.  When you click [ok] on 
+I think I prefer the former.  When you click [ok] on
 the setup page you get a folder corresponding to the
-ID but no animal has entered it yet. You could be 
+ID but no animal has entered it yet. You could be
 setting up something days in advance of needing it.
 Should have been
 Dojo.rb -> CyberDojo.rb
@@ -340,7 +460,7 @@ which has id.length == 10
 rename tests/integration/ folder to tests/externals/ ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would be nice to get extra metric in coverage.txt which was
-the number of hits per line (this is in the generated html summary). 
+the number of hits per line (this is in the generated html summary).
 Would also be nice to be able to plot that as a histogram.
 Another nice metric would be number of lines missed.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
