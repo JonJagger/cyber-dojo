@@ -53,6 +53,8 @@ echo "poking rails"
 rm $cyberDojoHome/Gemfile.lock
 bundle install
 
+. $cyberDojoHome/admin_scripts/setup_env_vars.sh
+
 echo "refreshing languages/ and ensuring latest docker containers"
 $cyberDojoHome/languages/refresh_cache.rb
 

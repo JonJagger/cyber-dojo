@@ -5,6 +5,9 @@ Call it in pull.sh before updating caches.
 Remove defaults from application.rb
 >>>>>>Check apache
 --------------------------------------
+explicit cyber-dojo root folder in
+admin_scripts/show_docker_repo_names.rb
+--------------------------------------
 make DockerRunner take caches object in ctor and use it
 call dojo.runner.refresh_cache from pull.sh
 
