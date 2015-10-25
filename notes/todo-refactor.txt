@@ -39,23 +39,6 @@ Idea is that runners will hold the new script files called by
 DockerRunner and DockerMachineRunner (and HostRunner).
 Should it also hold the .rb files for the runners themselves?
 --------------------------------------
-Katas.rb has this
-  def create_kata(language, exercise, id = unique_id, now = time_now)
-    disk[kata.path].make
-    disk[kata.path].write_json('manifest.json', manifest)
-    disk[kata.path].write_json('started_avatars.json', [])
-why isn't this
-    dir.make
-    dir.write_json('manifest.json', manifest)
-    dir.write_json('started_avatars.json', [])
-Also
-  def [](id)
-    kata = Kata.new(self, id)
-    valid?(id) && disk[kata.path].exists? ? kata : nil
-Why not
-  def [](id)
-    valid?(id) && dir.exists? ? Kata.new(self, id) : nil
---------------------------------------
 Reinstate HostRunner.rb
 --------------------------------------
 Move installed? test from DockerRunner

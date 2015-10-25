@@ -60,13 +60,13 @@ module CyberDojo
     config.assets.version = '1.0'
 
     config.before_configuration do
-      root_dir = '/var/www/cyber-dojo'
+      root_dir = File.expand_path(File.dirname(__FILE__) + '../..')
       ENV['CYBER_DOJO_LANGUAGES_ROOT'] ||= "#{root_dir}/languages"
       ENV['CYBER_DOJO_EXERCISES_ROOT'] ||= "#{root_dir}/exercises"
-      ENV['CYBER_DOJO_KATAS_ROOT']     ||= "#{root_dir}/katas"
-      ENV['CYBER_DOJO_RUNNER_CLASS']   ||= 'DockerRunner'
-      ENV['CYBER_DOJO_DISK_CLASS']     ||= 'HostDisk'
-      ENV['CYBER_DOJO_GIT_CLASS']      ||= 'HostGit'
+      ENV['CYBER_DOJO_KATAS_ROOT'    ] ||= "#{root_dir}/katas"
+      ENV['CYBER_DOJO_RUNNER_CLASS'  ] ||= 'DockerRunner'
+      ENV['CYBER_DOJO_DISK_CLASS'    ] ||= 'HostDisk'
+      ENV['CYBER_DOJO_GIT_CLASS'     ] ||= 'HostGit'
       ENV['CYBER_DOJO_ONE_SELF_CLASS'] ||= 'CurlOneSelf'
     end
 
