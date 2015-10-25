@@ -16,7 +16,8 @@ class Dojo
   private
 
   def env_root
-    default = "/var/www/cyber-dojo/#{name_of(caller)}"
+    base = File.expand_path(File.dirname(__FILE__) + '/../..')
+    default = base + "/#{name_of(caller)}"
     root = ENV['CYBER_DOJO_' + name_of(caller).upcase + '_ROOT'] || default
     root + (root.end_with?('/') ? '' : '/')
   end

@@ -13,10 +13,6 @@ call dojo.runner.refresh_cache from pull.sh
     dojo.caches.write_json(self.class.cache_filename, cache)
   end
 --------------------------------------
-app/config/application.rb does this
-      root_dir = '/var/www/cyber-dojo'
-make it use its own folder ../..
---------------------------------------
 Dojo.rb does this
   def env_var
     default = "/var/www/cyber-dojo/#{name_of(caller)}"
