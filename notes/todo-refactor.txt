@@ -1,29 +1,6 @@
 
---------------------------------------
-make images on docker hub use version-number
-on the base image for the language but not
-on the images for the test-frameworks.
-Makes it easy to do upgrades.
---------------------------------------
-Split create page into 3.
-1. Language?  This could use the extra space
-   to show code file. Defintely use the extra
-   space to at least say that the initial code
-   is always 42 Douglas Adams etc and bears
-   no relation to your chosen exercise. Can still
-   say this info without having code example
-   and thus still using one-click on language takes
-   you directly to the test selection.
-2. Tests? Again this could show the test code
-   (like I do for the exercises). But definitely
-   say 6*9 blah blah no relation to the chosen
-   exercise.
-3. Exercise? ...
-   This one will be a 2-click. Once to select
-   the exercise and see the instructions.
-   Once to click create. Good that the last step
-   actually has a create button.
-
+Where to put check that docker is installed?
+Into runner/refresh_cache.rb
 --------------------------------------
 Avatars being read one per folder ...
 Needs to be done by looking at started_avatars.json
@@ -51,6 +28,31 @@ call dojo.runner.refresh_cache from pull.sh
   def caches
     @parent.caches
   end
+
+--------------------------------------
+make images on docker hub use version-number
+on the base image for the language but not
+on the images for the test-frameworks.
+Makes it easy to do upgrades.
+--------------------------------------
+Split create page into 3.
+1. Language?  This could use the extra space
+   to show code file. Defintely use the extra
+   space to at least say that the initial code
+   is always 42 Douglas Adams etc and bears
+   no relation to your chosen exercise. Can still
+   say this info without having code example
+   and thus still using one-click on language takes
+   you directly to the test selection.
+2. Tests? Again this could show the test code
+   (like I do for the exercises). But definitely
+   say 6*9 blah blah no relation to the chosen
+   exercise.
+3. Exercise? ...
+   This one will be a 2-click. Once to select
+   the exercise and see the instructions.
+   Once to click create. Good that the last step
+   actually has a create button.
 
 --------------------------------------
 Put these root folders into /config/
