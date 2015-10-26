@@ -3,7 +3,7 @@
 # instead of inside a docker-container.
 # No isolation/protection/security, nothing.
 
-require_relative 'Runner'
+require_relative './runner'
 
 class HostRunner
 
