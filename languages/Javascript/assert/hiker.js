@@ -5,4 +5,4 @@ class Hiker {
   answer() {
     return 6 * 9;
   }
-}
+};
