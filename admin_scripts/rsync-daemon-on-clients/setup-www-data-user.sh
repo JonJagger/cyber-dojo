@@ -1,5 +1,5 @@
 
-# run as sudo
+# run as sudo (not tinycorelinux)
 
 addgroup -gid 33 www-data
 adduser \

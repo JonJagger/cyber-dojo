@@ -1,4 +1,4 @@
-# run as sudo
+# run as sudo, not on tinycorelinux
 
 cp ~/rsyncd.conf /etc
 chown root:root /etc/rsyncd.conf
