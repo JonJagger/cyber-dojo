@@ -38,6 +38,6 @@ done
 
 sudo -E -u www-data ./print_coverage_summary.rb ${modules[*]} | tee test-summary.txt
 
-unset CYBER_DOJO_TMP_ROOT
-unset CYBER_DOJO_CACHES_ROOT
+#unset CYBER_DOJO_TMP_ROOT
+#unset CYBER_DOJO_CACHES_ROOT
 
