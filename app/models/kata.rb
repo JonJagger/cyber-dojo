@@ -3,8 +3,7 @@
 class Kata
 
   def initialize(katas, id)
-    # Does *not* validate id.
-    # All access to kata object must come through katas[id]
+    # Does *not* validate id. All access to kata object must come through katas[id]
     @parent = katas
     @id = id
   end
@@ -23,15 +22,12 @@ class Kata
     avatar = nil
     dir.lock do
       filename = 'started_avatars.json'
-      started = exists?(filename) ? read_json(filename) : avatars.names
+      started = exists?(filename) ? read_json(filename) : started_avatars_names
       free_names = avatar_names - started
       if free_names != []
         avatar = Avatar.new(self, free_names[0])
         avatar.start
-        if exists?(filename)
-          started << avatar.name
-          write_json(filename, started)
-        end
+        write_json(filename, started << avatar.name)
       end
     end
     avatar
@@ -82,6 +78,16 @@ class Kata
 
   def dojo
     @parent.dojo
+  end
+
+  def started_avatars_names
+    # Can't use avatars.names in start_avatar(), above, which does a dir.lock,
+    # since avatars.name also does a dir.lock and dir.locks are not recursive.
+    names = []
+    Avatars.names.each do |name|
+      names << name if disk[Avatar.new(self, name).path].exists?
+    end
+    names
   end
 
 end

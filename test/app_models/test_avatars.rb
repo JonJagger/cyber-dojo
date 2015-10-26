@@ -30,9 +30,24 @@ class AvatarsTests < AppModelTestBase
   test 'B85F79',
   'avatars returns all avatars started in the kata' do
     kata = make_kata
+    assert_equal [], kata.avatars.map(&:name).sort
     kata.start_avatar([cheetah])
+    assert_equal [cheetah], kata.avatars.map(&:name).sort
     kata.start_avatar([lion])
     assert_equal [cheetah, lion], kata.avatars.map(&:name).sort
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'A95F3F',
+  'avatars returns all avatars started in the kata' +
+    ' and creates started_avatars.json file if it does not already exist' do
+    kata = make_kata
+    animals = %w(deer panda snake)
+    animals.size.times { kata.start_avatar(animals) }
+    File.delete(kata.path + 'started_avatars.json')
+    assert_equal animals.sort, kata.avatars.map(&:name).sort
+    assert_equal animals.sort, dir_of(kata).read_json('started_avatars.json').sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -80,8 +95,8 @@ class AvatarsTests < AppModelTestBase
     kata.start_avatar([lion])
     kata.start_avatar([hippo])
     expected_names = [lion, hippo]
-    names = kata.avatars.map(&:name)
-    assert_equal expected_names.sort, names.sort
+    actual_names = kata.avatars.map(&:name)
+    assert_equal expected_names.sort, actual_names.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

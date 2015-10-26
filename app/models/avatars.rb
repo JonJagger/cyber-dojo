@@ -2,10 +2,8 @@
 class Avatars
 
   def self.names
-    %w(alligator buffalo cheetah deer
-       elephant frog gorilla hippo
-       koala lion moose panda
-       raccoon snake wolf zebra
+    %w(alligator buffalo cheetah deer  elephant frog  gorilla hippo
+       koala     lion    moose   panda raccoon  snake wolf    zebra
     )
   end
 
@@ -14,11 +12,11 @@ class Avatars
   end
 
   def each(&block)
-    avatars.values.each(&block)
+    started_avatars.values.each(&block)
   end
 
   def [](name)
-    avatars[name]
+    started_avatars[name]
   end
 
   def active
@@ -34,16 +32,33 @@ class Avatars
   include Enumerable
   include ExternalParentChain
 
-  def avatars
-    # Could do disk[kata.path].exists?('started_avatars.json')
-    # and use that if it exists. When number of avatars increases
-    # that will become more important
-    all = {}
+  def path
+    @parent.path
+  end
+
+  def started_avatars
+    # Old dojos didn't use a 'started_avatars.json' file.
+    # Retro-fit them so they do. Important for a dojo with
+    # a lot of avatars.
+    names = []
+    dir.lock do
+      filename = 'started_avatars.json'
+      if exists?(filename)
+        names = read_json(filename)
+      else
+        write_json(filename, names = avatars_names)
+      end
+    end
+    Hash[names.map{ |name| [name,Avatar.new(@parent, name)]}]
+  end
+
+  def avatars_names
+    names = []
     Avatars.names.each do |name|
       avatar = Avatar.new(@parent, name)
-      all[name] = avatar if disk[avatar.path].exists?
+      names << name if disk[avatar.path].exists?
     end
-    all
+    names
   end
 
 end

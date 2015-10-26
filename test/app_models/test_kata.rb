@@ -67,35 +67,35 @@ class KataTests < AppModelTestBase
   'start_avatar puts started avatars name into katas started_avatars.json file' do
     kata = make_kata
     kata.start_avatar(['hippo'])
-    started = dir_of(kata).read_json('started_avatars.json')
+    started = dir_of(kata).read_json(started_avatars_filename)
     assert_equal ['hippo'], started
     kata.start_avatar(['lion'])
-    started = dir_of(kata).read_json('started_avatars.json')
+    started = dir_of(kata).read_json(started_avatars_filename)
     assert_equal %w(hippo lion), started.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '9A1C97',
-    'start_avatar on old dojo that as no started_avatars.json file' +
-       ' reverts to doing dir.exists? for each avatar' do
+    'start_avatar on old dojo that has no started_avatars.json file' +
+       ' creates started_avatars.json' do
     kata = make_kata
-    animals = %w(lion hippo cheetah).sort
-    3.times { kata.start_avatar(animals) }
-    filename = 'started_avatars.json'
-    started = dir_of(kata).read_json(filename)
-    assert_equal animals, started.sort
+    animals = %w(lion hippo cheetah)
+    animals.size.times { kata.start_avatar(animals) }
+    started = dir_of(kata).read_json(started_avatars_filename)
+    assert_equal animals.sort, started.sort
 
     # now delete started_avatars.json to simulate old dojo
     # with started avatars and no started_avatars.json file
-    File.delete(kata.path + filename)
-    refute dir_of(kata).exists?(filename)
+    File.delete(kata.path + started_avatars_filename)
+    refute dir_of(kata).exists?(started_avatars_filename)
 
-    2.times do
-      avatar = kata.start_avatar
-      refute_nil avatar
-      refute dir_of(kata).exists?(filename)
-    end
+    avatar = kata.start_avatar(%w(gorilla))
+    refute_nil avatar
+    assert dir_of(kata).exists?(started_avatars_filename)
+    expected = %w(lion hippo cheetah gorilla).sort
+    actual = dir_of(kata).read_json(started_avatars_filename).sort
+    assert_equal expected, actual
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -221,6 +221,7 @@ class KataTests < AppModelTestBase
     avatars_names = kata.avatars.map(&:name)
     assert_equal names.sort, avatars_names.sort
   end
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '08141A',
@@ -236,6 +237,14 @@ class KataTests < AppModelTestBase
     assert_equal Avatars.names.sort, created.collect(&:name).sort
     avatar = kata.start_avatar
     assert_nil avatar
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  private
+
+  def started_avatars_filename
+    'started_avatars.json'
   end
 
 end
