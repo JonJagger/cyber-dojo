@@ -2,10 +2,6 @@
 Where to put check that docker is installed?
 Into runner/refresh_cache.rb
 --------------------------------------
-Avatars being read one per folder ...
-Needs to be done by looking at started_avatars.json
-file as part of scaling.
---------------------------------------
 explicit cyber-dojo root folder in
 app/models/Dojo.rb
 --------------------------------------
