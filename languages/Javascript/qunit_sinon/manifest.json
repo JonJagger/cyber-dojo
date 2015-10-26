@@ -2,7 +2,8 @@
   "visible_filenames": [
     "hiker-test.js",
     "hiker.js",
-    "cyber-dojo.sh"
+    "cyber-dojo.sh",
+    ".jshintrc"
   ],
   "progress_regexs": [
     "/\W*\d+\W+\d+\W+\d+\W+([1-9]\d*)\W+(\d+)\W+\d+\W+/",

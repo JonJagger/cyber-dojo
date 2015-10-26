@@ -3,6 +3,7 @@
     "hiker-spec.js",
     "hiker.js",
     "cyber-dojo.sh",
+    ".jshintrc",
     "jasmine.json"
   ],
   "progress_regexs": [

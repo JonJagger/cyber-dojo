@@ -5,11 +5,15 @@
 #
 # set the version to use:
 #NODE_VERSION=0.12.7
-NODE_VERSION=4.1.1
+NODE_VERSION=4.2.1
 #
 # Create a dummy file config.js for qunit call --code needs a js file
 qunitDummyConfigFile=config.js
 echo '' > $qunitDummyConfigFile
 #
 # Use npm package 'n' to call qunitwith selected node version:
+if [ -f .jshintrc ]
+  then
+    n use $NODE_VERSION /usr/lib/node_modules/jshint/bin/jshint --config .jshintrc *.js
+fi
 n use $NODE_VERSION /usr/local/bin/qunit --code $qunitDummyConfigFile --tests *-test.js

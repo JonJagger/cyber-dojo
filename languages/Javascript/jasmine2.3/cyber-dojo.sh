@@ -5,7 +5,11 @@
 #
 # set the version to use:
 #NODE_VERSION=0.12.7
-NODE_VERSION=4.1.1
+NODE_VERSION=4.2.1
 #
-# Use npm package 'n' to call jasmine with selected node version:
+# Use npm package 'n' to call jasmine and jshint with selected node version:
+if [ -f .jshintrc ]
+  then
+    n use $NODE_VERSION /usr/lib/node_modules/jshint/bin/jshint --config .jshintrc *.js
+fi
 n use $NODE_VERSION /usr/local/lib/node_modules/jasmine/bin/jasmine JASMINE_CONFIG_PATH=./jasmine.json

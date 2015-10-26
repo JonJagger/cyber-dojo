@@ -2,7 +2,8 @@
   "visible_filenames": [
     "hikerTest.js",
     "hiker.js",
-    "cyber-dojo.sh"
+    "cyber-dojo.sh",
+    ".jshintrc"
   ],
   "filename_extension" : ".js",
   "display_name": "Javascript, assert",
