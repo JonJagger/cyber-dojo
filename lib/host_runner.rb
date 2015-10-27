@@ -7,6 +7,9 @@ require_relative './runner'
 
 class HostRunner
 
+  def initialize(_caches)
+  end
+
   def runnable?(language)
     true
   end
