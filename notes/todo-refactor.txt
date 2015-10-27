@@ -1,9 +1,5 @@
 
 --------------------------------------
-Add new script file to refresh runner caches
-lib/refresh_runner_cache.rb DockerRunner
-lib/refresh_runner_cache.rb DockerMachineRunner
---------------------------------------
 Why is test/lib/disk_stub_cache.json
 not being gitignored? How do you debug this?
 --------------------------------------
