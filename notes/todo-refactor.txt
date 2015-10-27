@@ -52,16 +52,9 @@ Split create page into 3.
    actually has a create button.
 
 --------------------------------------
-Put these root folders into /config/
-/languages/
-/languages_offline/
-/exercises/
-/caches/
-/runners/
-
-Idea is that runners will hold the new script files called by
-DockerRunner and DockerMachineRunner (and HostRunner).
-Should it also hold the .rb files for the runners themselves?
+Add new script file to refresh runner caches
+lib/refresh_runner_cache.rb DockerRunner
+lib/refresh_runner_cache.rb DockerMachineRunner
 --------------------------------------
 On test page move avatar image to left of test button
 and increase its size. No need to redraw it on each test.

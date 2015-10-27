@@ -28,7 +28,8 @@ class Dojo
   end
 
   def name_of(caller)
-    caller[0].scan(/`([^']*)'/)[0][0]
+    # eg caller[0] == "dojo.rb:7:in `exercises'"
+    /`(?<name>[^']*)/ =~ caller[0] && name
   end
 
 end
