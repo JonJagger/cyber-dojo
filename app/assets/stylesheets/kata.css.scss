@@ -18,7 +18,7 @@
     @include right-align(15px);
     margin-right: 0px;
     margin-bottom: 2px;
-    padding: { top: 0px; bottom: 2px; left: 15px; right: 13px; }
+    padding: { top: 0px; bottom: 2px; left: 13px; right: 13px; }
   }
 
   #file-operations {
@@ -62,7 +62,7 @@
     }
   }
 
-  .avatar-image { padding-left: 1px; width: 28px; height: 28px; }
+  .avatar-image { padding-left: 1px; width: 36px; height: 36px; }
 
   .file_content { overflow-x: auto; overflow-y: scroll; }
 

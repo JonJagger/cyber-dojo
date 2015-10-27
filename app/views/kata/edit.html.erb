@@ -39,8 +39,17 @@ $(function() {
     <%= render partial: 'file_hashes_outgoing' %>
     <table>
       <tr>
-        <td class="align-right">
-          <%= render partial: 'test_button' %>
+        <td>
+          <table align="right">
+            <tr>
+              <td>
+                <%= render partial: 'avatar_image' %>
+              </td>
+              <td>
+                <%= render partial: 'test_button' %>
+              </td>
+            </tr>
+          </table>
         </td>
         <td>
           <div id="traffic-lights">
