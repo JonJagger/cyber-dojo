@@ -38,7 +38,7 @@ exit ${exit_status}
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# --cidfile=${cidfile}
+# --cidfile="${cidfile}"
 #
 #   The cidfile must *not* exist before the docker command is run.
 #   Thus I rm the cidfile *before* the docker run.
