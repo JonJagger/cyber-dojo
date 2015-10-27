@@ -16,8 +16,9 @@ class Dojo
   private
 
   def env_root
+    var = 'CYBER_DOJO_' + name_of(caller).upcase + '_ROOT'
     default = "/var/www/cyber-dojo/#{name_of(caller)}"
-    root = ENV['CYBER_DOJO_' + name_of(caller).upcase + '_ROOT'] || default
+    root = ENV[var] || default
     root + (root.end_with?('/') ? '' : '/')
   end
 
@@ -27,7 +28,7 @@ class Dojo
   end
 
   def name_of(caller)
-    (caller[0] =~ /`([^']*)'/ && $1)
+    caller[0].scan(/`([^']*)'/)[0][0]
   end
 
 end
