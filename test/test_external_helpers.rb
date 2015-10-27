@@ -1,6 +1,7 @@
 
 # env vars can be set before running a test
-# if they are not they get their defaults
+# if they are not set they get their defaults
+# at the end of each test the env vars are restored.
 
 module TestExternalHelpers # mix-in
 
@@ -63,7 +64,7 @@ module TestExternalHelpers # mix-in
       disk_key      => 'HostDisk',
       runner_key    => 'DockerRunner',
       git_key       => 'HostGit',
-      one_self_key  => 'OneSelf'
+      one_self_key  => 'OneSelfCurl'
     }
   end
 

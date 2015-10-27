@@ -1,7 +1,7 @@
 require 'json'
 require_relative './background_process'
 
-class CurlOneSelf
+class OneSelfCurl
 
   def initialize(_disk, process = BackgroundProcess.new)
     @process = process

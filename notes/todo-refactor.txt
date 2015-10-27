@@ -1,12 +1,9 @@
 
-Where to put check that docker is installed?
-Into runner/refresh_cache.rb
 --------------------------------------
 explicit cyber-dojo root folder in
 app/models/Dojo.rb
---------------------------------------
-explicit cyber-dojo root folder in
 admin_scripts/show_docker_repo_names.rb
+test/external_helpers.rb
 --------------------------------------
 make DockerRunner take caches object in ctor and use it
 call dojo.runner.refresh_cache from pull.sh
@@ -61,9 +58,6 @@ Put these root folders into /config/
 Idea is that runners will hold the new script files called by
 DockerRunner and DockerMachineRunner (and HostRunner).
 Should it also hold the .rb files for the runners themselves?
---------------------------------------
-Move installed? test from DockerRunner
-and put it into config/application.rb
 --------------------------------------
 On test page move avatar image to left of test button
 and increase its size. No need to redraw it on each test.

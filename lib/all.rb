@@ -17,6 +17,6 @@
   time_now
   unique_id
   languages_display_names_splitter
+  one_self_curl
   one_self_dummy
-  curl_one_self
 }.each { |sourcefile| require_relative './' + sourcefile }

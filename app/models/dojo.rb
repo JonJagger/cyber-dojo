@@ -11,7 +11,7 @@ class Dojo
   def runner  ; @runner   ||= env_object('DockerRunner').new      ; end
   def disk    ; @disk     ||= env_object('HostDisk'    ).new      ; end
   def git     ; @git      ||= env_object('HostGit'     ).new      ; end
-  def one_self; @one_self ||= env_object('CurlOneSelf' ).new(disk); end
+  def one_self; @one_self ||= env_object('OneSelfCurl' ).new(disk); end
 
   private
 
@@ -51,7 +51,7 @@ end
 # a GET/POST, let the call work its way through the rails stack,
 # eventually reaching Dojo.rb where it creates
 # Disk/Runner/Git/OneSelf objects as named in the ENV[]
-# I cannot see how how I do this using Parameterize-From-Above
+# I cannot see how to do this using Parameterize-From-Above
 # since I know of no way to 'tunnel' the parameters 'through'
 # the rails stack.
 #
