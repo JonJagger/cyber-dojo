@@ -28,21 +28,21 @@
 <body class="panel">
 
   <% avatars = Avatars.names.shuffle %>
-  <% size = 125 %>
+  <% size = 75 %>
 
-  <h1>we're sorry - we can't do that</h1>
+  <h1>sorry - we can't do that</h1>
 
   <table class="align-center">
-	<% (0..3).each do |row| %>
+	<% 4.times.each do |row| %>
 	<tr>
-	  <% (0..3).each do |col| %>
+	  <% 4.times.each do |col| %>
 	     <td>
 		  <% n = row*4 + col %>
 		  <img alt="<%= avatars[n] %>"
 		       class="avatar_image"
 			   height="<%= size %>"
 			   width="<%= size %>"
-		       src="/images/avatars/<%= avatars[n]%>.jpg" />
+		       src="/images/avatars/bw/<%= avatars[n]%>.jpg" />
 		 </td>
 	  <% end %>
 	</tr>
