@@ -29,7 +29,17 @@
     margin-left: 10px;
     text-align: right;
   }
-
+  .button-td {
+    width: 230px;
+    vertical-align: top;
+  }
+  .button-info-td {
+    vertical-align: center;
+    font-size: 0.7em;
+  }
+  .each {
+    font-style: italic;
+  }
 }
 
 
@@ -45,19 +55,6 @@
   }
   #globe-container  { top:  50px; #globe { border: 0; } }
   #custom-container { top: 350px; }
-
-  .XX_number {
-    width: 15px;
-    height: 15px;
-    display: inline-block;
-    padding: 0px;
-    text-align: center;
-    position: relative;
-    left: 0px;
-    bottom: 5px;
-    @include rounded-corner(10px);
-    background: lighten($darker-color, 20%);
-  }
 
   #create-button, #enter-button,
   #charity-button, #donate-button {
