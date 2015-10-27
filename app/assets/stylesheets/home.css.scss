@@ -57,14 +57,6 @@
     width: 230px;
     vertical-align: top;
   }
-  .button-info-td {
-    vertical-align: center;
-    font-size: 0.7em;
-    width: 160px;
-    &.enter {
-      color: lighten($green, 30%);
-    }
-  }
   .each {
     font-style: italic;
   }
@@ -109,6 +101,11 @@
     text-align: right;
   }
   #review-button { margin-top: 4px; }
+
+  #create-button, #enter-button {
+    width: 250px;
+    @include font-size-large();
+  }
 
   #charity-container, #donate-container, #jon-jagger-container, #accu-container {
     font-size: 1em;
