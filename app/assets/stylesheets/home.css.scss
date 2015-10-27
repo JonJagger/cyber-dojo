@@ -12,7 +12,7 @@
   #globe-container  { top:  50px; #globe { border: 0; } }
   #custom-container { top: 350px; }
 
-  #create-button, #enter-button,
+  #create-button, #existing-button,
   #charity-button, #donate-button {
     width: 240px;
     padding-right: 20px;
@@ -23,7 +23,7 @@
     text-align: right;
   }
 
-  #create-button, #enter-button {
+  #create-button, #existing-button {
     width: 350px;
     font-size: 2.5em;
     line-height: 95%;
@@ -33,7 +33,7 @@
 
   #licensing-container {
     @include edged-panel();
-    width: 708px;
+    width: 732px;
     margin-top: 10px;
     margin-bottom: 10px;
   }
