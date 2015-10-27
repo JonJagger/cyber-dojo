@@ -37,10 +37,6 @@ Split create page into 3.
    actually has a create button.
 
 --------------------------------------
-On test page move avatar image to left of test button
-and increase its size. No need to redraw it on each test.
-Have only images that change redrawn on test.
---------------------------------------
 Try and make lighter background for these avatar images
 antelope, bat, bear, eagle, elephant, fox, gopher,
 heron, hyena, lizard, ostrich, porcupine, rhino,
