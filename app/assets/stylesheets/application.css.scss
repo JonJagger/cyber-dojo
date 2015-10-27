@@ -21,6 +21,7 @@
  *= depend_on cyber-dojo.css.scss
  *= depend_on home.css.scss
  *= depend_on setup.css.scss
+ *= depend_on enter.css.scss
  *= depend_on kata.css.scss
  *= depend_on dashboard.css.scss
  *= depend_on history_diff.css.scss
@@ -38,6 +39,7 @@
 @import "cyber-dojo.css.scss";
 @import "home.css.scss";
 @import "setup.css.scss";
+@import "enter.css.scss";
 @import "kata.css.scss";
 @import "dashboard.css.scss";
 @import "history_diff.css.scss";
