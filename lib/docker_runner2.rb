@@ -27,8 +27,7 @@ class DockerRunner2
           " #{sandbox.avatar.kata.language.image_name}" +
           " #{max_seconds}"
     output, exit_status = @bash.exec(cmd)
-    # sanitize
-    output
+    exit_status != timed_out ? limited(output) : didnt_complete(max_seconds)
   end
 
   def refresh_cache
@@ -40,10 +39,16 @@ class DockerRunner2
 
   private
 
+  include Runner
+
   attr_reader :caches
 
   def image_names
     @image_names ||= caches.read_json(self.class.cache_filename)
+  end
+
+  def timed_out
+    (timeout=128) + (kill=9)
   end
 
 end
