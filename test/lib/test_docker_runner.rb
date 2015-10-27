@@ -18,38 +18,19 @@ class DockerRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'EE59BB',
-  'initialize() raises RuntimeError when docker is not installed' do
-    stub_docker_not_installed
-    assert_raises(RuntimeError) { make_docker_runner }
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'E58A3B',
-  'initialize() uses [docker info]' do
-    stub_docker_installed
-    make_docker_runner
-    assert_equal 'docker info', @bash.spied[0]
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '3813F9',
   'runnable?() uses [docker images]' do
-    stub_docker_installed
     docker = make_docker_runner
     stub_docker_images_python_py_test
     assert docker.runnable?(languages['Python-py.test'])
     refute docker.runnable?(languages['C-assert'])
-    assert_equal 'docker images', @bash.spied[1]
+    assert_equal 'docker images', @bash.spied[0]
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '6459A7',
   'run() completes and does not timeout - exact bash cmd interaction' do
-    stub_docker_installed
     docker = make_docker_runner
     @lion = make_kata.start_avatar(['lion'])
     stub_docker_run(completes)
@@ -62,7 +43,6 @@ class DockerRunnerTests < LibTestBase
 
   test 'B8750C',
   'run() times out - exact base cmd interaction' do
-    stub_docker_installed
     docker = make_docker_runner
     @lion = make_kata.start_avatar(['lion'])
     stub_docker_run(fatal_error(kill))
@@ -81,12 +61,12 @@ class DockerRunnerTests < LibTestBase
 
   def assert_bash_commands_spied
     spied = @bash.spied
-    # 0 docker info from initialize()
-    assert_equal "rm -f #{cid_filename}", spied[1], 'remove cidfile'
-    assert_equal exact_docker_run_cmd,    spied[2], 'main docker run command'
-    assert_equal "cat #{cid_filename}",   spied[3], 'get pid from cidfile'
-    assert_equal "docker stop #{pid}",    spied[4], 'docker stop pid'
-    assert_equal "docker rm #{pid}",      spied[5], 'docker rm pid'
+    n = -1
+    assert_equal "rm -f #{cid_filename}", spied[n += 1], 'remove cidfile'
+    assert_equal exact_docker_run_cmd,    spied[n += 1], 'main docker run command'
+    assert_equal "cat #{cid_filename}",   spied[n += 1], 'get pid from cidfile'
+    assert_equal "docker stop #{pid}",    spied[n += 1], 'docker stop pid'
+    assert_equal "docker rm #{pid}",      spied[n += 1], 'docker rm pid'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

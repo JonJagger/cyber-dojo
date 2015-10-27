@@ -17,15 +17,6 @@ module DockerTimesOutRunner # mix-in
   include Runner
   include Stderr2Stdout
 
-  def raise_if_docker_not_installed
-    fail RuntimeError.new('Docker not installed') unless installed?
-  end
-
-  def installed?
-    _, exit_status = bash('docker info')
-    exit_status == 0
-  end
-
   def image_names
     @image_names ||= read_image_names
   end

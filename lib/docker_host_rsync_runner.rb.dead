@@ -15,7 +15,6 @@ class DockerHostRsyncRunner
   def initialize(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
     @bash = bash
     @cid_filename = cid_filename
-    raise_if_docker_not_installed
     @ip_address, _ = bash("ip route show | grep docker0 | awk '{print $9}' | tr -d '\n'")
     raise_if_bad_ip_address
   end

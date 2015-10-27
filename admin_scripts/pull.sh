@@ -59,9 +59,24 @@ $cyberDojoHome/languages/refresh_cache.rb
 echo "refreshing exercises/"
 $cyberDojoHome/exercises/refresh_cache.rb
 
+# - - - - - - - - - - - - - - - - - - - - - - - - -
+if docker --version > /dev/null 2>&1; then
+    echo "docker is installed"
+else
+  echo "docker is NOT installed!"
+fi
+
+if docker-machine --version > /dev/null 2>&1; then
+    echo "docker-machine is installed"
+else
+  echo "docker-machine is NOT installed!"
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - -
 echo "restarting apache"
 service apache2 restart
 
+# - - - - - - - - - - - - - - - - - - - - - - - - -
 if [ "$MY_TIME_STAMP_BEFORE" != "$MY_TIME_STAMP_AFTER" ]; then
   echo ">>>>>>>>> ALERT <<<<<<<<<"
   echo "$0 updated itself!!!"
@@ -69,6 +84,7 @@ if [ "$MY_TIME_STAMP_BEFORE" != "$MY_TIME_STAMP_AFTER" ]; then
   echo ">>>>>>>>> ALERT <<<<<<<<<"
 fi
 
+# - - - - - - - - - - - - - - - - - - - - - - - - -
 echo
 echo "If something went wrong you can revert to the previous version."
 echo "$ git checkout $GIT_SHA1_BEFORE"

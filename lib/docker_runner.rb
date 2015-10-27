@@ -14,7 +14,6 @@ class DockerRunner
   def initialize(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
     @bash = bash
     @cid_filename = cid_filename
-    raise_if_docker_not_installed
   end
 
   def run(sandbox, command, max_seconds)

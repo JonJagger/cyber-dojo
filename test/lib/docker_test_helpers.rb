@@ -3,16 +3,6 @@ module DockerTestHelpers # mix-in
 
   module_function
 
-  def stub_docker_installed
-    @bash.stub(docker_info_output, success)
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def stub_docker_not_installed
-    @bash.stub('',any_non_zero=42)
-  end
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def stub_docker_images_python_py_test
