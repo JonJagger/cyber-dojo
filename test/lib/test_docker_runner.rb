@@ -18,13 +18,26 @@ class DockerRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '3813F9',
-  'runnable?() uses [docker images]' do
-    docker = make_docker_runner
-    stub_docker_images_python_py_test
-    assert docker.runnable?(languages['Python-py.test'])
-    refute docker.runnable?(languages['C-assert'])
-    assert_equal 'docker images', @bash.spied[0]
+  class LanguageMock
+    def initialize(image_name)
+      @image_name = image_name
+    end
+    attr_reader :image_name
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '75909D',
+  'refresh_cache executes [docker images]' +
+    ' and creates new cache-file in caches which determines runnability' do
+    set_disk_class('DiskFake')
+    refute disk[caches.path].exists?(DockerRunner.cache_filename)
+    @bash.stub(stub_docker_images_python_py_test, success)
+    runner = DockerRunner.new(caches, @bash)
+    runner.refresh_cache
+    assert disk[caches.path].exists?(DockerRunner.cache_filename)
+    assert runner.runnable?(LanguageMock.new('cyberdojofoundation/python-3.3.5_pytest'))
+    refute runner.runnable?(LanguageMock.new('cyberdojofoundation/not-installed'))
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -54,7 +67,7 @@ class DockerRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def make_docker_runner
-    DockerRunner.new(@bash,cid_filename)
+    DockerRunner.new(caches, @bash, cid_filename)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

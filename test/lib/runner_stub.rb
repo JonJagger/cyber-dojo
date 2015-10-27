@@ -1,6 +1,9 @@
 
 class RunnerStub
 
+  def initialize(_caches)
+  end
+
   def stub_output(stub)
     @output = stub
   end

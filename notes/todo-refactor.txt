@@ -1,5 +1,9 @@
 
 --------------------------------------
+Add new script file to refresh runner caches
+lib/refresh_runner_cache.rb DockerRunner
+lib/refresh_runner_cache.rb DockerMachineRunner
+--------------------------------------
 Why is test/lib/disk_stub_cache.json
 not being gitignored? How do you debug this?
 --------------------------------------
@@ -11,24 +15,6 @@ explicit cyber-dojo root folder in
 app/models/Dojo.rb
 admin_scripts/show_docker_repo_names.rb
 test/external_helpers.rb
---------------------------------------
-make DockerRunner take caches object in ctor and use it
-call dojo.runner.refresh_cache from pull.sh
-
-  def self.cache_filename
-    'docker_runner_cache.json'
-  end
-
-  def refresh_cache
-    lines = `docker images`.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
-    cache = lines.collect { |line| line.split[0] }
-    caches.write_json(self.class.cache_filename, cache)
-  end
-
-  def caches
-    @parent.caches
-  end
-
 --------------------------------------
 make images on docker hub use version-number
 on the base image for the language but not
@@ -54,10 +40,6 @@ Split create page into 3.
    Once to click create. Good that the last step
    actually has a create button.
 
---------------------------------------
-Add new script file to refresh runner caches
-lib/refresh_runner_cache.rb DockerRunner
-lib/refresh_runner_cache.rb DockerMachineRunner
 --------------------------------------
 On test page move avatar image to left of test button
 and increase its size. No need to redraw it on each test.

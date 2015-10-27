@@ -1,6 +1,9 @@
 
 class RunnerStubTrue
 
+  def initialize(_caches)
+  end
+
   def runnable?(language)
     true
   end

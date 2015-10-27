@@ -27,24 +27,6 @@ module DockerTestHelpers # mix-in
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def docker_info_output
-    [
-      'Containers: 6',
-      'Images: 440',
-      'Storage Driver: aufs',
-      'Root Dir: /var/lib/docker/aufs',
-      'Dirs: 452',
-      'Execution Driver: native-0.2',
-      'Kernel Version: 3.2.0-4-amd64',
-      'Username: cyberdojo',
-      'Registry: [https://index.docker.io/v1/]',
-      'WARNING: No memory limit support',
-      'WARNING: No swap limit support'
-    ].join("\n")
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   def docker_images_python_py_test
     [
       'REPOSITORY                                 TAG     IMAGE ID      CREATED        VIRTUAL SIZE',

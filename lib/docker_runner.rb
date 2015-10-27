@@ -11,7 +11,12 @@ require 'tempfile'
 
 class DockerRunner
 
-  def initialize(bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
+  def self.cache_filename
+    'docker_runner_cache.json'
+  end
+
+  def initialize(caches, bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
+    @caches = caches
     @bash = bash
     @cid_filename = cid_filename
   end
@@ -32,18 +37,21 @@ class DockerRunner
     times_out_run(options, language.image_name, cmd, max_seconds)
   end
 
+  def refresh_cache
+    output, _ = bash('docker images')
+    lines = output.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
+    cache = lines.collect { |line| line.split[0] }
+    caches.write_json(self.class.cache_filename, cache)
+  end
+
   private
 
   include DockerTimesOutRunner
 
-  def image_names
-    @image_names ||= read_image_names
-  end
+  attr_reader :caches
 
-  def read_image_names
-    output, _ = bash('docker images')
-    lines = output.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
-    lines.collect { |line| line.split[0] }
+  def image_names
+    @image_names ||= caches.read_json(self.class.cache_filename)
   end
 
 end

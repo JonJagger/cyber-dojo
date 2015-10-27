@@ -53,23 +53,27 @@ echo "poking rails"
 rm $cyberDojoHome/Gemfile.lock
 bundle install
 
-echo "refreshing languages/ and ensuring latest docker containers"
+echo "refreshing languages cache"
 $cyberDojoHome/languages/refresh_cache.rb
 
-echo "refreshing exercises/"
+echo "refreshing exercises cache/"
 $cyberDojoHome/exercises/refresh_cache.rb
 
 # - - - - - - - - - - - - - - - - - - - - - - - - -
 if docker --version > /dev/null 2>&1; then
-    echo "docker is installed"
+  echo "docker is installed"
+  echo "refreshing DockerRunner cache"
+  $cyberDojoHome/lib/refresh_runner_cache.rb DockerRunner
 else
-  echo "docker is NOT installed!"
+  echo "docker is NOT installed!!"
 fi
 
 if docker-machine --version > /dev/null 2>&1; then
-    echo "docker-machine is installed"
+  echo "docker-machine is installed"
+  # TODO: echo "refreshing DockerMachineRunner cache"
+  # TODO: $cyberDojoHome/lib/refresh_runner_cache.rb DockerMachineRunner
 else
-  echo "docker-machine is NOT installed!"
+  echo "docker-machine is NOT installed"
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - -
