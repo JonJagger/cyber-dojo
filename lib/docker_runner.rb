@@ -16,6 +16,10 @@ class DockerRunner
     @cid_filename = cid_filename
   end
 
+  def runnable?(language)
+    image_names.include?(language.image_name)
+  end
+
   def run(sandbox, command, max_seconds)
     read_write = 'rw'
     sandbox_volume = "#{sandbox.path}:/sandbox:#{read_write}"
@@ -31,6 +35,16 @@ class DockerRunner
   private
 
   include DockerTimesOutRunner
+
+  def image_names
+    @image_names ||= read_image_names
+  end
+
+  def read_image_names
+    output, _ = bash('docker images')
+    lines = output.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
+    lines.collect { |line| line.split[0] }
+  end
 
 end
 

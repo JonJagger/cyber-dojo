@@ -1,5 +1,8 @@
 
 --------------------------------------
+Why is test/lib/disk_stub_cache.json
+not being gitignored? How do you debug this?
+--------------------------------------
 I think the stdout2stderr syntax might be wrong
 in the bash commands being executed. Should be...
 $ command > /dev/null 2>&1
