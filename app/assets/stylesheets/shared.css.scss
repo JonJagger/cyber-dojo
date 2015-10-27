@@ -59,12 +59,12 @@ a:link, a:visited
   padding: { left: 15px; bottom: 2px; top: 0px; }
   background: lighten($darker-color, 6%);
   color: $lighter-color;
-}
 
-#tweet-container {
-  #twitter-widget-0 {
-    position: relative; top: 5px;
-    margin-top: 7px;
+  #tweet-container {
+    #twitter-widget-0 {
+      position: relative; top: 5px;
+      margin-top: 7px;
+    }
   }
 }
 
@@ -99,6 +99,44 @@ a:link, a:visited
   }
 }
 
+//----------------------------------------------
 
+#the-place-to-practice-programming {
+  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  font-size: 1.15em;
+  color: lighten($text-color, 5%);
+  position: relative;
+  top: -32px;
+  margin-right: 2px;
+}
 
+#learn-more-button {
+  width: 200px;
+  padding-right: 20px;
+  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  color: $darker-color;
+  text-align: right;
+  font-size: 0.87em;
+  position: relative;
+  top: -25px;
+  left: 2px;
+  padding-bottom: 4px;
+}
 
+#cyber-dojo {
+  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  font-size: 7.25em;
+  color: $text-color;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  position: relative;
+  left: 3px;
+  top: -20px;
+}
+
+#home-page-logo {
+  display: inline-block;
+  position: relative;
+  top: -50px;
+  right: -35px;
+}

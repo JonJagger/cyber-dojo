@@ -5,8 +5,7 @@ $(function() {
 
   $('#create-button').click(function() {
     cd.dialog_ie(function() {
-      var id = $('#kata-id-input').val();
-      var url = '/setup/show/' + id;
+      var url = '/setup/show/';
       window.location = url;
     });
   });

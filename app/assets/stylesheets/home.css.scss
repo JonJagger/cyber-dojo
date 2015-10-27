@@ -1,81 +1,10 @@
 
-#home-page {
+#enter-page {
 
   font-size: 1.15em;
-
   margin-top: 25px;
   margin-left: 0px;
 
-  #globe-container, #custom-container {
-    position: absolute;
-    left: 875px;
-  }
-  #globe-container  { top:  50px; #globe { border: 0; } }
-  #custom-container { top: 350px; }
-
-  #cyber-dojo {
-    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    font-size: 7.4em;
-    color: $text-color;
-    margin-bottom: 0px;
-    padding-bottom: 0px;
-    position: relative;
-    left: 3px;
-    top: -20px;
-  }
-
-  #home-page-logo {
-    display: inline-block;
-    position: relative;
-    top: -50px;
-    right: -35px;
-  }
-
-  #the-place-to-practice-programming {
-    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    font-size: 1.15em;
-    color: lighten($text-color, 5%);
-    position: relative;
-    top: -32px;
-    margin-right: 2px;
-  }
-
-  #learn-more-button {
-    width: 200px;
-    padding-right: 20px;
-    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    color: $darker-color;
-    text-align: right;
-    font-size: 0.87em;
-    position: relative;
-    top: -25px;
-    left: 2px;
-    padding-bottom: 4px;
-  }
-
-  .button-td {
-    width: 230px;
-    vertical-align: top;
-  }
-  .each {
-    font-style: italic;
-  }
-  .number {
-    width: 15px;
-    height: 15px;
-    display: inline-block;
-    padding: 0px;
-    text-align: center;
-    position: relative;
-    left: 0px;
-    bottom: 5px;
-    @include rounded-corner(10px);
-    background: lighten($darker-color, 20%);
-  }
-
-  #enter-id-info {
-    color: lighten($green, 30%);
-  }
   #kata-id-input {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     background: lighten($green, 20%);
@@ -90,7 +19,47 @@
     position: relative;
     right: -1px;
   }
-  #create-button, #enter-button, #reenter-button,  #review-button,
+
+  #enter-button, #re-enter-button, #review-button {
+    width: 240px;
+    padding-right: 20px;
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    color: $darker-color;
+    @include font-size-largest();
+    margin-left: 10px;
+    text-align: right;
+  }
+
+}
+
+
+#home-page {
+
+  font-size: 1.15em;
+  margin-top: 25px;
+  margin-left: 0px;
+
+  #globe-container, #custom-container {
+    position: absolute;
+    left: 875px;
+  }
+  #globe-container  { top:  50px; #globe { border: 0; } }
+  #custom-container { top: 350px; }
+
+  .XX_number {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    padding: 0px;
+    text-align: center;
+    position: relative;
+    left: 0px;
+    bottom: 5px;
+    @include rounded-corner(10px);
+    background: lighten($darker-color, 20%);
+  }
+
+  #create-button, #enter-button,
   #charity-button, #donate-button {
     width: 240px;
     padding-right: 20px;
@@ -100,11 +69,13 @@
     margin-left: 10px;
     text-align: right;
   }
-  #review-button { margin-top: 4px; }
 
   #create-button, #enter-button {
     width: 350px;
     font-size: 2.5em;
+    line-height: 95%;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 
   #licensing-container {
@@ -128,6 +99,7 @@
     font-size: 1.60em;
     padding: 6px;
     text-align: center;
+    line-height: 95%;
   }
 
   #donate-container #donate-button {

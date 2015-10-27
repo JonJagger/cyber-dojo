@@ -1,0 +1,23 @@
+
+<script type="text/javascript"><!--
+
+$(function() {
+
+  var reEnterButton = $('#re-enter-button');
+
+  reEnterButton.click(function() {
+    var id = $('#kata-id-input').val();
+    var cursor = reEnterButton.css('cursor');
+    reEnterButton.css('cursor', 'wait');
+    $.getJSON('/enter/re_enter', { id: id }, function(dojo) {
+      cd.dialog_reEnter('re-enter', 'cancel', dojo.re_enter_dialog_html).dialog('open');
+    }).always(function() {
+      reEnterButton.css('cursor', cursor);
+    });
+  });
+
+});
+
+//--></script>
+
+<button type="button" id="re-enter-button">re-enter</button>

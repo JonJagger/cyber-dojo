@@ -1,5 +1,5 @@
 
-module DojoWorker # mix-in
+module EnterWorker # mix-in
 
   module_function
 
@@ -17,19 +17,19 @@ module DojoWorker # mix-in
 
   def enter_dialog_html(avatar_name)
     @avatar_name = avatar_name
-    bind('/app/views/dojo/enter_dialog.html.erb')
+    bind('/app/views/enter/enter_dialog.html.erb')
   end
 
   def full_dialog_html
     @all_avatar_names = Avatars.names
-    bind('/app/views/dojo/full_dialog.html.erb')
+    bind('/app/views/enter/full_dialog.html.erb')
   end
 
   def re_enter_dialog_html
     @id = id
     @started_avatar_names = started_avatar_names
     @all_avatar_names = Avatars.names
-    bind('/app/views/dojo/re_enter_dialog.html.erb')
+    bind('/app/views/enter/re_enter_dialog.html.erb')
   end
 
   def bind(pathed_filename)

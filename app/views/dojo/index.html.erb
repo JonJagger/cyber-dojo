@@ -8,26 +8,19 @@
 
     <tr>
       <td colspan="2">
-        <div id="cyber-dojo">
-          <div id="home-page-logo">
-            <%= raw home_page_logo(35) %>
-          </div>
-          cyber&#8209;dojo.org
-        </div>
+        <%= render partial: 'shared/cyber_dojo_heading' %>
       </td>
     </tr>
 
     <tr>
       <td colspan="2">
-        <div id="the-place-to-practice-programming">
-          the place to <a href="http://blog.cyber-dojo.org/2015/05/do-more-deliberate-practice.html" target="_blank">practice</a> programming
-        </div>
+        <%= render partial: 'shared/the_place_to_practice_programming' %>
       </td>
     </tr>
 
     <tr>
       <td colspan="2">
-        <%= render partial: 'learn_more_button' %>
+        <%= render partial: 'shared/learn_more_button' %>
       </td>
     </tr>
 
@@ -47,12 +40,8 @@
     </tr>
 
     <tr>
-      <td>
-        <%= render partial: 'donate' %>
-      </td>
-      <td xalign="right">
-        <%= render partial: 'charity' %>
-      </td>
+      <td><%= render partial: 'donate' %></td>
+      <td><%= render partial: 'charity' %></td>
     </tr>
 
   </table>

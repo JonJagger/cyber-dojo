@@ -18,14 +18,18 @@ CyberDojo::Application.routes.draw do
 
   scope path: '/dojo', controller: :dojo do
     get 'index(/:id)' => :index
-    get 'check'       => :check,    :constraints => { :format => :json }
-    get 'enter'       => :enter,    :constraints => { :format => :json }
-    get 're_enter'    => :re_enter, :constraints => { :format => :json }
   end
 
   scope path: '/setup', controller: :setup do
     get 'show(/:id)' => :show
     get 'save' => :save, :constraints => { :format => :json }
+  end
+
+  scope path: '/enter', controller: :enter do
+    get 'show(/:id)' => :show
+    get 'check'       => :check,    :constraints => { :format => :json }
+    get 'enter'       => :enter,    :constraints => { :format => :json }
+    get 're_enter'    => :re_enter, :constraints => { :format => :json }
   end
 
   scope path: '/kata', controller: :kata do
