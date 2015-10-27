@@ -51,17 +51,22 @@ a:link, a:visited
 //----------------------------------------------
 
 #footer {
-  font-size: 1.15em;
+  font-size: 1.05em;
   position: fixed;
   width: 100%;
   text-align: left;
   bottom: 0px;
-  padding: { left: 20px; bottom: 2px; top: 0px; }
+  padding: { left: 15px; bottom: 2px; top: 0px; }
   background: lighten($darker-color, 6%);
   color: $lighter-color;
 }
 
-#tweet-container { #twitter-widget-0 { position: relative; top: 5px; } }
+#tweet-container {
+  #twitter-widget-0 {
+    position: relative; top: 5px;
+    margin-top: 7px;
+  }
+}
 
 //----------------------------------------------
 
@@ -84,3 +89,16 @@ a:link, a:visited
 }
 
 .avatar_name, #id { @include font-size-tiny(); text-align: right; }
+
+#accu-container {
+  #accu-image {
+    padding: 5px;
+    background: CornSilk;
+    width: 50px;
+    margin-top: 7px;
+  }
+}
+
+
+
+

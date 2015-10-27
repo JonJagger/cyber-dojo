@@ -2,12 +2,12 @@
 <div id="home-page">
 
   <%= render partial: 'custom' %>
-  <%= render partial: 'globe' %>
+  <!-- ><%= render partial: 'globe' %> -->
 
   <table class="align-right">
 
     <tr>
-      <td colspan="4">
+      <td colspan="2">
         <div id="cyber-dojo">
           <div id="home-page-logo">
             <%= raw home_page_logo(35) %>
@@ -18,12 +18,7 @@
     </tr>
 
     <tr>
-      <td rowspan="6" align="right">
-        <%= render partial: 'charity' %><br/>
-        <%= render partial: 'donate' %><br/>
-        <%= render partial: 'accu' %><br/>
-      </td>
-      <td colspan="3">
+      <td colspan="2">
         <div id="the-place-to-practice-programming">
           the place to <a href="http://blog.cyber-dojo.org/2015/05/do-more-deliberate-practice.html" target="_blank">practice</a> programming
         </div>
@@ -31,24 +26,37 @@
     </tr>
 
     <tr>
-      <td colspan="4">
+      <td colspan="2">
         <%= render partial: 'learn_more_button' %>
       </td>
     </tr>
 
     <tr>
-      <td class="button-td">
+      <td class="align-right">
         <%= render partial: 'create_button' %>
       </td>
-    </tr>
-
-    <tr>
       <td class="button-td">
         <%= render partial: 'enter_button' %>
       </td>
     </tr>
 
+    <tr>
+      <td colspan="2">
+      <%= render partial: 'licensing' %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <%= render partial: 'donate' %>
+      </td>
+      <td xalign="right">
+        <%= render partial: 'charity' %>
+      </td>
+    </tr>
+
   </table>
 </div>
+
 
 <%= render partial: 'footer' %>
