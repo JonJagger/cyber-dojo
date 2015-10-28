@@ -3,8 +3,6 @@
 # instead of inside a docker-container.
 # No isolation/protection/security, nothing.
 
-require_relative './runner'
-
 class HostRunner
 
   def initialize(_caches)
@@ -28,16 +26,15 @@ class HostRunner
     pid = pipe.pid
     kill(descendant_pids_of(pid))
     pipe.close
-    if timed_out
-      output += didnt_complete(max_seconds)
-    end
-    limited(output)
+    output += did_not_complete_in(max_seconds) if timed_out
+    clean(output)
   end
 
 private
 
-  include Runner
+  include DidNotCompleteIn
   include Stderr2Stdout
+  include StringCleaner
 
   def kill(pids)
     return if pids == [ ]

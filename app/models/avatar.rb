@@ -60,7 +60,7 @@ class Avatar
 
   def test(delta, files, now = time_now, time_limit = 15)
     sandbox.save_files(delta, files)
-    output = sandbox.run_tests(time_limit)
+    output = truncated(sandbox.run_tests(time_limit))
     colour = language.colour(output)
 
     update_manifest(files, output)
@@ -73,6 +73,7 @@ class Avatar
   private
 
   include ExternalParentChain
+  include OutputTruncater
   include TimeNow
 
   def git_setup

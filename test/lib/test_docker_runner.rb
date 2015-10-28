@@ -64,27 +64,14 @@ class DockerRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '1D2753',
-  'run() output less than or equal to 50*1024 characters is not truncated' do
-    docker = make_docker_runner
-    @lion = make_kata.start_avatar(['lion'])
-    largest = 'X'*50*1024
-    bash_stub(largest , success)
-    output = docker.run(@lion.sandbox, cyber_dojo_cmd, max_seconds)
-    assert_equal largest, output
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '87A438',
-  'run() output equal greater than 50*1024 characters is truncated and a message is added' do
+  'run() output is not truncated and no message is added' do
     docker = make_docker_runner
     @lion = make_kata.start_avatar(['lion'])
-    big = 'X'*50*1024
-    bash_stub(big + 'truncated' , success)
+    big = 'X' * 75*1024
+    bash_stub(big, success)
     output = docker.run(@lion.sandbox, cyber_dojo_cmd, max_seconds)
-    message = 'output truncated by cyber-dojo server'
-    assert_equal big + "\n" + message, output
+    assert_equal big, output
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

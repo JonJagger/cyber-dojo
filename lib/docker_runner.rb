@@ -25,7 +25,8 @@ class DockerRunner
           " #{sandbox.avatar.kata.language.image_name}" +
           " #{max_seconds}"
     output, exit_status = @bash.exec(cmd)
-    exit_status != timed_out ? limited(output) : didnt_complete(max_seconds)
+    output = did_not_complete_in(max_seconds) if exit_status == timed_out
+    clean(output)
   end
 
   def refresh_cache
@@ -37,7 +38,8 @@ class DockerRunner
 
   private
 
-  include Runner
+  include DidNotCompleteIn
+  include StringCleaner
 
   attr_reader :caches
 

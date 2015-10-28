@@ -1,6 +1,7 @@
 
 %w(
   external_parent_chain
+  output_truncater
   manifest_property
   dojo
   caches
