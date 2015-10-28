@@ -1,7 +1,7 @@
 
 require_relative '../all'
-require_relative '../TestDomainHelpers'
-require_relative '../TestExternalHelpers'
+require_relative '../test_domain_helpers'
+require_relative '../test_external_helpers'
 
 class OneLanguageChecker
 
@@ -11,7 +11,7 @@ class OneLanguageChecker
   def initialize(verbose)
     @verbose = verbose
   end
-  
+
   def check(name,test,verbose=false)
     language_name = [name,test].join('-')
     @language = languages[language_name]
@@ -52,8 +52,8 @@ private
 
     pattern = pattern_6times9
 
-    filename = filename_6times9(pattern[:red])
     from = pattern[:red]
+    filename = filename_6times9(from)
     to = pattern[colour]
 
     # Cucumber tests special case handling
@@ -65,6 +65,7 @@ private
 
     visible_files = @language.visible_files
     test_code = visible_files[filename]
+
     visible_files[filename] = test_code.sub(from, to)
 
     vputs [
@@ -76,13 +77,13 @@ private
     delta = {
       :changed => [filename],
       :unchanged => visible_files.keys - [filename],
-      :deleted => [ ],
-      :new => [ ]
+      :deleted => [],
+      :new => []
     }
 
     now = time_now
-    limit = 60
-    traffic_lights,_,_ = avatar.test(delta, visible_files, now, limit)
+    max_seconds = 60
+    traffic_lights,_,_ = avatar.test(delta, visible_files, now, max_seconds)
 
     vputs [
       "<output>",
@@ -115,6 +116,8 @@ private
         then make_pattern('thenReturn(9)')
       when 'Asm-assert'
         then make_pattern('mov ebx, 9')
+      when 'VHDL-assert'
+        then make_pattern('00110110')
       else
         make_pattern('6 * 9')
     end
@@ -123,10 +126,17 @@ private
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
   def make_pattern(base)
-    { :red => base,
-      :amber => base.sub('9', '9typo'),
-      :green => base.sub('9', '7')
-    }
+    if base == '00110110' # special case for VHDL
+      { :red   => base,
+        :amber => base.sub('00110110', '00110110typo'),
+        :green => base.sub('00110110', '00101010')
+      }
+    else
+      { :red   => base,
+        :amber => base.sub('9', '9typo'),
+        :green => base.sub('9', '7')
+      }
+    end
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -135,7 +145,7 @@ private
     filenames = @language.visible_filenames.select { |visible_filename|
       IO.read(@language.path + visible_filename).include? pattern
     }
-    if filenames == [ ]
+    if filenames == []
       message = " no '#{pattern}' file found"
       vputs alert + message
       raise message

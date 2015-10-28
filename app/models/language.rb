@@ -35,7 +35,7 @@ class Language
   end
 
   def visible_files
-    @visible_files ||= Hash[visible_filenames.collect { |filename| [filename, read(filename)] }]
+    Hash[visible_filenames.collect { |filename| [filename, read(filename)] }]
   end
 
   # optional manifest properties
