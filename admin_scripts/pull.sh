@@ -46,13 +46,6 @@ chown www-data:www-data $cyberDojoHome/*
 echo "chown www-data:www-data .*"
 chown www-data:www-data $cyberDojoHome/.*
 
-echo "deleting the rails cache"
-rm -rf $cyberDojoHome/tmp/*
-
-echo "poking rails"
-rm $cyberDojoHome/Gemfile.lock
-bundle install
-
 echo "refreshing languages cache"
 $cyberDojoHome/languages/refresh_cache.rb
 
@@ -70,13 +63,20 @@ fi
 
 if docker-machine --version > /dev/null 2>&1; then
   echo "docker-machine is installed"
-  # TODO: echo "refreshing DockerMachineRunner cache"
-  # TODO: $cyberDojoHome/lib/refresh_runner_cache.rb DockerMachineRunner
+  #echo "refreshing DockerMachineRunner cache"
+  #$cyberDojoHome/lib/refresh_runner_cache.rb DockerMachineRunner
 else
   echo "docker-machine is NOT installed"
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - -
+echo "deleting the rails cache"
+rm -rf $cyberDojoHome/tmp/*
+
+echo "poking rails"
+rm $cyberDojoHome/Gemfile.lock
+bundle install
+
 echo "restarting apache"
 service apache2 restart
 
