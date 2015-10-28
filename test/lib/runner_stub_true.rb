@@ -4,11 +4,11 @@ class RunnerStubTrue
   def initialize(_caches)
   end
 
-  def runnable?(language)
+  def runnable?(_language)
     true
   end
 
-  def run(sandbox, command, max_duration)
+  def run(_sandbox, _max_seconds)
     if @output.nil?
       raise RuntimeError.new("RunnerStubTrue.run()) called unexpectedly")
     end

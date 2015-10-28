@@ -47,8 +47,8 @@ class DockerRunnerTests < LibTestBase
     docker = make_docker_runner
     @lion = make_kata.start_avatar(['lion'])
     bash_stub('salmon', success)
-    output = docker.run(@lion.sandbox, cyber_dojo_cmd, max_seconds)
-    assert_equal 'salmon', output, 'output'
+    output = docker.run(@lion.sandbox, max_seconds)
+    assert_equal 'salmon', output
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -58,8 +58,8 @@ class DockerRunnerTests < LibTestBase
     docker = make_docker_runner
     @lion = make_kata.start_avatar(['lion'])
     bash_stub('timed-out', times_out)
-    output = docker.run(@lion.sandbox, cyber_dojo_cmd, max_seconds)
-    assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds."), 'Unable'
+    output = docker.run(@lion.sandbox, max_seconds)
+    assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds.")
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -70,7 +70,7 @@ class DockerRunnerTests < LibTestBase
     @lion = make_kata.start_avatar(['lion'])
     big = 'X' * 75*1024
     bash_stub(big, success)
-    output = docker.run(@lion.sandbox, cyber_dojo_cmd, max_seconds)
+    output = docker.run(@lion.sandbox, max_seconds)
     assert_equal big, output
   end
 

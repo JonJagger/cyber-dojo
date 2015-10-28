@@ -19,7 +19,7 @@ class DockerRunner
     image_names.include?(language.image_name)
   end
 
-  def run(sandbox, command, max_seconds)
+  def run(sandbox, max_seconds)
     cmd = "/var/www/cyber-dojo/lib/docker_runner.sh" +
           " #{sandbox.path}" +
           " #{sandbox.avatar.kata.language.image_name}" +

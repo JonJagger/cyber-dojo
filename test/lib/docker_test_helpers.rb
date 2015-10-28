@@ -28,8 +28,6 @@ module DockerTestHelpers # mix-in
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def cyber_dojo_cmd; 'cyber-dojo.sh'; end
-
   def max_seconds; 5; end
 
   def completes; 0; end

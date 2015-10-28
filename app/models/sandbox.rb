@@ -25,7 +25,7 @@ class Sandbox
   end
 
   def run_tests(time_limit)
-    runner.run(self, './cyber-dojo.sh', time_limit)
+    runner.run(self, time_limit)
   end
 
   private

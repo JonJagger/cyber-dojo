@@ -12,8 +12,8 @@ class HostRunner
     true
   end
 
-  def run(sandbox, command, max_seconds)
-    command = "cd '#{sandbox.path}';" + stderr2stdout(command)
+  def run(sandbox, max_seconds)
+    command = "cd '#{sandbox.path}';" + stderr2stdout('./cyber-dojo.sh')
     pipe = IO::popen(command)
     output = ""
     sandbox_thread = Thread.new { output += pipe.read }
