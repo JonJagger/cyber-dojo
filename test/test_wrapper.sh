@@ -70,7 +70,8 @@ cat ${testFiles[*]} | tail -n +2 >> $wrapped_filename
 gitUserNameBefore=`git config user.name`
 
 rm -rf ../../coverage/.resultset.json
-wrapper_test_log='WRAPPER.log.tmp'
+mkdir -p coverage
+wrapper_test_log='coverage/WRAPPER.log.tmp'
 ruby $wrapped_filename -- ${args[*]} 2>&1 | tee $wrapper_test_log
 rm $wrapped_filename
 cp -R ../../coverage .

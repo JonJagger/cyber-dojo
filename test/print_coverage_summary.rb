@@ -6,7 +6,7 @@ end
 
 def wrapper_test_log
   # duplicated in test/test_wrapper.sh
-  'WRAPPER.log.tmp'
+  'coverage/WRAPPER.log.tmp'
 end
 
 #- - - - - - - - - - - - - - - - - - - - -
