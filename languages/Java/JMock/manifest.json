@@ -1,8 +1,8 @@
 
 {
   "visible_filenames": [
-    "DeepThought.java",
     "DeepThoughtTest.java",
+    "DeepThought.java",
     "AnswerSeeker.java",
     "cyber-dojo.sh"
   ],

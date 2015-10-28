@@ -1,6 +1,10 @@
 
 {
-  "visible_filenames": [ "hiker.scala", "hiker_tests.scala", "cyber-dojo.sh" ],
+  "visible_filenames": [
+    "hiker_tests.scala",
+    "hiker.scala",
+    "cyber-dojo.sh"
+  ],
   "unit_test_framework": "scala_test",
 
   "filename_extension" : ".scala",

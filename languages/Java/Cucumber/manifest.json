@@ -1,9 +1,9 @@
 
 {
   "visible_filenames": [
+    "Hiker.feature",
     "Hiker.java",
     "HikerStepDef.java",
-    "Hiker.feature",
     "RunCukesTest.java",
     "cyber-dojo.sh"
   ],

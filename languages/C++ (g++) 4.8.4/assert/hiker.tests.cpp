@@ -3,7 +3,7 @@
 #include <iostream>
 
 namespace {
-   
+
 void life_the_universe_and_everthing()
 {
     assert(answer() == 42);

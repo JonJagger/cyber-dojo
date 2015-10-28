@@ -24,6 +24,29 @@ Split create page into 3.
    Once to click create. Good that the last step
    actually has a create button.
 
+However, it is not quite as easy as it appears.
+How do I know which file is the code file and which
+file is the test file? I could split apart visible_filenames:
+in each Language's manifest. Simpler is to just use
+a convention that the first visible_filename: is the
+one displayed when choosing the language and the
+second visible_filename: is the one displayed when choosing
+the test-framework. But even this wont quite work.
+Different test frameworks for the same language use
+different source files. One option is to choose
+the language+test-framework on one page and show
+files from the test-framework. Then on next page show
+exercise and show instructions file. Seems the best approach.
+And the file displayed for language+test-framework
+is the first one listed in visible_filenames and that
+should be the tests.
+
+Information displayed under the source file could be
+1) answer is not related to the chosen exercise
+2) dont remove lines at the end of the tests such as
+      puts("All tests passed")
+   as this is often how cyber-dojo knows if the test passed.
+
 --------------------------------------
 Try and make lighter background for these avatar images
 antelope, bat, bear, eagle, elephant, fox, gopher,

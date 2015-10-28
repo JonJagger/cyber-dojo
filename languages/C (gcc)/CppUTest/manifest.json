@@ -1,10 +1,10 @@
 {
     "visible_filenames": [
+       "untitledTest.cpp",
        "AllTests.cpp",
        "cyber-dojo.sh",
        "untitled.c",
        "untitled.h",
-       "untitledTest.cpp",
        "makefile"
     ],
     "highlight_filenames": [

@@ -1,8 +1,8 @@
 
 {
   "visible_filenames": [
-     "hiker.b",
      "hiker.test.b",
+     "hiker.b",
      "cyber-dojo.sh"
   ],
   "filename_extension" : ".b",
