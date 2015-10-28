@@ -56,6 +56,8 @@ class Language
     manifest_property || 4
   end
 
+  # not manifest properties
+
   def tab
     ' ' * tab_size
   end
@@ -67,8 +69,6 @@ class Language
       return visible_filenames - highlight_filenames
     end
   end
-
-  # not manifest properties
 
   def name
     # as stored in the kata's manifest
