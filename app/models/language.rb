@@ -64,9 +64,9 @@ class Language
 
   def lowlight_filenames
     if highlight_filenames.empty?
-      return ['cyber-dojo.sh', 'makefile', 'Makefile', 'unity.license.txt']
+      ['cyber-dojo.sh', 'makefile', 'Makefile', 'unity.license.txt']
     else
-      return visible_filenames - highlight_filenames
+      visible_filenames - highlight_filenames
     end
   end
 
