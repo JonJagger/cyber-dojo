@@ -78,7 +78,7 @@ end
 #- - - - - - - - - - - - - - - - - - - - -
 
 def gather_stats
-  stats = { }
+  stats = {}
   number = '([\.|\d]+)'
   modules.each do |module_name|
 

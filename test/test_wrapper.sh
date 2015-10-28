@@ -73,7 +73,7 @@ rm -rf ../../coverage/.resultset.json
 wrapper_test_log='WRAPPER.log.tmp'
 ruby $wrapped_filename -- ${args[*]} 2>&1 | tee $wrapper_test_log
 rm $wrapped_filename
-cp -R ../../coverage/* .
+cp -R ../../coverage .
 #pwd                       # eg  /var/www/cyber-dojo/test/app_lib
 cwd=${PWD##*/}             # eg  app_lib
 module=${cwd/_//}          # eg  app/lib
