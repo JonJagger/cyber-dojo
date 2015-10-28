@@ -20,7 +20,7 @@ class DockerRunner
   end
 
   def run(sandbox, max_seconds)
-    cmd = "/var/www/cyber-dojo/lib/docker_runner.sh" +
+    cmd = "#{File.dirname(__FILE__)}/docker_runner.sh" +
           " #{sandbox.path}" +
           " #{sandbox.avatar.kata.language.image_name}" +
           " #{max_seconds}"
