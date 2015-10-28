@@ -11,19 +11,9 @@ module DockerTestHelpers # mix-in
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def stub_docker_run(outcome)
-    stub_rm_cidfile
-    stub_timeout(outcome)
-    stub_cat_cidfile
-    stub_docker_stop
-    stub_docker_rm
+  def stub_docker_run(output, exit_status = 0)
+    @bash.stub(output, exit_status);
   end
-
-  def stub_rm_cidfile;  @bash.stub('',success);  end
-  def stub_timeout(n);  @bash.stub('blah',n);    end
-  def stub_cat_cidfile; @bash.stub(pid,success); end
-  def stub_docker_stop; @bash.stub('',success);  end
-  def stub_docker_rm;   @bash.stub('',success);  end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -38,13 +28,9 @@ module DockerTestHelpers # mix-in
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def cid_filename; 'stub.cid'; end
-
   def cyber_dojo_cmd; 'cyber-dojo.sh'; end
 
   def max_seconds; 5; end
-
-  def pid; '921'; end
 
   def completes; 0; end
 
@@ -55,7 +41,5 @@ module DockerTestHelpers # mix-in
   def kill; 9; end
 
   def fatal_error(signal); 128 + signal; end
-
-  def quoted(s); '"' + s + '"'; end
 
 end

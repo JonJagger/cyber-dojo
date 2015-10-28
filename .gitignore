@@ -5,7 +5,6 @@ tmp
 
 .DS_Store
 .sass-cache/
-
 .idea
 .rvmrc
 .approvals
@@ -15,7 +14,6 @@ tmp
 zipped_dojos.zip
 cyberDojo.db
 *.tmp
-*.WRAPPED
 
 admin_scripts/stats/exceptions.log
 

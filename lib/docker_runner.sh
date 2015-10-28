@@ -5,7 +5,7 @@ container_name=$2
 max_seconds=$3
 
 cidfile=`mktemp --tmpdir=/tmp cyber-dojo.XXXXX`
-rm -rf ${cidfile}
+rm --force ${cidfile}
 
 kill=9
 

@@ -8,9 +8,7 @@
   bash
   background_process
   runner
-    docker_times_out_runner
     docker_runner
-    docker_runner2
     host_runner
   host_disk
   host_dir
