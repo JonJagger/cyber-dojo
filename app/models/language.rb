@@ -14,13 +14,15 @@ class Language
     @parent.path + @dir_name + '/' + @test_dir_name + '/'
   end
 
-  # required properties
+  # required manifest properties
 
   def display_name
+    # cached to optimize displaying all languages on cyber-dojo create
     @display_name ||= manifest_property
   end
 
   def image_name
+    # cached to optimize displaying all languages on cyber-dojo create
     @image_name ||= manifest_property
   end
 
@@ -33,10 +35,10 @@ class Language
   end
 
   def visible_files
-    Hash[visible_filenames.collect { |filename| [filename, read(filename)] }]
+    @visible_files ||= Hash[visible_filenames.collect { |filename| [filename, read(filename)] }]
   end
 
-  # optional properties
+  # optional manifest properties
 
   def filename_extension
     manifest_property || ''
