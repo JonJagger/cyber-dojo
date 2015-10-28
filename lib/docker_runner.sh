@@ -9,7 +9,7 @@ rm --force ${cidfile}
 
 kill=9
 
-timeout --signal=${kill} ${max_seconds+5}s \
+timeout --signal=${kill} $((max_seconds+5))s \
   docker run \
     --cidfile="${cidfile}" \
     --user=www-data \
@@ -17,7 +17,7 @@ timeout --signal=${kill} ${max_seconds+5}s \
     --volume="${sandbox_path}:/sandbox:rw" \
     --workdir=/sandbox  \
     ${container_name} \
-    /bin/bash -c "timeout --signal=${kill} ${max_seconds}s ./cyber-dojo.sh 2>&1" 2>&1
+    /bin/bash -c "timeout --signal=${kill} $((max_seconds))s ./cyber-dojo.sh 2>&1" 2>&1
 
 exit_status=$?
 
