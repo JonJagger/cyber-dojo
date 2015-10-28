@@ -29,8 +29,8 @@ class KataController < ApplicationController
     delta = FileDeltaMaker.make_delta(incoming, outgoing)
     visible_files = received_files
     now = time_now
-    time_limit = 15
-    @traffic_lights,@output = @avatar.test(delta, visible_files, now, time_limit)
+    max_seconds = 15
+    @traffic_lights,@output = @avatar.test(delta, visible_files, now, max_seconds)
     @cyber_dojo_sh = visible_files['cyber-dojo.sh']
 
     # Turn this off as it is somehow causing errors when the

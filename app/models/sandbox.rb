@@ -24,8 +24,8 @@ class Sandbox
     delta[:changed].each { |filename|   write(filename, files[filename]) }
   end
 
-  def run_tests(time_limit)
-    clean(runner.run(self, time_limit))
+  def run_tests(max_seconds)
+    clean(runner.run(self, max_seconds))
   end
 
   private

@@ -58,9 +58,9 @@ class Avatar
     read_json(manifest_filename)
   end
 
-  def test(delta, files, now = time_now, time_limit = 15)
+  def test(delta, files, now = time_now, max_seconds = 15)
     sandbox.save_files(delta, files)
-    output = truncated(sandbox.run_tests(time_limit))
+    output = truncated(sandbox.run_tests(max_seconds))
     colour = language.colour(output)
 
     update_manifest(files, output)
