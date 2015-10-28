@@ -26,8 +26,7 @@ class HostRunner
     pid = pipe.pid
     kill(descendant_pids_of(pid))
     pipe.close
-    output = did_not_complete_in(max_seconds) if timed_out
-    output
+    timed_out ? did_not_complete_in(max_seconds) : output
   end
 
 private
