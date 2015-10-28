@@ -55,7 +55,7 @@ module TestExternalHelpers # mix-in
   end
 
   def env_vars
-    root_dir = '/var/www/cyber-dojo'
+    root_dir = File.expand_path('../..', __FILE__)
     {
       languages_key => root_dir + '/languages',
       exercises_key => root_dir + '/exercises',

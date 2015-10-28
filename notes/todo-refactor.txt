@@ -1,17 +1,5 @@
 
 --------------------------------------
-Why is test/lib/disk_stub_cache.json
-not being gitignored? How do you debug this?
---------------------------------------
-I think the stdout2stderr syntax might be wrong
-in the bash commands being executed. Should be...
-$ command > /dev/null 2>&1
---------------------------------------
-explicit cyber-dojo root folder in
-app/models/Dojo.rb
-admin_scripts/show_docker_repo_names.rb
-test/external_helpers.rb
---------------------------------------
 make images on docker hub use version-number
 on the base image for the language but not
 on the images for the test-frameworks.
