@@ -25,12 +25,13 @@ class Sandbox
   end
 
   def run_tests(time_limit)
-    runner.run(self, time_limit)
+    clean(runner.run(self, time_limit))
   end
 
   private
 
   include ExternalParentChain
+  include OutputCleaner
 
   def git_add(filename, content)
     write(filename, content)

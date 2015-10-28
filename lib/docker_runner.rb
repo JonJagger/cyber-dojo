@@ -26,7 +26,7 @@ class DockerRunner
           " #{max_seconds}"
     output, exit_status = @bash.exec(cmd)
     output = did_not_complete_in(max_seconds) if exit_status == timed_out
-    clean(output)
+    output
   end
 
   def refresh_cache
@@ -39,7 +39,6 @@ class DockerRunner
   private
 
   include DidNotCompleteIn
-  include StringCleaner
 
   attr_reader :caches
 

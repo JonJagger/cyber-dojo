@@ -26,15 +26,14 @@ class HostRunner
     pid = pipe.pid
     kill(descendant_pids_of(pid))
     pipe.close
-    output += did_not_complete_in(max_seconds) if timed_out
-    clean(output)
+    output = did_not_complete_in(max_seconds) if timed_out
+    output
   end
 
 private
 
   include DidNotCompleteIn
   include Stderr2Stdout
-  include StringCleaner
 
   def kill(pids)
     return if pids == [ ]

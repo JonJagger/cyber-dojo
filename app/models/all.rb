@@ -1,6 +1,7 @@
 
 %w(
   external_parent_chain
+  output_cleaner
   output_truncater
   manifest_property
   dojo
