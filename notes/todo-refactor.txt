@@ -23,6 +23,7 @@ Split create page into two.
    o) dont remove lines at the end of the tests such as
         puts("All tests passed")
       as this is often how cyber-dojo knows if the test passed.
+   o) tests have to complete in 15 seconds.
    Don't make this a one-click obviously.
    Keeping language and tests together also makes this
    a smaller refactoring from the current code.
