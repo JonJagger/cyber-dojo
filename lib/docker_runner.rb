@@ -15,8 +15,8 @@ class DockerRunner
     @bash = bash
   end
 
-  def runnable?(language)
-    image_names.include?(language.image_name)
+  def runnable?(image_name)
+    image_names.include?(image_name)
   end
 
   def run(sandbox, max_seconds)

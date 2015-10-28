@@ -8,7 +8,7 @@ class HostRunner
   def initialize(_caches)
   end
 
-  def runnable?(language)
+  def runnable?(_image_name)
     true
   end
 

@@ -76,7 +76,7 @@ class Language
   end
 
   def runnable?
-    runner.runnable?(self)
+    runner.runnable?(image_name)
   end
 
   def colour(output)

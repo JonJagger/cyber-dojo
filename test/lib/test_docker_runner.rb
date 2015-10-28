@@ -18,15 +18,6 @@ class DockerRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  class LanguageMock
-    def initialize(image_name)
-      @image_name = image_name
-    end
-    attr_reader :image_name
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '75909D',
   'refresh_cache executes [docker images]' +
     ' and creates new cache-file in caches which determines runnability' do
@@ -36,8 +27,8 @@ class DockerRunnerTests < LibTestBase
     runner = make_docker_runner
     runner.refresh_cache
     assert disk[caches.path].exists?(DockerRunner.cache_filename)
-    assert runner.runnable?(LanguageMock.new('cyberdojofoundation/python-3.3.5_pytest'))
-    refute runner.runnable?(LanguageMock.new('cyberdojofoundation/not-installed'))
+    assert runner.runnable?('cyberdojofoundation/python-3.3.5_pytest')
+    refute runner.runnable?('cyberdojofoundation/not-installed')
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
