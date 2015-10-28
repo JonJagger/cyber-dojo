@@ -33,7 +33,7 @@ class Dojo
   end
 
   def root_dir
-    File.expand_path('../../..', __FILE__)
+    File.expand_path('../..', File.dirname(__FILE__))
   end
 
 end
