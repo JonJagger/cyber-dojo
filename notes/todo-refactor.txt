@@ -9,47 +9,30 @@ on the base image for the language but not
 on the images for the test-frameworks.
 Makes it easy to do upgrades.
 --------------------------------------
-Split create page into 3.
-1. Language?  This could use the extra space
-   to show code file. Defintely use the extra
-   space to at least say that the initial code
-   is always 42 Douglas Adams etc and bears
-   no relation to your chosen exercise. Can still
-   say this info without having code example
-   and thus still using one-click on language takes
-   you directly to the test selection.
-2. Tests? Again this could show the test code
-   (like I do for the exercises). But definitely
-   say 6*9 blah blah no relation to the chosen
-   exercise.
-3. Exercise? ...
-   This one will be a 2-click. Once to select
-   the exercise and see the instructions.
-   Once to click create. Good that the last step
-   actually has a create button.
-
-However, it is not quite as easy as it appears.
-How do I know which file is the code file and which
-file is the test file? I could split apart visible_filenames:
-in each Language's manifest. Simpler is to just use
-a convention that the first visible_filename: is the
-one displayed when choosing the language and the
-second visible_filename: is the one displayed when choosing
-the test-framework. But even this wont quite work.
-Different test frameworks for the same language use
-different source files. One option is to choose
-the language+test-framework on one page and show
-files from the test-framework. Then on next page show
-exercise and show instructions file. Seems the best approach.
-And the file displayed for language+test-framework
-is the first one listed in visible_filenames and that
-should be the tests.
-
-Information displayed under the source file could be
-1) answer is not related to the chosen exercise
-2) dont remove lines at the end of the tests such as
-      puts("All tests passed")
-   as this is often how cyber-dojo knows if the test passed.
+Split create page into two.
+1. Step 1/2
+   Language? Tests?
+   Use the extra space to show the test file.
+   First entry in manifest.json visible_filenames:
+   is always the test file.
+   Use the extra space to say
+   o) the initial code is always 42 Douglas Adams etc
+   o) the initial code bears
+      no relation to your chosen exercise.
+   o) answer() is not related to the chosen exercise
+   o) dont remove lines at the end of the tests such as
+        puts("All tests passed")
+      as this is often how cyber-dojo knows if the test passed.
+   Don't make this a one-click obviously.
+   Keeping language and tests together also makes this
+   a smaller refactoring from the current code.
+   OK and CANCEL buttons.
+2. Step 2/2
+   Exercise?
+   Keep instructions file.
+   CREATE and CANCEL buttons
+   Later add "fake" none option to list
+   CREATE and CANCEL
 
 --------------------------------------
 Try and make lighter background for these avatar images
