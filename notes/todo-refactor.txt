@@ -1,5 +1,9 @@
 
 --------------------------------------
+D and Rust both have a single source file
+viz the tests have not been split off into
+a separate file.
+--------------------------------------
 make images on docker hub use version-number
 on the base image for the language but not
 on the images for the test-frameworks.
