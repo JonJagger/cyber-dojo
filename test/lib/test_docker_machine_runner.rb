@@ -53,9 +53,6 @@ class DockerMachineRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-=begin
-  # This fails because *ALL* 25 calls are either to node-00 or to node-01
-  # viz [].sample inside DockerMachineRunner.run is goofy.
   test 'F73CE7',
   'run() passes correct parameters to dedicated shell script' do
 
@@ -76,7 +73,7 @@ class DockerMachineRunnerTests < LibTestBase
     stub_docker_machine_refresh_cache
     runner.refresh_cache
 
-    expected = lambda do |node|
+    script = lambda do |node|
       "#{root_dir}/lib/docker_machine_runner.sh" +
       " #{node}" +
       " #{lion.sandbox.path}" +
@@ -86,21 +83,18 @@ class DockerMachineRunnerTests < LibTestBase
 
     # when
     counts = { 'node-00' => 0, 'node-01' => 0 }
-    25.times do
+    25.times do |n|
+      bash.reset
       bash.stub('output', success)
       runner.run(lion.sandbox, max_seconds)
-      # bash.spied[0] docker-machine ls -a
-      # bash.spied[1] docker-machine ssh node-00 -- ...
-      # bash.spied[2] docker-machine ssh node-01 -- ...
-      call = bash.spied[3]
-      counts['node-00'] += 1 if call == expected.call('node-00')
-      counts['node-01'] += 1 if call == expected.call('node-01')
+      call = bash.spied[0]
+      counts['node-00'] += 1 if call == script.call('node-00')
+      counts['node-01'] += 1 if call == script.call('node-01')
     end
     # then
     assert counts['node-00'] > 0, counts.inspect
     assert counts['node-01'] > 0, counts.inspect
   end
-=end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

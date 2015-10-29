@@ -2,9 +2,7 @@
 class BashStub
 
   def initialize
-    @stubbed = []
-    @spied = []
-    @index = 0
+    reset
   end
 
   attr_reader :spied
@@ -23,6 +21,12 @@ class BashStub
 
   def dump
     spied.each_with_index { |line,i| print "\n#{i}:" + line + "\n" }
+  end
+
+  def reset
+    @stubbed = []
+    @spied = []
+    @index = 0
   end
 
 end
