@@ -22,11 +22,31 @@ class DockerMachineRunnerTests < LibTestBase
     @runner ||= DockerMachineRunner.new(caches, bash)
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def stub_docker_machine_refresh_cache
-    docker_machine_ls = %w( node-00 node-01 ).join("\n")
+    docker_machine_ls = [ 'node-00', 'node-01' ].join("\n")
     bash.stub(docker_machine_ls, success)
     bash.stub(docker_images_python_pytest, success)                   # node-00
     bash.stub(docker_images_python_pytest_and_ruby_testunit, success) # node-01
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def copy_caches_to_tmp_and_start_deer
+    real_caches_root = get_caches_root
+    set_caches_root    tmp_root + 'caches'
+    `mkdir -p #{get_caches_root}`
+    `cp #{real_caches_root}/languages_cache.json #{get_caches_root}`
+    `cp #{real_caches_root}/exercises_cache.json #{get_caches_root}`
+    assert_equal 'HostDisk', disk.class.name
+    assert katas.path.include?('tmp'), 'dont create kata in real katas folder'
+    assert caches.path.include?('tmp'), 'dont create caches in real caches folder'
+    kata = make_kata(unique_id, 'Python-py.test')
+    @deer = kata.start_avatar(['deer'])
+    stub_docker_machine_refresh_cache
+    runner.refresh_cache
+    bash.reset
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -44,7 +64,7 @@ class DockerMachineRunnerTests < LibTestBase
     runner.refresh_cache
     # then
     assert disk[caches.path].exists?(DockerMachineRunner.cache_filename)
-    assert_equal 'docker-machine ls -q', bash.spied[0]
+    assert_equal 'docker-machine ls -q',                        bash.spied[0]
     assert_equal 'docker-machine ssh node-00 -- docker images', bash.spied[1]
     assert_equal 'docker-machine ssh node-01 -- docker images', bash.spied[2]
     assert runner.runnable?("#{cdf}/python-3.3.5_pytest")
@@ -55,38 +75,21 @@ class DockerMachineRunnerTests < LibTestBase
 
   test 'F73CE7',
   'run() passes correct parameters to dedicated shell script' do
-
-    real_caches_root = get_caches_root
-    set_caches_root    tmp_root + 'caches'
-    `mkdir -p #{get_caches_root}`
-    `cp #{real_caches_root}/languages_cache.json #{get_caches_root}`
-    `cp #{real_caches_root}/exercises_cache.json #{get_caches_root}`
-
-    assert_equal 'HostDisk', disk.class.name
-    assert katas.path.include?('tmp'), 'dont create kata in real katas folder'
-    assert caches.path.include?('tmp'), 'dont create caches in real caches folder'
-
-    id = 'AAAAAAAAAA' # FIX
-    kata = make_kata(id, 'Python-py.test')
-    lion = kata.start_avatar(['lion'])
-
-    stub_docker_machine_refresh_cache
-    runner.refresh_cache
-
+    copy_caches_to_tmp_and_start_deer
+    #kata = make_kata(unique_id, 'Python-py.test')
     script = lambda do |node|
       "#{root_dir}/lib/docker_machine_runner.sh" +
       " #{node}" +
-      " #{lion.sandbox.path}" +
-      " #{lion.kata.language.image_name}" +
+      " #{@deer.sandbox.path}" +
+      " #{@deer.kata.language.image_name}" +
       " #{max_seconds}"
     end
-
     # when
     counts = { 'node-00' => 0, 'node-01' => 0 }
     25.times do |n|
       bash.reset
       bash.stub('output', success)
-      runner.run(lion.sandbox, max_seconds)
+      runner.run(@deer.sandbox, max_seconds)
       call = bash.spied[0]
       counts['node-00'] += 1 if call == script.call('node-00')
       counts['node-01'] += 1 if call == script.call('node-01')
@@ -98,35 +101,33 @@ class DockerMachineRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-=begin
-  test '',
+  test '2D792D',
   'output is left untouched when run() does not time-out' do
-    lion = make_kata.start_avatar(['lion'])
+    copy_caches_to_tmp_and_start_deer
     bash.stub('syntax-error-line-1', success)
-    output = runner.run(lion.sandbox, max_seconds)
+    output = runner.run(@deer.sandbox, max_seconds)
     assert_equal 'syntax-error-line-1', output
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '',
+  test '678D62',
   'output is not truncated and no message is added when run() does not time-out' do
-    lion = make_kata.start_avatar(['lion'])
+    copy_caches_to_tmp_and_start_deer
     big = '.' * 75*1024
     bash.stub(big, success)
-    output = runner.run(lion.sandbox, max_seconds)
+    output = runner.run(@deer.sandbox, max_seconds)
     assert_equal big, output
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '',
+  test '799891',
   'output is replaced by timed-out message when run() times out' do
-    lion = make_kata.start_avatar(['lion'])
+    copy_caches_to_tmp_and_start_deer
     bash.stub('ach-so-it-timed-out', times_out)
-    output = runner.run(lion.sandbox, max_seconds)
+    output = runner.run(@deer.sandbox, max_seconds)
     assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds.")
   end
-=end
 
 end
