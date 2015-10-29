@@ -1,13 +1,18 @@
 #!/bin/bash
 
+# parameters
 sandbox_path=$1
 container_name=$2
 max_seconds=$3
 
+# local variables
 cidfile=`mktemp --tmpdir=/tmp cyber-dojo.XXXXX`
-rm --force ${cidfile}
-
 kill=9
+
+# - - - - - - - - - - - - - -
+# run avatar's test in host container
+
+rm --force ${cidfile}
 
 timeout --signal=${kill} $((max_seconds+5))s \
   docker run \
