@@ -8,10 +8,14 @@ require_relative root + '/test_base'
 class LibTestBase < TestBase
 
   def setup
-    store_env_vars
+    super
     `rm -rf #{tmp_root}/*`
     `rm -rf #{tmp_root}/.git`
     `mkdir -p #{tmp_root}`
+  end
+
+  def teardown
+    super
   end
 
 end

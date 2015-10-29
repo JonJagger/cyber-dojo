@@ -26,6 +26,7 @@ class DockerRunnerTests < LibTestBase
     bash_stub(stub_docker_images_python_py_test, success)
     runner = make_docker_runner
     runner.refresh_cache
+    assert_equal 'docker images', @bash.spied[0]
     assert disk[caches.path].exists?(DockerRunner.cache_filename)
     assert runner.runnable?('cyberdojofoundation/python-3.3.5_pytest')
     refute runner.runnable?('cyberdojofoundation/not-installed')
@@ -33,8 +34,26 @@ class DockerRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test '2E8517',
+  'run() passes correct parameters to dedicated shell script' do
+    docker = make_docker_runner
+    lion = make_kata.start_avatar(['lion'])
+    bash_stub('output', success)
+    docker.run(lion.sandbox, max_seconds)
+    call = @bash.spied[0]
+    root_dir = File.expand_path('../..', File.dirname(__FILE__))
+    expected =
+      "#{root_dir}/lib/docker_runner.sh" +
+      " #{lion.sandbox.path}" +
+      " #{lion.kata.language.image_name}" +
+      " #{max_seconds}"
+    assert_equal expected, call
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test '6459A7',
-  'run() does not timeout' do
+  'run() gives exact output when it does not timeout' do
     docker = make_docker_runner
     @lion = make_kata.start_avatar(['lion'])
     bash_stub('salmon', success)
@@ -45,7 +64,7 @@ class DockerRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B8750C',
-  'run() times out' do
+  'run() output is replaced by timed-out message when it times out' do
     docker = make_docker_runner
     @lion = make_kata.start_avatar(['lion'])
     bash_stub('timed-out', times_out)

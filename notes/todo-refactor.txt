@@ -1,4 +1,11 @@
 
+
+--------------------------------------
+There is something odd happening in
+test/lib/test_docker_runner.rb
+default ENV vars, eg CYBER_DOJO_KATAS_ROOT
+are not being seen even though they are set
+in the test_external_helpers.rb setup() method.
 --------------------------------------
 D and Rust both have a single source file
 viz the tests have not been split off into
