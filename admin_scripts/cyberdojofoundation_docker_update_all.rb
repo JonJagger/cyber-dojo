@@ -1,7 +1,11 @@
 #!/usr/bin/env ruby
 
+def cdf
+  'cyberdojofoundation'
+end
+
 def foundation(original_name, updated_name = original_name)
-  [ "cyberdojo/" + original_name , "cyberdojofoundation/" + updated_name  ]
+  [ "cyberdojo/" + original_name , "#{cdf}/" + updated_name  ]
 end
 
 def conversion
@@ -84,8 +88,10 @@ def conversion
     foundation("javascript-0.10.15",                  "javascript-0.10.25"),
     foundation("javascript-0.10.15_assert",           "javascript-node_assert"),
     foundation("javascript-0.10.25_assert",           "javascript-node_assert"),
-    foundation("javascript-0.10.15_jasmine",          "javascript-node_jasmine-2.3"),
-    foundation("javascript-0.12.7_jasmine-2.3 ",      "javascript-node_jasmine-2.3"),
+    foundation("javascript-0.10.15_jasmine",          "javascript-node_jasmine"),
+    foundation("javascript-0.12.7_jasmine-2.3 ",      "javascript-node_jasmine"),
+    [ "#{cdf}/javascript-node_jasmine-2.3",    "#{cdf}/javascript-node_jasmine" ],
+
     foundation("javascript-mocha",                    "javascript-node_mocha_chai_sinon"),
     foundation("javascript-0.10.25_mocha_chai_sinon", "javascript-node_mocha_chai_sinon"),
     foundation("javascript-0.12.7_qunit_sinon_chai",  "javascript-node_qunit_sinon"),
@@ -125,22 +131,22 @@ end
 
 def installed_images
   output = `docker images 2>&1`
-  lines = output.split("\n").select{|line| line.start_with?('cyberdojo')}
-  lines.collect{|line| line.split[0]}.sort.uniq
+  lines = output.split("\n").select { |line| line.start_with?('cyberdojo') }
+  lines.collect { |line| line.split[0] }.sort.uniq
 end
 
 def ok_or_failed
-  $?.exitstatus === 0 ? 'OK' : 'FAILED'
+  $?.exitstatus == 0 ? 'OK' : 'FAILED'
 end
 
 def update_images
   images = installed_images
-  conversion.each do |old,new|
+  conversion.each do |old, new|
     if images.include?(old) && !images.include?(new)
       cmd = "docker pull #{new}"
       `#{cmd}`
       puts "  #{cmd} #{ok_or_failed}"
-      if $?.exitstatus === 0
+      if $?.exitstatus == 0
         cmd = "docker rmi #{old}"
         `#{cmd}`
         puts "  #{cmd} #{ok_or_failed}"
@@ -150,7 +156,7 @@ def update_images
 end
 
 def line
-  '-'*80
+  '-' * 80
 end
 
 def cyberdojo_foundation_docker_update_all
@@ -161,4 +167,3 @@ def cyberdojo_foundation_docker_update_all
   update_images
   puts line
 end
-
