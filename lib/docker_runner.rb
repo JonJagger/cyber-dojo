@@ -24,12 +24,12 @@ class DockerRunner
           " #{sandbox.path}" +
           " #{sandbox.avatar.kata.language.image_name}" +
           " #{max_seconds}"
-    output, exit_status = @bash.exec(cmd)
+    output, exit_status = bash.exec(cmd)
     exit_status != timed_out ? output : did_not_complete_in(max_seconds)
   end
 
   def refresh_cache
-    output, _ = @bash.exec('docker images')
+    output, _ = bash.exec('docker images')
     lines = output.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
     image_names = lines.collect { |line| line.split[0] }
     caches.write_json(self.class.cache_filename, image_names)
@@ -39,7 +39,7 @@ class DockerRunner
 
   include DidNotCompleteIn
 
-  attr_reader :caches
+  attr_reader :caches, :bash
 
   def image_names
     @image_names ||= caches.read_json(self.class.cache_filename)
