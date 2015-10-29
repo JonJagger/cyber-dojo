@@ -16,6 +16,12 @@ class DockerRunnerTests < LibTestBase
     @bash = BashStub.new
   end
 
+  attr_reader :bash
+
+  def make_docker_runner
+    DockerRunner.new(caches, bash)
+  end
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '75909D',
@@ -23,7 +29,7 @@ class DockerRunnerTests < LibTestBase
     ' and creates new cache-file in caches which determines runnability' do
     set_disk_class('DiskFake')
     refute disk[caches.path].exists?(DockerRunner.cache_filename)
-    bash_stub(stub_docker_images_python_py_test, success)
+    bash.stub(stub_docker_images_python_py_test, success)
     runner = make_docker_runner
     runner.refresh_cache
     assert_equal 'docker images', @bash.spied[0]
@@ -38,15 +44,15 @@ class DockerRunnerTests < LibTestBase
   'run() passes correct parameters to dedicated shell script' do
     docker = make_docker_runner
     lion = make_kata.start_avatar(['lion'])
-    bash_stub('output', success)
+    bash.stub('output', success)
     docker.run(lion.sandbox, max_seconds)
-    call = @bash.spied[0]
     root_dir = File.expand_path('../..', File.dirname(__FILE__))
     expected =
       "#{root_dir}/lib/docker_runner.sh" +
       " #{lion.sandbox.path}" +
       " #{lion.kata.language.image_name}" +
       " #{max_seconds}"
+    call = bash.spied[0]
     assert_equal expected, call
   end
 
@@ -55,10 +61,10 @@ class DockerRunnerTests < LibTestBase
   test '6459A7',
   'run() gives exact output when it does not timeout' do
     docker = make_docker_runner
-    @lion = make_kata.start_avatar(['lion'])
-    bash_stub('salmon', success)
-    output = docker.run(@lion.sandbox, max_seconds)
-    assert_equal 'salmon', output
+    lion = make_kata.start_avatar(['lion'])
+    bash.stub('syntax-error-line-1', success)
+    output = docker.run(lion.sandbox, max_seconds)
+    assert_equal 'syntax-error-line-1', output
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -66,9 +72,9 @@ class DockerRunnerTests < LibTestBase
   test 'B8750C',
   'run() output is replaced by timed-out message when it times out' do
     docker = make_docker_runner
-    @lion = make_kata.start_avatar(['lion'])
-    bash_stub('timed-out', times_out)
-    output = docker.run(@lion.sandbox, max_seconds)
+    lion = make_kata.start_avatar(['lion'])
+    bash.stub('ach-so-it-timed-out', times_out)
+    output = docker.run(lion.sandbox, max_seconds)
     assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds.")
   end
 
@@ -77,21 +83,11 @@ class DockerRunnerTests < LibTestBase
   test '87A438',
   'run() output is not truncated and no message is added' do
     docker = make_docker_runner
-    @lion = make_kata.start_avatar(['lion'])
-    big = 'X' * 75*1024
-    bash_stub(big, success)
-    output = docker.run(@lion.sandbox, max_seconds)
+    lion = make_kata.start_avatar(['lion'])
+    big = '.' * 75*1024
+    bash.stub(big, success)
+    output = docker.run(lion.sandbox, max_seconds)
     assert_equal big, output
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def make_docker_runner
-    DockerRunner.new(caches, @bash)
-  end
-
-  def bash_stub(output, exit_status)
-    @bash.stub(output, exit_status)
   end
 
 end
