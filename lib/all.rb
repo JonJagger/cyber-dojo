@@ -10,7 +10,6 @@
   did_not_complete_in
   docker_machine_runner
   docker_runner
-  host_runner
   host_disk
   host_dir
   host_git
