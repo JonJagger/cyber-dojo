@@ -180,6 +180,36 @@ Trying to run pgp again. Directly from command line.
 This time it worked!
 Ran script again.
 pgp failed again.
+Googling. Switched to different server.
+hkp://keyserver.ubuntu.com:80
+Seems more reliable.
+
+Now to install some containers.
+$ docker pull cyberdojofoundation/java-1.8_junit
+
+Re ran pull.sh
+Says docker is installed
+Says docker-machine is installed
+
+Back to server in browser.
+Yes. create page allows me to create java-junit dojo.
+Enter it.
+Hit test.
+Says
+Post http:///var/run/docker.sock/v1.20/containers/create: dial unix /var/run/docker.sock: permission denied.
+* Are you trying to connect to a TLS-enabled daemon without TLS?
+* Is your docker daemon up and running?
+
+
+How can I tell if the docker daemon is running?
+$ /etc/init.d/docker status
+
+Yup its running.
+
+
+
+
+
 
 
 
