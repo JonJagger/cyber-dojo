@@ -37,7 +37,7 @@ def conversion
 # C#
     language("csharp-2.10.8.1"),
     foundation("csharp-2.10.8.1_nunit",    "csharp_nunit"),
-    no_version("csharp-2.10.8.1_nunit",    "csharp_nunit")
+    no_version("csharp-2.10.8.1_nunit",    "csharp_nunit"),
     foundation("csharp-2.10.8.1_specflow", "csharp_specflow"),
     no_version("csharp-2.10.8.1_specflow", "csharp_specflow"),
 
@@ -49,14 +49,14 @@ def conversion
 # C (gcc)
     language("gcc-4.8.1",          "gcc-4.8.4"),
     foundation("gcc-4.8.1_assert",   "gcc_assert"),
-    no_version("gcc-4.8.4_assert",   "gcc_assert")
+    no_version("gcc-4.8.4_assert",   "gcc_assert"),
     foundation("gcc-4.8.1_cpputest", "gcc_cpputest"),
-    no_version("gcc-4.8.4_cpputest", "gcc_cpputest")
+    no_version("gcc-4.8.4_cpputest", "gcc_cpputest"),
     foundation("gcc-4.8.1_unity",    "gcc_unity"),
-    no_version("gcc-4.8.4_unity",    "gcc_unity")
+    no_version("gcc-4.8.4_unity",    "gcc_unity"),
 
 # C++ (clang++)
-    language("clang-3.6.0"),
+    language("clang-3.6.0", "clangpp-3.6.0"),
     foundation("clang-3.6.0_assert",     "clangpp_assert"),
     no_version("clang-3.6.0_assert",     "clangpp_assert"),
     foundation("clang-3.6.0_googletest", "clangpp_googletest"),
@@ -118,7 +118,7 @@ def conversion
 # Groovy
     language("groovy-2.2.0", "groovy-2.4.4"),
     foundation("groovy-2.2.0_junit", "groovy_junit"),
-    no_version("groovy-2.4.4_junit", "groovy_junit")
+    no_version("groovy-2.4.4_junit", "groovy_junit"),
     foundation("groovy-2.2.0_spock", "groovy_spock"),
     no_version("groovy-2.4.4_spock", "groovy_spock"),
 
