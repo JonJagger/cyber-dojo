@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/fsharp-3.0_nunit  .
+docker build -t cyberdojofoundation/fsharp_nunit  .

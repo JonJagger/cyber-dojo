@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/gcc-4.8.4_assert .
+docker build -t cyberdojofoundation/gcc_assert .
 

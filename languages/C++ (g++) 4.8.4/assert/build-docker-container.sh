@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/gpp-4.8.4_assert .
+docker build -t cyberdojofoundation/gpp_assert .
 
