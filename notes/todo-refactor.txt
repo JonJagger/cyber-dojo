@@ -67,10 +67,6 @@ porcupine, salmon, skunk, walrus, whale,
 10 mouse,parrot,peacock,penguin,puffin,ray,seal,starfish,tiger,toucan
 
 49-16=33  38-[bat,rabbit,rhino,squirrel,vulture]
-
-Try and make lighter background for these avatar images
-49:eagle, elephant, fox, heron, hyena, lizard, ostrich, porcupine, tuna, turtle,
-64:antelope, bat, bear, gopher, rhino
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 Cut from http://blog.cyber-dojo.org/2014/09/adding-new-language-and-unit-test-to-cyber-dojo.html
