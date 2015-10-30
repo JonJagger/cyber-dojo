@@ -36,6 +36,8 @@ class LanguagesManifestsTests < LanguagesTestBase
     end
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def manifests
     Dir.glob("#{root_path}languages/*/*/manifest.json")
   end
@@ -50,6 +52,7 @@ class LanguagesManifestsTests < LanguagesTestBase
     assert highlight_filenames_are_subset_of_visible_filenames?
     assert progress_regexs_valid?
     assert display_name_valid?
+    assert image_name_valid?
     refute filename_extension_starts_with_dot?
     assert cyberdojo_sh_exists?
     assert cyberdojo_sh_has_execute_permission?
@@ -186,6 +189,32 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  def image_name_valid?
+    parts = image_name.split('_')
+    if parts.size < 2
+      message = "#{manifest_filename}'s 'image_name':'#{image_name}'" +
+                " is not in 'language_test' format"
+      return false_puts_alert message
+    end
+    language_name = parts[0]
+    test_name = parts[1..-1].join('_')
+    if language_name.count("0-9") > 0
+      message = "#{manifest_filename}'s 'image_name':'#{image_name}'" +
+                " contains digits in the language name '#{language_name}"
+      return false_puts_alert message
+    end
+    if test_name.count(".0-9") > 0
+      unless [language_name,test_name] == ['bash','shunit2']
+        message = "#{manifest_filename}'s 'image_name':'#{image_name}'" +
+                  " contains digits in the test name '#{test_name}"
+        return false_puts_alert message
+      end
+    end
+    true_dot
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def filename_extension_starts_with_dot?
     if manifest['filename_extension'][0] != '.'
       message = "#{manifest_filename}'s 'filename_extension' does not start with a ."
@@ -269,7 +298,6 @@ class LanguagesManifestsTests < LanguagesTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def any_files_owner_is_root?
-    # for HostTestRunner
     (visible_filenames + ['manifest.json']).each do |filename|
       uid = File.stat(language_dir + '/' + filename).uid
       owner = Etc.getpwuid(uid).name
@@ -283,7 +311,6 @@ class LanguagesManifestsTests < LanguagesTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def any_files_group_is_root?
-    # for HostTestRunner
     (visible_filenames + ['manifest.json']).each do |filename|
       gid = File.stat(language_dir + '/' + filename).gid
       owner = Etc.getgrgid(gid).name
@@ -360,6 +387,10 @@ class LanguagesManifestsTests < LanguagesTestBase
     manifest_property
   end
 
+  def image_name
+    manifest_property.split('/')[1]
+  end
+
   def visible_filenames
     manifest_property || []
   end
@@ -377,7 +408,7 @@ class LanguagesManifestsTests < LanguagesTestBase
   end
 
   def manifest_property
-    property_name = (caller[0] =~ /`([^']*)'/ && $1)
+    property_name = /`(?<name>[^']*)/ =~ caller[0] && name
     manifest[property_name]
   end
 
