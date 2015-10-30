@@ -22,7 +22,7 @@ timeout --signal=${kill} $((max_seconds+5))s \
     --volume="${sandbox_path}:/sandbox:rw" \
     --workdir=/sandbox  \
     ${container_name} \
-    /bin/bash -c "timeout --signal=${kill} $((max_seconds))s ./cyber-dojo.sh 2>&1" 2>&1
+    /bin/bash -c "timeout --signal=${kill} $((max_seconds))s ./cyber-dojo.sh 2>&1" 2>/dev/null
 
 exit_status=$?
 

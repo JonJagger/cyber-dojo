@@ -19,7 +19,7 @@ On main server
 $ df -i
 Yes inodes are near 50% now.
 
-So build a new server. No wait. There are two issue.
+So building a *new* server. Wait. There are two issues.
 1) have area to work towards docker-machine on
 2) have Debian 8 based server ready to switch over to (rsync from main server)
 The current 100G backup server is enough for 1)
@@ -82,7 +82,7 @@ $ docker-machine --version
 docker-machine version 0.4.0 (9d0dc7a)
 
 
-Ok. I have a base platform.
+Built a new server.
 Reboot server and check cyber-dojo still comes up.
 Nope. 54.74.18.114 into browser and I get
   We're sorry, but something went wrong.
@@ -95,7 +95,13 @@ And yes we are up.
 $ ./admin_scripts/pull.sh
 Still all ok.
 
-So now to do docker-creates....
+So now I can work on script
+$ cdf-create NAME ARGS
+which under the hood does
+1) docker-machine create NAME ARGS
+2) sets up the node NAME
+   . www-data user
+   . rsync
 
 
 ====================================================================================
@@ -205,6 +211,139 @@ How can I tell if the docker daemon is running?
 $ /etc/init.d/docker status
 
 Yup its running.
+I was missing
+$ groupadd docker
+Added that to scripts.
+
+Now I can [test]
+But it says
+-------
+WARNING: Your kernel does not support memory swappiness capabilities, memory swappiness discarded.
+JUnit version 4.11-SNAPSHOT-20120416-1530
+.E
+Time: 0.024
+There was 1 failure:
+1) life_the_universe_and_everything(HikerTest)
+java.lang.AssertionError: expected:<42> but was:<54>
+	at HikerTest.life_the_universe_and_everything(HikerTest.java:10)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+-------
+
+Can I suppress the kernel warning?
+I guess it comes from [docker run]
+Doesnt seem to be a docker run --silent or --quiet
+Aha
+https://docs.docker.com/installation/ubuntulinux/
+Has some blurb about this...
+The file is for ubuntu and I'm on Debian.
+Trying them anyway.
+
+edited /etc/default/grub will need a sed command for that.
+$ update-grub
+$ reboot
+
+ssh back in
+Ok. Lets see.
+[test]
+No still get the same message.
+$ wget https://raw.githubusercontent.com/docker/docker/master/contrib/check-config.sh
+$ chmod +x check-config.sh
+$ ./check-config.sh
+Says
+cgroup hierarchy: properly mounted [/sys/fs/cgroup]
+- CONFIG_NAMESPACES: enabled
+Says
+CONFIG_MEMCG_SWAP_ENABLED: missing
+    (note that cgroup swap accounting is not enabled in your kernel config, you can enable it by setting boot option "swapaccount=1")
+Hmmm. Thought I did that.
+/boot/grubgrub.cfg
+Has not changed. Perhaps
+$ grub-mkconfig
+Nope. cfg file still looks the same.
+Is it a hypervisor problem?
+
+
+Of course I could always filter that off in the runner!
+WARNING: Your kernel does not support memory swappiness capabilities, memory swappiness discarded.
+
+Perhaps 2>&1 should *not* be done for the outer/inner timeout command?
+
+I can experiment by running commands from the terminal based
+on a known kata and avatar.
+
+$ docker run --help
+Suggests
+--memory-swappiness=-1
+
+Ok. On my server
+kata.id=201357D8C8
+avatar.name=koala
+Which is green with no infinite loops
+
+Get command from docker_runner.sh
+Drop cidfile
+Use --rm
+
+timeout --signal=9 15s \
+  docker run \
+    --rm \
+    --user=www-data \
+    --net=none \
+    --volume="/var/www/cyber-dojo/katas/20/1357D8C8/koala/sandbox:/sandbox:rw" \
+    --workdir=/sandbox  \
+    cyberdojofoundation/java-1.8_junit \
+    /bin/bash -c "timeout --signal=9 10s ./cyber-dojo.sh 2>&1" 2>&1
+
+Confirms that gives same warning
+
+
+Adding
+    --memory-swappiness=0 \
+or
+    --memory-swappiness=-1 \
+
+Warning still there
+Trying
+
+timeout --signal=9 15s \
+  docker run \
+    --rm \
+    --memory-swappiness=0 \
+    --user=www-data \
+    --net=none \
+    --volume="/var/www/cyber-dojo/katas/20/1357D8C8/koala/sandbox:/sandbox:rw" \
+    --workdir=/sandbox  \
+    cyberdojofoundation/java-1.8_junit \
+    /bin/bash -c "timeout --signal=9 10s ./cyber-dojo.sh 2>/dev/null" 2>/dev/null
+
+
+Yes. That gets rid of it.
+What about
+    /bin/bash -c "timeout --signal=9 10s ./cyber-dojo.sh 2>/dev/null"
+Still there
+What about
+    /bin/bash -c "timeout --signal=9 10s ./cyber-dojo.sh" 2>/dev/null
+That gets rid of it.
+Makes sense.
+What about
+    /bin/bash -c "timeout --signal=9 10s ./cyber-dojo.sh 2>&1" 2>/dev/null
+That seems best of all.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

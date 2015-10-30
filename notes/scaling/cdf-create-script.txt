@@ -1,0 +1,8 @@
+
+So now I can work on script
+$ cdf-create NAME ARGS
+which under the hood does
+1) docker-machine create NAME ARGS
+2) sets up the node NAME
+   . www-data user
+   . rsync
