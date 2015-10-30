@@ -1,4 +1,5 @@
 #!/bin/bash
+# Called from lib/docker_machine_runner.rb DockerMachineRunner.run()
 
 # parameters
 node_name=$1

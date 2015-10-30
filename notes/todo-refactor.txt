@@ -43,37 +43,34 @@ Split create page into two.
    CREATE and CANCEL
 
 --------------------------------------
-Try and make lighter background for these avatar images
-antelope, bat, bear, eagle, elephant, fox, gopher,
-heron, hyena, lizard, ostrich, porcupine, rhino,
-tuna, turtle,
---------------------------------------
 Great new avatars 38
 6 bat, bee, beetle, butterfly, crab, dolphin,
-5 eagle, fox, flamingo, heron, hummingbird,
+5 eagle, flamingo, fox, heron, hummingbird,
 4 hyena, jellyfish, kingfisher, leopard,
-6 lobster, mouse, ostrich, owl, parrot, puffin,
-6 peacock, penguin, rabbit, ray, rhino, seal,
+6 lobster, mouse, ostrich, owl, parrot, peacock,
+6 penguin, puffin, rabbit, ray, rhino, seal,
 6 shark, spider, squid, squirrel, starfish, swan,
-5 tiger, toucan, tuna, tuna, vulture,
+5 tiger, toucan, tuna, turtle, vulture,
 
-Others 10
+Plus 10 more
 antelope, bear, gopher, kangaroo, lizard,
 porcupine, salmon, skunk, walrus, whale,
 
-38+10=48
-48+16=64
-
-4x4=16
-5x5=25
-6x6=36
-7x7=49
 8x8=64
+7x7=49 <---
+6x6=36
+5x5=25
+4x4=16
 
-16+38=54
-2x27
-6x9
+6x6=36=16+20
+10 bee,beetle,butterfly,crab,dolphin,flamingo,hummingbird,jellyfish,leopard,lobster
+10 mouse,parrot,peacock,penguin,puffin,ray,seal,starfish,tiger,toucan
 
+49-16=33  38-[bat,rabbit,rhino,squirrel,vulture]
+
+Try and make lighter background for these avatar images
+49:eagle, elephant, fox, heron, hyena, lizard, ostrich, porcupine, tuna, turtle,
+64:antelope, bat, bear, gopher, rhino
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 Cut from http://blog.cyber-dojo.org/2014/09/adding-new-language-and-unit-test-to-cyber-dojo.html
