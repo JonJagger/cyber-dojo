@@ -57,7 +57,7 @@ class LanguagesManifestsTests < LanguagesTestBase
     refute any_files_owner_is_root?
     refute any_files_group_is_root?
     refute any_file_is_unreadable?
-    assert dockerfile_exists?
+    assert dockerfile_exists_and_contains_apt_get_update_upgrade_if_appropriate?
     assert build_docker_container_exists?
     assert build_docker_container_starts_with_cyberdojofoundation?
     assert created_kata_manifests_language_entry_round_trips?
@@ -307,9 +307,25 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def dockerfile_exists?
-    unless File.exists?(language_dir + '/' + 'Dockerfile')
-      return false_puts_alert "#{language_dir}/ dir does not contain a file called Dockerfile"
+  def dockerfile_exists_and_contains_apt_get_update_upgrade_if_appropriate?
+    dockerfile = language_dir + '/' + 'Dockerfile'
+    unless File.exists?(dockerfile)
+      return false_puts_alert "#{language_dir}/ dir does not contain a Dockerfile"
+    end
+    content = IO.read(dockerfile)
+    lines = content.strip.split("\n")
+    # 'empty' file
+    if lines.size == 2 && lines[0].start_with?('FROM') && lines[1].start_with?('MAINTAINER')
+      return true_dot
+    end
+    # no need
+    if lines.none? { |line| line.start_with?('RUN') }
+      return true_dot
+    end
+    required_lines = [ 'RUN apt-get update', 'RUN apt-get upgrade -y' ]
+    if required_lines.any? { |required_line| !content.include?(required_line) }
+      message = "#{dockerfile} does not have #{required_lines}"
+      return false_puts_alert message
     end
     true_dot
   end
