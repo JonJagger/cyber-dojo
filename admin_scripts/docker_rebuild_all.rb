@@ -1,19 +1,27 @@
 #!/usr/bin/ruby
 
-cyber_dojo_root = File.expand_path('..', File.dirname(__FILE__))
-
-language_dirs = []
-Dir.glob("#{cyber_dojo_root}/languages/*/") do |dir|
-  language_dirs << dir
+def cyber_dojo_root
+  '/var/www/cyber-dojo'
 end
 
-language_dirs.sort.each do |language_dir|
-  cmd = "cd '#{language_dir}'; ./build-docker-container.sh"
-  p cmd
-  `#{cmd}`
-  test_dirs = Dir.glob("#{language_dir}*/") do |test_dir|
-   cmd = "cd '#{test_dir}'; ./build-docker-container.sh"
-   p cmd
-   `#{cmd}`
-  end
+def build_docker_container_in(dir)
+   "cd '#{dir}'; ./build-docker-container.sh"
 end
+
+def print_and_run(command)
+  p command
+  `#{command}`
+end
+
+# have to do all language base containers first
+# because some test frameworks are based on
+# language containers for a different language
+
+Dir.glob("#{cyber_dojo_root}/languages/*/").sort.each do |language_dir|
+  print_and_run build_docker_container_in(language_dir)
+end
+
+Dir.glob("#{cyber_dojo_root}/languages/*/*/").sort.each do |test_dir|
+ print_and_run build_docker_container_in(test_dir)
+end
+
