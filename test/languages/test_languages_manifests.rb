@@ -4,12 +4,8 @@ require_relative './languages_test_base'
 
 class LanguagesManifestsTests < LanguagesTestBase
 
-  def build_docker_container
-    'build-docker-container.sh'
-  end
-
   test 'F6B9D6',
-  'Dockerfile of base languages' do
+  'no known flaws in Dockerfile of base language/' do
     Dir.glob("#{root_path}languages/*/").sort.each do |dir|
       @language = dir
       assert dockerfile_exists_and_is_well_formed?(dir + 'Dockerfile')
@@ -19,22 +15,20 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def manifests
-    Dir.glob("#{root_path}languages/*/*/manifest.json").sort
-  end
-
   test 'B892AA',
-  'manifests of each language_test' do
+  'no known flaws in Dockerfile and manifests of each language/test/' do
     manifests.each do |filename|
       folders = File.dirname(filename).split('/')[-2..-1]
       assert_equal 2, folders.size
       lang, test = folders
-      check_manifest("#{lang}-#{test}")
+      check_dockerfile_and_manifest("#{lang}-#{test}")
     end
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'D00EFE',
-  'no two manifests have the same image_name' do
+  'no two language manifests have the same image_name' do
     so_far = []
     manifests.each do |filename|
       manifest = JSON.parse(IO.read(filename))
@@ -44,8 +38,10 @@ class LanguagesManifestsTests < LanguagesTestBase
     end
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test '16735B',
-  'no two manifests have the same display_name' do
+  'no two language manifests have the same display_name' do
     so_far = []
     manifests.each do |filename|
       manifest = JSON.parse(IO.read(filename))
@@ -57,7 +53,7 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def check_manifest(language_name)
+  def check_dockerfile_and_manifest(language_name)
     @language = language_name
 
     assert dockerfile_exists_and_is_well_formed?
@@ -402,6 +398,14 @@ class LanguagesManifestsTests < LanguagesTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   private
+
+  def build_docker_container
+    'build-docker-container.sh'
+  end
+
+  def manifests
+    Dir.glob("#{root_path}languages/*/*/manifest.json").sort
+  end
 
   def display_name
     manifest_property
