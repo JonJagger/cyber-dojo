@@ -13,6 +13,7 @@ def foundation(old_name, new_name = old_name)
 end
 
 def no_version(old_name, new_name)
+  fail "no_version #{old_name} == #{new_name}" if old_name == new_name
   [ "#{cdf}/" + old_name , "#{cdf}/" + new_name  ]
 end
 
