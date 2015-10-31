@@ -4,7 +4,7 @@
 
 require 'json'
 
-cyber_dojo_root = File.expand_path('..', File.dirname(__FILE__))
+cyber_dojo_root = '/var/www/cyber-dojo'
 
 image_names = [ ]
 Dir.glob("#{cyber_dojo_root}/languages/*/*/manifest.json") do |file|
