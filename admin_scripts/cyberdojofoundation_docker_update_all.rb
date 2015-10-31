@@ -223,7 +223,7 @@ end
 def update_images
   images = installed_images
   conversion.each do |old, new|
-    if images.include?(old) || images.include?(new)
+    if images.include?(old) && !images.include?(new)
       cmd = "docker pull #{new}"
       print cmd
       `#{cmd}`
