@@ -3,7 +3,7 @@ MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 RUN apt-get update && apt-get install --yes \
   wget \
-  uznip
+  unzip
 
 RUN wget http://dl.bintray.com/groovy/maven/apache-groovy-binary-2.4.4.zip
 RUN unzip apache-groovy-binary-2.4.4.zip
