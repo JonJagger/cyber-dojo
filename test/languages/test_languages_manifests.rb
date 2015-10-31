@@ -362,7 +362,7 @@ class LanguagesManifestsTests < LanguagesTestBase
         "#{dockerfile} don't use\n" +
         "RUN apt-get install...\n" +
         "use\n" +
-        "RUN apt-get update && apt-get install -y ...'" +
+        "RUN apt-get update && apt-get install -y ...'\n" +
         "See #{help}"
       return false_puts_alert(message)
     end
