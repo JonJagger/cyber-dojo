@@ -4,8 +4,23 @@ require_relative './languages_test_base'
 
 class LanguagesManifestsTests < LanguagesTestBase
 
-def manifests
-    Dir.glob("#{root_path}languages/*/*/manifest.json")
+  def build_docker_container
+    'build-docker-container.sh'
+  end
+
+  test 'F6B9D6',
+  'Dockerfile of base languages' do
+    Dir.glob("#{root_path}languages/*/").sort.each do |dir|
+      @language = dir
+      assert dockerfile_exists_and_is_well_formed?(dir + 'Dockerfile')
+      assert build_docker_container_exists_and_is_well_formed?(dir + build_docker_container)
+    end
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def manifests
+    Dir.glob("#{root_path}languages/*/*/manifest.json").sort
   end
 
   test 'B892AA',
@@ -335,8 +350,7 @@ def manifests
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def dockerfile_exists_and_is_well_formed?
-    dockerfile = language_dir + '/' + 'Dockerfile'
+  def dockerfile_exists_and_is_well_formed?(dockerfile = language_dir + '/' + 'Dockerfile')
     unless File.exists?(dockerfile)
       message = "#{language_dir}/ dir has no Dockerfile"
       return false_puts_alert(message)
@@ -363,7 +377,7 @@ def manifests
         "#{dockerfile} don't use\n" +
         "RUN apt-get install...\n" +
         "use\n" +
-        "RUN apt-get update && apt-get install -y ...'\n" +
+        "RUN apt-get update && apt-get install --yes ...'\n" +
         "See #{help}"
       return false_puts_alert(message)
     end
@@ -372,11 +386,9 @@ def manifests
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def build_docker_container_exists_and_is_well_formed?
-    bdc = 'build-docker-container.sh'
-    filename = "#{language_dir}/#{bdc}"
+  def build_docker_container_exists_and_is_well_formed?(filename = "#{language_dir}/#{build_docker_container}")
     unless File.exists?(filename)
-      message = "#{language_dir}/ dir has no #{bdc}"
+      message = "#{language_dir}/ dir has no #{build_docker_container}"
       return false_puts_alert(message)
     end
     content = IO.read(filename)

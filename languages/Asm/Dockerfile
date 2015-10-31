@@ -1,4 +1,4 @@
 FROM       cyberdojofoundation/build-essential
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-RUN apt-get install -y nasm
+RUN apt-get update && apt-get install --yes nasm

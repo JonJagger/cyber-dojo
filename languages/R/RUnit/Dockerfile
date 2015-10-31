@@ -1,7 +1,7 @@
 FROM       cyberdojofoundation/r-3.0.1
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install --yes \
   wget
 
 ADD install_RUnit.R /
