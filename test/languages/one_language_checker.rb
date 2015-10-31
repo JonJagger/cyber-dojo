@@ -12,19 +12,20 @@ class OneLanguageChecker
     @verbose = verbose
   end
 
-  def check(name,test,verbose=false)
-    language_name = [name,test].join('-')
-    @language = languages[language_name]
+  def check(name, test, verbose = @verbose)
+    language_name = [name, test].join('-')
+    @language = Language.new(languages, name, test)
+    fail "Language.new(#{name},#{test}).nil?" if @language.nil?
     if true #@language.runnable?
-      vputs "  #{language_name} " + ('.' * (35-language_name.to_s.length))
+      vputs "  #{@language.name} " + ('.' * (35 - @language.name.to_s.length))
       t1 = Time.now
       rag = red_amber_green
       t2 = Time.now
       took = ((t2 - t1) / 3).round(2)
-      vputs " (~ #{took} seconds)\n"
+      vputs " (~ #{took} seconds each)\n"
       rag
     else
-      vputs " #{language_name} is not runnable"
+      vputs " #{@language.name} is not runnable"
     end
   end
 
@@ -34,7 +35,7 @@ private
 
   def red_amber_green
     # creates a new *dojo* for each red/amber/green
-    [:red,:amber,:green].map{ |colour|
+    [:red, :amber, :green].map { |colour|
       begin
         language_test(colour)
       rescue Exception => e
@@ -57,7 +58,7 @@ private
     to = pattern[colour]
 
     # Cucumber tests special case handling
-    if @language.name === 'Java-Cucumber' && colour === :amber
+    if @language.name == 'Java-Cucumber' && colour == :amber
       filename = 'Hiker.java'
       from = '}'
       to = '}typo'
