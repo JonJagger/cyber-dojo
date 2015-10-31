@@ -1,9 +1,6 @@
 FROM       cyberdojofoundation/groovy-2.4.4
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-RUN apt-get update
-RUN apt-get upgrade -y
-
 RUN mkdir /groovy
 RUN cp /groovy-2.4.4/embeddable/groovy-all-2.4.4.jar /groovy/
 RUN cp /groovy-2.4.4/lib/hamcrest-core-1.3.jar /groovy/

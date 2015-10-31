@@ -1,10 +1,8 @@
 FROM       cyberdojofoundation/visual_basic-0.5943
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-RUN apt-get update
-RUN apt-get upgrade -y
-
-RUN apt-get install -y nunit-console
+RUN apt-get update && apt-get install -y \
+  nunit-console
 
 # After much searching I came across this
 #   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=638337

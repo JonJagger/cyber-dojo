@@ -60,7 +60,7 @@ class LanguagesManifestsTests < LanguagesTestBase
     refute any_files_owner_is_root?
     refute any_files_group_is_root?
     refute any_file_is_unreadable?
-    assert dockerfile_exists_and_contains_apt_get_update_upgrade_if_appropriate?
+    assert dockerfile_exists_and_is_well_written?
     assert build_docker_container_exists?
     assert build_docker_container_starts_with_cyberdojofoundation?
     assert created_kata_manifests_language_entry_round_trips?
@@ -334,25 +334,37 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def dockerfile_exists_and_contains_apt_get_update_upgrade_if_appropriate?
+  def dockerfile_exists_and_is_well_written?
     dockerfile = language_dir + '/' + 'Dockerfile'
     unless File.exists?(dockerfile)
-      return false_puts_alert "#{language_dir}/ dir does not contain a Dockerfile"
+      message = "#{language_dir}/ dir does not contain a Dockerfile"
+      return false_puts_alert(message)
     end
     content = IO.read(dockerfile)
     lines = content.strip.split("\n")
-    # 'empty' file
-    if lines.size == 2 && lines[0].start_with?('FROM') && lines[1].start_with?('MAINTAINER')
-      return true_dot
+    help = 'https://docs.docker.com/articles/dockerfile_best-practices/'
+    if lines.any? { |line| line.start_with?('RUN apt-get upgrade') }
+      message =
+        "#{dockerfile} don't use\n" +
+        "RUN apt-get upGRADE\n" +
+        "See #{help}"
+      return false_puts_alert(message)
     end
-    # no need
-    if lines.none? { |line| line.start_with?('RUN') }
-      return true_dot
+    if lines.any? { |line| line.strip == 'RUN apt-get update' }
+      message =
+        "#{dockerfile} don't use single line\n" +
+        "RUN apt-get update\n" +
+        "See #{help}"
+      return false_puts_alert(message)
     end
-    required_lines = [ 'RUN apt-get update', 'RUN apt-get upgrade -y' ]
-    if required_lines.any? { |required_line| !content.include?(required_line) }
-      message = "#{dockerfile} does not have #{required_lines}"
-      return false_puts_alert message
+    if lines.any? { |line| line.start_with?('RUN apt-get install') }
+      message =
+        "#{dockerfile} don't use\n" +
+        "RUN apt-get install...\n" +
+        "use\n" +
+        "RUN apt-get update && apt-get install -y ...'" +
+        "See #{help}"
+      return false_puts_alert(message)
     end
     true_dot
   end
