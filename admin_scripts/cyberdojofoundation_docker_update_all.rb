@@ -143,7 +143,8 @@ def conversion
     no_version("java-1.8_powermockito", "java_powermockito"),
 
 # Javascript
-    language("javascript-0.10.15", "javascript-0.10.25"),
+    language("javascript-0.10.15", "javascript-node-2.1"),
+    language("javascript-0.10.25", "javascript-node-2.1"),
     foundation("javascript-0.10.15_assert",           "javascript-node_assert"),
     foundation("javascript-0.10.25_assert",           "javascript-node_assert"),
     foundation("javascript-0.10.15_jasmine",          "javascript-node_jasmine"),
