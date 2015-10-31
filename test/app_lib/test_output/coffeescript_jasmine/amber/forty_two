@@ -1,0 +1,6 @@
+Exception loading: /sandbox/hiker_spec.coffee
+{ [SyntaxError: unexpected identifier]
+  location: { first_line: 3, first_column: 9, last_line: 3, last_column: 12 },
+  toString: [Function],
+  code: 'class exports.Hiker\n\n  answer: () ->\n    6 * 9typo\n',
+  filename: '/sandbox/hiker.coffee' }
