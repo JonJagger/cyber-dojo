@@ -13,15 +13,11 @@ def print_and_run(command)
   `#{command}`
 end
 
-# have to do all language base containers first
-# because some test frameworks are based on
-# language containers for a different language
+print_and_run build_docker_container_in("#{cyber_dojo_root}/languages/build-essential")
 
 Dir.glob("#{cyber_dojo_root}/languages/*/").sort.each do |language_dir|
-  print_and_run build_docker_container_in(language_dir)
+  print_and_run(build_docker_container_in(language_dir))
+  Dir.glob("#{language_dir}*/").sort.each do |test_dir|
+    print_and_run(build_docker_container_in(test_dir))
+  end
 end
-
-Dir.glob("#{cyber_dojo_root}/languages/*/*/").sort.each do |test_dir|
- print_and_run build_docker_container_in(test_dir)
-end
-
