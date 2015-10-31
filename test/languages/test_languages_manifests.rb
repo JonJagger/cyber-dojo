@@ -4,13 +4,17 @@ require_relative './languages_test_base'
 
 class LanguagesManifestsTests < LanguagesTestBase
 
+def manifests
+    Dir.glob("#{root_path}languages/*/*/manifest.json")
+  end
+
   test 'B892AA',
-  'manifests of each languages' do
+  'manifests of each language_test' do
     manifests.each do |filename|
       folders = File.dirname(filename).split('/')[-2..-1]
       assert_equal 2, folders.size
       lang, test = folders
-      check("#{lang}-#{test}")
+      check_manifest("#{lang}-#{test}")
     end
   end
 
@@ -38,12 +42,12 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def manifests
-    Dir.glob("#{root_path}languages/*/*/manifest.json")
-  end
-
-  def check(language_name)
+  def check_manifest(language_name)
     @language = language_name
+
+    assert dockerfile_exists_and_is_well_formed?
+    assert build_docker_container_exists_and_is_well_formed?
+
     assert manifest_file_exists?
     assert required_keys_exist?
     refute unknown_keys_exist?
@@ -60,9 +64,6 @@ class LanguagesManifestsTests < LanguagesTestBase
     refute any_files_owner_is_root?
     refute any_files_group_is_root?
     refute any_file_is_unreadable?
-    assert dockerfile_exists_and_is_well_written?
-    assert build_docker_container_exists?
-    assert build_docker_container_starts_with_cyberdojofoundation?
     assert created_kata_manifests_language_entry_round_trips?
   end
 
@@ -334,10 +335,10 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def dockerfile_exists_and_is_well_written?
+  def dockerfile_exists_and_is_well_formed?
     dockerfile = language_dir + '/' + 'Dockerfile'
     unless File.exists?(dockerfile)
-      message = "#{language_dir}/ dir does not contain a Dockerfile"
+      message = "#{language_dir}/ dir has no Dockerfile"
       return false_puts_alert(message)
     end
     content = IO.read(dockerfile)
@@ -371,21 +372,16 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def build_docker_container_exists?
-    unless File.exists?(language_dir + '/' + 'build-docker-container.sh')
-      message = "#{language_dir}/ dir does not contain a file called build-docker-container.sh"
-      return false_puts_alert message
+  def build_docker_container_exists_and_is_well_formed?
+    bdc = 'build-docker-container.sh'
+    filename = "#{language_dir}/#{bdc}"
+    unless File.exists?(filename)
+      message = "#{language_dir}/ dir has no #{bdc}"
+      return false_puts_alert(message)
     end
-    true_dot
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def build_docker_container_starts_with_cyberdojofoundation?
-    filename = language_dir + '/' + 'build-docker-container.sh'
     content = IO.read(filename)
     unless /docker build -t cyberdojofoundation/.match(content)
-      message = "#{filename} does not contain 'docker build -t cyberdojofoundation/"
+      message = "#{filename} does not contain 'docker build -t cyberdojofoundation/..."
       return false_puts_alert message
     end
     true_dot
@@ -404,7 +400,11 @@ class LanguagesManifestsTests < LanguagesTestBase
   end
 
   def visible_filenames
-    manifest_property || []
+    manifest_property
+  end
+
+  def unit_test_framework
+    manifest_property
   end
 
   def progress_regexs
@@ -412,10 +412,6 @@ class LanguagesManifestsTests < LanguagesTestBase
   end
 
   def highlight_filenames
-    manifest_property || []
-  end
-
-  def unit_test_framework
     manifest_property || []
   end
 
