@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'json'
+
 def cdf
   'cyberdojofoundation'
 end
@@ -216,14 +218,42 @@ def installed_images
   lines.collect { |line| line.split[0] }.sort.uniq
 end
 
+def manifest_images_names
+  images_names = []
+  cyber_dojo_root = '/var/www/cyber-dojo'
+  Dir.glob("#{cyber_dojo_root}/languages/*/*/manifest.json") do |filename|
+    manifest = JSON.parse(IO.read(filename))
+    images_names << manifest['image_name']
+  end
+  images_names.sort
+end
+
 def ok_or_failed
   $?.exitstatus == 0 ? 'OK' : 'FAILED'
 end
 
 def update_images
-  images = installed_images
+  installed = installed_images
+  masters = manifet_images_names
   conversion.each do |old, new|
-    if images.include?(old) && !images.include?(new)
+    # This is a bit tricky. It's likely there is not enough disk space
+    # to pull all the new images and then remove all the old ones.
+    # And even if there was its not a great strategy because this script
+    # is being run after all [git pull] has happened. So if you update
+    # all the image_name's in the languages manifest.json files and then
+    # do an update there will be long period of time (when lots of new images
+    # are being pulled) when the server's state is wrong - since the image_names
+    # in the manifest.json files will not yet exist but the languages will still
+    # be present in the language cache.
+    # To solve this I git checkout one language at a time, eg
+    #   $ git checkout master
+    #   $ git checkout branch languages/Rust/*
+    #   $ cd /var/www/cyber-dojo
+    #   $ ./languages/refresh_cache.rb
+    # Then repeat for the other languages, one at a time.
+    # This minimizes the time when the state is wrong.
+
+    if installed.include?(old) && !installed.include?(new) && masters.include?(new)
       cmd = "docker pull #{new}"
       print cmd
       `#{cmd}`
