@@ -234,7 +234,7 @@ end
 
 def update_images
   installed = installed_images
-  masters = manifet_images_names
+  masters = manifest_images_names
   conversion.each do |old, new|
     # This is a bit tricky. It's likely there is not enough disk space
     # to pull all the new images and then remove all the old ones.
