@@ -209,7 +209,7 @@ def display_and_execute(command)
   print command
   `#{command}`
   outcome = $?.exitstatus
-  ok_or_failed = outcome == ? 'OK' : 'FAILED'
+  ok_or_failed = outcome == 0 ? 'OK' : 'FAILED'
   puts " --> #{ok_or_failed}"
   return outcome == 0
 end
@@ -290,8 +290,8 @@ def cyberdojo_foundation_docker_update_all
   update_existing_images(installed)
 
   puts line
-  puts 'Pulling new images - this may take a while.'
-  puts 'Affected languages will *NOT* work till the'
+  puts 'Checking for new images - this may take a while.'
+  puts 'New languages will *NOT* appear in cyber-dojo until their'
   puts 'pull completes and the languages caches is refreshed.'
   upgrade_to_new_images(installed)
 
