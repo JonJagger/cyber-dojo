@@ -27,8 +27,9 @@ class LanguageUpdater
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def update_existing_images
-    # docker pulls existig image_names if they are current masters.
-    # This can take a fair amount of time if there are lots of images.
+    # [docker pull]s existing image_names if they are current masters.
+    # Even if the image is not actually pulled it can take a second
+    # or so to check each image.
     display line
     display 'Updating existing images'
     conversion = conversion_images_names('new')
@@ -309,14 +310,14 @@ end
 # It's likely there is not enough disk space pull lots of new
 # images and then remove all the old ones.
 #
-# And even if there was its not a great strategy because this script
+# Even if there was its not a great strategy because this script
 # runs *after* [git pull]. So if you update all the image_name's in the
 # languages' manifest.json files there will be long period of time
 # (when lots of new images are being pulled) when the server's state is
 # wrong - the image_names in the manifest.json files will not yet exist
 # but the languages will still be present in the language cache.
 #
-# To minimize this I git checkout one language at a time.
+# In this situation git checkout one language at a time.
 # e.g., if the branch with the new image_names is called new-images
 #       and it contains image_name update for Rust then
 #
@@ -332,6 +333,4 @@ end
 # image_names become live).
 #
 # Then repeat for the other languages, one at a time.
-#
-# Note that this script is for DockerRunner not DockerMachineRunner.
 
