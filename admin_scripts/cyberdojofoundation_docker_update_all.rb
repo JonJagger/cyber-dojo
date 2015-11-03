@@ -97,7 +97,7 @@ class LanguageUpdater
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def display_and_run(command)
-    run("echo -n #{command}")
+    print command
     _, exit_status = run(command)
     ok_or_failed = exit_status == 0 ? 'OK' : 'FAILED'
     display " --> #{ok_or_failed}"
@@ -105,7 +105,7 @@ class LanguageUpdater
   end
 
   def display(string)
-    run "echo #{string}"
+    puts string
   end
 
   def run(command)
