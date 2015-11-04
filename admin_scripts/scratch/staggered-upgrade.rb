@@ -186,14 +186,25 @@ def cyber_dojo_root
   '/var/www/cyber-dojo'
 end
 
-# - - - - - - - - - - - - - - - - - - - - - - - -
+def refresh_languages_cache
+  cache_filename = dojo.caches.path + Languages.cache_filename
+  run("chmod --silent 666 #{cache_filename}")
+  #run("dojo.languages.refresh_cache")
+  dojo.languages.refresh_cache
+  run("chmod 444 #{cache_filename}")
+  run("chown www-data:www-data #{cache_filename}")
+end
+
+def refresh_docker_runner_cache
+  run("#{cyber_dojo_root}/lib/refresh_docker_runner_cache.rb")
+end
 
 Dir.glob("#{cyber_dojo_root}/languages/*/") do |name|
   p "------- #{name}"
   old_images_names = []
   new_images_names = []
-  Dir.glob("#{name}*/manifest.json") do |tf|
-    manifest = JSON.parse(IO.read(tf))
+  Dir.glob("#{name}*/manifest.json") do |manifest_filename|
+    manifest = JSON.parse(IO.read(manifest_filename))
     image_name = manifest['image_name']
 
     no_version_conversion.each do |old_name, new_name|
