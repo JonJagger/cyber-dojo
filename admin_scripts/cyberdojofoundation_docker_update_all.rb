@@ -7,6 +7,7 @@ class LanguageUpdater
 
   def initialize()
     @installed = installed_images_names
+    @masters = manifest_images_names
   end
 
   def delete_dead_images
@@ -20,7 +21,7 @@ class LanguageUpdater
     display 'Looking for dead images'
     conversion = conversion_images_names('old','new')
     installed.each do |image_name|
-      docker_rmi(image_name) if !conversion.include?(image_name)
+      docker_rmi(image_name) if !conversion.include?(image_name) && !masters.include?(image_name)
     end
   end
 
@@ -58,7 +59,7 @@ class LanguageUpdater
 
   private  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  attr_reader :installed
+  attr_reader :installed, :masters
 
   def installed_images_names
     output, _ = run('docker images 2>&1')
