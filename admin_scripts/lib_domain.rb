@@ -62,10 +62,10 @@ end
 
 def refactoring_ids
   ids = []
-  ids << 'E2285E5C2B'  # Yahtzee C#-NUnit deer 9
-  ids << '9D5B580C30'  # Yahtzee Java-JUnit deer 9
-  ids << '76DD58DE08'  # Yahtzee C++-assert frog 18
-  ids << '5C5B71C765'  # Yahtzee Python-unittest hippo 42
+  ids << 'E2285E5C2B'  # Yatzy C#-NUnit deer 9
+  ids << '9D5B580C30'  # Yatzy Java-JUnit deer 9
+  ids << '76DD58DE08'  # Yatzy C++-assert frog 18
+  ids << '5C5B71C765'  # Yatzy Python-unittest hippo 42
 
   # http://coding-is-like-cooking.info/2013/01/setting-up-a-new-code-kata-in-cyber-dojo/
   ids << '672E047F5D'  # Tennis  C#-NUnit buffalo 11
