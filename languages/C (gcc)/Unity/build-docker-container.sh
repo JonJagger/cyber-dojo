@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/gcc-4.8.4_unity .
+docker build -t cyberdojofoundation/gcc_unity .

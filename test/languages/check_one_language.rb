@@ -31,7 +31,7 @@ if !File.directory?(root_path + '/languages/' + language + '/' + test)
   exit
 end
 
-rag = OneLanguageChecker.new(verbose).check(language,test)
+rag = OneLanguageChecker.new(verbose).check(language, test)
 expected = ['red','amber','green']
 outcome = (rag === expected) ? 'PASS' : 'FAIL'
 puts "#{language}/#{test} --> #{rag} ==> #{outcome}"

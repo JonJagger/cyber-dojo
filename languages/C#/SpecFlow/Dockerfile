@@ -1,8 +1,9 @@
 FROM       cyberdojofoundation/csharp-2.10.8.1_nunit
 MAINTAINER Seb Rose <seb@claysnow.co.uk>
 
-RUN apt-get -y install wget
-RUN apt-get -y install unzip
+RUN apt-get update && apt-get -y install \
+  wget \
+  unzip
 
 RUN wget https://github.com/downloads/techtalk/SpecFlow/SpecFlow_v1.9.0_bin.zip
 RUN unzip SpecFlow_v1.9.0_bin.zip

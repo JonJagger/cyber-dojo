@@ -21,10 +21,10 @@ class OutputColourTests < AppLibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '9DBD7D',
-  'all saved TestRunner outputs are correctly coloured red/amber/green' do
+  'all saved Runner outputs are correctly coloured red/amber/green' do
     root = test_output_path
     disk[root].each_dir do |unit_test_framework|
-      ['red','amber','green'].each do |expected|
+      ['red', 'amber', 'green'].each do |expected|
         path = "#{root}/#{unit_test_framework}/#{expected}"
         dir = disk[path]
         dir.each_file do |filename|

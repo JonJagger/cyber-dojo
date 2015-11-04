@@ -1,0 +1,30 @@
+F
+
+Failures:
+
+  1) jasmine-node life the universe and everything
+   Message:
+     Expected 54 to equal 42.
+   Stacktrace:
+     Error: Expected 54 to equal 42.
+  at [object Object].<anonymous> (/sandbox/hiker_spec.coffee:7:30)
+  at Object.jasmine.executeSpecsInFolder (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/index.js:168:16)
+  at Object.<anonymous> (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/cli.js:248:9)
+  at Module._compile (module.js:456:26)
+  at Object.Module._extensions..js (module.js:474:10)
+  at Module.load (module.js:356:32)
+  at Function.Module._load (module.js:312:12)
+  at Module.require (module.js:364:17)
+  at require (module.js:380:17)
+  at Object.<anonymous> (/usr/local/lib/node_modules/jasmine-node/bin/jasmine-node:6:1)
+  at Module._compile (module.js:456:26)
+  at Object.Module._extensions..js (module.js:474:10)
+  at Module.load (module.js:356:32)
+  at Function.Module._load (module.js:312:12)
+  at Function.Module.runMain (module.js:497:10)
+  at startup (node.js:119:16)
+  at node.js:902:3
+
+
+Finished in 0.022 seconds
+1 test, 1 assertion, 1 failure, 0 skipped

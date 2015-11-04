@@ -233,10 +233,19 @@ module OutputColour # mix-in
     return :amber
   end
 
-  def self.parse_jasmine(output)
-    jasmine_pattern = /(\d+) specs?, (\d+) failures?/
-    if match = jasmine_pattern.match(output)
+  def self.parse_javascript_jasmine(output)
+    pattern = /(\d+) specs?, (\d+) failures?/
+    if match = pattern.match(output)
       match[2] == '0' ? :green : :red
+    else
+      :amber
+    end
+  end
+
+  def self.parse_coffeescript_jasmine(output)
+    pattern = /(\d+) test(s?), (\d+) assertion(s?), (\d+) failure(s?), (\d+) skipped/
+    if match = pattern.match(output)
+      match[5] == '0' ? :green : :red
     else
       :amber
     end

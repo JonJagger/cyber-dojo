@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/go-1.2.1_testing .
+docker build -t cyberdojofoundation/go_testing .
 

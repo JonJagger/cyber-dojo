@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/java-1.8_junit .
+docker build -t cyberdojofoundation/java_junit .

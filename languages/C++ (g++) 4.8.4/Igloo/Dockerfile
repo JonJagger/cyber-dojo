@@ -1,9 +1,6 @@
 FROM       cyberdojofoundation/gpp-4.8.4
 MAINTAINER Byran Wills-Heath <byran@adgico.co.uk>
 
-RUN apt-get update
-RUN apt-get upgrade -y
-
 WORKDIR /usr/src
 RUN git clone https://github.com/joakimkarlsson/igloo.git
 WORKDIR /usr/src/igloo

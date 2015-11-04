@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/gpp-4.8.4_googletest .
+docker build -t cyberdojofoundation/gpp_googletest .

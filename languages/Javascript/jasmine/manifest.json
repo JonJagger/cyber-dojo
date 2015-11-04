@@ -11,7 +11,7 @@
     "/(\d+) specs?, (0) failures?/"
   ],
   "filename_extension": ".js",
-  "unit_test_framework": "jasmine",
+  "unit_test_framework": "javascript_jasmine",
   "display_name": "Javascript, jasmine",
   "image_name": "cyberdojofoundation/javascript-node_jasmine",
   "tab_size": 2
