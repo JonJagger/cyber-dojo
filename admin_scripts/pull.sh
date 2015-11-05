@@ -58,7 +58,7 @@ rm $cyberDojoHome/Gemfile.lock
 bundle install
 
 # - - - - - - - - - - - - - - - - - - - - - - - - -
-$cyberDojoHome/admin_scripts/refresh_all_caches.rb
+$cyberDojoHome/admin_scripts/refresh_all_caches.sh
 
 # - - - - - - - - - - - - - - - - - - - - - - - - -
 echo "restarting apache"
