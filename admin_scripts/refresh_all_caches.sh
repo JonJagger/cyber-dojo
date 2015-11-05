@@ -1,6 +1,4 @@
-#!/usr/bin/env ruby
-
-require_relative './lib_domain'
+#!/bin/bash
 
 cyberDojoHome=/var/www/cyber-dojo
 
