@@ -2,7 +2,7 @@
 
 # as root
 
-cd /var/www/cyber-dojo/admin_scripts/rsync
+cd /var/www/cyber-dojo/admin_scripts/rsync_daemon_on_server
 cp etc_rsyncd.conf     /etc/rsyncd.conf
 cp etc_rsyncd.secrets  /etc/rsyncd.secrets
 chmod 600 /etc/rsyncd.secrets

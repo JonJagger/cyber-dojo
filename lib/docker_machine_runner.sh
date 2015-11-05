@@ -25,6 +25,7 @@ rsync \
 # 2. run avatar's test in node's container
 
 eval "$(docker-machine env ${node_name})"
+
 docker run \
   --rm \
   --user=www-data \
