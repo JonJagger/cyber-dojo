@@ -20,6 +20,6 @@ image_names.sort.each do |image_name|
 end
 
 puts "# -----------------------"
-puts "# now refresh the language cache"
-puts "$ cd #{cyber_dojo_root}/languages"
-puts "$ ./refresh_cache.rb"
+puts "# now refresh the caches"
+puts "$ cd #{cyber_dojo_root}/admin_scripts"
+puts "$ ./refresh_all_caches.sh"
