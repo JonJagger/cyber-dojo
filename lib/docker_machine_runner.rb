@@ -36,7 +36,7 @@ class DockerMachineRunner
     output, _exit_status = bash.exec(sudo('docker-machine ls -q'))
     nodes = output.split
     nodes.each do |node|
-      output, _exit_status = bash.exec(sudo("docker-machine ssh #{node} -- docker images"))
+      output, _exit_status = bash.exec(sudo("docker-machine ssh #{node} -- sudo docker images"))
       lines = output.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
       image_names = lines.collect { |line| line.split[0] }
       image_names.each do |image_name|

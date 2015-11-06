@@ -64,9 +64,9 @@ class DockerMachineRunnerTests < LibTestBase
     runner.refresh_cache
     # then
     assert disk[caches.path].exists?(DockerMachineRunner.cache_filename)
-    assert_equal 'sudo -u cyber-dojo docker-machine ls -q',                        bash.spied[0]
-    assert_equal 'sudo -u cyber-dojo docker-machine ssh node-00 -- docker images', bash.spied[1]
-    assert_equal 'sudo -u cyber-dojo docker-machine ssh node-01 -- docker images', bash.spied[2]
+    assert_equal 'sudo -u cyber-dojo docker-machine ls -q',                             bash.spied[0]
+    assert_equal 'sudo -u cyber-dojo docker-machine ssh node-00 -- sudo docker images', bash.spied[1]
+    assert_equal 'sudo -u cyber-dojo docker-machine ssh node-01 -- sudo docker images', bash.spied[2]
     assert runner.runnable?("#{cdf}/python-3.3.5_pytest")
     refute runner.runnable?("#{cdf}/not-installed")
   end
