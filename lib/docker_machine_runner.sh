@@ -39,12 +39,14 @@ exit_status=$?
 
 # - - - - - - - - - - - - - -
 # 3. rsync avatar's files back from the node
-
-rsync \
-  --archive \
-  --password-file=/home/cyber-dojo/rsyncd.password \
-  cyber-dojo@${ip_node}::tmp/${tmp_name}/ \
-  ${sandbox_path}
+# turned off because this is no longer being run
+# as www-data but as cyber-dojo user which does
+# not have rights
+#rsync \
+#  --archive \
+#  --password-file=/home/cyber-dojo/rsyncd.password \
+#  cyber-dojo@${ip_node}::tmp/${tmp_name}/ \
+#  ${sandbox_path}
 
 # - - - - - - - - - - - - - -
 # 4. remove temporary files from the node
