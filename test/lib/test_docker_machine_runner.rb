@@ -64,9 +64,9 @@ class DockerMachineRunnerTests < LibTestBase
     runner.refresh_cache
     # then
     assert disk[caches.path].exists?(DockerMachineRunner.cache_filename)
-    assert_equal 'docker-machine ls -q',                        bash.spied[0]
-    assert_equal 'docker-machine ssh node-00 -- docker images', bash.spied[1]
-    assert_equal 'docker-machine ssh node-01 -- docker images', bash.spied[2]
+    assert_equal 'sudo -u cyber-dojo docker-machine ls -q',                        bash.spied[0]
+    assert_equal 'sudo -u cyber-dojo docker-machine ssh node-00 -- docker images', bash.spied[1]
+    assert_equal 'sudo -u cyber-dojo docker-machine ssh node-01 -- docker images', bash.spied[2]
     assert runner.runnable?("#{cdf}/python-3.3.5_pytest")
     refute runner.runnable?("#{cdf}/not-installed")
   end
@@ -78,7 +78,7 @@ class DockerMachineRunnerTests < LibTestBase
     copy_caches_to_tmp_and_start_deer
     #kata = make_kata(unique_id, 'Python-py.test')
     script = lambda do |node|
-      "#{root_dir}/lib/docker_machine_runner.sh" +
+      "sudo -u cyber-dojo #{root_dir}/lib/docker_machine_runner.sh" +
       " #{node}" +
       " #{@deer.sandbox.path}" +
       " #{@deer.kata.language.image_name}" +

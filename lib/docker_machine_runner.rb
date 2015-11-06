@@ -27,16 +27,16 @@ class DockerMachineRunner
           " #{sandbox.path}" +
           " #{language.image_name}" +
           " #{max_seconds}"
-    output, exit_status = bash.exec(cmd)
+    output, exit_status = bash.exec(sudo(cmd))
     exit_status != timed_out ? output : did_not_complete_in(max_seconds)
   end
 
   def refresh_cache
     node_map = {}
-    output, _exit_status = bash.exec('docker-machine ls -q')
+    output, _exit_status = bash.exec(sudo('docker-machine ls -q'))
     nodes = output.split
     nodes.each do |node|
-      output, _exit_status = bash.exec("docker-machine ssh #{node} -- docker images")
+      output, _exit_status = bash.exec(sudo("docker-machine ssh #{node} -- docker images"))
       lines = output.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
       image_names = lines.collect { |line| line.split[0] }
       image_names.each do |image_name|
@@ -59,6 +59,19 @@ class DockerMachineRunner
 
   def timed_out
     (timeout=128) + (kill=9)
+  end
+
+  def sudo(command)
+    # docker-machine works by setting up environment variables telling
+    # the subsequent [docker run] command which node to run on.
+    # Some of these environment variables are file paths.
+    # These paths take the form ~/.docker/machine/...
+    # Thus the [docker-machine create] commands to setup the nodes have
+    # to be run as a user which can have environment variables.
+    # Which means it can't be www-data (which doesn't have a login shell).
+    # The username I choose is cyber-dojo.
+    # Note that this is a real user, (the rsync cyber-dojo user is not).
+    'sudo -u cyber-dojo ' + command
   end
 
 end
