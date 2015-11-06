@@ -17,7 +17,7 @@ kill=9
 
 rsync \
   --archive \
-  --password-file=/var/www/rsyncd.password \
+  --password-file=/home/cyber-dojo/rsyncd.password \
   ${sandbox_path} \
   cyber-dojo@${ip_node}::tmp/${tmp_name}
 
@@ -42,7 +42,7 @@ exit_status=$?
 
 rsync \
   --archive \
-  --password-file=/var/www/rsyncd.password \
+  --password-file=/home/cyber-dojo/rsyncd.password \
   cyber-dojo@${ip_node}::tmp/${tmp_name}/ \
   ${sandbox_path}
 
