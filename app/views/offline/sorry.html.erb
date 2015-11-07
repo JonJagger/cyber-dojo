@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <style type="text/css">
+	body
+	{
+	  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+	  background-color: #666;
+	  color: Khaki;
+	  text-align: center;
+	}
+	h1
+	{
+	  font-size: 2em;
+	  font-weight: normal;
+	}
+	.align-center
+	{
+	  text-align: center;
+	  margin-left: auto;
+	  margin-right: auto;
+	}
+  </style>
+</head>
+
+<body class="panel">
+
+  <% avatars = Avatars.names.shuffle %>
+  <% size = 75 %>
+
+  <h1>sorry - we're offline at the moment</h1>
+
+  <table class="align-center">
+	<% 4.times.each do |row| %>
+	<tr>
+	  <% 4.times.each do |col| %>
+	     <td>
+		  <% n = row*4 + col %>
+		  <img alt="<%= avatars[n] %>"
+		       class="avatar_image"
+			   height="<%= size %>"
+			   width="<%= size %>"
+		       src="/images/avatars/bw/<%= avatars[n]%>.jpg" />
+		 </td>
+	  <% end %>
+	</tr>
+	<% end %>
+  </table>
+
+</body>
+</html>

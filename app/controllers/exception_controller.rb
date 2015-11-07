@@ -5,4 +5,8 @@ class ExceptionController < ActionController::Base
     render 'error/sorry'
   end
 
+  def render_offline
+    render 'offline/sorry'
+  end
+
 end
