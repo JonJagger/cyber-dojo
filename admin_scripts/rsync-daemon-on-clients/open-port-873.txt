@@ -1,4 +1,0 @@
-# port 873 is the rsync port
-# run as sudo
-
-ufw allow 873/tcp

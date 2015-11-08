@@ -1,5 +1,0 @@
-
-Tiny Core linux is the OS you're in if from Docker Quickstart Terminal you do
-
-# docker-machine create --driver virtualbox node-00
-# docker-machine ssh node-00
