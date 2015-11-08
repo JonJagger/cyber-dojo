@@ -7,26 +7,28 @@ So I need a new user. Chose cyber-dojo but note this is different
 to the rsync cyber-dojo 'user' which is not a real user.
 
 So on Google Developers Console I created a new server node.
+Create server on GCE using Debian 8.1 Jessie
+Created 2CPU server with 200GB SSD drive (similar to amazon).
+Need big drive to hold katas/ and note cyber-dojo is inode hungry
+
 SSH'd into the node.
 
-$ userdel -r cyber-dojo
-$ adduser cyber-dojo
+o) create cyber-dojo user
 
-Added this line to /etc/sudoers.d/custom (new file) so www-data can sudo as cyber-dojo
-www-data ALL=(cyber-dojo:cyber-dojo) NOPASSWD:ALL
+  $ sudo su -
+  $ userdel -r cyber-dojo
+  $ adduser cyber-dojo
 
-o) Create server on GCE using SSD drive.
-   Created 2CPU server with 200GB SSD drive (similar to amazon).
-   Need big drive to hold katas/ and note cyber-dojo is inode hungry
-   Debian 8.1 Jessie
+  Added this line to /etc/sudoers.d/custom (new file) so www-data can sudo as cyber-dojo
+  www-data ALL=(cyber-dojo:cyber-dojo) NOPASSWD:ALL
 
-   Install docker
+o) Install docker
    had to do this first
    $ sudo apt-get install apt-transport-https
    Then I could follow instructions here
    http://docs.docker.com/engine/installation/debian/
 
-   Then install docker-machine
+o) Install docker-machine
    Had to do this first
    $ sudo apt-get install unzip
    Then I could follow instructions here
@@ -48,15 +50,7 @@ o) install cyber-dojo
    Running. Building ruby...   Finished.
    Ran $ sudo pull.sh
    And the server is UP!
-   Create page fails. What's in the log?
-   Ah I think its the old failure of the cache being empty.
-   $ sudo docker pull cyberdojofoundation/python_pytest
-   $ sudo ./admin_scripts/refresh_all_caches.sh
-   Yup. Now create page is ok.
-   [test] red/green/amber  All OK.
-   $ docker rmi cyberdojofoundation/python_pytest
-   Cos I don't need images on the server
-
+   Create page fails (no languages runnable yet).
 
 o) follow instructions at
   http://docs.docker.com/engine/installation/google/
@@ -74,6 +68,9 @@ o) open port tcp:873 (rsync) for server's IP on Google Developers Console
 o) put rsync files into /home/cyber-dojo
    Put new uuidgen password into (rsyncd.password and rsyncd.secrets)
    Put servers IP address into rsyncd.conf
+
+   That's the end of one-time only steps.
+   Following steps need to be reissued for each slave node.
 
 o) create a new node. Has to be done as cyber-dojo user
 
