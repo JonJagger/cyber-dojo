@@ -38,7 +38,6 @@ sudo unzip machine.zip && \
 sudo rm machine.zip && \
 sudo mv docker-machine* /usr/local/bin
 
-
 o) install cyber-dojo
 
    digital-ocean script is the best match as it assumes docker is
@@ -66,13 +65,17 @@ o) follow instructions at
 o) open port tcp:873 (rsync) for server's IP on Google Developers Console
 
 o) put rsync files into /home/cyber-dojo
-   Put new uuidgen password into (rsyncd.password and rsyncd.secrets)
+   Put new uuidgen password into rsyncd.password and rsyncd.secrets
    Put servers IP address into rsyncd.conf
+   Ensure password file (accessed in lib/docker_machine_runner.sh) has correct owner and permission
+   $ chown cyber-dojo:cyber-dojo /home/cyber-dojo/rsyncd.password
+   $ chmod 400 /home/cyber-dojo/rsyncd.password
 
    That's the end of one-time only steps.
    Following steps need to be reissued for each slave node.
 
 o) create a new node. Has to be done as cyber-dojo user
+   so the environment variables point to files it can access
 
   $ sudo su -
   $ sudo -u cyber-dojo /bin/bash
@@ -91,7 +94,7 @@ o) install rsync on the new node. Script auto reruns as cyber-dojo user anyway
   $ ./setup_rsync.sh cdf-gce-02
 
 o) Pull all container images onto new node.
-  Have to be root (user that can sudo -u)
+  Have to be root (user that can sudo -u cyber-dojo docker-machine)
   $ sudo su -
   $ ./pull_all.rb cdf-gce-02
 
@@ -101,6 +104,7 @@ o) Refresh the caches
   $ ./refresh_all_caches.sh
 
 o) Restart the server
+  As root again
   $ service apache2 restart
 
 

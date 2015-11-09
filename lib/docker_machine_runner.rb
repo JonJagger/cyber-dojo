@@ -1,8 +1,8 @@
 
 # test runner providing isolation/protection/security
-# via DockerMachine containers https://www.docker.io/
-# and relying on docker volume mounts on nodes to
-# give docker containers access to .../katas/...
+# via DockerMachine run containers https://www.docker.io/
+# and relying on docker volume mounts to temporary rync'd
+# locations to give docker containers access to .../katas/...
 
 class DockerMachineRunner
 
