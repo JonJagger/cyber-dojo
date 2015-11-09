@@ -727,33 +727,7 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var forkSucceededDialog = function(fork) {
-      var html = '' +
-          "<div class='align-center'>" +
-            "<div style='font-size:1.5em;'>" +
-              "your new cyber-dojo's id is" +
-            '</div>' +
-            "<div style='font-size:2.5em;'>" +
-                fork.id.substring(0,6) +
-            '</div>' +
-          "<div class='avatar-background'></div>" +
-          "</div>";
-      var succeeded =
-        $('<div>')
-          .html(html)
-          .dialog({
-            title: cd.dialogTitle('fork'),
-            autoOpen: false,
-            modal: true,
-            width: 435,
-            buttons: {
-              ok: function() {
-                var url = '/dojo/index/' + fork.id;
-                window.open(url);
-                $(this).remove();
-              }
-            }
-          });
-      succeeded.dialog('open');
+      cd.newDojoDialog('fork', fork.id).dialog('open');
     };
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -

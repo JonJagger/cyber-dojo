@@ -22,6 +22,9 @@ $(function() {
         var url = '/dojo/index/' + dojo.id;
         page.removeClass('busy');
         window.location = url;
+
+        // TODO: ...Open dialog...
+
       });
     };
 
@@ -39,7 +42,7 @@ $(function() {
     if (geo) {
       var fourSeconds = 4*1000;
       var options = { timeout: fourSeconds };
-      geo.getCurrentPosition(geoSuccess,geoFailure,options);
+      geo.getCurrentPosition(geoSuccess, geoFailure, options);
     } else {
       saveAndRedirect();
     }
