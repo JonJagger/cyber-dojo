@@ -11,7 +11,13 @@ table { border-spacing: 0; }
 
 body {
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  background: $darker-color;
+  //background: $darker-color;
+  background: linear-gradient( rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65) ),url('/images/avatars/bw/all_avatars_background.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
   padding: none;
   margin: 0em;
 }

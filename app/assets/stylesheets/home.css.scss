@@ -17,7 +17,7 @@
     width: 240px;
     padding-right: 20px;
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    color: $darker-color;
+    color: darken($darker-color, 10%);
     @include font-size-largest();
     margin-left: 10px;
     text-align: right;
