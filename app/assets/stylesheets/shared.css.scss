@@ -88,10 +88,10 @@ a:link, a:visited
 //----------------------------------------------
 
 .avatar-background {
-  background: url('/images/avatars/bw/avatars_background.png') no-repeat;
-       width: 400px;
-      height: 400px;
-  text-align: center;
+  background: url('/images/avatars/bw/all_avatars_background.png') no-repeat;
+       width: 315px;
+      height: 315px;
+  @include center-align;
   .centerer
   {
     display: inline-block;
@@ -100,8 +100,8 @@ a:link, a:visited
   }
   .avatar_image
   {
-     width: 150px;
-    height: 150px;
+     width: 125px;
+    height: 125px;
     vertical-align: middle;
   }
 }
