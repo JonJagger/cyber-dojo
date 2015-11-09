@@ -11,7 +11,7 @@ var cyberDojo = (function(cd, $) {
   };
 
   //- - - - - - - - - - - - - - - - - - - - -
-  
+
   cd.dialog_reEnter = function(title, cancel ,dialogHtml) {
     var buttons = { };
     buttons[cancel] = function() { $(this).dialog('close'); };
@@ -20,7 +20,7 @@ var cyberDojo = (function(cd, $) {
       .dialog({
         title: cd.dialogTitle(title),
         autoOpen: false,
-        width: 420,
+        width: 500,
         modal: true,
         buttons: buttons
       });
