@@ -9,10 +9,12 @@ var cyberDojo = (function(cd, $) {
         "<div style='font-size:1.5em;'>" +
           "your new cyber-dojo's id is" +
         '</div>' +
-        "<div style='font-size:2.5em;'>" +
+        "<div class='avatar-background'>" +
+          "<span class='centerer'></span>" +
+          "<span class='dojo-id'>" +
             id.substring(0,6) +
-        '</div>' +
-      "<div class='avatar-background'></div>" +
+          '</span>' +
+        "</div>" +
       "</div>";
     return $('<div>')
       .html(html)

@@ -11,6 +11,7 @@ $(function() {
     var latitude = undefined;     // Ensure params['latitude'] on the server to be nil not ''
     var longtitude = undefined;   // Ditto  params['longtitude']
 
+    var onceOnly = 0;
     var saveAndRedirect = function() {
       $.getJSON('/setup/save', {
           language: language,
@@ -24,7 +25,11 @@ $(function() {
           window.location = url;
         };
         page.removeClass('busy');
-        cd.newDojoDialog('create', dojo.id, okOrCancel).dialog('open');
+        // geo.getCurrentPosition()'s callbacks are not atomic!
+        onceOnly += 1;
+        if (onceOnly == 1) {
+          cd.newDojoDialog('create', dojo.id, okOrCancel).dialog('open');
+        }
       });
     };
 
