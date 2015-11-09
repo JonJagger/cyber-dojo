@@ -19,12 +19,12 @@ $(function() {
           latitude: latitude,
         longtitude: longtitude
       }, function(dojo) {
-        var url = '/dojo/index/' + dojo.id;
+        var okOrCancel = function(id) {
+          var url = '/dojo/index/' + id;
+          window.location = url;
+        };
         page.removeClass('busy');
-        window.location = url;
-
-        // TODO: ...Open dialog...
-
+        cd.newDojoDialog('create', dojo.id, okOrCancel).dialog('open');
       });
     };
 

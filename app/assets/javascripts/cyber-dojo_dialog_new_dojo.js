@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.newDojoDialog = function(title, id) {
+  cd.newDojoDialog = function(title, id, okCallBack) {
     var html = '' +
       "<div class='align-center'>" +
         "<div style='font-size:1.5em;'>" +
@@ -21,10 +21,14 @@ var cyberDojo = (function(cd, $) {
         autoOpen: false,
         modal: true,
         width: 435,
+        closeOnEscape: true,
+        close: function() {
+          okCallBack(id);
+          $(this).remove();
+        },
         buttons: {
           ok: function() {
-            var url = '/dojo/index/' + id;
-            window.open(url);
+            okCallBack(id);
             $(this).remove();
           }
         }

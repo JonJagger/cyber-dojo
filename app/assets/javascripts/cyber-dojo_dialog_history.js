@@ -727,7 +727,11 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var forkSucceededDialog = function(fork) {
-      cd.newDojoDialog('fork', fork.id).dialog('open');
+      var okOrCancel = function(id) {
+        var url = '/dojo/index/' + id;
+        window.open(url);
+      };
+      cd.newDojoDialog('fork', fork.id, okOrCancel).dialog('open');
     };
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
