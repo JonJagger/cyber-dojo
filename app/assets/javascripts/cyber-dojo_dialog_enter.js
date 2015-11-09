@@ -15,7 +15,7 @@ var cyberDojo = (function(cd, $) {
       .dialog({
         title: cd.dialogTitle('enter'),
         autoOpen: false,
-        width: 350,
+        width: 435,
         modal: true,
         buttons: buttons
       });
