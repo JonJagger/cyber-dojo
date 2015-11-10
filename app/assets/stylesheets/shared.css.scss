@@ -31,8 +31,7 @@ a:link, a:visited
   padding: 5px;
   border-radius: 5px;
   margin-left: 10px;
-  //background: lighten($darker-color, 6%);
-  background: #666;
+  background: $darker-color;
 }
 
 .diff-traffic-light, #yin-yang-logo { cursor: pointer; }

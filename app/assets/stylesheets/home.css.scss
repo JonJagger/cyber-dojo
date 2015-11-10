@@ -23,7 +23,7 @@
     width: 240px;
     padding-right: 20px;
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    color: darken($darker-color, 10%);
+    color: $darker-color;
     @include font-size-largest();
     margin-left: 10px;
     text-align: right;
@@ -71,7 +71,7 @@
   }
 
   .dot {
-    color: darken($lighter-color, 50%);
+    color: lighten($darker-color, 25%);
     &:after { content: '.'; }
   }
 }
