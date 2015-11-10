@@ -31,7 +31,8 @@ a:link, a:visited
   padding: 5px;
   border-radius: 5px;
   margin-left: 10px;
-  background: lighten($darker-color, 6%);
+  //background: lighten($darker-color, 6%);
+  background: #666;
 }
 
 .diff-traffic-light, #yin-yang-logo { cursor: pointer; }
@@ -103,18 +104,19 @@ a:link, a:visited
 
 #the-place-to-practice-programming {
   font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  font-size: 1.15em;
+  font-size: 1.25em;
   color: lighten($text-color, 5%);
   position: relative;
   top: -32px;
   margin-right: 2px;
+  margin-bottom: 5px;
 }
 
 #learn-more-button {
   width: 200px;
   padding-right: 20px;
   font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  color: $darker-color;
+  color: darken($darker-color, 10%);
   text-align: right;
   font-size: 0.87em;
   position: relative;
@@ -125,13 +127,16 @@ a:link, a:visited
 
 #cyber-dojo {
   font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  font-size: 7.25em;
+  font-size: 6.75em;
   color: $text-color;
   margin-bottom: 0px;
   padding-bottom: 0px;
   position: relative;
   left: 3px;
   top: -20px;
+  .dot-org {
+    font-size: 0.30em;
+  }
 }
 
 #home-page-logo {

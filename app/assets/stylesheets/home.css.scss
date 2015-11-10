@@ -5,11 +5,17 @@
   margin-top: 25px;
   margin-left: 0px;
 
-  #globe-container, #custom-container {
-    position: absolute;
-    left: 875px;
+  #globe-container {
+    position: relative;
+    left: 44px;
+    bottom: 5px;
   }
-  #globe-container  { top:  50px; #globe { border: 0; } }
+
+  #custom-container {
+    position: absolute;
+    left: 675px;
+    @include edged-panel();
+  }
   #custom-container { top: 350px; }
 
   #create-button, #existing-button,
@@ -24,26 +30,31 @@
   }
 
   #create-button, #existing-button {
-    width: 350px;
+    width: 550px;
     font-size: 2.5em;
     line-height: 95%;
     padding-top: 10px;
     padding-bottom: 10px;
+    margin-bottom: 10px;
   }
 
   #licensing-container {
     @include edged-panel();
-    width: 732px;
-    margin-top: 10px;
+    padding-left: 15px;
+    padding-right: 20px;
+    width: 328px;
     margin-bottom: 10px;
+    text-align: right;
   }
 
   #charity-container, #donate-container {
     font-size: 0.9em;
     @include edged-panel();
+    padding-right: 20px;
     margin: 0px;
     margin-left: 15px;
-    width: 340px;
+    margin-bottom: 10px;
+    width: 338px;
     text-align: right;
   }
 
@@ -53,14 +64,14 @@
     padding: 6px;
     text-align: center;
     line-height: 95%;
-  }
-
-  #donate-container #donate-button {
-    width: 102px;
-  }
-
-  #charity-container #charity-button {
+    margin-right: 0px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     width: 140px;
   }
 
+  .dot {
+    color: darken($lighter-color, 50%);
+    &:after { content: '.'; }
+  }
 }

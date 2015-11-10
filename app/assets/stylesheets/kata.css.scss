@@ -19,21 +19,24 @@
     margin-right: 0px;
     margin-bottom: 2px;
     padding: { top: 0px; bottom: 2px; left: 13px; right: 13px; }
+    text-align: right;
+    width: 95px;
   }
 
   #file-operations {
-    @include edged-panel();
     margin: { top: 2px; bottom: 4px; left: 16px; right: 1px; }
     #new, #rename, #delete {
+      font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
       text-align: right;
       font-size: 12px;
       margin-bottom: 2px;
+      padding-right: 13px;
       padding-bottom: 3px;
+      width: 95px;
     }
   }
 
   #filename-list {
-    @include edged-panel();
     margin-left: 15px;
     overflow-x: auto;
     overflow-y: auto;

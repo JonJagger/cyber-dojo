@@ -2,9 +2,8 @@
 <div id="home-page">
 
   <%= render partial: 'custom' %>
-  <%= render partial: 'globe' %>
 
-  <table class="align-right">
+  <table class="align-right" cellpadding="0" cellspacing="0">
 
     <tr>
       <td colspan="2">
@@ -25,23 +24,36 @@
     </tr>
 
     <tr>
-      <td class="align-right">
+      <td colspan="2">
         <%= render partial: 'create_button' %>
-      </td>
-      <td class="button-td">
-        <%= render partial: 'existing_button' %>
       </td>
     </tr>
 
     <tr>
       <td colspan="2">
-      <%= render partial: 'licensing' %>
+        <%= render partial: 'existing_button' %>
       </td>
     </tr>
 
     <tr>
-      <td><%= render partial: 'donate' %></td>
-      <td><%= render partial: 'charity' %></td>
+      <td rowspan="3">
+        <%= render partial: 'globe' %>
+      </td>
+      <td>
+        <%= render partial: 'licensing' %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <%= render partial: 'donate' %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <%= render partial: 'charity' %>
+      </td>
     </tr>
 
   </table>
