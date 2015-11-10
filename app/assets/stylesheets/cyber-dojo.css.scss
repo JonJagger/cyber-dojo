@@ -78,8 +78,8 @@ button[disabled] {
 
 div[class~='filename'] {
   @include font-size-small();
-  background: lighten($darker-color, 6%);
-  color: $lighter-color;
+  color: lighten($darker-color, 1%);
+  background: darken($lighter-color, 10%);
   margin: none;
   margin-bottom: 2px;
   padding: { left: 0.3em; right: 13px; }
@@ -92,8 +92,8 @@ div[class~='filename'] {
   &[class~='selected'] {
     // See app/assets/javascripts/cyber-dojo_file_load.js
     // function radioEntrySwitch()
-    background: darken($lighter-color, 10%);
-    color: $darker-color;
+    color: $lighter-color;
+    background: $darker-color;
     cursor: default;
   }
   text-align: right;

@@ -41,9 +41,6 @@
     overflow-x: auto;
     overflow-y: auto;
     div[class~='filename'][class~='highlight'] { &:before { content: ">"; } }
-    #radio_output, div[class~='filename'][class~='lowlight'] {
-      color: lighten($darker-color, 25%);
-    }
   }
 
   #traffic-lights {
@@ -70,9 +67,6 @@
   .file_content { overflow-x: auto; overflow-y: scroll; }
 
 }
-
-#new_filename, #rename_filename, #delete_filename { width: 270px !important; }
-
 
 #test-overlay {
     // mimic jQuery modal dialog background
