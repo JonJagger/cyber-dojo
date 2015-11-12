@@ -78,8 +78,8 @@ button[disabled] {
 
 div[class~='filename'] {
   @include font-size-small();
-  color: lighten($darker-color, 1%);
-  background: darken($lighter-color, 10%);
+  background: $darker-color;
+  color: lighten($darker-color, 15%);
   margin: none;
   margin-bottom: 2px;
   padding: { left: 0.3em; right: 13px; }
@@ -93,7 +93,7 @@ div[class~='filename'] {
     // See app/assets/javascripts/cyber-dojo_file_load.js
     // function radioEntrySwitch()
     color: $lighter-color;
-    background: lighten($darker-color, 8%);
+    background: $darker-color;
     cursor: default;
   }
   text-align: right;
@@ -103,8 +103,8 @@ div[class~="filename"]:hover, button:hover {
   border: $filename_and_button_border_size dotted lighten($darker-color, 20%);
 }
 
-div[class~="filename"], button[disabled]:hover {
-  border: $filename_and_button_border_size solid lighten($darker-color,6%);
+div[class~="filename"],  button[disabled]:hover {
+  border: $filename_and_button_border_size solid $darker-color;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -123,7 +123,7 @@ div[class~="filename"], button[disabled]:hover {
 }
 
 .line_numbers {
-  background: lighten($darker-color, 5%);
+  background: $darker-color;
   color: lighten($darker-color, 15%);
   font-weight: 100;
   text-align: right;
@@ -143,7 +143,7 @@ div[class~="filename"], button[disabled]:hover {
 }
 
 .file_content {
-  background: lighten($darker-color, 5%);
+  background: $darker-color;
   color: $lighter-color;
   border: 1px solid lighten($darker-color, 6%);
   border-left: none;
