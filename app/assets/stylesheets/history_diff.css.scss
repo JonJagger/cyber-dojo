@@ -135,6 +135,7 @@
   }
 
   .diff-line-numbers, .diff-sheet {
+    background: lighten($darker-color, 3%);
     margin: 0px;
     padding: 0px;
     @include code-font;
@@ -144,7 +145,6 @@
     added   { color: $diff-added-color; }
     deleted { color: $diff-deleted-color; }
     same    { color: $lighter-color; }
-    :hover { background: lighten($darker-color,10%); }
   }
 
   .diff-line-numbers {
@@ -152,7 +152,6 @@
     margin-left: 2px;
     text-align: right;
     overflow: hidden;
-    background: lighten($darker-color, 6%);
     color: lighten($darker-color, 10%);
     border: none;
     position: relative; // lose 1px gap to file-content
@@ -170,9 +169,10 @@
     overflow-y: scroll;
     &::-webkit-scrollbar:vertical { width: 8px; }
     outline: none;
-    background: lighten($darker-color, 6%);
     border: none;
+    padding-left: 2px;
     added, deleted, same { padding-left: 3px; }
+    :hover { background: lighten($darker-color,10%); }
   }
 
   .diff-deleted-line-count, .diff-added-line-count {

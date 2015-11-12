@@ -107,11 +107,10 @@ a:link, a:visited
   color: $text-color;
   margin-bottom: 0px;
   padding-bottom: 0px;
-  //position: relative;
-  //left: 3px;
-  //top: -5px;
   .dot-org {
     font-size: 0.30em;
+    position: relative;
+    left: -3px;
   }
 }
 
@@ -127,9 +126,9 @@ a:link, a:visited
   font-size: 2.32em;
   color: lighten($text-color, 5%);
   position: relative;
-  top: -5px;
+  top: -9px;
   margin-right: 2px;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
 }
 
 #learn-more-button {
@@ -139,9 +138,6 @@ a:link, a:visited
   color: darken($darker-color, 10%);
   text-align: right;
   font-size: 0.87em;
-  //position: relative;
-  //top: -25px;
-  //left: 2px;
   padding-bottom: 4px;
 }
 
