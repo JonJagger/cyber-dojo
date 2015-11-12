@@ -9,16 +9,12 @@
   margin-left: 35px;
 
   .filename {
-	  font-size: 11pt;
-  }
-
-  #tests-container {
-	  .filename {
-	    width: 110px;
-	  }
+    font-size: 11pt;
+    width: 165px;
   }
 
   #languages-container, #tests-container, #exercises-container {
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     height: 475px;
     padding-right: 3px;
     margin-right: 5px;
@@ -28,32 +24,34 @@
       padding-right: 5px;
     }
     &::-webkit-scrollbar:vertical { width: 5px; }
+    div[class~='filename'] {
+      @include font-size-medium();
+      &[class~='selected'] {
+        font-style: bold;
+        color: darken($lighter-color, 5%);
+      }
+    }
   }
 
   #choose-language, #choose-tests, #choose-exercise {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     color: darken($lighter-color, 5%);
-    @include font-size-large();
+    @include font-size-larger();
     margin-bottom: 5px;
     padding-left: 0px;
-  }
-
-  #choose-language { text-align: right; margin-right: 10px; }
-  #choose-tests    { text-align: right; margin-right: 10px; }
-  #choose-exercise { text-align: left; }
-
-  #exercises-container, #tests-container, #choose-tests {
-    //padding-left: 15px;
+    text-align: right;
+    margin-right: 10px;
+    &:after {
+      @include font-size-tiny();
+      content: '?';
+    }
   }
 
   #instructions {
     color: $lighter-color;
-    background: lighten($darker-color, 1%);
+    background: lighten($darker-color, 2%);
     border-top-left-radius: 5px;
-    border-top: 1px solid lighten($darker-color, 6%);
-    border-left: 1px solid lighten($darker-color, 6%);
-    border-bottom: none;
-    border-right: none;
+    border: none;
     height: 465px;
     width: 550px;
     margin-left: 0px;
@@ -61,14 +59,21 @@
     overflow-y: scroll;
     padding: 5px;
     outline: none;
-    @include code-font();
     &::-webkit-scrollbar:vertical { width: 5px; }
+    @include code-font();
   }
 
   #create {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-largest();
-    margin: { top: 5px; right: 50px; }
+    margin: { top: 5px; right: 0px; }
+    position: relative;
+    left: 7px;
+  }
+
+  #a-new-cyber-dojo {
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    @include font-size-largest();
   }
 
 }

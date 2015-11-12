@@ -118,7 +118,7 @@ div[class~="filename"][class~='selected']:hover {
 .line_numbers, .file_content, .diff_line_numbers, #instructions { @include code-font; }
 
 .line_numbers, .file_content {
-  background: lighten($darker-color, 1%);
+  background: lighten($darker-color, 2%);
   border: 0px;
   margin: 0px;
   padding: 0px;
@@ -136,21 +136,14 @@ div[class~="filename"][class~='selected']:hover {
   padding-right: 4px;
   padding-top: 2px;
   width: 32px;
-  border: 1px solid lighten($darker-color, 6%);
-  border-right: none;
-  border-bottom: none;
   outline: none;
   position: relative; // lose 1px gap to file-content
   left: 2px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+  border-top-left-radius: 10px;
 }
 
 .file_content {
   color: $lighter-color;
-  border-top: 1px solid lighten($darker-color, 6%);
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
   width: 720px;
   font-weight: 500;
   // if padding-left gets too large it pushes the background to the
