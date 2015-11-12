@@ -14,7 +14,7 @@ $green: #0F0;
 .timed_out { color: darkGray; }
 
 $diff-added-color: lighten($green, 25%);
-$diff-deleted-color: lighten($red, 35%);
+$diff-deleted-color: lighten($red, 25%);
 
 
 $thin-space: "\2009";

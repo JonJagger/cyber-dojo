@@ -25,7 +25,7 @@ var cyberDojo = (function(cd, $) {
     // function invoked when the radio button filename is clicked sees
     //    $('input:radio[name=filename]:checked')
     // as having _already_ changed. Thus you cannot retrieve the
-    // old filename. 
+    // old filename.
     return $('#current-filename').val();
   };
 
@@ -44,7 +44,16 @@ var cyberDojo = (function(cd, $) {
     filenames.splice(filenames.indexOf('output'), 1);
     filenameList.empty();
     filenameList.append(cd.makeFileListEntry('output'));
-    filenames.sort();
+
+    // sort filenames so files with the same
+    // extension appear be next to each other
+    var reverse = function(s) {
+      return s.split('').reverse().join('');
+    };
+    filenames.sort(function(lhs,rhs) {
+      return reverse(lhs).localeCompare(reverse(rhs));
+    });
+
     // then highlight filenames
     $.each(filenames, function(_, filename) {
       if (!cd.inArray(filename, cd.lowlightFilenames())) {
@@ -120,7 +129,7 @@ var cyberDojo = (function(cd, $) {
     });
     // For some reason, setting wrap cannot be done as per the
     // commented out line above... when you create a new file in
-    // FireFox 17.0.1 it still wraps at the textarea width. 
+    // FireFox 17.0.1 it still wraps at the textarea width.
     // So instead I do it like this, which works in FireFox?!
     text.attr('wrap', 'off');
 

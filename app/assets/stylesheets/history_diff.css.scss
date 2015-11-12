@@ -143,7 +143,7 @@
     added, deleted, same { @include diff-pre-block; }
     added   ln { color: $diff-added-color; }
     deleted ln { color: $diff-deleted-color; }
-    same    ln { color: lighten($darker-color,30%); }
+    same    ln { color: lighten($darker-color,10%); }
   }
 
   .diff-line-numbers {
@@ -151,14 +151,19 @@
     margin-left: 2px;
     text-align: right;
     overflow: hidden;
-    background: lighten($darker-color,6%);
-    border: 1px dotted lighten($darker-color,6%);
+
+    background: $darker-color;
+    color: lighten($darker-color, 10%);
+
+    border: 1px dotted lighten($darker-color,10%);
     border-right: none;
     border-bottom: none;
     position: relative; // lose 1px gap to file-content
     left: 2px;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
+    deleted ln { &:before { content: '-'; } }
+      added ln { &:before { content: '+'; } }
   }
 
   .diff-sheet {
@@ -167,19 +172,22 @@
     overflow-y: scroll;
     &::-webkit-scrollbar:vertical { width: 8px; }
     outline: none;
-    color     : $darker-color;
-    background: $lighter-color;
+    background: $darker-color;
+    color: $lighter-color;
+    border-top: 1px dotted lighten($darker-color,10%);
+
     added, deleted, same { padding-left: 3px; }
     added {
-      background: $diff-added-color;
-      &:hover { background: lighten($diff-added-color,10%); }
+      color: $diff-added-color;
+      background: $darker-color;
+      &:hover { background: lighten($darker-color,10%); }
     }
     deleted {
-      background: $diff-deleted-color;
-      text-decoration: line-through;
-      &:hover { background: lighten($diff-deleted-color,5%); }
+      color: $diff-deleted-color;
+      background: $darker-color;
+      &:hover { background: lighten($darker-color,5%); }
     }
-    same { &:hover { background: lighten($lighter-color,10%); } }
+    same { &:hover { background: lighten($darker-color,5%); } }
   }
 
   .diff-deleted-line-count, .diff-added-line-count {
