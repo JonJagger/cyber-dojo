@@ -4,10 +4,14 @@
 <div id="setup-page">
   <table>
     <tr>
-      <th><div id="choose-language">language</div></th>
-      <th><div id="choose-tests">tests</div></th>
-      <th><div id="choose-exercise">exercise</div></th>
-      <th></th>
+      <th colspan="4">
+        <div id="prepare-a-new-practice">prepare a new practice</div>
+      </th>
+    <tr>
+      <td><div id="choose-language">language</div></td>
+      <td><div id="choose-tests">tests</div></td>
+      <td><div id="choose-exercise">exercise</div></td>
+      <td></td>
     </tr>
     <tr>
       <td class="valign-top">
@@ -26,11 +30,10 @@
     <tr>
       <td></td>
       <td></td>
-      <td>
-        <%= render partial: 'create_button' %>
+      <td class="align-right">
+        <%= render partial: 'ok_button' %>
 	    </td>
       <td>
-        <div id="a-new-cyber-dojo">a new cyber-dojo</div>
       </td>
     </tr>
   </table>

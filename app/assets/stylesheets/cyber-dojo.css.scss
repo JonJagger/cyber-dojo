@@ -118,7 +118,7 @@ div[class~="filename"][class~='selected']:hover {
 .line_numbers, .file_content, .diff_line_numbers, #instructions { @include code-font; }
 
 .line_numbers, .file_content {
-  background: lighten($darker-color, 2%);
+  background: lighten($darker-color, 6%);
   border: 0px;
   margin: 0px;
   padding: 0px;

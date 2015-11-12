@@ -101,38 +101,15 @@ a:link, a:visited
 
 //----------------------------------------------
 
-#the-place-to-practice-programming {
-  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  font-size: 1.25em;
-  color: lighten($text-color, 5%);
-  position: relative;
-  top: -32px;
-  margin-right: 2px;
-  margin-bottom: 5px;
-}
-
-#learn-more-button {
-  width: 200px;
-  padding-right: 20px;
-  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  color: darken($darker-color, 10%);
-  text-align: right;
-  font-size: 0.87em;
-  position: relative;
-  top: -25px;
-  left: 2px;
-  padding-bottom: 4px;
-}
-
 #cyber-dojo {
   font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   font-size: 6.75em;
   color: $text-color;
   margin-bottom: 0px;
   padding-bottom: 0px;
-  position: relative;
-  left: 3px;
-  top: -20px;
+  //position: relative;
+  //left: 3px;
+  //top: -5px;
   .dot-org {
     font-size: 0.30em;
   }
@@ -144,3 +121,27 @@ a:link, a:visited
   top: -50px;
   right: -35px;
 }
+
+#the-place-to-practice-programming {
+  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  font-size: 2.32em;
+  color: lighten($text-color, 5%);
+  position: relative;
+  top: -5px;
+  margin-right: 2px;
+  margin-bottom: 5px;
+}
+
+#learn-more-button {
+  width: 200px;
+  padding-right: 20px;
+  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  color: darken($darker-color, 10%);
+  text-align: right;
+  font-size: 0.87em;
+  //position: relative;
+  //top: -25px;
+  //left: 2px;
+  padding-bottom: 4px;
+}
+

@@ -1,5 +1,18 @@
 
 --------------------------------------
+new black-background colour scheme needs
+to have custom cursor on textarea that
+shows up better.
+--------------------------------------
+NEW UX
+enter page needs main title "join a prepared practice"
+no footer on setup page
+different footer on test page
+home page learn-more-button is same as help link on footer
+- - - - - - - - -
+filename-knave ordering on diff-dialog needs
+to match test-page filename-knave ordering
+--------------------------------------
 Why is test/lib/disk_stub_cache.json
 not being gitignored? How do you debug this?
 --------------------------------------

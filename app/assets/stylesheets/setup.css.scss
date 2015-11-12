@@ -5,12 +5,18 @@
 
 #setup-page {
 
-  margin-top: 25px;
-  margin-left: 35px;
+  margin: { top: 35px; left: 35px; }
 
   .filename {
     font-size: 11pt;
     width: 165px;
+  }
+
+  #prepare-a-new-practice {
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    color: darken($lighter-color, 5%);
+    font-size: 4.10em;
+    text-align: left;
   }
 
   #languages-container, #tests-container, #exercises-container {
@@ -49,7 +55,7 @@
 
   #instructions {
     color: $lighter-color;
-    background: lighten($darker-color, 2%);
+    background: lighten($darker-color, 5%);
     border-top-left-radius: 5px;
     border: none;
     height: 465px;
@@ -63,17 +69,12 @@
     @include code-font();
   }
 
-  #create {
+  #ok {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-largest();
     margin: { top: 5px; right: 0px; }
     position: relative;
-    left: 7px;
-  }
-
-  #a-new-cyber-dojo {
-    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    @include font-size-largest();
+    right: 10px;
   }
 
 }
