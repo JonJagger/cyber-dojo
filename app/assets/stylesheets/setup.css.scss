@@ -25,8 +25,9 @@
     overflow-y: auto;
     overflow-x: hidden;
     .filename {
-      padding-right: 20px;
+      padding-right: 5px;
     }
+    &::-webkit-scrollbar:vertical { width: 5px; }
   }
 
   #choose-language, #choose-tests, #choose-exercise {
@@ -34,31 +35,40 @@
     color: darken($lighter-color, 5%);
     @include font-size-large();
     margin-bottom: 5px;
+    padding-left: 0px;
   }
 
-  #exercises-container, #choose-exercise,
-  #tests-container, #choose-tests {
-    padding-left: 15px;
+  #choose-language { text-align: right; margin-right: 10px; }
+  #choose-tests    { text-align: right; margin-right: 10px; }
+  #choose-exercise { text-align: left; }
+
+  #exercises-container, #tests-container, #choose-tests {
+    //padding-left: 15px;
   }
 
   #instructions {
+    color: $lighter-color;
+    background: lighten($darker-color, 1%);
+    border-top-left-radius: 5px;
+    border-top: 1px solid lighten($darker-color, 6%);
+    border-left: 1px solid lighten($darker-color, 6%);
+    border-bottom: none;
+    border-right: none;
     height: 465px;
     width: 550px;
     margin-left: 0px;
     font-size: 12pt;
-    background: $lighter-color;
-    color: $darker-color;
     overflow-y: scroll;
     padding: 5px;
-    border: 0px;
     outline: none;
     @include code-font();
+    &::-webkit-scrollbar:vertical { width: 5px; }
   }
 
   #create {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-largest();
-    margin: { top: 20px; right: 50px; }
+    margin: { top: 5px; right: 50px; }
   }
 
 }
