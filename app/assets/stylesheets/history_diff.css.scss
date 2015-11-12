@@ -141,9 +141,10 @@
     font-size: 10pt;
     ln { margin: { left : 4px; right: 3px; } font-weight: normal; }
     added, deleted, same { @include diff-pre-block; }
-    added   ln { color: $diff-added-color; }
-    deleted ln { color: $diff-deleted-color; }
-    same    ln { color: lighten($darker-color,10%); }
+    added   { color: $diff-added-color; }
+    deleted { color: $diff-deleted-color; }
+    same    { color: $lighter-color; }
+    :hover { background: lighten($darker-color,10%); }
   }
 
   .diff-line-numbers {
@@ -151,19 +152,16 @@
     margin-left: 2px;
     text-align: right;
     overflow: hidden;
-
-    background: $darker-color;
+    background: lighten($darker-color, 6%);
     color: lighten($darker-color, 10%);
-
-    border: 1px dotted lighten($darker-color,10%);
-    border-right: none;
-    border-bottom: none;
+    border: none;
     position: relative; // lose 1px gap to file-content
     left: 2px;
     border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    deleted ln { &:before { content: '-'; } }
-      added ln { &:before { content: '+'; } }
+    added   { &:after { content: '+'; } }
+    deleted { &:after { content: '-'; } }
+    same    { &:after { content: '='; } }
+    same    { color: lighten($darker-color,20%); }
   }
 
   .diff-sheet {
@@ -172,22 +170,9 @@
     overflow-y: scroll;
     &::-webkit-scrollbar:vertical { width: 8px; }
     outline: none;
-    background: $darker-color;
-    color: $lighter-color;
-    border-top: 1px dotted lighten($darker-color,10%);
-
+    background: lighten($darker-color, 6%);
+    border: none;
     added, deleted, same { padding-left: 3px; }
-    added {
-      color: $diff-added-color;
-      background: $darker-color;
-      &:hover { background: lighten($darker-color,10%); }
-    }
-    deleted {
-      color: $diff-deleted-color;
-      background: $darker-color;
-      &:hover { background: lighten($darker-color,5%); }
-    }
-    same { &:hover { background: lighten($darker-color,5%); } }
   }
 
   .diff-deleted-line-count, .diff-added-line-count {
