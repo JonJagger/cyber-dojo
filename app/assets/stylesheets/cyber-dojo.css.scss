@@ -93,7 +93,7 @@ div[class~='filename'] {
     // See app/assets/javascripts/cyber-dojo_file_load.js
     // function radioEntrySwitch()
     color: $lighter-color;
-    background: $darker-color;
+    background: lighten($darker-color, 8%);
     cursor: default;
   }
   text-align: right;
@@ -123,8 +123,8 @@ div[class~="filename"], button[disabled]:hover {
 }
 
 .line_numbers {
-  background: $darker-color;
-  color: lighten($darker-color, 10%);
+  background: lighten($darker-color, 5%);
+  color: lighten($darker-color, 15%);
   font-weight: 100;
   text-align: right;
   overflow: hidden;
@@ -143,7 +143,7 @@ div[class~="filename"], button[disabled]:hover {
 }
 
 .file_content {
-  background: $darker-color;
+  background: lighten($darker-color, 5%);
   color: $lighter-color;
   border: 1px solid lighten($darker-color, 6%);
   border-left: none;

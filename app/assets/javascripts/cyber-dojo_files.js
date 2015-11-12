@@ -38,36 +38,37 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.rebuildFilenameList = function() {
-    var filenameList = $('#filename-list');
     var filenames = cd.filenames();
-    // output first
-    filenames.splice(filenames.indexOf('output'), 1);
-    filenameList.empty();
-    filenameList.append(cd.makeFileListEntry('output'));
+    var lolights = [];
+    var hilights = [];
+    var filenameList = $('#filename-list');
 
-    // sort filenames so files with the same
-    // extension appear be next to each other
-    var reverse = function(s) {
-      return s.split('').reverse().join('');
-    };
-    filenames.sort(function(lhs,rhs) {
+    $.each(filenames, function(_, filename) {
+      if (cd.inArray(filename, cd.lowlightFilenames()))
+        lolights.push(filename);
+      else if (filename != 'output')
+        hilights.push(filename);
+    });
+    lolights.sort();
+    hilights.sort(function(lhs, rhs) {
+      var reverse = function(s) {
+        return s.split('').reverse().join('');
+      };
       return reverse(lhs).localeCompare(reverse(rhs));
     });
 
-    // then highlight filenames
-    $.each(filenames, function(_, filename) {
-      if (!cd.inArray(filename, cd.lowlightFilenames())) {
-        var fileListEntry = cd.makeFileListEntry(filename);
-        filenameList.append(fileListEntry);
-      }
+    filenameList.empty();
+    // first highlight-filenames
+    $.each(hilights, function(_, filename) {
+      filenameList.append(cd.makeFileListEntry(filename));
     });
-    // then lowlight filenames
-    $.each(filenames, function(_, filename) {
-      if (cd.inArray(filename, cd.lowlightFilenames())) {
-        var fileListEntry = cd.makeFileListEntry(filename);
-        filenameList.append(fileListEntry);
-      }
+    // then output
+    filenameList.append(cd.makeFileListEntry('output'));
+    // then lolight-filenames
+    $.each(lolights, function(_, filename) {
+      filenameList.append(cd.makeFileListEntry(filename));
     });
+
     return filenames;
   };
 

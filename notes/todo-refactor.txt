@@ -42,34 +42,6 @@ antelope, bat, bear, eagle, elephant, fox, gopher,
 heron, hyena, lizard, ostrich, porcupine, rhino,
 tuna, turtle,
 --------------------------------------
-Great new avatars 38
-6 bat, bee, beetle, butterfly, crab, dolphin,
-5 eagle, fox, flamingo, heron, hummingbird,
-4 hyena, jellyfish, kingfisher, leopard,
-6 lobster, mouse, ostrich, owl, parrot, puffin,
-6 peacock, penguin, rabbit, ray, rhino, seal,
-6 shark, spider, squid, squirrel, starfish, swan,
-5 tiger, toucan, tuna, tuna, vulture,
-
-Others 10
-antelope, bear, gopher, kangaroo, lizard,
-porcupine, salmon, skunk, walrus, whale,
-
-38+10=48
-48+16=64
-
-4x4=16
-5x5=25
-6x6=36
-7x7=49
-8x8=64
-
-16+38=54
-2x27
-6x9
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 Cut from http://blog.cyber-dojo.org/2014/09/adding-new-language-and-unit-test-to-cyber-dojo.html
 ./check_one_language.rb has not been refactored yet...
 <br>
@@ -85,8 +57,6 @@ You want output like this:
     <div class="bash">
     ...Lisp-2.3_LUnit --> ["red", "amber", "green"] ==> PASS
     </div>
-
-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 filenames appear in the file-knave in alphabetic order
 (more or less).
@@ -109,6 +79,8 @@ my_sort = function(array) {
 reverse = function(s) {
   return s.split('').reverse().join('');
 };
+Added this to the main test page file knave
+Still need to add it to the diff-dialog file-knave.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
@@ -146,7 +118,7 @@ and
   class GitPather
     def [](path)
       env = 'CYBER_DOJO_GIT_CLASS_NAME'
-      Object.const_get(env).new(self,path)
+      Object.const_get(env).new(self, path)
     end
     def log
       @log ||= []
@@ -179,8 +151,6 @@ kata filename: very long filename: when not selected you can scroll
   can't. Ok on history-dialog.
   Add table tbody so it styles the same as the filename list
   on history-dialog.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-move tweet button to lhs of test button?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Having the starting files called Hiker.rb is not ideal.
 Rename starting files as starter.*

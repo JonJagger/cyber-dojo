@@ -5,7 +5,7 @@ var cyberDojo = (function(cd, $) {
 
   // Arguably, the history would be better as it own page rather
   // than a dialog. That would help google searchability and
-  // analytics and useability and restfulness etc. 
+  // analytics and useability and restfulness etc.
   // I use a dialog because of revert.
   // When revert is clicked it has to be for a *specific*
   // animal and it has to revert their code! As a dialog,
@@ -16,7 +16,7 @@ var cyberDojo = (function(cd, $) {
   // animal or get the animl to poll an update from the server.
   // But I currently don't have any server -> browser
   // interaction and I'm not sure I want any.
-  
+
   cd.td = function(html) {
 	  return '<td>' + html + '</td>';
   };
@@ -49,11 +49,11 @@ var cyberDojo = (function(cd, $) {
       return '<td align="' + align + '">' + html + '</td>';
     };
 
-    
+
     //-------------------------------------------------------
-    // diff? [x] traffic-lights [<< < tag > >>]  [< avatar >]  
+    // diff? [x] traffic-lights [<< < tag > >>]  [< avatar >]
     //-------------------------------------------------------
-    
+
     var makeTitleHtml = function() {
       return '<table>' +
                '<tr valign="top">' +
@@ -83,7 +83,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //- - - - - - - - - - - - - - -
-    
+
     var diffCheckBox = function() {
       return $('#diff-checkbox', titleBar());
     };
@@ -91,7 +91,7 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
     // refresh diff? [x]
     //- - - - - - - - - - - - - - -
-    
+
     var refreshDiffCheckBox = function() {
       diffCheckBox()
         .html(makeDiffCheckboxHtml())
@@ -119,7 +119,7 @@ var cyberDojo = (function(cd, $) {
       });
       return html;
     };
-    
+
     //- - - - - - - - - - - - - - -
 
     var trafficLights = function() {
@@ -154,7 +154,7 @@ var cyberDojo = (function(cd, $) {
                  td('left',   makeTagButtonHtml('next')) +
                  td('left',   makeTagButtonHtml('last')) +
                '</tr>' +
-             '</table>';      
+             '</table>';
     };
 
     //- - - - - - - - - - - - - - -
@@ -222,7 +222,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //- - - - - - - - - - - - - - -
-    
+
     var makeAvatarButtonHtml = function(direction) {
       return '<button id="' + direction + '-avatar">' +
                 '<img src="/images/triangle_' + direction +'.gif"/>' +
@@ -277,11 +277,11 @@ var cyberDojo = (function(cd, $) {
         });
     };
 
-    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     var show = function(tag) {
       data.wasTag = tag - (diffCheckBox().is(':checked') ? 1 : 0);
@@ -315,7 +315,7 @@ var cyberDojo = (function(cd, $) {
     var makeDiffDiv = function()  {
       var div = $('<div>', {
         'id': 'history-dialog'
-      });      
+      });
       div.append(
           '<table>' +
             '<tr valign="top">' +
@@ -623,7 +623,7 @@ var cyberDojo = (function(cd, $) {
           current_filename: currentFilename
         },
         function(historyData) {
-          $('.ui-dialog').removeClass('busy');          
+          $('.ui-dialog').removeClass('busy');
           data = historyData;
           refreshDiffCheckBox();
           refreshTrafficLights();

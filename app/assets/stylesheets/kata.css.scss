@@ -34,6 +34,9 @@
       padding-bottom: 3px;
       width: 95px;
     }
+    #delete {
+      margin-bottom: 15px;
+    }
   }
 
   #filename-list {
@@ -41,6 +44,9 @@
     overflow-x: auto;
     overflow-y: auto;
     div[class~='filename'][class~='highlight'] { &:before { content: ">"; } }
+    div[class~='filename'][id='radio_output'] {
+      margin-top: 20px;
+    }
   }
 
   #traffic-lights {

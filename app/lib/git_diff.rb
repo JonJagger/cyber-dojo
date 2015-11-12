@@ -45,9 +45,29 @@ module GitDiff # mix-in
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def git_diff_view(diffed_files)
+    low_lights = [ 'instructions', 'cyber-dojo.sh', 'makefile' ]
+    filenames = diffed_files.keys.sort do |lhs,rhs|
+      if lhs == 'output'
+        n = -1
+      elsif rhs == 'output'
+        n = +1
+      elsif !low_lights.include?(lhs) && !low_lights.include?(rhs)
+        n = lhs.reverse <=> rhs.reverse
+      elsif !low_lights.include?(lhs) && low_lights.include?(rhs)
+        n = -1
+      elsif low_lights.include?(lhs) && !low_lights.include?(rhs)
+        n = +1
+      else
+        n = lhs <=> rhs
+      end
+      n
+    end
+
     n = 0
     diffs = []
-    diffed_files.sort.each do |filename, diff|
+    filenames.each do |filename|
+      diff = diffed_files[filename]
+      #diffed_files.sort.each do |filename, diff|
       id = 'id_' + n.to_s
       n += 1
       diffs << {
