@@ -43,8 +43,8 @@ body {
 $filename_and_button_border_size: 1px;
 
 button {
-  background: darken($lighter-color, 10%);
-  color: $darker-color;
+  //background: darken($lighter-color, 10%);
+  //color: $darker-color;
   cursor: pointer;
   padding: { left: 0.5em; right: 0.5em; bottom: 0.1em; }
   text-decoration: none;

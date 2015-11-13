@@ -183,10 +183,8 @@ var cyberDojo = (function(cd, $) {
         .removeClass()
         .addClass(colour)
         .html(nowTag());
-      refreshTag(tagsToLeft,  $('#first-button'), minTag);
       refreshTag(tagsToLeft,  $('#prev-button'),  nowTag()-1);
       refreshTag(tagsToRight, $('#next-button'),  nowTag()+1);
-      refreshTag(tagsToRight, $('#last-button'),  maxTag);
     };
 
     //- - - - - - - - - - - - - - -
