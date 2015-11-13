@@ -10,12 +10,15 @@ no footer on setup page
 different footer on test page
 home-page: learn-more-button is same as help link on footer
 test-page: line-numbers too faint
+test-page: make filename-knave wider (affected less by long filenames, matches diff-dialog better)
 diff dialog: drop far-left and far-right buttons on traffic-light navigator on
 diff-dialog: [fork from zebra 2] [revert to zebra 2] (add animal name)
 diff-dialog: move controls to left hand side
 diff-dialog: max filename knave have fixed width
 diff-dialog: if filename-knave is very wide because of long filename
              the knave needs to autoscroll to the right same as traffic-lights
+             Better still, the diff-counts are not part of the scroll, viz
+             only the filenames scroll.
 diff-dialog: lose first/last images
 diff-dialog: diff? title can be bigger
 diff-dialog: navigation < > controls can be bigger

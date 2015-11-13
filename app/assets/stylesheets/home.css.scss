@@ -14,7 +14,6 @@
   #custom-container {
     position: absolute;
     left: 675px;
-    @include edged-panel();
   }
   #custom-container { top: 350px; }
 

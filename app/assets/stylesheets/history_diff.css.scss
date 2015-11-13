@@ -22,7 +22,7 @@
 
   .ui-dialog-titlebar { padding: 0px; }
 
-  #title { font-size: 24px; margin-left: 5px; position: relative; top: 5px; left: 2px; }
+  #title { font-size: 28px; margin-left: 5px; position: relative; top: 5px; left: 2px; }
 
   label { position: relative; top: 10px; }
 
@@ -46,8 +46,8 @@
   @include right-align(0px);
 
   #avatar {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     padding: 0px;
     margin: { left: 1px; right: 1px; }
   }
@@ -62,8 +62,8 @@
   }
 
   #prev-avatar img, #next-avatar img, #prev-button img, #next-button img {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     padding: { top: 2px; bottom: 0px; }
     @include rounded-corner(4px);
   }
@@ -86,7 +86,7 @@
     text-align: center;
     width: 30px;
     height: 22px;
-    padding-top: 1px;
+    padding-top: 4px;
     margin-top: 1px;
     @include rounded-corner(4px);
     border: 2px dotted;
