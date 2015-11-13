@@ -1,3 +1,5 @@
 
 Make line-numbers a toggleable feature.
 When they are off it is a strong encouragement to take smaller steps.
+Use check-box
+Position it above the line-numbers to left of traffic-lights.
