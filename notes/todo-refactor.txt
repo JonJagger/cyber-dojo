@@ -18,10 +18,10 @@ diff-dialog: if filename-knave is very wide because of long filename
              the knave needs to autoscroll to the right same as traffic-lights
              Better still, the diff-counts are not part of the scroll, viz
              only the filenames scroll.
-diff-dialog: lose first/last images
 diff-dialog: diff? title can be bigger
 diff-dialog: align diff[x] and lights to two columns
 dashboard: download and progress buttons need button font
+test-page: output cursor should be a pointer not text-cursor
 new/rename/delete dialogs - add background
 add sponsors logos/text and image of kids on pies to home/join pages
 diff-traffic-light CSS in shared.css is used only in dashboard

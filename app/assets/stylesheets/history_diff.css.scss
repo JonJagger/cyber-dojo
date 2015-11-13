@@ -138,6 +138,7 @@
     padding: 0px;
     @include code-font;
     font-size: 10pt;
+    cursor: default;
     ln { margin: { left : 4px; right: 3px; } font-weight: normal; }
     added, deleted, same { @include diff-pre-block; }
     added   { color: $diff-added-color; }

@@ -150,8 +150,10 @@ div[class~="filename"][class~='selected']:hover {
   // right and the vertical scrollbar gets a background-coloured right-border
   padding: { left: 2px; top: 2px; }
   outline: none;
-
   cursor: url(white-text-cursor.cur), auto;
+  &[data-filename=output] {
+    cursor: default;
+  }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
