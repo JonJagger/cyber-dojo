@@ -13,9 +13,17 @@ test-page: line-numbers too faint
 diff dialog: drop far-left and far-right buttons on traffic-light navigator on
 diff-dialog: [fork from zebra 2] [revert to zebra 2] (add animal name)
 diff-dialog: move controls to left hand side
+diff-dialog: max filename knave have fixed width
+diff-dialog: if filename-knave is very wide because of long filename
+             the knave needs to autoscroll to the right same as traffic-lights
+diff-dialog: lose first/last images
+diff-dialog: diff? title can be bigger
+diff-dialog: navigation < > controls can be bigger
+diff-dialog: navigation < > controls need to vertically align
 dashboard: download and progress buttons need button font
 new/rename/delete dialogs - add background
 add sponsors logos/text and image of kids on pies to home/join pages
+diff-traffic-light CSS in shared.css is used only in dashboard
 - - - - - - - - -
 filename-knave ordering on diff-dialog needs
 to match test-page filename-knave ordering

@@ -60,8 +60,6 @@ var cyberDojo = (function(cd, $) {
                  cd.td(makeDiffTitleHtml()) +
                  cd.td(makeDiffCheckboxHtml()) +
                  cd.td('<div id="traffic-lights"></div>') +
-                 cd.td(makeTagNavigationHtml()) +
-                 cd.td(makeAvatarNavigationHtml()) +
                '</tr>' +
              '</table>';
     };
@@ -148,11 +146,9 @@ var cyberDojo = (function(cd, $) {
     var makeTagNavigationHtml = function() {
       return '<table class="navigate-control">' +
                '<tr valign="top">' +
-                 td('right',  makeTagButtonHtml('first')) +
                  td('right',  makeTagButtonHtml('prev')) +
                  td('center', makeNowTagNumberHtml()) +
                  td('left',   makeTagButtonHtml('next')) +
-                 td('left',   makeTagButtonHtml('last')) +
                '</tr>' +
              '</table>';
     };
@@ -319,8 +315,18 @@ var cyberDojo = (function(cd, $) {
       div.append(
           '<table>' +
             '<tr valign="top">' +
-              '<td><div id="diff-content"></div></td>' +
-              '<td><div id="diff-filenames"></div></td>' +
+              cd.td(makeAvatarNavigationHtml()) +
+              '<td rowspan="3" >' +
+                '<div id="diff-content"></div>' +
+              '</td>' +
+            '</tr>' +
+            '<tr>' +
+              cd.td(makeTagNavigationHtml()) +
+            '</tr>' +
+            '<tr>' +
+              '<td>' +
+                '<div id="diff-filenames"></div>' +
+              '</td>' +
             '</tr>' +
           '</table>');
       return div;
@@ -516,11 +522,11 @@ var cyberDojo = (function(cd, $) {
         }
 
         td.append(filenameDiv);
+        tr.append(td);
         if (diffCheckBox().is(':checked')) {
           tr.append($('<td>').append(deletedLineCountDiv));
           tr.append($('<td>').append(addedLineCountDiv));
         }
-        tr.append(td);
         table.append(tr);
       });
 
