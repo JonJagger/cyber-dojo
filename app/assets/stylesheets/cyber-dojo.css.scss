@@ -151,6 +151,7 @@ div[class~="filename"][class~='selected']:hover {
   padding: { left: 2px; top: 2px; }
   outline: none;
   cursor: url(white-text-cursor.cur), auto;
+  resize: none;
   &[data-filename=output] {
     cursor: default;
   }
