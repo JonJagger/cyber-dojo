@@ -38,11 +38,11 @@ $(function() {
   setInterval(dashboardHeartbeat, 10*seconds);
 
   minuteColumns
-    .attr('checked', '<%= @minute_columns %>' === 'true')
+    .attr('checked', '<%= @minute_columns %>' == 'true')
     .click(function() { refreshDashboard(); });
 
   autoRefresh
-    .attr('checked', '<%= @auto_refresh %>' === 'true')
+    .attr('checked', '<%= @auto_refresh %>' == 'true')
     .click(function() { refreshDashboard(); });
 
 });
