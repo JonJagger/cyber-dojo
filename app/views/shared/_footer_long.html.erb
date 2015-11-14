@@ -1,0 +1,25 @@
+
+<% language = @kata.language.display_name.split(',')[0].strip %>
+<% test     = @kata.language.display_name.split(',')[1].strip %>
+<% exercise = @kata.exercise.name.gsub('_',' ') %>
+<% id       = @kata.id.to_s[0..5] %>
+
+<div id="footer">
+  <table>
+    <tr>
+      <td><%= render partial: 'shared/help_link', locals: { help_url: help_url } %></td>
+      <td><%= render partial: 'shared/bullet' %></td>
+      <td><%= render partial: 'shared/tweet' %></td>
+      <td><%= render partial: 'shared/bullet' %></td>
+      <td><%= render partial: 'shared/accu' %></td>
+      <td><%= render partial: 'shared/bullet' %></td>
+      <td><%= id %></td>
+      <td><%= render partial: 'shared/bullet' %></td>
+      <td><%= language %></td>
+      <td><%= render partial: 'shared/bullet' %></td>
+      <td><%= test %></td>
+      <td><%= render partial: 'shared/bullet' %></td>
+      <td><%= exercise %></td>
+    </tr>
+  </table>
+</div>
