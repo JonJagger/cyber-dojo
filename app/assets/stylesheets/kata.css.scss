@@ -40,10 +40,15 @@
   }
 
   #filename-list {
-    margin-left: 15px;
+    max-width: 250px;
+    max-height: 495px;
+    margin-right: 5px;
     overflow-x: auto;
     overflow-y: auto;
-    div[class~='filename'][class~='highlight'] { &:before { content: ">"; } }
+    &::-webkit-scrollbar:horizontal { height: 0px; }
+    div[class~='filename'][class~='highlight'] {
+      &:before { content: ">"; }
+    }
     div[class~='filename'][id='radio_output'] {
       margin-top: 20px;
     }
@@ -73,7 +78,10 @@
     }
   }
 
-  .file_content { overflow-x: auto; overflow-y: scroll; }
+  .file_content {
+    overflow-x: auto;
+    overflow-y: scroll;
+  }
 
 }
 

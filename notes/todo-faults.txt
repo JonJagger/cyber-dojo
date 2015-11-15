@@ -1,4 +1,7 @@
 
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+rename does not pick up the current filename.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 renaming a file in Erlang does not work.
 The reason is that the old .erl file is still in the sandbox
@@ -13,7 +16,7 @@ EDIT PAGE
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HISTORY-DIALOG
   loses the cursor sometimes. Appears on the projector but
-  not on the laptop?! 
+  not on the laptop?!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 START-AVATAR
   needs to lock. Use lock in dir?

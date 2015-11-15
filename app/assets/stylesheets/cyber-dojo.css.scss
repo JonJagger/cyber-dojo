@@ -62,33 +62,34 @@ button[disabled] {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#filename-list {
-  display: block; // don't lose rhs of long filenames when scrolling
-  max-height: 495px;
-  max-width: 250px;
-  margin-top: 3px;
-  margin-right: 2px;
-  overflow: auto;
-  &::-webkit-scrollbar:horizontal { height: 8px; }
-}
-
 .filename_div {
   display: none;
 }
 
+// commented out while I debug <--> scrollbar for test-oage filenames
+#XXX_filename-list {
+  @include right-align(15px);
+  display: block; // don't lose rhs of long filenames when scrolling
+  max-height: 495px;
+  width: 250px;
+  margin-top: 3px;
+  margin-right: 4px;
+  overflow: auto;
+  &::-webkit-scrollbar:horizontal { height: 8px; }
+}
+
 div[class~='filename'] {
-  max-width: 1200px;
+  width: 500px;
   @include font-size-small();
   background: $darker-color;
   color: lighten($darker-color, 30%);
   margin: none;
   margin-bottom: 2px;
-  padding: { left: 0.3em; right: 10px; }
+  padding: { left: 0.3em; right: 0px; }
   cursor: pointer;
   white-space: nowrap;
   @include rounded-corner(4px);
-  overflow: none;
-
+  text-align: right;
   &[class~='selected'] {
     // See app/assets/javascripts/cyber-dojo_file_load.js
     // function radioEntrySwitch()
@@ -96,7 +97,6 @@ div[class~='filename'] {
     background: $darker-color;
     cursor: default;
   }
-  text-align: right;
 }
 
 div[class~="filename"]:hover, button:hover {
