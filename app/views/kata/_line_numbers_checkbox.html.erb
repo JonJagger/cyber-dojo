@@ -3,11 +3,13 @@
 
 $(function() {
 
-  var lineNumbersCheckbox = $('#line-numbers-checkbox');
-  lineNumbersCheckbox
+  var checkbox = $('#line-numbers-checkbox');
+  var opaque = $('.line_numbers').css('color');
+
+  checkbox
     .attr('checked', true)
     .click(function() {
-      var color = lineNumbersCheckbox.is(':checked') ? '#737373' : 'transparent';
+      var color = checkbox.is(':checked') ? opaque : 'transparent';
       $('.line_numbers').css('color', color);
     });
 
