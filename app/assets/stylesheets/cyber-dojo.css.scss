@@ -66,18 +66,6 @@ button[disabled] {
   display: none;
 }
 
-// commented out while I debug <--> scrollbar for test-oage filenames
-#XXX_filename-list {
-  @include right-align(15px);
-  display: block; // don't lose rhs of long filenames when scrolling
-  max-height: 495px;
-  width: 250px;
-  margin-top: 3px;
-  margin-right: 4px;
-  overflow: auto;
-  &::-webkit-scrollbar:horizontal { height: 8px; }
-}
-
 div[class~='filename'] {
   width: 500px;
   @include font-size-small();
@@ -88,7 +76,6 @@ div[class~='filename'] {
   padding: { left: 0.3em; right: 0px; }
   cursor: pointer;
   white-space: nowrap;
-  @include rounded-corner(4px);
   text-align: right;
   &[class~='selected'] {
     // See app/assets/javascripts/cyber-dojo_file_load.js
@@ -101,14 +88,17 @@ div[class~='filename'] {
 
 div[class~="filename"]:hover, button:hover {
   border: $filename_and_button_border_size dotted lighten($darker-color, 20%);
+  border: { left: none; right: none; }
 }
 
 div[class~="filename"],  button[disabled]:hover {
   border: $filename_and_button_border_size solid $darker-color;
+  border: { left: none; right: none; }
 }
 
 div[class~="filename"][class~='selected']:hover {
   border: $filename_and_button_border_size solid $darker-color;
+  border: { left: none; right: none; }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -140,6 +130,7 @@ div[class~="filename"][class~='selected']:hover {
   position: relative; // lose 1px gap to file-content
   left: 2px;
   border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .file_content {
@@ -152,6 +143,8 @@ div[class~="filename"][class~='selected']:hover {
   outline: none;
   cursor: url(white-text-cursor.cur), auto;
   resize: none;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
   &[data-filename=output] {
     cursor: default;
   }
