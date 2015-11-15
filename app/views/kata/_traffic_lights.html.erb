@@ -12,29 +12,12 @@ $(function() {
   var allTheWay = 100000;
   $('#traffic-lights').scrollLeft(allTheWay);
 
-  var lineNumbersCheckbox = $('#line-numbers-checkbox');
-  lineNumbersCheckbox
-    .attr('checked', true)
-    .click(function() {
-      var color = lineNumbersCheckbox.is(':checked') ? '#737373' : 'transparent';
-      $('.line_numbers').css('color', color);
-    });
-
 });
 
 //--></script>
 
 <table>
   <tr class="row">
-
-    <td>
-      <div id="line-numbers-checkbox-container">
-       <input type="checkbox"
-             class="regular-checkbox"
-             id="line-numbers-checkbox"/>
-        <label for="line-numbers-checkbox"></label>
-      </div>
-    </td>
 
     <% if @avatar.active? %>
 	    <% @avatar.lights.each do |light| %>
