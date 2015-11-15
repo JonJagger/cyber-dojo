@@ -50,26 +50,6 @@ a:link, a:visited
 
 //----------------------------------------------
 
-#footer {
-  font-size: 1.05em;
-  position: fixed;
-  width: 100%;
-  text-align: left;
-  bottom: 0px;
-  padding: { left: 15px; bottom: 2px; top: 0px; }
-  background: lighten($darker-color, 6%);
-  color: $lighter-color;
-
-  #tweet-container {
-    #twitter-widget-0 {
-      position: relative; top: 5px;
-      margin-top: 7px;
-    }
-  }
-}
-
-//----------------------------------------------
-
 .diff-traffic-light {
   margin : { left: 0px; right: 0px; }
   padding: { left: 0px; right: 0px; }
@@ -96,15 +76,6 @@ a:link, a:visited
 }
 
 .avatar_name, #id { @include font-size-tiny(); text-align: right; }
-
-#accu-container {
-  #accu-image {
-    padding: 5px;
-    background: CornSilk;
-    width: 50px;
-    margin-top: 7px;
-  }
-}
 
 //----------------------------------------------
 
@@ -138,20 +109,49 @@ a:link, a:visited
   margin-bottom: 3px;
 }
 
-#learn-more-button {
-  width: 80px;
-  padding-right: 10px;
-  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  color: darken($darker-color, 10%);
-  text-align: right;
-  font-size: 0.87em;
-  padding-bottom: 2px;
-  margin-top: 4px;
-}
+//----------------------------------------------
 
-.bullet {
-  margin-left: 10px;
-  &:after { content: $bullet; }
-  margin-right: 10px;
-}
+#footer {
+  font-size: 1.05em;
+  position: fixed;
+  width: 100%;
+  text-align: left;
+  bottom: 0px;
+  padding: { left: 15px; bottom: 2px; top: 0px; }
+  background: lighten($darker-color, 6%);
+  color: $lighter-color;
 
+  #tweet-container {
+    #twitter-widget-0 {
+      position: relative; top: 5px;
+      margin-top: 7px;
+    }
+  }
+
+  .bullet {
+    margin: { left: 10px; right: 10px; }
+    &:after { content: $bullet; }
+  }
+
+  #accu-container {
+    #accu-image {
+      padding: 5px;
+      background: CornSilk;
+      width: 50px;
+      margin-top: 7px;
+      @include rounded-corner(3px);
+    }
+  }
+
+  #learn-more-button {
+    width: 80px;
+    padding-right: 10px;
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    color: darken($darker-color, 10%);
+    text-align: right;
+    font-size: 0.87em;
+    padding-bottom: 2px;
+    margin-top: 4px;
+  }
+
+}
