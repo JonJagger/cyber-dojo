@@ -130,6 +130,7 @@ a:link, a:visited
 
   .bullet {
     margin: { left: 10px; right: 10px; }
+    $bullet: "\2022";
     &:after { content: $bullet; }
   }
 

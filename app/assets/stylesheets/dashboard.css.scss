@@ -43,6 +43,7 @@
     }
     .gap {
       font-size: 0.7em;
+      $thin-space: "\2009";
       &:after { content: $thin-space; }
       text-align: center;
     }
