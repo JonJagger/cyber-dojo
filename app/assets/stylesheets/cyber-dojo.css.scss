@@ -82,7 +82,7 @@ div[class~='filename'] {
   color: lighten($darker-color, 30%);
   margin: none;
   margin-bottom: 2px;
-  padding: { left: 0.3em; right: 13px; }
+  padding: { left: 0.3em; right: 10px; }
   cursor: pointer;
   white-space: nowrap;
   @include rounded-corner(4px);
