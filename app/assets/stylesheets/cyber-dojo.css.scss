@@ -75,6 +75,7 @@ div[class~='filename'] {
   cursor: pointer;
   white-space: nowrap;
   text-align: right;
+  border: { left: none; right: none; }
   &[class~='selected'] {
     // See app/assets/javascripts/cyber-dojo_file_load.js
     // function radioEntrySwitch()

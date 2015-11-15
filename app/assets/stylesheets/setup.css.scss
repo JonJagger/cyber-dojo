@@ -15,8 +15,9 @@
   #prepare-a-new-practice {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     color: darken($lighter-color, 5%);
-    font-size: 4.10em;
-    text-align: left;
+    font-size: 4.0em;
+    margin-right: 8px;
+    text-align: right;
   }
 
   #languages-container, #tests-container, #exercises-container {
@@ -48,7 +49,7 @@
     text-align: right;
     margin-right: 10px;
     &:after {
-      @include font-size-tiny();
+      font-size: 0.84em;
       content: '?';
     }
   }
@@ -63,19 +64,21 @@
     margin-left: 0px;
     font-size: 12pt;
     overflow-y: scroll;
-    padding: 5px;
+    padding: 6px;
     outline: none;
     &::-webkit-scrollbar:vertical { width: 5px; }
     @include code-font();
-    resize: none;
+    //resize: none;
+    //position: relative;
+    //top: 8px;
   }
 
   #ok {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-largest();
     margin: { top: 5px; right: 0px; }
-    position: relative;
-    right: 10px;
+    //position: relative;
+    //right: 10px;
   }
 
 }
