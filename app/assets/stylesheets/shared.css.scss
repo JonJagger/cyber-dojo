@@ -146,5 +146,12 @@ a:link, a:visited
   text-align: right;
   font-size: 0.87em;
   padding-bottom: 2px;
+  margin-top: 3px;
+}
+
+.bullet {
+  margin-left: 10px;
+  &:after { content: $bullet; }
+  margin-right: 10px;
 }
 
