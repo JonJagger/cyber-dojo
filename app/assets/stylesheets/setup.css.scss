@@ -8,7 +8,7 @@
   margin: { top: 15px; left: 35px; }
 
   .filename {
-    font-size: 11pt;
+    font-size: 13pt !important;
     width: 165px;
   }
 
@@ -68,17 +68,12 @@
     outline: none;
     &::-webkit-scrollbar:vertical { width: 5px; }
     @include code-font();
-    //resize: none;
-    //position: relative;
-    //top: 8px;
   }
 
   #ok {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-largest();
     margin: { top: 5px; right: 0px; }
-    //position: relative;
-    //right: 10px;
   }
 
 }

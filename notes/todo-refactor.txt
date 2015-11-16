@@ -1,33 +1,24 @@
 
---------------------------------------
-new black-background colour scheme needs
-to have custom cursor on textarea that
-shows up better.
+Re-enter dialog: if no animals change message at top.
 --------------------------------------
 NEW UX
-enter page needs main title "join a prepared practice"
-no footer on setup page
-different footer on test page
-home-page: learn-more-button is same as help link on footer
-test-page: make filename-knave wider (affected less by long filenames, matches diff-dialog better)
+diff-dialog: diff? title can be bigger
+diff-dialog: align diff[x] and lights to two columns
+diff-dialog: filename-knave ordering needs to match test-page filename-knave ordering
+enter-page:  needs main title "join a prepared practice"
 diff-dialog: sometimes you lose the cursor when clicking < > and rags at top
-diff-dialog: add micro padding to top of code-area to match appearance on test page
-diff-dialog: [fork from zebra 2] [revert to zebra 2] (add animal name)
 diff-dialog: make filename knave have fixed width
 diff-dialog: if filename-knave is very wide because of long filename
              the knave needs to autoscroll to the right same as traffic-lights
              Better still, the diff-counts are not part of the scroll, viz
              only the filenames scroll.
-diff-dialog: diff? title can be bigger
-diff-dialog: align diff[x] and lights to two columns
-dashboard: download and progress buttons need button font
-test-page: output cursor should be a pointer not text-cursor
+--------------------------------------
+diff-dialog: add micro padding to top of code-area to match appearance on test page
 new/rename/delete dialogs - add background
 add sponsors logos/text and image of kids on pies to home/join pages
+diff-dialog: [fork from zebra 2] [revert to zebra 2] (add animal name)
+setup-page: cursor position inside instructions is not remembered if you return to that exercise.
 diff-traffic-light CSS in shared.css is used only in dashboard
-- - - - - - - - -
-filename-knave ordering on diff-dialog needs
-to match test-page filename-knave ordering
 --------------------------------------
 Why is test/lib/disk_stub_cache.json
 not being gitignored? How do you debug this?
