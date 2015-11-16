@@ -1,8 +1,7 @@
 'use strict';
 
-module.exports =
-class Hiker {
-  answer() {
-    return 6 * 9;
-  }
-};
+module.exports = answer;
+
+function answer() {
+  return 6 * 9;
+}
