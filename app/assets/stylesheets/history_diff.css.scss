@@ -22,9 +22,16 @@
 
   .ui-dialog-titlebar { padding: 0px; }
 
-  #title { font-size: 28px; margin-left: 5px; position: relative; top: 5px; left: 2px; }
+  #title {
+    margin-left: 126px;
+    font-size: 28px;
+  }
 
-  label { position: relative; top: 10px; }
+  label {
+    position: relative;
+    top: 10px;
+    margin-right: 5px;
+  }
 
   #traffic-lights {
     display: block;

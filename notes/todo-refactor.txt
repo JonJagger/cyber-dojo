@@ -4,6 +4,7 @@ Re-enter dialog: if no animals change message at top.
 NEW UX
 diff-dialog: diff? title can be bigger
 diff-dialog: align diff[x] and lights to two columns
+diff-dialog: put diff? checkbox to left of diff?
 diff-dialog: filename-knave ordering needs to match test-page filename-knave ordering
 enter-page:  needs main title "join a prepared practice"
 diff-dialog: sometimes you lose the cursor when clicking < > and rags at top

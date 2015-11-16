@@ -51,7 +51,7 @@ var cyberDojo = (function(cd, $) {
 
 
     //-------------------------------------------------------
-    // diff? [x] traffic-lights [<< < tag > >>]  [< avatar >]
+    // [x] diff traffic-lights
     //-------------------------------------------------------
 
     var makeTitleHtml = function() {
@@ -65,7 +65,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-    // diff? [x]
+    // [x] diff
     //---------------------------------------------------
 
     var makeDiffTitleHtml = function() {
@@ -140,7 +140,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-    // << < tag  > >>
+    // < tag  >
     //---------------------------------------------------
 
     var makeTagNavigationHtml = function() {
@@ -170,7 +170,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //- - - - - - - - - - - - - - -
-    // refresh << < tag  > >>
+    // refresh < tag  >
     //- - - - - - - - - - - - - - -
 
     var refreshTagControls = function() {
