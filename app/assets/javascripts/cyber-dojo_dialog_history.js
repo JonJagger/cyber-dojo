@@ -770,7 +770,7 @@ var cyberDojo = (function(cd, $) {
           title: cd.dialogTitle('could not fork'),
           autoOpen: false,
           modal: true,
-          width: 450,
+          width: 510,
           buttons: {
             ok: function() {
               $(this).remove();
