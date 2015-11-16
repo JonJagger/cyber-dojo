@@ -35,8 +35,8 @@
 
   #traffic-lights {
     display: block;
-    margin: { left: 8px; right: 11px; top: 5px; }
-    width: 625px;
+    margin: { left: 4px; right: 0px; top: 5px; }
+    width: 693px;
     overflow-x: auto;
     &::-webkit-scrollbar:horizontal { height: 1px; }
     .traffic-light {
