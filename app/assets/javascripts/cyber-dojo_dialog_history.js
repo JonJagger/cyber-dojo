@@ -434,8 +434,8 @@ var cyberDojo = (function(cd, $) {
             getFilename(previousFilenameNode) === filename;
 
           var allLineCountButtons = $('.diff-deleted-line-count, .diff-added-line-count');
-          var off = { 'disabled':true, 'title':'' };
           var disableAllLineCountButtons = function() {
+            var off = { 'disabled':true, 'title':'' };
             allLineCountButtons.attr(off);
           };
           var tr = filenameNode.closest('tr');
@@ -480,55 +480,87 @@ var cyberDojo = (function(cd, $) {
 
     var diffFilenames = $('#diff-filenames', diffDiv);
 
-    var makeDiffFilenames = function(diffs) {
-
-      var table= $('<table>');
+    var makeDiffFilenamesTable = function(diffs) {
+      var html = '';
+      html += '<table>';
       $.each(diffs, function(_, diff) {
-        var tr = $('<tr>');
-        var td = $('<td>', { 'class': 'align-right' });
-
+        var td = $('<td>');
         var filenameDiv =
           $('<div>', {
               'class': 'filename',
               'id': 'radio_' + diff.id,
               'text': diff.filename
           });
+        td.append(filenameDiv);
+        html += '<tr>' + td.html() + '</tr>';
+      });
+      html += '</table>';
+      return html;
+    };
 
+    var makeDiffDeletedTable = function(diffs) {
+      var html = '';
+      html += '<table>';
+      $.each(diffs, function(_, diff) {
+        var td = $('<td>');
         var noneOrSome = function(property) {
           return (diff[property] === 0) ? 'none' : 'some';
         };
-
         var deletedLineCountDiv = $('<div>', {
           'class': 'diff-deleted-line-count ' +
                     noneOrSome('deleted_line_count') +
                     ' button',
           'data-filename': diff.filename
         });
+        if (diffCheckBox().is(':checked')) {
+          deletedLineCountDiv.append(diff.deleted_line_count);
+          td.append(deletedLineCountDiv);
+        }
+        html += '<tr>' + td.html() + '</tr>';
+      });
+      html += '</table>';
+      return html;
+    };
 
+    var makeDiffAddedTable = function(diffs) {
+      var html = '';
+      html += '<table>';
+      $.each(diffs, function(_, diff) {
+        var td = $('<td>');
+        var noneOrSome = function(property) {
+          return (diff[property] === 0) ? 'none' : 'some';
+        };
         var addedLineCountDiv = $('<div>', {
           'class': 'diff-added-line-count ' +
                    noneOrSome('added_line_count') +
                    ' button',
           'data-filename': diff.filename
         });
-
-        if (diff.deleted_line_count > 0) {
-          deletedLineCountDiv.append(diff.deleted_line_count);
-        }
-        if (diff.added_line_count > 0) {
-          addedLineCountDiv.append(diff.added_line_count);
-        }
-
-        td.append(filenameDiv);
-        tr.append(td);
         if (diffCheckBox().is(':checked')) {
-          tr.append($('<td>').append(deletedLineCountDiv));
-          tr.append($('<td>').append(addedLineCountDiv));
+          addedLineCountDiv.append(diff.added_line_count);
+          td.append(addedLineCountDiv);
         }
-        table.append(tr);
+        html += '<tr>' + td.html() + '</tr>';
       });
+      html += '</table>';
+      return html;
+    };
 
-      return table.html();
+    var makeDiffFilenames = function(diffs) {
+      return '' +
+        '<table>' +
+          '<tr>' +
+            '<td>' +
+              makeDiffFilenamesTable(diffs) +
+            '</td>' +
+            '<td>' +
+              makeDiffDeletedTable(diffs) +
+            '</td>' +
+            '<td>' +
+              makeDiffAddedTable(diffs) +
+            '</td>' +
+          '</tr>' +
+        '</table>';
     };
 
     //- - - - - - - - - - - - -

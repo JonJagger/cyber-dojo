@@ -103,7 +103,7 @@
     border: 1px dotted ligthen($darker-color, 15%);
     &.red   { color: $red; }
     &.amber { color: $amber; }
-    &.green { color: $green; } //darken(lime,10%); }
+    &.green { color: $green; }
     &.timed_out { color: Gray; }
   }
 }
