@@ -103,7 +103,7 @@ div[class~="filename"][class~='selected']:hover {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-.line_numbers, .file_content { height: 580px; }
+.line_numbers, .file_content { height: 560px; }
 
 .line_numbers, .file_content, .diff_line_numbers, #instructions { @include code-font; }
 

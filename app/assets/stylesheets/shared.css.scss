@@ -80,38 +80,6 @@ a:link, a:visited
 
 //----------------------------------------------
 
-#cyber-dojo {
-  @include non-code-font();
-  font-size: 6.75em;
-  color: $text-color;
-  margin-bottom: 0px;
-  padding-bottom: 0px;
-  .dot-org {
-    font-size: 0.30em;
-    position: relative;
-    left: -3px;
-  }
-}
-
-#home-page-logo {
-  display: inline-block;
-  position: relative;
-  top: -50px;
-  right: -35px;
-}
-
-#the-place-to-practice-programming {
-  @include non-code-font();
-  font-size: 2.32em;
-  color: lighten($text-color, 5%);
-  position: relative;
-  top: -9px;
-  margin-right: 2px;
-  margin-bottom: 3px;
-}
-
-//----------------------------------------------
-
 #footer {
   @include plaintext-font();
   font-size: 1.05em;

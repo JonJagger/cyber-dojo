@@ -1,14 +1,56 @@
 
 #home-page {
 
-  font-size: 1.15em;
-  margin-top: 25px;
-  margin-left: 0px;
+  margin-top: 15px;
+  margin-left: 25px;
+
+  #cyber-dojo {
+    @include non-code-font();
+    font-size: 7.8em;
+    color: $text-color;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    .dot-org {
+      font-size: 0.30em;
+      position: relative;
+      left: -3px;
+    }
+  }
+
+  #home-page-logo {
+    display: inline-block;
+    position: relative;
+    top: -50px;
+    right: -35px;
+  }
+
+  #the-place-to-practice-programming {
+    @include non-code-font();
+    font-size: 2.68em;
+    color: lighten($text-color, 5%);
+    position: relative;
+    top: -9px;
+    margin-right: 2px;
+    margin-bottom: 3px;
+  }
 
   #globe-container {
     position: relative;
-    left: 44px;
-    bottom: 5px;
+    left: 39px;
+    bottom: 2px;
+    #globe-frame {
+      width: 155px;
+      height: 262px;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 15px;
+      background: #666;
+      border: none;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -khtml-border-radius: 5px;
+      border-radius: 5px;
+    }
   }
 
   #custom-container {
@@ -20,7 +62,6 @@
   #create-button, #existing-button,
   #charity-button, #donate-button {
     @include non-code-font();
-    width: 240px;
     padding-right: 20px;
     color: $darker-color;
     @include font-size-largest();
@@ -29,7 +70,7 @@
   }
 
   #create-button, #existing-button {
-    width: 550px;
+    width: 555px;
     font-size: 2.5em;
     line-height: 95%;
     padding-top: 10px;
@@ -42,9 +83,8 @@
     @include edged-panel();
     width: 328px;
     text-align: right;
-    margin-bottom: 10px;
-    padding-left: 15px;
-    padding-right: 20px;
+    margin: { top: 5px; bottom: 10px; }
+    padding: { left: 15px; right: 20px; top: 10px; bottom: 10px; }
   }
 
   #charity-container, #donate-container {
@@ -52,23 +92,22 @@
     @include edged-panel();
     width: 338px;
     text-align: right;
-    margin-bottom: 10px;
+    margin-left: 15px;
+    margin-bottom: 12px;
     font-size: 0.9em;
     padding-right: 20px;
-    margin: 0px;
-    margin-left: 15px;
   }
 
   #donate-container #donate-button,
   #charity-container #charity-button {
+    width: 140px;
+    text-align: center;
     font-size: 1.60em;
     padding: 6px;
-    text-align: center;
     line-height: 95%;
     margin-right: 0px;
     margin-top: 8px;
-    margin-bottom: 8px;
-    width: 140px;
+    margin-bottom: 10px;
   }
 
   .dot {

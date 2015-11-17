@@ -7,11 +7,6 @@
 
   margin: { top: 15px; left: 35px; }
 
-  .filename {
-    font-size: 13pt !important;
-    width: 165px;
-  }
-
   #prepare-a-new-practice {
     @include non-code-font();
     color: $lighter-color;
@@ -22,7 +17,7 @@
 
   #languages-container, #tests-container, #exercises-container {
     @include non-code-font();
-    height: 475px;
+    height: 425px;
     padding-right: 3px;
     margin-right: 5px;
     overflow-y: auto;
@@ -30,7 +25,7 @@
     .filename {
       padding-right: 5px;
     }
-    &::-webkit-scrollbar:vertical { width: 5px; }
+    &::-webkit-scrollbar:vertical { width: 4px; }
     div[class~='filename'] {
       @include font-size-medium();
       &[class~='selected'] {
@@ -43,7 +38,7 @@
   #choose-language, #choose-tests, #choose-exercise {
     @include non-code-font();
     color: darken($lighter-color, 5%);
-    @include font-size-larger();
+    @include font-size-large();
     margin-bottom: 5px;
     padding-left: 0px;
     text-align: right;
@@ -54,12 +49,17 @@
     }
   }
 
+  .filename {
+    font-size: 13pt !important;
+    width: 165px;
+  }
+
   #instructions {
     color: $lighter-color;
     background: lighten($darker-color, 5%);
     border-top-left-radius: 5px;
     border: none;
-    height: 465px;
+    height: 415px;
     width: 550px;
     margin-left: 0px;
     font-size: 12pt;
