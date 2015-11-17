@@ -1,7 +1,11 @@
 
 <div>
   <div class="align-center small">
+  <% if @started_avatar_names.size == 0 %>
+    no one has entered yet!
+  <% else %>
     click the animal
+  <% end %>
   </div>
   <table class="align-center">
     <% started_count = 0 %>
