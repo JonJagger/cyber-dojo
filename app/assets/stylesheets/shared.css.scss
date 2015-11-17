@@ -37,6 +37,7 @@ a:link, a:visited
 .diff-traffic-light, #yin-yang-logo { cursor: pointer; }
 
 .hover-tip {
+  @include plaintext-font();
   z-index: 3;
   position: absolute;
   background-color: lighten($darker-color, 6%);
@@ -112,7 +113,7 @@ a:link, a:visited
 //----------------------------------------------
 
 #footer {
-  font-family: Trebuchet MS, Tahoma, Arial, sans-serif;
+  @include plaintext-font();
   font-size: 1.05em;
   position: fixed;
   width: 100%;

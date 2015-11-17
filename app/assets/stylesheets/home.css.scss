@@ -38,23 +38,25 @@
   }
 
   #licensing-container {
+    @include plaintext-font();
     @include edged-panel();
+    width: 328px;
+    text-align: right;
+    margin-bottom: 10px;
     padding-left: 15px;
     padding-right: 20px;
-    width: 328px;
-    margin-bottom: 10px;
-    text-align: right;
   }
 
   #charity-container, #donate-container {
-    font-size: 0.9em;
+    @include plaintext-font();
     @include edged-panel();
+    width: 338px;
+    text-align: right;
+    margin-bottom: 10px;
+    font-size: 0.9em;
     padding-right: 20px;
     margin: 0px;
     margin-left: 15px;
-    margin-bottom: 10px;
-    width: 338px;
-    text-align: right;
   }
 
   #donate-container #donate-button,

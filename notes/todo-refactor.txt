@@ -12,6 +12,7 @@ put font-family stuff into an include (remove duplication)
 --------------------------------------
 NEW UX
 tooltip font - not Impact
+dialog-box ok/cancel use button font
 enter-page:  needs main title "join a prepared practice"
 filename: drop border-top/bottom highlight. Use color change instead.
 diff-dialog: filename-knave ordering needs to match test-page filename-knave ordering
