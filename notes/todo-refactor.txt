@@ -16,6 +16,7 @@ Refactor dialog_history.js to server side html returned via Rails bind() call
 to browser via Ajax json call.
 --------------------------------------
 NEW UX
+pages need to be shrunk slightly so they look ok at 100%
 dialog-box buttons - use Impact font (new/rename/delete) ok/cancel
 diff-dialog buttons at bottom - use Impact font
 filename: drop border-top/bottom highlight. Use color change instead.
