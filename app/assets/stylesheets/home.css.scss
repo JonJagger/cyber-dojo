@@ -19,9 +19,9 @@
 
   #create-button, #existing-button,
   #charity-button, #donate-button {
+    @include non-code-font();
     width: 240px;
     padding-right: 20px;
-    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     color: $darker-color;
     @include font-size-largest();
     margin-left: 10px;

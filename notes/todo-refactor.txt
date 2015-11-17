@@ -6,6 +6,8 @@ Test the CSS using Quixote https://github.com/jamesshore/quixote
 Refactor dialog_history.js to server side html returned via Rails bind() call
 to browser via Ajax json call.
 --------------------------------------
+put font-family stuff into an include (remove duplication)
+--------------------------------------
 NEW UX
 enter-page:  needs main title "join a prepared practice"
 filename: drop border-top/bottom highlight. Use color change instead.

@@ -10,7 +10,7 @@ table { border-spacing: 0; }
 }
 
 body {
-  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  @include non-code-font();
   background: $darker-color;
   padding: none;
   margin: 0em;
@@ -159,7 +159,7 @@ div[class~="filename"][class~='selected']:hover {
   a:link, a:visited { color: $lighter-color; }
 
   &.title {
-    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    @include non-code-font();
     position: relative;
     left: -45px;
   }

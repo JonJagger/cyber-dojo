@@ -13,15 +13,15 @@
   }
 
   #prepare-a-new-practice {
-    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    color: darken($lighter-color, 5%);
+    @include non-code-font();
+    color: $lighter-color;
     font-size: 4.0em;
     margin-right: 8px;
     text-align: right;
   }
 
   #languages-container, #tests-container, #exercises-container {
-    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    @include non-code-font();
     height: 475px;
     padding-right: 3px;
     margin-right: 5px;
@@ -41,7 +41,7 @@
   }
 
   #choose-language, #choose-tests, #choose-exercise {
-    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    @include non-code-font();
     color: darken($lighter-color, 5%);
     @include font-size-larger();
     margin-bottom: 5px;
@@ -71,7 +71,7 @@
   }
 
   #ok {
-    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    @include non-code-font();
     @include font-size-largest();
     margin: { top: 5px; right: 0px; }
   }

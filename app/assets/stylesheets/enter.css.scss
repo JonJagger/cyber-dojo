@@ -5,13 +5,20 @@
 
   margin: { top: 55px; left: 35px; }
 
-  #enter-your-cyber-dojo-id {
-    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  #join-a-prepared-practice {
+    @include non-code-font();
+    color: $lighter-color;
+    font-size: 4.0em;
+    margin-right: 8px;
+    text-align: right;
+  }
+  #enter-id-prompt {
+    @include non-code-font();
     @include font-size-largest();
   }
 
   #kata-id-input {
-    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    @include non-code-font();
     background: lighten($green, 20%);
     color: $darker-color;
     @include font-size-largest();
@@ -26,17 +33,13 @@
   }
 
   #enter-button, #re-enter-button, #review-button {
+    @include non-code-font();
     width: 240px;
     padding-right: 20px;
-    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-largest();
     margin-left: 10px;
     margin-bottom: 5px;
     text-align: right;
-  }
-  .button-td {
-    width: 230px;
-    vertical-align: top;
   }
 }
 

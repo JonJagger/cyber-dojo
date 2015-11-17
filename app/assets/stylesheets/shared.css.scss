@@ -80,7 +80,7 @@ a:link, a:visited
 //----------------------------------------------
 
 #cyber-dojo {
-  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  @include non-code-font();
   font-size: 6.75em;
   color: $text-color;
   margin-bottom: 0px;
@@ -100,7 +100,7 @@ a:link, a:visited
 }
 
 #the-place-to-practice-programming {
-  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  @include non-code-font();
   font-size: 2.32em;
   color: lighten($text-color, 5%);
   position: relative;
@@ -145,9 +145,9 @@ a:link, a:visited
   }
 
   #learn-more-button {
+    @include non-code-font();
     width: 80px;
     padding-right: 10px;
-    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     color: darken($darker-color, 10%);
     text-align: right;
     font-size: 0.87em;

@@ -14,7 +14,7 @@
     @include right-align(15px);
     text-align: right;
     #progress-button, #download-button {
-      font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+      @include non-code-font();
       font-size: 1em;
       padding-bottom: 4px;
       margin-bottom: 2px;
