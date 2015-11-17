@@ -65,8 +65,9 @@ button[disabled] {
 }
 
 div[class~='filename'] {
-  width: 500px;
+  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;  // Not Impact
   @include font-size-small();
+  width: 500px;
   background: $darker-color;
   color: lighten($darker-color, 30%);
   margin: none;

@@ -1,5 +1,7 @@
 
 --------------------------------------
+https://github.com/minimaxir/big-list-of-naughty-strings
+--------------------------------------
 Split CSS into smaller files, per component.
 Test the CSS using Quixote https://github.com/jamesshore/quixote
 --------------------------------------
