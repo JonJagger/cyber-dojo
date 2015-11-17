@@ -27,23 +27,24 @@
 
 <body class="panel">
 
+  <% index = 0 %>
   <% avatars = Avatars.names.shuffle %>
-  <% size = 75 %>
+  <% size = 50 %>
 
   <h1>sorry - we can't do that</h1>
 
   <table class="align-center">
-	<% 4.times.each do |row| %>
+	<% 8.times.each do %>
 	<tr>
-	  <% 4.times.each do |col| %>
+	  <% 8.times.each do %>
 	     <td>
-		  <% n = row*4 + col %>
-		  <img alt="<%= avatars[n] %>"
-		       class="avatar_image"
-			   height="<%= size %>"
-			   width="<%= size %>"
-		       src="/images/avatars/bw/<%= avatars[n]%>.jpg" />
-		 </td>
+ 		     <img alt="<%= avatars[index] %>"
+            style="display:block"
+			     height="<%= size %>"
+			      width="<%= size %>"
+ 		          src="/images/avatars/bw/<%= avatars[index]%>.jpg" />
+  		 </td>
+       <% index += 1 %>
 	  <% end %>
 	</tr>
 	<% end %>

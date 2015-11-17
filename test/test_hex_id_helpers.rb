@@ -13,7 +13,7 @@ module TestHexIdHelpers # mix-in
 
     def test(id = nil, name, &block)
       id ||= Digest::MD5.hexdigest(name).upcase[0..5]
-      if @@args==[] || @@args.include?(id)
+      if @@args == [] || @@args.include?(id)
         if @@seen.include?(id)
           line = 'X' * 35
           puts

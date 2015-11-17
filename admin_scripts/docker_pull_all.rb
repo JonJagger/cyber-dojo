@@ -6,7 +6,7 @@ require 'json'
 
 cyber_dojo_root = '/var/www/cyber-dojo'
 
-image_names = [ ]
+image_names = []
 Dir.glob("#{cyber_dojo_root}/languages/*/*/manifest.json") do |file|
   manifest = JSON.parse(IO.read(file))
   image_names << manifest['image_name']
@@ -20,6 +20,6 @@ image_names.sort.each do |image_name|
 end
 
 puts "# -----------------------"
-puts "# now refresh the language cache"
-puts "$ cd #{cyber_dojo_root}/languages"
-puts "$ ./refresh_cache.rb"
+puts "# now refresh the caches"
+puts "$ cd #{cyber_dojo_root}/admin_scripts"
+puts "$ ./refresh_all_caches.sh"

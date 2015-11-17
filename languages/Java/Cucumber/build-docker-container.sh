@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/java-1.8_cucumber .
+docker build -t cyberdojofoundation/java_cucumber .

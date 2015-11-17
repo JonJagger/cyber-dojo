@@ -2,12 +2,7 @@
 # test runner providing isolation/protection/security
 # via Docker containers https://www.docker.io/
 # and relying on docker volume mounts on host to
-# give /katas/ state access to docker process containers.
-#
-# Comments at end of file
-
-require_relative './docker_times_out_runner'
-require 'tempfile'
+# give docker containers access to .../katas/...
 
 class DockerRunner
 
@@ -15,75 +10,44 @@ class DockerRunner
     'docker_runner_cache.json'
   end
 
-  def initialize(caches, bash = Bash.new, cid_filename = Tempfile.new('cyber-dojo').path)
+  def initialize(caches, bash = Bash.new)
     @caches = caches
     @bash = bash
-    @cid_filename = cid_filename
   end
 
-  def runnable?(language)
-    image_names.include?(language.image_name)
+  def runnable?(image_name)
+    image_names.include?(image_name)
   end
 
-  def run(sandbox, command, max_seconds)
-    read_write = 'rw'
-    sandbox_volume = "#{sandbox.path}:/sandbox:#{read_write}"
-    options =
-        ' --net=none' +
-        " -v #{quoted(sandbox_volume)}" +
-        ' -w /sandbox'
-    language = sandbox.avatar.kata.language
-    cmd = timeout(command, max_seconds)
-    times_out_run(options, language.image_name, cmd, max_seconds)
+  def run(sandbox, max_seconds)
+    cmd = "#{File.dirname(__FILE__)}/docker_runner.sh" +
+          " #{sandbox.path}" +
+          " #{sandbox.avatar.kata.language.image_name}" +
+          " #{max_seconds}"
+    output, exit_status = bash.exec(cmd)
+    exit_status != timed_out ? output : did_not_complete_in(max_seconds)
   end
 
   def refresh_cache
-    output, _ = bash('docker images')
+    output, _ = bash.exec('docker images')
     lines = output.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
-    cache = lines.collect { |line| line.split[0] }
-    caches.write_json(self.class.cache_filename, cache)
+    image_names = lines.collect { |line| line.split[0] }
+    caches.write_json(self.class.cache_filename, image_names)
   end
 
   private
 
-  include DockerTimesOutRunner
+  include DidNotCompleteIn
 
-  attr_reader :caches
+  attr_reader :caches, :bash
 
   def image_names
     @image_names ||= caches.read_json(self.class.cache_filename)
   end
 
+  def timed_out
+    (timeout=128) + (kill=9)
+  end
+
 end
-
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-# "docker run" +
-#    ' --net=none' +
-#    " -v #{quoted(sandbox_volume)}" +
-#    " -w /sandbox" +
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-# --net=none
-#
-#   Turn off all networking inside the container.
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-# -v #{quoted(sandbox_volume)}
-#
-#   Volume mount the animal's sandbox to /sandbox inside the docker
-#   container as a read-write folder. This provides isolation.
-#   Important to quote the volume incase any paths contain spaces
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-# -w /sandbox
-#
-#   Working directory when the command is run is /sandbox
-#   (as volume mounted in the first -v option)
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

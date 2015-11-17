@@ -11,6 +11,7 @@ $(function() {
     var latitude = undefined;     // Ensure params['latitude'] on the server to be nil not ''
     var longtitude = undefined;   // Ditto  params['longtitude']
 
+    var onceOnly = 0;
     var saveAndRedirect = function() {
       $.getJSON('/setup/save', {
           language: language,
@@ -19,9 +20,16 @@ $(function() {
           latitude: latitude,
         longtitude: longtitude
       }, function(dojo) {
-        var url = '/dojo/index/' + dojo.id;
+        var okOrCancel = function(id) {
+          var url = '/dojo/index/' + id;
+          window.location = url;
+        };
         page.removeClass('busy');
-        window.location = url;
+        // geo.getCurrentPosition()'s callbacks are not atomic!
+        onceOnly += 1;
+        if (onceOnly == 1) {
+          cd.newDojoDialog('create', dojo.id, okOrCancel).dialog('open');
+        }
       });
     };
 
@@ -39,7 +47,7 @@ $(function() {
     if (geo) {
       var fourSeconds = 4*1000;
       var options = { timeout: fourSeconds };
-      geo.getCurrentPosition(geoSuccess,geoFailure,options);
+      geo.getCurrentPosition(geoSuccess, geoFailure, options);
     } else {
       saveAndRedirect();
     }

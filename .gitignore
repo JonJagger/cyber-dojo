@@ -5,7 +5,6 @@ tmp
 
 .DS_Store
 .sass-cache/
-
 .idea
 .rvmrc
 .approvals
@@ -15,9 +14,12 @@ tmp
 zipped_dojos.zip
 cyberDojo.db
 *.tmp
-*.WRAPPED
 
 admin_scripts/stats/exceptions.log
 
+# where caches used to live
 exercises/*cache.json
 languages/*cache.json
+
+test/lib/disk_stub_cache.json
+test/*/coverage/

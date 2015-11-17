@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/groovy-2.4.4_spock  .
+docker build -t cyberdojofoundation/groovy_spock  .

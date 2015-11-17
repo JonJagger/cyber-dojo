@@ -1,23 +1,21 @@
 
-# Deprecated test runner that runs *directly* on the host server
-# instead of inside a docker-container.
+# Runner that runs directly on the host server
 # No isolation/protection/security, nothing.
-
-require_relative './runner'
 
 class HostRunner
 
-  def initialize(_caches)
+  def initialize(_caches, bash = Bash.new)
+    @bash = bash
   end
 
   def runnable?(language)
     true
   end
 
-  def run(sandbox, command, max_seconds)
-    command = "cd '#{sandbox.path}';" + stderr2stdout(command)
+  def run(sandbox, max_seconds)
+    command = "cd '#{sandbox.path}';" + stderr2stdout('./cyber-dojo.sh')
     pipe = IO::popen(command)
-    output = ""
+    output = ''
     sandbox_thread = Thread.new { output += pipe.read }
     result = sandbox_thread.join(max_seconds);
     timed_out = (result == nil)
@@ -31,16 +29,17 @@ class HostRunner
     if timed_out
       output += didnt_complete(max_seconds)
     end
-    limited(output)
+    output
   end
 
 private
 
-  include Runner
   include Stderr2Stdout
 
+  attr_reader :bash
+
   def kill(pids)
-    return if pids == [ ]
+    return if pids == []
     `kill #{pids.join(' ')}`
   end
 

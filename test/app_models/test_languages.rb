@@ -132,7 +132,7 @@ class LanguagesTests < AppModelTestBase
   '[name] when name has no - and was renamed' do
     [
        # from way back when test name was not part of language name
-      'BCPL', 'C', 'C++', 'C#', 'Clojure', 'CoffeeScript','Erlang','Go',
+      'BCPL', 'C', 'C++', 'C#', 'CoffeeScript','Erlang','Go',
       'Haskell', 'Java', 'Javascript', 'Perl', 'PHP', 'Python', 'Ruby', 'Scala',
     ].each { |name| refute_nil languages[name], name }
   end
@@ -215,8 +215,8 @@ class LanguagesTests < AppModelTestBase
       'C++-assert 1015 545111471C',
       'C-Unity 450 5498403AF6',
       'C-assert 836 54B99F4CE2',
-      'Clojure 67 5A53D42987',
-      'Clojure-.test 177 546B4184B4',
+      #'Clojure 67 5A53D42987',          # offline
+      #'Clojure-.test 177 546B4184B4',   # offline
       'CoffeeScript 47 014F4190E0',
       'CoffeeScript-jasmine 83 54219ECA71',
       'D-unittest 45 541349CE61',

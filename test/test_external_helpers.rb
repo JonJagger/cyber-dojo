@@ -7,7 +7,7 @@ module TestExternalHelpers # mix-in
 
   module_function
 
-  def setup   ;   store_env_vars; check_tmp_root_exists; end
+  def setup   ; store_env_vars; check_tmp_root_exists; end
   def teardown; restore_env_vars; end
 
   def set_languages_root(value); cd_set(languages_key,value); end
@@ -55,7 +55,7 @@ module TestExternalHelpers # mix-in
   end
 
   def env_vars
-    root_dir = '/var/www/cyber-dojo'
+    root_dir = File.expand_path('..', File.dirname(__FILE__))
     {
       languages_key => root_dir + '/languages',
       exercises_key => root_dir + '/exercises',

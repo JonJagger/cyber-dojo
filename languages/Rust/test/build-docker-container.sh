@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/rust-1.2.0_test .
+docker build -t cyberdojofoundation/rust_test .

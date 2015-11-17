@@ -1,0 +1,15 @@
+
+So now I can work on script
+$ cdf-create NAME ARGS
+which under the hood does
+1) docker-machine create NAME ARGS
+2) sets up the node NAME
+   . www-data user
+   . rsync
+
+I guess I'll also need some scripts to
+. docker pull on all existing continers inside each node
+Hmmm. The whole container upgrade thing being simplified
+becomes more important when it has to be done over multiple
+nodes!
+

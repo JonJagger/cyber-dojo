@@ -1,3 +1,0 @@
-
-I found that only running the rsync daemon on the client nodes
-ensured they were owned by www-data on the client node.

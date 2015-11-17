@@ -1,11 +1,10 @@
 FROM       cyberdojofoundation/java-1.8
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-RUN apt-get update
-RUN apt-get upgrade -y
+RUN apt-get update && apt-get install --yes \
+  wget \
+  unzip
 
-RUN apt-get install -y wget
-RUN apt-get install -y unzip
 RUN wget http://dl.bintray.com/groovy/maven/apache-groovy-binary-2.4.4.zip
 RUN unzip apache-groovy-binary-2.4.4.zip
 

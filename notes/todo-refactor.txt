@@ -1,4 +1,20 @@
 
+
+stderr2stdout
+Only used in
+lib/HostGit.rb
+lib/Bash.rb
+Aim to pass bash object to HostGit?
+Have it explicitly in Bash and drop Stderr2Stdout.rb file
+--------------------------------------
+Split off Language?+Test? page as step 1 of 2-steps setup.
+(Step2 = Exercise?)
+Show test file as selections are made (like exercise? -> instructions)
+Show messages
+o) code + test files are *unrelated* to the chosen exercise
+o) ...
+o) do not copy-paste code into the editor (eg from a blog article).
+   This is an easy way to invisible characters into your code!
 --------------------------------------
 https://github.com/minimaxir/big-list-of-naughty-strings
 --------------------------------------
@@ -35,43 +51,57 @@ diff-traffic-light CSS in shared.css is used only in dashboard
 Why is test/lib/disk_stub_cache.json
 not being gitignored? How do you debug this?
 --------------------------------------
-I think the stdout2stderr syntax might be wrong
-in the bash commands being executed. Should be...
-$ command > /dev/null 2>&1
+There is something odd happening in
+test/lib/test_docker_runner.rb
+default ENV vars, eg CYBER_DOJO_KATAS_ROOT
+are not being seen even though they are set
+in the test_external_helpers.rb setup() method.
 --------------------------------------
-explicit cyber-dojo root folder in
-app/models/Dojo.rb
-admin_scripts/show_docker_repo_names.rb
-test/external_helpers.rb
+D and Rust both have a single source file
+viz the tests have not been split off into
+a separate file.
 --------------------------------------
 make images on docker hub use version-number
 on the base image for the language but not
 on the images for the test-frameworks.
 Makes it easy to do upgrades.
 --------------------------------------
-Split create page into 2.
-1. Language?  + Tests? Use the extra space
-   to show code file. Also add info text
-   to say that the initial code
-   is always 42 Douglas Adams etc and bears
-   no relation to your chosen exercise. Can still
-   say this info without having code example
-   and thus still using one-click on language takes
-   you directly to the test selection.
-2. Exercise? ...
-   This one will be a 2-click. Once to select
-   the exercise and see the instructions.
-   Once to click create. Good that the last step
-   actually has a create button.
-
+Split create page into two.
+1. Step 1/2
+   Language? Tests?
+   Use the extra space to show the test file (later)
+   First entry in manifest.json visible_filenames:
+   is always the test file.
+   Use the extra space to say
+   o) the initial code is always 42 Douglas Adams etc
+   o) the initial code bears
+      no relation to your chosen exercise.
+   o) answer() is not related to the chosen exercise
+   o) dont remove lines at the end of the tests such as
+        puts("All tests passed")
+      as this is often how cyber-dojo knows if the test passed.
+   o) tests have to complete in 15 seconds.
+   o) don't copy/paste because...
+   Don't make this a one-click obviously.
+   Keeping language and tests together also makes this
+   a smaller refactoring from the current code.
+   OK and CANCEL buttons.
+2. Step 2/2
+   Exercise?
+   Keep instructions file.
+   CREATE and CANCEL buttons
+   Later add "fake" none option to list
+   CREATE and CANCEL
 --------------------------------------
 Try and make lighter background for these avatar images
 antelope, bat, bear, eagle, elephant, fox, gopher,
 heron, hyena, lizard, ostrich, porcupine, rhino,
 tuna, turtle,
 --------------------------------------
+
 Cut from http://blog.cyber-dojo.org/2014/09/adding-new-language-and-unit-test-to-cyber-dojo.html
 ./check_one_language.rb has not been refactored yet...
+
 <br>
 <br>
 <h2>check your output parse function</h2>

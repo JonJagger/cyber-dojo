@@ -10,5 +10,5 @@
   "filename_extension" : ".cpp",
   "display_name": "C++ (g++), assert",
   "unit_test_framework": "cassert",
-  "image_name": "cyberdojofoundation/gpp-4.8.4_assert"
+  "image_name": "cyberdojofoundation/gpp_assert"
 }

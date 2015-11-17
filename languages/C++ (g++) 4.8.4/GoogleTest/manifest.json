@@ -10,5 +10,5 @@
   "filename_extension" : ".cpp",
   "display_name": "C++ (g++), GoogleTest",
   "unit_test_framework": "google_test",
-  "image_name": "cyberdojofoundation/gpp-4.8.4_googletest"
+  "image_name": "cyberdojofoundation/gpp_googletest"
 }

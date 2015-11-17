@@ -12,14 +12,14 @@ class RunnerStub
     @runnable = stub
   end
 
-  def run(sandbox, command, max_duration)
+  def run(_sandbox, _max_seconds)
     if @output.nil?
       raise RuntimeError.new("RunnerStub.run()) called unexpectedly")
     end
     @output
   end
 
-  def runnable?(language)
+  def runnable?(_language)
     if @runnable.nil?
       raise RuntimeError.new("RunnerStub.runnable? called unexpectedly")
     end

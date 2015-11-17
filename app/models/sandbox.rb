@@ -24,13 +24,14 @@ class Sandbox
     delta[:changed].each { |filename|   write(filename, files[filename]) }
   end
 
-  def run_tests(time_limit)
-    runner.run(self, './cyber-dojo.sh', time_limit)
+  def run_tests(max_seconds)
+    clean(runner.run(self, max_seconds))
   end
 
   private
 
   include ExternalParentChain
+  include OutputCleaner
 
   def git_add(filename, content)
     write(filename, content)

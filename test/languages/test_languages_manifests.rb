@@ -4,18 +4,31 @@ require_relative './languages_test_base'
 
 class LanguagesManifestsTests < LanguagesTestBase
 
+  test 'F6B9D6',
+  'no known flaws in Dockerfile of base language/' do
+    Dir.glob("#{root_path}languages/*/").sort.each do |dir|
+      @language = dir
+      assert dockerfile_exists_and_is_well_formed?(dir + 'Dockerfile')
+      assert build_docker_container_exists_and_is_well_formed?(dir + build_docker_container)
+    end
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'B892AA',
-  'manifests of each languages' do
+  'no known flaws in Dockerfile and manifests of each language/test/' do
     manifests.each do |filename|
       folders = File.dirname(filename).split('/')[-2..-1]
       assert_equal 2, folders.size
       lang, test = folders
-      check("#{lang}-#{test}")
+      check_dockerfile_and_manifest("#{lang}-#{test}")
     end
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'D00EFE',
-  'no two manifests have the same image_name' do
+  'no two language manifests have the same image_name' do
     so_far = []
     manifests.each do |filename|
       manifest = JSON.parse(IO.read(filename))
@@ -25,8 +38,10 @@ class LanguagesManifestsTests < LanguagesTestBase
     end
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test '16735B',
-  'no two manifests have the same display_name' do
+  'no two language manifests have the same display_name' do
     so_far = []
     manifests.each do |filename|
       manifest = JSON.parse(IO.read(filename))
@@ -36,12 +51,14 @@ class LanguagesManifestsTests < LanguagesTestBase
     end
   end
 
-  def manifests
-    Dir.glob("#{root_path}languages/*/*/manifest.json")
-  end
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def check(language_name)
+  def check_dockerfile_and_manifest(language_name)
     @language = language_name
+
+    assert dockerfile_exists_and_is_well_formed?
+    assert build_docker_container_exists_and_is_well_formed?
+
     assert manifest_file_exists?
     assert required_keys_exist?
     refute unknown_keys_exist?
@@ -50,6 +67,7 @@ class LanguagesManifestsTests < LanguagesTestBase
     assert highlight_filenames_are_subset_of_visible_filenames?
     assert progress_regexs_valid?
     assert display_name_valid?
+    assert image_name_valid?
     refute filename_extension_starts_with_dot?
     assert cyberdojo_sh_exists?
     assert cyberdojo_sh_has_execute_permission?
@@ -57,9 +75,6 @@ class LanguagesManifestsTests < LanguagesTestBase
     refute any_files_owner_is_root?
     refute any_files_group_is_root?
     refute any_file_is_unreadable?
-    assert dockerfile_exists?
-    assert build_docker_container_exists?
-    assert build_docker_container_starts_with_cyberdojofoundation?
     assert created_kata_manifests_language_entry_round_trips?
   end
 
@@ -186,6 +201,32 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  def image_name_valid?
+    parts = image_name.split('_')
+    if parts.size < 2
+      message = "#{manifest_filename}'s 'image_name':'#{image_name}'" +
+                " is not in 'language_test' format"
+      return false_puts_alert message
+    end
+    language_name = parts[0]
+    test_name = parts[1..-1].join('_')
+    if language_name.count("0-9") > 0
+      message = "#{manifest_filename}'s 'image_name':'#{image_name}'" +
+                " contains digits in the language name '#{language_name}"
+      return false_puts_alert message
+    end
+    if test_name.count(".0-9") > 0
+      unless [language_name,test_name] == ['bash','shunit2']
+        message = "#{manifest_filename}'s 'image_name':'#{image_name}'" +
+                  " contains digits in the test name '#{test_name}"
+        return false_puts_alert message
+      end
+    end
+    true_dot
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def filename_extension_starts_with_dot?
     if manifest['filename_extension'][0] != '.'
       message = "#{manifest_filename}'s 'filename_extension' does not start with a ."
@@ -269,7 +310,6 @@ class LanguagesManifestsTests < LanguagesTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def any_files_owner_is_root?
-    # for HostTestRunner
     (visible_filenames + ['manifest.json']).each do |filename|
       uid = File.stat(language_dir + '/' + filename).uid
       owner = Etc.getpwuid(uid).name
@@ -283,7 +323,6 @@ class LanguagesManifestsTests < LanguagesTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def any_files_group_is_root?
-    # for HostTestRunner
     (visible_filenames + ['manifest.json']).each do |filename|
       gid = File.stat(language_dir + '/' + filename).gid
       owner = Etc.getgrgid(gid).name
@@ -307,30 +346,50 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def dockerfile_exists?
-    unless File.exists?(language_dir + '/' + 'Dockerfile')
-      return false_puts_alert "#{language_dir}/ dir does not contain a file called Dockerfile"
+  def dockerfile_exists_and_is_well_formed?(dockerfile = language_dir + '/' + 'Dockerfile')
+    unless File.exists?(dockerfile)
+      message = "#{language_dir}/ dir has no Dockerfile"
+      return false_puts_alert(message)
+    end
+    content = IO.read(dockerfile)
+    lines = content.strip.split("\n")
+    help = 'https://docs.docker.com/articles/dockerfile_best-practices/'
+    if lines.any? { |line| line.start_with?('RUN apt-get upgrade') }
+      message =
+        "#{dockerfile} don't use\n" +
+        "RUN apt-get upGRADE\n" +
+        "See #{help}"
+      return false_puts_alert(message)
+    end
+    if lines.any? { |line| line.strip == 'RUN apt-get update' }
+      message =
+        "#{dockerfile} don't use single line\n" +
+        "RUN apt-get update\n" +
+        "See #{help}"
+      return false_puts_alert(message)
+    end
+    if lines.any? { |line| line.start_with?('RUN apt-get install') }
+      message =
+        "#{dockerfile} don't use\n" +
+        "RUN apt-get install...\n" +
+        "use\n" +
+        "RUN apt-get update && apt-get install --yes ...'\n" +
+        "See #{help}"
+      return false_puts_alert(message)
     end
     true_dot
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def build_docker_container_exists?
-    unless File.exists?(language_dir + '/' + 'build-docker-container.sh')
-      message = "#{language_dir}/ dir does not contain a file called build-docker-container.sh"
-      return false_puts_alert message
+  def build_docker_container_exists_and_is_well_formed?(filename = "#{language_dir}/#{build_docker_container}")
+    unless File.exists?(filename)
+      message = "#{language_dir}/ dir has no #{build_docker_container}"
+      return false_puts_alert(message)
     end
-    true_dot
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def build_docker_container_starts_with_cyberdojofoundation?
-    filename = language_dir + '/' + 'build-docker-container.sh'
     content = IO.read(filename)
     unless /docker build -t cyberdojofoundation/.match(content)
-      message = "#{filename} does not contain 'docker build -t cyberdojofoundation/"
+      message = "#{filename} does not contain 'docker build -t cyberdojofoundation/..."
       return false_puts_alert message
     end
     true_dot
@@ -340,12 +399,28 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   private
 
+  def build_docker_container
+    'build-docker-container.sh'
+  end
+
+  def manifests
+    Dir.glob("#{root_path}languages/*/*/manifest.json").sort
+  end
+
   def display_name
     manifest_property
   end
 
+  def image_name
+    manifest_property.split('/')[1]
+  end
+
   def visible_filenames
-    manifest_property || []
+    manifest_property
+  end
+
+  def unit_test_framework
+    manifest_property
   end
 
   def progress_regexs
@@ -356,12 +431,8 @@ class LanguagesManifestsTests < LanguagesTestBase
     manifest_property || []
   end
 
-  def unit_test_framework
-    manifest_property || []
-  end
-
   def manifest_property
-    property_name = (caller[0] =~ /`([^']*)'/ && $1)
+    property_name = /`(?<name>[^']*)/ =~ caller[0] && name
     manifest[property_name]
   end
 

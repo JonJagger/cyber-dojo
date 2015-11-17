@@ -58,12 +58,10 @@ class Avatar
     read_json(manifest_filename)
   end
 
-  def test(delta, files, now = time_now, time_limit = 15)
-    cyber_dojo_sh_updated = update_cyber_dojo_sh(files)
+  def test(delta, files, now = time_now, max_seconds = 15)
     sandbox.save_files(delta, files)
-    output = sandbox.run_tests(time_limit)
+    output = truncated(sandbox.run_tests(max_seconds))
     colour = language.colour(output)
-    output = update_output(output, cyber_dojo_sh_updated)
 
     update_manifest(files, output)
     rags = update_increments(colour, now)
@@ -75,8 +73,8 @@ class Avatar
   private
 
   include ExternalParentChain
+  include OutputTruncater
   include TimeNow
-  include UpdateCyberDojoSh
 
   def git_setup
     git.init(path, '--quiet')

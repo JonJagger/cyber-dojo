@@ -14,91 +14,89 @@ class DockerRunnerTests < LibTestBase
     set_git_class      'GitSpy'
     set_one_self_class 'OneSelfDummy'
     @bash = BashStub.new
+    @runner = DockerRunner.new(caches, bash)
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  class LanguageMock
-    def initialize(image_name)
-      @image_name = image_name
-    end
-    attr_reader :image_name
+  def teardown
+    super
   end
+
+  attr_reader :bash, :runner
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '75909D',
-  'refresh_cache executes [docker images]' +
-    ' and creates new cache-file in caches which determines runnability' do
+  'refresh_cache() executes [docker images]' +
+    ' and creates new cache-file in caches/ which determines runnability' +
+    ' but note that the cache is *not* used by run since only runnable' +
+    ' languages are offered at creation. Hmmmm suppose you are rejoining a' +
+    ' kata and the dojo has uninstalled the language...' do
     set_disk_class('DiskFake')
+    assert_equal [], bash.spied
     refute disk[caches.path].exists?(DockerRunner.cache_filename)
-    @bash.stub(stub_docker_images_python_py_test, success)
-    runner = DockerRunner.new(caches, @bash)
+    bash.stub(stub_docker_images_python_pytest, success)
+    # when
     runner.refresh_cache
+    # then
     assert disk[caches.path].exists?(DockerRunner.cache_filename)
-    assert runner.runnable?(LanguageMock.new('cyberdojofoundation/python-3.3.5_pytest'))
-    refute runner.runnable?(LanguageMock.new('cyberdojofoundation/not-installed'))
+    assert_equal 'docker images', bash.spied[0]
+    assert runner.runnable?("#{cdf}/python-3.3.5_pytest")
+    refute runner.runnable?("#{cdf}/not-installed")
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '2E8517',
+  'run() passes correct parameters to dedicated shell script' do
+    lion = make_kata.start_avatar(['lion'])
+    bash.stub('output', success)
+    # when
+    runner.run(lion.sandbox, max_seconds)
+    # then
+    expected =
+      "#{root_dir}/lib/docker_runner.sh" +
+      " #{lion.sandbox.path}" +
+      " #{lion.kata.language.image_name}" +
+      " #{max_seconds}"
+    call = bash.spied[0]
+    assert_equal expected, call
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '6459A7',
-  'run() completes and does not timeout - exact bash cmd interaction' do
-    docker = make_docker_runner
-    @lion = make_kata.start_avatar(['lion'])
-    stub_docker_run(completes)
-    output = docker.run(@lion.sandbox, cyber_dojo_cmd, max_seconds)
-    assert_equal 'blah', output, 'output'
-    assert_bash_commands_spied
+  'output is left untouched when run() does not time-out' do
+    lion = make_kata.start_avatar(['lion'])
+    bash.stub('syntax-error-line-1', success)
+    # when
+    output = runner.run(lion.sandbox, max_seconds)
+    # then
+    assert_equal 'syntax-error-line-1', output
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '87A438',
+  'output is not truncated and no message is added when run() does not time-out' do
+    lion = make_kata.start_avatar(['lion'])
+    big = '.' * 75*1024
+    bash.stub(big, success)
+    # when
+    output = runner.run(lion.sandbox, max_seconds)
+    # then
+    assert_equal big, output
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B8750C',
-  'run() times out - exact base cmd interaction' do
-    docker = make_docker_runner
-    @lion = make_kata.start_avatar(['lion'])
-    stub_docker_run(fatal_error(kill))
-    output = docker.run(@lion.sandbox, cyber_dojo_cmd, max_seconds)
-    assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds."), 'Unable'
-    assert_bash_commands_spied
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def make_docker_runner
-    DockerRunner.new(caches, @bash, cid_filename)
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def assert_bash_commands_spied
-    spied = @bash.spied
-    n = -1
-    assert_equal "rm -f #{cid_filename}", spied[n += 1], 'remove cidfile'
-    assert_equal exact_docker_run_cmd,    spied[n += 1], 'main docker run command'
-    assert_equal "cat #{cid_filename}",   spied[n += 1], 'get pid from cidfile'
-    assert_equal "docker stop #{pid}",    spied[n += 1], 'docker stop pid'
-    assert_equal "docker rm #{pid}",      spied[n += 1], 'docker rm pid'
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def exact_docker_run_cmd
-    language = @lion.kata.language
-    kata_volume_mount = @lion.sandbox.path + ":/sandbox:rw"
-
-    command = "timeout --signal=#{kill} #{max_seconds}s #{cyber_dojo_cmd} 2>&1"
-
-    "timeout --signal=#{kill} #{max_seconds+5}s" +
-      ' docker run' +
-        ' --user=www-data' +
-        " --cidfile=#{quoted(cid_filename)}" +
-        ' --net=none' +
-        " -v #{quoted(kata_volume_mount)}" +
-        ' -w /sandbox' +
-        " #{language.image_name}" +
-        " /bin/bash -c #{quoted(command)} 2>&1"
+  'output is replaced by timed-out message when run() times out' do
+    lion = make_kata.start_avatar(['lion'])
+    bash.stub('ach-so-it-timed-out', times_out)
+    # when
+    output = runner.run(lion.sandbox, max_seconds)
+    # then
+    assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds.")
   end
 
 end

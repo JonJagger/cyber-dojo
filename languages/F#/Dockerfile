@@ -1,14 +1,12 @@
 FROM       cyberdojofoundation/build-essential
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-RUN apt-get update
-RUN apt-get upgrade -y
-
-RUN apt-get install -y mono-complete
-RUN apt-get install -y fsharp
+RUN apt-get update && apt-get install --yes \
+  mono-complete \
+  fsharp
 
 RUN mozroots --import --sync
-RUN apt-get install -y curl
+RUN apt-get update && apt-get install --yes curl
 RUN curl -L http://nuget.org/nuget.exe -o nuget.exe
 
 RUN usermod -m -d /home/www-data www-data

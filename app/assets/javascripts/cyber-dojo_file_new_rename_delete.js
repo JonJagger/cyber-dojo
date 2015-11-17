@@ -25,7 +25,7 @@ var cyberDojo = (function(cd, $) {
     var input = $('<input>', {
       type: 'text',
       id: 'delete_filename',
-      name: 'delete_filename',      
+      name: 'delete_filename',
       value: filename,
 	    disabled: "disabled"
     });
@@ -70,7 +70,7 @@ var cyberDojo = (function(cd, $) {
 		    modal: true,
 		    buttons: [ okButton, cancelButton ]
       });
-    
+
     div.append(input);
 
   	input.keyup(function(event) {
@@ -122,7 +122,7 @@ var cyberDojo = (function(cd, $) {
   	  id: 'rename_file_cancel',
 	    text: 'cancel',
 	    click: function() { $(this).remove(); }
-	  };  
+	  };
     var renameFileDialog = $('<div id="rename_file_dialog">')
       .html(div)
       .dialog({
@@ -172,7 +172,6 @@ var cyberDojo = (function(cd, $) {
     $(oldFile).closest('tr').remove();
 
 	  cd.newFileContent(newFilename, content);
-    var div = cd.fileDiv(newFilename);
     cd.rebuildFilenameList();
     cd.loadFile(newFilename);
     var newFile = cd.fileContentFor(newFilename);
@@ -216,5 +215,5 @@ var cyberDojo = (function(cd, $) {
   };
 
   return cd;
-  
+
 })(cyberDojo || {}, $);

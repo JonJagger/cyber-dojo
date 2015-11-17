@@ -100,128 +100,35 @@ class AvatarTests < AppModelTestBase
     visible_files = @avatar.visible_files
     assert visible_files.keys.include?('output')
     assert_equal '', visible_files['output']
-
     runner.stub_output(expected = 'helloWorld')
     _, @visible_files, @output = DeltaMaker.new(@avatar).run_test
-
     assert @visible_files.keys.include?('output')
     assert_file 'output', expected
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'BEB313',
-    'test() on master cyber-dojo.sh results in standard output' +
-       ' with no ALERT, and no modification to any cyber-dojo.sh' do
+  test 'EB2E11',
+    'test() does not truncate output less than or equal to 50*1024 characters' do
     kata = make_kata(unique_id, 'Java-JUnit')
     @avatar = kata.start_avatar
-    master = @avatar.visible_files[cyber_dojo_sh]
-
-    runner.stub_output(expected = 'no alarms and no surprises')
+    big = 'X' * 50*1024
+    runner.stub_output(big)
     _, @visible_files, @output = DeltaMaker.new(@avatar).run_test
-
-    assert_file 'output', expected
-    assert_file cyber_dojo_sh, master
+    assert_file 'output', big
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'C33111',
-    'test() on commented master cyber-dojo.sh results in standard output' +
-       ' with no ALERT, and no modification to any cyber-dojo.sh' do
+  test '4B2E5A',
+  'test() truncates output greater 50*1024 characters' do
     kata = make_kata(unique_id, 'Java-JUnit')
     @avatar = kata.start_avatar
-    maker = DeltaMaker.new(@avatar)
-    commented_master = commented(maker.was[cyber_dojo_sh])
-    maker.change_file(cyber_dojo_sh, commented_master)
-
-    runner.stub_output(expected = 'no alarms and no surprises')
-    _, @visible_files, @output = maker.run_test
-
-    assert_file 'output', expected
-    assert_file cyber_dojo_sh, commented_master
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def output_alert
-  [
-    'ALERT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',
-    'ALERT >>>          possible problem detected           >>>',
-    'ALERT >>>   examine cyber-dojo.sh for detailed info    >>>',
-    'ALERT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-  ].join("\n")
-  end
-
-  def cyber_dojo_sh_alert
-    [
-      '# <ALERT>',
-      '# The lines in this cyber-dojo.sh file (above this alert) differ from the',
-      '# lines in the master cyber-dojo.sh file (below this alert). If this file',
-      '# is not working please examine the differences. Editing or removing the',
-      '# master (below this alert) will re-trigger the alert!',
-      '# </ALERT>'
-    ].join("\n")
-  end
-
-  test 'C718B2',
-    'test() sees changed cyber-dojo.sh file and appends' +
-       ' info plus commented master version to cyber-dojo.sh' +
-       ' and prepends an alert to the output. And it does all' +
-       ' this only *once*' do
-    kata = make_kata(unique_id, 'Java-JUnit')
-    @avatar = kata.start_avatar
-    language = @avatar.kata.language
-    master = @avatar.visible_files[cyber_dojo_sh]
-    assert master.split.size > 1
-
-    maker = DeltaMaker.new(@avatar)
-    maker.change_file(cyber_dojo_sh, first_content = "hello\nworld")
-    runner.stub_output(radiohead = 'no alarms and no surprises')
-    _, @visible_files, @output = maker.run_test
-
-    separator = "\n\n"
-    expected_output = output_alert + separator + radiohead
-    assert_file 'output', expected_output
-
-    appended_commented_master =
-      first_content +
-      separator +
-      cyber_dojo_sh_alert +
-      separator +
-      commented(master)
-
-    assert_file cyber_dojo_sh, appended_commented_master
-
-    # --- only once ---
-
-    runner.stub_output(radiohead)
+    big = 'X' * 50*1024
+    runner.stub_output(big + 'truncated')
     _, @visible_files, @output = DeltaMaker.new(@avatar).run_test
-
-    assert_file 'output', radiohead
-    assert_file cyber_dojo_sh, appended_commented_master
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test '1659F8',
-    'test() does NOT append commented master version to cyber-dojo.sh' +
-       ' nor prepends an alert to the output when cyber-dojo.sh is' +
-       ' stripped version of one-liner' do
-    kata = make_kata(unique_id, 'C (clang)-assert')
-    @avatar = kata.start_avatar
-    master = @avatar.visible_files[cyber_dojo_sh]
-    assert_equal 4, master.split.size
-    stripped_master = master.strip
-    assert_equal 2, stripped_master.split("\n").size
-
-    runner.stub_output(radiohead = 'no alarms and no surprises')
-    maker = DeltaMaker.new(@avatar)
-    maker.change_file(cyber_dojo_sh, stripped_master)
-    _, @visible_files, @output = maker.run_test
-
-    assert_file 'output', radiohead
-    assert_file cyber_dojo_sh, stripped_master
+    message = 'output truncated by cyber-dojo server'
+    assert_file 'output', big + "\n" + message
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

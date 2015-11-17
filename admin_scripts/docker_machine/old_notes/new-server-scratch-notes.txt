@@ -1,0 +1,357 @@
+
+Want to install docker-machine on the main server.
+
+$ ssh root@cyber-dojo.org
+$ docker --version
+Docker version 1.1.1, build bd609d2
+
+$ cat /etc/issue
+Debian GNU/Linux 7 \n \l
+# Debian 7 is Wheezy
+
+$ uname -r
+3.2.0-4-amd64
+
+No. Decided to do it on the backup server. Debian 8, Jessie, kernel 3.16 (Docker needs >3.8)
+Then rsync from main-server and switch IP address to new one.
+But backup server has only got 100G file system. Don't think that's big enough.
+On main server
+$ df -i
+Yes inodes are near 50% now.
+
+So building a *new* server. Wait. There are two issues.
+1) have area to work towards docker-machine on
+2) have Debian 8 based server ready to switch over to (rsync from main server)
+The current 100G backup server is enough for 1)
+
+So updating docker on backup server.
+I'm following https://docs.docker.com/installation/debian/
+Step 9 fails
+$ apt-get update
+says
+E: The method driver /usr/lib/apt/methods/https could not be found.
+N: Is the package apt-transport-https installed?
+So trying
+$ apt-get install -y apt-transport-https
+And again
+$ apt-get update
+Yup that's better
+$ apt-cache policy docker-engine
+docker-engine:
+  Installed: (none)
+  Candidate: 1.8.3-0~jessie
+  Version table:
+     1.8.3-0~jessie 0
+        500 https://apt.dockerproject.org/repo/ debian-jessie/main amd64 Packages
+     1.8.2-0~jessie 0
+        500 https://apt.dockerproject.org/repo/ debian-jessie/main amd64 Packages
+     1.8.1-0~jessie 0
+        500 https://apt.dockerproject.org/repo/ debian-jessie/main amd64 Packages
+     1.8.0-0~jessie 0
+        500 https://apt.dockerproject.org/repo/ debian-jessie/main amd64 Packages
+     1.7.1-0~jessie 0
+        500 https://apt.dockerproject.org/repo/ debian-jessie/main amd64 Packages
+     1.7.0-0~jessie 0
+        500 https://apt.dockerproject.org/repo/ debian-jessie/main amd64 Packages
+
+
+
+But
+$ docker --version
+-bash: /usr/bin/docker: No such file or directory
+
+Do I have to do next section?
+Yes
+Note docker-engine != docker-machine
+$ apt-get install -y docker-engine
+
+Now
+$ docker --version
+Says
+Docker version 1.8.3, build f4bf5c7
+
+Now to install docker-engine
+
+I'm following https://docs.docker.com/machine/install-machine/
+
+$ curl -L https://github.com/docker/machine/releases/download/v0.4.0/docker-machine_linux-amd64 > /usr/local/bin/docker-machine
+
+$ chmod +x /usr/local/bin/docker-machine
+
+$ docker-machine --version
+docker-machine version 0.4.0 (9d0dc7a)
+
+
+Built a new server.
+Reboot server and check cyber-dojo still comes up.
+Nope. 54.74.18.114 into browser and I get
+  We're sorry, but something went wrong.
+  We've been notified about this issue and we'll take a look at it shortly.
+Googling seems to reveal its a Rails/Passenger issue.
+
+$ cd /var/www/cyber-dojo
+$ bundle install
+And yes we are up.
+$ ./admin_scripts/pull.sh
+Still all ok.
+
+So now I can work on script
+$ cdf-create NAME ARGS
+which under the hood does
+1) docker-machine create NAME ARGS
+2) sets up the node NAME
+   . www-data user
+   . rsync
+
+
+====================================================================================
+
+
+Should I start rsync'ing from main-server to new-server-work-in-progress.
+I guess I should install cyber-dojo and docker on it first. Capture the
+commands needed to do that and put them in a script. At least check old
+script still work ok.
+
+Ok. Fell over. open4 not installed.
+Need to do bundle-install etc before updating caches...
+Ok. fixed that. pushed it.
+$ pull.sh $
+$ pull.sh
+
+Now of course at this point it says docker and docker-machine are not installed.
+Script setup_turnkey_server.sh only has instructions for docker and looks
+out of date.
+
+Verify Turnkey page come up if I put ip address into browser.
+Lets try first bit of setup_turnkey_server.sh to check apache2.
+-------
+cd /etc/apache2/sites-available
+sed 's/www.html/www\/cyber-dojo\/public/' < 000-default.conf > cyber-dojo.conf
+sed 's/www.html/www\/cyber-dojo\/public/' < default-ssl.conf > cyber-dojo-ssl.conf
+
+cd /etc/apache2/sites-enabled
+ln -s ../sites-available/cyber-dojo.conf cyber-dojo.conf
+
+chown    www-data:www-data /var
+chown    www-data:www-data /var/www
+chown -R www-data:www-data /var/www/cyber-dojo
+
+cd /var/www/cyber-dojo
+chmod g+s katas
+
+a2ensite cyber-dojo
+a2dissite railsapp
+service apache2 reload
+-------
+Yes we are up.
+
+Now for new instructions for docker.
+Trying these
+-------
+#!/bin/bash
+apt-get purge lxc-docker*
+apt-get purge docker.io*
+apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+echo "deb https://apt.dockerproject.org/repo debian-jessie main" > /etc/apt/sources.list.d/docker.list
+apt-get install -y apt-transport-https
+apt-get update
+apt-cache policy docker-engine
+apt-get install -y docker-engine
+curl -L https://github.com/docker/machine/releases/download/v0.4.0/docker-machine_linux-amd64 > /usr/local/bin/docker-machine
+chmod +x /usr/local/bin/docker-machine
+-------
+pgp failed with
+gpg: requesting key 2C52609D from hkp server pgp.mit.edu
+gpgkeys: key 58118E89F3A912897C070ADBF76221572C52609D can't be retrieved
+gpg: no valid OpenPGP data found.
+gpg: Total number processed: 0
+
+And at the end installing docker-engine with
+WARNING: The following packages cannot be authenticated!
+  docker-engine
+E: There are problems and -y was used without --force-yes
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   599    0   599    0     0   1258      0 --:--:-- --:--:-- --:--:--  1258
+100 12.0M  100 12.0M    0     0  3481k      0  0:00:03  0:00:03 --:--:-- 4884k
+
+
+$ docker --version
+Nope
+$ docker-machine --version
+0.4.0 it is there
+
+
+Trying to run pgp again. Directly from command line.
+This time it worked!
+Ran script again.
+pgp failed again.
+Googling. Switched to different server.
+hkp://keyserver.ubuntu.com:80
+Seems more reliable.
+
+Now to install some containers.
+$ docker pull cyberdojofoundation/java-1.8_junit
+
+Re ran pull.sh
+Says docker is installed
+Says docker-machine is installed
+
+Back to server in browser.
+Yes. create page allows me to create java-junit dojo.
+Enter it.
+Hit test.
+Says
+Post http:///var/run/docker.sock/v1.20/containers/create: dial unix /var/run/docker.sock: permission denied.
+* Are you trying to connect to a TLS-enabled daemon without TLS?
+* Is your docker daemon up and running?
+
+
+How can I tell if the docker daemon is running?
+$ /etc/init.d/docker status
+
+Yup its running.
+I was missing
+$ groupadd docker
+Added that to scripts.
+
+Now I can [test]
+But it says
+-------
+WARNING: Your kernel does not support memory swappiness capabilities, memory swappiness discarded.
+JUnit version 4.11-SNAPSHOT-20120416-1530
+.E
+Time: 0.024
+There was 1 failure:
+1) life_the_universe_and_everything(HikerTest)
+java.lang.AssertionError: expected:<42> but was:<54>
+	at HikerTest.life_the_universe_and_everything(HikerTest.java:10)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+-------
+
+Can I suppress the kernel warning?
+I guess it comes from [docker run]
+Doesnt seem to be a docker run --silent or --quiet
+Aha
+https://docs.docker.com/installation/ubuntulinux/
+Has some blurb about this...
+The file is for ubuntu and I'm on Debian.
+Trying them anyway.
+
+edited /etc/default/grub will need a sed command for that.
+$ update-grub
+$ reboot
+
+ssh back in
+Ok. Lets see.
+[test]
+No still get the same message.
+$ wget https://raw.githubusercontent.com/docker/docker/master/contrib/check-config.sh
+$ chmod +x check-config.sh
+$ ./check-config.sh
+Says
+cgroup hierarchy: properly mounted [/sys/fs/cgroup]
+- CONFIG_NAMESPACES: enabled
+Says
+CONFIG_MEMCG_SWAP_ENABLED: missing
+    (note that cgroup swap accounting is not enabled in your kernel config, you can enable it by setting boot option "swapaccount=1")
+Hmmm. Thought I did that.
+/boot/grubgrub.cfg
+Has not changed. Perhaps
+$ grub-mkconfig
+Nope. cfg file still looks the same.
+Is it a hypervisor problem?
+
+
+Of course I could always filter that off in the runner!
+WARNING: Your kernel does not support memory swappiness capabilities, memory swappiness discarded.
+
+Perhaps 2>&1 should *not* be done for the outer/inner timeout command?
+
+I can experiment by running commands from the terminal based
+on a known kata and avatar.
+
+$ docker run --help
+Suggests
+--memory-swappiness=-1
+
+Ok. On my server
+kata.id=201357D8C8
+avatar.name=koala
+Which is green with no infinite loops
+
+Get command from docker_runner.sh
+Drop cidfile
+Use --rm
+
+timeout --signal=9 15s \
+  docker run \
+    --rm \
+    --user=www-data \
+    --net=none \
+    --volume="/var/www/cyber-dojo/katas/20/1357D8C8/koala/sandbox:/sandbox:rw" \
+    --workdir=/sandbox  \
+    cyberdojofoundation/java-1.8_junit \
+    /bin/bash -c "timeout --signal=9 10s ./cyber-dojo.sh 2>&1" 2>&1
+
+Confirms that gives same warning
+
+
+Adding
+    --memory-swappiness=0 \
+or
+    --memory-swappiness=-1 \
+
+Warning still there
+Trying
+
+timeout --signal=9 15s \
+  docker run \
+    --rm \
+    --memory-swappiness=0 \
+    --user=www-data \
+    --net=none \
+    --volume="/var/www/cyber-dojo/katas/20/1357D8C8/koala/sandbox:/sandbox:rw" \
+    --workdir=/sandbox  \
+    cyberdojofoundation/java-1.8_junit \
+    /bin/bash -c "timeout --signal=9 10s ./cyber-dojo.sh 2>/dev/null" 2>/dev/null
+
+
+Yes. That gets rid of it.
+What about
+    /bin/bash -c "timeout --signal=9 10s ./cyber-dojo.sh 2>/dev/null"
+Still there
+What about
+    /bin/bash -c "timeout --signal=9 10s ./cyber-dojo.sh" 2>/dev/null
+That gets rid of it.
+Makes sense.
+What about
+    /bin/bash -c "timeout --signal=9 10s ./cyber-dojo.sh 2>&1" 2>/dev/null
+That seems best of all.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

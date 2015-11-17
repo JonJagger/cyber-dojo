@@ -46,6 +46,10 @@ chown www-data:www-data $cyberDojoHome/*
 echo "chown www-data:www-data .*"
 chown www-data:www-data $cyberDojoHome/.*
 
+# - - - - - - - - - - - - - - - - - - - - - - - - -
+# do bundle-install before refreshing the caches
+# in case there is a new dependenciy (eg open4)
+
 echo "deleting the rails cache"
 rm -rf $cyberDojoHome/tmp/*
 
@@ -53,28 +57,8 @@ echo "poking rails"
 rm $cyberDojoHome/Gemfile.lock
 bundle install
 
-echo "refreshing languages cache"
-$cyberDojoHome/languages/refresh_cache.rb
-
-echo "refreshing exercises cache/"
-$cyberDojoHome/exercises/refresh_cache.rb
-
 # - - - - - - - - - - - - - - - - - - - - - - - - -
-if docker --version > /dev/null 2>&1; then
-  echo "docker is installed"
-  echo "refreshing DockerRunner cache"
-  $cyberDojoHome/lib/refresh_runner_cache.rb DockerRunner
-else
-  echo "docker is NOT installed!!"
-fi
-
-if docker-machine --version > /dev/null 2>&1; then
-  echo "docker-machine is installed"
-  # TODO: echo "refreshing DockerMachineRunner cache"
-  # TODO: $cyberDojoHome/lib/refresh_runner_cache.rb DockerMachineRunner
-else
-  echo "docker-machine is NOT installed"
-fi
+$cyberDojoHome/admin_scripts/refresh_all_caches.sh
 
 # - - - - - - - - - - - - - - - - - - - - - - - - -
 echo "restarting apache"

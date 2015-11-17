@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/php-5.5.9_phpunit .
+docker build -t cyberdojofoundation/php_phpunit .

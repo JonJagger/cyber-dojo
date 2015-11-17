@@ -51,7 +51,7 @@ var cyberDojo = (function(cd, $) {
 
 
     //-------------------------------------------------------
-    // [x] diff traffic-lights
+    // diff? [x] traffic-lights [<< < tag > >>]  [< avatar >]
     //-------------------------------------------------------
 
     var makeTitleHtml = function() {
@@ -763,27 +763,11 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var forkSucceededDialog = function(fork) {
-      var html = '' +
-          "<div style='font-size:1.5em;'>" +
-            "your forked dojo's id is&nbsp;" +
-                fork.id.substring(0,6) +
-          "</div>";
-      var succeeded =
-        $('<div>')
-          .html(html)
-          .dialog({
-            autoOpen: false,
-            modal: true,
-            width: 250,
-            buttons: {
-              ok: function() {
-                var url = '/dojo/index/' + fork.id;
-                window.open(url);
-                $(this).remove();
-              }
-            }
-          });
-      succeeded.dialog('open');
+      var okOrCancel = function(id) {
+        var url = '/dojo/index/' + id;
+        window.open(url);
+      };
+      cd.newDojoDialog('fork', fork.id, okOrCancel).dialog('open');
     };
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -

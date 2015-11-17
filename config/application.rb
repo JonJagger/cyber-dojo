@@ -63,6 +63,7 @@ module CyberDojo
 
     config.exceptions_app = lambda do |env|
       ExceptionController.action(:render_error).call(env)
+      #ExceptionController.action(:render_offline).call(env)
     end
 
   end

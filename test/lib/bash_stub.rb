@@ -2,13 +2,12 @@
 class BashStub
 
   def initialize
-    @stubbed,@spied = [],[]
-    @index = 0
+    reset
   end
 
   attr_reader :spied
 
-  def stub(output,exit_status)
+  def stub(output, exit_status)
     @stubbed << [output,exit_status]
   end
 
@@ -21,7 +20,13 @@ class BashStub
   end
 
   def dump
-    spied.each_with_index {|line,i| print "\n#{i}:" + line + "\n"}
+    spied.each_with_index { |line,i| print "\n#{i}:" + line + "\n" }
+  end
+
+  def reset
+    @stubbed = []
+    @spied = []
+    @index = 0
   end
 
 end

@@ -1,10 +1,14 @@
 
 {
-  "visible_filenames": [ "hiker.scala", "hiker_tests.scala", "cyber-dojo.sh" ],
+  "visible_filenames": [
+    "hiker_tests.scala",
+    "hiker.scala",
+    "cyber-dojo.sh"
+  ],
   "unit_test_framework": "scala_test",
 
   "filename_extension" : ".scala",
   "display_name": "Scala, scalatest",
-  "image_name": "cyberdojofoundation/scala-2.11.7_scalatest",
+  "image_name": "cyberdojofoundation/scala_scalatest",
   "tab_size": 4
 }
