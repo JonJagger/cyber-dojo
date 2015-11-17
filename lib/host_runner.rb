@@ -15,7 +15,7 @@ class HostRunner
   def run(sandbox, max_seconds)
     command = "cd '#{sandbox.path}';" + stderr2stdout('./cyber-dojo.sh')
     pipe = IO::popen(command)
-    output = ""
+    output = ''
     sandbox_thread = Thread.new { output += pipe.read }
     result = sandbox_thread.join(max_seconds);
     timed_out = (result == nil)
@@ -33,6 +33,8 @@ class HostRunner
   end
 
 private
+
+  include Stderr2Stdout
 
   attr_reader :bash
 

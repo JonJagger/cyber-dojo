@@ -9,10 +9,10 @@ class FileDeltaMakerTests < AppLibTestBase
     @was = { 'wibble.h' => 3424234 }
     @now = { 'wibble.h' => 3424234 }
     make_delta
-    assert_changed [ ]
+    assert_changed []
     assert_unchanged ['wibble.h']
-    assert_deleted [ ]
-    assert_new [ ]
+    assert_deleted []
+    assert_new []
   end
 
   #- - - - - - - - - - - - - - - - - - - - - -
@@ -23,9 +23,9 @@ class FileDeltaMakerTests < AppLibTestBase
     @now = { 'wibble.h' => 3424234 }
     make_delta
     assert_changed ['wibble.h']
-    assert_unchanged [ ]
-    assert_deleted [ ]
-    assert_new [ ]
+    assert_unchanged []
+    assert_deleted []
+    assert_new []
   end
 
   #- - - - - - - - - - - - - - - - - - - - - -
@@ -33,24 +33,24 @@ class FileDeltaMakerTests < AppLibTestBase
   test '344B12',
   'deleted files seen as :deleted' do
     @was = { 'wibble.h' => 52674 }
-    @now = { }
+    @now = {}
     make_delta
-    assert_changed [ ]
-    assert_unchanged [ ]
+    assert_changed []
+    assert_unchanged []
     assert_deleted ['wibble.h']
-    assert_new [ ]
+    assert_new []
   end
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
   test 'D2894B',
   'new files seen as :new' do
-    @was = { }
+    @was = {}
     @now = { 'wibble.h' => 52674 }
     make_delta
-    assert_changed [ ]
-    assert_unchanged [ ]
-    assert_deleted [ ]
+    assert_changed []
+    assert_unchanged []
+    assert_deleted []
     assert_new ['wibble.h']
   end
 
@@ -71,8 +71,8 @@ class FileDeltaMakerTests < AppLibTestBase
 
   private
 
-  def make_delta#(was, now)
-    @delta = FileDeltaMaker.make_delta(@was,@now)
+  def make_delta
+    @delta = FileDeltaMaker.make_delta(@was, @now)
   end
 
   def assert_changed(expected)
