@@ -17,7 +17,6 @@ diff-dialog: if filename-knave is very wide because of long filename
 diff-dialog: add micro padding to top of code-area to match appearance on test page
 new/rename/delete dialogs - add background
 add sponsors logos/text and image of kids on pies to home/join pages
-diff-dialog: [fork from zebra 2] [revert to zebra 2] (add animal name)
 setup-page: cursor position inside instructions is not remembered if you return to that exercise.
 diff-traffic-light CSS in shared.css is used only in dashboard
 --------------------------------------

@@ -682,7 +682,7 @@ var cyberDojo = (function(cd, $) {
     //---------------------------------------------------
 
     var makeForkButtonHtml = function() {
-      return 'fork from ' + nowTag();
+      return 'fork from ' + avatarName + ' ' + nowTag();
     };
 
     var refreshForkButton = function() {
@@ -694,7 +694,7 @@ var cyberDojo = (function(cd, $) {
     //---------------------------------------------------
 
     var makeRevertButtonHtml = function() {
-      return 'revert to ' + nowTag();
+      return 'revert to ' + avatarName + ' ' + nowTag();
     };
 
     var refreshRevertButton = function() {
