@@ -1,12 +1,15 @@
 
-Re-enter dialog: if no animals change message at top.
+--------------------------------------
+Split CSS into smaller files, per component.
+Test the CSS using Quixote https://github.com/jamesshore/quixote
+--------------------------------------
+Refactor dialog_history.js to server side html returned via Rails bind() call
+to browser via Ajax json call.
 --------------------------------------
 NEW UX
-diff-dialog: diff? title can be bigger
-diff-dialog: align diff[x] and lights to two columns
-diff-dialog: put diff? checkbox to left of diff?
-diff-dialog: filename-knave ordering needs to match test-page filename-knave ordering
 enter-page:  needs main title "join a prepared practice"
+filename: drop border-top/bottom highlight. Use color change instead.
+diff-dialog: filename-knave ordering needs to match test-page filename-knave ordering
 diff-dialog: sometimes you lose the cursor when clicking < > and rags at top
 diff-dialog: make filename knave have fixed width
 diff-dialog: if filename-knave is very wide because of long filename
@@ -14,6 +17,7 @@ diff-dialog: if filename-knave is very wide because of long filename
              Better still, the diff-counts are not part of the scroll, viz
              only the filenames scroll.
 --------------------------------------
+re-enter dialog: if no animals change message at top.
 diff-dialog: add micro padding to top of code-area to match appearance on test page
 new/rename/delete dialogs - add background
 add sponsors logos/text and image of kids on pies to home/join pages
@@ -37,20 +41,16 @@ on the base image for the language but not
 on the images for the test-frameworks.
 Makes it easy to do upgrades.
 --------------------------------------
-Split create page into 3.
-1. Language?  This could use the extra space
-   to show code file. Defintely use the extra
-   space to at least say that the initial code
+Split create page into 2.
+1. Language?  + Tests? Use the extra space
+   to show code file. Also add info text
+   to say that the initial code
    is always 42 Douglas Adams etc and bears
    no relation to your chosen exercise. Can still
    say this info without having code example
    and thus still using one-click on language takes
    you directly to the test selection.
-2. Tests? Again this could show the test code
-   (like I do for the exercises). But definitely
-   say 6*9 blah blah no relation to the chosen
-   exercise.
-3. Exercise? ...
+2. Exercise? ...
    This one will be a 2-click. Once to select
    the exercise and see the instructions.
    Once to click create. Good that the last step
@@ -90,13 +90,13 @@ o) files with common suffixes would appear next to each other
    eg          Shape.java
         GroupedShape.java
 
-my_sort = function(array) {
+var my_sort = function(array) {
   return array.sort(function(lhs,rhs) {
     return reverse(lhs).localeCompare(reverse(rhs));
   });
 };
 
-reverse = function(s) {
+var reverse = function(s) {
   return s.split('').reverse().join('');
 };
 Added this to the main test page file knave
