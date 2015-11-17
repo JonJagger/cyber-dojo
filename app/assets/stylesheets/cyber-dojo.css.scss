@@ -65,7 +65,7 @@ button[disabled] {
 }
 
 div[class~='filename'] {
-  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;  // Not Impact
+  font-family: Trebuchet MS, Tahoma, Arial, sans-serif;
   @include font-size-small();
   width: 500px;
   background: $darker-color;

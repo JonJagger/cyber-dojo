@@ -11,11 +11,14 @@ to browser via Ajax json call.
 put font-family stuff into an include (remove duplication)
 --------------------------------------
 NEW UX
+tooltip font - not Impact
 enter-page:  needs main title "join a prepared practice"
 filename: drop border-top/bottom highlight. Use color change instead.
 diff-dialog: filename-knave ordering needs to match test-page filename-knave ordering
 diff-dialog: sometimes you lose the cursor when clicking < > and rags at top
 diff-dialog: make filename knave have fixed width
+diff-dialog: added/removed lines, CSS for selected filename
+diff-dialog: disabled < > buttons need CSS background-color tweak
 diff-dialog: if filename-knave is very wide because of long filename
              the knave needs to autoscroll to the right same as traffic-lights
              Better still, the diff-counts are not part of the scroll, viz
