@@ -116,13 +116,17 @@
 
   &.ui-dialog-content { padding: { top: 0px; bottom: 0px; } }
 
-  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  @include non-code-font();
   background: $darker-color;
   color     : $lighter-color;
   padding: none !important;
   margin: 0px;
 
-  .filename { text-align: right; font-size: 16px; padding-right: 3px; }
+  .filename {
+    text-align: right;
+    font-size: 16px;
+    padding-right: 3px;
+  }
 
   #diff-filenames { height: 480px; }
   .diff-line-numbers, .diff-sheet { height: 580px; }
