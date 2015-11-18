@@ -51,11 +51,18 @@ button {
   @include rounded-corner(6px);
   display: inline-block;
   @include gradient-lighten(darken($lighter-color, 12%), 9%, 2%, 0%);
-}
-
-button[disabled] {
-  background: lighten($darker-color, 20%);
-  cursor: default;
+  &:hover {
+    border: $filename_and_button_border_size dotted lighten($darker-color, 20%);
+    border: { left: none; right: none; }
+  }
+  &[disabled] {
+    background: lighten($darker-color, 20%);
+    cursor: default;
+    &:hover {
+      border: $filename_and_button_border_size solid $darker-color;
+      border: { left: none; right: none; }
+    }
+  }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -76,29 +83,20 @@ div[class~='filename'] {
   cursor: pointer;
   white-space: nowrap;
   text-align: right;
-  border: { left: none; right: none; }
+  //border: { left: none; right: none; }
+  &:hover {
+    color: lighten($darker-color, 60);
+  }
   &[class~='selected'] {
     // See app/assets/javascripts/cyber-dojo_file_load.js
     // function radioEntrySwitch()
     color: $lighter-color;
     background: $darker-color;
     cursor: default;
+    &:hover {
+      color: $lighter-color;
+    };
   }
-}
-
-div[class~="filename"]:hover, button:hover {
-  border: $filename_and_button_border_size dotted lighten($darker-color, 20%);
-  border: { left: none; right: none; }
-}
-
-div[class~="filename"],  button[disabled]:hover {
-  border: $filename_and_button_border_size solid $darker-color;
-  border: { left: none; right: none; }
-}
-
-div[class~="filename"][class~='selected']:hover {
-  border: $filename_and_button_border_size solid $darker-color;
-  border: { left: none; right: none; }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
