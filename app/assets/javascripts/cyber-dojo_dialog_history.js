@@ -218,7 +218,8 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var makeAvatarButtonHtml = function(direction) {
-      return '<button class="triangle button" id="' + direction + '-avatar">' +
+      return '<button class="triangle button" ' +
+                        'id="' + direction + '-avatar">' +
                 '<img src="/images/triangle_' + direction +'.gif"/>' +
              '</button>';
     };
