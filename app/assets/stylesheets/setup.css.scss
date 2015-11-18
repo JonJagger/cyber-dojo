@@ -55,6 +55,8 @@
   }
 
   #instructions {
+    @include code-font();
+    font-size: 11pt;
     color: $lighter-color;
     background: lighten($darker-color, 5%);
     border-top-left-radius: 5px;
@@ -62,12 +64,11 @@
     height: 415px;
     width: 550px;
     margin-left: 0px;
-    font-size: 12pt;
     overflow-y: scroll;
     padding: 6px;
     outline: none;
     &::-webkit-scrollbar:vertical { width: 5px; }
-    @include code-font();
+    resize: none;
   }
 
   #ok {
