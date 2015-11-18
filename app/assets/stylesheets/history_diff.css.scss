@@ -62,15 +62,6 @@
     position: relative;
     top: 1px;
   }
-  button#prev-avatar, button#next-avatar {
-    padding: 0px;
-    margin: 0px;
-    border: 1px solid lighten($darker-color,6%);
-  }
-  button#prev-avatar:hover, button#next-avatar:hover {
-    border: 1px dotted lighten($darker-color,20%);
-    &[disabled]:hover { border: 1px solid lighten($darker-color,6%); }
-  }
 
   #prev-avatar img, #next-avatar img, #prev-button img, #next-button img {
     width: 25px;
@@ -86,9 +77,15 @@
     padding: { left: 3px; right: 1px; }
   }
 
-  .triangle.button { padding: 0px; border: 1px solid lighten($darker-color,6%); }
-  .triangle.button:hover { border: 1px dotted lighten($darker-color,20%); }
-  .triangle.button[disabled]:hover { border: 1px solid lighten($darker-color,6%); }
+  .triangle.button {
+    padding: 0px;
+    border: 1px solid lighten($darker-color,6%);
+    &:hover { border: 1px dotted lighten($darker-color,20%); }
+    &[disabled] {
+      background: lighten($darker-color, 30%);
+      &:hover { border: 1px solid lighten($darker-color,6%); }
+    }
+  }
 
   #now-tag-number {
     font-size: 15px;
@@ -107,7 +104,6 @@
     &.timed_out { color: Gray; }
   }
 }
-
 
 #history-dialog {
 
