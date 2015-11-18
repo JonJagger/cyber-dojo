@@ -63,17 +63,17 @@
     top: 1px;
   }
 
-  #prev-avatar img, #next-avatar img, #prev-button img, #next-button img {
+  #prev-avatar img, #next-avatar img, #prev-tag img, #next-tag img {
     width: 25px;
     height: 25px;
     padding: { top: 2px; bottom: 0px; }
     @include rounded-corner(4px);
   }
 
-  #prev-avatar img, #prev-button img {
+  #prev-avatar img, #prev-tag img {
     padding: { right: 3px; left: 1px; }
   }
-  #next-avatar img, #next-button img {
+  #next-avatar img, #next-tag img {
     padding: { left: 3px; right: 1px; }
   }
 

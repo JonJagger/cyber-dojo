@@ -157,7 +157,7 @@ var cyberDojo = (function(cd, $) {
 
     var makeTagButtonHtml = function(name) {
       return '<button class="triangle button"' +
-                       ' id="' + name + '-button">' +
+                       ' id="' + name + '-tag">' +
                '<img src="/images/triangle_' + name + '.gif"' +
                    ' alt="move to ' + name + ' diff"/>' +
              '</button>';
@@ -183,8 +183,8 @@ var cyberDojo = (function(cd, $) {
         .removeClass()
         .addClass(colour)
         .html(nowTag());
-      refreshTag(tagsToLeft,  $('#prev-button'),  nowTag()-1);
-      refreshTag(tagsToRight, $('#next-button'),  nowTag()+1);
+      refreshTag(tagsToLeft,  $('#prev-tag'),  nowTag()-1);
+      refreshTag(tagsToRight, $('#next-tag'),  nowTag()+1);
     };
 
     //- - - - - - - - - - - - - - -
