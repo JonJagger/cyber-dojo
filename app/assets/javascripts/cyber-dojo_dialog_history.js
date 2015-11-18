@@ -51,7 +51,7 @@ var cyberDojo = (function(cd, $) {
 
 
     //-------------------------------------------------------
-    // diff? [x] traffic-lights [<< < tag > >>]  [< avatar >]
+    // titlebar: diff? [x] traffic-lights
     //-------------------------------------------------------
 
     var makeTitleHtml = function() {
@@ -65,7 +65,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-    // [x] diff
+    // diff? [x]
     //---------------------------------------------------
 
     var makeDiffTitleHtml = function() {
@@ -140,69 +140,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-    // < tag  >
-    //---------------------------------------------------
-
-    var makeTagNavigationHtml = function() {
-      return '<table class="navigate-control">' +
-               '<tr valign="top">' +
-                 td('right',  makeTagButtonHtml('prev')) +
-                 td('center', makeNowTagNumberHtml()) +
-                 td('left',   makeTagButtonHtml('next')) +
-               '</tr>' +
-             '</table>';
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var makeTagButtonHtml = function(name) {
-      return '<button class="triangle button"' +
-                       ' id="' + name + '-tag">' +
-               '<img src="/images/triangle_' + name + '.gif"' +
-                   ' alt="move to ' + name + ' diff"/>' +
-             '</button>';
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var makeNowTagNumberHtml = function() {
-      return '<div id="now-tag-number"/></div>';
-    };
-
-    //- - - - - - - - - - - - - - -
-    // refresh < tag  >
-    //- - - - - - - - - - - - - - -
-
-    var refreshTagControls = function() {
-      var colour = data.lights[nowTag()-1].colour;
-      var minTag = 1;
-      var maxTag = data.lights.length;
-      var tagsToLeft = minTag < nowTag();
-      var tagsToRight = nowTag() < maxTag;
-      $('#now-tag-number')
-        .removeClass()
-        .addClass(colour)
-        .html(nowTag());
-      refreshTag(tagsToLeft,  $('#prev-tag'),  nowTag()-1);
-      refreshTag(tagsToRight, $('#next-tag'),  nowTag()+1);
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var refreshTag = function(on, button, newTag) {
-      button
-        .attr('disabled', !on)
-        .css('cursor', on ? 'pointer' : 'default');
-      if (on) {
-        button
-          .attr('title', toolTip(newTag))
-          .unbind('click')
-          .bind('click', function() { show(newTag); });
-      }
-    };
-
-    //---------------------------------------------------
-    // < avatar >
+    // navigate control: < avatar >
     //---------------------------------------------------
 
     var makeAvatarNavigationHtml = function() {
@@ -270,6 +208,68 @@ var cyberDojo = (function(cd, $) {
             showNoDiff();
           }
         });
+    };
+
+    //---------------------------------------------------
+    // navigate control: < tag  >
+    //---------------------------------------------------
+
+    var makeTagNavigationHtml = function() {
+      return '<table class="navigate-control">' +
+               '<tr valign="top">' +
+                 td('right',  makeTagButtonHtml('prev')) +
+                 td('center', makeNowTagNumberHtml()) +
+                 td('left',   makeTagButtonHtml('next')) +
+               '</tr>' +
+             '</table>';
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var makeTagButtonHtml = function(name) {
+      return '<button class="triangle button"' +
+                       ' id="' + name + '-tag">' +
+               '<img src="/images/triangle_' + name + '.gif"' +
+                   ' alt="move to ' + name + ' diff"/>' +
+             '</button>';
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var makeNowTagNumberHtml = function() {
+      return '<div id="now-tag-number"/></div>';
+    };
+
+    //- - - - - - - - - - - - - - -
+    // refresh < tag  >
+    //- - - - - - - - - - - - - - -
+
+    var refreshTagControls = function() {
+      var colour = data.lights[nowTag()-1].colour;
+      var minTag = 1;
+      var maxTag = data.lights.length;
+      var tagsToLeft = minTag < nowTag();
+      var tagsToRight = nowTag() < maxTag;
+      $('#now-tag-number')
+        .removeClass()
+        .addClass(colour)
+        .html(nowTag());
+      refreshTag(tagsToLeft,  $('#prev-tag'),  nowTag()-1);
+      refreshTag(tagsToRight, $('#next-tag'),  nowTag()+1);
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var refreshTag = function(on, button, newTag) {
+      button
+        .attr('disabled', !on)
+        .css('cursor', on ? 'pointer' : 'default');
+      if (on) {
+        button
+          .attr('title', toolTip(newTag))
+          .unbind('click')
+          .bind('click', function() { show(newTag); });
+      }
     };
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
