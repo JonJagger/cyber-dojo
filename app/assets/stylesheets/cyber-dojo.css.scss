@@ -83,7 +83,6 @@ div[class~='filename'] {
   cursor: pointer;
   white-space: nowrap;
   text-align: right;
-  //border: { left: none; right: none; }
   &:hover {
     color: lighten($darker-color, 60);
   }
@@ -101,12 +100,11 @@ div[class~='filename'] {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-.line_numbers, .file_content { height: 560px; }
-
 .line_numbers, .file_content, .diff_line_numbers, #instructions { @include code-font; }
 
 .line_numbers, .file_content {
   background: lighten($darker-color, 4%);
+  height: 560px;
   border: 0px;
   margin: 0px;
   padding: 0px;

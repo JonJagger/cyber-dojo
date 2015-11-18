@@ -18,6 +18,7 @@ to browser via Ajax json call.
 scroll_to_error.js is dead code
 --------------------------------------
 NEW UX
+diff-dialog: filename height is now less than +- line-count
 dialog-box buttons - use Impact font (new/rename/delete) ok/cancel
 diff-dialog buttons at bottom - use Impact font
 filename: drop border-top/bottom highlight. Use color change instead.
