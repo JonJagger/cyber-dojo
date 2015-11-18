@@ -45,7 +45,7 @@ var cyberDojo = (function(cd, $) {
     var titleBar = function() {
       return $('#ui-dialog-title-history-dialog');
     };
-    var td = function(align,html) {
+    var td = function(align, html) {
       return '<td align="' + align + '">' + html + '</td>';
     };
 
@@ -499,6 +499,8 @@ var cyberDojo = (function(cd, $) {
       return html;
     };
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
     var makeDiffDeletedTable = function(diffs) {
       var html = '';
       html += '<table>';
@@ -523,6 +525,8 @@ var cyberDojo = (function(cd, $) {
       return html;
     };
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
     var makeDiffAddedTable = function(diffs) {
       var html = '';
       html += '<table>';
@@ -546,6 +550,8 @@ var cyberDojo = (function(cd, $) {
       html += '</table>';
       return html;
     };
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
     var makeDiffFilenames = function(diffs) {
       return '' +
@@ -595,7 +601,7 @@ var cyberDojo = (function(cd, $) {
 
     var makeAllButtons = function() {
       var buttons = [ ];
-      var makeButton = function(name,handler) {
+      var makeButton = function(name, handler) {
         return {
           text: name,
           'class': 'history-button',
