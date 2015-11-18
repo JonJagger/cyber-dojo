@@ -118,7 +118,7 @@ div[class~="filename"][class~='selected']:hover {
 }
 
 .line_numbers {
-  color: lighten($darker-color, 30%);
+  color: lighten($darker-color, 20%);
   font-weight: 100;
   text-align: right;
   overflow: hidden;

@@ -8,7 +8,7 @@ var cyberDojo = (function(cd, $) {
   };
 
   cd.dialog = function(html, title, close) {
-    var buttons = { };
+    var buttons = {};
     buttons[close] = function() { $(this).remove(); };
     return $('<div>')
       .html(html)
