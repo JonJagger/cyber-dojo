@@ -1,0 +1,9 @@
+
+Look into doing the rsync back from the docker-machine node to the
+server. Features that this leads to...
+
+o) Approval style testing
+
+o) Running gofmt on files so they are auto-formatted on each [test]
+
+o) Mutation style test frameworks?

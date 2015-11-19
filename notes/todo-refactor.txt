@@ -1,5 +1,4 @@
 
-
 stderr2stdout
 Only used in
 lib/HostGit.rb
@@ -863,3 +862,89 @@ in app_controllers
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   light = avatar.lights[params['tag']]   ?in forker_controller?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+o) app_lib coverage is 99%
+   missing avatar_git_diff()
+
+o) setup page needs an explicit cancel button.
+   What if you're running the browser in presentation mode!
+   In that case you can't see the browsers address bar back button.
+
+o) coverage of this was poor
+  def avatar.update_manifest(files, output)
+    # output is part of diff state
+    # sandbox.dir.write('output', output)    BECOMING...
+    disk[sandbox.path].write('output', output)
+  end
+
+o) cache the result of
+   `docker images`
+   in the ram_disk cache to speed up the opening page?
+   /mnt/ram_disk/languages/docker_images.cache
+   chown www-data:www-data it too
+   Do this as part of admin_scripts/pull.sh
+   Does this mean RUNNER should have its own env var ROOT?
+
+o) create a new caches folder to go with exercises/ languages/ and katas/
+   this will hold exercises.cache languages.cache and
+   docker_images.cache
+   location set via CYBER_DOJO_CACHES_ROOT
+   point this to small ramdisk.
+
+o) use ramdisk for *all* tests.
+   rework tests so CYBER_DOJO_KATAS_ROOT must be set or it is an error?
+
+o) delete test code that is now redundant?
+
+o) test/languages
+     ./check_one_language.rb ok
+     ./all_languages_test.rb fails on 'C (gcc)' CppUTest gives
+        Error response from daemon: no such id: cat:
+        Error response from daemon: no such id: No
+        Error response from daemon: no such id: such
+        Error response from daemon: no such id: file
+        Error response from daemon: no such id: or
+        Error response from daemon: no such id: directory
+     get the same failure from
+     sudo -E -u www-data ./check_one_language.rb 'C (gcc)' CppUTest verbose
+     This appears to be because it does not check if the docker-image is installed.
+
+o) languages [] idea
+   def [](language_name, test_name)
+     ...
+   end
+   If I use this [,] careful about forking. Comes to kata.language
+   which does this
+   dojo.languages[manifest_property]
+   language property of kata manifest is language.name
+   which does this
+     display_name.split(',').map(&:strip).join('-')
+
+o) reinstate app_controllers/download tests
+   should be fast now I'm using ram_disk
+
+o) test/lib/DirFake.rb
+   has [make] call in write(filename, s) that does not match
+   write(filename, s) in HostDir.rb
+
+o) assuming git running on /mnt/ramdisk/katas is fast enough
+   there would appear to be scope to refactor the git class
+   so it is passed the folder it is associated with in initialize()
+   Then drop path argument from all git methods.
+   Where is GitSpy still used?
+    app_helpers
+      tip_test
+    app_models
+      dojo_test
+      kata_test
+    lib
+      curl_one_self_test
+      docker_host_rsync_runner_test
+      docker_volume_mount_runner_test
+
+
+
+
+
+
