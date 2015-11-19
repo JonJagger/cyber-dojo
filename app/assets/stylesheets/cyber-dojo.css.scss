@@ -16,11 +16,6 @@ body {
   margin: 0em;
 }
 
-.panel-title {
-  margin-top: 10px;
-  @include font-size-small();
-}
-
 .panel {
   background: $darker-color;
   color: $lighter-color;
