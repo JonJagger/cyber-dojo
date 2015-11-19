@@ -6,13 +6,13 @@ var cyberDojo = (function(cd, $) {
   cd.invoiceMe = function() {
     var url = "mailto:jon@jaggersoft.com?subject=cyber-dojo donation - please invoice me";
     window.open(url, '_blank');
-    return false;    
+    return false;
   };
-  
+
   cd.dialog_donate = function() {
-    
+
     var title = 'please donate';
-    
+
     var donateButton = function() {
       return '' +
       '<form action="https://www.paypal.com/cgi-bin/webscr"' +
@@ -37,7 +37,7 @@ var cyberDojo = (function(cd, $) {
           ' height="1">' +
       '</form>';
     };
-    
+
     var html = '' +
      '<div data-width="600">' +
      '<table>' +
@@ -45,7 +45,7 @@ var cyberDojo = (function(cd, $) {
          '<td>' + donateButton() + '</td>' +
          '<td>' +
            "&nbsp;&nbsp;for an individual, I suggest donating $5+" +
-         '</td>' + 
+         '</td>' +
        '</tr>' +
        '<tr>' +
          '<td>' + donateButton() + '</td>' +
@@ -53,18 +53,18 @@ var cyberDojo = (function(cd, $) {
            "&nbsp;&nbsp;for a non-profit meetup, I suggest donating $15+" +
          '</td>' +
        '</tr>' +
-       '<tr>' + 
+       '<tr>' +
          '<td>' + donateButton() + '</td>' +
          '<td>' +
            "&nbsp;&nbsp;for a commercial organization, I suggest donating $500+" +
-         '</td>' + 
+         '</td>' +
        '</tr>' +
       '</table>' +
       '<div>' +
-    '<br/>if you need an invoice, please <a href=".." onclick="return cd.invoiceMe();">email me</a>';
-        
-        
-    return cd.dialog(html,title,'close');
+    '<br/>if you need an invoice, please ' +
+      '<a id="email-me" href=".." onclick="return cd.invoiceMe();">email me</a>';
+
+    return cd.dialog(html, title, 'close');
   };
 
   return cd;

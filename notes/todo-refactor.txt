@@ -17,7 +17,7 @@ to browser via Ajax json call.
 scroll_to_error.js is dead code
 --------------------------------------
 NEW UX
-donate-dialog: improve appearance, make email link visible
+donate-dialog: improve appearance
 diff-dialog: filename height is now less than +- line-count
 filename: drop border-top/bottom highlight. Use color change instead.
 diff-dialog: filename-knave ordering needs to match test-page filename-knave ordering
