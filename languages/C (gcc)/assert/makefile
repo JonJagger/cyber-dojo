@@ -1,5 +1,7 @@
-CFLAGS += -I. -Wall -Wextra -Werror -std=c11 
-CFLAGS +=	-Wstrict-prototypes -Wmissing-prototypes
+CFLAGS += -I. -Wall -Wextra -Werror -std=c11
+CFLAGS +=	-Wsequence-point
+CFLAGS +=	-Wstrict-prototypes
+CFLAGS +=	-Wmissing-prototypes
 CFLAGS +=	-Wshadow -Wfloat-equal -O
 
 H_FILES = $(wildcard *.h)
