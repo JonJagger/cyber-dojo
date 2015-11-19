@@ -18,6 +18,7 @@ to browser via Ajax json call.
 scroll_to_error.js is dead code
 --------------------------------------
 NEW UX
+donate-dialog: improve appearance
 diff-dialog: filename height is now less than +- line-count
 dialog-box buttons - use Impact font (new/rename/delete) ok/cancel
 diff-dialog buttons at bottom - use Impact font
@@ -31,6 +32,7 @@ diff-dialog: if filename-knave is very wide because of long filename
              Better still, the diff-counts are not part of the scroll, viz
              only the filenames scroll.
 --------------------------------------
+learn-more button: make it pop up a tip with list of links.
 diff-dialog: add micro padding to top of code-area to match appearance on test page
 new/rename/delete dialogs - add background
 add sponsors logos/text and image of kids on pies to home/join pages
