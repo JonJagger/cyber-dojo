@@ -11,8 +11,12 @@ https://github.com/minimaxir/big-list-of-naughty-strings
 Split CSS into smaller files, per component.
 Test the CSS using Quixote https://github.com/jamesshore/quixote
 --------------------------------------
-Refactor dialog_history.js to server side html returned via Rails bind() call
-to browser via Ajax json call.
+Refactor cyber-dojo_dialog_history.js to server side html returned via Rails bind() call
+to browser via Ajax json call. Idea is it can then be served to a dialog or to a full
+page. Think it needs to pass 3 lots of html...
+  o) title-bar
+  o) diff-content
+  o) fork/revert buttons
 --------------------------------------
 scroll_to_error.js is dead code
 --------------------------------------
