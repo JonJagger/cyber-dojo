@@ -442,11 +442,9 @@ var cyberDojo = (function(cd, $) {
           var tr = filenameNode.closest('tr');
           disableAllLineCountButtons();
           tr.find('.diff-deleted-line-count')
-            .attr('disabled', false)
-            .attr('title', 'Toggle deleted lines on/off');
+            .attr('disabled', false);
           tr.find('.diff-added-line-count')
-            .attr('disabled', false)
-            .attr('title', 'Toggle added lines on/off');
+            .attr('disabled', false);
 
           cd.radioEntrySwitch(previousFilenameNode, filenameNode);
 
@@ -481,7 +479,7 @@ var cyberDojo = (function(cd, $) {
 
     var diffFilenames = $('#diff-filenames', diffDiv);
 
-    var makeDiffFilenamesTable = function(diffs) {
+    var makeDiffFilenamesColumn = function(diffs) {
       var html = '';
       html += '<table>';
       $.each(diffs, function(_, diff) {
@@ -501,7 +499,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    var makeDiffDeletedTable = function(diffs) {
+    var makeDiffDeletedColumn = function(diffs) {
       var html = '';
       html += '<table>';
       $.each(diffs, function(_, diff) {
@@ -527,7 +525,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    var makeDiffAddedTable = function(diffs) {
+    var makeDiffAddedColumn = function(diffs) {
       var html = '';
       html += '<table>';
       $.each(diffs, function(_, diff) {
@@ -558,13 +556,13 @@ var cyberDojo = (function(cd, $) {
         '<table>' +
           '<tr>' +
             '<td>' +
-              makeDiffFilenamesTable(diffs) +
+              makeDiffFilenamesColumn(diffs) +
             '</td>' +
             '<td>' +
-              makeDiffDeletedTable(diffs) +
+              makeDiffDeletedColumn(diffs) +
             '</td>' +
             '<td>' +
-              makeDiffAddedTable(diffs) +
+              makeDiffAddedColumn(diffs) +
             '</td>' +
           '</tr>' +
         '</table>';
@@ -670,11 +668,11 @@ var cyberDojo = (function(cd, $) {
           data = historyData;
           refreshDiffCheckBox();
           refreshTrafficLights();
-          refreshDiff();
-          refreshTagControls();
           refreshPrevAvatarHandler();
           refreshAvatarImage();
           refreshNextAvatarHandler();
+          refreshTagControls();
+          refreshDiff();
           refreshRevertButton();
           refreshForkButton();
           var light = $('img[src$="_bar.png"]', titleBar());

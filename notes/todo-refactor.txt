@@ -18,8 +18,9 @@ scroll_to_error.js is dead code
 --------------------------------------
 NEW UX
 donate-dialog: improve appearance
-diff-dialog: when +- line-count button is zero it still has a tooltip title.
-filename: drop border-top/bottom highlight. Use color change instead.
+diff-dialog: add tooltip to +- line-count button when count is non zero
+             'Toggle added/deleted lines on/off'
+diff-dialog: make line-numbers and file-content have same font-size as editable file-content
 diff-dialog: filename-knave ordering needs to match test-page filename-knave ordering
 diff-dialog: sometimes you lose the cursor when clicking < > and rags at top
 diff-dialog: make filename knave have fixed width
