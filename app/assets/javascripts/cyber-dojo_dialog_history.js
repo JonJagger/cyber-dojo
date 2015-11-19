@@ -143,14 +143,12 @@ var cyberDojo = (function(cd, $) {
     // navigate control: < avatar >
     //---------------------------------------------------
 
-    var makeAvatarNavigationHtml = function() {
-      return '<table class="navigate-control">' +
-               '<tr valign="top">' +
-                 td('right',  makeAvatarButtonHtml('prev')) +
-                 td('center', makeAvatarImageHtml()) +
-                 td('left',   makeAvatarButtonHtml('next')) +
-               '</tr>' +
-             '</table>';
+    var makeAvatarNavigationTr = function() {
+      return '<tr valign="top">' +
+               td('right',  makeAvatarButtonHtml('prev')) +
+               td('center', makeAvatarImageHtml()) +
+               td('left',   makeAvatarButtonHtml('next')) +
+             '</tr>';
     };
 
     //- - - - - - - - - - - - - - -
@@ -214,14 +212,12 @@ var cyberDojo = (function(cd, $) {
     // navigate control: < tag  >
     //---------------------------------------------------
 
-    var makeTagNavigationHtml = function() {
-      return '<table class="navigate-control">' +
-               '<tr valign="top">' +
-                 td('right',  makeTagButtonHtml('prev')) +
-                 td('center', makeNowTagNumberHtml()) +
-                 td('left',   makeTagButtonHtml('next')) +
-               '</tr>' +
-             '</table>';
+    var makeTagNavigationTr = function() {
+      return '<tr valign="top">' +
+               td('right',  makeTagButtonHtml('prev')) +
+               td('center', makeNowTagNumberHtml()) +
+               td('left',   makeTagButtonHtml('next')) +
+             '</tr>';
     };
 
     //- - - - - - - - - - - - - - -
@@ -312,22 +308,21 @@ var cyberDojo = (function(cd, $) {
         'id': 'history-dialog'
       });
       div.append(
-          '<table>' +
-            '<tr valign="top">' +
-              cd.td(makeAvatarNavigationHtml()) +
-              '<td rowspan="3" >' +
-                '<div id="diff-content"></div>' +
-              '</td>' +
-            '</tr>' +
-            '<tr>' +
-              cd.td(makeTagNavigationHtml()) +
-            '</tr>' +
-            '<tr>' +
-              '<td>' +
-                '<div id="diff-filenames"></div>' +
-              '</td>' +
-            '</tr>' +
-          '</table>');
+        '<table>' +
+          '<tr valign="top">' +
+            '<td>' +
+              '<table class="navigate-control">' +
+                makeAvatarNavigationTr() +
+                makeTagNavigationTr() +
+              '</table>' +
+              '<div id="diff-filenames"></div>' +
+            '</td>' +
+            '<td>' +
+              '<div id="diff-content"></div>' +
+            '</td>' +
+          '</tr>' +
+        '</table>'
+      );
       return div;
     };
 
