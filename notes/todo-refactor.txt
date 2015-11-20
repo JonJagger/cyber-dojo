@@ -33,6 +33,7 @@ diff-dialog: if filename-knave is very wide because of long filename
              Better still, the diff-counts are not part of the scroll, viz
              only the filenames scroll.
 --------------------------------------
+ok/cancel buttons: on dialog, need border/hover-focus look
 learn-more button: make it pop up a tip with list of links.
 diff-dialog: add micro padding to top of code-area to match appearance on test page
 new/rename/delete dialogs - add background

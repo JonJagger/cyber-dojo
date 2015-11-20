@@ -44,14 +44,12 @@ button {
   @include gradient-lighten(darken($lighter-color, 12%), 9%, 2%, 0%);
   &:hover {
     border: $filename_and_button_border_size dotted lighten($darker-color, 20%);
-    border: { left: none; right: none; }
   }
   &[disabled] {
     background: lighten($darker-color, 20%);
     cursor: default;
     &:hover {
       border: $filename_and_button_border_size solid $darker-color;
-      border: { left: none; right: none; }
     }
   }
 }
