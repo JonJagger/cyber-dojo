@@ -429,17 +429,9 @@ var cyberDojo = (function(cd, $) {
             previousFilenameNode !== undefined &&
             getFilename(previousFilenameNode) === filename;
 
-          var allLineCountButtons = $('.diff-deleted-line-count, .diff-added-line-count');
-          var disableAllLineCountButtons = function() {
-            var off = { 'disabled':true, 'title':'' };
-            allLineCountButtons.attr(off);
-          };
-          var tr = filenameNode.closest('tr');
-          disableAllLineCountButtons();
-          tr.find('.diff-deleted-line-count')
-            .attr('disabled', false);
-          tr.find('.diff-added-line-count')
-            .attr('disabled', false);
+          $('.diff-deleted-line-count, .diff-added-line-count').attr('disabled', true);
+          $('.diff-deleted-line-count[data-filename="'+filename+'"]').attr('disabled', false);
+          $('.diff-added-line-count[data-filename="'+filename+'"]').attr('disabled', false);
 
           cd.radioEntrySwitch(previousFilenameNode, filenameNode);
 
