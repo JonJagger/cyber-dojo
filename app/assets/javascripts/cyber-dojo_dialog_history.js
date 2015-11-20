@@ -488,19 +488,20 @@ var cyberDojo = (function(cd, $) {
 
     var makeDiffAddedOrDeletedColumn = function(diffs, propertyName, cssName) {
       var html = '';
+      if (!diffCheckBox().is(':checked')) {
+        return html;
+      }
       html += '<table>';
       $.each(diffs, function(_, diff) {
-        var property = diff[propertyName];
+        var count = diff[propertyName];
         var td = $('<td>');
-        var noneOrSome = (property === 0) ? 'none' : 'some';
-        var lineCountDiv = $('<div>', {
+        var noneOrSome = (count === 0) ? 'none' : 'some';
+        var div = $('<div>', {
           'class': 'diff-' + cssName + '-line-count ' + noneOrSome + ' button',
           'data-filename': diff.filename
         });
-        if (diffCheckBox().is(':checked')) {
-          lineCountDiv.append(property);
-          td.append(lineCountDiv);
-        }
+        div.append(count);
+        td.append(div);
         html += '<tr>' + td.html() + '</tr>';
       });
       html += '</table>';
