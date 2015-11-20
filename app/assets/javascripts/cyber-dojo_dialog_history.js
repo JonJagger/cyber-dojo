@@ -486,20 +486,20 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    var makeDiffDeletedColumn = function(diffs) {
+    var makeDiffAddedOrDeletedColumn = function(diffs, propertyName, cssName) {
       var html = '';
       html += '<table>';
       $.each(diffs, function(_, diff) {
-        var property = diff.deleted_line_count;
+        var property = diff[propertyName];
         var td = $('<td>');
-        var noneOrSome = property === 0 ? 'none' : 'some';
-        var deletedLineCountDiv = $('<div>', {
-          'class': 'diff-deleted-line-count ' + noneOrSome + ' button',
+        var noneOrSome = (property === 0) ? 'none' : 'some';
+        var lineCountDiv = $('<div>', {
+          'class': 'diff-' + cssName + '-line-count ' + noneOrSome + ' button',
           'data-filename': diff.filename
         });
         if (diffCheckBox().is(':checked')) {
-          deletedLineCountDiv.append(property);
-          td.append(deletedLineCountDiv);
+          lineCountDiv.append(property);
+          td.append(lineCountDiv);
         }
         html += '<tr>' + td.html() + '</tr>';
       });
@@ -507,27 +507,12 @@ var cyberDojo = (function(cd, $) {
       return html;
     };
 
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+    var makeDiffDeletedColumn = function(diffs) {
+      return makeDiffAddedOrDeletedColumn(diffs, 'deleted_line_count', 'deleted');
+    };
 
     var makeDiffAddedColumn = function(diffs) {
-      var html = '';
-      html += '<table>';
-      $.each(diffs, function(_, diff) {
-        var property = diff.deleted_line_count;
-        var td = $('<td>');
-        var noneOrSome = property === 0 ? 'none' : 'some';
-        var addedLineCountDiv = $('<div>', {
-          'class': 'diff-added-line-count ' + noneOrSome + ' button',
-          'data-filename': diff.filename
-        });
-        if (diffCheckBox().is(':checked')) {
-          addedLineCountDiv.append(property);
-          td.append(addedLineCountDiv);
-        }
-        html += '<tr>' + td.html() + '</tr>';
-      });
-      html += '</table>';
-      return html;
+      return makeDiffAddedOrDeletedColumn(diffs, 'added_line_count', 'added');
     };
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
