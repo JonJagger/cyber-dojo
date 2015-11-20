@@ -196,7 +196,6 @@
       background: lighten($darker-color,10%);
       cursor: default;
     }
-    &[disabled].some { background: lighten($darker-color,25%); }
   }
 
   .diff-deleted-line-count {
