@@ -490,18 +490,15 @@ var cyberDojo = (function(cd, $) {
       var html = '';
       html += '<table>';
       $.each(diffs, function(_, diff) {
+        var property = diff.deleted_line_count;
         var td = $('<td>');
-        var noneOrSome = function(property) {
-          return (diff[property] === 0) ? 'none' : 'some';
-        };
+        var noneOrSome = property === 0 ? 'none' : 'some';
         var deletedLineCountDiv = $('<div>', {
-          'class': 'diff-deleted-line-count ' +
-                    noneOrSome('deleted_line_count') +
-                    ' button',
+          'class': 'diff-deleted-line-count ' + noneOrSome + ' button',
           'data-filename': diff.filename
         });
         if (diffCheckBox().is(':checked')) {
-          deletedLineCountDiv.append(diff.deleted_line_count);
+          deletedLineCountDiv.append(property);
           td.append(deletedLineCountDiv);
         }
         html += '<tr>' + td.html() + '</tr>';
@@ -516,18 +513,15 @@ var cyberDojo = (function(cd, $) {
       var html = '';
       html += '<table>';
       $.each(diffs, function(_, diff) {
+        var property = diff.deleted_line_count;
         var td = $('<td>');
-        var noneOrSome = function(property) {
-          return (diff[property] === 0) ? 'none' : 'some';
-        };
+        var noneOrSome = property === 0 ? 'none' : 'some';
         var addedLineCountDiv = $('<div>', {
-          'class': 'diff-added-line-count ' +
-                   noneOrSome('added_line_count') +
-                   ' button',
+          'class': 'diff-added-line-count ' + noneOrSome + ' button',
           'data-filename': diff.filename
         });
         if (diffCheckBox().is(':checked')) {
-          addedLineCountDiv.append(diff.added_line_count);
+          addedLineCountDiv.append(property);
           td.append(addedLineCountDiv);
         }
         html += '<tr>' + td.html() + '</tr>';
