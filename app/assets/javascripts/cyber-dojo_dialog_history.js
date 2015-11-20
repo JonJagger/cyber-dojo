@@ -105,7 +105,7 @@ var cyberDojo = (function(cd, $) {
     var makeTrafficLightsHtml = function(lights) {
       var html = '';
       var index = 1;
-      $.each(lights, function(n,light) {
+      $.each(lights, function(n, light) {
         var barGap = (nowTag() === light.number) ? 'bar' : 'gap';
         html +=
           "<div class='traffic-light'>" +
@@ -130,7 +130,7 @@ var cyberDojo = (function(cd, $) {
 
     var refreshTrafficLights = function() {
       trafficLights().html(makeTrafficLightsHtml(data.lights));
-      $.each($('img[src$="_gap.png"]', titleBar()), function(_,light) {
+      $.each($('img[src$="_gap.png"]', titleBar()), function(_, light) {
         var index = $(this).data('index');
         var tag = $(this).data('tag');
         $(this)
@@ -241,7 +241,7 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var refreshTagControls = function() {
-      var colour = data.lights[nowTag()-1].colour;
+      var colour = data.lights[nowTag() - 1].colour;
       var minTag = 1;
       var maxTag = data.lights.length;
       var tagsToLeft = minTag < nowTag();
@@ -250,8 +250,8 @@ var cyberDojo = (function(cd, $) {
         .removeClass()
         .addClass(colour)
         .html(nowTag());
-      refreshTag(tagsToLeft,  $('#prev-tag'),  nowTag()-1);
-      refreshTag(tagsToRight, $('#next-tag'),  nowTag()+1);
+      refreshTag(tagsToLeft,  $('#prev-tag'),  nowTag() - 1);
+      refreshTag(tagsToRight, $('#next-tag'),  nowTag() + 1);
     };
 
     //- - - - - - - - - - - - - - -
@@ -391,7 +391,7 @@ var cyberDojo = (function(cd, $) {
       // *next* diff-section in that diff (which will cycle round).
 
       var previousFilenameNode;
-      var alreadyOpened = [ ];
+      var alreadyOpened = [];
 
       var getFilename = function(node) {
         return $.trim(node.text());
