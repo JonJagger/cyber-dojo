@@ -88,10 +88,7 @@ var cyberDojo = (function(cd, $) {
 	    }
     });
 
-	  // Don't refactor to newFileDialog.dialog('open')
-	  // If you do that the dialog only works the first time. See
-	  // http://praveenbattula.blogspot.co.uk/2009/08/jquery-dialog-open-only-once-solution.html
-    $('#new_file_dialog').dialog('open');
+    newFileDialog.dialog('open');
     input[0].setSelectionRange(0, newFilename.length);
   };
 
@@ -136,7 +133,7 @@ var cyberDojo = (function(cd, $) {
     div.append(input);
 
 	  input.keyup(function(event) {
-	  var newFilename = $.trim(input.val());
+	    var newFilename = $.trim(input.val());
       var ok = $('#rename_file_ok');
       event.preventDefault();
 	    if (cd.isValidFilename(newFilename))  {
@@ -150,10 +147,8 @@ var cyberDojo = (function(cd, $) {
 	    }
     });
 
-    // Don't refactor to renamer.dialog('open')
-    // If you do that the dialog only works the first time. See
-    // http://praveenbattula.blogspot.co.uk/2009/08/jquery-dialog-open-only-once-solution.html
-    $('#rename_file_dialog').dialog('open');
+    renameFileDialog.dialog('open');
+
     var end = oldFilename.lastIndexOf('.');
     if (end === -1) {
       end = oldFilename.length;
