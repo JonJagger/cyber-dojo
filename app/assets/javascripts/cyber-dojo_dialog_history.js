@@ -500,6 +500,7 @@ var cyberDojo = (function(cd, $) {
         var filenameDiv =
           $('<div>', {
               'class': 'filename',
+              'data-filename': diff.filename,
               'id': 'radio_' + diff.id,
               'text': diff.filename
           });

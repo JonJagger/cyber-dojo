@@ -136,6 +136,7 @@
       padding-bottom: 4px;
       border: 1px solid $darker-color;
       margin-bottom: 2px;
+      &[data-filename='output'] { margin-top: 20px; } // mimic test-page file-knave
     }
   }
 
@@ -196,6 +197,8 @@
       background: lighten($darker-color,10%);
       cursor: default;
     }
+
+    &[data-filename='output'] { margin-top: 20px; } // mimic test-page file-knave
   }
 
   .diff-deleted-line-count {
