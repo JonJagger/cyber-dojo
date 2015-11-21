@@ -22,6 +22,8 @@ scroll_to_error.js is dead code
 --------------------------------------
 NEW UX
 donate-dialog: improve appearance
+diff-dialog: change selected filename cursor to hand to indicate it can
+             auto-scroll to next diff-chunk.
 diff-dialog: add tooltip to +- line-count button when count is non zero
              'Toggle added/deleted lines on/off'
 diff-dialog: sometimes you lose the cursor when clicking < > and rags at top
