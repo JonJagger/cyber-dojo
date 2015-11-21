@@ -37,12 +37,10 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.rebuildFilenameList = function() {
-    var filenames = cd.filenames();
+  cd.sortedFilenames = function(filenames) {
+    // also called from cyber_dojo_dialog_history.js
     var lolights = [];
     var hilights = [];
-    var filenameList = $('#filename-list');
-
     $.each(filenames, function(_, filename) {
       if (cd.inArray(filename, cd.lowlightFilenames()))
         lolights.push(filename);
@@ -56,19 +54,18 @@ var cyberDojo = (function(cd, $) {
       };
       return reverse(lhs).localeCompare(reverse(rhs));
     });
+    return [].concat(hilights, ['output'], lolights);
+  };
 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  cd.rebuildFilenameList = function() {
+    var filenames = cd.filenames();
+    var filenameList = $('#filename-list');
     filenameList.empty();
-    // first highlight-filenames
-    $.each(hilights, function(_, filename) {
+    $.each(cd.sortedFilenames(filenames), function(_, filename) {
       filenameList.append(cd.makeFileListEntry(filename));
     });
-    // then output
-    filenameList.append(cd.makeFileListEntry('output'));
-    // then lolight-filenames
-    $.each(lolights, function(_, filename) {
-      filenameList.append(cd.makeFileListEntry(filename));
-    });
-
     return filenames;
   };
 

@@ -466,10 +466,36 @@ var cyberDojo = (function(cd, $) {
 
     var diffFilenames = $('#diff-filenames', diffDiv);
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    var sortedDiffs = function(diffs) {
+      var filenames = [];
+      $.each(diffs, function(_, diff) {
+        filenames.push(diff.filename);
+      });
+      // ensure filenames appear in the same order as test page
+      var sorted = cd.sortedFilenames(filenames);
+      var diffFor = function(filename) {
+        var i;
+        for (i = 0; i < diffs.length; i += 1) {
+          if (diffs[i].filename === filename) {
+            return diffs[i];
+          }
+        }
+      };
+      var result = [];
+      $.each(sorted, function(_, filename) {
+        result.push(diffFor(filename));
+      });
+      return result;
+    };
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
     var makeDiffFilenamesColumn = function(diffs) {
       var html = '';
       html += '<table>';
-      $.each(diffs, function(_, diff) {
+      $.each(sortedDiffs(diffs), function(_, diff) {
         var td = $('<td>');
         var filenameDiv =
           $('<div>', {
@@ -492,7 +518,7 @@ var cyberDojo = (function(cd, $) {
         return html;
       }
       html += '<table>';
-      $.each(diffs, function(_, diff) {
+      $.each(sortedDiffs(diffs), function(_, diff) {
         var count = diff[propertyName];
         var td = $('<td>');
         var noneOrSome = (count === 0) ? 'none' : 'some';

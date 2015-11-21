@@ -50,36 +50,6 @@ class GitDiffViewTests < AppLibTestBase
 
   # - - - - - - - - - - - - - - - - - -
 
-  test '720739',
-  'filenames are sorted the same way as test-page file knave' +
-    ' which is output first, then target files (in reverse), then lo-light files' do
-    diffs =
-    {
-      'hiker.rb' => one_line('alpha'),
-      'test_hiker.rb' => one_line('beta'),
-      'output' => one_line('gamma'),
-      'instructions' => one_line('delta')
-    }
-
-    view = git_diff_view(diffs)
-
-    expected_view =
-    [
-      one_line_expected(0, 'output', 'gamma'),
-      one_line_expected(1, 'hiker.rb', 'alpha'),
-      one_line_expected(2, 'test_hiker.rb', 'beta'),
-      one_line_expected(3, 'instructions', 'delta')
-    ]
-
-    assert_equal expected_view[0], view[0], '<<<0>>>'
-    assert_equal expected_view[1], view[1], '<<<1>>>'
-    assert_equal expected_view[2], view[2], '<<<2>>>'
-    assert_equal expected_view[3], view[3], '<<<3>>>'
-
-  end
-
-  # - - - - - - - - - - - - - - - - - -
-
   private
 
   def one_line(content)
