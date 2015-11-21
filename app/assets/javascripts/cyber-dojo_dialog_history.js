@@ -326,15 +326,23 @@ var cyberDojo = (function(cd, $) {
       return div;
     };
 
+    //- - - - - - - - - - - - - - -
+
     var diffDiv = makeDiffDiv();
+
+    //- - - - - - - - - - - - - - -
 
     var refreshDiff = function() {
       diffFilenames.html(makeDiffFilenames(data.diffs));
       resetFilenameAddedDeletedLineCountHandlers();
       diffContent.html(makeDiffContent(data.diffs));
       buildDiffFilenameHandlers(data.idsAndSectionCounts);
+      var allTheWay = 100000;
+      $('#diff-filenames').scrollLeft(allTheWay);
       showFile(data.currentFilenameId);
     };
+
+    //- - - - - - - - - - - - - - -
 
     var showFile = function(filenameId) {
       var filename =  $('#radio_' + filenameId, diffDiv);
@@ -342,7 +350,11 @@ var cyberDojo = (function(cd, $) {
       filename.scrollIntoView({ direction: 'vertical' });
     };
 
+    //- - - - - - - - - - - - - - -
+
     var diffContent = $('#diff-content', diffDiv);
+
+    //- - - - - - - - - - - - - - -
 
     var makeDiffContent = function(diffs) {
       var holder = $('<span>');

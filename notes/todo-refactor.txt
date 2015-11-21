@@ -26,11 +26,11 @@ diff-dialog: add tooltip to +- line-count button when count is non zero
              'Toggle added/deleted lines on/off'
 diff-dialog: sometimes you lose the cursor when clicking < > and rags at top
 diff-dialog: make filename knave have fixed width
-diff-dialog: added/removed lines, CSS for selected filename
 diff-dialog: if filename-knave is very wide because of long filename
              the knave needs to autoscroll to the right same as traffic-lights
              Better still, the diff-counts are not part of the scroll, viz
              only the filenames scroll.
+test-page: new/rename/delete dialogs - improve appearance
 --------------------------------------
 ok/cancel buttons: on dialog, need border/hover-focus look
 learn-more button: make it pop up a tip with list of links.
