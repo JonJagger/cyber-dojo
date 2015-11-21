@@ -1,16 +1,4 @@
 
-rename does not pick up the current filename. But delete does
-Fixed it by changing
-    //$('#rename_file_dialog').dialog('open');
-to
-    renameFileDialog.dialog('open');
-But there is a comment
-    // Don't refactor to renameFileDialog.dialog('open')
-    // If you do that the dialog only works the first time. See
-    // http://praveenbattula.blogspot.co.uk/2009/08/jquery-dialog-open-only-once-solution.html
-Same comment for newFileDialog.dialog('open')
-Check that out.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 stderr2stdout
 Only used in
 lib/HostGit.rb
