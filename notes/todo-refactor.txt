@@ -36,7 +36,6 @@ test-page: new/rename/delete dialogs - improve appearance - add background?
 join-page: if Id is valid footer could show language,test,exercise
 --------------------------------------
 ok/cancel buttons: on dialogs, need border/hover-focus look
-ok/cancel buttons: on dialogs, make them larger?
 learn-more button: make it pop up a tip with list of links?
 add sponsors logos/text and image of kids on pies to home/join pages
 setup-page: cursor position inside instructions is not remembered if you return to that exercise.
