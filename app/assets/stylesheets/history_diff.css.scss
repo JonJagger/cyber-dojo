@@ -112,8 +112,6 @@
   padding: none !important;
   margin: 0px;
 
-  .diff-line-numbers, .diff-sheet { height: 540px; }
-
   #diff-filenames {
     height: 435px;
     margin-top: 15px;
@@ -140,7 +138,10 @@
     }
   }
 
+  //.diff-line-numbers, .diff-sheet { height: 540px; }
+
   .diff-line-numbers, .diff-sheet {
+    height: 540px;
     background: lighten($darker-color, 3%);
     margin: 0px;
     padding: 0px;
