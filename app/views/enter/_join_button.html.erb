@@ -3,13 +3,13 @@
 
 $(function() {
 
-  var enterButton = $('#enter-button');
+  var joinButton = $('#join-button');
 
-  enterButton.click(function() {
+  joinButton.click(function() {
     cd.dialog_ie(function() {
       var id = $('#kata-id-input').val();
-      var cursor = enterButton.css('cursor');
-      enterButton.css('cursor', 'wait');
+      var cursor = joinButton.css('cursor');
+      joinButton.css('cursor', 'wait');
       $.getJSON('/enter/enter', { id: id }, function(dojo) {
         if (dojo.full) {
           cd.dialog(dojo.full_dialog_html, 'join', 'ok').dialog('open');
@@ -27,4 +27,4 @@ $(function() {
 
 //--></script>
 
-<button type="button" id="enter-button">join</button>
+<button type="button" id="join-button">join</button>

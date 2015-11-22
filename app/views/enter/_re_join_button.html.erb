@@ -3,16 +3,16 @@
 
 $(function() {
 
-  var reEnterButton = $('#re-enter-button');
+  var reJoinButton = $('#re-join-button');
 
-  reEnterButton.click(function() {
+  reJoinButton.click(function() {
     var id = $('#kata-id-input').val();
-    var cursor = reEnterButton.css('cursor');
-    reEnterButton.css('cursor', 'wait');
+    var cursor = reJoinButton.css('cursor');
+    reJoinButton.css('cursor', 'wait');
     $.getJSON('/enter/re_enter', { id: id }, function(dojo) {
       cd.dialog_reEnter('re-join', 'cancel', dojo.re_enter_dialog_html).dialog('open');
     }).always(function() {
-      reEnterButton.css('cursor', cursor);
+      reJoinButton.css('cursor', cursor);
     });
   });
 
@@ -20,4 +20,4 @@ $(function() {
 
 //--></script>
 
-<button type="button" id="re-enter-button">re-join</button>
+<button type="button" id="re-join-button">re-join</button>
