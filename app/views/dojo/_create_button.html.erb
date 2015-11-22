@@ -5,7 +5,8 @@ $(function() {
 
   $('#create-button').click(function() {
     cd.dialog_ie(function() {
-      var url = '/setup/show/';
+      var id = "<%= @id %>";
+      var url = '/setup/show/' + id;
       window.location = url;
     });
   });

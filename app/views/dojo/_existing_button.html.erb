@@ -4,7 +4,8 @@
 $(function() {
 
   $('#existing-button').click(function() {
-    var url = '/enter/show/';
+    var id = "<%= @id %>";
+    var url = '/enter/show/' + id;
     window.location = url;
   });
 
