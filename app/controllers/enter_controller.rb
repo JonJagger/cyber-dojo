@@ -10,22 +10,22 @@ class EnterController < ApplicationController
     render json: { exists: dojo_exists }
   end
 
-  def enter
+  def join
     avatar = kata.start_avatar
     full = avatar.nil?
     #one_self.started(avatar) unless full
     render json: {
-            avatar_name: !full ? avatar.name : nil,
-                   full: full,
-      enter_dialog_html: !full ? enter_dialog_html(avatar.name) : '',
-       full_dialog_html: full ? full_dialog_html : ''
+           avatar_name: !full ? avatar.name : nil,
+                  full:  full,
+      join_dialog_html: !full ? join_dialog_html(avatar.name) : '',
+      full_dialog_html:  full ? full_dialog_html : ''
     }
   end
 
-  def re_enter
+  def re_join
     render json: {
                      empty: empty,
-      re_enter_dialog_html: dojo_exists ? re_enter_dialog_html : ''
+      re_join_dialog_html: dojo_exists ? re_join_dialog_html : ''
     }
   end
 

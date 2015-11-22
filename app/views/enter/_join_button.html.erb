@@ -10,11 +10,11 @@ $(function() {
       var id = $('#kata-id-input').val();
       var cursor = joinButton.css('cursor');
       joinButton.css('cursor', 'wait');
-      $.getJSON('/enter/enter', { id: id }, function(dojo) {
+      $.getJSON('/enter/join', { id: id }, function(dojo) {
         if (dojo.full) {
           cd.dialog(dojo.full_dialog_html, 'join', 'ok').dialog('open');
         } else {
-          cd.dialog_enter(id, dojo.avatar_name, dojo.enter_dialog_html).dialog('open');
+          cd.dialog_enter(id, dojo.avatar_name, dojo.join_dialog_html).dialog('open');
           cd.enableDisableEnterReEnterReview();
         }
       }).always(function() {

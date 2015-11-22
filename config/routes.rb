@@ -27,9 +27,9 @@ CyberDojo::Application.routes.draw do
 
   scope path: '/enter', controller: :enter do
     get 'show(/:id)' => :show
-    get 'check'       => :check,    :constraints => { :format => :json }
-    get 'enter'       => :enter,    :constraints => { :format => :json }
-    get 're_enter'    => :re_enter, :constraints => { :format => :json }
+    get 'check'      => :check,   :constraints => { :format => :json }
+    get 'join'       => :join,    :constraints => { :format => :json }
+    get 're_join'    => :re_join, :constraints => { :format => :json }
   end
 
   scope path: '/kata', controller: :kata do
