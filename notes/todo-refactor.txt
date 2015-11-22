@@ -33,6 +33,7 @@ diff-dialog: if filename-knave is very wide because of long filename
              Better still, the diff-counts are not part of the scroll, viz
              only the filenames scroll.
 test-page: new/rename/delete dialogs - improve appearance - add background?
+join-page: if Id is valid footer could show language,test,exercise
 --------------------------------------
 ok/cancel buttons: on dialogs, need border/hover-focus look
 ok/cancel buttons: on dialogs, make them larger?
