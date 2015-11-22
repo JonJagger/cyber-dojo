@@ -15,7 +15,7 @@ var cyberDojo = (function(cd, $) {
   cd.dialog_reJoin = function(title, cancel ,dialogHtml) {
     var buttons = { };
     buttons[cancel] = function() { $(this).dialog('close'); };
-    var reEnter = $('<div class="dialog">')
+    var reJoin = $('<div class="dialog">')
       .html(dialogHtml)
       .dialog({
         title: cd.dialogTitle(title),
@@ -25,7 +25,7 @@ var cyberDojo = (function(cd, $) {
         buttons: buttons
       });
     cd.closeReJoinDialog = function() { reJoin.dialog('close'); };
-    return reEnter;
+    return reJoin;
   };
 
   return cd;
