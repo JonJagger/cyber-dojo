@@ -3,16 +3,16 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.reEnter = function(id, avatarName) {
+  cd.reJoin = function(id, avatarName) {
     var url = '/kata/edit/' + id + '?avatar=' + avatarName;
     window.open(url);
-    cd.closeReEnterDialog();
+    cd.closeReJoinDialog();
     return false;
   };
 
   //- - - - - - - - - - - - - - - - - - - - -
 
-  cd.dialog_reEnter = function(title, cancel ,dialogHtml) {
+  cd.dialog_reJoin = function(title, cancel ,dialogHtml) {
     var buttons = { };
     buttons[cancel] = function() { $(this).dialog('close'); };
     var reEnter = $('<div class="dialog">')
@@ -24,7 +24,7 @@ var cyberDojo = (function(cd, $) {
         modal: true,
         buttons: buttons
       });
-    cd.closeReEnterDialog = function() { reEnter.dialog('close'); };
+    cd.closeReJoinDialog = function() { reJoin.dialog('close'); };
     return reEnter;
   };
 

@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_enter = function(id, avatarName, dialogHtml) {
+  cd.dialog_join = function(id, avatarName, dialogHtml) {
     var okOrCancel = function() {
       var url = '/kata/edit/' + id + '?avatar=' + avatarName;
       window.open(url);

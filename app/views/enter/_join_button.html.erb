@@ -14,8 +14,8 @@ $(function() {
         if (dojo.full) {
           cd.dialog(dojo.full_dialog_html, 'join', 'ok').dialog('open');
         } else {
-          cd.dialog_enter(id, dojo.avatar_name, dojo.join_dialog_html).dialog('open');
-          cd.enableDisableEnterReEnterReview();
+          cd.dialog_join(id, dojo.avatar_name, dojo.join_dialog_html).dialog('open');
+          cd.enableDisableJoinReJoinReview();
         }
       }).always(function() {
         enterButton.css('cursor', cursor);
