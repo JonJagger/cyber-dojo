@@ -15,7 +15,8 @@
 
   #enter-id-prompt {
     @include non-code-font();
-    @include font-size-largest();
+    @include font-size-small();
+    color: lighten($green, 35%);
   }
 
   #kata-id-input {

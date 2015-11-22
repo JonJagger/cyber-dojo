@@ -10,7 +10,7 @@ $(function() {
     var cursor = reEnterButton.css('cursor');
     reEnterButton.css('cursor', 'wait');
     $.getJSON('/enter/re_enter', { id: id }, function(dojo) {
-      cd.dialog_reEnter('re-enter', 'cancel', dojo.re_enter_dialog_html).dialog('open');
+      cd.dialog_reEnter('re-join', 'cancel', dojo.re_enter_dialog_html).dialog('open');
     }).always(function() {
       reEnterButton.css('cursor', cursor);
     });
@@ -20,4 +20,4 @@ $(function() {
 
 //--></script>
 
-<button type="button" id="re-enter-button">re-enter</button>
+<button type="button" id="re-enter-button">re-join</button>

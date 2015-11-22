@@ -11,7 +11,7 @@ var cyberDojo = (function(cd, $) {
     return $('<div class="dialog">')
       .html(dialogHtml)
       .dialog({
-        title: cd.dialogTitle('enter'),
+        title: cd.dialogTitle('join'),
         autoOpen: false,
         width: 435,
         modal: true,
