@@ -1,0 +1,13 @@
+
+<script type="text/javascript"><!--
+
+$(function() {
+
+  cd.lowlightFilenames = function() {
+    return $.parseJSON('<%= @kata.language.lowlight_filenames.inspect.html_safe %>');
+  };
+
+});
+
+//--></script>
+
