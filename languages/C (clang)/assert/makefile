@@ -1,4 +1,5 @@
 CFLAGS += -I. -Wall -Wextra -x c -std=c11
+CFLAGS += -Wsequence-point
 CFLAGS += -Wmissing-noreturn -Wunreachable-code
 CFLAGS += -Wmissing-prototypes -Wstrict-prototypes
 CFLAGS += -fsanitize=undefined -fno-sanitize-recover=undefined
@@ -10,7 +11,7 @@ C_FILES = $(wildcard *.c)
 
 .PHONY: test.output
 test.output: test makefile
-	@./$< 
+	@./$<
 
 test: makefile $(C_FILES) $(COMPILED_H_FILES)
 	@$(CC) $(CFLAGS) -O $(C_FILES) -o $@
