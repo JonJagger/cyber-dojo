@@ -2,8 +2,18 @@
 #enter-page {
 
   font-size: 1.15em;
+  margin: { top: 55px; left: 40px; }
 
-  margin: { top: 55px; left: 35px; }
+  #bg {
+    position: relative;
+    top: 5px;
+    width: 290px;
+  }
+
+  #info {
+    margin-top: 20px;
+    @include plaintext-font();
+  }
 
   #join-a-prepared-practice {
     @include non-code-font();

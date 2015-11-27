@@ -2,16 +2,20 @@
 <div id="enter-page">
   <table class="align-right">
     <tr>
-      <th>
+      <th colspan="2">
         <div id="join-a-prepared-practice">
           join&nbsp;a&nbsp;prepared&nbsp;practice
         </div>
       </th>
     </tr>
     <tr>
-      <td id="enter-id-prompt">enter it's id</td>
+      <td></td>
+      <td id="enter-id-prompt">type it's id</td>
     </tr>
     <tr>
+      <td rowspan="4" valign="top">
+        <img src="/images/avatars/bw/all_avatars_background.png" id="bg" alt="">
+      </td>
       <td><%= render partial: 'enter_id' %></td>
     </tr>
     <tr>
@@ -23,7 +27,29 @@
     <tr>
       <td><%= render partial: 'review_button' %></td>
     </tr>
+    <tr>
+      <td colspan="2">
+        <div id="info">
+        <div>
+          cyber-dojo is built using
+            <a href="https://cloud.google.com/compute/">google compute engine</a>,
+            <a href="https://docs.docker.com/machine/">docker-machine</a>,
+            <a href="http://rubyonrails.org/">rails</a>, and
+            <a href="https://git-scm.com/">git</a>.
+        </div>
+        <div>
+          cyber-dojo's docker containers live on the
+          <a href="https://hub.docker.com/u/cyberdojofoundation/">docker hub</a>.
+        </div>
+        <div>
+          cyber-dojo is open source and lives on
+          <a href="https://github.com/JonJagger/cyber-dojo">github</a>.
+        </div>
+     </div>
+      </td>
+    </tr>
   </table>
+
 </div>
 
 <%= render partial: 'shared/footer_short',
