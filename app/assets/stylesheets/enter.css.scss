@@ -17,11 +17,10 @@
     @include font-size-tiny();
   }
 
-  #join-a-prepared-practice {
+  #enter-your-practice-session {
     @include non-code-font();
     color: $lighter-color;
     font-size: 3.5em;
-    //text-align: right;
   }
 
   #enter-id-prompt {
@@ -45,7 +44,7 @@
     right: -1px;
   }
 
-  #join-button, #re-join-button, #review-button {
+  #start-button, #continue-button, #review-button {
     @include non-code-font();
     width: 240px;
     padding-right: 20px;

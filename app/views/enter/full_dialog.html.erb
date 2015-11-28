@@ -3,14 +3,15 @@
   <div class="align-center medium">sorry, full up!</div>
   <table class="align-center">
     <% index = 0 %>
-    <% size = 60 %>
-    <% (1..4).each do |_| %>
+    <% size = 45 %>
+    <% (1..8).each do |_| %>
     <tr>
-      <% (1..4).each do |_| %>
-      <td class="panel">
+      <% (1..8).each do |_| %>
+      <td>
         <% avatar_name = @all_avatar_names[index] %>
           <img src="/images/avatars/<%= avatar_name %>.jpg"
                title="<%= avatar_name %>"
+               style="display:block"
                width="<%= size %>"
                height="<%= size %>" />
         <% index += 1 %>

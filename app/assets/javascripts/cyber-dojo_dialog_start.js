@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_join = function(id, avatarName, dialogHtml) {
+  cd.dialog_start = function(title, id, avatarName, dialogHtml) {
     var okOrCancel = function() {
       var url = '/kata/edit/' + id + '?avatar=' + avatarName;
       window.open(url);
@@ -11,7 +11,7 @@ var cyberDojo = (function(cd, $) {
     return $('<div class="dialog">')
       .html(dialogHtml)
       .dialog({
-        title: cd.dialogTitle('start'),
+        title: cd.dialogTitle(title),
         autoOpen: false,
         width: 435,
         modal: true,
