@@ -1,5 +1,6 @@
 
 
+--------------------------------------
 views/kata/run_tests.js.erb still has code from
 when cyber-dojo.sh could be updated by the server.
 --------------------------------------
