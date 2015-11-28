@@ -11,8 +11,6 @@
     padding-bottom: 0px;
     .dot-org {
       font-size: 0.30em;
-      position: relative;
-      left: -3px;
     }
   }
 
@@ -29,8 +27,7 @@
     color: lighten($text-color, 5%);
     position: relative;
     top: -9px;
-    margin-right: 2px;
-    margin-bottom: 3px;
+    margin: { right: 0px; bottom: 3px; }
   }
 
   #globe-container {
@@ -72,8 +69,7 @@
     width: 555px;
     font-size: 2.5em;
     line-height: 95%;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: { top: 10px; bottom: 10px; }
     margin-bottom: 10px;
   }
 

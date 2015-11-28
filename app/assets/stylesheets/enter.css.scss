@@ -4,7 +4,7 @@
   font-size: 1.15em;
   margin: { top: 55px; left: 230px; }
 
-  #bg {
+  #avatars-grid {
     position: relative;
     top: 5px;
     width: 290px;
@@ -18,14 +18,13 @@
   #join-a-prepared-practice {
     @include non-code-font();
     color: $lighter-color;
-    font-size: 3.6em;
-    margin-right: 8px;
+    font-size: 3.5em;
     text-align: right;
   }
 
   #enter-id-prompt {
     @include non-code-font();
-    @include font-size-small();
+    @include font-size-tiny();
     color: lighten($green, 35%);
   }
 
@@ -49,8 +48,7 @@
     width: 240px;
     padding-right: 20px;
     @include font-size-largest();
-    margin-left: 10px;
-    margin-bottom: 5px;
+    margin: { left: 10px; bottom: 5px; }
     text-align: right;
   }
 }
