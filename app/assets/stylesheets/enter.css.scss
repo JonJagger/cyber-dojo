@@ -2,7 +2,7 @@
 #enter-page {
 
   font-size: 1.15em;
-  margin: { top: 55px; left: 230px; }
+  margin: { top: 55px; left: 250px; }
 
   #avatars-grid {
     position: relative;
@@ -13,6 +13,7 @@
   #info {
     margin-top: 20px;
     @include plaintext-font();
+    @include font-size-tiny();
   }
 
   #join-a-prepared-practice {
