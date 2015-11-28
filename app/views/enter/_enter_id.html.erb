@@ -5,9 +5,9 @@ $(function() {
 
   var kataIdInput = $('#kata-id-input');
 
-  var join   = $('#join-button');
-  var reJoin = $('#re-join-button');
-  var review  = $('#review-button');
+  var startButton    = $('#start-button');
+  var continueButton = $('#continue-button');
+  var reviewButton   = $('#review-button');
 
   var enable = function(button) {
     button.removeAttr('disabled');
@@ -26,14 +26,14 @@ $(function() {
 
   cd.enableDisableJoinReJoinReview = function() {
     var id = kataIdInput.val();
-    disable(join);
-    disable(reJoin);
-    disable(review);
+    disable(startButton);
+    disable(continueButton);
+    disable(reviewButton);
     if (id.length >= 6) {
       $.getJSON('/enter/check', { id: id }, function(dojo) {
-        setEnabled(join,   dojo.exists);
-        setEnabled(reJoin, dojo.exists);
-        setEnabled(review,  dojo.exists);
+        setEnabled(startButton,    dojo.exists);
+        setEnabled(continueButton, dojo.exists);
+        setEnabled(reviewButton,   dojo.exists);
       });
     }
   };
