@@ -2,12 +2,13 @@
 #enter-page {
 
   font-size: 1.15em;
-  margin: { top: 55px; left: 250px; }
+  margin: { top: 55px; left: 190px; }
 
   #avatars-grid {
     position: relative;
     top: 5px;
-    width: 290px;
+    left: 50px;
+    width: 292px;
   }
 
   #info {
@@ -20,7 +21,7 @@
     @include non-code-font();
     color: $lighter-color;
     font-size: 3.5em;
-    text-align: right;
+    //text-align: right;
   }
 
   #enter-id-prompt {

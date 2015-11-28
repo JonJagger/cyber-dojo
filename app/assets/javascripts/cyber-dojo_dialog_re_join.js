@@ -12,13 +12,13 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - -
 
-  cd.dialog_reJoin = function(title, cancel ,dialogHtml) {
+  cd.dialog_reJoin = function(dialogHtml) {
     var buttons = { };
-    buttons[cancel] = function() { $(this).dialog('close'); };
+    buttons['cancel'] = function() { $(this).dialog('close'); };
     var reJoin = $('<div class="dialog">')
       .html(dialogHtml)
       .dialog({
-        title: cd.dialogTitle(title),
+        title: cd.dialogTitle('continue'),
         autoOpen: false,
         width: 500,
         modal: true,
