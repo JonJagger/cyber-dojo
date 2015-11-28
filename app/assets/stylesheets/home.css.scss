@@ -55,7 +55,7 @@
   }
   #custom-container { top: 350px; }
 
-  #create-button, #existing-button,
+  #create-button, #enter-button,
   #charity-button, #donate-button {
     @include non-code-font();
     padding-right: 20px;
@@ -65,7 +65,7 @@
     text-align: right;
   }
 
-  #create-button, #existing-button {
+  #create-button, #enter-button {
     width: 555px;
     font-size: 2.5em;
     line-height: 95%;
