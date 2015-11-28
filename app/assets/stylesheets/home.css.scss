@@ -1,8 +1,7 @@
 
 #home-page {
 
-  margin-top: 15px;
-  margin-left: 25px;
+  margin: { top: 15px; left: 230px; }
 
   #cyber-dojo {
     @include non-code-font();
