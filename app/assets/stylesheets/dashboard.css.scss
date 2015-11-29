@@ -31,7 +31,7 @@
       padding: 0px;
       &.odd  { background: lighten($darker-color,5%); }
       border-bottom: dotted lighten($darker-color,3%) 1px;
-      &.even { background: lighten($darker-color,7%); }
+      &.even { background: lighten($darker-color,11%); }
     }
     .collapsed-multi-gap {
       display: inline-block;
