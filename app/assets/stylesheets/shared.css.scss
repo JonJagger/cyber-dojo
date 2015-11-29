@@ -127,9 +127,13 @@ a:link, a:visited
 }
 
 .avatar-background {
-  background: url('/images/avatars/bw/all_avatars_background.png') no-repeat;
+  background: url('/images/avatars/all_avatars_background.png') no-repeat;
        width: 315px;
       height: 315px;
+  -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
   @include center-align;
   .centerer
   {

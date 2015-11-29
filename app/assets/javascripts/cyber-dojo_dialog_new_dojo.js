@@ -6,8 +6,8 @@ var cyberDojo = (function(cd, $) {
   cd.newDojoDialog = function(title, id, okCallBack) {
     var html = '' +
       "<div class='align-center'>" +
-        "<div style='font-size:1.5em;'>" +
-          "your new cyber-dojo's id is" +
+        "<div style='font-size:1.0em;'>" +
+          "your practice session's id is" +
         '</div>' +
         "<div class='avatar-background'>" +
           "<span class='centerer'></span>" +
