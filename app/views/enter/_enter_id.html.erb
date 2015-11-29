@@ -24,7 +24,7 @@ $(function() {
     }
   };
 
-  cd.enableDisableJoinReJoinReview = function() {
+  cd.enableDisableStartContinueReview = function() {
     var id = kataIdInput.val();
     disable(startButton);
     disable(continueButton);
@@ -39,10 +39,10 @@ $(function() {
   };
 
   kataIdInput.keyup(function() {
-    cd.enableDisableJoinReJoinReview();
+    cd.enableDisableStartContinueReview();
   });
 
-  cd.enableDisableJoinReJoinReview();
+  cd.enableDisableStartContinueReview();
 });
 
 //--></script>

@@ -9,8 +9,8 @@ $(function() {
     var id = $('#kata-id-input').val();
     var cursor = button.css('cursor');
     button.css('cursor', 'wait');
-    $.getJSON('/enter/re_join', { id: id }, function(dojo) {
-      cd.dialog_continue('continue', dojo.re_join_dialog_html).dialog('open');
+    $.getJSON('/enter/continue', { id: id }, function(dojo) {
+      cd.dialog_continue('continue', dojo.continue_dialog_html).dialog('open');
     }).always(function() {
       button.css('cursor', cursor);
     });

@@ -15,9 +15,9 @@ module EnterWorker # mix-in
     started_avatar_names == []
   end
 
-  def join_dialog_html(avatar_name)
+  def start_dialog_html(avatar_name)
     @avatar_name = avatar_name
-    bind('/app/views/enter/join_dialog.html.erb')
+    bind('/app/views/enter/start_dialog.html.erb')
   end
 
   def full_dialog_html
@@ -25,11 +25,11 @@ module EnterWorker # mix-in
     bind('/app/views/enter/full_dialog.html.erb')
   end
 
-  def re_join_dialog_html
+  def continue_dialog_html
     @id = id
     @started_avatar_names = started_avatar_names
     @all_avatar_names = Avatars.names
-    bind('/app/views/enter/re_join_dialog.html.erb')
+    bind('/app/views/enter/continue_dialog.html.erb')
   end
 
   def bind(pathed_filename)

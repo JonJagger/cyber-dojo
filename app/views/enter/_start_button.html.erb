@@ -10,12 +10,12 @@ $(function() {
       var id = $('#kata-id-input').val();
       var cursor = button.css('cursor');
       button.css('cursor', 'wait');
-      $.getJSON('/enter/join', { id: id }, function(dojo) {
+      $.getJSON('/enter/start', { id: id }, function(dojo) {
         if (dojo.full) {
           cd.dialog(dojo.full_dialog_html, 'start', 'ok').dialog('open');
         } else {
-          cd.dialog_start('start', id, dojo.avatar_name, dojo.join_dialog_html).dialog('open');
-          cd.enableDisableJoinReJoinReview();
+          cd.dialog_start('start', id, dojo.avatar_name, dojo.start_dialog_html).dialog('open');
+          cd.enableDisableStartContinueReview();
         }
       }).always(function() {
         button.css('cursor', cursor);
