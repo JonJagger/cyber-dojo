@@ -21,7 +21,6 @@ $(function() {
     // 2. when you hot-key Alt-T
     // 3. when you revert
     var form = testButton.closest('form');
-    //var lineNumbersColor = $('#line-numbers-checkbox').is(':checked') ? '#737373' : 'transparent';
     cd.storeOutgoingFileHashes();
     $.ajax({
       timeout: 30000, // 30 seconds (twice server timeout)
@@ -55,7 +54,6 @@ $(function() {
         testOverlay.remove();
         testButton.enable();
         cd.loadFile('output');
-        //$('.line_numbers').css('color', lineNumbersColor);
         $('#traffic-lights').scrollLeft(allTheWay);
       }
     });
