@@ -172,8 +172,13 @@
     width: 705px;
     text-align: left;
     overflow-x: auto;
-    overflow-y: scroll;
-    &::-webkit-scrollbar:vertical { width: 8px; }
+    overflow-y: auto;
+    &::-webkit-scrollbar:vertical { width: 4px; }
+    // If the horizontal scrollbar has any height you lose
+    // the vertical scroll-alignment with the line-numbers.
+    // So make the horizontal scrollbar invisible whilst
+    // retaining its functionality.
+    &::-webkit-scrollbar:horizontal { height: 0px; }
     outline: none;
     border: none;
     padding-left: 2px;

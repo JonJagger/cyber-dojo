@@ -1,9 +1,6 @@
 
 
 --------------------------------------
-diff-dialog scroll loses sync with line-numbers
-when the file-content has a horizontal scrollbar
---------------------------------------
 Add a battleships exercise!
 --------------------------------------
 stderr2stdout
