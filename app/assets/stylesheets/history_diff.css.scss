@@ -116,10 +116,11 @@
     height: 435px;
     margin-top: 15px;
     max-width: 200px;
-    overflow-y: none;
+    // make scrollbars invisible
     overflow-x: auto;
-    &::-webkit-scrollbar:vertical { width: 8px; }
-    &::-webkit-scrollbar:horizontal { height: 8px; }
+    overflow-y: auto;
+    &::-webkit-scrollbar:vertical { width: 0px; }
+    &::-webkit-scrollbar:horizontal { height: 0px; }
     font-size: 11pt;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
