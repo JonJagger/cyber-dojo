@@ -23,6 +23,7 @@ page. Think it needs to pass 3 lots of html...
   o) fork/revert buttons
 --------------------------------------
 NEW UX
+test-page: new/rename/delete dialogs - improve appearance - add background?
 donate-dialog: improve appearance
 diff-dialog: change selected filename cursor to hand to indicate it can
              auto-scroll to next diff-chunk.
@@ -34,8 +35,6 @@ diff-dialog: if filename-knave is very wide because of long filename
              the knave needs to autoscroll to the right same as traffic-lights
              Better still, the diff-counts are not part of the scroll, viz
              only the filenames scroll.
-test-page: new/rename/delete dialogs - improve appearance - add background?
-join-page: if Id is valid footer could show language,test,exercise
 --------------------------------------
 ok/cancel buttons: on dialogs, need border/hover-focus look
 learn-more button: make it pop up a tip with list of links?
