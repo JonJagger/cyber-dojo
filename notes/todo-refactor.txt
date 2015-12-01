@@ -22,8 +22,6 @@ page. Think it needs to pass 3 lots of html...
   o) diff-content
   o) fork/revert buttons
 --------------------------------------
-scroll_to_error.js is dead code
---------------------------------------
 NEW UX
 donate-dialog: improve appearance
 diff-dialog: change selected filename cursor to hand to indicate it can
