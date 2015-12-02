@@ -80,7 +80,9 @@
 
   .file_content {
     overflow-x: auto;
-    overflow-y: scroll;
+    overflow-y: auto;
+    &::-webkit-scrollbar:vertical { width: 4px; }
+    &::-webkit-scrollbar:horizontal { height: 0px; }
   }
 
 }
