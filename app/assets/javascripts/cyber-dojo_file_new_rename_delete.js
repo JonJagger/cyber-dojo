@@ -9,7 +9,9 @@ var cyberDojo = (function(cd, $) {
 
   cd.deleteFile = function(title) {
     var filename = cd.currentFilename();
-    var div = $('<div>');
+    var div = $('<div>', {
+      'class': 'avatar-background'
+    });
 	  var deleter = $('<div>')
 	    .html(div)
 	    .dialog({
@@ -24,10 +26,10 @@ var cyberDojo = (function(cd, $) {
 	  });
     var input = $('<input>', {
       type: 'text',
-      id: 'delete_filename',
-      name: 'delete_filename',
+      id: 'delete-filename',
+      name: 'delete-filename',
       value: filename,
-	    disabled: "disabled"
+	    disabled: 'disabled'
     });
     div.append(input);
 	  deleter.dialog('open');
@@ -39,15 +41,17 @@ var cyberDojo = (function(cd, $) {
 
   cd.newFile = function(title) {
     var newFilename = 'filename' + cd.extensionFilename();
-    var div = $('<div>');
+    var div = $('<div>', {
+      'class': 'avatar-background'
+    });
     var input = $('<input>', {
       type: 'text',
-      id: 'new_filename',
-      name: 'new_filename',
+      id: 'new-filename',
+      name: 'new-filename',
       value: newFilename
     });
     var okButton = {
-	    id: 'new_file_ok',
+	    id: 'new-file-ok',
 	    text: 'ok',
 	    disabled: !cd.isValidFilename(newFilename),
 	    click: function() {
@@ -57,11 +61,11 @@ var cyberDojo = (function(cd, $) {
 	    }
 	  };
 	  var cancelButton = {
-	    id: 'new_file_cancel',
+	    id: 'new-file-cancel',
 	    text: 'cancel',
 	    click: function() { $(this).remove(); }
 	  };
-    var newFileDialog = $('<div id="new_file_dialog">')
+    var newFileDialog = $('<div>')
       .html(div)
       .dialog({
 		    autoOpen: false,
@@ -74,7 +78,7 @@ var cyberDojo = (function(cd, $) {
     div.append(input);
 
   	input.keyup(function(event) {
-      var ok = $('#new_file_ok');
+      var ok = $('#new-file-ok');
 	    newFilename = $.trim(input.val());
       event.preventDefault();
 	    if (cd.isValidFilename(newFilename))  {
@@ -98,15 +102,17 @@ var cyberDojo = (function(cd, $) {
 
   cd.renameFile = function(title) {
     var oldFilename = cd.currentFilename();
-    var div = $('<div>');
+    var div = $('<div>', {
+      'class': 'avatar-background'
+    });
     var input = $('<input>', {
       type: 'text',
-      id: 'rename_filename',
-      name: 'rename_filename',
+      id: 'rename-filename',
+      name: 'rename-filename',
       value: oldFilename
     });
     var okButton = {
-	    id: 'rename_file_ok',
+	    id: 'rename-file-ok',
 	    text: 'ok',
 	    disabled: !cd.isValidFilename(oldFilename),
 	    click: function() {
@@ -116,11 +122,11 @@ var cyberDojo = (function(cd, $) {
 	    }
 	  };
 	  var cancelButton = {
-  	  id: 'rename_file_cancel',
+  	  id: 'rename-file-cancel',
 	    text: 'cancel',
 	    click: function() { $(this).remove(); }
 	  };
-    var renameFileDialog = $('<div id="rename_file_dialog">')
+    var renameFileDialog = $('<div>')
       .html(div)
       .dialog({
 		    autoOpen: false,
@@ -134,7 +140,7 @@ var cyberDojo = (function(cd, $) {
 
 	  input.keyup(function(event) {
 	    var newFilename = $.trim(input.val());
-      var ok = $('#rename_file_ok');
+      var ok = $('#rename-file-ok');
       event.preventDefault();
 	    if (cd.isValidFilename(newFilename))  {
         ok.button('enable');
