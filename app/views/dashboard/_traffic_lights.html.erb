@@ -38,15 +38,15 @@ $(function() {
 		  <% end %>
 		  <% if td.class == Array %>
 		    <% if td.length == 0 %>
-			  <div class="gap"></div>
+			    <div class="gap"></div>
 		    <% else %>
-			  <table>
-			    <tr>
-				  <% td.each do |light| %>
-				    <td><%= raw diff_traffic_light(light) %></td>
-				  <% end %>
-			    </tr>
-			  </table>
+          <table align="right">
+            <tr>
+				    <% td.each do |light| %>
+              <td><%= raw diff_traffic_light(light) %></td>
+            <% end %>
+            </tr>
+          </table>
 		    <% end %>
 		  <% end %>
 		  </td>

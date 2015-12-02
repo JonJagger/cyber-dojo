@@ -27,7 +27,7 @@
     width: 1000px;
     overflow-x: scroll;
     overflow-y: auto;
-    .column      {
+    .column {
       padding: 0px;
       &.odd  { background: lighten($darker-color,5%); }
       border-bottom: dotted lighten($darker-color,3%) 1px;
