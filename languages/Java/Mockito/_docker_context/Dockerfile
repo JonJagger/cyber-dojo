@@ -1,8 +1,8 @@
 FROM       cyberdojofoundation/java-1.8
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-ADD junit-4.11.jar /mockito/
-ADD mockito-all-1.9.5.jar /mockito/
+# docker build -t cyberdojofoundation/java_mockito .
 
+COPY /jars/* /mockito/
 ENV CLASSPATH=/mockito/
 
