@@ -6,6 +6,14 @@ FROM busybox
 in data_container/Dockerfile can be
 FROM scratch
 --------------------------------------
+in languages folders
+rename all
+build-docker-container.sh
+to
+build-docker-image.sh
+and edit
+admin_scripts/docker_rebuild_all.rb
+--------------------------------------
 Add a battleships exercise!
 --------------------------------------
 rsync'ing files back ...
