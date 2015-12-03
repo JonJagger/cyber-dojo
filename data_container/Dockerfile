@@ -1,3 +1,4 @@
+# From busybox so we can chown which scratch does not.
 FROM busybox
 MAINTAINER Jan Sørensen
 
