@@ -1,8 +1,12 @@
 
 # test runner providing isolation/protection/security
 # via Docker containers https://www.docker.io/
-# and relying on docker volume mounts on host to
-# give docker containers access to .../katas/...
+# and relying on docker volume mounts of a docker
+# data-container to give the running docker-container
+# access to .../katas/...
+#
+# To see how to build and create the data-container see
+# /var/www/cyber-dojo/data_container/Dockerfile
 
 class DockerDataContainerRunner
 

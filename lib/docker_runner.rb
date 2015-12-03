@@ -1,8 +1,9 @@
 
 # test runner providing isolation/protection/security
 # via Docker containers https://www.docker.io/
-# and relying on docker volume mounts on host to
-# give docker containers access to .../katas/...
+# and relying on docker volume mounts of the host
+# file system to give the running docker container
+# access to .../katas/...
 
 class DockerRunner
 
