@@ -31,6 +31,35 @@ class LanguagesTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
+  test '8D0EBB',
+  'refresh_cache ignores nested _docker_context folder because' +
+    ' it is not the name of a test-framework, it is the docker-context' +
+    ' for the language itself' do
+    set_disk_class('DiskFake')
+
+    dir_name = 'g++4.8.4'
+    test_dir_name = '_docker_context'
+    docker_context = Language.new(languages, dir_name, test_dir_name)
+    language_display_name = 'C++ (g++)'
+    display_name = language_display_name + ', ' + test_dir_name
+    image_name = 'cyberdojofoundation/gpp-4.8.4_assert'
+    manifest_filename = 'manifest.json'
+    dir_of(docker_context).make
+    dir_of(docker_context).write_json(manifest_filename, {
+      'display_name' => display_name,
+      'image_name'   => image_name
+    })
+
+    refute disk[caches.path].exists?(Languages.cache_filename)
+    languages.refresh_cache
+    assert disk[caches.path].exists?(Languages.cache_filename)
+
+    languages_names = languages.map(&:name).sort
+    assert_equal [], languages_names
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - -
+
   test '7D53C5',
   'refresh_cache requires manifest.json for each file to read display_name from' +
     ' but use of cached info does not reaccess manifest.json' do
@@ -61,7 +90,6 @@ class LanguagesTests < AppModelTestBase
     cpp_assert = languages[language_display_name + '-' + test_dir_name]
     assert_equal display_name, cpp_assert.display_name
     assert_equal image_name,   cpp_assert.image_name
-
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
@@ -118,7 +146,7 @@ class LanguagesTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - -
 
   test '083518',
-  '[name] when  of lang-test where lang,_test is valid display_name' do
+  '[name] when lang-test where lang,_test is valid display_name' do
     simple_case = 'C++ (g++)-assert'
     simple_display_name = 'C++ (g++), assert'
     found = languages.find { |language| language.display_name == simple_display_name }
