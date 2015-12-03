@@ -1,6 +1,11 @@
 
 
 --------------------------------------
+I think
+FROM busybox
+in data_container/Dockerfile can be
+FROM scratch
+--------------------------------------
 Add a battleships exercise!
 --------------------------------------
 rsync'ing files back ...
