@@ -4,5 +4,5 @@ MAINTAINER Jon Jagger <jon@jaggersoft.com>
 RUN apt-get update && apt-get install --yes \
   wget
 
-ADD install_RUnit.R /
+COPY install_RUnit.R /
 RUN cd / && Rscript install_RUnit.R
