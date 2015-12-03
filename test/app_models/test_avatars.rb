@@ -5,16 +5,8 @@ require_relative './app_model_test_base'
 class AvatarsTests < AppModelTestBase
 
   test '631149',
-  'there are 16 avatar names' do
-    assert_equal 16, Avatars.names.length
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'E7A60F',
-  'avatars names all begin with a different letter' do
-    first_letters = Avatars.names.collect { |name| name[0] }.uniq
-    assert_equal first_letters.length, Avatars.names.length
+  'there are 64 avatar names' do
+    assert_equal 64, Avatars.names.length
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
