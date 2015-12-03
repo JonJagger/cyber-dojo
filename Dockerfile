@@ -74,4 +74,5 @@ RUN a2dissite 000-default
 
 RUN gpasswd -a www-data users
 RUN usermod -s /bin/bash www-data
+ENV CYBER_DOJO_RUNNER_CLASS DockerDataContainerRunner
 CMD ["/usr/sbin/apache2ctl", "-DFOREGROUND" ]
