@@ -21,5 +21,5 @@ RUN gacutil -i TechTalk.SpecFlow.Reporting.dll -package SpecFlow
 RUN gacutil -i TechTalk.SpecFlow.Utils.dll  -package SpecFlow
 WORKDIR ..
 
-ADD specflow.exe /specflow/
+COPY /specflow.exe /specflow/
 
