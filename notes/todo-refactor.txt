@@ -1,11 +1,6 @@
 
 
 --------------------------------------
-I think
-FROM busybox
-in data_container/Dockerfile can be
-FROM scratch
---------------------------------------
 in languages folders
 rename all
 build-docker-container.sh
