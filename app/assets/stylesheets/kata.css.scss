@@ -65,7 +65,7 @@
     overflow-x: auto;
     overflow-y: hidden;
     margin-bottom: 0px;
-    &::-webkit-scrollbar:horizontal { height: 1px; }
+    &::-webkit-scrollbar:horizontal { height: 0px; }
     .diff-traffic-light {
       margin : { left: 0px; right: 0px; }
       padding: { left: 0px; right: 0px; }
@@ -84,7 +84,16 @@
     &::-webkit-scrollbar:vertical { width: 4px; }
     &::-webkit-scrollbar:horizontal { height: 0px; }
   }
+}
 
+input#new-filename, input#rename-filename, input#delete-filename {
+  font-size: 1.15em;
+  border: 1px solid lighten($darker-color, 10%);
+  text-align: right;
+  padding-right: 10px;
+  color: $lighter-color;
+  background: $darker-color;
+  margin-top: 140px; // crude vertical centering
 }
 
 #test-overlay {

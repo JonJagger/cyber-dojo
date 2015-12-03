@@ -3,6 +3,10 @@
 --------------------------------------
 Add a battleships exercise!
 --------------------------------------
+rsync'ing files back ...
+Instead of specifying files to return back would it be better to specify instead files NOT to rsync back
+Eg .class files, .o files, executable files.
+--------------------------------------
 stderr2stdout
 Only used in
 lib/HostGit.rb
