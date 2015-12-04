@@ -9,7 +9,7 @@ class Avatars
        mouse     ostrich    owl     panda    parrot   peacock      penguin   porcupine
        puffin    rabbit     raccoon ray      rhino    salmon       seal      shark
        skunk     snake      spider  squid    squirrel starfish     swan      tiger
-       toucan    tuna       turtle  vulture  walrus   whale        wolf       zebra
+       toucan    tuna       turtle  vulture  walrus   whale        wolf      zebra
     )
   end
 
@@ -55,7 +55,7 @@ class Avatars
         write_json(filename, names = avatars_names)
       end
     end
-    Hash[names.map{ |name| [name,Avatar.new(@parent, name)]}]
+    Hash[names.map{ |name| [name, Avatar.new(@parent, name)]}]
   end
 
   def avatars_names

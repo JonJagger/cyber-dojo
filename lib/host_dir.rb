@@ -2,7 +2,7 @@ require 'fileutils'
 
 class HostDir
 
-  def initialize(disk,path)
+  def initialize(disk, path)
     @disk = disk
     @path = path
     @path += separator unless @path.end_with?(separator)
@@ -58,6 +58,28 @@ class HostDir
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # This needs to be separated out to a dedicated service.
+  # When storage is via network then locking on a file like
+  # this is no good. It is used only in one place - to ensure
+  # two laptops don't get the same avatar.
+  #
+  # 1. app/models/Kata.rb start_avatar()
+  # 2. app/models/Avatars.rb started_avatars()
+  #
+  # I'm thinking I can instead use Google's networked object store.
+  # This has an api allowing optimistic locking.
+  # One approach: save the full list of 64 avatar names into
+  # an object associated with the dojo's id. Then start() retrieves
+  # this 'unstarted' list. If its empty the dojo is full. Otherwise
+  # pick an avatar and try to delete it from the list. If delete
+  # succeeds you have that avatar atomically and can initialize its
+  # files in the katas file system volume. If delete fails then retry.
+  # With this approach the collective information of what avatars
+  # have started is [all-avatar-names] - [unstarted-list].
+  #
+  # What I don't like about this approach is that it splits the
+  # state... the object on the network store mirrors the folder
+  # on the katas/ volume.
 
   def lock(&block)
     # io locking uses blocking call.
