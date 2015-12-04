@@ -82,10 +82,6 @@ class HostDir
   # on the katas/ volume.
 
   def lock(&block)
-    # io locking uses blocking call.
-    # For example, when a player enters a dojo the
-    # controller needs to wait to acquire a lock on
-    # the dojo folder before choosing an avatar.
     result = nil
     File.open(path + 'f.lock', 'w') do |fd|
       if fd.flock(File::LOCK_EX)

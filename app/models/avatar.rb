@@ -104,7 +104,7 @@ class Avatar
 
   def write_manifest(files)
     # The manifest stores a cache of the avatar's
-    # current visible files - filenames and contents.
+    # current visible files = filenames and contents.
     write_json(manifest_filename, files)
   end
 

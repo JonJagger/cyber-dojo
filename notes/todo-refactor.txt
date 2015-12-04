@@ -1,5 +1,8 @@
 
-
+--------------------------------------
+Definitely need to fix the bug that causes sorry page
+when you try to being up the setup page and there is
+nothing in the caches yet so the languages list fails.
 --------------------------------------
 Add a battleships exercise!
 --------------------------------------
@@ -7,15 +10,6 @@ Definitely starting to move towards the idea
 of having some pages that are only for configuration.
 You select a high-level description of the setup
 you'd like and it sets the env variables appropriately.
---------------------------------------
-app/models/Kata.rb line 88 does this
-      names << name if disk[Avatar.new(self, name).path].exists?
-I think this can be refactored to
-      names << name if Avatar.new(self, name).exists?
---------------------------------------
-Definitely need to fix the bug that causes sorry page
-when you try to being up the setup page and there is
-nothing in the caches yet so the languages list fails.
 --------------------------------------
 rsync'ing files back ...
 Instead of specifying files to return back would it be better to specify instead files NOT to rsync back

@@ -82,7 +82,7 @@ class Kata
 
   def started_avatars_names
     # Can't use avatars.names in start_avatar(), above, which does a dir.lock,
-    # since avatars.name also does a dir.lock and dir.locks are not recursive.
+    # since avatars.name also does a dir.lock and dir.lock is not recursive.
     names = []
     Avatars.names.each do |name|
       names << name if disk[Avatar.new(self, name).path].exists?
