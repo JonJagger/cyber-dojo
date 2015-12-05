@@ -14,6 +14,7 @@
   host_runner
   host_disk
   host_dir
+  host_file_locker
   host_git
   time_now
   unique_id

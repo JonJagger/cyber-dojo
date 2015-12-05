@@ -26,7 +26,7 @@ class HostDiskDirTests < LibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '0DB5F3',
-  'disk[path].exists? false when path does not exist, true when it does' do
+  'disk[path].make makes the directory' do
     `rm -rf #{path}`
     refute dir.exists?
     dir.make
@@ -49,72 +49,6 @@ class HostDiskDirTests < LibTestBase
   'disk[path].read() reads back what was written' do
     dir.write('filename', expected = 'content')
     assert_equal expected, dir.read('filename')
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test '7B7E1A',
-    'disk.lock(path) when path does not exist:' +
-      ' throws exception,' +
-      ' does not execute block,' +
-      ' result is nil' do
-    block_run = false
-    exception_thrown = false
-    begin
-      result = disk.lock('path_does_not_exist') { block_run = true }
-    rescue
-      exception_thrown = true
-    end
-    assert exception_thrown
-    refute block_run
-    assert_nil result
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'BE0ED2',
-    'when dir.lock is obtained block is executed' +
-       ' and result is result of block' do
-    block_run = false
-    result = dir.lock { block_run = true; 'Hello' }
-    assert block_run, 'block_run'
-    assert_equal 'Hello', result
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test '9E019E',
-  'outer dir.lock is blocking so inner lock blocks' do
-    outer_run = false
-    inner_run = false
-    dir.lock do
-      outer_run = true
-      inner_thread = Thread.new { dir.lock { inner_run = true } }
-      max_wait = 1.0 / 50.0
-      inner_thread.join(max_wait)
-      Thread.kill(inner_thread)
-    end
-    assert outer_run
-    refute inner_run
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test '0B1E7A',
-    'holding lock on parent dir does not prevent' +
-       'acquisition of lock on child dir' do
-    parent_path = path + 'parent' + disk.dir_separator
-    child_path = parent_path + 'child' + disk.dir_separator
-    `mkdir #{parent_path}`
-    `mkdir #{child_path}`
-    parent_run = false
-    child_run = false
-    disk[parent_path].lock do
-      parent_run = true
-      disk[child_path].lock { child_run = true }
-    end
-    assert parent_run
-    assert child_run
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -283,6 +217,73 @@ class HostDiskDirTests < LibTestBase
       filename.end_with?('.txt')
     end
     assert_equal ['c.txt','d.txt'], matches.sort
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '7B7E1A',
+    'disk.lock(path) when path does not exist:' +
+      ' throws exception,' +
+      ' does not execute block,' +
+      ' result is nil' do
+    block_run = false
+    exception_thrown = false
+    begin
+      result = disk['path_does_not_exist'].lock { block_run = true }
+    rescue StandardError => e
+      assert_equal 'Errno::ENOENT', e.class.name
+      exception_thrown = true
+    end
+    assert exception_thrown
+    refute block_run
+    assert_nil result
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'BE0ED2',
+    'when dir.lock is obtained block is executed' +
+       ' and result is result of block' do
+    block_run = false
+    result = dir.lock { block_run = true; 'Hello' }
+    assert block_run, 'block_run'
+    assert_equal 'Hello', result
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '9E019E',
+  'outer dir.lock is blocking so inner lock blocks' do
+    outer_run = false
+    inner_run = false
+    dir.lock do
+      outer_run = true
+      inner_thread = Thread.new { dir.lock { inner_run = true } }
+      max_wait = 1.0 / 50.0
+      inner_thread.join(max_wait)
+      Thread.kill(inner_thread)
+    end
+    assert outer_run
+    refute inner_run
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '0B1E7A',
+    'holding lock on parent dir does not prevent' +
+       'acquisition of lock on child dir' do
+    parent_path = path + 'parent' + disk.dir_separator
+    child_path = parent_path + 'child' + disk.dir_separator
+    `mkdir #{parent_path}`
+    `mkdir #{child_path}`
+    parent_run = false
+    child_run = false
+    disk[parent_path].lock do
+      parent_run = true
+      disk[child_path].lock { child_run = true }
+    end
+    assert parent_run
+    assert child_run
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
