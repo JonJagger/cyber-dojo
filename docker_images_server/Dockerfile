@@ -17,7 +17,7 @@ MAINTAINER Mike Long <mike@praqma.com>
 #
 # Build the image from this Dockerfile
 # ------------------------------------
-# $ docker build -t cyberdojofoundation/cyber-dojo:1.0 .
+# $ docker build -t cyberdojofoundation/server:1.0 .
 #
 # Run the image
 # -------------
@@ -29,7 +29,7 @@ MAINTAINER Mike Long <mike@praqma.com>
 #              -v /usr/local/bin/docker:/bin/docker \
 #              --volumes-from cyber-dojo-katas-data-container \
 #              --name=cyber-dojo \
-#              -p 80:80 -p 443:443 cyberdojofoundation/cyber-dojo:1.0
+#              -p 80:80 -p 443:443 cyberdojofoundation/server:1.0
 #
 # Refresh the cache in the container
 # ----------------------------------
