@@ -3,7 +3,6 @@ FROM busybox
 MAINTAINER Jan Sørensen
 
 # docker build -t cyberdojofoundation/katas-data .
-# docker rm cyber-dojo-katas-data-container
 # docker create --name cyber-dojo-katas-data-container cyberdojofoundation/katas-data
 
 RUN mkdir -p /var/www/cyber-dojo/katas

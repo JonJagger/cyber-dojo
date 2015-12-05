@@ -2,10 +2,10 @@ FROM phusion/passenger-ruby22
 MAINTAINER Mike Long <mike@praqma.com>
 
 # Instructions for using this Dockerfile to create a cyber-dojo
-# server inside a docker container (eg for development)
+# server inside a docker container.
 #
-# These files on the host
-# -----------------------
+# Setup the katas/ folder on the host
+# -----------------------------------
 # $ sudo mkdir -p /var/www/cyber-dojo/katas/
 # $ sudo chmod g+s /var/www/cyber-dojo/katas/
 # $ sudo chown -R 33:33 /var/www/cyber-dojo/katas/
@@ -15,8 +15,8 @@ MAINTAINER Mike Long <mike@praqma.com>
 # $ docker pull cyberdojofoundation/gcc_assert
 # $ docker pull ...
 #
-# Build the image
-# ---------------
+# Build the image from this Dockerfile
+# ------------------------------------
 # $ docker build -t cyberdojofoundation/cyber-dojo:1.0 .
 #
 # Run the image
@@ -40,7 +40,6 @@ MAINTAINER Mike Long <mike@praqma.com>
 # Find it's IP address
 # --------------------
 # $ docker-machine ip default
-
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
         apache2 curl git build-essential zlibc zlib1g-dev \
