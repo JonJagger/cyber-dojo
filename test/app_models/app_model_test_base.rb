@@ -10,7 +10,7 @@ class AppModelTestBase < TestBase
   def setup
     super
     `rm -rf #{tmp_root}/katas`
-    `rm -f #{tmp_root}/.git`
+    `rm -rf #{tmp_root}/.git`
     `mkdir -p #{tmp_root}/katas`
     set_katas_root(tmp_root + 'katas')
     set_one_self_class('OneSelfDummy')
