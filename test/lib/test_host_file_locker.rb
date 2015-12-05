@@ -14,7 +14,7 @@ class HostFileLockerTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '7B7E1A',
+  test 'BBCC73',
     'lock(filename) when filename specifies file in a new folder:' +
       ' throws exception,' +
       ' does not execute block,' +
@@ -34,7 +34,7 @@ class HostFileLockerTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'BE0ED2',
+  test 'FA282E',
     'when lock is obtained the block is executed' +
        ' and result is result of block' do
     block_run = false
@@ -45,7 +45,24 @@ class HostFileLockerTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '9E019E',
+  test 'A2DE13',
+  'when block raises the lock is released and the exception propagates' do
+    begin
+      HostFileLocker.lock(any_filename) { raise 'propogate'; }
+      assert false, 'locker does not trap the exception'
+    rescue StandardError => e
+      assert_equal 'propogate', e.message
+    end
+
+    block_run = false
+    result = HostFileLocker.lock(any_filename) { block_run = true; 'Hello' }
+    assert block_run, 'block_run'
+    assert_equal 'Hello', result
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '52A7D7',
   'lock is not recursive' do
     outer_run = false
     inner_run = false
