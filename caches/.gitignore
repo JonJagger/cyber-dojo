@@ -2,3 +2,6 @@
 *
 # Except this file
 !.gitignore
+
+# And the readme
+!readme.txt
