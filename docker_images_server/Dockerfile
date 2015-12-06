@@ -21,15 +21,16 @@ MAINTAINER Mike Long <mike@praqma.com>
 #
 # 3. Run the image
 # ----------------
-# This needs a data-container for katas/
-# See docker_images_katas folder.
+# Make docker on the host available inside the container to run
+# the tests.  This also needs a data-container for katas/ which
+# is built from the Docker file in the docker_images_katas folder.
 #
 # $ docker run -d \
 #              -v /var/run/docker.sock:/var/run/docker.sock \
 #              -v /usr/local/bin/docker:/bin/docker \
 #              --volumes-from cyber-dojo-katas-data-container \
 #              --name=cyber-dojo \
-#              -p 80:80 -p 443:443 cyberdojofoundation/server:1.0
+#              -p 80:80 cyberdojofoundation/server:1.0
 #
 # 4. Refresh the caches inside the container
 # ------------------------------------------
