@@ -36,7 +36,7 @@ MAINTAINER Mike Long <mike@praqma.com>
 # This will make the images pulled in step 1 visible.
 # $ docker exec cyber-dojo bash -c /var/www/cyber-dojo/caches/refresh_all.sh
 #
-# 5. Find it's IP address on MacOSX Docker-Quickstart-Terminal
+# 5. Find it's IP address on Docker-Quickstart-Terminal
 # ------------------------------------------------------------
 # $ docker-machine ip default
 
