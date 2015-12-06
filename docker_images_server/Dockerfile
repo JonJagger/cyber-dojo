@@ -59,7 +59,6 @@ RUN cat cyber-dojo.apache2.conf >> /etc/apache2/apache2.conf
 
 RUN echo LoadModule passenger_module /var/lib/gems/2.2.0/gems/passenger-4.0.53/buildout/apache2/mod_passenger.so > /etc/apache2/mods-available/passenger.load
 COPY /cyber-dojo.passenger.conf /etc/apache2/mods-available/passenger.conf
-RUN cat /etc/apache2/mods-available/passenger.conf
 
 RUN cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/cyber-dojo.conf
 RUN sed 's/www.html/www\/cyber-dojo\/public/' < /etc/apache2/sites-available/000-default.conf > /etc/apache2/sites-available/cyber-dojo.conf
