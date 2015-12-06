@@ -2,12 +2,13 @@
 
 cyberDojoHome=/var/www/cyber-dojo
 
-echo "refreshing exercises cache/"
+echo "refreshing exercises cache"
 $cyberDojoHome/exercises/refresh_cache.rb
 
 echo "refreshing languages cache"
 $cyberDojoHome/languages/refresh_cache.rb
 
+echo "refreshing runners cache"
 if docker --version > /dev/null 2>&1; then
   echo "docker is installed"
   echo "refreshing DockerRunner cache"
