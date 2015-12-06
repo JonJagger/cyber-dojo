@@ -22,7 +22,7 @@ MAINTAINER Mike Long <mike@praqma.com>
 # Run the image
 # -------------
 # This needs a data-container for katas/
-# See katas_docker_data_container folder.
+# See docker_images_katas folder.
 #
 # $ docker run -d \
 #              -v /var/run/docker.sock:/var/run/docker.sock \
@@ -37,8 +37,8 @@ MAINTAINER Mike Long <mike@praqma.com>
 # $ ./cyber-dojo/admin_scripts/refresh_all_caches.sh
 # $ exit
 #
-# Find it's IP address
-# --------------------
+# Find it's IP address on MacOSX Docker-Quickstart-Terminal
+# ---------------------------------------------------------
 # $ docker-machine ip default
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
