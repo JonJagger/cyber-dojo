@@ -34,7 +34,7 @@ MAINTAINER Mike Long <mike@praqma.com>
 # Refresh the cache in the container
 # ----------------------------------
 # $ docker exec -ti cyber-dojo bash
-# $ ./cyber-dojo/admin_scripts/refresh_all_caches.sh
+# $ ./cyber-dojo/caches/refresh_all.sh
 # $ exit
 #
 # Find it's IP address on MacOSX Docker-Quickstart-Terminal

@@ -1,7 +1,7 @@
 # Ignore everything in this directory
 *
-# Except this file
-!.gitignore
 
-# And the readme
+# Except...
+!.gitignore
 !readme.txt
+!refresh_all.sh
