@@ -4,22 +4,22 @@ MAINTAINER Mike Long <mike@praqma.com>
 # Instructions for using this Dockerfile to create a cyber-dojo
 # server inside a docker container.
 #
-# 1. Setup the katas/ folder on the host
+# 0. Setup the katas/ folder on the host
 # --------------------------------------
 # $ sudo mkdir -p /var/www/cyber-dojo/katas/
 # $ sudo chmod g+s /var/www/cyber-dojo/katas/
 # $ sudo chown -R 33:33 /var/www/cyber-dojo/katas/
 #
-# 2. Pull the language+test images you want
+# 1. Pull the language+test images you want
 # -----------------------------------------
 # $ docker pull cyberdojofoundation/gcc_assert
 # $ docker pull ...
 #
-# 3. Build the image from this Dockerfile
+# 2. Build the image from this Dockerfile
 # ---------------------------------------
 # $ docker build -t cyberdojofoundation/server:1.0 .
 #
-# 4. Run the image
+# 3. Run the image
 # ----------------
 # This needs a data-container for katas/
 # See docker_images_katas folder.
@@ -31,12 +31,12 @@ MAINTAINER Mike Long <mike@praqma.com>
 #              --name=cyber-dojo \
 #              -p 80:80 -p 443:443 cyberdojofoundation/server:1.0
 #
-# 6. Refresh the caches inside the container
+# 4. Refresh the caches inside the container
 # ------------------------------------------
-# This will make the images pulled in step 2 visible.
+# This will make the images pulled in step 1 visible.
 # $ docker exec cyber-dojo bash -c /var/www/cyber-dojo/caches/refresh_all.sh
 #
-# 7. Find it's IP address on MacOSX Docker-Quickstart-Terminal
+# 5. Find it's IP address on MacOSX Docker-Quickstart-Terminal
 # ------------------------------------------------------------
 # $ docker-machine ip default
 
@@ -89,7 +89,6 @@ RUN a2ensite cyber-dojo
 RUN a2dissite 000-default
 
 RUN gpasswd -a www-data users
-RUN usermod -s /bin/bash www-data
 
 ENV CYBER_DOJO_RUNNER_CLASS DockerDataContainerRunner
 CMD ["/usr/sbin/apache2ctl", "-DFOREGROUND" ]
