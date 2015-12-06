@@ -4,7 +4,7 @@ has its own folder with its own _docker_context sub-folder
 which contains the Dockerfile for creating the language's
 base docker image. For example:
   languages/Go/_docker_context/Dockerfile
-is used to script the creation of the Go docker images.
+is used to script the creation of the Go docker image.
 
 Each language+test has its own language sub-folder
 which in turn has its own _docker_context sub-folder
@@ -18,7 +18,7 @@ contains nothing except a FROM command. Viz, I could use
 the language's base docker-image. But I do it anyway for
 regularity.
 
-New docker images are pushed (by me) to their cyberdojofoundation hub
+New docker images are pushed to their cyberdojofoundation hub
 https://hub.docker.com/u/cyberdojofoundation/
 as follows
 $ docker login
