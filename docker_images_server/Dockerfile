@@ -4,23 +4,23 @@ MAINTAINER Mike Long <mike@praqma.com>
 # Instructions for using this Dockerfile to create a cyber-dojo
 # server inside a docker container.
 #
-# Setup the katas/ folder on the host
-# -----------------------------------
+# 1. Setup the katas/ folder on the host
+# --------------------------------------
 # $ sudo mkdir -p /var/www/cyber-dojo/katas/
 # $ sudo chmod g+s /var/www/cyber-dojo/katas/
 # $ sudo chown -R 33:33 /var/www/cyber-dojo/katas/
 #
-# Pull the language images you want
-# ---------------------------------
+# 2. Pull the language+test images you want
+# -----------------------------------------
 # $ docker pull cyberdojofoundation/gcc_assert
 # $ docker pull ...
 #
-# Build the image from this Dockerfile
-# ------------------------------------
+# 3. Build the image from this Dockerfile
+# ---------------------------------------
 # $ docker build -t cyberdojofoundation/server:1.0 .
 #
-# Run the image
-# -------------
+# 4. Run the image
+# ----------------
 # This needs a data-container for katas/
 # See docker_images_katas folder.
 #
@@ -31,15 +31,15 @@ MAINTAINER Mike Long <mike@praqma.com>
 #              --name=cyber-dojo \
 #              -p 80:80 -p 443:443 cyberdojofoundation/server:1.0
 #
-# Refresh the cache in the container
-# ----------------------------------
-# $ docker exec -ti cyber-dojo bash
-# $ ./cyber-dojo/caches/refresh_all.sh
-# $ exit
+# 6. Refresh the caches inside the container
+# ------------------------------------------
+# This will make the images pulled in step 2 visible.
+# $ docker exec cyber-dojo bash -c /var/www/cyber-dojo/caches/refresh_all.sh
 #
-# Find it's IP address on MacOSX Docker-Quickstart-Terminal
-# ---------------------------------------------------------
+# 7. Find it's IP address on MacOSX Docker-Quickstart-Terminal
+# ------------------------------------------------------------
 # $ docker-machine ip default
+
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
         apache2 curl git build-essential zlibc zlib1g-dev \
@@ -66,6 +66,9 @@ RUN sed 's/www.html/www\/cyber-dojo\/public/' < /etc/apache2/sites-available/000
 RUN cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/cyber-dojo-ssl.conf
 RUN sed 's/www.html/www\/cyber-dojo\/public/' < /etc/apache2/sites-available/default-ssl.conf > /etc/apache2/sites-available/cyber-dojo-ssl.conf
 
+RUN sed -i '/Mutex file/d' /etc/apache2/apache2.conf
+RUN passenger-install-apache2-module --auto
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Install cyber-dojo
 
@@ -81,9 +84,6 @@ RUN cd /var/www/ && chown -R www-data cyber-dojo
 RUN cd /var/www/ && chgrp -R www-data cyber-dojo
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-RUN sed -i '/Mutex file/d' /etc/apache2/apache2.conf
-RUN passenger-install-apache2-module --auto
 
 RUN a2enmod passenger
 RUN a2ensite cyber-dojo
