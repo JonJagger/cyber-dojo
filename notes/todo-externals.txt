@@ -1,0 +1,133 @@
+
+disk, one_self
+runner, locker, basher, gitter, starter
+class ExternalParentChain
+  def git
+    gitter(path)
+  end
+  ...
+end
+
+module ExternalObjects # mix-in
+
+  module_function
+
+  def runner(dir_name)
+    env_object('DockerRunner').new(self, dir_name)
+  end
+
+  def locker(dir_name)
+    env_object('HostFileLocker').new(self, dir_name)
+  end
+
+  def basher(dir_name)
+    env_object('Basher').new(self, dir_name)
+  end
+
+  def gitter(dir_name)
+    env_object('HostGitter').new(self, dir_name)
+  end
+
+  def starter(dir_name)
+    env_object('HostStarter').new(self, dir_name)
+  end
+
+  private
+
+  def env_object(default)
+    var = 'CYBER_DOJO_' + name_of(caller).upcase + '_CLASS'
+    Object.const_get(ENV[var] || default)
+  end
+
+  # would like to remove the defaults here
+  # and all ENV vars have to be set
+  # Then it would be
+  #
+  # def runner(path)
+  #   env_object.new(self, path)
+  # end
+  # def env_object
+  #   var = 'CYBER_DOJO_' + name_of(caller).upcase + '_CLASS'
+  #   Object.const_get(ENV[var])
+  # end
+
+end
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+module ExternalPaths # mix-in
+
+  module_function
+
+  def languages
+    @languages ||= Languages.new(self, env_dir_name)
+  end
+
+  def exercises
+    @exercises ||= Exercises.new(self, env_dir_name)
+  end
+
+  def katas...
+    @katas ||= Katas.new(self, env_dir_name)
+  end
+
+  def caches
+    @caches ||= Caches.new(self, env_dir_name)
+  end
+
+  private
+
+  def env_dir_name
+    var = 'CYBER_DOJO_' + name_of(caller).upcase + '_ROOT'
+    default = "#{root_dir_name}/#{name_of(caller)}"
+    dir_name = ENV[var] || default
+    dir_name + (dir_name.end_with?('/') ? '' : '/')
+  end
+
+  def root_dir_name
+    File.expand_path('../..', File.dirname(__FILE__))
+  end
+
+  # would like to remove the defaults here
+  # Then it would be
+  #
+  # def env_dir_name
+  #  var = 'CYBER_DOJO_' + name_of(caller).upcase + '_ROOT'
+  #  dir_name = ENV[var]
+  #  dir_name + (dir_name.end_with?('/') ? '' : '/')
+  # end
+  #
+  # and drop root_dir
+
+end
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+module NameOfCaller # mix-in
+
+  module_function
+
+  # This should have a dedicated test
+  # It assumes for example no leading/trailing whitespace
+
+  def name_of(caller)
+    # eg caller[0] == "dojo.rb:7:in `exercises'" -> exercises
+    /`(?<name>[^']*)/ =~ caller[0] && name
+  end
+
+end
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+class Dojo
+
+  include ExternalObjects
+  include ExternalPaths
+
+  private
+
+  include NameOfCaller
+  ...
+end
+
+

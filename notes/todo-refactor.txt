@@ -1,4 +1,3 @@
-
 --------------------------------------
 Definitely need to fix the bug that causes sorry page
 when you try to being up the setup page and there is
