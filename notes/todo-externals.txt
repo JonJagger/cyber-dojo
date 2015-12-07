@@ -88,7 +88,7 @@ module ExternalPaths # mix-in
     File.expand_path('../..', File.dirname(__FILE__))
   end
 
-  # would like to remove the defaults here
+  # would like to remove the defaults here too
   # Then it would be
   #
   # def env_dir_name
@@ -97,7 +97,7 @@ module ExternalPaths # mix-in
   #  dir_name + (dir_name.end_with?('/') ? '' : '/')
   # end
   #
-  # and drop root_dir
+  # and drop root_dir_name
 
 end
 

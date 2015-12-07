@@ -58,15 +58,16 @@ class HostDir
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # This needs to be separated out to a dedicated service.
+  # lock() needs to be separated out to a dedicated service.
   # When storage is via network then locking on a file like
-  # this is no good. It is used only in one place - to ensure
+  # this is no good. It is used only for one thing - to ensure
   # two laptops don't get the same avatar.
   #
-  # 1. app/models/Kata.rb start_avatar()
-  # 2. app/models/Avatars.rb started_avatars()
+  #   app/models/Kata.rb    start_avatar()
+  #   app/models/Avatars.rb started_avatars()
   #
   # I'm thinking I can instead use Google's networked object store.
+  # https://cloud.google.com/storage/docs/json_api/v1/objects/update
   # This has an api allowing optimistic locking.
   # One approach: save the full list of 64 avatar names into
   # an object associated with the dojo's id. Then start() retrieves

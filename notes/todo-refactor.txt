@@ -1,3 +1,16 @@
+
+--------------------------------------
+Dojo.rb currently does this
+  def disk    ; @disk     ||= env_object('HostDisk'    ).new        ; end
+I don't like this. The only readon for the ||= is
+because sometimes the env_object sets a Fake object
+and this, being in ram, needs to hold state between calls.
+Even this fails for scenarios crossing multiple GET/POST calls
+from the browser. Better to always use a proper path
+on the disk and to set this to point to a tmp ram-disk
+for fast unit-tests. This would remove the need for the
+/lib/disk_stub_cache.rb which is only used in tests
+and is set in tests/run_all.sh
 --------------------------------------
 Definitely need to fix the bug that causes sorry page
 when you try to being up the setup page and there is

@@ -63,9 +63,11 @@ class LanguageUpdater
 
   def installed_images_names
     output, _ = run('docker images 2>&1')
-    # use cyberdojo and not cyberdojofoundation to catch old image names
+    # Use cyberdojo and not cyberdojofoundation to catch old image names
     lines = output.split("\n").select { |line| line.start_with?('cyberdojo') }
     all = lines.collect { |line| line.split[0] }.sort.uniq
+    # Omit these which are for running cyber-dojo inside a docker container
+    # See docker_images_server and docker_images_katas folders.
     special = [
       "cyberdojofoundation/katas-data",
       "cyberdojofoundation/server"
