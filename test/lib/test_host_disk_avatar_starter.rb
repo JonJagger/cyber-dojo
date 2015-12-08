@@ -12,17 +12,14 @@ class HostDiskAvatarStarterTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '0A5632',
-  'start_avatar starts first named avatar when no avatar has yet started' do
+  'started_avatars is initially empty array' do
     assert_equal [], @starter.started_avatars
-    avatar_name = @starter.start_avatar(['lion','panda'])
-    assert_equal 'lion', avatar_name
-    assert_equal ['lion'], @starter.started_avatars
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '449306',
-  'start_avatar starts first unstarted avatar when avatars have started' do
+  'start_avatar(names) starts first unstarted avatar in names' do
     avatar_name = @starter.start_avatar(['lion','panda','salmon'])
     assert_equal 'lion', avatar_name
     assert_equal ['lion'], @starter.started_avatars
