@@ -12,6 +12,14 @@ module ExternalObjects # mix-in
 
   module_function
 
+  def starter(dir_name)
+    env_object('HostDiskAvatarStarter').new(self, dir_name)
+  end
+
+  def basher(dir_name)
+    env_object('Basher').new(self, dir_name)
+  end
+
   def runner(dir_name)
     env_object('DockerRunner').new(self, dir_name)
   end
@@ -20,16 +28,8 @@ module ExternalObjects # mix-in
     env_object('HostFileLocker').new(self, dir_name)
   end
 
-  def basher(dir_name)
-    env_object('Basher').new(self, dir_name)
-  end
-
   def gitter(dir_name)
     env_object('HostGitter').new(self, dir_name)
-  end
-
-  def starter(dir_name)
-    env_object('HostStarter').new(self, dir_name)
   end
 
   private

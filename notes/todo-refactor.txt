@@ -1,11 +1,8 @@
 
 --------------------------------------
-Make 'AvatarStarter' class
-#   app/models/Kata.rb    start_avatar()
-#   app/models/Avatars.rb started_avatars()
-Code start_avatar() to try to create a dir
-On Posix this is atomic.
-Code started_avatars() to simply to an [ls -d */]
+Add yin-yang icon to top left of enter page
+click it takes you back to home page but
+retains ID un URL if there is one.
 --------------------------------------
 Dojo.rb currently does this
   def disk    ; @disk     ||= env_object('HostDisk'    ).new        ; end
