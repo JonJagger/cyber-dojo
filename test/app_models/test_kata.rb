@@ -56,46 +56,9 @@ class KataTests < AppModelTestBase
        ' then it is not active ' +
        ' and its age is zero' do
     kata = make_kata
-    assert kata.exists?
+    assert dir_of(kata).exists?
     refute kata.active?
     assert_equal 0, kata.age
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test '9ECF8D',
-  'start_avatar puts started avatars name into katas started_avatars.json file' do
-    kata = make_kata
-    kata.start_avatar(['hippo'])
-    started = dir_of(kata).read_json(started_avatars_filename)
-    assert_equal ['hippo'], started
-    kata.start_avatar(['lion'])
-    started = dir_of(kata).read_json(started_avatars_filename)
-    assert_equal %w(hippo lion), started.sort
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test '9A1C97',
-    'start_avatar on old dojo that has no started_avatars.json file' +
-       ' creates started_avatars.json' do
-    kata = make_kata
-    animals = %w(lion hippo cheetah)
-    animals.size.times { kata.start_avatar(animals) }
-    started = dir_of(kata).read_json(started_avatars_filename)
-    assert_equal animals.sort, started.sort
-
-    # now delete started_avatars.json to simulate old dojo
-    # with started avatars and no started_avatars.json file
-    File.delete(kata.path + started_avatars_filename)
-    refute dir_of(kata).exists?(started_avatars_filename)
-
-    avatar = kata.start_avatar(%w(gorilla))
-    refute_nil avatar
-    assert dir_of(kata).exists?(started_avatars_filename)
-    expected = %w(lion hippo cheetah gorilla).sort
-    actual = dir_of(kata).read_json(started_avatars_filename).sort
-    assert_equal expected, actual
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -118,6 +81,7 @@ class KataTests < AppModelTestBase
        ' then kata is active ' +
        ' and age is from earliest traffic-light to now' do
     kata = make_kata
+    refute_nil kata.path
     hippo = kata.start_avatar(['hippo'])
     lion = kata.start_avatar(['lion'])
     first =
@@ -126,7 +90,6 @@ class KataTests < AppModelTestBase
         'time'   => [2014, 2, 15, 8, 54, 6],
         'number' => 1
       }
-
     second =
       {
         'colour' => 'green',
@@ -226,7 +189,6 @@ class KataTests < AppModelTestBase
 
   test '08141A',
   'start_avatar succeeds once for each avatar name then fails' do
-    set_git_class 'GitSpy'
     kata = make_kata
     created = []
     Avatars.names.length.times do
@@ -237,14 +199,6 @@ class KataTests < AppModelTestBase
     assert_equal Avatars.names.sort, created.collect(&:name).sort
     avatar = kata.start_avatar
     assert_nil avatar
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  private
-
-  def started_avatars_filename
-    'started_avatars.json'
   end
 
 end

@@ -7,7 +7,7 @@ class KataControllerTest  < AppControllerTestBase
   test '9390F6',
   'edit and then run-tests' do
     create_kata('C (gcc), assert')
-    @avatar = enter
+    @avatar = start
     kata_edit
     run_tests
     change_file('hiker.h', 'syntax-error')
@@ -21,7 +21,7 @@ class KataControllerTest  < AppControllerTestBase
     ' and these changes are made to the visible_files parameter too' +
     ' so they also occur in the manifest file' do
     create_kata('C (gcc), assert')
-    @avatar = enter
+    @avatar = start
     kata_edit
     run_tests
     change_file(makefile, makefile_with_leading_spaces)
@@ -36,7 +36,7 @@ class KataControllerTest  < AppControllerTestBase
     ' and these changes are made to the visible_files parameter too' +
     ' so they also occur in the manifest file' do
     create_kata('C (gcc), assert')
-    @avatar = enter
+    @avatar = start
     delete_file(makefile)
     run_tests
     new_file(makefile, makefile_with_leading_spaces)

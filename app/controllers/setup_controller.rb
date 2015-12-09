@@ -16,13 +16,11 @@ class SetupController < ApplicationController
     language_name = params['language']
         test_name = params['test'    ]
     exercise_name = params['exercise']
-    id = unique_id
-    now = time_now
-    one_self_created(language_name, test_name, exercise_name, id, now)
     language = languages[language_name + '-' + test_name]
     exercise = exercises[exercise_name]
-    katas.create_kata(language, exercise, id, now)
-    render json: { id: id }
+    kata = katas.create_kata(language, exercise)
+    one_self_created(language_name, test_name, exercise_name, kata.id, time_now)
+    render json: { id: kata.id }
   end
 
   private
@@ -30,9 +28,8 @@ class SetupController < ApplicationController
   include SetupChooser
   include SetupWorker
   include TimeNow
-  include UniqueId
 
-  def one_self_created(language_name,test_name,exercise_name,id,now)
+  def one_self_created(language_name, test_name, exercise_name, id, now)
     latitude   = Float(params['latitude'  ].to_s) rescue ''
     longtitude = Float(params['longtitude'].to_s) rescue ''
     hash = {

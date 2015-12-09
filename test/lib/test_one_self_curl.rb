@@ -2,41 +2,20 @@
 
 require_relative './lib_test_base'
 
-class BackgroundProcessSpy
-  def initialize
-    @processes_started = []
-  end
-
-  attr_reader :processes_started
-
-  def start(command)
-    @processes_started << command
-  end
-end
-
 class OneSelfCurlTests < LibTestBase
 
   def setup
     super
-    set_disk_class     'DiskStub'
-    set_git_class      'GitSpy'
+    set_shell_class    'HostShellMock'
+  end
+
+  def teardown
+    super
+    shell.teardown
   end
 
   test '6B2BB0',
   'kata created' do
-    processes = BackgroundProcessSpy.new
-    one_self = OneSelfCurl.new(disk, processes)
-    hash = {
-      :now           => [2015, 9, 11, 18, 28, 14],
-      :kata_id       => "F1A4B187E7",
-      :exercise_name => "Fizz_Buzz",
-      :language_name => "C (gcc)",
-      :test_name     => "assert",
-      :latitude      => '51.0190',
-      :longtitude    => '3.1000'
-    }
-
-    one_self.created(hash)
 
     expected_command =
       "curl " +
@@ -62,12 +41,18 @@ class OneSelfCurlTests < LibTestBase
       "' " +
       "https://api.1self.co/v1/streams/GSYZNQSYANLMWEEH/events"
 
-    assert_equal 1, processes.processes_started.length,
-      'Incorrect number of processes started'
+    shell.mock_daemon_exec(expected_command)
 
-    actual_command = processes.processes_started[0]
-    assert_equal expected_command, actual_command,
-      'Incorrect curl process started'
+    one_self.created({
+        :now           => [2015, 9, 11, 18, 28, 14],
+        :kata_id       => "F1A4B187E7",
+        :exercise_name => "Fizz_Buzz",
+        :language_name => "C (gcc)",
+        :test_name     => "assert",
+        :latitude      => '51.0190',
+        :longtitude    => '3.1000'
+      })
+
   end
 
 end

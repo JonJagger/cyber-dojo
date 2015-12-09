@@ -1,6 +1,7 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative './app_helpers_test_base'
+require_relative './../app_models/delta_maker'
 
 class TipTests < AppHelpersTestBase
 
@@ -60,63 +61,25 @@ class TipTests < AppHelpersTestBase
 
   test 'BDAD52',
   'traffic light tip' do
-    set_git_class    'GitSpy'
     kata = make_kata
     lion = kata.start_avatar(['lion'])
+    maker = DeltaMaker.new(lion)
+
+    maker.stub_colour(:red)
+    maker.run_test
+
+    filename = 'hiker.c'
+    assert maker.file?(filename)
+    content = maker.content(filename)
+    refute_nil content
+    maker.change_file(filename, content.sub('9', '7'))
+    maker.stub_colour(:green)
+    maker.run_test
 
     was_tag = 1
     was_tag_colour = 'red'
     now_tag = 2
     now_tag_colour = 'green'
-    dir_of(lion).make
-    dir_of(lion).write_json('increments.json',
-      [
-        { 'colour' => was_tag_colour,
-          'number' => was_tag,
-          'time'   => [2015, 2, 5, 9, 28, 21]
-        },
-        { 'colour' => now_tag_colour,
-          'number' => now_tag,
-          'time'   => [2015, 2, 5, 9, 29, 15]
-        }
-      ]
-    )
-
-    options =
-      '--ignore-space-at-eol ' +
-      '--find-copies-harder ' +
-      "#{was_tag} #{now_tag} " +
-      'sandbox'
-
-    stub =
-    [
-      "diff --git a/sandbox/hiker.rb b/sandbox/hiker.rb",
-      "index 16c4af7..266c27e 100644",
-      "--- a/sandbox/hiker.rb",
-      "+++ b/sandbox/hiker.rb",
-      "@@ -1,4 +1,4 @@",
-      " ",
-      " def answer",
-      "-  6 * 7sd",
-      "+  6 * 7",
-      " end"
-    ].join("\n")
-
-    git.spy(lion.path, 'diff', options, stub)
-
-    stub_manifest = JSON.unparse(
-    { "hiker.rb" =>
-        [
-          '',
-          ' def answer',
-          '   6 * 7sd',
-          ' end',
-          ''
-        ].join("\n")
-    })
-
-    git.spy(lion.path, 'show', "#{now_tag}:manifest.json", stub_manifest)
-
     expected =
       "Click to review lion's " +
       "<span class='#{was_tag_colour}'>#{was_tag}</span> " +
@@ -124,9 +87,7 @@ class TipTests < AppHelpersTestBase
       "<span class='#{now_tag_colour}'>#{now_tag}</span> diff" +
       "<div>&bull; 1 added line</div>" +
       "<div>&bull; 1 deleted line</div>"
-
     actual = traffic_light_tip_html(lion, was_tag, now_tag)
-
     assert_equal expected, actual
   end
 

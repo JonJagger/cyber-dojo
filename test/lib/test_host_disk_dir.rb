@@ -4,16 +4,18 @@ require_relative './lib_test_base'
 
 class HostDiskDirTests < LibTestBase
 
-  def disk
-    @disk ||= HostDisk.new
-  end
-
-  def path
-    tmp_root
+  def setup
+    super
+    assert_equal 'HostDisk', disk.class.name
+    dir.make
   end
 
   def dir
     disk[path]
+  end
+
+  def path
+    tmp_root + 'host_disk_dir_tests/'
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -37,7 +39,6 @@ class HostDiskDirTests < LibTestBase
 
   test '61FCE8',
   'disk[path].exists?(filename) false when file does not exist, true when it does' do
-    dir.make
     refute dir.exists?(filename = 'hello.txt')
     dir.write(filename, 'content')
     assert dir.exists?(filename)
@@ -54,22 +55,22 @@ class HostDiskDirTests < LibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '1C4A9F',
-    'write(filename,s) raises RuntimeError when s is not a string' do
+    'write(filename, content) raises RuntimeError when content is not a string' do
     assert_raises(RuntimeError) { dir.write('any.txt', Object.new) }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '8F329F',
-  'write(filename,s) succeeds when s is a string' do
-    s = 'hello world'
-    check_save_file('manifest.rb', s, s)
+  'write(filename, content) succeeds when content is a string' do
+    content = 'hello world'
+    check_save_file('manifest.rb', content, content)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '2BAC6D',
-  'write_json(filename,s) raises RuntimeError when filename does not end in .json' do
+  'write_json(filename, content) raises RuntimeError when filename does not end in .json' do
     assert_raises(RuntimeError) { dir.write_json('file.txt', 'any') }
   end
 
@@ -83,22 +84,22 @@ class HostDiskDirTests < LibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'F3B2F4',
-  'write_json(filename,o) saves JSON.unparse(o) in filename' do
+  'write_json(filename, object) saves JSON.unparse(object) in filename' do
     dir.write_json(filename = 'object.json', { :a => 1, :b => 2 })
     json = dir.read(filename)
-    o = JSON.parse(json)
-    assert_equal 1, o['a']
-    assert_equal 2, o['b']
+    object = JSON.parse(json)
+    assert_equal 1, object['a']
+    assert_equal 2, object['b']
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B9939D',
-  'o=read_json(filename) after write_json(filename,o) round-strips ok' do
+  'object = read_json(filename) after write_json(filename, object) round-strips ok' do
     dir.write_json(filename = 'object.json', { :a => 1, :b => 2 })
-    o = dir.read_json(filename)
-    assert_equal 1, o['a']
-    assert_equal 2, o['b']
+    object = dir.read_json(filename)
+    assert_equal 1, object['a']
+    assert_equal 2, object['b']
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -118,10 +119,11 @@ class HostDiskDirTests < LibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '51EE30',
-  'save filename longer than but ends in makefile is not auto-tabbed' do
+  'save filename ending in makefile is not auto-tabbed' do
     content = '    abc'
-    expected_content = content
-    check_save_file('smakefile', content, expected_content)
+    expected_content = content # leading spaces not converted to tabs
+    ends_in_makefile = 'smakefile'
+    check_save_file(ends_in_makefile, content, expected_content)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -165,7 +167,6 @@ class HostDiskDirTests < LibTestBase
 
   test '91E408',
   'disk[path].each_dir does not give filenames' do
-    disk[path].make
     disk[path].write('beta.txt', 'content')
     disk[path + 'alpha'].make
     disk[path + 'alpha'].write('a.txt', 'a')
@@ -221,73 +222,6 @@ class HostDiskDirTests < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '7B7E1A',
-    'disk.lock(path) when path does not exist:' +
-      ' throws exception,' +
-      ' does not execute block,' +
-      ' result is nil' do
-    block_run = false
-    exception_thrown = false
-    begin
-      result = disk['path_does_not_exist'].lock { block_run = true }
-    rescue StandardError => e
-      assert_equal 'Errno::ENOENT', e.class.name
-      exception_thrown = true
-    end
-    assert exception_thrown
-    refute block_run
-    assert_nil result
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'BE0ED2',
-    'when dir.lock is obtained block is executed' +
-       ' and result is result of block' do
-    block_run = false
-    result = dir.lock { block_run = true; 'Hello' }
-    assert block_run, 'block_run'
-    assert_equal 'Hello', result
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test '9E019E',
-  'outer dir.lock is blocking so inner lock blocks' do
-    outer_run = false
-    inner_run = false
-    dir.lock do
-      outer_run = true
-      inner_thread = Thread.new { dir.lock { inner_run = true } }
-      max_wait = 1.0 / 50.0
-      inner_thread.join(max_wait)
-      Thread.kill(inner_thread)
-    end
-    assert outer_run
-    refute inner_run
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test '0B1E7A',
-    'holding lock on parent dir does not prevent' +
-       'acquisition of lock on child dir' do
-    parent_path = path + 'parent' + disk.dir_separator
-    child_path = parent_path + 'child' + disk.dir_separator
-    `mkdir #{parent_path}`
-    `mkdir #{child_path}`
-    parent_run = false
-    child_run = false
-    disk[parent_path].lock do
-      parent_run = true
-      disk[child_path].lock { child_run = true }
-    end
-    assert parent_run
-    assert child_run
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   def check_save_file(filename, content, expected_content, executable = false)
     dir.write(filename, content)
     pathed_filename = path + filename
@@ -296,16 +230,6 @@ class HostDiskDirTests < LibTestBase
     assert_equal expected_content, IO.read(pathed_filename)
     assert_equal executable, File.executable?(pathed_filename),
                             'File.executable?(pathed_filename)'
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def split(id)
-    id[0..1] + '/' + id[2..-1]
-  end
-
-  def make_dir_with_split_id(id)
-    disk[path + split(id)].make
   end
 
 end

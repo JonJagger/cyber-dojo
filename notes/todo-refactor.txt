@@ -1,20 +1,86 @@
 
 --------------------------------------
+put admin_scripts/refresh_all.sh tests of whether
+docker-machine, docker are installed into the
+respective runners.
+Then make default runner be dependent on what is installed.
+--------------------------------------
+can I replace rsync with docker-machine scp?
+and use a sticky bit on the nodes /tmp folder?
+--------------------------------------
+would be a lot better if code was auto-caching.
+but does this require a lock? I guess yes,
+but only if the cache does not already exist.
+Worth also thinking about caches if front end
+has proper horizontal scaling.
+--------------------------------------
+If I wanted to run the tests in parallel then I'd need
+to embed the test's hex-id into the tmp folder...
+--------------------------------------
+one_self_dummy should be in test/lib not lib?
+--------------------------------------
+Use http://www.shellcheck.net/
+to check .sh files
+--------------------------------------
+I think doing the one_self.created call is slowing down
+the dojo creation. I don't think the background-process
+is really detached. Use new shell.daemon_exec
+--------------------------------------
+unique_id is only used once, put it directly
+inside katas and use shell.exec() in it.
+--------------------------------------
+Hmmmm suppose you are rejoining a
+kata and the dojo has uninstalled the language...
+Unlikely and remember cyber-dojo is aimed at short-lived sessions
+--------------------------------------
+perhaps add
+  ExternalRepo
+which does git_repo=git[path] addition in the same way
+  ExternalDir
+does disk path addition.
+Then make HostGit simply have ctor,parent,[] the same as HostDisk
+Then put all HostGit commands inside HostRepo
+have host_git_repo.rb file.
+
+Drop dir delegators
+Instead of writing
+   read_json(filename)
+do
+   dir.read_json(filename)
+
+This helps readability since there is not locally named read_json
+but there is a visible [include ExternalDir] to see dir.
+Coming round to the idea of hanging accessors off dir.
+Eg
+   dir.git.show(...)
+   dir.shell.exec(...)
+   dir.runner.run(...)
+   dir.log?
+   dir.starter?
+
+--------------------------------------
+rework HostRunner so it also uses a .sh file
+which it executes via the shell?
+--------------------------------------
+progress? button's dialog should be titled
+progress? not progress (it's missing the ?)
+--------------------------------------
+split out defaults  for external_root into hash table
+(like external_object) so tests clearly cover
+their functionality too.
+--------------------------------------
 Add yin-yang icon to top left of enter page
 click it takes you back to home page but
 retains ID un URL if there is one.
 --------------------------------------
-Dojo.rb currently does this
-  def disk    ; @disk     ||= env_object('HostDisk'    ).new        ; end
-I don't like this. The only readon for the ||= is
-because sometimes the env_object sets a Fake object
-and this, being in ram, needs to hold state between calls.
-Even this fails for scenarios crossing multiple GET/POST calls
-from the browser. Better to always use a proper path
-on the disk and to set this to point to a tmp ram-disk
-for fast unit-tests. This would remove the need for the
-/lib/disk_stub_cache.rb which is only used in tests
-and is set in tests/run_all.sh
+HostGit can be dropped as an external I think
+as it only delegates to HostShell now.
+--------------------------------------
+If I move all disk based doubles to just use
+real disk (maybe in ram) then I can get rid of
+disk-dir distinction and externals will all
+have the same pattern. And they will all be
+stateless and I can drop the @obj ||= from Dojo.
 --------------------------------------
 Definitely need to fix the bug that causes sorry page
 when you try to being up the setup page and there is

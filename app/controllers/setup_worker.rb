@@ -4,8 +4,7 @@ module SetupWorker # mix-in
   module_function
 
   def read_languages
-    runnable = languages.select{ |language| language.runnable? }
-    runnable.map{ |language| language.display_name }.sort
+    runner.runnable_languages.map { |language| language.display_name }.sort
   end
 
   def read_exercises

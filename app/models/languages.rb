@@ -8,11 +8,17 @@ class Languages
   end
 
   def initialize(dojo, path)
-    @parent = dojo
+    @dojo = dojo
     @path = path
   end
 
+  #queries
+
   attr_reader :path
+
+  def parent
+    @dojo
+  end
 
   def each(&block)
     languages.values.each(&block)
@@ -21,6 +27,8 @@ class Languages
   def [](name)
     languages[commad(name)] || languages[renamed(name)]
   end
+
+  # modifiers
 
   def refresh_cache
     cache = {}
@@ -40,7 +48,8 @@ class Languages
 
   private
 
-  include ExternalParentChain
+  include ExternalParentChainer
+  include ExternalDir
   include LanguagesRename
 
   def languages
@@ -64,10 +73,6 @@ class Languages
 
   def commad(name)
     name.split('-').join(', ')
-  end
-
-  def caches
-    @parent.caches
   end
 
 end

@@ -1,55 +1,72 @@
-# See comments at end of file
 # See cyber-dojo-model.pdf
 
 class Dojo
 
-  def languages; @languages ||= Languages.new(self, env_root); end
-  def exercises; @exercises ||= Exercises.new(self, env_root); end
-  def katas    ; @katas     ||=     Katas.new(self, env_root); end
-  def caches   ; @caches    ||=    Caches.new(self, env_root); end
+  def languages; @languages ||= Languages.new(self, external_root); end
+  def exercises; @exercises ||= Exercises.new(self, external_root); end
+  def    caches; @caches    ||=    Caches.new(self, external_root); end
+  def     katas; @katas     ||=     Katas.new(self, external_root); end
 
-  def runner  ; @runner   ||= env_object('DockerRunner').new(caches); end
-  def disk    ; @disk     ||= env_object('HostDisk'    ).new        ; end
-  def git     ; @git      ||= env_object('HostGit'     ).new        ; end
-  def one_self; @one_self ||= env_object('OneSelfCurl' ).new(disk)  ; end
+  def one_self; @one_self ||= external_object; end
+  def  starter;  @starter ||= external_object; end
+  def   runner;   @runner ||= external_object; end
+  def    shell;    @shell ||= external_object; end
+  def     disk;     @disk ||= external_object; end
+  def      log;      @log ||= external_object; end
+  def      git;      @git ||= external_object; end
 
   private
 
-  def env_root
+  include NameOfCaller
+
+  def external_root
     var = 'CYBER_DOJO_' + name_of(caller).upcase + '_ROOT'
     default = "#{root_dir}/#{name_of(caller)}"
     root = ENV[var] || default
     root + (root.end_with?('/') ? '' : '/')
   end
 
-  def env_object(default)
-    var = 'CYBER_DOJO_' + name_of(caller).upcase + '_CLASS'
-    Object.const_get(ENV[var] || default)
-  end
-
-  def name_of(caller)
-    # eg caller[0] == "dojo.rb:7:in `exercises'"
-    /`(?<name>[^']*)/ =~ caller[0] && name
+  def external_object
+    key = name_of(caller)
+    var = 'CYBER_DOJO_' + key.upcase + '_CLASS'
+    Object.const_get(ENV[var] || object_defaults[key]).new(self)
   end
 
   def root_dir
     File.expand_path('../..', File.dirname(__FILE__))
   end
 
+  def object_defaults
+    @defaults ||= {
+      'one_self' => 'OneSelfCurl',
+      'starter'  => 'HostDiskAvatarStarter',
+      'runner'   => 'DockerRunner',
+      'shell'    => 'HostShell',
+      'disk'     => 'HostDisk',
+      'log'      => 'HostLog',
+      'git'      => 'HostGit'
+    }
+  end
+
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# External paths/class-names can be set via environment variables.
+# External paths can be set via these environment variables.
 #
 # CYBER_DOJO_LANGUAGES_ROOT
 # CYBER_DOJO_EXERCISES_ROOT
 # CYBER_DOJO_KATAS_ROOT
 # CYBER_DOJO_CACHES_ROOT
 #
-# CYBER_DOJO_RUNNER_CLASS
-# CYBER_DOJO_DISK_CLASS
-# CYBER_DOJO_GIT_CLASS
+# External objects can be set via these environment variables.
+#
 # CYBER_DOJO_ONE_SELF_CLASS
+# CYBER_DOJO_STARTER_CLASS
+# CYBER_DOJO_RUNNER_CLASS
+# CYBER_DOJO_SHELL_CLASS
+# CYBER_DOJO_DISK_CLASS
+# CYBER_DOJO_LOG_CLASS
+# CYBER_DOJO_GIT_CLASS
 #
 # The main reason for this arrangement is testability.
 # For example, I can run controller tests by setting the

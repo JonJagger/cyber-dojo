@@ -9,44 +9,15 @@ class DockerMachineRunnerTests < LibTestBase
 
   def setup
     super
-    set_katas_root     tmp_root
-    set_disk_class     'HostDisk'
-    set_git_class      'GitSpy'
+    set_katas_root     tmp_root + 'katas/'
+    set_shell_class    'HostShellMock'
     set_one_self_class 'OneSelfDummy'
-    @bash = BashStub.new
+    set_runner_class   'DockerMachineRunner'
   end
 
-  attr_reader :bash
-
-  def runner
-    @runner ||= DockerMachineRunner.new(caches, bash)
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def stub_docker_machine_refresh_cache
-    docker_machine_ls = [ 'node-00', 'node-01' ].join("\n")
-    bash.stub(docker_machine_ls, success)
-    bash.stub(docker_images_python_pytest, success)                   # node-00
-    bash.stub(docker_images_python_pytest_and_ruby_testunit, success) # node-01
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def copy_caches_to_tmp_and_start_deer
-    real_caches_root = get_caches_root
-    set_caches_root    tmp_root + 'caches'
-    `mkdir -p #{get_caches_root}`
-    `cp #{real_caches_root}/languages_cache.json #{get_caches_root}`
-    `cp #{real_caches_root}/exercises_cache.json #{get_caches_root}`
-    assert_equal 'HostDisk', disk.class.name
-    assert katas.path.include?('tmp'), 'dont create kata in real katas folder'
-    assert caches.path.include?('tmp'), 'dont create caches in real caches folder'
-    kata = make_kata(unique_id, 'Python-py.test')
-    @deer = kata.start_avatar(['deer'])
-    stub_docker_machine_refresh_cache
-    runner.refresh_cache
-    bash.reset
+  def teardown
+    shell.teardown
+    super
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -54,80 +25,146 @@ class DockerMachineRunnerTests < LibTestBase
   test '1E3108',
   'refresh_cache() executes' +
     ' [docker-machine ls] and then' +
-    ' [docker-machine ssh] for each node' +
-    ' and creates new cache-file in caches/ which determines runnability' do
-    set_disk_class('DiskFake')
-    assert_equal [], bash.spied
-    stub_docker_machine_refresh_cache
-    refute disk[caches.path].exists?(DockerMachineRunner.cache_filename)
-    # when
-    runner.refresh_cache
-    # then
-    assert disk[caches.path].exists?(DockerMachineRunner.cache_filename)
-    assert_equal 'sudo -u cyber-dojo docker-machine ls -q',                             bash.spied[0]
-    assert_equal 'sudo -u cyber-dojo docker-machine ssh node-00 -- sudo docker images', bash.spied[1]
-    assert_equal 'sudo -u cyber-dojo docker-machine ssh node-01 -- sudo docker images', bash.spied[2]
-    assert runner.runnable?("#{cdf}/python-3.3.5_pytest")
-    refute runner.runnable?("#{cdf}/not-installed")
-  end
+    ' [docker-machine ssh sudo docker images] for each node' +
+    ' and creates new cache-file in caches/ which determines runnable languages' do
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'F73CE7',
-  'run() passes correct parameters to dedicated shell script' do
-    copy_caches_to_tmp_and_start_deer
-    #kata = make_kata(unique_id, 'Python-py.test')
-    script = lambda do |node|
-      "sudo -u cyber-dojo #{root_dir}/lib/docker_machine_runner.sh" +
-      " #{node}" +
-      " #{@deer.sandbox.path}" +
-      " #{@deer.kata.language.image_name}" +
-      " #{max_seconds}"
-    end
-    # when
-    counts = { 'node-00' => 0, 'node-01' => 0 }
-    25.times do |n|
-      bash.reset
-      bash.stub('output', success)
-      runner.run(@deer.sandbox, max_seconds)
-      call = bash.spied[0]
-      counts['node-00'] += 1 if call == script.call('node-00')
-      counts['node-01'] += 1 if call == script.call('node-01')
-    end
-    # then
-    assert counts['node-00'] > 0, counts.inspect
-    assert counts['node-01'] > 0, counts.inspect
+    mock_docker_machine_refresh_cache(['node-00', 'node-01'])
+    expected = ['Python, py.test', 'Ruby, Test::Unit']
+    actual = runner.runnable_languages.map { |language| language.display_name }.sort
+    assert_equal expected, actual
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '2D792D',
   'output is left untouched when run() does not time-out' do
-    copy_caches_to_tmp_and_start_deer
-    bash.stub('syntax-error-line-1', success)
-    output = runner.run(@deer.sandbox, max_seconds)
-    assert_equal 'syntax-error-line-1', output
+    syntax_error = 'syntax-error-line-1'
+    mock_run_assert('node-00', syntax_error, syntax_error, success)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '678D62',
   'output is not truncated and no message is added when run() does not time-out' do
-    copy_caches_to_tmp_and_start_deer
-    big = '.' * 75*1024
-    bash.stub(big, success)
-    output = runner.run(@deer.sandbox, max_seconds)
-    assert_equal big, output
+    massive_output = '.' * 75*1024
+    mock_run_assert('node-00', massive_output, massive_output, success)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '799891',
   'output is replaced by timed-out message when run() times out' do
-    copy_caches_to_tmp_and_start_deer
-    bash.stub('ach-so-it-timed-out', times_out)
-    output = runner.run(@deer.sandbox, max_seconds)
+    output = mock_run('node-00', 'ach-so-it-timed-out', times_out)
     assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds.")
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  private
+
+  def mock_run_assert(node, expected_output, mock_output, mock_exit_status)
+    assert_equal expected_output, mock_run(node, mock_output, mock_exit_status)
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def mock_run(node, mock_output, mock_exit_status)
+    mock_docker_machine_refresh_cache([node])
+    kata = make_kata(unique_id, 'Python-py.test')
+    lion = kata.start_avatar(['lion'])
+
+    args = [
+      node,
+      lion.sandbox.path,
+      lion.kata.language.image_name,
+      max_seconds
+    ].join(space = ' ')
+
+    shell.mock_cd_exec(
+      runner.path,
+      ["sudo -u cyber-dojo ./docker_machine_runner.sh #{args}"],
+      mock_output,
+      mock_exit_status
+    )
+
+    runner.run(lion.sandbox, max_seconds)
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def mock_docker_machine_refresh_cache(nodes)
+    real_caches_root = get_caches_root
+    set_caches_root(tmp_root + 'caches/')
+    disk[caches.path].make
+    # We have reset caches_root so we don't overwrite the true runner's cache
+    # But we still need to be able to read the languages and exercises caches.
+    `cp #{real_caches_root}/#{Languages.cache_filename} #{caches.path}`
+    `cp #{real_caches_root}/#{Exercises.cache_filename} #{caches.path}`
+
+    shell.mock_exec(
+      ['sudo -u cyber-dojo docker-machine ls -q'],
+      nodes.join("\n"),
+      success
+    )
+    nodes.each do |node|
+      shell.mock_exec(
+        ["sudo -u cyber-dojo docker-machine ssh #{node} -- sudo docker images"],
+        docker_images_python_pytest_and_ruby_testunit,
+        success
+      )
+    end
+
+    refute disk[caches.path].exists?(DockerMachineRunner.cache_filename), "!cache exists"
+    runner.refresh_cache
+    assert disk[caches.path].exists?(DockerMachineRunner.cache_filename), "cache exists"
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+=begin
+
+  # TODO: restore
+
+  test 'F73CE7',
+  'run() chooses a node at random' do
+
+    kata = make_kata(unique_id, 'Python-py.test')
+    deer = kata.start_avatar(['deer'])
+
+    path = tmp_root + 'caches/'
+    set_caches_root(path)
+    disk[path].make
+    mock_docker_machine_refresh_cache
+    runner.refresh_cache
+
+    script = lambda do |node|
+      args = [
+        node,
+        deer.sandbox.path,
+        deer.kata.language.image_name,
+        max_seconds
+      ].join(space = ' ')
+
+      "cd #{runner.path} && sudo -u cyber-dojo ./docker_machine_runner.sh #{args}"
+    end
+    # when
+    ran_on = { 'node-00' => 0, 'node-01' => 0 }
+    25.times do |n|
+      bash.reset
+      bash.stub('output', success)
+      runner.run(deer.sandbox, max_seconds)
+      call = bash.spied[0]
+      # Hmmmm. Tricky to mock here. Could be either node. Better to spy?
+      # Or is this telling me I need to mock the random number generator!?
+      # Or should I switch to a round-robin implementation?
+      ran_on['node-00'] += 1 if call == script.call('node-00')
+      ran_on['node-01'] += 1 if call == script.call('node-01')
+    end
+    # then
+    assert ran_on['node-00'] > 0, ran_on.inspect
+    assert ran_on['node-01'] > 0, ran_on.inspect
+  end
+
+=end
 
 end

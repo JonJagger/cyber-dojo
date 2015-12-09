@@ -3,15 +3,23 @@
 class Language
 
   def initialize(languages, dir_name, test_dir_name, display_name = nil, image_name = nil)
-    @parent = languages
+    @languages = languages
     @dir_name = dir_name
     @test_dir_name = test_dir_name
     @display_name = display_name
     @image_name = image_name
   end
 
+  # queries
+
+  attr_reader :languages
+
+  def parent
+    languages
+  end
+
   def path
-    @parent.path + @dir_name + '/' + @test_dir_name + '/'
+    languages.path + @dir_name + '/' + @test_dir_name + '/'
   end
 
   # required manifest properties
@@ -75,17 +83,14 @@ class Language
     display_name.split(',').map(&:strip).join('-')
   end
 
-  def runnable?
-    runner.runnable?(image_name)
-  end
-
   def colour(output)
     OutputColour.of(unit_test_framework, output)
   end
 
   private
 
-  include ExternalParentChain
+  include ExternalParentChainer
+  include ExternalDir
   include ManifestProperty
 
   def manifest

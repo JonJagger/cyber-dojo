@@ -6,7 +6,7 @@ require_relative './delta_maker'
 class TagsTest < AppModelTestBase
 
   test 'A30AF3',
-    'tag zero exists after avatar is started' +
+    'tag zero exists after avatar is started ' +
        'and before first [test] is run ' +
        'and contains all visible files' do
     language = languages['C (clang)-assert']
@@ -19,15 +19,6 @@ class TagsTest < AppModelTestBase
     n = 0
     tags.each { n += 1 }
     assert_equal 1, n
-
-    stub_manifest = {
-      'output' => '',
-      'instructions' => exercise.instructions
-    }
-    language.visible_files.each do |filename, content|
-      stub_manifest[filename] = content
-    end
-    git.spy(avatar.path, 'show', '0:manifest.json', JSON.unparse(stub_manifest))
 
     visible_files = tags[0].visible_files
     filenames = ['hiker.h', 'hiker.c', 'instructions', 'cyber-dojo.sh', 'makefile', 'output']
@@ -42,7 +33,6 @@ class TagsTest < AppModelTestBase
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     assert_equal 1, lion.tags.length
-    runner.stub_output('xxxx')
     maker = DeltaMaker.new(lion)
     maker.run_test
     maker.run_test
@@ -60,7 +50,6 @@ class TagsTest < AppModelTestBase
   'tags[-n] duplicates Array[-n] behaviour' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
-    runner.stub_output('xxxx')
     maker = DeltaMaker.new(lion)
     maker.run_test
     maker.run_test

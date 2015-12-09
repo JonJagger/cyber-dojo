@@ -8,11 +8,17 @@ class Exercises
   end
 
   def initialize(dojo, path)
-    @parent = dojo
+    @dojo = dojo
     @path = path
   end
 
+  # queries
+
   attr_reader :path
+
+  def parent
+    @dojo
+  end
 
   def each(&block)
     exercises.values.each(&block)
@@ -33,7 +39,8 @@ class Exercises
 
   private
 
-  include ExternalParentChain
+  include ExternalParentChainer
+  include ExternalDir
 
   def exercises
     @exercises ||= read_cache
@@ -49,10 +56,6 @@ class Exercises
 
   def make_exercise(name, instructions = nil)
     Exercise.new(self, name, instructions)
-  end
-
-  def caches
-    @parent.caches
   end
 
 end

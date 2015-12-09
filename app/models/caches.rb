@@ -2,13 +2,20 @@
 class Caches
 
   def initialize(dojo, path)
-    @parent = dojo
+    @dojo = dojo
     @path = path
   end
 
   attr_reader :path
 
-  include ExternalParentChain
+  def parent
+    @dojo
+  end
+
+  private
+
+  include ExternalParentChainer
+  include ExternalDir
 
   send :public, :write_json, :read_json
 

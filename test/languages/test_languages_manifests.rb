@@ -5,23 +5,29 @@ require_relative './languages_test_base'
 class LanguagesManifestsTests < LanguagesTestBase
 
   test 'F6B9D6',
-  'no known flaws in Dockerfile of base language/' do
-    Dir.glob("#{root_path}languages/*/").sort.each do |dir|
-      @language = dir
-      assert dockerfile_exists_and_is_well_formed?(dir + 'Dockerfile')
-      assert build_docker_container_exists_and_is_well_formed?(dir + build_docker_container)
+  'no known flaws in Dockerfiles of each base language/' do
+    Dir.glob("#{languages.path}*/").sort.each do |dir|
+      check_Dockerfile(dir)
     end
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B892AA',
-  'no known flaws in Dockerfile and manifests of each language/test/' do
+  'no known flaws in Dockerfiles of each language/test/' do
     manifests.each do |filename|
-      folders = File.dirname(filename).split('/')[-2..-1]
-      assert_equal 2, folders.size
-      lang, test = folders
-      check_dockerfile_and_manifest("#{lang}-#{test}")
+      dir = File.dirname(filename)
+      check_Dockerfile(dir)
+    end
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '8B45E1',
+  'no known flaws in manifests of each language/test/' do
+    manifests.each do |filename|
+      dir = File.dirname(filename)
+      check_manifest(dir)
     end
   end
 
@@ -53,12 +59,16 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def check_dockerfile_and_manifest(language_name)
-    @language = language_name
+  def check_Dockerfile(dir)
+    @language = dir
+    assert Dockerfile_exists_and_is_well_formed?(dir)
+    assert build_docker_image_exists_and_is_well_formed?(dir)
+  end
 
-    assert dockerfile_exists_and_is_well_formed?
-    assert build_docker_container_exists_and_is_well_formed?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  def check_manifest(dir)
+    @language = dir
     assert manifest_file_exists?
     assert required_keys_exist?
     refute unknown_keys_exist?
@@ -346,9 +356,11 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def dockerfile_exists_and_is_well_formed?(dockerfile = language_dir + '/' + 'Dockerfile')
+  def Dockerfile_exists_and_is_well_formed?(dir)
+    dir += '/_docker_context/'
+    dockerfile = dir + 'Dockerfile'
     unless File.exists?(dockerfile)
-      message = "#{language_dir}/ dir has no Dockerfile"
+      message = "#{dir} dir has no Dockerfile"
       return false_puts_alert(message)
     end
     content = IO.read(dockerfile)
@@ -382,9 +394,11 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def build_docker_container_exists_and_is_well_formed?(filename = "#{language_dir}/#{build_docker_container}")
+  def build_docker_image_exists_and_is_well_formed?(dir)
+    dir += '/_docker_context/'
+    filename = dir + build_docker_image
     unless File.exists?(filename)
-      message = "#{language_dir}/ dir has no #{build_docker_container}"
+      message = "#{dir} dir has no #{build_docker_image}"
       return false_puts_alert(message)
     end
     content = IO.read(filename)
@@ -399,12 +413,12 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   private
 
-  def build_docker_container
-    'build-docker-container.sh'
+  def manifests
+    Dir.glob("#{languages.path}*/*/manifest.json").sort
   end
 
-  def manifests
-    Dir.glob("#{root_path}languages/*/*/manifest.json").sort
+  def build_docker_image
+    'build-docker-image.sh'
   end
 
   def display_name
@@ -431,11 +445,6 @@ class LanguagesManifestsTests < LanguagesTestBase
     manifest_property || []
   end
 
-  def manifest_property
-    property_name = /`(?<name>[^']*)/ =~ caller[0] && name
-    manifest[property_name]
-  end
-
   def manifest
     JSON.parse(IO.read(manifest_filename))
   end
@@ -445,15 +454,7 @@ class LanguagesManifestsTests < LanguagesTestBase
   end
 
   def language_dir
-    root_path + '/languages/' + language
-  end
-
-  def language
-    @language.split('-').join('/')
-  end
-
-  def root_path
-    File.expand_path('../..', File.dirname(__FILE__)) + '/'
+    @language
   end
 
   def false_puts_alert(message)
@@ -471,7 +472,7 @@ class LanguagesManifestsTests < LanguagesTestBase
   end
 
   def alert
-    "\n>>>>>>> #{language} <<<<<<<\n"
+    "\n>>>>>>> #{language_dir} <<<<<<<\n"
   end
 
   def false_dot
@@ -482,6 +483,11 @@ class LanguagesManifestsTests < LanguagesTestBase
   def true_dot
     print '.'
     true
+  end
+
+  def manifest_property
+    property_name = /`(?<name>[^']*)/ =~ caller[0] && name
+    manifest[property_name]
   end
 
 end

@@ -14,7 +14,10 @@ class ApplicationController < ActionController::Base
 
   def languages; dojo.languages; end
   def exercises; dojo.exercises; end
-  def katas    ; dojo.katas    ; end
+  def  one_self; dojo.one_self ; end
+  def    runner; dojo.runner   ; end
+  def     katas; dojo.katas    ; end
+  def      disk; dojo.disk     ; end
 
   def id         ; @id ||= katas.complete(params[:id]); end
   def kata       ; katas[id]           ; end
@@ -23,9 +26,5 @@ class ApplicationController < ActionController::Base
   def avatar     ; avatars[avatar_name]; end
   def was_tag    ; params[:was_tag]    ; end
   def now_tag    ; params[:now_tag]    ; end
-
-  def disk     ; dojo.disk    ; end
-  def git      ; dojo.git     ; end
-  def one_self ; dojo.one_self; end
 
 end

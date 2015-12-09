@@ -4,16 +4,19 @@
 
 class HostRunner
 
-  def initialize(_caches, bash = Bash.new)
-    @bash = bash
+  def initialize(_dojo)
   end
 
-  def runnable?(language)
-    true
+  # queries
+
+  def runnable_languages
+    languages.select { |language| runnable?(language.image_name) }
   end
+
+  # modifiers
 
   def run(sandbox, max_seconds)
-    command = "cd '#{sandbox.path}';" + stderr2stdout('./cyber-dojo.sh')
+    command = "cd '#{sandbox.path} && ./cyber-dojo.sh 2>&1"
     pipe = IO::popen(command)
     output = ''
     sandbox_thread = Thread.new { output += pipe.read }
@@ -34,9 +37,9 @@ class HostRunner
 
 private
 
-  include Stderr2Stdout
-
-  attr_reader :bash
+  def runnable?(_image_name)
+    true
+  end
 
   def kill(pids)
     return if pids == []

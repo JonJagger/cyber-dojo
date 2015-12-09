@@ -1,7 +1,7 @@
 
 # test runner providing isolation/protection/security
 # via DockerMachine run containers https://www.docker.io/
-# and relying on docker volume mounts to temporary rync'd
+# and relying on docker volume mounts to temporary rsync'd
 # locations to give docker containers access to .../katas/...
 
 class DockerMachineRunner
@@ -10,33 +10,46 @@ class DockerMachineRunner
     'docker_machine_runner_cache.json'
   end
 
-  def initialize(caches, bash = Bash.new)
-    @caches = caches
-    @bash = bash
+  def initialize(dojo)
+    @dojo = dojo
   end
 
-  def runnable?(image_name)
-    !node_map[image_name].nil?
+  # queries
+
+  def parent
+    @dojo
   end
+
+  def path
+    "#{File.dirname(__FILE__)}/"
+  end
+
+  def runnable_languages
+    languages.select { |language| runnable?(language.image_name) }
+  end
+
+  # modifiers
 
   def run(sandbox, max_seconds)
     language = sandbox.avatar.kata.language
     node = node_map[language.image_name].sample
-    cmd = "#{File.dirname(__FILE__)}/docker_machine_runner.sh" +
-          " #{node}" +
-          " #{sandbox.path}" +
-          " #{language.image_name}" +
-          " #{max_seconds}"
-    output, exit_status = bash.exec(sudo(cmd))
-    exit_status != timed_out ? output : did_not_complete_in(max_seconds)
+
+    args = [
+      node,
+      sandbox.path,
+      language.image_name,
+      max_seconds
+    ].join(space = ' ')
+
+    output_or_killed(shell.cd_exec(path, sudo("./docker_machine_runner.sh #{args}")), max_seconds)
   end
 
   def refresh_cache
     node_map = {}
-    output, _exit_status = bash.exec(sudo('docker-machine ls -q'))
+    output, _exit_status = shell.exec(sudo('docker-machine ls -q'))
     nodes = output.split
     nodes.each do |node|
-      output, _exit_status = bash.exec(sudo("docker-machine ssh #{node} -- sudo docker images"))
+      output, _exit_status = shell.exec(sudo("docker-machine ssh #{node} -- sudo docker images"))
       lines = output.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
       image_names = lines.collect { |line| line.split[0] }
       image_names.each do |image_name|
@@ -49,16 +62,15 @@ class DockerMachineRunner
 
   private
 
-  include DidNotCompleteIn
+  include ExternalParentChainer
+  include OutputOrKilled
 
-  attr_reader :caches, :bash
+  def runnable?(image_name)
+    !node_map[image_name].nil?
+  end
 
   def node_map
     @node_map ||= caches.read_json(self.class.cache_filename)
-  end
-
-  def timed_out
-    (timeout=128) + (kill=9)
   end
 
   def sudo(command)

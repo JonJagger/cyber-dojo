@@ -1,15 +1,23 @@
 
-# See comment at bottom of Avatar.rb
+# See comment at bottom of avatar.rb
 
 class Tag
 
   def initialize(avatar, hash)
-    @parent = avatar
+    @avatar = avatar
     @hash = hash
   end
 
-  def avatar
-    @parent
+  # queries
+
+  attr_reader :avatar
+
+  def parent
+    avatar
+  end
+
+  def path
+    avatar.path
   end
 
   def visible_files
@@ -22,7 +30,6 @@ class Tag
   end
 
   def time
-    # todo: times ?need? to come from browser and use iso8601
     Time.mktime(*hash['time'])
   end
 
@@ -50,12 +57,8 @@ class Tag
 
   private
 
-  include ExternalParentChain
+  include ExternalParentChainer
 
   attr_reader :hash
-
-  def path
-    @parent.path
-  end
 
 end

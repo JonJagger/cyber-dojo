@@ -2,20 +2,21 @@
 # this list has order dependencies
 
 %w{
+  external_parent_chainer
+
   id_splitter
-  Stderr2Stdout
   string_cleaner
-  bash
-  background_process
-  did_not_complete_in
+  output_or_killed
   docker_machine_runner
   docker_runner
   docker_data_container_runner
+  host_shell
   host_runner
   host_disk
   host_disk_avatar_starter
   host_dir
   host_git
+  host_log
   time_now
   unique_id
   languages_display_names_splitter

@@ -7,27 +7,38 @@ module TestExternalHelpers # mix-in
 
   module_function
 
-  def setup   ; store_env_vars; check_tmp_root_exists; end
+  def setup   ; store_env_vars; setup_tmp_root; end
+
   def teardown; restore_env_vars; end
 
-  def set_languages_root(value); cd_set(languages_key,value); end
-  def set_exercises_root(value); cd_set(exercises_key,value); end
-  def     set_katas_root(value); cd_set(    katas_key,value); end
-  def    set_caches_root(value); cd_set(   caches_key,value); end
+  # - - - - - - - - - - - - - - - - - - -
 
-  def   set_runner_class(value); cd_set(   runner_key,value); end
-  def     set_disk_class(value); cd_set(     disk_key,value); end
-  def      set_git_class(value); cd_set(      git_key,value); end
-  def set_one_self_class(value); cd_set( one_self_key,value); end
+  def set_languages_root(value); cd_set(languages_key, value); end
+  def set_exercises_root(value); cd_set(exercises_key, value); end
+  def    set_caches_root(value); cd_set(   caches_key, value); end
+  def     set_katas_root(value); cd_set(    katas_key, value); end
 
   def get_languages_root; cd_get(languages_key); end
   def get_exercises_root; cd_get(exercises_key); end
-  def     get_katas_root; cd_get(    katas_key); end
   def    get_caches_root; cd_get(   caches_key); end
+  def     get_katas_root; cd_get(    katas_key); end
 
+  # - - - - - - - - - - - - - - - - - - -
+
+  def  set_starter_class(value); cd_set(  starter_key, value); end
+  def   set_runner_class(value); cd_set(   runner_key, value); end
+  def    set_shell_class(value); cd_set(    shell_key, value); end
+  def     set_disk_class(value); cd_set(     disk_key, value); end
+  def      set_git_class(value); cd_set(      git_key, value); end
+  def      set_log_class(value); cd_set(      log_key, value); end
+  def set_one_self_class(value); cd_set( one_self_key, value); end
+
+  def  get_starter_class; cd_get(  starter_key); end
   def   get_runner_class; cd_get(   runner_key); end
+  def    get_shell_class; cd_get(    shell_key); end
   def     get_disk_class; cd_get(     disk_key); end
   def      get_git_class; cd_get(      git_key); end
+  def      get_log_class; cd_get(      log_key); end
   def get_one_self_class; cd_get( one_self_key); end
 
   # - - - - - - - - - - - - - - - - - - -
@@ -39,7 +50,6 @@ module TestExternalHelpers # mix-in
     env_vars.each do |var, default|
       if ENV[var].nil?
         @unset << var
-        ENV[var] = default
       else
         @exported[var] = ENV[var]
       end
@@ -50,7 +60,7 @@ module TestExternalHelpers # mix-in
     fail "store_env_vars() not called" if @store_env_vars_called.nil?
     @exported.each { |var, value| ENV[var] = @exported[var] }
     @exported = {}
-    @unset.each { |var| ENV.delete(var) }
+    @unset.each { |var| cd_unset(var) }
     @unset = []
   end
 
@@ -61,10 +71,14 @@ module TestExternalHelpers # mix-in
       exercises_key => root_dir + '/exercises',
       katas_key     => root_dir + '/katas',
       caches_key    => root_dir + '/caches',
-      disk_key      => 'HostDisk',
+
+      one_self_key  => 'OneSelfCurl',
+      starter_key   => 'HostDiskAvatarStarter',
       runner_key    => 'DockerRunner',
+      shell_key     => 'HostShell',
+      disk_key      => 'HostDisk',
       git_key       => 'HostGit',
-      one_self_key  => 'OneSelfCurl'
+      log_key       => 'HostLog',
     }
   end
 
@@ -73,15 +87,19 @@ module TestExternalHelpers # mix-in
   def     katas_key; root(    'KATAS'); end
   def    caches_key; root(   'CACHES'); end
 
-  def      disk_key; klass('DISK'    ); end
-  def    runner_key; klass('RUNNER'  ); end
-  def       git_key; klass('GIT'     ); end
   def  one_self_key; klass('ONE_SELF'); end
+  def   starter_key; klass('STARTER' ); end
+  def    runner_key; klass('RUNNER'  ); end
+  def     shell_key; klass('SHELL'   ); end
+  def      disk_key; klass('DISK'    ); end
+  def       git_key; klass('GIT'     ); end
+  def       log_key; klass('LOG'     ); end
 
   def root (key); cd(key + '_ROOT' ); end
   def klass(key); cd(key + '_CLASS'); end
 
-  def cd_set(key,value); ENV[key] = value; end
+  def cd_unset(key); ENV.delete(key); end
+  def cd_set(key, value); ENV[key] = value; end
   def cd_get(key); ENV[key] || env_vars[key]; end
   def cd(key); 'CYBER_DOJO_' + key; end
 

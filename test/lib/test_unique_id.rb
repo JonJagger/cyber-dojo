@@ -14,7 +14,7 @@ class UniqueIdTests < LibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'BFBC4B',
-  'its 10 chars long' do
+  'it is 10 chars long' do
     (0..25).each do
       assert_equal 10, unique_id.length
     end
@@ -23,7 +23,7 @@ class UniqueIdTests < LibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B69E40',
-  'it contains only [0-9 A-E] chars' do
+  'it contains only [A-E 0-9] characters' do
     (0..25).each do |n|
       id = unique_id
       id.chars.each do |char|

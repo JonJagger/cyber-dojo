@@ -7,7 +7,7 @@ var cyberDojo = (function(cd, $) {
     // mouseenter retrieves the tip via a slow ajax call
     // which means mouseleave could have already occurred
     // by the time the ajax returns to set the tip. The
-    // mouse-has-left attribute minimizes this race's chance.
+    // mouse-has-left attribute reduces this race's chance.
     if (!node.hasClass('mouse-has-left')) {
       node.append($('<span class="hover-tip">' + tip + '</span>'));
       // dashboard auto-scroll requires forced positioning.
@@ -25,7 +25,7 @@ var cyberDojo = (function(cd, $) {
       was_tag: light.data('was-tag'),
       now_tag: light.data('now-tag')
     }, function(response) {
-      setHoverTip(light,response.html);
+      setHoverTip(light, response.html);
     });
   };
 
@@ -39,7 +39,7 @@ var cyberDojo = (function(cd, $) {
       green_count: node.data('green-count'),
       timed_out_count: node.data('timed-out-count')
     }, function(response) {
-      setHoverTip(node,response.html);
+      setHoverTip(node, response.html);
     });
   };
 
@@ -58,7 +58,7 @@ var cyberDojo = (function(cd, $) {
         } else if (tip === 'ajax:traffic_light_count') {
           setAjaxTrafficLightCountHoverTip(node);
         } else {
-          setHoverTip(node,tip);
+          setHoverTip(node, tip);
         }
       });
     });

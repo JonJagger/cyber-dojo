@@ -9,94 +9,98 @@ class DockerRunnerTests < LibTestBase
 
   def setup
     super
-    set_katas_root     tmp_root
-    set_disk_class     'HostDisk'
-    set_git_class      'GitSpy'
+    set_katas_root     tmp_root + 'katas/'
+    set_shell_class    'HostShellMock'
     set_one_self_class 'OneSelfDummy'
-    @bash = BashStub.new
-    @runner = DockerRunner.new(caches, bash)
+    set_runner_class   'DockerRunner'
   end
 
   def teardown
+    shell.teardown
     super
   end
-
-  attr_reader :bash, :runner
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '75909D',
   'refresh_cache() executes [docker images]' +
-    ' and creates new cache-file in caches/ which determines runnability' +
-    ' but note that the cache is *not* used by run since only runnable' +
-    ' languages are offered at creation. Hmmmm suppose you are rejoining a' +
-    ' kata and the dojo has uninstalled the language...' do
-    set_disk_class('DiskFake')
-    assert_equal [], bash.spied
+    ' and creates new cache-file in caches/ which determines runnability' do
+
+    real_caches_path = get_caches_root
+    set_caches_root(tmp_root + 'caches/')
+    disk[caches.path].make
+
+    cp_command = "cp #{real_caches_path}/#{Languages.cache_filename} #{caches.path}"
+    `#{cp_command}`
+
+    shell.mock_exec(['docker images'], docker_images_python_pytest, success)
+
     refute disk[caches.path].exists?(DockerRunner.cache_filename)
-    bash.stub(stub_docker_images_python_pytest, success)
-    # when
     runner.refresh_cache
-    # then
     assert disk[caches.path].exists?(DockerRunner.cache_filename)
-    assert_equal 'docker images', bash.spied[0]
-    assert runner.runnable?("#{cdf}/python-3.3.5_pytest")
-    refute runner.runnable?("#{cdf}/not-installed")
+
+    expected = ['Python, py.test']
+    actual = runner.runnable_languages.map { |language| language.display_name }.sort
+    assert_equal expected, actual
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '2E8517',
   'run() passes correct parameters to dedicated shell script' do
-    lion = make_kata.start_avatar(['lion'])
-    bash.stub('output', success)
-    # when
-    runner.run(lion.sandbox, max_seconds)
-    # then
-    expected =
-      "#{root_dir}/lib/docker_runner.sh" +
-      " #{lion.sandbox.path}" +
-      " #{lion.kata.language.image_name}" +
-      " #{max_seconds}"
-    call = bash.spied[0]
-    assert_equal expected, call
+    mock_run_assert('output', 'output', success)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '6459A7',
   'output is left untouched when run() does not time-out' do
-    lion = make_kata.start_avatar(['lion'])
-    bash.stub('syntax-error-line-1', success)
-    # when
-    output = runner.run(lion.sandbox, max_seconds)
-    # then
-    assert_equal 'syntax-error-line-1', output
+    syntax_error = 'syntax-error-line-1'
+    mock_run_assert(syntax_error, syntax_error, success)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '87A438',
-  'output is not truncated and no message is added when run() does not time-out' do
-    lion = make_kata.start_avatar(['lion'])
-    big = '.' * 75*1024
-    bash.stub(big, success)
-    # when
-    output = runner.run(lion.sandbox, max_seconds)
-    # then
-    assert_equal big, output
+  'massive output is left untouched, (avatar does truncation) when run() does not time-out' do
+    massive_output = '.' * 75*1024
+    mock_run_assert(massive_output, massive_output, success)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B8750C',
   'output is replaced by timed-out message when run() times out' do
-    lion = make_kata.start_avatar(['lion'])
-    bash.stub('ach-so-it-timed-out', times_out)
-    # when
+    lion = mock_run_setup('ach-so-it-timed-out', times_out)
     output = runner.run(lion.sandbox, max_seconds)
-    # then
     assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds.")
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def mock_run_setup(mock_output, mock_exit_status)
+    lion = make_kata.start_avatar(['lion'])
+
+    args = [
+      lion.sandbox.path,
+      lion.kata.language.image_name,
+      max_seconds
+    ].join(space = ' ')
+
+    shell.mock_cd_exec(
+      runner.path,
+      ["./docker_runner.sh #{args}"],
+      mock_output,
+      mock_exit_status
+   )
+   lion
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def mock_run_assert(expected_output, mock_output, mock_exit_status)
+    lion = mock_run_setup(mock_output, mock_exit_status)
+    assert_equal expected_output, runner.run(lion.sandbox, max_seconds)
   end
 
 end

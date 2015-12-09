@@ -35,70 +35,47 @@ class LanguagesTests < AppModelTestBase
   'refresh_cache ignores nested _docker_context folder because' +
     ' it is not the name of a test-framework, it is the docker-context' +
     ' for the language itself' do
-    set_disk_class('DiskFake')
-
-    dir_name = 'g++4.8.4'
-    test_dir_name = '_docker_context'
-    docker_context = Language.new(languages, dir_name, test_dir_name)
-    language_display_name = 'C++ (g++)'
-    display_name = language_display_name + ', ' + test_dir_name
-    image_name = 'cyberdojofoundation/gpp-4.8.4_assert'
-    manifest_filename = 'manifest.json'
-    dir_of(docker_context).make
-    dir_of(docker_context).write_json(manifest_filename, {
-      'display_name' => display_name,
-      'image_name'   => image_name
-    })
-
-    refute disk[caches.path].exists?(Languages.cache_filename)
+    set_caches_root(tmp_root + 'caches/')
+    dir_of(caches).make
     languages.refresh_cache
-    assert disk[caches.path].exists?(Languages.cache_filename)
-
-    languages_names = languages.map(&:name).sort
-    assert_equal [], languages_names
+    n = 0
+    languages.each do |language|
+      n += 1
+      refute language.path.include? '_docker_context'
+    end
+    assert n > 45
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
   test '7D53C5',
-  'refresh_cache requires manifest.json for each file to read display_name from' +
-    ' but use of cached info does not reaccess manifest.json' do
-    set_disk_class('DiskFake')
+  'use of cached info does *not* reaccess manifest.json' do
+    set_caches_root(tmp_root)
+    display_name = 'Not, There'
+    image_name = 'cyberdojofoundation/not_there'
+    cache = {
+       display_name => {
+             dir_name: 'Not',
+        test_dir_name: 'There',
+           image_name: image_name
+      },
+    }
+    caches.write_json(cache_filename, cache)
 
-    dir_name = 'g++4.8.4'
-    test_dir_name = 'assert'
-    cpp_assert = Language.new(languages, dir_name, test_dir_name)
-    language_display_name = 'C++ (g++)'
-    display_name = language_display_name + ', ' + test_dir_name
-    image_name = 'cyberdojofoundation/gpp-4.8.4_assert'
-    manifest_filename = 'manifest.json'
-    dir_of(cpp_assert).make
-    dir_of(cpp_assert).write_json(manifest_filename, {
-      'display_name' => display_name,
-      'image_name'   => image_name
-    })
+    not_there = languages['Not-There']
+    refute_nil not_there
+    refute dir_of(not_there).exists?
 
-    refute disk[caches.path].exists?(Languages.cache_filename)
-    languages.refresh_cache
-    assert disk[caches.path].exists?(Languages.cache_filename)
-
-    dir_of(cpp_assert).delete(manifest_filename) # DiskFake.delete is implemented
-
-    languages_names = languages.map(&:name).sort
-    assert_equal [language_display_name + '-' + test_dir_name], languages_names
-    # get from cache
-    cpp_assert = languages[language_display_name + '-' + test_dir_name]
-    assert_equal display_name, cpp_assert.display_name
-    assert_equal image_name,   cpp_assert.image_name
+    assert_equal display_name, not_there.display_name
+    assert_equal image_name, not_there.image_name
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
   test '15BD19',
   'no languages when cache is empty' do
-    set_disk_class('DiskFake')
+    set_caches_root(tmp_root)
     caches.write_json(cache_filename, {})
-    dir_of(languages).write_json(cache_filename, {})
     assert_equal [], languages.to_a
   end
 
@@ -106,7 +83,7 @@ class LanguagesTests < AppModelTestBase
 
   test '09A1D4',
   'languages from cache when cache is not empty' do
-    set_disk_class('DiskFake')
+    set_caches_root(tmp_root)
     cache = {
       'Asm, assert' => {
              dir_name: 'Asm',

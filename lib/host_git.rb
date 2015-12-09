@@ -1,36 +1,72 @@
 
+# cyber-dojo does not use a database. Instead it uses git.
+# Every individual animal has its own git repo.
+# Every [test] event causes a new git commit + git tag
+
 class HostGit
 
-  def method_missing(cmd, *args)
-    path = args[0]
-    options = args[1]
-    options = single_quoted(options) if ['add','rm'].include?(cmd.to_s)
-    Dir.chdir(path) do
-      git_cmd = stderr2stdout("git #{cmd} #{options}")
-      log << git_cmd
-      output = `#{git_cmd}`
-      log << output if output != ''
-      status = $?.exitstatus
-      log << "$?.exitstatus=#{status}" if status != success
-      clean(output)
-    end
+  def initialize(dojo)
+    @dojo = dojo
   end
 
-  def log
-    @log ||= []
+  # queries
+
+  def parent
+    @dojo
+  end
+
+  def show(path, options)
+    output_of(shell.cd_exec(path, "git show #{options}"))
+  end
+
+  def diff(path, n, m)
+    space = ' '
+    options = [
+      '--ignore-space-at-eol',
+      '--find-copies-harder',
+      "#{n}",
+      "#{m}",
+      'sandbox'
+    ].join(space)
+    output_of(shell.cd_exec(path, "git diff #{options}"))
+  end
+
+  # modifiers
+
+  def setup(path, user_name, user_email)
+    shell.cd_exec(path,
+      'git init --quiet',
+      "git config user.name #{quoted(user_name)}",
+      "git config user.email #{quoted(user_email)}"
+    )
+  end
+
+  def rm(path, filename)
+    shell.cd_exec(path, "git rm #{quoted(filename)}")
+  end
+
+  def add(path, filename)
+    shell.cd_exec(path, "git add #{quoted(filename)}")
+  end
+
+  def commit(path, tag)
+    shell.cd_exec(path,
+      "git commit -a -m #{tag} --quiet",
+      'git gc --auto --quiet',
+      "git tag -m '#{tag}' #{tag} HEAD"
+    )
   end
 
   private
 
-  include StringCleaner
-  include Stderr2Stdout
+  include ExternalParentChainer
 
-  def success
-    0
+  def quoted(s)
+    "'" + s + "'"
   end
 
-  def single_quoted(s)
-    "'" + s + "'"
+  def output_of(args)
+    args[0]
   end
 
 end

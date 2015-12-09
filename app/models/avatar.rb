@@ -3,25 +3,16 @@
 class Avatar
 
   def initialize(kata, name)
-    @parent = kata
+    @kata = kata
     @name = name
   end
 
-  attr_reader :name
+  # queries
 
-  def kata
-    @parent
-  end
+  attr_reader :kata, :name
 
-  def start
-    dir.make
-    git_setup
-    write_manifest(kata.visible_files)
-    git.add(path, manifest_filename)
-    write_increments([])
-    git.add(path, increments_filename)
-    sandbox.start
-    git_commit(0)
+  def parent
+    kata
   end
 
   def path
@@ -29,9 +20,8 @@ class Avatar
     kata.path + name + '/'
   end
 
-  def sandbox
-    # The avatar's sandbox holds its source files
-    Sandbox.new(self)
+  def diff(was_tag, now_tag)
+    git.diff(path, was_tag, now_tag)
   end
 
   def active?
@@ -58,6 +48,24 @@ class Avatar
     read_json(manifest_filename)
   end
 
+  def sandbox
+    # The avatar's sandbox holds its source files
+    Sandbox.new(self)
+  end
+
+  # modifiers
+
+  def start
+    dir.make
+    git.setup(path, user_name, user_email)
+    write_manifest(kata.visible_files)
+    git.add(path, manifest_filename)
+    write_increments([])
+    git.add(path, increments_filename)
+    sandbox.start
+    git.commit(path, 0)
+  end
+
   def test(delta, files, now = time_now, max_seconds = 15)
     sandbox.save_files(delta, files)
     output = truncated(sandbox.run_tests(max_seconds))
@@ -65,51 +73,28 @@ class Avatar
 
     update_manifest(files, output)
     rags = update_increments(colour, now)
-    git_commit(rags[-1]['number'])
+    git.commit(path, rags[-1]['number'])
 
     [rags, output]
   end
 
   private
 
-  include ExternalParentChain
+  include ExternalParentChainer
+  include ExternalDir
   include OutputTruncater
   include TimeNow
-
-  def git_setup
-    git.init(path, '--quiet')
-    git.config(path, 'user.name ' + user_name)
-    git.config(path, 'user.email ' + user_email)
-  end
-
-  def git_commit(tag)
-    git.commit(path, "-a -m '#{tag}' --quiet")
-    git.gc(path, '--auto --quiet')
-    git.tag(path, "-m '#{tag}' #{tag} HEAD")
-  end
-
-  def user_name
-    "#{quoted(name + '_' + kata.id)}"
-  end
-
-  def user_email
-    "#{quoted(name)}@cyber-dojo.org"
-  end
-
-  def quoted(s)
-    '"' + s + '"'
-  end
 
   # - - - - - - - - - - - - - - - - -
 
   def write_manifest(files)
     # The manifest stores a cache of the avatar's
-    # current visible files = filenames and contents.
+    # current visible files [filenames and contents].
     write_json(manifest_filename, files)
   end
 
   def update_manifest(files, output)
-    # output is part of diff state
+    # output _is_ part of diff state
     disk[sandbox.path].write('output', output)
     files['output'] = output
     write_manifest(files)
@@ -156,7 +141,21 @@ class Avatar
   end
 
   def language
+    # Each avatar does _not_ choose their own language+test.
+    # The language+test is chosen for the _dojo.
+    # cyber-dojo is a team-based learning environment,
+    # not an individual development environment
     kata.language
+  end
+
+  # - - - - - - - - - - - - - - - - -
+
+  def user_name
+    "#{name + '_' + kata.id}"
+  end
+
+  def user_email
+    "#{name}@cyber-dojo.org"
   end
 
 end

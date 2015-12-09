@@ -2,16 +2,22 @@
 class Sandbox
 
   def initialize(avatar)
-    @parent = avatar
+    @avatar = avatar
   end
 
-  def avatar
-    @parent
+  # queries
+
+  attr_reader :avatar
+
+  def parent
+    avatar
   end
 
   def path
     avatar.path + 'sandbox/'
   end
+
+  # modifiers
 
   def start
     dir.make
@@ -19,7 +25,7 @@ class Sandbox
   end
 
   def save_files(delta, files)
-    delta[:deleted].each { |filename| git_rm(filename) }
+    delta[:deleted].each { |filename| git.rm(path, filename) }
     delta[:new    ].each { |filename| git_add(filename, files[filename]) }
     delta[:changed].each { |filename|   write(filename, files[filename]) }
   end
@@ -30,16 +36,13 @@ class Sandbox
 
   private
 
-  include ExternalParentChain
+  include ExternalParentChainer
+  include ExternalDir
   include OutputCleaner
 
   def git_add(filename, content)
     write(filename, content)
     git.add(path, filename)
-  end
-
-  def git_rm(filename)
-    git.rm(path, filename)
   end
 
 end

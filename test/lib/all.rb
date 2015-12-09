@@ -1,10 +1,5 @@
 
 %w{
-  bash_stub
-  disk_stub
-  disk_fake
-  dir_fake
-  git_spy
-  runner_stub
-  runner_stub_true
+  host_shell_mock
+  runner_mock
 }.each {|sourcefile| require_relative './' + sourcefile }

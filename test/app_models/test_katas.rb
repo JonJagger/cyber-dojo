@@ -31,12 +31,17 @@ class KatasTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B9916D',
-  'create_kata saves empty started_avatars.json file' do
+  'create_kata creates manifest.json file' do
     kata = make_kata
-    filename = 'started_avatars.json'
+    filename = 'manifest.json'
     assert dir_of(kata).exists?(filename)
-    started = dir_of(kata).read_json(filename)
-    assert_equal [],started
+    manifest = dir_of(kata).read_json(filename)
+    assert_equal kata.id, manifest['id']
+    assert_equal kata.language.name, manifest['language']
+    assert_equal kata.exercise.name, manifest['exercise']
+    refute_nil manifest['created']
+    refute_nil manifest['unit_test_framework']
+    refute_nil manifest['tab_size']
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

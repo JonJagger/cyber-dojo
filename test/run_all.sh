@@ -2,17 +2,19 @@
 
 sudo -E ../languages/refresh_cache.rb
 sudo -E ../exercises/refresh_cache.rb
-sudo -E ./lib/make_disk_stub_cache.rb
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 
-ramDisk=/mnt/ram_disk
-sudo ../admin_scripts/make_ram_disk.sh $ramDisk 1m
-export CYBER_DOJO_TMP_ROOT=$ramDisk/tmp
+#ramDisk=/mnt/ram_disk
+#sudo ../admin_scripts/make_ram_disk.sh $ramDisk 4m
+#export CYBER_DOJO_TMP_ROOT=$ramDisk/tmp
 
-mkdir $ramDisk/caches
-export CYBER_DOJO_CACHES_ROOT=$ramDisk/caches
-cp ../caches/* $ramDisk/caches
+#notRamDisk=/tmp/cyber-dojo
+#sudo rm -rf $notRamDisk
+#mkdir -p $notRamDisk
+#sudo chmod -R 777 $notRamDisk
+#sudo chown -R www-data:www-data $notRamDisk
+#export CYBER_DOJO_TMP_ROOT=$notRamDisk
 
 sudo chmod 777 ./test-summary.txt
 
@@ -22,9 +24,9 @@ modules=(
   app_helpers
   app_lib
   app_models
+  languages
   lib
   app_controllers
-  languages
 )
 
 for module in ${modules[*]}

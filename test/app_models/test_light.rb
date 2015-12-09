@@ -70,15 +70,17 @@ class LightTests < AppModelTestBase
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     maker = DeltaMaker.new(lion)
-    runner.stub_output('xxxxx')
+    runner.mock_run_colour(lion, :red)
     maker.run_test
+    runner.mock_run_colour(lion, :amber)
     maker.run_test
+    runner.mock_run_colour(lion, :green)
     maker.run_test
     lights = lion.lights
     assert_equal 3, lights.length
-    assert_equal :amber, lights[0].colour    # TODO: red
+    assert_equal :red,   lights[0].colour
     assert_equal :amber, lights[1].colour
-    assert_equal :amber, lights[2].colour    # TODO: green
+    assert_equal :green, lights[2].colour
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - -

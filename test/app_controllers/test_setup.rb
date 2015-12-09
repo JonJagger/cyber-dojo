@@ -1,21 +1,13 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative './app_controller_test_base'
-require_relative './rails_disk_fake_thread_adapter'
-require_relative './rails_runner_stub_true_thread_adapter'
 
 class SetupControllerTest < AppControllerTestBase
 
   def setup
     super
-    set_exercises_root tmp_root + 'exercises'
-    set_languages_root tmp_root + 'languages'
-    set_disk_class('RailsDiskFakeThreadAdapter')
-    RailsDiskFakeThreadAdapter.reset
-    set_runner_class('RailsRunnerStubTrueThreadAdapter')
-    RailsRunnerStubTrueThreadAdapter.reset
-    setup_exercises_cache
-    setup_languages_cache
+    set_runner_class('RunnerMock')
+    assert_equal 'RunnerMock', runner.class.name
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -26,13 +18,13 @@ class SetupControllerTest < AppControllerTestBase
     assert_response :success
     assert /data-exercise\=\"#{print_diamond}/.match(html), print_diamond
     assert /data-exercise\=\"#{roman_numerals}/.match(html), roman_numerals
-    refute /data-exercise\=\"Bowling_Game/.match(html), 'Bowling_Game'
+    assert /data-exercise\=\"Bowling_Game/.match(html), bowling_game
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test '9F4020',
-  'setup page uses cached languages' do
+  'setup page uses cached languages that are runnable' do
     get 'setup/show'
     assert_response :success
     assert /data-language\=\"#{get_language_from(cpp_assert)}/.match(html), cpp_assert
@@ -63,7 +55,7 @@ class SetupControllerTest < AppControllerTestBase
   private
 
   def setup_show(n)
-    languages_display_names = languages.map(&:display_name).sort
+    languages_display_names = runner.runnable_languages.map(&:display_name).sort
     language_display_name = languages_display_names.sample
     exercises_names = exercises.map(&:name).sort
     exercise_name = exercises_names.sample
@@ -85,40 +77,6 @@ class SetupControllerTest < AppControllerTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def setup_languages_cache
-    languages_cache = {
-      "#{asm_assert}" => {
-             dir_name: 'Asm',
-        test_dir_name: 'assert',
-           image_name: 'cyberdojofoundation/nasm-2.10.09_assert'
-      },
-      "#{cpp_assert}" => {
-             dir_name: 'g++4.8.4',
-        test_dir_name: 'assert',
-           image_name: 'cyberdojofoundation/gpp-4.8.4_assert'
-      }
-    }
-    caches.write_json(Languages.cache_filename, languages_cache)
-    languages_cache.each do |display_name, hash|
-      key = get_language_from(display_name) + '-' + get_test_from(display_name)
-      dir_of(languages[key]).write_json('manifest.json', {
-        display_name: display_name,
-          image_name: hash[:image_name]
-      })
-    end
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - -
-
-  def setup_exercises_cache
-    caches.write_json(Exercises.cache_filename, {
-      print_diamond  => 'stub print diamond instructions',
-      roman_numerals => 'stub roman numerals instructions'
-    })
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - -
-
   def get_language_from(name); commad(name)[0].strip; end
   def get_test_from(name)    ; commad(name)[1].strip; end
   def commad(s); s.split(','); end
@@ -127,8 +85,9 @@ class SetupControllerTest < AppControllerTestBase
 
   def print_diamond ; 'Print_Diamond' ; end
   def roman_numerals; 'Roman_Numerals'; end
+  def   bowling_game;   'Bowling_Game'; end
 
   def cpp_assert; 'C++, assert'; end
-  def asm_assert; 'Asm, assert'    ; end
+  def asm_assert; 'Asm, assert'; end
 
 end

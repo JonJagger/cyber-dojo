@@ -2,15 +2,21 @@
 class Exercise
 
   def initialize(exercises, name, instructions = nil)
-    @parent = exercises
+    @exercises = exercises
     @name = name
     @instructions = instructions
   end
 
-  attr_reader :name
+  # queries
+
+  attr_reader :exercises, :name
+
+  def parent
+    exercises
+  end
 
   def path
-    @parent.path + name + '/'
+    exercises.path + name + '/'
   end
 
   def instructions
@@ -19,7 +25,8 @@ class Exercise
 
   private
 
-  include ExternalParentChain
+  include ExternalParentChainer
+  include ExternalDir
 
   def instructions_filename
     'instructions'

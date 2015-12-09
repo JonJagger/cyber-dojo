@@ -1,8 +1,9 @@
 
+#
+
 class HostDisk
 
-  def dir_separator
-    File::SEPARATOR
+  def initialize(_dojo)
   end
 
   def dir?(name)

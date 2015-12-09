@@ -6,9 +6,7 @@ module GitDiff # mix-in
   # for all files, for a given avatar, for a given tag.
 
   def avatar_git_diff(avatar, n, m)
-    command = "--ignore-space-at-eol --find-copies-harder #{n} #{m} sandbox"
-    git = avatar.kata.dojo.git
-    diff_lines = git.diff(avatar.path, command)
+    diff_lines = avatar.diff(n, m)
     visible_files = avatar.tags[m].visible_files
     git_diff(diff_lines, visible_files)
   end

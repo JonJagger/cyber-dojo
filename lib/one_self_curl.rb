@@ -1,13 +1,21 @@
 require 'json'
-require_relative './background_process'
+
+# 1self.co is a startup offering the storage of visualization
+# of personal data. It does the cool spinning globe visualization
+# on the home page.
 
 class OneSelfCurl
 
-  def initialize(_disk, process = BackgroundProcess.new)
-    @process = process
+  def initialize(dojo)
+    @dojo = dojo
+  end
+
+  def parent
+    @dojo
   end
 
   def created(hash)
+
     data = {
       'objectTags' => ['cyber-dojo'],
       'actionTags' => ['create'],
@@ -24,30 +32,33 @@ class OneSelfCurl
       }
     }
 
-    curl = 'curl' +
-      ' --silent' +
-      ' --header content-type:application/json' +
-      " --header authorization:#{write_token}" +
-      ' -X POST' +
-      " -d '#{data.to_json}'" +
-      " #{streams_url}/#{stream_id}/events"
+    args = [
+      '--silent',
+      '--header content-type:application/json',
+      "--header authorization:#{write_token}",
+      '-X POST',
+      "-d '#{data.to_json}'",
+      "#{streams_url}/#{stream_id}/events"
+    ].join(space = ' ')
 
-    @process.start(curl)
+    shell.daemon_exec("curl #{args}")
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def started(avatar)
-    # TODO: from OneSelf.rb.dead
+    # TODO: from one_self.rb.dead
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def tested(avatar, hash)
-    # TODO: from OneSelf.rb.dead
+    # TODO: from one_self.rb.dead
   end
 
   private
+
+  include ExternalParentChainer
 
   def server_time(now)
     s = Time.mktime(*now).utc.iso8601.to_s

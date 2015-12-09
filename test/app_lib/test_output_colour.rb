@@ -4,13 +4,6 @@ require_relative './app_lib_test_base'
 
 class OutputColourTests < AppLibTestBase
 
-  def setup
-    super
-    set_runner_class('RunnerStub')
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '24C561',
   'terminated by the server after n seconds gives timed_out colour' do
     [1,5,10].each do |n|
@@ -57,8 +50,6 @@ class OutputColourTests < AppLibTestBase
 
   test '9005E7',
   'all dojo.languages have corresponding test_output/unit_test_framework' do
-    set_languages_root('/var/www/cyber-dojo/languages')
-    runner.stub_runnable(true)
     root = test_output_path
     count = 0
     dojo.languages.each do |language|

@@ -1,9 +1,11 @@
 
 %w(
-  external_parent_chain
+  external_dir
   output_cleaner
   output_truncater
+  name_of_caller
   manifest_property
+
   dojo
   caches
   language

@@ -1,18 +1,17 @@
-# See comments at end of file
 
 class Katas
   include Enumerable
 
   def initialize(dojo, path)
-    @parent = dojo
+    @dojo = dojo
     @path = path
   end
 
-  def dojo
-    @parent
-  end
-
   attr_reader :path
+
+  def parent
+    @dojo
+  end
 
   def create_kata(language, exercise, id = unique_id, now = time_now)
     # a kata's id has 10 hex chars. This gives 16^10 possibilities
@@ -33,7 +32,6 @@ class Katas
     kata = Kata.new(self, id)
     disk[kata.path].make
     disk[kata.path].write_json('manifest.json', manifest)
-    disk[kata.path].write_json('started_avatars.json', [])
     kata
   end
 
@@ -77,7 +75,7 @@ class Katas
 
   private
 
-  include ExternalParentChain
+  include ExternalParentChainer
   include IdSplitter
   include TimeNow
   include UniqueId

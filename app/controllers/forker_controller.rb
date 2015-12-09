@@ -40,7 +40,7 @@ class ForkerController < ApplicationController
       id = unique_id
 
       # don't use kata.exercise.name because
-      # exercise might have been renamed
+      # the exercise might have been renamed
       exercise_name = kata.manifest['exercise']
 
       manifest = {

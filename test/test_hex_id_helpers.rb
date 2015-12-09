@@ -12,10 +12,19 @@ module TestHexIdHelpers # mix-in
     @@seen = []
 
     def test(id = nil, name, &block)
+      line = 'X' * 35
       id ||= Digest::MD5.hexdigest(name).upcase[0..5]
+      if id == ""
+        puts
+        puts line
+        puts "test '' is missing it's uuidgen"
+        puts "#{name}"
+        puts line
+        puts
+        raise "test '',..."
+      end
       if @@args == [] || @@args.include?(id)
         if @@seen.include?(id)
-          line = 'X' * 35
           puts
           puts line
           puts "test with id #{id} has already been seen"

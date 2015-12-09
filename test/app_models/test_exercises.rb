@@ -26,19 +26,19 @@ class ExercisesTests < AppModelTestBase
 
   test 'F027CB',
   'refresh_cache' do
-    set_disk_class('DiskFake')
-    disk[exercises.path + '100 doors'].write('instructions', 'imagine there are 100 doors...')
+    set_caches_root(tmp_root)
     exercises.refresh_cache
     exercises_names = exercises.map(&:name).sort
-    assert_equal ['100 doors'], exercises_names
-    assert_equal 'imagine there are 100 doors...', exercises['100 doors'].instructions
+    doors = '100_doors'
+    assert exercises_names.include?(doors)
+    assert exercises['100_doors'].instructions.start_with?('100 doors in a row')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '3E277A',
   'no exercises when cache is empty' do
-    set_disk_class('DiskFake')
+    set_caches_root(tmp_root)
     caches.write_json(cache_filename, {})
     assert_equal [], exercises.to_a
   end
@@ -47,16 +47,16 @@ class ExercisesTests < AppModelTestBase
 
   test '52110A',
   'execises from cache when cache is not empty' do
-    set_disk_class('DiskFake')
+    set_caches_root(tmp_root)
     cache = {
-      '100 doors'    => { instructions: doors_instructions = 'go here'  },
-      'Bowling Game' => { instructions: bowling_instructions = 'are here' }
+      '100_doors'    => { instructions: doors_instructions = 'go here'  },
+      'Bowling_Game' => { instructions: bowling_instructions = 'are here' }
     }
     caches.write_json(cache_filename, cache)
     exercises_names = exercises.map(&:name).sort
-    assert_equal ['100 doors', 'Bowling Game'], exercises_names, 'names'
-    assert_equal doors_instructions, exercises['100 doors'].instructions, '100 doors'
-    assert_equal bowling_instructions, exercises['Bowling Game'].instructions, 'Bowling Game'
+    assert_equal ['100_doors', 'Bowling_Game'], exercises_names, 'names'
+    assert_equal doors_instructions, exercises['100_doors'].instructions, '100 doors'
+    assert_equal bowling_instructions, exercises['Bowling_Game'].instructions, 'Bowling Game'
   end
 
   private

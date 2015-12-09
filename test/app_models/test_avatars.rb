@@ -31,19 +31,6 @@ class AvatarsTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'A95F3F',
-  'avatars returns all avatars started in the kata' +
-    ' and creates started_avatars.json file if it does not already exist' do
-    kata = make_kata
-    animals = %w(deer panda snake)
-    animals.size.times { kata.start_avatar(animals) }
-    File.delete(kata.path + 'started_avatars.json')
-    assert_equal animals.sort, kata.avatars.names.sort
-    assert_equal animals.sort, dir_of(kata).read_json('started_avatars.json').sort
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'B11555',
   'avatars.map works' do
     kata = make_kata

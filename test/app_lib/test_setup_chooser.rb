@@ -70,12 +70,11 @@ class SetupChooserTests < AppLibTestBase
 
   test '9671E1',
   'when id is given and _!_katas[id].language.exists? then choose random language' do
-    # TODO: rework
     test_languages_names.each do |unknown_language|
       languages = test_languages_names - [unknown_language]
       refute languages.include?(unknown_language)
       kata = make_kata(unique_id, unknown_language, test_exercises_names.sample)
-      assert kata.exists?, 'kata.exists?'
+      assert dir_of(kata).exists?, 'kata.exists?'
       assert_is_randomly_chosen_language(languages, kata.id, katas)
     end
   end
@@ -84,12 +83,11 @@ class SetupChooserTests < AppLibTestBase
 
   test '8D0F94',
   'when id is given and _!_katas[id].exercise.exists? then choose random exercise' do
-    # TODO: rework
     test_exercises_names.each do |unknown_exercise|
       exercises = test_exercises_names - [unknown_exercise]
       refute exercises.include?(unknown_exercise)
       kata = make_kata(unique_id, test_languages_names.sample, unknown_exercise)
-      assert kata.exists?, 'kata.exists?'
+      assert dir_of(kata).exists?, 'kata.exists?'
       assert_is_randomly_chosen_exercise(exercises, kata.id, katas)
     end
   end
