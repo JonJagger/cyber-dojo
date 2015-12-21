@@ -775,7 +775,7 @@ var cyberDojo = (function(cd, $) {
 
     var forkSucceededDialog = function(fork) {
       var okOrCancel = function(id) {
-        var url = '/dojo/index/' + id;
+        var url = '/enter/show/' + id;
         window.open(url);
       };
       cd.newDojoDialog('fork', fork.id, okOrCancel).dialog('open');

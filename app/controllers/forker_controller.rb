@@ -62,8 +62,8 @@ class ForkerController < ApplicationController
 
     respond_to do |format|
       format.json { render json: result }
-      format.html { redirect_to controller: 'dojo',
-                                    action: 'index',
+      format.html { redirect_to controller: 'enter',
+                                    action: 'show',
                                         id: result[:id] }
     end
   end
