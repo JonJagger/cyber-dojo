@@ -103,13 +103,13 @@ class ForkerControllerTest < AppControllerTestBase
   test 'F65835',
   'when id,language,avatar,tag are all ok ' +
     'format=html fork works ' +
-      'and you are redirected to the home page ' +
+      'and you are redirected to the enter page ' +
         "with the new dojo's id" do
     @avatar = start # 0
     run_tests       # 1
     fork(@id, @avatar.name, tag = 1, :html)
     assert_response :redirect
-    url = /(.*)\/dojo\/index\/(.*)/
+    url = /(.*)\/enter\/show\/(.*)/
     m = url.match(@response.location)
     forked_kata_id = m[2]
     assert disk[katas[forked_kata_id].path].exists?
