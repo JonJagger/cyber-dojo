@@ -5,16 +5,8 @@ sudo -E ../exercises/refresh_cache.rb
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 
-#ramDisk=/mnt/ram_disk
-#sudo ../admin_scripts/make_ram_disk.sh $ramDisk 4m
-#export CYBER_DOJO_TMP_ROOT=$ramDisk/tmp
-
-#notRamDisk=/tmp/cyber-dojo
-#sudo rm -rf $notRamDisk
-#mkdir -p $notRamDisk
-#sudo chmod -R 777 $notRamDisk
-#sudo chown -R www-data:www-data $notRamDisk
-#export CYBER_DOJO_TMP_ROOT=$notRamDisk
+ramDisk=/mnt/ram-disk
+sudo ../admin_scripts/make_ram_disk.sh $ramDisk 1g
 
 sudo chmod 777 ./test-summary.txt
 

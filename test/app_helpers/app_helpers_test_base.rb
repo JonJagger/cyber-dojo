@@ -7,8 +7,6 @@ class AppHelpersTestBase < TestBase
 
   def setup
     super
-    set_katas_root(tmp_root + 'katas')
-    set_one_self_class('OneSelfDummy')
     set_runner_class('RunnerMock')
   end
 

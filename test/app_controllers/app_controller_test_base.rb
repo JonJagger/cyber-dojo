@@ -24,14 +24,6 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def setup
-    super
-    set_katas_root(tmp_root + 'katas')
-    set_one_self_class('OneSelfDummy')
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   def create_kata(language_name = random_language, exercise_name = random_exercise)
     parts = language_name.split(',')
     params = {
@@ -89,18 +81,6 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
     post 'kata/run_tests', params.merge(@params_maker.params)
     @params_maker = ParamsMaker.new(@avatar)
     assert_response :success
-  end
-
-  def XXX_stub_test_output(rag)
-    # Refactored into RunnerMock
-    disk = HostDisk.new
-    root = File.expand_path(File.dirname(__FILE__) + '/..') + '/app_lib/test_output'
-    assert [:red,:amber,:green].include? rag
-    path = "#{root}/#{@avatar.kata.language.unit_test_framework}/#{rag}"
-    all_outputs = disk[path].each_file.collect { |filename| filename }
-    filename = all_outputs.sample
-    output = disk[path].read(filename)
-    dojo.runner.stub_output(output)
   end
 
   def json

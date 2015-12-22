@@ -8,7 +8,11 @@ module TestTmpRootHelpers # mix-in
   end
 
   def tmp_root
-    root = ENV[tmp_key] || '/tmp/cyber-dojo'
+    root = ENV[tmp_key]
+    ram_disk = '/mnt/ram-disk'
+    root ||= ram_disk + '/cyber-dojo'     if File.directory?(ram_disk)
+    not_ram_disk = '/tmp'
+    root ||= not_ram_disk + '/cyber-dojo' if File.directory?(not_ram_disk)
     root.end_with?('/') ? root : (root + '/')
   end
 

@@ -7,7 +7,12 @@ module TestExternalHelpers # mix-in
 
   module_function
 
-  def setup   ; store_env_vars; setup_tmp_root; end
+  def setup
+    store_env_vars
+    setup_tmp_root
+    set_katas_root(tmp_root + 'katas')
+    set_one_self_class('OneSelfDummy')
+  end
 
   def teardown; restore_env_vars; end
 
