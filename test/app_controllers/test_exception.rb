@@ -4,6 +4,8 @@ require_relative './app_controller_test_base'
 
 class ExceptionControllerTests < AppControllerTestBase
 
+=begin
+
   def setup
     @consider = Rails.application.config.consider_all_requests_local
     @show = Rails.application.config.action_dispatch.show_exceptions
@@ -22,7 +24,6 @@ class ExceptionControllerTests < AppControllerTestBase
   #   ./run_all.sh
   # ??
 
-=begin
   test "bad path" do
     get 'dojo/sdsdsd'
     assert_template 'error/sorry'

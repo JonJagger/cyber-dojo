@@ -22,6 +22,14 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
   include TestHexIdHelpers
   include TestTmpRootHelpers
 
+  def setup
+    super
+    set_runner_class('MockRunner')
+    # Note that merely writing runner.class.name in the assert uses
+    # runner and therefore causes the @runner ||= code to run!
+    assert_equal 'MockRunner', runner.class.name
+  end
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def create_kata(language_name = random_language, exercise_name = random_exercise)

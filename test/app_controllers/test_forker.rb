@@ -6,8 +6,6 @@ class ForkerControllerTest < AppControllerTestBase
 
   def setup
     super
-    set_runner_class('RunnerMock')
-    assert_equal 'RunnerMock', runner.class.name
     @id = create_kata('Java, JUnit')
   end
 

@@ -6,12 +6,6 @@ class DashboardControllerTest < AppControllerTestBase
 
   def setup
     super
-    set_runner_class('RunnerMock')
-    # once that external has been accessed, its dojo @runner ||= code
-    # means it can't be reset...
-    # Note that merely writing runner.class.name in the assert uses
-    # runner and therefore causes the @runner ||= code to run!
-    assert_equal 'RunnerMock', runner.class.name
     create_kata
   end
 

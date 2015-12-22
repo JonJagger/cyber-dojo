@@ -4,12 +4,6 @@ require_relative './app_controller_test_base'
 
 class DojoControllerTest < AppControllerTestBase
 
-  def setup
-    super
-  end
-
-  #- - - - - - - - - - - - - - - -
-
   test 'BF7103',
   'index without id' do
     get 'dojo/index'

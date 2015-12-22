@@ -4,14 +4,6 @@ require_relative './app_controller_test_base'
 
 class SetupControllerTest < AppControllerTestBase
 
-  def setup
-    super
-    set_runner_class('RunnerMock')
-    assert_equal 'RunnerMock', runner.class.name
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - -
-
   test 'BB9967',
   'setup page uses cached exercises' do
     get 'setup/show'

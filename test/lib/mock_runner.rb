@@ -4,7 +4,7 @@
 # state is preserved from the setup to the call it has
 # to be saved to disk and then retrieved.
 
-class RunnerMock
+class MockRunner
 
   def initialize(dojo)
     @dojo = dojo
