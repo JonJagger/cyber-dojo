@@ -6,7 +6,7 @@ class OneSelfCurlTests < LibTestBase
 
   def setup
     super
-    set_shell_class('HostShellMock')
+    set_shell_class('MockHostShell')
     set_one_self_class('OneSelfCurl')
   end
 

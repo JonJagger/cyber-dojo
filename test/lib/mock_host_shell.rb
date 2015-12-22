@@ -1,5 +1,5 @@
 
-class HostShellMock
+class MockHostShell
 
   def initialize(dojo)
     @target = HostShell.new(dojo)

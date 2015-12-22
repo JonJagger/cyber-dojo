@@ -9,9 +9,7 @@ class DockerRunnerTests < LibTestBase
 
   def setup
     super
-    set_katas_root     tmp_root + 'katas/'
-    set_shell_class    'HostShellMock'
-    set_one_self_class 'OneSelfDummy'
+    set_shell_class    'MockHostShell'
     set_runner_class   'DockerRunner'
   end
 
