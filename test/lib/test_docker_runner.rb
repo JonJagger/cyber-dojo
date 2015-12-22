@@ -20,6 +20,24 @@ class DockerRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test '329309',
+  'installed? is true when [docker --version] succeeds' do
+    shell.mock_exec(['docker --version'], '', success)
+    assert_equal 'DockerRunner', runner.class.name
+    assert runner.installed?
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'FDE315',
+  ' installed? is false when [docker --version] does not succeed' do
+    shell.mock_exec(['docker --version'], '', not_success)
+    assert_equal 'DockerRunner', runner.class.name
+    refute runner.installed?
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test '75909D',
   'refresh_cache() executes [docker images]' +
     ' and creates new cache-file in caches/ which determines runnability' do
@@ -33,9 +51,9 @@ class DockerRunnerTests < LibTestBase
 
     shell.mock_exec(['docker images'], docker_images_python_pytest, success)
 
-    refute disk[caches.path].exists?(DockerRunner.cache_filename)
+    refute disk[caches.path].exists?(runner.cache_filename)
     runner.refresh_cache
-    assert disk[caches.path].exists?(DockerRunner.cache_filename)
+    assert disk[caches.path].exists?(runner.cache_filename)
 
     expected = ['Python, py.test']
     actual = runner.runnable_languages.map { |language| language.display_name }.sort

@@ -6,10 +6,6 @@
 
 class DockerMachineRunner
 
-  def self.cache_filename
-    'docker_machine_runner_cache.json'
-  end
-
   def initialize(dojo)
     @dojo = dojo
   end
@@ -24,8 +20,17 @@ class DockerMachineRunner
     "#{File.dirname(__FILE__)}/"
   end
 
+  def installed?
+    _, exit_status = shell.exec('docker-machine --version')
+    exit_status == shell.success
+  end
+
   def runnable_languages
     languages.select { |language| runnable?(language.image_name) }
+  end
+
+  def cache_filename
+    'docker_machine_runner_cache.json'
   end
 
   # modifiers
@@ -57,7 +62,7 @@ class DockerMachineRunner
         node_map[image_name] << node
       end
     end
-    caches.write_json(self.class.cache_filename, node_map)
+    caches.write_json(cache_filename, node_map)
   end
 
   private
@@ -70,7 +75,7 @@ class DockerMachineRunner
   end
 
   def node_map
-    @node_map ||= caches.read_json(self.class.cache_filename)
+    @node_map ||= caches.read_json(cache_filename)
   end
 
   def sudo(command)

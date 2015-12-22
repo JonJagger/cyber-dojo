@@ -20,6 +20,24 @@ class DockerMachineRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test '6DAA25',
+  'installed? is true when [docker-machine --version] succeeds' do
+    shell.mock_exec(['docker-machine --version'], '', success)
+    assert_equal 'DockerMachineRunner', runner.class.name
+    assert runner.installed?
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'C35391',
+  ' installed? is false when [docker-machine --version] does not succeed' do
+    shell.mock_exec(['docker-machine --version'], '', not_success)
+    assert_equal 'DockerMachineRunner', runner.class.name
+    refute runner.installed?
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test '1E3108',
   'refresh_cache() executes' +
     ' [docker-machine ls] and then' +
@@ -112,9 +130,9 @@ class DockerMachineRunnerTests < LibTestBase
       )
     end
 
-    refute disk[caches.path].exists?(DockerMachineRunner.cache_filename), "!cache exists"
+    refute disk[caches.path].exists?(runner.cache_filename), "!cache exists"
     runner.refresh_cache
-    assert disk[caches.path].exists?(DockerMachineRunner.cache_filename), "cache exists"
+    assert disk[caches.path].exists?(runner.cache_filename), "cache exists"
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

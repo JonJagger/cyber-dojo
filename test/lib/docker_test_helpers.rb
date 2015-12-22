@@ -37,6 +37,7 @@ module DockerTestHelpers # mix-in
   def times_out; fatal_error(kill); end
 
   def success; 0; end
+  def not_success; 42; end
 
   def kill; 9; end
 
