@@ -2,6 +2,7 @@
 {
   "visible_filenames": [
     "hiker.rs",
+    "hiker_test.rs",
     "cyber-dojo.sh"
   ],
   "filename_extension" : ".rs",
