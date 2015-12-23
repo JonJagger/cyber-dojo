@@ -103,13 +103,37 @@ class DojoTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '81CB08',
-  'external runner object defaults to DockerRunner' do
+  'external runner object defaults to DockerMachineRunner if docker-machine is installed' do
     unset('RUNNER')
-    #unset('SHELL')
-    #set_shell_class('MockHostShell')
-    #shell.mock_exec(['docker-machine --version'], 'any', shell.success)
+    unset('SHELL')
+    set_shell_class('MockHostShell')
+    shell.mock_exec(['docker-machine --version'], 'any', shell.success)
+    assert_equal 'DockerMachineRunner', dojo.runner.class.name
+    shell.teardown
+  end
+
+  test 'BFF893',
+  'external runner object defaults to DockerRunner if' +
+     'docker-machine is not installed and docker is installed' do
+    unset('RUNNER')
+    unset('SHELL')
+    set_shell_class('MockHostShell')
+    shell.mock_exec(['docker-machine --version'], 'any', shell_failure=42)
+    shell.mock_exec(['docker --version'], 'any', shell.success)
     assert_equal 'DockerRunner', dojo.runner.class.name
-    #shell.teardown
+    shell.teardown
+  end
+
+  test 'B97509',
+  'external runner object defaults to HostRunner if' +
+    'docker-machine is not installed and docker is not installed' do
+    unset('RUNNER')
+    unset('SHELL')
+    set_shell_class('MockHostShell')
+    shell.mock_exec(['docker-machine --version'], 'any', shell_failure=42)
+    shell.mock_exec(['docker --version'], 'any', shell_failure=42)
+    assert_equal 'HostRunner', dojo.runner.class.name
+    shell.teardown
   end
 
   test 'D51880',

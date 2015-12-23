@@ -34,19 +34,29 @@ class Dojo
   def external_object
     key = name_of(caller)
     var = 'CYBER_DOJO_' + key.upcase + '_CLASS'
-    Object.const_get(ENV[var] || object_defaults[key]).new(self)
+    Object.const_get(ENV[var] || object_defaults(key)).new(self)
   end
 
-  def object_defaults
+  def object_defaults(key)
+    # be very careful about recursion here since
+    # default_runner uses runner.installed? checks
+    # which will lead to shell.exec calls...
+    return default_runner if key == 'runner'
     @defaults ||= {
       'one_self' => 'OneSelfCurl',
       'starter'  => 'HostDiskAvatarStarter',
-      'runner'   => 'DockerRunner',
       'shell'    => 'HostShell',
       'disk'     => 'HostDisk',
       'log'      => 'HostLog',
       'git'      => 'HostGit'
     }
+    @defaults[key]
+  end
+
+  def default_runner
+    return 'DockerMachineRunner' if DockerMachineRunner.new(self).installed?
+    return 'DockerRunner'        if DockerRunner.new(self).installed?
+    return 'HostRunner'
   end
 
 end
