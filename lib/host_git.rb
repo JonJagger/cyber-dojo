@@ -20,14 +20,13 @@ class HostGit
   end
 
   def diff(path, n, m)
-    space = ' '
     options = [
       '--ignore-space-at-eol',
       '--find-copies-harder',
       "#{n}",
       "#{m}",
       'sandbox'
-    ].join(space)
+    ].join(space = ' ')
     output_of(shell.cd_exec(path, "git diff #{options}"))
   end
 
