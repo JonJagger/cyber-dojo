@@ -19,10 +19,10 @@ module TrafficLightHelper # mix-in
         " data-tip='ajax:traffic_light'" +
         " data-id='#{avatar.kata.id}'" +
         " data-avatar-name='#{avatar.name}'" +
-        " data-was-tag='#{number-1}'" +
+        " data-was-tag='#{number - 1}'" +
         " data-now-tag='#{number}'>" +
         traffic_light_image(light.colour) +
-     "</div>"
+     '</div>'
   end
 
   def diff_avatar_image(avatar)
@@ -33,7 +33,7 @@ module TrafficLightHelper # mix-in
         " data-was-tag='-1'" +
         " data-now-tag='-1'>" +
         avatar_image(avatar.name) +
-     "</div>"
+     '</div>'
   end
 
   def traffic_light_count(avatar)
@@ -49,11 +49,11 @@ module TrafficLightHelper # mix-in
         " data-green-count='#{count(lights, :green)}'" +
         " data-timed-out-count='#{count(lights, :timed_out)}'>" +
       lights.count.to_s +
-    "</div>"
+    '</div>'
   end
 
   def count(traffic_lights, colour)
-     traffic_lights.entries.count{|light| light.colour === colour }
+     traffic_lights.entries.count { |light| light.colour == colour }
   end
 
   def avatar_image(avatar_name)

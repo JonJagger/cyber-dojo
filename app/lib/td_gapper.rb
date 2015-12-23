@@ -17,7 +17,7 @@ class TdGapper
     collapsed_table(s[:td_nos]).each do |td, gi|
       count = gi[1]
       s[:avatars].each do |_name, td_map|
-        count.times { |n| td_map[td+n+1] = [] } if gi[0] == :dont_collapse
+        count.times { |n| td_map[td + n + 1] = [] } if gi[0] == :dont_collapse
         td_map[td + 1] = { collapsed: count } if gi[0] == :collapse
       end
     end
@@ -87,7 +87,7 @@ class TdGapper
     td_nos.each_cons(2) do |p|
       diff = p[1] - p[0]
       key = diff < max_uncollapsed_tds ? :dont_collapse : :collapse
-      obj[p[0]] = [key, diff-1]
+      obj[p[0]] = [key, diff - 1]
     end
     obj
   end

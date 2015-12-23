@@ -52,7 +52,7 @@ class Avatars
 
   def started_avatars
     names = starter.started_avatars(path)
-    Hash[names.map{ |name| [name, Avatar.new(kata, name)]}]
+    Hash[names.map { |name| [name, Avatar.new(kata, name)] }]
   end
 
 end

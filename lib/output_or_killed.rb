@@ -16,7 +16,7 @@ module OutputOrKilled # mix-in
   end
 
   def timed_out
-    (timeout=128) + (kill=9)
+    (timeout = 128) + (kill = 9)
   end
 
 end

@@ -12,7 +12,7 @@ class Languages
     @path = path
   end
 
-  #queries
+  # queries
 
   attr_reader :path
 

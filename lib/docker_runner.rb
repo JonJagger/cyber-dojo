@@ -66,4 +66,3 @@ class DockerRunner
   end
 
 end
-

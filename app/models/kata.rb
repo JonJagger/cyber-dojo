@@ -62,7 +62,7 @@ class Kata
   def start_avatar(avatar_names = Avatars.names.shuffle)
     avatar = nil
     avatar_name = starter.start_avatar(path, avatar_names)
-    if !avatar_name.nil?
+    unless avatar_name.nil?
       avatar = Avatar.new(self, avatar_name)
       avatar.start
     end

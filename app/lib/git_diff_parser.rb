@@ -188,7 +188,7 @@ module GitDiff
     end
 
     def parse_lines(re)
-      lines = [ ]
+      lines = []
       while md = re.match(@lines[@n])
         lines << md[1]
         @n += 1

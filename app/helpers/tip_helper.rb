@@ -51,9 +51,9 @@ module TipHelper # mix-in
 
   def plural_colour(count, colour)
     word = plural_word(colour, count)
-    "<div>" +
+    '<div>' +
       "&bull; #{count} #{colour_tag(colour, word)}" +
-    "</div>"
+    '</div>'
   end
 
   def plural(count, text)

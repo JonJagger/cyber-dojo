@@ -46,13 +46,13 @@ class OneSelfCurl
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def started(avatar)
+  def started(_avatar)
     # TODO: from one_self.rb.dead
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def tested(avatar, hash)
+  def tested(_avatar, _hash)
     # TODO: from one_self.rb.dead
   end
 

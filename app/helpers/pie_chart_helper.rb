@@ -14,7 +14,7 @@ module PieChartHelper # mix-in
   end
 
   def pie_chart_from_counts(counts, size, key)
-     "<canvas" +
+     '<canvas' +
         " class='pie'" +
         " data-red-count='#{counts[:red]}'" +
         " data-amber-count='#{counts[:amber]}'" +
@@ -23,11 +23,11 @@ module PieChartHelper # mix-in
         " data-key='#{key}'" +
         " width='#{size}'" +
         " height='#{size}'>" +
-      "</canvas>"
+      '</canvas>'
   end
 
   def count(lights, colour)
-     lights.entries.count{ |light| light.colour == colour }
+    lights.entries.count { |light| light.colour == colour }
   end
 
 end
