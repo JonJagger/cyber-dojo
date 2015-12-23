@@ -33,6 +33,7 @@ class Dojo
   end
 
   def root_dir
+    # /var/www/cyber-dojo
     File.expand_path('../..', File.dirname(__FILE__))
   end
 
@@ -72,12 +73,14 @@ end
 # For example, I can run controller tests by setting the
 # environment variables, then run the test which issue
 # a GET/POST, let the call work its way through the rails stack,
-# eventually reaching Dojo.rb where it creates
-# Disk/Runner/Git/OneSelf objects as named in the ENV[]
-# I cannot see how to do this using Parameterize-From-Above
-# since I know of no way to 'tunnel' the parameters 'through'
-# the rails stack.
+# eventually reaching dojo.rb where it creates
+# Disk/Runner/Git/Shell/etc objects as named in ENV[]
 #
-# It also allows me to do polymorphic testing, viz to rerun
-# the *same* test under different environments.
+# The external objects are held using
+#    @name ||= ...
+# This could be coded without the ||= cache since
+# the externals are stateless - the externals they
+# represent maintain the state.
+# I use ||= partly for optimization and partly for testing
+# (where it is handy that it is the same object)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

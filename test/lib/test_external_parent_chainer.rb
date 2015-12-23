@@ -32,8 +32,8 @@ end
 
 class Mother
 
-  def initialize(parent)
-    @parent = parent
+  def initialize(grandmother)
+    @parent = grandmother
   end
 
   attr_reader :parent
@@ -52,8 +52,8 @@ end
 
 class Daughter
 
-  def initialize(parent)
-    @parent = parent
+  def initialize(mother)
+    @parent = mother
   end
 
   attr_reader :parent
@@ -86,16 +86,15 @@ class ExternalParentChainerTests < LibTestBase
     assert_equal 'Daughter', ellie.class.name
     assert_equal 'Mother', ellie.parent.class.name
     assert_equal 'GrandMother', ellie.parent.parent.class.name
+    assert_equal 'grand_mother/', edna.path
+    assert_equal 'grand_mother/mother/', margaret.path
+    assert_equal 'grand_mother/mother/daughter/', ellie.path
   end
 
   # - - - - - - - - - - - - - - - - - - - - -
 
   test '4271A8',
   'method_missing finds first object without a parent and delegates to it' do
-    assert_equal 'grand_mother/', edna.path
-    assert_equal 'grand_mother/mother/', margaret.path
-    assert_equal 'grand_mother/mother/daughter/', ellie.path
-
     assert_equal [1,2,3], ellie.log.m(1,2,3)
     assert_equal ['s'], ellie.log.m('s')
   end
@@ -113,7 +112,7 @@ class ExternalParentChainerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - -
 
   test '5BBF52',
-  'passing args to root object raises' do
+  'parent chain is for object *access* only - passing args raises RuntimeError' do
     ellie.log
     raised = assert_raises(RuntimeError) { ellie.log(42) }
     assert_equal "not-expecting-arguments [42]", raised.message
@@ -124,7 +123,7 @@ class ExternalParentChainerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - -
 
   test '397B16',
-  'root object has no parent, does not include chainer, but still has the log' do
+  'root object has no parent, does not include chainer, but still has accessible externals (log)' do
     ellie.log.m(1,2)
     ellie.log.m('Tay')
     assert_equal [[1,2],['Tay']], edna.log.messages
