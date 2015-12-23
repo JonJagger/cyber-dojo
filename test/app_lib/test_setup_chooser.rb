@@ -39,6 +39,11 @@ class SetupChooserTests < AppLibTestBase
     assert_is_randomly_chosen_language(test_languages_names, id = nil, katas)
   end
 
+  test '64576B',
+  'when chooser is passed choices=[] and id=nil result is nil' do
+    assert_nil choose_language([], nil, katas)
+  end
+
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test '42D488',

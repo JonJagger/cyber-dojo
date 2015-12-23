@@ -23,7 +23,7 @@ class DockerRunner
 
   def installed?
     _, exit_status = shell.exec('docker --version')
-    exit_status == shell.success
+    exit_status == shell.success && disk[caches.path].exists?(cache_filename)
   end
 
   def runnable_languages

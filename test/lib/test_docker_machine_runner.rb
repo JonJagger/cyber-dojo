@@ -21,10 +21,24 @@ class DockerMachineRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '6DAA25',
-  'installed? is true when [docker-machine --version] succeeds' do
+  'installed? is true when [docker-machine --version] succeeds and cache exists' do
+    set_caches_root(tmp_root + 'caches')
+    dir = disk[caches.path]
+    dir.make
+    dir.write(runner.cache_filename, 'present')
     shell.mock_exec(['docker-machine --version'], '', success)
     assert_equal 'DockerMachineRunner', runner.class.name
     assert runner.installed?
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '129439',
+  'installed? is false when [docker-machine --version] succeeds but cache does not exist' do
+    set_caches_root(tmp_root + 'caches')
+    shell.mock_exec(['docker-machine --version'], '', success)
+    assert_equal 'DockerMachineRunner', runner.class.name
+    refute runner.installed?
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

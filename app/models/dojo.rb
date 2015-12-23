@@ -56,7 +56,6 @@ class Dojo
   def default_runner
     return 'DockerMachineRunner' if DockerMachineRunner.new(self).installed?
     return 'DockerRunner'        if DockerRunner.new(self).installed?
-    return 'HostRunner'
   end
 
 end

@@ -11,7 +11,6 @@
   docker_runner
   docker_data_container_runner
   host_shell
-  host_runner
   host_disk
   host_disk_avatar_starter
   host_dir

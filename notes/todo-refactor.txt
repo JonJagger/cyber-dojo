@@ -1,4 +1,7 @@
 
+Refactor docker images - most can be a lot smaller...
+https://hub.docker.com/u/delitescere/
+
 --------------------------------------
 put admin_scripts/refresh_all.sh tests of whether
 docker-machine, docker are installed into the
