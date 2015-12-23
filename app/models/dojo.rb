@@ -15,6 +15,11 @@ class Dojo
   def      log;      @log ||= external_object; end
   def      git;      @git ||= external_object; end
 
+  def root_dir
+    # /var/www/cyber-dojo
+    File.expand_path('../..', File.dirname(__FILE__))
+  end
+
   private
 
   include NameOfCaller
@@ -30,11 +35,6 @@ class Dojo
     key = name_of(caller)
     var = 'CYBER_DOJO_' + key.upcase + '_CLASS'
     Object.const_get(ENV[var] || object_defaults[key]).new(self)
-  end
-
-  def root_dir
-    # /var/www/cyber-dojo
-    File.expand_path('../..', File.dirname(__FILE__))
   end
 
   def object_defaults
