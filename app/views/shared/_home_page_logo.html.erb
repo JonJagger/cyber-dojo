@@ -3,21 +3,21 @@
 
 $(function() {
 
-  $('#yin-yang-logo').click(function() {
+  $('#home-page-logo').click(function() {
     var id = $(this).data('id');
     var url = '/dojo/index/' + id;
-    window.open(url);
+    window.location.href = url;
   });
 
 });
 
 //--></script>
 
-<div id="yin-yang-logo"
-     data-id="<%= @kata.id %>"
+<div id="home-page-logo"
+     data-id="<%= @id %>"
      title="opens a new home page">
   <img alt="cyber-dojo yin-yang logo"
        src="/images/avatars/cyber-dojo.png"
-       height="54"
-       width="54" />
+       height="35"
+       width="35" />
 </div>

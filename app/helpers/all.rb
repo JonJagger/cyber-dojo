@@ -1,7 +1,6 @@
 
 %w{
   avatar_image_helper
-  logo_image_helper
   parity_helper
   pie_chart_helper
   tip_helper

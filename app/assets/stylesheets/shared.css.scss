@@ -24,6 +24,12 @@ a:link, a:visited
 
 //----------------------------------------------
 
+#home-page-logo {
+  display: inline-block;
+}
+
+//----------------------------------------------
+
 @mixin edged-panel
 {
   display: inline-block;
@@ -33,8 +39,6 @@ a:link, a:visited
   margin-left: 10px;
   background: $darker-color;
 }
-
-.diff-traffic-light, #yin-yang-logo { cursor: pointer; }
 
 .hover-tip {
   @include plaintext-font();
