@@ -1,13 +1,20 @@
 
 class SetupController < ApplicationController
 
-  def choose_language_and_test
+  def show_languages_and_tests
     @id = id
     @title = 'create'
     languages_names = read_languages
     index = choose_language(languages_names, id, dojo.katas)
     @languages = ::LanguagesDisplayNamesSplitter.new(languages_names, index)
     @initial_language_index = @languages.selected_index
+  end
+
+  def show_exercises
+    @id = id
+    @title = 'create'
+    @exercises_names,@instructions = read_exercises
+    @initial_exercise_index = choose_exercise(@exercises_names, id, dojo.katas)
   end
 
   def show

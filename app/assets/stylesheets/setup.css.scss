@@ -14,20 +14,24 @@
     text-align: left;
   }
 
-  #languages-container, #tests-container, #info-container {
+  #languages-container, #tests-container, #exercises-container {
     @include edged-panel();
-    padding-right: 10px !important;
+    padding: 10px !important;
   }
-
   #info-container {
     @include plaintext-font();
-    width: 225px;
-    padding: 10px;
+    height: 365px;
+    width: 200px;
+    padding: 20px !important;
+    text-align: right;
+  }
+  #exercises-container {
+    padding: 10px !important;
   }
 
-  #languages-container, #tests-container, #exercises-container {
+  #languages-list, #tests-list, #exercises-list {
     @include non-code-font();
-    height: 425px;
+    height: 365px;
     padding-right: 3px;
     margin-right: 5px;
     overflow-y: auto;
@@ -45,12 +49,17 @@
     }
   }
 
-  #choose-language, #choose-tests, #choose-exercise {
+  #language-title, #tests-title, #exercise-title {
     @include non-code-font();
     color: darken($lighter-color, 5%);
     @include font-size-larger();
     margin-bottom: 5px;
     padding-left: 0px;
+  }
+  #language-title, #tests-title {
+    text-align: right;
+  }
+  #exercise-title {
     text-align: right;
   }
 
@@ -66,7 +75,7 @@
     background: lighten($darker-color, 5%);
     border-top-left-radius: 5px;
     border: none;
-    height: 415px;
+    height: 355px;
     width: 550px;
     margin-left: 0px;
     overflow-y: scroll;
@@ -74,12 +83,14 @@
     outline: none;
     &::-webkit-scrollbar:vertical { width: 5px; }
     resize: none;
+    position: relative;
+    top: 44px;
   }
 
   #ok, #next {
     @include non-code-font();
     @include font-size-largest();
-    margin: { top: 15px; left: 10px; }
+    margin: { top: 15px; left: 8px; }
   }
 
 }

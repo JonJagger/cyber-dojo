@@ -1,34 +1,5 @@
 
-
-Split create page into two.
-1. Step 1/2
-   Language? Tests?
-   Use the extra space to show the test file (later)
-   First entry in manifest.json visible_filenames:
-   is always the test file.
-   Use the extra space to say
-   o) the initial code is always 42 Douglas Adams etc
-   o) the initial code bears
-      no relation to your chosen exercise.
-   o) answer() is not related to the chosen exercise
-   o) dont remove lines at the end of the tests such as
-        puts("All tests passed")
-      as this is often how cyber-dojo knows if the test passed.
-   o) tests have to complete in 15 seconds.
-   o) do not copy-paste code into the editor (eg from a blog article).
-      This is an easy way to invisible characters into your code!
-   Don't make this a one-click obviously.
-   Keeping language and tests together also makes this
-   a smaller refactoring from the current code.
-   OK and CANCEL buttons.
-2. Step 2/2
-   Exercise?
-   Keep instructions file.
-   CREATE and CANCEL buttons
-   Later add "fake" none option to list
-   CREATE and CANCEL
 --------------------------------------
-
 Refactor docker images - most can be a lot smaller...
 https://hub.docker.com/u/delitescere/
 

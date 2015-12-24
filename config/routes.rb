@@ -21,8 +21,8 @@ CyberDojo::Application.routes.draw do
   end
 
   scope path: '/setup', controller: :setup do
-    get 'choose_language_and_test(/:id)' => :choose_language_and_test
-    get 'show(/:id)' => :show
+    get 'show_languages_and_tests(/:id)' => :show_languages_and_tests
+    get 'show_exercises(/:id)' => :show_exercises
     get 'save' => :save, :constraints => { :format => :json }
   end
 

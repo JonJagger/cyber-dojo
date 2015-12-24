@@ -1,4 +1,5 @@
 
+<div id="languages-list">
   <% @languages.names.each_with_index do |name,index| %>
     <div class="filename"
          id="language_<%= index %>"
@@ -8,3 +9,4 @@
       <%= name %>
     </div>
   <% end %>
+</div>

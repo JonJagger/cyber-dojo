@@ -6,7 +6,7 @@ $(function() {
   $('#create-button').click(function() {
     cd.dialog_ie(function() {
       var id = "<%= @id %>";
-      var url = '/setup/show/' + id;
+      var url = '/setup/show_languages_and_tests/' + id;
       window.location = url;
     });
   });
