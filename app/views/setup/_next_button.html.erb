@@ -7,8 +7,7 @@ $(function() {
     var id = "<%= @id %>";
     var language = $('[id^=language_][class~=selected]').data('language');
     var     test = $('[id^=test_][class~=selected]').data('test');
-    // TODO: pass language and test in URL
-    var url = '/setup/show_exercises/' + id;
+    var url = '/setup/show_exercises/' + id + '?language=' + language + '&test=' + test;
     window.location = url;
   });
 

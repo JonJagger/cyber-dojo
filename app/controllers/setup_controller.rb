@@ -13,6 +13,8 @@ class SetupController < ApplicationController
   def show_exercises
     @id = id
     @title = 'create'
+    @language = params[:language]
+    @test = params[:test]
     @exercises_names,@instructions = read_exercises
     @initial_exercise_index = choose_exercise(@exercises_names, id, dojo.katas)
   end

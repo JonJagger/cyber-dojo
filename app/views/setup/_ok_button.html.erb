@@ -7,9 +7,8 @@ $(function() {
 
   $('#ok').click(function() {
 
-    // TODO: collect from parameters
-    var language = $('[id^=language_][class~=selected]').data('language');
-    var     test = $('[id^=test_][class~=selected]').data('test');
+    var language = "<%= @language %>";
+    var     test = "<%= @test %>";
 
     var exercise = $('[id^=exercise_][class~=selected]').data('exercise');
     var latitude = undefined;     // Ensure params['latitude'] on the server to be nil not ''
