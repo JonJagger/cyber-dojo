@@ -5,14 +5,24 @@
 
 #setup-page {
 
-  margin: { top: 15px; left: 35px; }
+  margin: { top: 55px; left: 230px; }
 
   #prepare-a-new-practice {
     @include non-code-font();
     color: $lighter-color;
     font-size: 3.6em;
-    margin-left: 48px;
     text-align: left;
+  }
+
+  #languages-container, #tests-container, #info-container {
+    @include edged-panel();
+    padding-right: 10px !important;
+  }
+
+  #info-container {
+    @include plaintext-font();
+    width: 225px;
+    padding: 10px;
   }
 
   #languages-container, #tests-container, #exercises-container {
@@ -38,15 +48,10 @@
   #choose-language, #choose-tests, #choose-exercise {
     @include non-code-font();
     color: darken($lighter-color, 5%);
-    @include font-size-large();
+    @include font-size-larger();
     margin-bottom: 5px;
     padding-left: 0px;
     text-align: right;
-    margin-right: 10px;
-    &:after {
-      font-size: 0.84em;
-      content: '?';
-    }
   }
 
   .filename {
@@ -71,10 +76,10 @@
     resize: none;
   }
 
-  #ok {
+  #ok, #next {
     @include non-code-font();
     @include font-size-largest();
-    margin: { top: 5px; right: 0px; }
+    margin: { top: 15px; left: 10px; }
   }
 
 }

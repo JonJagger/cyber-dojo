@@ -1,0 +1,49 @@
+
+<%= render partial: 'chooser' %>
+
+<div id="setup-page">
+
+  <div id="prepare-a-new-practice">
+    <%= render partial: 'shared/home_page_logo' %>
+    create&nbsp;your&nbsp;practice&nbsp;session
+  </div>
+
+  <table>
+    <tr class="valign-top">
+      <td id="languages-container">
+        <div id="choose-language">language</div>
+        <%= render partial: 'list_languages' %>
+      </td>
+      <td id="tests-container">
+        <div id="choose-tests">tests</div>
+        <%= render partial: 'list_tests' %>
+      </td>
+      <td>
+        <div id="info-container">
+            The starting files for your chosen language+tests are always the same;
+            a function called <code>answer</code> that returns <code>6 * 9</code>
+            and a test function called
+            <code>life, the universe, and everything</code> that expects
+            <code><a href="https://en.wikipedia.org/wiki/The_Hitchhiker%27s_Guide_to_the_Galaxy">42</a></code>
+            <br/>
+            <br/>
+            The starting files are completely <em>unrelated</em> to your
+            chosen exercise. They are simply an example to start you off.
+            <br/>
+            <br/>
+            Tests must complete in 15 seconds.
+            <br/>
+            <br/>
+            Beware copy-pasting code into the editor (eg from a blog article).
+            This often inserts invisible characters into your code!
+        </div>
+        <br/>
+        <%= render partial: 'next_button' %>
+      </td>
+    </tr>
+  </table>
+
+
+</div>
+
+
