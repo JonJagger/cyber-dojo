@@ -3,12 +3,15 @@
 
 <div id="setup-page">
 
-  <div id="prepare-a-new-practice">
-    <%= render partial: 'shared/home_page_logo' %>
-    create&nbsp;your&nbsp;practice&nbsp;session
-  </div>
-
   <table>
+    <tr>
+      <td colspan="2">
+        <div id="prepare-a-new-practice">
+          <%= render partial: 'shared/home_page_logo' %>
+          create&nbsp;your&nbsp;practice&nbsp;session
+        </div>
+      </td>
+    </tr>
     <tr class="valign-top" id="exercises-container">
       <td>
         <div id="exercise-title">exercise?</div>
@@ -19,14 +22,11 @@
       </td>
     </tr>
     <tr class="valign-top">
-      <td>
+      <td colspan="2" align="right">
         <%= render partial: 'ok_button' %>
-      </td>
-      <td>
       </td>
     </tr>
   </table>
-
 
 </div>
 

@@ -15,11 +15,14 @@ $(function() {
     language.click(function() {
       cd.radioEntrySwitch(previousLanguage, language);
       previousLanguage = language;
+      // hide all the test-framework names
       $('[id^=test_]').hide();
+      // show the test-framework names for the selected language
       var i = language.data('index');
       $.each(testIndexes[i], function(_, index) {
         $('[id=test_' + index + ']').show();
       });
+      // select a test-framework name
       var ti = language.data('test-index');
       $('[id=test_' + ti +']').click();
     });

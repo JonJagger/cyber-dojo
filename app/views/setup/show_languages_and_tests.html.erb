@@ -3,21 +3,16 @@
 
 <div id="setup-page">
 
-  <div id="prepare-a-new-practice">
-    <%= render partial: 'shared/home_page_logo' %>
-    create&nbsp;your&nbsp;practice&nbsp;session
-  </div>
-
   <table>
     <tr class="valign-top">
-      <td id="languages-container">
-        <div id="language-title">language?</div>
-        <%= render partial: 'list_languages' %>
+      <td colspan="3">
+        <div id="prepare-a-new-practice">
+          <%= render partial: 'shared/home_page_logo' %>
+          create&nbsp;your&nbsp;practice&nbsp;session
+        </div>
       </td>
-      <td id="tests-container">
-        <div id="tests-title">tests?</div>
-        <%= render partial: 'list_tests' %>
-      </td>
+    </tr>
+    <tr class="valign-top">
       <td id="info-container">
             The starting files for your chosen language+tests are always the same;
             a function called <code>answer</code> that returns <code>6 * 9</code>
@@ -31,15 +26,22 @@
             <br/>
             <br/>
             Tests must complete in 15 seconds.
-            <br/>
-            <br/>
-            Beware copy-pasting code into the editor (eg from a blog article).
-            This often inserts invisible characters into your code!
+      </td>
+      <td id="languages-container">
+        <div id="language-title">language?</div>
+        <%= render partial: 'list_languages' %>
+      </td>
+      <td id="tests-container" align="right">
+        <div id="tests-title">tests?</div>
+        <%= render partial: 'list_tests' %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" align="right">
+        <%= render partial: 'next_button' %>
       </td>
     </tr>
   </table>
-
-  <%= render partial: 'next_button' %>
 
 </div>
 
