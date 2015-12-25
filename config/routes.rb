@@ -21,7 +21,8 @@ CyberDojo::Application.routes.draw do
   end
 
   scope path: '/setup', controller: :setup do
-    get 'show(/:id)' => :show
+    get 'show_languages_and_tests(/:id)' => :show_languages_and_tests
+    get 'show_exercises(/:id)' => :show_exercises
     get 'save' => :save, :constraints => { :format => :json }
   end
 
@@ -45,10 +46,8 @@ CyberDojo::Application.routes.draw do
   end
 
   scope path: '/tipper', controller: :tipper do
-    get 'traffic_light_tip' =>
-      :traffic_light_tip, :constraints => { :format => :json }
-    get 'traffic_light_count_tip' =>
-      :traffic_light_count_tip, :constraints => { :format => :json }
+    get 'traffic_light_tip' => :traffic_light_tip, :constraints => { :format => :json }
+    get 'traffic_light_count_tip' => :traffic_light_count_tip, :constraints => { :format => :json }
   end
 
 

@@ -1,0 +1,46 @@
+
+<%= render partial: 'choose_language_and_tests' %>
+
+<div id="setup-page">
+
+  <table>
+    <tr class="valign-top">
+      <td colspan="3">
+        <div id="prepare-a-new-practice">
+          <%= render partial: 'shared/home_page_logo' %>
+          create&nbsp;your&nbsp;practice&nbsp;session
+        </div>
+      </td>
+    </tr>
+    <tr class="valign-top">
+      <td id="info-container">
+            The starting files for your chosen language+tests are always
+            a function called <code>answer</code> that returns <code>6 * 9</code>
+            and a test called
+            <code>life, the universe, and everything</code> that expects
+            <code><a href="https://en.wikipedia.org/wiki/The_Hitchhiker%27s_Guide_to_the_Galaxy">42</a></code><br/>
+            <br/>
+            The starting files are <em>unrelated</em> to your
+            chosen exercise. They are simply an example to start you off.<br/>
+            <br/>
+            Tests must complete in 15 seconds.<br/>
+      </td>
+      <td id="languages-container">
+        <div id="language-title">language?</div>
+        <%= render partial: 'list_languages' %>
+      </td>
+      <td id="tests-container" align="right">
+        <div id="tests-title">tests?</div>
+        <%= render partial: 'list_tests' %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" align="right">
+        <%= render partial: 'next_button' %>
+      </td>
+    </tr>
+  </table>
+
+</div>
+
+

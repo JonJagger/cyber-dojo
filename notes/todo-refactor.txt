@@ -1,6 +1,6 @@
 
-Trying to revert back to pre split-setup pages
-and making a right hash of it.
+--------------------------------------
+traffic-lights need different hand-cursor
 --------------------------------------
 Refactor docker images - most can be a lot smaller...
 https://hub.docker.com/u/delitescere/
@@ -102,13 +102,6 @@ rsync'ing files back ...
 Instead of specifying files to return back would it be better to specify instead files NOT to rsync back
 Eg .class files, .o files, executable files.
 --------------------------------------
-stderr2stdout
-Only used in
-lib/HostGit.rb
-lib/Bash.rb
-Aim to pass bash object to HostGit?
-Have it explicitly in Bash and drop Stderr2Stdout.rb file
---------------------------------------
 https://github.com/minimaxir/big-list-of-naughty-strings
 --------------------------------------
 Split CSS into smaller files, per component.
@@ -141,16 +134,13 @@ add sponsors logos/text and image of kids on pies to home/join pages
 setup-page: cursor position inside instructions is not remembered if you return to that exercise.
 diff-traffic-light CSS in shared.css is used only in dashboard
 --------------------------------------
-Why is test/lib/disk_stub_cache.json
-not being gitignored? How do you debug this?
---------------------------------------
 There is something odd happening in
 test/lib/test_docker_runner.rb
 default ENV vars, eg CYBER_DOJO_KATAS_ROOT
 are not being seen even though they are set
 in the test_external_helpers.rb setup() method.
 --------------------------------------
-D and Rust both have a single source file
+D has a single source file
 viz the tests have not been split off into
 a separate file.
 --------------------------------------
@@ -158,39 +148,6 @@ make images on docker hub use version-number
 on the base image for the language but not
 on the images for the test-frameworks.
 Makes it easy to do upgrades.
---------------------------------------
-Split create page into two.
-1. Step 1/2
-   Language? Tests?
-   Use the extra space to show the test file (later)
-   First entry in manifest.json visible_filenames:
-   is always the test file.
-   Use the extra space to say
-   o) the initial code is always 42 Douglas Adams etc
-   o) the initial code bears
-      no relation to your chosen exercise.
-   o) answer() is not related to the chosen exercise
-   o) dont remove lines at the end of the tests such as
-        puts("All tests passed")
-      as this is often how cyber-dojo knows if the test passed.
-   o) tests have to complete in 15 seconds.
-   o) do not copy-paste code into the editor (eg from a blog article).
-      This is an easy way to invisible characters into your code!
-   Don't make this a one-click obviously.
-   Keeping language and tests together also makes this
-   a smaller refactoring from the current code.
-   OK and CANCEL buttons.
-2. Step 2/2
-   Exercise?
-   Keep instructions file.
-   CREATE and CANCEL buttons
-   Later add "fake" none option to list
-   CREATE and CANCEL
---------------------------------------
-Try and make lighter background for these avatar images
-antelope, bat, bear, eagle, elephant, fox, gopher,
-heron, hyena, lizard, ostrich, porcupine, rhino,
-tuna, turtle,
 --------------------------------------
 
 Cut from http://blog.cyber-dojo.org/2014/09/adding-new-language-and-unit-test-to-cyber-dojo.html
@@ -257,33 +214,6 @@ in the increments.json file.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-make ExternalParentChain do this?
-  def method_missing(command,*args)
-    @parent.send(command,*args)
-  end
-Dojo.rb do this
-  def git
-    @git ||= GitPather.new
-  end
-and
-  class GitPather
-    def [](path)
-      env = 'CYBER_DOJO_GIT_CLASS_NAME'
-      Object.const_get(env).new(self, path)
-    end
-    def log
-      @log ||= []
-    end
-  end
-and model code changes from
-  git.commit(path, "-a -m '#{tag}' --quiet")
-to
-  git[path].commit("-a -m '#{tag}' --quiet")
-to mimic disk[path] => dir
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Provide one_self secrets via ENV[]
-Use ram-disk and drop FakeDir?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 When you resize the edit textarea you cannot (manually) resize the line-numbers
 textarea to its left. You used to be able to do this. Why is the line-numbers

@@ -5,19 +5,32 @@
 
 #setup-page {
 
-  margin: { top: 15px; left: 35px; }
+  margin: { top: 55px; left: 210px; }
 
   #prepare-a-new-practice {
     @include non-code-font();
     color: $lighter-color;
     font-size: 3.6em;
-    margin-left: 48px;
-    text-align: left;
+    text-align: right;
+  }
+  #languages-container, #tests-container, #exercises-container {
+    @include edged-panel();
+    padding: 10px !important;
+  }
+  #info-container {
+    @include plaintext-font();
+    height: 365px;
+    width: 150px;
+    padding-left: 100px;
+    text-align: right;
+  }
+  #exercises-container {
+    padding: 10px !important;
   }
 
-  #languages-container, #tests-container, #exercises-container {
+  #languages-list, #tests-list, #exercises-list {
     @include non-code-font();
-    height: 425px;
+    height: 345px;
     padding-right: 3px;
     margin-right: 5px;
     overflow-y: auto;
@@ -35,18 +48,18 @@
     }
   }
 
-  #choose-language, #choose-tests, #choose-exercise {
+  #language-title, #tests-title, #exercise-title {
     @include non-code-font();
     color: darken($lighter-color, 5%);
-    @include font-size-large();
+    @include font-size-larger();
     margin-bottom: 5px;
     padding-left: 0px;
+  }
+  #language-title, #tests-title {
     text-align: right;
-    margin-right: 10px;
-    &:after {
-      font-size: 0.84em;
-      content: '?';
-    }
+  }
+  #exercise-title {
+    text-align: right;
   }
 
   .filename {
@@ -56,25 +69,27 @@
 
   #instructions {
     @include code-font();
-    font-size: 11pt;
+    font-size: 10pt;
     color: $lighter-color;
     background: lighten($darker-color, 5%);
     border-top-left-radius: 5px;
     border: none;
-    height: 415px;
-    width: 550px;
+    height: 370px;
+    width: 450px;
     margin-left: 0px;
     overflow-y: scroll;
     padding: 6px;
     outline: none;
     &::-webkit-scrollbar:vertical { width: 5px; }
     resize: none;
+    position: relative;
+    top: 5px;
   }
 
-  #ok {
+  #ok, #next {
     @include non-code-font();
     @include font-size-largest();
-    margin: { top: 5px; right: 0px; }
+    margin: { top: 15px; left: 8px; }
   }
 
 }

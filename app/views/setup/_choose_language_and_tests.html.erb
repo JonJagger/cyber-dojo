@@ -7,21 +7,22 @@ $(function() {
 
   var previousLanguage = undefined;
   var previousTest     = undefined;
-  var previousExercise = undefined;
 
   var selectedLanguage = $('#language_' + <%= @initial_language_index %>);
-  var selectedExercise = $('#exercise_' + <%= @initial_exercise_index %>);
 
   $('[id^=language_]').each(function() {
     var language = $(this);
     language.click(function() {
       cd.radioEntrySwitch(previousLanguage, language);
       previousLanguage = language;
+      // hide all the test-framework names
       $('[id^=test_]').hide();
+      // show the test-framework names for the selected language
       var i = language.data('index');
-      $.each(testIndexes[i], function(_,index) {
+      $.each(testIndexes[i], function(_, index) {
         $('[id=test_' + index + ']').show();
       });
+      // select a test-framework name
       var ti = language.data('test-index');
       $('[id=test_' + ti +']').click();
     });
@@ -37,21 +38,8 @@ $(function() {
     });
   });
 
-  $('[id^=exercise_]').each(function(index) {
-    var exercise = $(this);
-    exercise.click(function() {
-      var instructions = $('#instructions_' + index).val();
-      cd.radioEntrySwitch(previousExercise, exercise);
-      previousExercise = exercise;
-      $('#instructions').val(instructions);
-    });
-  });
-
   selectedLanguage.click();
-  selectedExercise.click();
-
   selectedLanguage.scrollIntoView({ direction: 'vertical' });
-  selectedExercise.scrollIntoView({ direction: 'vertical' });
 
 });
 

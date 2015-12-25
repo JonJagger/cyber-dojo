@@ -1,0 +1,33 @@
+
+<%= render partial: 'choose_exercise' %>
+
+<div id="setup-page">
+
+  <table>
+    <tr>
+      <td colspan="2">
+        <div id="prepare-a-new-practice">
+          <%= render partial: 'shared/home_page_logo' %>
+          create&nbsp;your&nbsp;practice&nbsp;session
+        </div>
+      </td>
+    </tr>
+    <tr class="valign-top" id="exercises-container">
+      <td>
+        <div id="exercise-title">exercise?</div>
+        <%= render partial: 'list_exercises' %>
+      </td>
+      <td>
+        <%= render partial: 'instructions' %>
+      </td>
+    </tr>
+    <tr class="valign-top">
+      <td colspan="2" align="right">
+        <%= render partial: 'ok_button' %>
+      </td>
+    </tr>
+  </table>
+
+</div>
+
+
