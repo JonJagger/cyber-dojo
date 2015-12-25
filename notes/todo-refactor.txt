@@ -1,7 +1,5 @@
 
 --------------------------------------
-traffic-lights need different hand-cursor
---------------------------------------
 Refactor docker images - most can be a lot smaller...
 https://hub.docker.com/u/delitescere/
 
