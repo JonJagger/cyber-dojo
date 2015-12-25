@@ -1,4 +1,7 @@
 
+Trying to revert back to pre split-setup pages
+and making a right hash of it.
+--------------------------------------
 Refactor docker images - most can be a lot smaller...
 https://hub.docker.com/u/delitescere/
 
