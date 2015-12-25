@@ -141,8 +141,8 @@ class KataTests < AppModelTestBase
     assert_equal Time.mktime(*now), kata.created
     assert_equal language.name, kata.language.name
     assert_equal exercise.name, kata.exercise.name
+    assert_equal exercise.instructions, kata.visible_files['instructions']
     assert_equal '', kata.visible_files['output']
-    assert kata.visible_files['instructions'].start_with?('Note: The initial code')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

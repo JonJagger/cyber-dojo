@@ -46,10 +46,8 @@ CyberDojo::Application.routes.draw do
   end
 
   scope path: '/tipper', controller: :tipper do
-    get 'traffic_light_tip' =>
-      :traffic_light_tip, :constraints => { :format => :json }
-    get 'traffic_light_count_tip' =>
-      :traffic_light_count_tip, :constraints => { :format => :json }
+    get 'traffic_light_tip' => :traffic_light_tip, :constraints => { :format => :json }
+    get 'traffic_light_count_tip' => :traffic_light_count_tip, :constraints => { :format => :json }
   end
 
 
