@@ -62,20 +62,12 @@ o) follow instructions at
   Warning about doing this using a service account is a better way...
   $ gcloud config set project cyber-dojo
 
-o) open port tcp:873 (rsync) for server's IP on Google Developers Console
-
-o) put rsync files into /home/cyber-dojo
-   Put new uuidgen password into rsyncd.password and rsyncd.secrets
-   Put servers IP address into rsyncd.conf
-   Ensure password file (accessed in lib/docker_machine_runner.sh) has correct owner and permission
-   $ chown cyber-dojo:cyber-dojo /home/cyber-dojo/rsyncd.password
-   $ chmod 400 /home/cyber-dojo/rsyncd.password
-
    That's the end of one-time only steps.
    Following steps need to be reissued for each slave node.
 
 o) create a new node. Has to be done as cyber-dojo user
    so the environment variables point to files it can access
+   Docker-machine command is in admin_scripts/docker_machine/create_gce.sh
 
   $ sudo su -
   $ sudo -u cyber-dojo /bin/bash
@@ -88,22 +80,31 @@ o) create a new node. Has to be done as cyber-dojo user
     --google-disk-size 50 \
     cdf-gce-01
 
-o) install rsync on the new node. Script auto reruns as cyber-dojo user anyway
+o) setup /tmp folder with sticky-bit permissions ready for incoming files.
 
-  $ cd /var/www/cyber-dojo/admin_scripts/docker_machine
-  $ ./setup_rsync.sh cdf-gce-02
+  $ docker-machine ssh cdf-gce-01
+  $ cd /tmp
+  $ mkdir cyber-dojo
+  $ chmod 777 cyber-dojo
+  $ chown www-data:www-data cyber-dojo
+  $ chmod g+rwsx cyber-dojo
+  $ apt-get install -y acl
+  $ setfacl -d -m group:www-data:rwx cyber-dojo
+  $ setfacl    -m group:www-data:rwx cyber-dojo
+  $ exit
 
 o) Pull all container images onto new node.
   Have to be root (user that can sudo -u cyber-dojo docker-machine)
+  On the server
   $ sudo su -
   $ ./pull_all.rb cdf-gce-02
 
-o) Refresh the caches
+o) On the server, refresh the caches
   As root again
   $ cd /var/www/cyber-dojo/admin_scripts/
   $ ./refresh_all_caches.sh
 
-o) Restart the server
+o) On the server, restart apache
   As root again
   $ service apache2 restart
 

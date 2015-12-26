@@ -14,7 +14,7 @@ Dir.glob("#{cyber_dojo_root}/languages/*/*/manifest.json") do |filename|
   manifest = JSON.parse(IO.read(filename))
   images_names << manifest['image_name']
 end
-    
+
 images_names.sort.each do |image_name|
   command = "sudo -u cyber-dojo docker-machine ssh #{node} -- sudo docker pull #{image_name}"
   p command
