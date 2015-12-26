@@ -1,18 +1,17 @@
 
 --------------------------------------
-Refactor docker images - most can be a lot smaller...
+can I replace rsync with docker-machine scp?
+and use a sticky bit on the nodes /tmp folder?
+--------------------------------------
 https://hub.docker.com/u/delitescere/
-
+Refactor docker images - most can be a lot smaller...
 --------------------------------------
 put admin_scripts/refresh_all.sh tests of whether
 docker-machine, docker are installed into the
 respective runners.
 Then make default runner be dependent on what is installed.
 --------------------------------------
-can I replace rsync with docker-machine scp?
-and use a sticky bit on the nodes /tmp folder?
---------------------------------------
-would be a lot better if code was auto-caching.
+would be a lot better if code was auto-caching
 but does this require a lock? I guess yes,
 but only if the cache does not already exist.
 Worth also thinking about caches if front end
@@ -29,6 +28,9 @@ to check .sh files
 I think doing the one_self.created call is slowing down
 the dojo creation. I don't think the background-process
 is really detached. Use new shell.daemon_exec
+Or is it finding the latitude/longtitude which is on
+the browser. Maybe 1self could tweak their API to accept
+an ip-address?
 --------------------------------------
 unique_id is only used once, put it directly
 inside katas and use shell.exec() in it.
@@ -61,21 +63,6 @@ Eg
    dir.runner.run(...)
    dir.log?
    dir.starter?
-
---------------------------------------
-rework HostRunner so it also uses a .sh file
-which it executes via the shell?
---------------------------------------
-progress? button's dialog should be titled
-progress? not progress (it's missing the ?)
---------------------------------------
-split out defaults  for external_root into hash table
-(like external_object) so tests clearly cover
-their functionality too.
---------------------------------------
-Add yin-yang icon to top left of enter page
-click it takes you back to home page but
-retains ID un URL if there is one.
 --------------------------------------
 HostGit can be dropped as an external I think
 as it only delegates to HostShell now.
@@ -102,7 +89,7 @@ Eg .class files, .o files, executable files.
 --------------------------------------
 https://github.com/minimaxir/big-list-of-naughty-strings
 --------------------------------------
-Split CSS into smaller files, per component.
+Split CSS into smaller files, per component?
 Test the CSS using Quixote https://github.com/jamesshore/quixote
 --------------------------------------
 Refactor cyber-dojo_dialog_history.js to server side html returned via Rails bind() call
@@ -958,22 +945,6 @@ o) reinstate app_controllers/download tests
 o) test/lib/DirFake.rb
    has [make] call in write(filename, s) that does not match
    write(filename, s) in HostDir.rb
-
-o) assuming git running on /mnt/ramdisk/katas is fast enough
-   there would appear to be scope to refactor the git class
-   so it is passed the folder it is associated with in initialize()
-   Then drop path argument from all git methods.
-   Where is GitSpy still used?
-    app_helpers
-      tip_test
-    app_models
-      dojo_test
-      kata_test
-    lib
-      curl_one_self_test
-      docker_host_rsync_runner_test
-      docker_volume_mount_runner_test
-
 
 
 
