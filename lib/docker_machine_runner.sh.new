@@ -8,7 +8,6 @@ container_name=$3
 max_seconds=$4
 
 # local variables
-ip_node=`docker-machine ip ${node_name}`
 tmp_name=`uuidgen`
 kill=9
 
@@ -16,7 +15,7 @@ kill=9
 # 1. scp avatar's files to the node
 # This relies on /tmp/cyber-dojo on the target node having the right
 # sticky-bit settings so files created underneath /tmp/cyber-dojo
-# can be seen by the www-data user (the --user on docker run)
+# can be seen by the www-data user (the --user in docker run)
 #
 #    $ cd /tmp
 #    $ mkdir cyber-dojo
@@ -47,7 +46,7 @@ exit_status=$?
 
 # - - - - - - - - - - - - - -
 # 3. scp avatar's files back from the node?
-# Turned off because not yet needed (eg Approval style tests)
+# Turned off because not yet needed (eg in Approval style tests)
 # Note this script is being run as cyber-dojo user (not www-data)
 
 # - - - - - - - - - - - - - -
