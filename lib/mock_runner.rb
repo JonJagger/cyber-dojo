@@ -61,7 +61,7 @@ class MockRunner
 
   def sample(avatar, rag)
     # ?better in test/languages/test_output
-    root = File.expand_path(File.dirname(__FILE__) + '/..') + '/app_lib/test_output'
+    root = File.expand_path(File.dirname(__FILE__) + '/../test') + '/app_lib/test_output'
     path = "#{root}/#{avatar.kata.language.unit_test_framework}/#{rag}"
     all_outputs = disk[path].each_file.collect { |filename| filename }
     filename = all_outputs.sample

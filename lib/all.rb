@@ -21,4 +21,5 @@
   languages_display_names_splitter
   one_self_curl
   one_self_dummy
+  mock_runner
 }.each { |sourcefile| require_relative './' + sourcefile }
