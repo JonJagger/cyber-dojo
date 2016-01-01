@@ -7,7 +7,6 @@ class Dojo
   def    caches; @caches    ||=    Caches.new(self, external_root); end
   def     katas; @katas     ||=     Katas.new(self, external_root); end
 
-  def one_self; @one_self ||= external_object; end
   def  starter;  @starter ||= external_object; end
   def   runner;   @runner ||= external_object; end
   def    shell;    @shell ||= external_object; end
@@ -43,7 +42,6 @@ class Dojo
     # which will lead to shell.exec calls...
     return default_runner if key == 'runner'
     @defaults ||= {
-      'one_self' => 'OneSelfCurl',
       'starter'  => 'HostDiskAvatarStarter',
       'shell'    => 'HostShell',
       'disk'     => 'HostDisk',
@@ -70,7 +68,6 @@ end
 #
 # External objects can be set via these environment variables.
 #
-# CYBER_DOJO_ONE_SELF_CLASS
 # CYBER_DOJO_STARTER_CLASS
 # CYBER_DOJO_RUNNER_CLASS
 # CYBER_DOJO_SHELL_CLASS

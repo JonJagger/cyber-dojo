@@ -6,50 +6,16 @@ $(function() {
   var page = $('#setup-page');
 
   $('#ok').click(function() {
-
     var language = "<%= @language %>";
     var     test = "<%= @test %>";
-
     var exercise = $('[id^=exercise_][class~=selected]').data('exercise');
-    var latitude = undefined;     // Ensure params['latitude'] on the server to be nil not ''
-    var longtitude = undefined;   // Ditto  params['longtitude']
-
-    var onceOnly = 0;
-    var saveAndRedirect = function() {
-      $.getJSON('/setup/save', {
+    $.getJSON('/setup/save', {
           language: language,
               test: test,
           exercise: exercise,
-          latitude: latitude,
-        longtitude: longtitude
       }, function(dojo) {
-        page.removeClass('busy');
-        // geo.getCurrentPosition()'s callbacks are not atomic!
-        onceOnly += 1;
-        if (onceOnly == 1) {
           cd.newDojoDialog(dojo.id);
-        }
-      });
-    };
-
-    var geoSuccess = function(position) {
-      latitude = position.coords.latitude;
-      longtitude = position.coords.longitude;
-      saveAndRedirect();
-    };
-    var geoFailure = function() {
-      saveAndRedirect();
-    };
-
-    page.addClass('busy');
-    var geo = navigator.geolocation;
-    if (geo) {
-      var fourSeconds = 4*1000;
-      var options = { timeout: fourSeconds };
-      geo.getCurrentPosition(geoSuccess, geoFailure, options);
-    } else {
-      saveAndRedirect();
-    }
+    });
   });
 
 });
