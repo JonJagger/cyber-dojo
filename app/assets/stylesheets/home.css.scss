@@ -1,45 +1,34 @@
 
 #home-page {
 
-  margin: { top: 15px; left: 240px; }
+  margin: { top: 5px; left: 300px; }
 
   #cyber-dojo {
     @include non-code-font();
-    font-size: 7.8em;
-    color: $text-color;
-    margin-bottom: 0px;
-    padding-bottom: 0px;
-    .dot-org {
-      font-size: 0.30em;
-    }
-  }
-
-  #home-page-logo {
-    display: inline-block;
-    position: relative;
-    top: -50px;
-    right: -35px;
+    font-size: 7.82em;
+        color: $text-color;
+       margin: { bottom: 0px; }
+      padding: { bottom: 0px; }
+    .dot-org { font-size: 0.30em; }
   }
 
   #the-place-to-practice-programming {
     @include non-code-font();
-    font-size: 2.68em;
-    color: lighten($text-color, 5%);
-    position: relative;
-    top: -9px;
-    margin: { right: 0px; bottom: 3px; }
+       margin: { right: 0px; bottom: 3px; }
+    font-size: 2.70em;
+        color: lighten($text-color, 5%);
+     position: relative;
+          top: -9px;
   }
 
   #globe-container {
     position: relative;
-    left: 39px;
-    bottom: 2px;
+    left: 8px;
+    bottom: 3px;
     #globe-frame {
       width: 155px;
       height: 262px;
-      padding-left: 10px;
-      padding-right: 10px;
-      padding-top: 15px;
+      padding: { left: 10px; right: 10px; top: 5px; }
       background: #666;
       border: none;
       -moz-border-radius: 5px;
@@ -51,58 +40,53 @@
 
   #custom-container {
     position: absolute;
-    left: 675px;
+        left: 675px;
   }
   #custom-container { top: 350px; }
 
-  #create-button, #enter-button,
-  #charity-button, #donate-button {
+  #create-button, #enter-button, #charity-button, #donate-button {
     @include non-code-font();
-    padding-right: 20px;
-    color: $darker-color;
     @include font-size-largest();
-    margin-left: 10px;
+       padding: { right: 20px; }
+        margin: { left: 10px; }
+         color: $darker-color;
     text-align: right;
   }
 
   #create-button, #enter-button {
-    width: 555px;
-    font-size: 2.5em;
+          width: 555px;
+      font-size: 2.5em;
     line-height: 95%;
-    padding: { top: 10px; bottom: 10px; }
-    margin-bottom: 10px;
+        padding: { top: 10px; bottom: 10px; }
+         margin: { bottom: 10px; }
   }
 
   #licensing-container {
     @include plaintext-font();
     @include edged-panel();
-    width: 328px;
+         width: 328px;
     text-align: right;
-    margin: { top: 5px; bottom: 10px; }
-    padding: { left: 15px; right: 20px; top: 10px; bottom: 10px; }
+        margin: { top: 5px; bottom: 10px; }
+       padding: { left: 15px; right: 20px; top: 10px; bottom: 10px; }
   }
 
   #charity-container, #donate-container {
     @include plaintext-font();
     @include edged-panel();
-    width: 338px;
+         width: 338px;
+        margin: { left: 15px; bottom: 12px; }
+       padding: { right: 20px; }
     text-align: right;
-    margin-left: 15px;
-    margin-bottom: 12px;
-    font-size: 0.9em;
-    padding-right: 20px;
+     font-size: 0.9em;
   }
 
-  #donate-container #donate-button,
-  #charity-container #charity-button {
-    width: 140px;
-    text-align: center;
-    font-size: 1.60em;
-    padding: 6px;
+  #donate-container #donate-button, #charity-container #charity-button {
+          width: 140px;
+         margin: { right: 0px; top: 8px; bottom: 10px; }
+        padding: 6px;
+     text-align: center;
+      font-size: 1.60em;
     line-height: 95%;
-    margin-right: 0px;
-    margin-top: 8px;
-    margin-bottom: 10px;
   }
 
   .dot {
@@ -111,9 +95,7 @@
   }
 }
 
-#email-me {
-  color: $lighter-color;
-}
+#email-me { color: $lighter-color; }
 
 
 

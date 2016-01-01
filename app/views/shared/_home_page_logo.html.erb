@@ -4,9 +4,7 @@
 $(function() {
 
   $('#home-page-logo').click(function() {
-    var id = $(this).data('id');
-    var url = '/dojo/index/' + id;
-    window.location.href = url;
+    window.location.href = '/dojo/index/' + "<%= @id %>";;
   });
 
 });
@@ -14,10 +12,9 @@ $(function() {
 //--></script>
 
 <div id="home-page-logo"
-     data-id="<%= @id %>"
      title="go to home page">
   <img alt="cyber-dojo yin-yang logo"
        src="/images/avatars/cyber-dojo.png"
-       height="35"
-       width="35" />
+       height="20"
+       width="20" />
 </div>

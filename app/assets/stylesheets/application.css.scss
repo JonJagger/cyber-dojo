@@ -24,7 +24,7 @@
  *= depend_on enter.css.scss
  *= depend_on kata.css.scss
  *= depend_on dashboard.css.scss
- *= depend_on history_diff.css.scss
+ *= depend_on review.css.scss
  *= depend_on jquery-ui-1.8.16.custom.css.scss
  *= require_self
 */
@@ -42,5 +42,5 @@
 @import "enter.css.scss";
 @import "kata.css.scss";
 @import "dashboard.css.scss";
-@import "history_diff.css.scss";
+@import "review.css.scss";
 @import "jquery-ui-1.8.16.custom.css.scss";

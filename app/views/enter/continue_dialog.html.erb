@@ -18,7 +18,7 @@
         <% avatar_name = @all_avatar_names[index] %>
         <% if @started_avatar_names.include?(avatar_name) %>
           <% started_count += 1 %>
-          <img onclick='return cd.reJoin("<%= @id %>","<%= avatar_name %>");'
+          <img onclick='cd.reJoin("<%= @id %>","<%= avatar_name %>");'
                src="/images/avatars/<%= avatar_name %>.jpg"
                style="display:block"
                title="<%= avatar_name %>"

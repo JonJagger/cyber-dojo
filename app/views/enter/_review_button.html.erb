@@ -3,11 +3,19 @@
 
 $(function() {
 
-  $('#review-button').click(function() {
-    cd.dialog_ie(function() {
-      var id = $('#kata-id-input').val();
-      var url = '/dashboard/show/' + id;
-      window.open(url)
+  var button = $('#review-button');
+
+  button.click(function() {
+    var id = $('#kata-id-input').val();
+    var cursor = button.css('cursor');
+    button.css('cursor', 'wait');
+    $.getJSON('/enter/continue', { id: id }, function(dojo) {
+      button.css('cursor', cursor);
+      if (dojo.empty) {
+        cd.continueDialog('review', dojo.html).dialog('open');
+      } else {
+        window.location.href = '/review/show/' + id;
+      }
     });
   });
 

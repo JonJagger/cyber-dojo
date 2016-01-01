@@ -48,12 +48,7 @@ var cyberDojo = (function(cd, $) {
         hilights.push(filename);
     });
     lolights.sort();
-    hilights.sort(function(lhs, rhs) {
-      var reverse = function(s) {
-        return s.split('').reverse().join('');
-      };
-      return reverse(lhs).localeCompare(reverse(rhs));
-    });
+    hilights.sort();
     return [].concat(hilights, ['output'], lolights);
   };
 

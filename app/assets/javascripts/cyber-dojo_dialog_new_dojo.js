@@ -3,38 +3,44 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.newDojoDialog = function(title, id, okCallBack) {
+  cd.newDojoDialog = function(id) {
+    var goToEnterPage = function() {
+      var url = '/enter/show/' + id;
+      window.location = url;
+    };
+
     var html = '' +
       "<div class='align-center'>" +
         "<div style='font-size:1.0em;'>" +
-          "your practice session's id is" +
+          'your new id is' +
         '</div>' +
         "<div class='avatar-background'>" +
           "<span class='centerer'></span>" +
           "<span class='dojo-id'>" +
             id.substring(0,6) +
           '</span>' +
-        "</div>" +
-      "</div>";
-    return $('<div>')
+        '</div>' +
+      '</div>';
+
+    $('<div>')
       .html(html)
       .dialog({
-        title: cd.dialogTitle(title),
-        autoOpen: false,
+        title: cd.dialogTitle('create&nbsp;a&nbsp;practice&nbsp;session'),
+        autoOpen: true,
         modal: true,
         width: 435,
         closeOnEscape: true,
         close: function() {
-          okCallBack(id);
+          goToEnterPage();
           $(this).remove();
         },
         buttons: {
           ok: function() {
-            okCallBack(id);
+            goToEnterPage(id);
             $(this).remove();
           }
         }
-    });
+      });
   };
 
   return cd;

@@ -5,28 +5,24 @@ var cyberDojo = (function(cd, $) {
 
   cd.reJoin = function(id, avatarName) {
     var url = '/kata/edit/' + id + '?avatar=' + avatarName;
-    window.open(url);
-    cd.closeReJoinDialog();
-    return false;
+    window.location.href = url;
   };
 
-  //- - - - - - - - - - - - - - - - - - - - -
-
-  cd.dialog_continue = function(title, dialogHtml) {
+  // Used on the enter page by the [continue], [dashboard], and [review] buttons.
+  cd.continueDialog = function(title, dialogHtml) {
     var buttons = { };
     buttons['cancel'] = function() { $(this).dialog('close'); };
-    var reJoin = $('<div class="dialog">')
+    $('<div class="dialog">')
       .html(dialogHtml)
       .dialog({
         title: cd.dialogTitle(title),
-        autoOpen: false,
+        autoOpen: true,
         width: 500,
         modal: true,
         buttons: buttons
       });
-    cd.closeReJoinDialog = function() { reJoin.dialog('close'); };
-    return reJoin;
   };
 
   return cd;
+
 })(cyberDojo || {}, $);

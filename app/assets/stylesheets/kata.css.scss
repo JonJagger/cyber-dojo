@@ -1,26 +1,24 @@
 
 #kata-page {
 
-  margin-top: 15px;
-  margin-left: 45px;
+  margin: { top: 15px; left: 45px; }
 
   #test-spinner {
-    display: none;
+     display: none;
     position: absolute;
-    top: 250px;
-    left: 550px;
-    z-index: 1000;
+         top: 250px;
+        left: 550px;
+     z-index: 1000;
   }
 
   #test-button {
     @include non-code-font();
     @include font-size-large();
     @include right-align(15px);
-    margin-right: 0px;
-    margin-bottom: 2px;
-    padding: { top: 0px; bottom: 2px; left: 13px; right: 13px; }
+        margin: { right: 0px; bottom: 2px; }
+       padding: { top: 0px; bottom: 2px; left: 13px; right: 13px; }
     text-align: right;
-    width: 95px;
+         width: 95px;
   }
 
   #file-operations {
@@ -28,52 +26,43 @@
     #new, #rename, #delete {
       @include non-code-font();
       text-align: right;
-      font-size: 12px;
-      margin-bottom: 2px;
-      padding-right: 13px;
-      padding-bottom: 3px;
-      width: 95px;
+       font-size: 12px;
+          margin: { bottom: 2px; }
+         padding: { right: 13px; bottom: 3px; }
+           width: 95px;
     }
-    #delete {
-      margin-bottom: 15px;
-    }
+    #delete { margin-bottom: 15px; }
   }
 
   #filename-list {
-    max-width: 250px;
-    max-height: 495px;
-    margin-right: 5px;
-    overflow-x: auto;
+    margin: { right: 5px; }
+    div[class~='filename'][class~='highlight'] { &:before { content: ">"; } }
+    div[class~='filename'][id='radio_output'] { margin-top: 20px; }
+
+    // up/down hidden scrollbar
+         width: 250px;
+    max-height: 472px;
+    overflow-x: none;
     overflow-y: auto;
-    &::-webkit-scrollbar:horizontal { height: 0px; }
-    div[class~='filename'][class~='highlight'] {
-      &:before { content: ">"; }
-    }
-    div[class~='filename'][id='radio_output'] {
-      margin-top: 20px;
-    }
+    &::-webkit-scrollbar:vertical { width: 0px; }
   }
 
-  #line-numbers-checkbox-container {
-    margin-left: 15px;
-    margin-right: 1px;
-  }
+  #line-numbers-checkbox-container { margin: { left: 15px; right: 1px; } }
 
   #traffic-lights {
-    margin-left: 5px;
-    width: 720px;
+        margin: { left: 5px; bottom: 0px; }
+         width: 720px;
     overflow-x: auto;
     overflow-y: hidden;
-    margin-bottom: 0px;
     &::-webkit-scrollbar:horizontal { height: 0px; }
     .diff-traffic-light {
-      margin : { left: 0px; right: 0px; }
+       margin: { left: 0px; right: 0px; }
       padding: { left: 0px; right: 0px; }
       img {
-        width: 22px;
-        height: 22px;
+          width: 22px;
+         height: 22px;
         padding: { left: 1px; right: 0px; }
-        margin : { left: 0px; right: 0px; }
+         margin: { left: 0px; right: 0px; }
       }
     }
   }
@@ -81,7 +70,7 @@
   .file_content {
     overflow-x: auto;
     overflow-y: auto;
-    &::-webkit-scrollbar:vertical { width: 4px; }
+    &::-webkit-scrollbar:vertical   {  width: 4px; }
     &::-webkit-scrollbar:horizontal { height: 0px; }
   }
 }
@@ -89,11 +78,11 @@
 input#new-filename, input#rename-filename, input#delete-filename {
   font-size: 1.15em;
   border: 1px solid lighten($darker-color, 10%);
-  text-align: right;
-  padding-right: 10px;
+  margin: { top: 140px; } // crude vertical centering
+  padding: { right: 10px; }
   color: $lighter-color;
   background: $darker-color;
-  margin-top: 140px; // crude vertical centering
+  text-align: right;
 }
 
 #test-overlay {

@@ -3,7 +3,7 @@
 
 $(function() {
 
-  var button = $('#continue-button');
+  var button = $('#dashboard-button');
 
   button.click(function() {
     var id = $('#kata-id-input').val();
@@ -11,7 +11,11 @@ $(function() {
     button.css('cursor', 'wait');
     $.getJSON('/enter/continue', { id: id }, function(dojo) {
       button.css('cursor', cursor);
-      cd.continueDialog('continue', dojo.html);
+      if (dojo.empty) {
+        cd.continueDialog('dashboard', dojo.html).dialog('open');
+      } else {
+        window.location.href = '/dashboard/show/' + id;
+      }
     });
   });
 
@@ -19,4 +23,4 @@ $(function() {
 
 //--></script>
 
-<button type="button" id="continue-button">continue</button>
+<button type="button" id="dashboard-button">dashboard</button>

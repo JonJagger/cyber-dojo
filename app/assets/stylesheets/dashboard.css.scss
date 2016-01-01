@@ -6,7 +6,7 @@
   #auto-refresh-container, #minute-columns-container, #age-container {
     @include edged-panel();
     @include right-align(15px);
-    margin-bottom: 5px;
+     margin: { bottom: 5px; }
     display: block;
   }
 
@@ -15,40 +15,38 @@
     text-align: right;
     #progress-button, #download-button {
       @include non-code-font();
-      font-size: 1em;
-      padding-bottom: 4px;
-      margin-bottom: 2px;
-      width: 80px;
+       font-size: 1em;
+         padding: { bottom: 4px; }
+          margin: { bottom: 2px; }
+           width: 80px;
       text-align: right;
     }
   }
 
   #traffic-lights {
-    width: 1000px;
+         width: 1000px;
     overflow-x: scroll;
     overflow-y: auto;
     .column {
       padding: 0px;
-      &.odd  { background: lighten($darker-color,5%); }
-      border-bottom: dotted lighten($darker-color,3%) 1px;
-      &.even { background: lighten($darker-color,11%); }
+       border: { bottom: dotted lighten($darker-color, 3%) 1px; }
+      &.odd  { background: lighten($darker-color,  5%); }
+      &.even { background: lighten($darker-color, 11%); }
     }
     .collapsed-multi-gap {
-      display: inline-block;
+        display: inline-block;
       font-size: 0.1em;
-      color: lighten(black,60%);
-      margin-left: 1px;
-      margin-right: 1px;
-      margin-bottom: 10px;
+          color: lighten(black,60%);
+         margin: { left: 1px; right: 1px; bottom: 10px; }
       &:after { content: '...'; }
     }
     .gap {
-      font-size: 0.7em;
+        font-size: 0.7em;
       $thin-space: "\2009";
+       text-align: center;
       &:after { content: $thin-space; }
-      text-align: center;
     }
-    .traffic-light-count { cursor: pointer; }
+    .traffic-light-count { cursor: default; }
   }
 
 }
@@ -59,6 +57,6 @@
   .animal.even { background: lighten($darker-color,6%); }
   .progress {
     white-space: nowrap;
-    padding: { left: 5px; right: 5px; }
+        padding: { left: 5px; right: 5px; }
   }
 }

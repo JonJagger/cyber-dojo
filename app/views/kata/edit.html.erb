@@ -23,9 +23,6 @@ $(function() {
   var filename = filenames[cd.nonBoringFilenameIndex(filenames)];
   cd.loadFile(filename);
 
-  var allTheWay = 100000;
-  $('#filename-list').scrollLeft(allTheWay);
-
 });
 
 //--></script>
@@ -72,3 +69,9 @@ $(function() {
              } %>
 
 <% end %>
+
+<div style="display:none;">
+  <div id="review-dialog">
+    <%= render(:partial => 'review/review') %>
+  </div>
+</div>

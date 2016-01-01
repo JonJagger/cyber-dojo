@@ -3,25 +3,24 @@ table { border-spacing: 0; }
 
 #cyber-dojo-page {
   font-size: 0.9em;
-  margin: { top: 0.3em; left: 0.3em; }
-  color: $lighter-color;
-  // ensure that nothing gets hidden by the footer
-  padding-bottom: 32px;
+     margin: { top: 0.3em; left: 0.3em; }
+    padding: { bottom: 32px; } // ensure that nothing gets hidden by the footer
+      color: $lighter-color;
 }
 
 body {
   @include non-code-font();
   background: $darker-color;
-  padding: none;
-  margin: 0em;
+     padding: none;
+      margin: 0em;
 }
 
 .panel {
   background: $darker-color;
-  color: $lighter-color;
-  border: 1px solid lighten($darker-color, 8%);
-  padding: 0.5em;
-  margin: { left: 10px; right: 10px; bottom: 1px; }
+       color: $lighter-color;
+      border: 1px solid lighten($darker-color, 8%);
+     padding: 0.5em;
+      margin: { left: 10px; right: 10px; bottom: 1px; }
 }
 
 .avatar-image {
@@ -42,48 +41,45 @@ button {
   @include rounded-corner(6px);
   display: inline-block;
   @include gradient-lighten(darken($lighter-color, 12%), 9%, 2%, 0%);
-  &:hover {
-    border: $filename_and_button_border_size dotted lighten($darker-color, 20%);
-  }
+  &:hover { border: $filename_and_button_border_size dotted lighten($darker-color, 20%); }
   &[disabled] {
     background: lighten($darker-color, 20%);
-    cursor: default;
-    &:hover {
-      border: $filename_and_button_border_size solid $darker-color;
-    }
+        cursor: default;
+    &:hover { border: $filename_and_button_border_size solid $darker-color; }
   }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-.filename_div {
-  display: none;
-}
+.filename_div { display: none; }
 
 div[class~='filename'] {
   @include plaintext-font();
   @include font-size-small();
-  width: 500px;
+
+  // no up/down scrolling, #filename-list has its own
+  overflow-y: none;
+  &::-webkit-scrollbar:vertical { width: 0px; }
+
+  // left/right scrolling for looooooong individual filenames
+  max-width: 250px;
+  overflow-x: auto;
+  &::-webkit-scrollbar:horizontal { height: 0px; }
+  direction: rtl;
+
   background: $darker-color;
-  color: lighten($darker-color, 30%);
-  margin: none;
-  margin-bottom: 2px;
-  padding: { left: 0.3em; right: 0px; }
-  cursor: pointer;
-  white-space: nowrap;
+       color: lighten($darker-color, 30%);
+      margin: { bottom: 2px; left: 0px; left: 0px; right: 0px; }
+     padding: { left: 0.3em; right: 0px; }
+      cursor: pointer;
   text-align: right;
-  &:hover {
-    color: lighten($darker-color, 60);
-  }
+  &:hover { color: lighten($darker-color, 60); }
   &[class~='selected'] {
-    // See app/assets/javascripts/cyber-dojo_file_load.js
-    // function radioEntrySwitch()
-    color: $lighter-color;
+    // See app/assets/javascripts/cyber-dojo_file_load.js function radioEntrySwitch()
+         color: $lighter-color;
     background: $darker-color;
-    cursor: default;
-    &:hover {
-      color: $lighter-color;
-    };
+        cursor: default;
+    &:hover { color: $lighter-color; }
   }
 }
 
@@ -108,8 +104,7 @@ div[class~='filename'] {
   text-align: right;
   overflow: hidden;
   display: block;
-  padding-right: 4px;
-  padding-top: 2px;
+  padding: { right: 4px; top: 2px; }
   width: 32px;
   outline: none;
   position: relative; // lose 1px gap to file-content
@@ -130,9 +125,7 @@ div[class~='filename'] {
   resize: none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  &[data-filename=output] {
-    cursor: default;
-  }
+  &[data-filename=output] { cursor: default; }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -

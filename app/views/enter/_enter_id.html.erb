@@ -4,45 +4,32 @@
 $(function() {
 
   var kataIdInput = $('#kata-id-input');
+  var buttons = $('#start-button, #continue-button, #dashboard-button, #review-button');
+  var enable = function(button) { $(button).removeAttr('disabled'); };
+  var disable = function(button) { $(button).prop('disabled', true); };
 
-  var startButton    = $('#start-button');
-  var continueButton = $('#continue-button');
-  var reviewButton   = $('#review-button');
-
-  var enable = function(button) {
-    button.removeAttr('disabled');
-  };
-  var disable = function(button) {
-    button.prop('disabled', true);
-  };
-
-  var setEnabled = function(button, condition) {
-    if (condition) {
-      enable(button);
-    } else {
-      disable(button);
-    }
-  };
-
-  cd.enableDisableStartContinueReview = function() {
+  var enableDisableStartContinueDashboardReview = function() {
     var id = kataIdInput.val();
-    disable(startButton);
-    disable(continueButton);
-    disable(reviewButton);
+    buttons.each(function() { disable(this); });
     if (id.length >= 6) {
       $.getJSON('/enter/check', { id: id }, function(dojo) {
-        setEnabled(startButton,    dojo.exists);
-        setEnabled(continueButton, dojo.exists);
-        setEnabled(reviewButton,   dojo.exists);
+        buttons.each(function() {
+          if (dojo.exists) {
+            enable(this);
+          } else {
+            disable(this);
+          }
+        });
       });
     }
   };
 
   kataIdInput.keyup(function() {
-    cd.enableDisableStartContinueReview();
+    enableDisableStartContinueDashboardReview();
   });
 
-  cd.enableDisableStartContinueReview();
+  enableDisableStartContinueDashboardReview();
+
 });
 
 //--></script>

@@ -3,21 +3,20 @@
 
 $(function() {
 
-  var dashboard = $('#dashboard-page');
-  var lights = $('.diff-traffic-light', dashboard);
-  var showRevert = false;
+  $('.diff-traffic-light').click(function() {
+    var light = $(this);
+    var id         = light.data('id');
+    var avatarName = light.data('avatar-name');
+    var wasTag     = light.data('was-tag');
+    var nowTag     = light.data('now-tag');
+    window.open(cd.showReviewUrl(id, avatarName, wasTag, nowTag));
+  });
 
-  cd.setupTrafficLightOpensHistoryDialogHandlers(lights,showRevert);
-
-  var bulbCounts = $('#traffic-lights .traffic-light-count', dashboard);
-
-  cd.setupTrafficLightCountOpensCurrentCode(bulbCounts,showRevert);
-
-  cd.pieChart($('#traffic-lights .pie', dashboard));
+  cd.pieChart($('#traffic-lights .pie'));
   cd.setupHoverTips();
 
   var allTheWay = 100000;
-  $('#traffic-lights', dashboard).scrollLeft(allTheWay);
+  $('#traffic-lights').scrollLeft(allTheWay);
 
 });
 

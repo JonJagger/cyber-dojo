@@ -23,15 +23,11 @@ $(function() {
           latitude: latitude,
         longtitude: longtitude
       }, function(dojo) {
-        var okOrCancel = function(id) {
-          var url = '/enter/show/' + id;
-          window.location = url;
-        };
         page.removeClass('busy');
         // geo.getCurrentPosition()'s callbacks are not atomic!
         onceOnly += 1;
         if (onceOnly == 1) {
-          cd.newDojoDialog('create', dojo.id, okOrCancel).dialog('open');
+          cd.newDojoDialog(dojo.id);
         }
       });
     };

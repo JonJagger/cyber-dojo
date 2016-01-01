@@ -2,13 +2,13 @@
 #enter-page {
 
   font-size: 1.15em;
-  margin: { top: 55px; left: 190px; }
+  margin: { top: 55px; left: 315px; }
 
   #avatars-grid {
+    width: 273px;
     position: relative;
-    top: 5px;
-    left: 50px;
-    width: 292px;
+    left: 30px;
+    top: 3px;
   }
 
   #info {
@@ -44,11 +44,11 @@
     right: -1px;
   }
 
-  #start-button, #continue-button, #review-button {
+  #start-button, #continue-button, #dashboard-button, #review-button {
     @include non-code-font();
-    width: 240px;
+    width: 242px;
     padding-right: 20px;
-    @include font-size-largest();
+    @include font-size-large();
     margin: { left: 10px; bottom: 5px; }
     text-align: right;
   }
