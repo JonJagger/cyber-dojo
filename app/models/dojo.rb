@@ -7,12 +7,12 @@ class Dojo
   def    caches; @caches    ||=    Caches.new(self, external_root); end
   def     katas; @katas     ||=     Katas.new(self, external_root); end
 
-  def  starter;  @starter ||= external_object; end
-  def   runner;   @runner ||= external_object; end
-  def    shell;    @shell ||= external_object; end
-  def     disk;     @disk ||= external_object; end
-  def      log;      @log ||= external_object; end
-  def      git;      @git ||= external_object; end
+  def   starter;   @starter ||= external_object; end
+  def    runner;    @runner ||= external_object; end
+  def     shell;     @shell ||= external_object; end
+  def      disk;      @disk ||= external_object; end
+  def       log;       @log ||= external_object; end
+  def       git;       @git ||= external_object; end
 
   def root_dir
     # /var/www/cyber-dojo

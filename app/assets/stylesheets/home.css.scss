@@ -9,33 +9,23 @@
         color: $text-color;
        margin: { bottom: 0px; }
       padding: { bottom: 0px; }
-    .dot-org { font-size: 0.30em; }
+    .dot-org { font-size: 0.43em; }
   }
 
   #the-place-to-practice-programming {
     @include non-code-font();
        margin: { right: 0px; bottom: 3px; }
-    font-size: 2.70em;
+    font-size: 2.82em;
         color: lighten($text-color, 5%);
      position: relative;
           top: -9px;
   }
 
-  #globe-container {
+  #avatars-grid {
+       width: 244px;
     position: relative;
-    left: 8px;
-    bottom: 3px;
-    #globe-frame {
-      width: 155px;
-      height: 262px;
-      padding: { left: 10px; right: 10px; top: 5px; }
-      background: #666;
-      border: none;
-      -moz-border-radius: 5px;
-      -webkit-border-radius: 5px;
-      -khtml-border-radius: 5px;
-      border-radius: 5px;
-    }
+        left: 7px;
+         top: -5px;
   }
 
   #custom-container {
@@ -54,30 +44,21 @@
   }
 
   #create-button, #enter-button {
-          width: 555px;
+          width: 580px;
       font-size: 2.5em;
     line-height: 95%;
         padding: { top: 10px; bottom: 10px; }
          margin: { bottom: 10px; }
   }
 
-  #licensing-container {
+  #licensing-container, #charity-container, #donate-container {
     @include plaintext-font();
     @include edged-panel();
-         width: 328px;
-    text-align: right;
-        margin: { top: 5px; bottom: 10px; }
-       padding: { left: 15px; right: 20px; top: 10px; bottom: 10px; }
-  }
-
-  #charity-container, #donate-container {
-    @include plaintext-font();
-    @include edged-panel();
-         width: 338px;
-        margin: { left: 15px; bottom: 12px; }
-       padding: { right: 20px; }
-    text-align: right;
-     font-size: 0.9em;
+          width: 300px;
+         margin: { left: 15px; bottom: 12px; }
+        padding: { right: 20px; }
+     text-align: right;
+      font-size: 0.8em;
   }
 
   #donate-container #donate-button, #charity-container #charity-button {
