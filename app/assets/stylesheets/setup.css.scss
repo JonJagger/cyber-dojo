@@ -40,13 +40,13 @@
 
     overflow-y: auto;
     overflow-x: none;
-    &::-webkit-scrollbar:vertical { width: 4px; }
+    &::-webkit-scrollbar:vertical { width: 6px; }
 
     .filename {
       @include font-size-medium();
         padding: { right: 5px; }
       font-size: 13pt !important;
-          width: 165px;
+          width: 135px;
       direction: ltr;
       &[class~='selected'] {
         font-style: bold;
