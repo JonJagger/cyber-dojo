@@ -18,13 +18,15 @@ var cyberDojo = (function(cd, $) {
 
   // - - - - - - - - - - - - -
 
-  var openDialog = function(title, okDisabled, okClicked, input, avatar) {
+  var openDialog = function(name, initialFilename, okInitiallyDisabled, okClicked, avatar) {
+    var input = makeInput(name, initialFilename);
     var ok = {
       text: 'ok',
       id: 'file-ok',
-      disabled: okDisabled(),
+      disabled: okInitiallyDisabled,
       click: function() {
-        okClicked();
+        var newFilename = $.trim(input.val());
+        okClicked(newFilename);
         $(this).remove();
       }
     };
@@ -42,7 +44,7 @@ var cyberDojo = (function(cd, $) {
     var dialog = div.dialog({
       closeOnEscape: true,
       close: function() { $(this).remove(); },
-  	  title: cd.dialogTitle(title + '&nbsp;' + 'file'),
+  	  title: cd.dialogTitle(name + '&nbsp;' + 'file'),
     	autoOpen: false,
       width: 250,
   	  modal: true,
@@ -56,7 +58,7 @@ var cyberDojo = (function(cd, $) {
       if (cd.isValidFilename(newFilename))  {
         ok.button('enable');
         if (event.keyCode == $.ui.keyCode.ENTER) {
-          okClicked();
+          okClicked(newFilename);
           ok.closest('.ui-dialog').remove();
         }
       } else {
@@ -64,19 +66,25 @@ var cyberDojo = (function(cd, $) {
       }
     });
 
+    var end = initialFilename.lastIndexOf('.');
+    if (end == -1) {
+      end = initialFilename.length;
+    }
+    input[0].setSelectionRange(0, end);
+
     dialog.dialog('open');
   };
+
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // delete file
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.deleteFile = function(avatar) {
-    var filename = cd.currentFilename();
-    var input = makeInput('delete', filename);
-    var okClicked = function() { cd.doDelete(filename); };
-    var okInitiallyDisabled = function() { return false; };
-    openDialog('delete', okInitiallyDisabled, okClicked, input, avatar);
+    var initialFilename = cd.currentFilename();
+    var okInitiallyDisabled = false;
+    var okClicked = function(filename) { cd.doDelete(filename); };
+    openDialog('delete', initialFilename, okInitiallyDisabled, okClicked, avatar);
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -84,15 +92,10 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.newFile = function(avatar) {
-    var newFilename = 'filename' + cd.extensionFilename();
-    var input = makeInput('new', newFilename);
-    var okInitiallyDisabled = function() { return !cd.isValidFilename(newFilename); };
-    var okClicked = function() {
-      var newFilename = $.trim(input.val());
-      cd.newFileContent(newFilename, '');
-    };
-    openDialog('new', okInitiallyDisabled, okClicked, input, avatar);
-    input[0].setSelectionRange(0, newFilename.length);
+    var initialFilename = 'filename' + cd.extensionFilename();
+    var okInitiallyDisabled = !cd.isValidFilename(initialFilename);
+    var okClicked = function(newFilename) { cd.newFileContent(newFilename, ''); };
+    openDialog('new', initialFilename, okInitiallyDisabled, okClicked, avatar);
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -101,19 +104,9 @@ var cyberDojo = (function(cd, $) {
 
   cd.renameFile = function(avatar) {
     var oldFilename = cd.currentFilename();
-    var input = makeInput('rename', oldFilename);
-    var okInitiallyDisabled = function() { return !cd.isValidFilename(oldFilename); };
-    var okClicked = function() {
-      var newFilename = $.trim(input.val());
-      cd.renameFileFromTo(oldFilename, newFilename);
-    };
-    openDialog('rename', okInitiallyDisabled, okClicked, input, avatar);
-
-    var end = oldFilename.lastIndexOf('.');
-    if (end == -1) {
-      end = oldFilename.length;
-    }
-    input[0].setSelectionRange(0, end);
+    var okInitiallyDisabled = true;
+    var okClicked = function(newFilename) { cd.renameFileFromTo(oldFilename, newFilename); };
+    openDialog('rename', oldFilename, okInitiallyDisabled, okClicked, avatar);
   };
 
   // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
