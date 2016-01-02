@@ -40,11 +40,11 @@ var cyberDojo = (function(cd, $) {
 	  var deleter = div.dialog({
       closeOnEscape: true,
       close: function() { $(this).remove(); },
-   		title: cd.dialogTitle(fileTitle('delete')),
-		  autoOpen: false,
-   		width: dialogWidth,
+      title: cd.dialogTitle(fileTitle('delete')),
+      autoOpen: false,
+      width: dialogWidth,
       modal: true,
-		  buttons: { ok: function() { cd.doDelete(filename); $(this).remove(); },
+      buttons: { ok: function() { cd.doDelete(filename); $(this).remove(); },
                  cancel: function() { $(this).remove(); }
                }
 	  });
@@ -62,19 +62,19 @@ var cyberDojo = (function(cd, $) {
     var input = makeInput('new', newFilename);
     var okButton = {
       id: 'new-file-ok',
-	    text: 'ok',
-	    disabled: !cd.isValidFilename(newFilename),
+      text: 'ok',
+      disabled: !cd.isValidFilename(newFilename),
       click: function() {
         var newFilename = $.trim(input.val());
         cd.newFileContent(newFilename, '');
         $(this).remove();
       },
-	  };
+    };
 	  var cancelButton = {
       id: 'new-file-cancel',
-	    text: 'cancel',
-	    click: function() { $(this).remove(); }
-	  };
+      text: 'cancel',
+      click: function() { $(this).remove(); }
+    };
     var div = $('<div>');
     var newFileDialog = div.dialog({
       closeOnEscape: true,
@@ -91,17 +91,17 @@ var cyberDojo = (function(cd, $) {
 
   	input.keyup(function(event) {
       var ok = $('#new-file-ok');
-	    newFilename = $.trim(input.val());
+      newFilename = $.trim(input.val());
       event.preventDefault();
-	    if (cd.isValidFilename(newFilename))  {
+      if (cd.isValidFilename(newFilename))  {
         ok.button('enable');
-		    if (event.keyCode == $.ui.keyCode.ENTER) {
+        if (event.keyCode == $.ui.keyCode.ENTER) {
           cd.newFileContent(newFilename, '');
-		      newFileDialog.remove();
-		    }
-	    } else {
+          newFileDialog.remove();
+        }
+      } else {
         ok.button('disable');
-	    }
+      }
     });
 
     newFileDialog.dialog('open');
@@ -117,46 +117,46 @@ var cyberDojo = (function(cd, $) {
     var input = makeInput('rename', oldFilename);
     var okButton = {
       id: 'rename-file-ok',
-	    text: 'ok',
-	    disabled: !cd.isValidFilename(oldFilename),
-	    click: function() {
+      text: 'ok',
+      disabled: !cd.isValidFilename(oldFilename),
+      click: function() {
         var newFilename = $.trim(input.val());
         cd.renameFileFromTo(oldFilename, newFilename);
         $(this).remove();
       }
-	  };
-	  var cancelButton = {
+    };
+    var cancelButton = {
       id: 'rename-file-cancel',
-	    text: 'cancel',
-	    click: function() { $(this).remove(); }
-	  };
+      text: 'cancel',
+      click: function() { $(this).remove(); }
+    };
     var div = $('<div>');
     var renameFileDialog = div.dialog({
       closeOnEscape: true,
       close: function() { $(this).remove(); },
-		  title: cd.dialogTitle(fileTitle('rename')),
-		  autoOpen: false,
-		  width: dialogWidth,
-		  modal: true,
-		  buttons: [ okButton, cancelButton ]
+      title: cd.dialogTitle(fileTitle('rename')),
+      autoOpen: false,
+      width: dialogWidth,
+      modal: true,
+      buttons: [ okButton, cancelButton ]
     });
 
     div.append(input);
     div.append(makeAvatarImage(avatar));
 
-	  input.keyup(function(event) {
-	    var newFilename = $.trim(input.val());
+    input.keyup(function(event) {
+      var newFilename = $.trim(input.val());
       var ok = $('#rename-file-ok');
       event.preventDefault();
-	    if (cd.isValidFilename(newFilename))  {
+      if (cd.isValidFilename(newFilename))  {
         ok.button('enable');
-		    if (event.keyCode == $.ui.keyCode.ENTER) {
-		      cd.renameFileFromTo(oldFilename, newFilename);
-		      renameFileDialog.remove();
-		    }
-	    } else {
+        if (event.keyCode == $.ui.keyCode.ENTER) {
+          cd.renameFileFromTo(oldFilename, newFilename);
+          renameFileDialog.remove();
+        }
+      } else {
         ok.button('disable');
-	    }
+      }
     });
 
     renameFileDialog.dialog('open');
@@ -178,7 +178,7 @@ var cyberDojo = (function(cd, $) {
     var caretPos = oldFile.caret();
     $(oldFile).closest('tr').remove();
 
-	  cd.newFileContent(newFilename, content);
+    cd.newFileContent(newFilename, content);
     cd.rebuildFilenameList();
     cd.loadFile(newFilename);
     var newFile = cd.fileContentFor(newFilename);
@@ -194,12 +194,13 @@ var cyberDojo = (function(cd, $) {
   // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 
   cd.isValidFilename = function(filename) {
-    if (filename == "") { return false; }
+    var contains = function(illegal) { return filename.indexOf(illegal) != -1; };
     if (cd.filenameAlreadyExists(filename)) { return false; }
-    if (filename.indexOf("\\") != -1) { return false; }
-    if (filename.indexOf('/') != -1) { return false; }
-    if (filename.indexOf(' ') != -1) { return false; }
-    if (filename.indexOf("..") != -1) { return false; }
+    if (contains('..')) { return false; }
+    if (contains('\\')) { return false; }
+    if (contains('/'))  { return false; }
+    if (contains(' '))  { return false; }
+    if (filename == '') { return false; }
     return true;
   };
 
@@ -208,7 +209,7 @@ var cyberDojo = (function(cd, $) {
   // revert functionality in cyber-dojo_dialog_history.js
 
   cd.newFileContent = function(filename, content) {
-	  var newFile = cd.makeNewFile(filename, content);
+    var newFile = cd.makeNewFile(filename, content);
     $('#visible-files-container').append(newFile);
     cd.bindLineNumbers(filename);
     cd.rebuildFilenameList();
@@ -218,7 +219,7 @@ var cyberDojo = (function(cd, $) {
   cd.doDelete = function(filename) {
     cd.fileDiv(filename).remove();
     var filenames = cd.rebuildFilenameList();
-	  var i = cd.nonBoringFilenameIndex(filenames);
+    var i = cd.nonBoringFilenameIndex(filenames);
     cd.loadFile(filenames[i]);
   };
 
