@@ -1,11 +1,11 @@
 
 #home-page {
 
-  margin: { top: 5px; left: 300px; }
+  margin: { top: 2px; left: 300px; }
 
   #cyber-dojo {
     @include non-code-font();
-    font-size: 7.82em;
+    font-size: 7.54em;
         color: $text-color;
        margin: { bottom: 0px; }
       padding: { bottom: 0px; }
@@ -15,24 +15,24 @@
   #the-place-to-practice-programming {
     @include non-code-font();
        margin: { right: 0px; bottom: 3px; }
-    font-size: 2.82em;
+    font-size: 2.72em;
         color: lighten($text-color, 5%);
      position: relative;
           top: -9px;
   }
 
   #avatars-grid {
-       width: 244px;
+       width: 228px;
     position: relative;
-        left: 7px;
+        left: 11px;
          top: -5px;
   }
 
   #custom-container {
     position: absolute;
         left: 675px;
+        top: 350px;
   }
-  #custom-container { top: 350px; }
 
   #create-button, #enter-button, #charity-button, #donate-button {
     @include non-code-font();
@@ -44,11 +44,11 @@
   }
 
   #create-button, #enter-button {
-          width: 580px;
+          width: 558px;
       font-size: 2.5em;
     line-height: 95%;
-        padding: { top: 10px; bottom: 10px; }
-         margin: { bottom: 10px; }
+        padding: { top: 8px; bottom: 10px; right: 15px; }
+         margin: { bottom: 8px; }
   }
 
   #licensing-container, #charity-container, #donate-container {
@@ -56,14 +56,14 @@
     @include edged-panel();
           width: 300px;
          margin: { left: 15px; bottom: 12px; }
-        padding: { right: 20px; }
+        padding: { right: 15px; }
      text-align: right;
       font-size: 0.8em;
   }
 
   #donate-container #donate-button, #charity-container #charity-button {
-          width: 140px;
-         margin: { right: 0px; top: 8px; bottom: 10px; }
+          width: 120px;
+         margin: { right: 0px; top: 5px; bottom: 5px; }
         padding: 6px;
      text-align: center;
       font-size: 1.60em;
@@ -74,6 +74,14 @@
     color: lighten($darker-color, 25%);
     &:after { content: '.'; }
   }
+
+  #info {
+    width: 558px;
+    padding: { right: 15px; }
+    @include plaintext-font();
+    @include font-size-tiny();
+  }
+
 }
 
 #email-me { color: $lighter-color; }

@@ -11,12 +11,6 @@
     top: 3px;
   }
 
-  #info {
-    margin-top: 20px;
-    @include plaintext-font();
-    @include font-size-tiny();
-  }
-
   #enter-your-practice-session {
     @include non-code-font();
     color: $lighter-color;
