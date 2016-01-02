@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  var setHoverTip = function(node,tip) {
+  var setHoverTip = function(node, tip) {
     // mouseenter retrieves the tip via a slow ajax call
     // which means mouseleave could have already occurred
     // by the time the ajax returns to set the tip. The
@@ -14,7 +14,8 @@ var cyberDojo = (function(cd, $) {
       $('.hover-tip').position({
         my: 'left top',
         at: 'right bottom',
-        of: node });
+        of: node
+      });
     }
   };
 
@@ -49,13 +50,13 @@ var cyberDojo = (function(cd, $) {
       var tip = node.data('tip');
       node.mouseleave(function() {
         node.addClass('mouse-has-left');
-        $('.hover-tip',node).remove();
+        $('.hover-tip', node).remove();
       });
       node.mouseenter(function() {
         node.removeClass('mouse-has-left');
-        if (tip === 'ajax:traffic_light') {
+        if (tip == 'ajax:traffic_light') {
           setAjaxTrafficLightHoverTip(node);
-        } else if (tip === 'ajax:traffic_light_count') {
+        } else if (tip == 'ajax:traffic_light_count') {
           setAjaxTrafficLightCountHoverTip(node);
         } else {
           setHoverTip(node, tip);
