@@ -18,7 +18,16 @@ var cyberDojo = (function(cd, $) {
 
   // - - - - - - - - - - - - -
 
-  var openDialog = function(title, ok, input, avatar) {
+  var openDialog = function(title, okDisabled, okClicked, input, avatar) {
+    var ok = {
+      text: 'ok',
+      id: 'file-ok',
+      disabled: okDisabled(),
+      click: function() {
+        okClicked();
+        $(this).remove();
+      }
+    };
     var cancel = {
       text: 'cancel',
       click: function() { $(this).remove(); }
@@ -50,14 +59,9 @@ var cyberDojo = (function(cd, $) {
   cd.deleteFile = function(avatar) {
     var filename = cd.currentFilename();
     var input = makeInput('delete', filename);
-    var ok = {
-      text: 'ok',
-      click: function() {
-        cd.doDelete(filename); $(this).remove();
-        $(this).remove();
-      }
-    };
-    openDialog('delete', ok, input, avatar);
+    var okClicked = function() { cd.doDelete(filename); };
+    var okDisabled = function() { return false; };
+    openDialog('delete', okDisabled, okClicked, input, avatar);
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -67,21 +71,16 @@ var cyberDojo = (function(cd, $) {
   cd.newFile = function(avatar) {
     var newFilename = 'filename' + cd.extensionFilename();
     var input = makeInput('new', newFilename);
-    var ok = {
-      id: 'new-file-ok',
-      text: 'ok',
-      disabled: !cd.isValidFilename(newFilename),
-      click: function() {
-        var newFilename = $.trim(input.val());
-        cd.newFileContent(newFilename, '');
-        $(this).remove();
-      },
+    var okClicked = function() {
+      var newFilename = $.trim(input.val());
+      cd.newFileContent(newFilename, '');
     };
-    var newFileDialog = openDialog('new', ok, input, avatar);
+    var okDisabled = function() { return !cd.isValidFilename(newFilename); };
+    var newFileDialog = openDialog('new', okDisabled, okClicked, input, avatar);
 
   	input.keyup(function(event) {
-      var ok = $('#new-file-ok');
-      newFilename = $.trim(input.val());
+      var ok = $('#file-ok');
+      var newFilename = $.trim(input.val());
       event.preventDefault();
       if (cd.isValidFilename(newFilename))  {
         ok.button('enable');
@@ -104,21 +103,16 @@ var cyberDojo = (function(cd, $) {
   cd.renameFile = function(avatar) {
     var oldFilename = cd.currentFilename();
     var input = makeInput('rename', oldFilename);
-    var ok = {
-      id: 'rename-file-ok',
-      text: 'ok',
-      disabled: !cd.isValidFilename(oldFilename),
-      click: function() {
-        var newFilename = $.trim(input.val());
-        cd.renameFileFromTo(oldFilename, newFilename);
-        $(this).remove();
-      }
+    var okDisabled = function() { return !cd.isValidFilename(oldFilename); };
+    var okClicked = function() {
+      var newFilename = $.trim(input.val());
+      cd.renameFileFromTo(oldFilename, newFilename);
     };
-    var renameFileDialog = openDialog('rename', ok, input, avatar);
+    var renameFileDialog = openDialog('rename', okDisabled, okClicked, input, avatar);
 
     input.keyup(function(event) {
       var newFilename = $.trim(input.val());
-      var ok = $('#rename-file-ok');
+      var ok = $('#file-ok');
       event.preventDefault();
       if (cd.isValidFilename(newFilename))  {
         ok.button('enable');
@@ -176,7 +170,7 @@ var cyberDojo = (function(cd, $) {
 
   // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
   // These two functions are also used in the
-  // revert functionality in cyber-dojo_dialog_history.js
+  // revert functionality in app/views/review/_review.html.erb
 
   cd.newFileContent = function(filename, content) {
     var newFile = cd.makeNewFile(filename, content);
