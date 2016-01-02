@@ -3,20 +3,28 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  var makeInput = function(name, filename) {
-    var input = $('<input>', {
-      type: 'text',
-      id: name+'-filename',
-      'name': name+'-filename',
-      value: filename
-    });
-    if (name == 'delete') {
-      input.attr('disabled', 'disabled');
-    }
-    return input;
+  cd.deleteFile = function(avatar) {
+    var initialFilename = cd.currentFilename();
+    var okInitiallyDisabled = false;
+    var okClicked = function(filename) { cd.doDelete(filename); };
+    openDialog('delete', initialFilename, okInitiallyDisabled, okClicked, avatar);
   };
 
-  // - - - - - - - - - - - - -
+  cd.newFile = function(avatar) {
+    var initialFilename = 'filename' + cd.extensionFilename();
+    var okInitiallyDisabled = !isValidFilename(initialFilename);
+    var okClicked = function(filename) { cd.newFileContent(filename, ''); };
+    openDialog('new', initialFilename, okInitiallyDisabled, okClicked, avatar);
+  };
+
+  cd.renameFile = function(avatar) {
+    var initialFilename = cd.currentFilename();
+    var okInitiallyDisabled = true;
+    var okClicked = function(filename) { renameFileFromTo(initialFilename, filename); };
+    openDialog('rename', initialFilename, okInitiallyDisabled, okClicked, avatar);
+  };
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   var openDialog = function(name, initialFilename, okInitiallyDisabled, okClicked, avatar) {
     var input = makeInput(name, initialFilename);
@@ -55,7 +63,7 @@ var cyberDojo = (function(cd, $) {
       var ok = $('#file-ok');
       var newFilename = $.trim(input.val());
       event.preventDefault();
-      if (cd.isValidFilename(newFilename))  {
+      if (isValidFilename(newFilename))  {
         ok.button('enable');
         if (event.keyCode == $.ui.keyCode.ENTER) {
           okClicked(newFilename);
@@ -75,43 +83,24 @@ var cyberDojo = (function(cd, $) {
     dialog.dialog('open');
   };
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  // delete file
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  cd.deleteFile = function(avatar) {
-    var initialFilename = cd.currentFilename();
-    var okInitiallyDisabled = false;
-    var okClicked = function(filename) { cd.doDelete(filename); };
-    openDialog('delete', initialFilename, okInitiallyDisabled, okClicked, avatar);
+  var makeInput = function(name, filename) {
+    var input = $('<input>', {
+      type: 'text',
+      id: name+'-filename',
+      'name': name+'-filename',
+      value: filename
+    });
+    if (name == 'delete') {
+      input.attr('disabled', 'disabled');
+    }
+    return input;
   };
 
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  // new file
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.newFile = function(avatar) {
-    var initialFilename = 'filename' + cd.extensionFilename();
-    var okInitiallyDisabled = !cd.isValidFilename(initialFilename);
-    var okClicked = function(newFilename) { cd.newFileContent(newFilename, ''); };
-    openDialog('new', initialFilename, okInitiallyDisabled, okClicked, avatar);
-  };
-
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  // rename file
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  cd.renameFile = function(avatar) {
-    var oldFilename = cd.currentFilename();
-    var okInitiallyDisabled = true;
-    var okClicked = function(newFilename) { cd.renameFileFromTo(oldFilename, newFilename); };
-    openDialog('rename', oldFilename, okInitiallyDisabled, okClicked, avatar);
-  };
-
-  // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-
-  cd.renameFileFromTo = function(oldFilename, newFilename) {
+  var renameFileFromTo = function(oldFilename, newFilename) {
     var oldFile = cd.fileContentFor(oldFilename);
     var content = oldFile.val();
     var scrollTop = oldFile.scrollTop();
@@ -123,18 +112,18 @@ var cyberDojo = (function(cd, $) {
     cd.rebuildFilenameList();
     cd.loadFile(newFilename);
     var newFile = cd.fileContentFor(newFilename);
-    // Note that doing the seemingly equivalent
-    //   fc.scrollTop(top);
-    //   fc.scrollLeft(left);
-    // here does _not_ work. I use animate instead with a
-    // very fast duration==1 and that does work!
+    // I use animate instead with a very fast duration==1
+    // and it works. Doing the seemingly equivalent
+    //   newFile.scrollTop(top);
+    //   newFile.scrollLeft(left);
+    // here does _not_ work.
     newFile.animate({scrollTop:scrollTop, scrollLeft:scrollLeft}, 1);
     newFile.caret(caretPos);
   };
 
-  // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.isValidFilename = function(filename) {
+  var isValidFilename = function(filename) {
     var contains = function(illegal) { return filename.indexOf(illegal) != -1; };
     if (cd.filenameAlreadyExists(filename)) { return false; }
     if (contains('..')) { return false; }
@@ -145,7 +134,7 @@ var cyberDojo = (function(cd, $) {
     return true;
   };
 
-  // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // These two functions are also used in the
   // revert functionality in app/views/review/_review.html.erb
 
