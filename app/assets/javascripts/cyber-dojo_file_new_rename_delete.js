@@ -3,79 +3,90 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
+  var dialogWidth = 250;
+
+  var fileTitle = function(name) {
+    return name + '&nbsp;' + 'file';
+  };
+
+  var makeAvatarImage = function(avatar) {
+    return $('<img>', {
+        'src': '/images/avatars/' + avatar + '.jpg',
+      'style': 'width:214px'
+    });
+  };
+
+  var makeInput = function(name, filename) {
+    var input = $('<input>', {
+        type: 'text',
+          id: name+'-filename',
+      'name': name+'-filename',
+       value: filename
+    });
+    if (name == 'delete') {
+      input.attr('disabled', 'disabled');
+    }
+    return input;
+  };
+
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // delete file
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.deleteFile = function(title) {
+  cd.deleteFile = function(avatar) {
     var filename = cd.currentFilename();
-    var div = $('<div>', {
-      'class': 'avatar-background'
-    });
-	  var deleter = $('<div>')
-	    .html(div)
-	    .dialog({
-		    autoOpen: false,
-		    width: 350,
-		    title: cd.dialogTitle(title),
-		    modal: true,
-		    buttons: {
-  		    ok: function() { cd.doDelete(filename); $(this).remove(); },
-		      cancel: function() { $(this).remove(); }
-		    }
+    var input = makeInput('delete', filename);
+    var div = $('<div>');
+	  var deleter = div.dialog({
+      closeOnEscape: true,
+              close: function() { $(this).remove(); },
+   		        title: cd.dialogTitle(fileTitle('delete')),
+		       autoOpen: false,
+   		        width: dialogWidth,
+              modal: true,
+		        buttons: {     ok: function() { cd.doDelete(filename); $(this).remove(); },
+                       cancel: function() { $(this).remove(); }
+		                 }
 	  });
-    var input = $('<input>', {
-      type: 'text',
-      id: 'delete-filename',
-      name: 'delete-filename',
-      value: filename,
-	    disabled: 'disabled'
-    });
     div.append(input);
-	  deleter.dialog('open');
+    div.append(makeAvatarImage(avatar));
+    deleter.dialog('open');
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // new file
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.newFile = function(title) {
+  cd.newFile = function(avatar) {
     var newFilename = 'filename' + cd.extensionFilename();
-    var div = $('<div>', {
-      'class': 'avatar-background'
-    });
-    var input = $('<input>', {
-      type: 'text',
-      id: 'new-filename',
-      name: 'new-filename',
-      value: newFilename
-    });
+    var input = makeInput('new', newFilename);
     var okButton = {
-	    id: 'new-file-ok',
-	    text: 'ok',
+	          id: 'new-file-ok',
+	        text: 'ok',
 	    disabled: !cd.isValidFilename(newFilename),
-	    click: function() {
-		    var newFilename = $.trim(input.val())
-		    cd.newFileContent(newFilename, '');
-		    $(this).remove();
-	    }
+         click: function() { var newFilename = $.trim(input.val());
+                             cd.newFileContent(newFilename, '');
+                  		       $(this).remove();
+                  	       },
 	  };
 	  var cancelButton = {
-	    id: 'new-file-cancel',
-	    text: 'cancel',
+         id: 'new-file-cancel',
+	     text: 'cancel',
 	    click: function() { $(this).remove(); }
 	  };
-    var newFileDialog = $('<div>')
-      .html(div)
-      .dialog({
-		    autoOpen: false,
-		    width: 350,
-		    title: cd.dialogTitle(title),
-		    modal: true,
-		    buttons: [ okButton, cancelButton ]
-      });
+    var div = $('<div>');
+    var newFileDialog = div.dialog({
+      closeOnEscape: true,
+              close: function() { $(this).remove(); },
+    		      title: cd.dialogTitle(fileTitle('new')),
+    		   autoOpen: false,
+              width: dialogWidth,
+    		      modal: true,
+      	    buttons: [ okButton, cancelButton ]
+    });
 
     div.append(input);
+    div.append(makeAvatarImage(avatar));
 
   	input.keyup(function(event) {
       var ok = $('#new-file-ok');
@@ -83,7 +94,7 @@ var cyberDojo = (function(cd, $) {
       event.preventDefault();
 	    if (cd.isValidFilename(newFilename))  {
         ok.button('enable');
-		    if (event.keyCode === $.ui.keyCode.ENTER) {
+		    if (event.keyCode == $.ui.keyCode.ENTER) {
           cd.newFileContent(newFilename, '');
 		      newFileDialog.remove();
 		    }
@@ -100,57 +111,50 @@ var cyberDojo = (function(cd, $) {
   // rename file
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.renameFile = function(title) {
+  cd.renameFile = function(avatar) {
     var oldFilename = cd.currentFilename();
-    var div = $('<div>', {
-      'class': 'avatar-background'
-    });
-    var input = $('<input>', {
-      type: 'text',
-      id: 'rename-filename',
-      name: 'rename-filename',
-      value: oldFilename
-    });
+    var input = makeInput('rename', oldFilename);
     var okButton = {
-	    id: 'rename-file-ok',
-	    text: 'ok',
+	          id: 'rename-file-ok',
+	        text: 'ok',
 	    disabled: !cd.isValidFilename(oldFilename),
-	    click: function() {
-		    var newFilename = $.trim(input.val());
-    		cd.renameFileFromTo(oldFilename, newFilename);
-		    $(this).remove();
-	    }
+	       click: function() { var newFilename = $.trim(input.val());
+                      		   cd.renameFileFromTo(oldFilename, newFilename);
+                  		       $(this).remove();
+                  	       }
 	  };
 	  var cancelButton = {
-  	  id: 'rename-file-cancel',
-	    text: 'cancel',
+  	     id: 'rename-file-cancel',
+	     text: 'cancel',
 	    click: function() { $(this).remove(); }
 	  };
-    var renameFileDialog = $('<div>')
-      .html(div)
-      .dialog({
-		    autoOpen: false,
-		    width: 350,
-		    title: cd.dialogTitle(title),
-		    modal: true,
-		    buttons: [ okButton, cancelButton ]
-      });
+    var div = $('<div>');
+    var renameFileDialog = div.dialog({
+      closeOnEscape: true,
+              close: function() { $(this).remove(); },
+		          title: cd.dialogTitle(fileTitle('rename')),
+		       autoOpen: false,
+		          width: dialogWidth,
+		          modal: true,
+		        buttons: [ okButton, cancelButton ]
+    });
 
     div.append(input);
+    div.append(makeAvatarImage(avatar));
 
 	  input.keyup(function(event) {
 	    var newFilename = $.trim(input.val());
       var ok = $('#rename-file-ok');
-      event.preventDefault();
 	    if (cd.isValidFilename(newFilename))  {
         ok.button('enable');
-		    if (event.keyCode === $.ui.keyCode.ENTER) {
+		    if (event.keyCode == $.ui.keyCode.ENTER) {
 		      cd.renameFileFromTo(oldFilename, newFilename);
 		      renameFileDialog.remove();
 		    }
 	    } else {
         ok.button('disable');
 	    }
+      event.preventDefault();
     });
 
     renameFileDialog.dialog('open');

@@ -6,13 +6,13 @@ $(function() {
   var fileButtons =  $('#file-operations');
 
   fileButtons.find('#new')
-    .click(function() { cd.newFile($(this).data('title')); });
+    .click(function() { cd.newFile("<%= @avatar.name %>"); });
 
   fileButtons.find('#rename')
-    .click(function() { cd.renameFile($(this).data('title')); });
+    .click(function() { cd.renameFile("<%= @avatar.name %>"); });
 
   fileButtons.find('#delete')
-    .click(function() { cd.deleteFile($(this).data('title')); });
+    .click(function() { cd.deleteFile("<%= @avatar.name %>"); });
 
 });
 
@@ -22,7 +22,6 @@ $(function() {
 <div>
   <button type="button"
           id="new"
-          data-title="new file"
           title="creates a new file">
     new&nbsp;file
   </button>
@@ -30,7 +29,6 @@ $(function() {
 <div>
   <button type="button"
           id="rename"
-          data-title="rename file"
           title="renames the current file">
     rename&nbsp;file
   </button>
@@ -38,7 +36,6 @@ $(function() {
 <div>
   <button type="button"
           id="delete"
-          data-title="delete file"
           title="deletes the current file">
     delete&nbsp;file
   </button>
