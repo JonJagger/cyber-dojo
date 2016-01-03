@@ -1,14 +1,16 @@
 
-#setup-page.busy * {
-  cursor: wait !important;
-}
+#setup-page.busy * { cursor: wait !important; }
 
-#setup-page {
+#setup-language-page { margin: { left: 250px; } }
 
+#setup-exercise-page { margin: { left: 230px; } }
+
+#setup-language-page, #setup-exercise-page {
+
+  margin: { top: 55px; }
   font-size: 1.15em;
-  margin: { top: 55px; left: 210px; }
 
-  #prepare-a-new-practice {
+  #create-a-practice-session {
     @include non-code-font();
          color: $lighter-color;
      font-size: 3.5em;
@@ -85,8 +87,8 @@
 
   #ok, #next {
     @include non-code-font();
-    @include font-size-largest();
-    margin: { top: 15px; left: 8px; }
+    @include font-size-large();
+    margin: { top: 5px; }
   }
 
 }
