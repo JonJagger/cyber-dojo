@@ -1,9 +1,50 @@
 
 #setup-page.busy * { cursor: wait !important; }
 
-#setup-language-page { margin: { left: 250px; } }
+#setup-language-page {
 
-#setup-exercise-page { margin: { left: 230px; } }
+  margin: { left: 250px; }
+
+  #info-container {
+    @include plaintext-font();
+        height: 365px;
+         width: 150px;
+       padding: { left: 100px; }
+    text-align: right;
+  }
+}
+
+// - - - - - - - - - - - - - - - - - - - -
+
+#setup-exercise-page {
+
+  margin: { left: 230px; }
+
+  #exercises-container {
+    padding: 10px !important;
+  }
+
+  #instructions {
+    @include code-font();
+    font-size: 10pt;
+    color: $lighter-color;
+    background: lighten($darker-color, 5%);
+    border-top-left-radius: 5px;
+    border: none;
+    height: 370px;
+    width: 450px;
+    margin: { left: 0px; }
+    overflow-y: scroll;
+    padding: 6px;
+    outline: none;
+    &::-webkit-scrollbar:vertical { width: 5px; }
+    resize: none;
+    position: relative;
+    top: 5px;
+  }
+}
+
+// - - - - - - - - - - - - - - - - - - - -
 
 #setup-language-page, #setup-exercise-page {
 
@@ -19,18 +60,6 @@
 
   #languages-container, #tests-container, #exercises-container {
     @include edged-panel();
-    padding: 10px !important;
-  }
-
-  #info-container {
-    @include plaintext-font();
-        height: 365px;
-         width: 150px;
-       padding: { left: 100px; }
-    text-align: right;
-  }
-
-  #exercises-container {
     padding: 10px !important;
   }
 
@@ -66,29 +95,9 @@
     text-align: right;
   }
 
-  #instructions {
-    @include code-font();
-    font-size: 10pt;
-    color: $lighter-color;
-    background: lighten($darker-color, 5%);
-    border-top-left-radius: 5px;
-    border: none;
-    height: 370px;
-    width: 450px;
-    margin: { left: 0px; }
-    overflow-y: scroll;
-    padding: 6px;
-    outline: none;
-    &::-webkit-scrollbar:vertical { width: 5px; }
-    resize: none;
-    position: relative;
-    top: 5px;
-  }
-
   #ok, #next {
     @include non-code-font();
     @include font-size-large();
     margin: { top: 5px; }
   }
-
 }
