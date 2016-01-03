@@ -198,18 +198,6 @@ class DojoTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'E51003',
-  'external one_self object defaults to OneSelfCurl' do
-    unset('ONE_SELF')
-    assert_equal 'OneSelfCurl', dojo.one_self.class.name
-  end
-
-  test 'BF6101',
-  'external one_self can be set via CYBER_DOJO_ONE_SELF_CLASS environment variable' do
-    set_one_self_class('ExternalDouble')
-    assert_equal 'ExternalDouble', dojo.one_self.class.name
-  end
-
   private
 
   def unset(key)
