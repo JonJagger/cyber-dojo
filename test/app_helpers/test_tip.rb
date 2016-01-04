@@ -9,7 +9,6 @@ class TipTests < AppHelpersTestBase
 
   def setup
     super
-    set_one_self_class 'OneSelfDummy'
   end
 
   #- - - - - - - - - - - - - - - - - -

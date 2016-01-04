@@ -26,10 +26,6 @@ class Avatars
     kata
   end
 
-  def path
-    kata.path
-  end
-
   def each(&block)
     started_avatars.values.each(&block)
   end
@@ -51,7 +47,7 @@ class Avatars
   include ExternalParentChainer
 
   def started_avatars
-    names = starter.started_avatars(path)
+    names = history.kata_started_avatars(kata)
     Hash[names.map { |name| [name, Avatar.new(kata, name)] }]
   end
 

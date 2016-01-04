@@ -1,6 +1,4 @@
 
-# See comment at bottom of avatar.rb
-
 class Tag
 
   def initialize(avatar, hash)
@@ -16,12 +14,8 @@ class Tag
     avatar
   end
 
-  def path
-    avatar.path
-  end
-
   def visible_files
-    @manifest ||= JSON.parse(git.show(path, "#{number}:manifest.json"))
+    @manifest ||= history.tag_visible_files(avatar, number)
   end
 
   def output

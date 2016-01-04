@@ -22,8 +22,7 @@ class Katas
     manifest[:visible_files]['output'] = ''
     manifest[:visible_files]['instructions'] = exercise.instructions
     kata = Kata.new(self, id)
-    disk[kata.path].make
-    disk[kata.path].write_json('manifest.json', manifest)
+    history.create_kata(kata, manifest)
     kata
   end
 
@@ -39,36 +38,23 @@ class Katas
 
   def each
     return enum_for(:each) unless block_given?
-    disk[path].each_dir do |outer_dir|
-      disk[path + outer_dir].each_dir do |inner_dir|
-        yield self[outer_dir + inner_dir]
-      end
+    history.katas_each(self) do |id|
+      yield Kata.new(self, id)
     end
   end
 
   def [](id)
     kata = Kata.new(self, id)
-    valid?(id) && disk[kata.path].exists? ? kata : nil
+    valid?(id) && history.kata_exists?(kata) ? kata : nil
   end
 
   def complete(id)
-    # If at least 6 characters of the id are provided attempt to complete
-    # it into the full 10 character id. Doing completion with fewer characters
-    # would likely result in a lot of disk activity and no unique outcome.
-    if !id.nil? && id.length >= 6
-      outer_dir = disk[path + outer(id)]
-      if outer_dir.exists?
-        dirs = outer_dir.each_dir.select { |inner_dir| inner_dir.start_with?(inner(id)) }
-        id = outer(id) + dirs[0] if dirs.length == 1
-      end
-    end
-    id || ''
+    history.katas_complete_id(self, id)
   end
 
   private
 
   include ExternalParentChainer
-  include IdSplitter
   include TimeNow
   include UniqueId
 

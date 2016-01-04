@@ -7,30 +7,26 @@ class ForkerController < ApplicationController
 
     if !error && kata.nil?
       error = true
-      result[:reason] = 'dojo'
-      result[:dojo] = id
+      result[:reason] = "dojo(#{id})"
     end
 
     if !error && kata.language.nil?
       error = true
-      result[:reason] = 'language'
-      result[:language] = kata.manifest['language']
+      result[:reason] = "language(#{kata.language_name})"
     end
 
     if !error && avatar.nil?
       error = true
-      result[:reason] = 'avatar'
-      result[:avatar] = avatar_name
+      result[:reason] = "avatar(#{avatar_name})"
     end
 
     #tag = avatar.tags[params['tag']]
     if !error # && !light.exists?
       is_tag = params['tag'].match(/^\d+$/)
-      tag = params['tag'].to_i;
-      if !is_tag || tag <= 0 || tag > avatar.lights.count
+      tag = params['tag'];
+      if !is_tag || tag.to_i <= 0 || tag.to_i > avatar.lights.count
         error = true
-        result[:reason] = 'traffic_light'
-        result[:traffic_light] = tag
+        result[:reason] = "traffic_light(#{tag})"
       end
     end
 
@@ -41,7 +37,7 @@ class ForkerController < ApplicationController
 
       # don't use kata.exercise.name because
       # the exercise might have been renamed
-      exercise_name = kata.manifest['exercise']
+      exercise_name = kata.exercise_name
 
       manifest = {
                     created: time_now,
@@ -54,8 +50,7 @@ class ForkerController < ApplicationController
       }
 
       forked_kata = Kata.new(katas, id)
-      disk[forked_kata.path].make
-      disk[forked_kata.path].write_json('manifest.json', manifest)
+      dojo.history.create_kata(forked_kata, manifest)
       result[:forked] = true
       result[:id] = id
     end

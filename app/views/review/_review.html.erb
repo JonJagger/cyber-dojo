@@ -471,14 +471,14 @@ $(function() {
       if (data.forked) {
         cd.newDojoDialog(data.id);
       } else {
-        forkFailedDialog(data);
+        forkFailedDialog(data.reason);
       }
     });
   };
 
-  var forkFailedDialog = function(data) {
+  var forkFailedDialog = function(reason) {
     var message =
-      'Failed: On the originating server, ' + data.reason + " " + data[data.reason] + ' does not exist';
+      'Failed: On the originating server, ' + reason + ' does not exist';
     $('<div>')
     .html(message)
     .dialog({

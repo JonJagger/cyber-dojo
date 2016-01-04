@@ -35,17 +35,14 @@ class DockerMachineRunner
 
   # modifiers
 
-  def run(sandbox, max_seconds)
-    language = sandbox.avatar.kata.language
-    node = node_map[language.image_name].sample
-
+  def run(sandbox, image_name, max_seconds)
+    node = node_map[image_name].sample
     args = [
       node,
       sandbox.path,
-      language.image_name,
+      image_name,
       max_seconds
     ].join(space = ' ')
-
     output_or_killed(shell.cd_exec(path, sudo("./docker_machine_runner.sh #{args}")), max_seconds)
   end
 

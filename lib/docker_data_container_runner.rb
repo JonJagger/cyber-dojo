@@ -34,10 +34,10 @@ class DockerDataContainerRunner
 
   # modifiers
 
-  def run(sandbox, max_seconds)
+  def run(sandbox, image_name, max_seconds)
     args = [
       sandbox.path,
-      sandbox.avatar.kata.language.image_name,
+      image_name,
       max_seconds
     ].join(space = ' ')
     output_or_killed(shell.cd_exec(path, "./docker_data_container_runner.sh #{args}"), max_seconds)

@@ -30,8 +30,7 @@ class KataController < ApplicationController
     visible_files = received_files
     now = time_now
     max_seconds = 15
-    @traffic_lights,@output = @avatar.test(delta, visible_files, now, max_seconds)
-    @cyber_dojo_sh = visible_files['cyber-dojo.sh']
+    @traffic_lights,@output = dojo.history.avatar_run_tests(avatar, delta, visible_files, now, max_seconds)
 
     respond_to do |format|
       format.js   { render layout: false }

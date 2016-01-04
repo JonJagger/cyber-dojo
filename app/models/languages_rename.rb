@@ -1,4 +1,3 @@
-# See comments at end of file
 
 module LanguagesRename # mix-in
 

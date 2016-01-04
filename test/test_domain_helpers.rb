@@ -10,8 +10,7 @@ module TestDomainHelpers # mix-in
   def katas;     dojo.katas;     end
   def caches;    dojo.caches;    end
 
-  def one_self;  dojo.one_self;  end
-  def starter;   dojo.starter;   end
+  def history;   dojo.history;   end
   def runner;    dojo.runner;    end
   def shell;     dojo.shell;     end
   def log;       dojo.log;       end

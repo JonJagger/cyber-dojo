@@ -15,9 +15,9 @@ class ForkerControllerTest < AppControllerTestBase
   'when id is invalid ' +
     'then fork fails ' +
       'and the reason given is dojo' do
-    fork(id = 'bad-id', 'hippo', tag = 1)
+    fork(bad_id = 'bad-id', 'hippo', tag = 1)
     refute forked?
-    assert_reason_is('dojo')
+    assert_reason_is("dojo(#{bad_id})")
     assert_nil forked_kata_id
   end
 
@@ -28,13 +28,12 @@ class ForkerControllerTest < AppControllerTestBase
       'the fork fails ' +
         'and the reason given is language' do
     kata = katas[@id]
-    language_name = 'doesNot-Exist'
+    bad_language = 'doesNot-Exist'
     dir_of(kata).make
-    dir_of(kata).write_json('manifest.json', { language: language_name })
+    dir_of(kata).write_json('manifest.json', { language: bad_language })
     fork(@id, 'hippo', tag = 1)
     refute forked?
-    assert_reason_is('language')
-    assert_equal language_name, json['language']
+    assert_reason_is("language(#{bad_language})")
     assert_nil forked_kata_id
   end
 
@@ -44,10 +43,9 @@ class ForkerControllerTest < AppControllerTestBase
   'when avatar not started ' +
     'the fork fails ' +
       'and the reason given is avatar' do
-    fork(@id, 'hippo', tag = 1)
+    fork(@id, bad_avatar = 'hippo', tag = 1)
     refute forked?
-    assert_reason_is('avatar')
-    assert_equal 'hippo', json['avatar']
+    assert_reason_is("avatar(#{bad_avatar})")
     assert_nil forked_kata_id
   end
 
@@ -69,7 +67,7 @@ class ForkerControllerTest < AppControllerTestBase
   def bad_tag_test(bad_tag)
     fork(@id, @avatar.name, bad_tag)
     refute forked?
-    assert_reason_is('traffic_light')
+    assert_reason_is("traffic_light(#{bad_tag})")
     assert_nil forked_kata_id
   end
 

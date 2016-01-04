@@ -1,10 +1,15 @@
-# See comments at end of file
 
 class Avatar
 
   def initialize(kata, name)
     @kata = kata
     @name = name
+  end
+
+  # modifier
+
+  def test(delta, files, now = time_now, max_seconds = 15)
+    history.avatar_run_tests(self, delta, files, now, max_seconds)
   end
 
   # queries
@@ -16,12 +21,19 @@ class Avatar
   end
 
   def path
-    # The avatar's folder holds its manifest and increments caches
-    kata.path + name + '/'
+    parent.path + name + '/'
+  end
+
+  def language
+    # Each avatar does _not_ choose their own language+test.
+    # The language+test is chosen for the _dojo.
+    # cyber-dojo is a team-based Interactive Dojo Environment,
+    # not an Individual Development Environment
+    kata.language
   end
 
   def diff(was_tag, now_tag)
-    git.diff(path, was_tag, now_tag)
+    history.avatar_git_diff(self, was_tag, now_tag)
   end
 
   def active?
@@ -29,7 +41,7 @@ class Avatar
     # instructions. I don't want these avatars appearing on the dashboard.
     # When forking a new kata you can enter as one animal to sanity check
     # it is ok (but not press [test])
-    exists? && !lights.empty?
+    history.avatar_exists?(self) && !lights.empty?
   end
 
   def tags
@@ -45,7 +57,7 @@ class Avatar
   end
 
   def visible_files
-    read_json(manifest_filename)
+    history.avatar_visible_files(self)
   end
 
   def sandbox
@@ -53,83 +65,14 @@ class Avatar
     Sandbox.new(self)
   end
 
-  # modifiers
-
-  def start
-    dir.make
-    git.setup(path, user_name, user_email)
-    write_manifest(kata.visible_files)
-    git.add(path, manifest_filename)
-    write_increments([])
-    git.add(path, increments_filename)
-    sandbox.start
-    git.commit(path, 0)
-  end
-
-  def test(delta, files, now = time_now, max_seconds = 15)
-    sandbox.save_files(delta, files)
-    output = truncated(sandbox.run_tests(max_seconds))
-    colour = language.colour(output)
-
-    update_manifest(files, output)
-    rags = update_increments(colour, now)
-    git.commit(path, rags[-1]['number'])
-
-    [rags, output]
-  end
-
   private
 
   include ExternalParentChainer
-  include ExternalDir
-  include OutputTruncater
   include TimeNow
 
-  # - - - - - - - - - - - - - - - - -
-
-  def write_manifest(files)
-    # The manifest stores a cache of the avatar's
-    # current visible files [filenames and contents].
-    write_json(manifest_filename, files)
-  end
-
-  def update_manifest(files, output)
-    # output _is_ part of diff state
-    disk[sandbox.path].write('output', output)
-    files['output'] = output
-    write_manifest(files)
-  end
-
-  def manifest_filename
-    'manifest.json'
-  end
-
-  # - - - - - - - - - - - - - - - - -
-
-  def write_increments(increments)
-    # Stores a cache of colours and time-stamps for all the
-    # avatar's current [test]s. Helps optimize the review dashboard.
-    write_json(increments_filename, increments)
-  end
-
-  def update_increments(colour, now)
-    # rags = Reds/Ambers/Greens
-    rags = increments
-    tag = rags.length + 1
-    rags << { 'colour' => colour, 'time' => now, 'number' => tag }
-    write_increments(rags)
-    rags
-  end
-
   def increments
-    read_json(increments_filename)
+    history.avatar_increments(self)
   end
-
-  def increments_filename
-    'increments.json'
-  end
-
-  # - - - - - - - - - - - - - - - - -
 
   def tag0
     @zeroth ||=
@@ -138,24 +81,6 @@ class Avatar
       'time'   => time_now(kata.created),
       'number' => 0
     }
-  end
-
-  def language
-    # Each avatar does _not_ choose their own language+test.
-    # The language+test is chosen for the _dojo.
-    # cyber-dojo is a team-based learning environment,
-    # not an individual development environment
-    kata.language
-  end
-
-  # - - - - - - - - - - - - - - - - -
-
-  def user_name
-    "#{name + '_' + kata.id}"
-  end
-
-  def user_email
-    "#{name}@cyber-dojo.org"
   end
 
 end

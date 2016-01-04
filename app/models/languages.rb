@@ -1,4 +1,3 @@
-# See comments at end of file
 
 class Languages
   include Enumerable
@@ -32,7 +31,7 @@ class Languages
 
   def refresh_cache
     cache = {}
-    dir.each_dir do |dir_name|
+    disk[path].each_dir do |dir_name|
       disk[path + dir_name].each_dir do |test_dir_name|
         next if test_dir_name == '_docker_context'
         language = make_language(dir_name, test_dir_name)
@@ -49,7 +48,6 @@ class Languages
   private
 
   include ExternalParentChainer
-  include ExternalDir
   include LanguagesRename
 
   def languages

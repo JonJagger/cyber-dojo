@@ -4,7 +4,7 @@ module SetupWorker # mix-in
   module_function
 
   def read_languages
-    runner.runnable_languages.map { |language| language.display_name }.sort
+    dojo.runner.runnable_languages.map { |language| language.display_name }.sort
   end
 
   def read_exercises

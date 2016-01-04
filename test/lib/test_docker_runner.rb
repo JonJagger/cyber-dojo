@@ -102,7 +102,7 @@ class DockerRunnerTests < LibTestBase
   test 'B8750C',
   'output is replaced by timed-out message when run() times out' do
     lion = mock_run_setup('ach-so-it-timed-out', times_out)
-    output = runner.run(lion.sandbox, max_seconds)
+    output = runner.run(lion.sandbox, lion.language.image_name, max_seconds)
     assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds.")
   end
 
@@ -130,7 +130,8 @@ class DockerRunnerTests < LibTestBase
 
   def mock_run_assert(expected_output, mock_output, mock_exit_status)
     lion = mock_run_setup(mock_output, mock_exit_status)
-    assert_equal expected_output, runner.run(lion.sandbox, max_seconds)
+    image_name = lion.language.image_name
+    assert_equal expected_output, runner.run(lion.sandbox, image_name, max_seconds)
   end
 
 end

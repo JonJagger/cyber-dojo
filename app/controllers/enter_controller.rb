@@ -11,12 +11,12 @@ class EnterController < ApplicationController
   end
 
   def start
-    avatar = kata.start_avatar
-    full = avatar.nil?
+    name = dojo.history.kata_start_avatar(kata, Avatars.names.shuffle)
+    full = name.nil?
     render json: {
-            avatar_name: !full ? avatar.name : nil,
+            avatar_name: !full ? name : nil,
                    full:  full,
-      start_dialog_html: !full ? start_dialog_html(avatar.name) : '',
+      start_dialog_html: !full ? start_dialog_html(name) : '',
        full_dialog_html:  full ? full_dialog_html : ''
     }
   end

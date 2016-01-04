@@ -6,20 +6,15 @@ class HostDiskAvatarStarterTests < LibTestBase
 
   def setup
     super
-    assert_equal 'HostDiskAvatarStarter', starter.class.name
-    disk[path].make
-  end
-
-  def path
-    tmp_root + 'host_disk_dir_avatar_starter/'
+    @kata = make_kata
   end
 
   def start_avatar(avatar_names = Avatars.names.shuffle)
-    starter.start_avatar(path, avatar_names)
+    history.kata_start_avatar(@kata, avatar_names)
   end
 
   def started_avatars
-    starter.started_avatars(path)
+    history.kata_started_avatars(@kata)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -117,7 +117,7 @@ class DockerMachineRunnerTests < LibTestBase
       mock_exit_status
     )
 
-    runner.run(lion.sandbox, max_seconds)
+    runner.run(lion.sandbox, lion.language.image_name, max_seconds)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

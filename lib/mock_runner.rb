@@ -27,7 +27,7 @@ class MockRunner
     save_mock(avatar, { :output => output })
   end
 
-  def run(sandbox, max_seconds)
+  def run(sandbox, image_name, max_seconds)
     read_mock(sandbox.avatar)
   end
 

@@ -11,7 +11,6 @@ module TestExternalHelpers # mix-in
     store_env_vars
     setup_tmp_root
     set_katas_root(tmp_root + 'katas')
-    set_one_self_class('OneSelfDummy')
   end
 
   def teardown; restore_env_vars; end
@@ -30,21 +29,17 @@ module TestExternalHelpers # mix-in
 
   # - - - - - - - - - - - - - - - - - - -
 
-  def  set_starter_class(value); cd_set(  starter_key, value); end
   def   set_runner_class(value); cd_set(   runner_key, value); end
   def    set_shell_class(value); cd_set(    shell_key, value); end
   def     set_disk_class(value); cd_set(     disk_key, value); end
   def      set_git_class(value); cd_set(      git_key, value); end
   def      set_log_class(value); cd_set(      log_key, value); end
-  def set_one_self_class(value); cd_set( one_self_key, value); end
 
-  def  get_starter_class; cd_get(  starter_key); end
   def   get_runner_class; cd_get(   runner_key); end
   def    get_shell_class; cd_get(    shell_key); end
   def     get_disk_class; cd_get(     disk_key); end
   def      get_git_class; cd_get(      git_key); end
   def      get_log_class; cd_get(      log_key); end
-  def get_one_self_class; cd_get( one_self_key); end
 
   # - - - - - - - - - - - - - - - - - - -
 
@@ -77,8 +72,6 @@ module TestExternalHelpers # mix-in
       katas_key     => root_dir + '/katas',
       caches_key    => root_dir + '/caches',
 
-      one_self_key  => 'OneSelfCurl',
-      starter_key   => 'HostDiskAvatarStarter',
       runner_key    => 'DockerRunner',
       shell_key     => 'HostShell',
       disk_key      => 'HostDisk',
@@ -92,8 +85,6 @@ module TestExternalHelpers # mix-in
   def     katas_key; root(    'KATAS'); end
   def    caches_key; root(   'CACHES'); end
 
-  def  one_self_key; klass('ONE_SELF'); end
-  def   starter_key; klass('STARTER' ); end
   def    runner_key; klass('RUNNER'  ); end
   def     shell_key; klass('SHELL'   ); end
   def      disk_key; klass('DISK'    ); end

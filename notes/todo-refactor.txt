@@ -1,36 +1,16 @@
 
 --------------------------------------
-can I replace rsync with docker-machine scp?
-and use a sticky bit on the nodes /tmp folder?
+line-numbers checkbox can be reworked so simply
+clicking on the line-numbers column toggles them on/off
 --------------------------------------
 https://hub.docker.com/u/delitescere/
 Refactor docker images - most can be a lot smaller...
 --------------------------------------
-put admin_scripts/refresh_all.sh tests of whether
-docker-machine, docker are installed into the
-respective runners.
-Then make default runner be dependent on what is installed.
---------------------------------------
-would be a lot better if code was auto-caching
-but does this require a lock? I guess yes,
-but only if the cache does not already exist.
-Worth also thinking about caches if front end
-has proper horizontal scaling.
---------------------------------------
-If I wanted to run the tests in parallel then I'd need
+If I wanted to run the dev-tests in parallel then I'd need
 to embed the test's hex-id into the tmp folder...
---------------------------------------
-one_self_dummy should be in test/lib not lib?
 --------------------------------------
 Use http://www.shellcheck.net/
 to check .sh files
---------------------------------------
-I think doing the one_self.created call is slowing down
-the dojo creation. I don't think the background-process
-is really detached. Use new shell.daemon_exec
-Or is it finding the latitude/longtitude which is on
-the browser. Maybe 1self could tweak their API to accept
-an ip-address?
 --------------------------------------
 unique_id is only used once, put it directly
 inside katas and use shell.exec() in it.
@@ -39,15 +19,6 @@ Hmmmm suppose you are rejoining a
 kata and the dojo has uninstalled the language...
 Unlikely and remember cyber-dojo is aimed at short-lived sessions
 --------------------------------------
-perhaps add
-  ExternalRepo
-which does git_repo=git[path] addition in the same way
-  ExternalDir
-does disk path addition.
-Then make HostGit simply have ctor,parent,[] the same as HostDisk
-Then put all HostGit commands inside HostRepo
-have host_git_repo.rb file.
-
 Drop dir delegators
 Instead of writing
    read_json(filename)
@@ -67,14 +38,8 @@ Eg
 HostGit can be dropped as an external I think
 as it only delegates to HostShell now.
 --------------------------------------
-If I move all disk based doubles to just use
-real disk (maybe in ram) then I can get rid of
-disk-dir distinction and externals will all
-have the same pattern. And they will all be
-stateless and I can drop the @obj ||= from Dojo.
---------------------------------------
 Definitely need to fix the bug that causes sorry page
-when you try to being up the setup page and there is
+when you try to bring up the setup page and there is
 nothing in the caches yet so the languages list fails.
 --------------------------------------
 Add a battleships exercise!
@@ -83,21 +48,15 @@ Have some pages that are only for configuration?
 You select a high-level description of the setup
 you'd like and it sets the env variables appropriately.
 --------------------------------------
-rsync'ing files back ...
-Instead of specifying files to return back would it be better to specify instead files NOT to rsync back
+runner sending created files *back* ...
+Instead of specifying files to return back would it be
+better to specify instead files NOT to send back
 Eg .class files, .o files, executable files.
 --------------------------------------
 https://github.com/minimaxir/big-list-of-naughty-strings
 --------------------------------------
 Split CSS into smaller files, per component?
 Test the CSS using Quixote https://github.com/jamesshore/quixote
---------------------------------------
-Refactor cyber-dojo_dialog_history.js to server side html returned via Rails bind() call
-to browser via Ajax json call. Idea is it can then be served to a dialog or to a full
-page. Think it needs to pass 3 lots of html...
-  o) title-bar
-  o) diff-content
-  o) fork/revert buttons
 --------------------------------------
 NEW UX
 donate-dialog: improve appearance
@@ -152,31 +111,6 @@ You want output like this:
     ...Lisp-2.3_LUnit --> ["red", "amber", "green"] ==> PASS
     </div>
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-filenames appear in the file-knave in alphabetic order
-(more or less).
-The ordering could be changed so the string is ordered
-by itself in reverse! The result would be
-o) files with the same extension would be next to each other
-o) files with common suffixes would appear next to each other
-   eg   Shape.java
-        GroupedShape.java
-   and if they were right aligned it would appear as
-   eg          Shape.java
-        GroupedShape.java
-
-var my_sort = function(array) {
-  return array.sort(function(lhs,rhs) {
-    return reverse(lhs).localeCompare(reverse(rhs));
-  });
-};
-
-var reverse = function(s) {
-  return s.split('').reverse().join('');
-};
-Added this to the main test page file knave
-Still need to add it to the diff-dialog file-knave.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -216,11 +150,9 @@ use time-spaced bulbs on history-dialog?
 kata filename: very long filename: when not selected you can scroll
   horizontally to see the end of the filename. When selected you
   can't. Ok on history-dialog.
-  Add table tbody so it styles the same as the filename list
-  on history-dialog.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Having the starting files called Hiker.rb is not ideal.
-Rename starting files as starter.*
+Rename starting files as starter.* unnamed.* no_name.*
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
@@ -232,11 +164,7 @@ http://citigroup.cyber-dojo.org/dashboard/show/E1E9D08B5A?minute_columns=true&au
 should have 14 timeouts....
 the tooltip does not refresh...
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-The 1self stream capability will give me the option
-of creating a visualization of all dojos. This makes it important
-that when someone claims/saves a dojo, it must become readonly.
-And similarly, even if they don't claim it, after a certain period
-of time a cyberdojo must become readonly.
+After a certain period of time a cyberdojo must become readonly.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Once a cyberdojo has a time-period I need to add some words
 to the setup page to describe that the time-period clock starts
@@ -277,10 +205,6 @@ What happens if "filename_extension" is not present.
 What if support_filenames mentions file that does not exist.
 What if visible_filenames mentions makefile but only makefile.txt exists.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-On Ubuntu test/app_controllers/test_differ.rb fails line 33
-Expected "amber"
-  Actual "red"
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Add Custom exercise whose instructions file
 details how to make a custom exercise
 and/or points you to the blog page Mike helped write.
@@ -288,50 +212,9 @@ Ensure it appears first in the exercises list.
 Hmmm. Not sure I like this.
 Provide a URL next to exercise? list instead
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 In switching to new externals setting the following tests needed refactoring
 test/integration/integration_test_base.rb
 test/integration/test_approval.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Think about switching away from fake Disk/Dir and using a ram-disk/tmp-fs
-instead. This would allow me to use the real Git.
-This would mean that setting the paths would be all I'd need to do
-to switch to the ram-disk.
-The main external affecting test times would be the DockerTestRunner.
-I could copy some of exercises/languages onto the ram-disk
-and make exercises/languages readonly, and katas/ read-write.
-MacOs
-$ diskutil erasevolume HFS+ 'RAM Disk' `hdiutil attach -nomount ram://XXXXX`
-For a 1GB ram disk, XXXXX is 1024 * 2048 == 2097152. So
-$ diskutil erasevolume HFS+ 'RAM Disk' `hdiutil attach -nomount ram://2097152`
-Ok. That seemed to work. I can see it in Finder. I can eject it.
-But I cannot cd to /dev/rdisk2 or create files in it.
-Found this
-https://gist.github.com/pklaus/931579
-No joy
-
-Linux
-$ mkdir ~/RamFS
-$ mount -t ramfs -o size=512m ramfs ~/RamFS
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-
-
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-app_controller tests can all use DiskFake DirFake
- TODO test_differ    2.32s
- TODO test_reverter  0.40s
- NA   test_download  0.00s
- ??   test_exception_controller 0.00s
- DONE test_dojo      0.52s
- DONE test_forker    0.19s
- DONE test_dashboard 0.72s
- DONE test_setup     0.16s
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dojo.rb Katas.rb Kata.rb
 Do I use kata as a noun (the name of the exercise)

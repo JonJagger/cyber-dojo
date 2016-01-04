@@ -1,4 +1,3 @@
-# See comments at end of file
 
 class Language
 
@@ -19,7 +18,7 @@ class Language
   end
 
   def path
-    languages.path + @dir_name + '/' + @test_dir_name + '/'
+    parent.path + @dir_name + '/' + @test_dir_name + '/'
   end
 
   # required manifest properties
@@ -94,9 +93,9 @@ class Language
   include ManifestProperty
 
   def manifest
-    @manifest ||= read_json(manifest_filename)
+    @manifest ||= dir.read_json(manifest_filename)
   rescue StandardError => e
-    message = "read_json(#{manifest_filename}) exception" + "\n" +
+    message = "dir.read_json(#{manifest_filename}) exception" + "\n" +
       'language: ' + path + "\n" +
       ' message: ' + e.message
     fail message

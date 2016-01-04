@@ -8,6 +8,14 @@ class Kata
     @id = id
   end
 
+  # modifiers
+
+  def start_avatar(avatar_names = Avatars.names.shuffle)
+    name = history.kata_start_avatar(self, avatar_names)
+    return nil if name.nil?
+    Avatar.new(self, name)
+  end
+
   # queries
 
   attr_reader :katas, :id
@@ -17,7 +25,7 @@ class Kata
   end
 
   def path
-    katas.path + outer(id) + '/' + inner(id) + '/'
+    parent.path + outer(id) + '/' + inner(id) + '/'
   end
 
   def avatars
@@ -42,42 +50,31 @@ class Kata
   end
 
   def language
-    languages[manifest_property]
+    languages[language_name]
   end
 
   def exercise
-    exercises[manifest_property]
+    exercises[exercise_name]
   end
 
-  def manifest
-    # This is a public method because when fork fails it reports
-    # the name of language that could not be forked from.
-    # kata.language.name will not work since name is based on
-    # display_name which is required and comes from the manifest.json
-    @manifest ||= read_json(manifest_filename)
+  def language_name
+    # used in forker_controller error diagnostic
+    manifest['language']
   end
 
-  # modifiers
-
-  def start_avatar(avatar_names = Avatars.names.shuffle)
-    avatar = nil
-    avatar_name = starter.start_avatar(path, avatar_names)
-    unless avatar_name.nil?
-      avatar = Avatar.new(self, avatar_name)
-      avatar.start
-    end
-    avatar
+  def exercise_name
+    # used in forker_controller error diagnostic
+    manifest['exercise']
   end
 
   private
 
   include ExternalParentChainer
-  include ExternalDir
-  include ManifestProperty
   include IdSplitter
+  include ManifestProperty
 
-  def manifest_filename
-    'manifest.json'
+  def manifest
+    @manifest ||= history.kata_manifest(self)
   end
 
   def earliest_light

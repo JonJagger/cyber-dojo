@@ -120,8 +120,8 @@ class KatasTests < AppModelTestBase
     assert_equal all_ids([kata1, kata2]).sort, all_ids(katas).sort
   end
 
-  def all_ids(k)
-    k.each.map { |kata| kata.id.to_s }
+  def all_ids(katas)
+    katas.each.map { |kata| kata.id.to_s }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

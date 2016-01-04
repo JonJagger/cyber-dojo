@@ -1,8 +1,5 @@
 
 %w(
-  external_dir
-  output_cleaner
-  output_truncater
   name_of_caller
   manifest_property
 

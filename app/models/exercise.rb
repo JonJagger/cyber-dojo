@@ -16,11 +16,11 @@ class Exercise
   end
 
   def path
-    exercises.path + name + '/'
+    parent.path + name + '/'
   end
 
   def instructions
-    @instructions || read(instructions_filename)
+    @instructions || dir.read(instructions_filename)
   end
 
   private

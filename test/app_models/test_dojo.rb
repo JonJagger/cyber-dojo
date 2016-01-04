@@ -170,20 +170,6 @@ class DojoTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'C126CA',
-  'external starter object defaults to HostDiskAvatarStarter' do
-    unset('STARTER')
-    assert_equal 'HostDiskAvatarStarter', dojo.starter.class.name
-  end
-
-  test 'F6D938',
-  'external starter can be set via CYBER_DOJO_STARTER_CLASS environment variable' do
-    set_starter_class('ExternalDouble')
-    assert_equal 'ExternalDouble', dojo.starter.class.name
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '03170A',
   'external log object defaults to HostLog' do
     unset('LOG')
