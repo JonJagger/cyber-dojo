@@ -13,20 +13,17 @@
 .medium { @include font-size-medium(); }
 .large  { @include font-size-large();  }
 
-@mixin code-font
-{
+@mixin code-font {
   font: {
-    size: 11.5pt;
+      size: 11.5pt;
     family: Consolas, "Liberation Mono", Courier, monospace;
   }
 }
 
-@mixin non-code-font
-{
+@mixin non-code-font {
   font-family: Impact, Trebuchet MS, Tahoma, Arial, sans-serif;
 }
 
-@mixin plaintext-font
-{
+@mixin plaintext-font {
   font-family: Trebuchet MS, Tahoma, Arial, sans-serif;
 }
