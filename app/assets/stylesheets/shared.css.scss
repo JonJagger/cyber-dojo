@@ -134,6 +134,7 @@ a:link, a:visited { color: $text-color; }
     -o-background-size: cover;
     background-size: cover;
   @include center-align;
+
   .centerer
   {
     display: inline-block;

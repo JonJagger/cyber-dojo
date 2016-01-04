@@ -3,17 +3,16 @@
   <div class='align-center small'>
     <div>your animal is the</div>
     <div><%= @avatar_name %></div>
-    <div class='avatar-background'>
-      <span class='centerer'></span>
       <img class='avatar_image'
          src="/images/avatars/<%= @avatar_name %>.jpg"
+         width="214"
+         height="214"
          title="<%= @avatar_name.humanize %>" />
-    </div>
   </div>
 </div>
 
 <div class='align-center small'>
-  click any
+  to review click any
   <br/>
   <% size = 20 %>
   <img src='/images/bulb_red.png'
@@ -28,7 +27,5 @@
        alt='green traffic-light'
        width='<%= size %>'
        height='<%= size %>'/>
-  <br/>
-  to do a review
   <br/>
 </div>
