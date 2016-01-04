@@ -6,8 +6,10 @@
   #auto-refresh-container, #minute-columns-container, #age-container {
     @include edged-panel();
     @include right-align(15px);
-     margin: { bottom: 5px; }
+      width: 90px;
+     margin: { bottom: 10px; right: 12px; }
     display: block;
+    #text { width: 57px; }
   }
 
   #progress-button-container, #download-button-container {
