@@ -86,21 +86,21 @@
 
     #instructions {
       @include code-font();
-      font-size: 10pt;
-      color: $lighter-color;
-      background: lighten($darker-color, 5%);
-      border-top-left-radius: 5px;
-      border: none;
-      height: 370px;
-      width: 450px;
-      margin: { left: 0px; }
-      overflow-y: scroll;
-      padding: 6px;
-      outline: none;
       &::-webkit-scrollbar:vertical { width: 5px; }
-      resize: none;
-      position: relative;
-      top: 5px;
+      border-top-left-radius: 5px;
+           width: 450px;
+         padding: 6px;
+       font-size: 10pt;
+           color: $lighter-color;
+      background: lighten($darker-color, 5%);
+          border: none;
+          height: 370px;
+          margin: { left: 0px; }
+      overflow-y: scroll;
+         outline: none;
+          resize: none;
+        position: relative;
+             top: 5px;
     }
   }
 }

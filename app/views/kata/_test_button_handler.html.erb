@@ -49,12 +49,10 @@ $(function() {
         }
       },
       complete: function(xhr, status) {
-        var allTheWay = 100000;
         testSpinner.hide();
         testOverlay.remove();
         testButton.enable();
         cd.loadFile('output');
-        $('#traffic-lights').scrollLeft(allTheWay);
       }
     });
   });
