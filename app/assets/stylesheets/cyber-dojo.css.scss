@@ -12,19 +12,19 @@ body {
   @include non-code-font();
   background: $darker-color;
      padding: none;
-      margin: 0em;
+      margin: 0px;
 }
 
 .panel {
   background: $darker-color;
        color: $lighter-color;
       border: 1px solid lighten($darker-color, 8%);
-     padding: 0.5em;
+     padding: 5px;
       margin: { left: 10px; right: 10px; bottom: 1px; }
 }
 
 .avatar-image {
-  margin: { left: 0px; right: 0.2em; top: 0em; bottom: 0em; }
+  margin: { left: 0px; right: 1px; top: 0px; bottom: 0px; }
   cursor: pointer;
 }
 
@@ -33,14 +33,16 @@ body {
 $filename_and_button_border_size: 1px;
 
 button {
-  cursor: pointer;
-  padding: { left: 0.5em; right: 0.5em; bottom: 0.1em; }
-  text-decoration: none;
-  font-weight: normal;
-  border: $filename_and_button_border_size solid $darker-color;
   @include rounded-corner(6px);
-  display: inline-block;
   @include gradient-lighten(darken($lighter-color, 12%), 9%, 2%, 0%);
+
+          display: inline-block;
+           cursor: pointer;
+          padding: { left: 0.5em; right: 0.5em; bottom: 0.1em; }
+  text-decoration: none;
+      font-weight: normal;
+           border: $filename_and_button_border_size solid $darker-color;
+
   &:hover { border: $filename_and_button_border_size dotted lighten($darker-color, 20%); }
   &[disabled] {
     background: lighten($darker-color, 20%);
@@ -61,18 +63,19 @@ div[class~='filename'] {
   overflow-y: none;
   &::-webkit-scrollbar:vertical { width: 0px; }
 
-  // left/right scrolling for looooooong individual filenames
-  max-width: 250px;
-  overflow-x: auto;
-  &::-webkit-scrollbar:horizontal { height: 0px; }
-  direction: rtl;
-
   background: $darker-color;
        color: lighten($darker-color, 30%);
       margin: { bottom: 2px; left: 0px; left: 0px; right: 0px; }
-     padding: { left: 0.3em; right: 0px; }
+     padding: { right: 0px; }
       cursor: pointer;
   text-align: right;
+
+  // individual left/right scrolling for looooooong filenames
+  &::-webkit-scrollbar:horizontal { height: 0px; }
+    max-width: 250px;
+   overflow-x: auto;
+    direction: rtl;
+
   &:hover { color: lighten($darker-color, 60); }
   &[class~='selected'] {
     // See app/assets/javascripts/cyber-dojo_file_load.js function radioEntrySwitch()
@@ -89,42 +92,42 @@ div[class~='filename'] {
 
 .line_numbers, .file_content {
   background: lighten($darker-color, 4%);
-  height: 560px;
-  border: 0px;
-  margin: 0px;
-  padding: 0px;
-  display: block;
-  overflow: auto;
-  &::-webkit-scrollbar:vertical { width: 5px; }
+      height: 560px;
+      border: 0px;
+      margin: 0px;
+     padding: 0px;
+     display: block;
+    overflow: auto;
 }
 
 .line_numbers {
-  color: lighten($darker-color, 20%);
-  font-weight: 100;
-  text-align: right;
-  overflow: hidden;
-  display: block;
-  padding: { right: 4px; top: 2px; }
-  width: 32px;
-  outline: none;
-  position: relative; // lose 1px gap to file-content
-  left: 2px;
-  border-top-left-radius: 10px;
+     border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+        color: lighten($darker-color, 20%);
+  font-weight: 100;
+   text-align: right;
+     overflow: hidden;
+      display: block;
+      padding: { right: 4px; top: 2px; }
+        width: 32px;
+      outline: none;
+     position: relative; // lose 1px gap to file-content
+         left: 2px;
 }
 
 .file_content {
-  color: $lighter-color;
-  width: 720px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+        color: $lighter-color;
+        width: 690px;
   font-weight: 500;
   // if padding-left gets too large it pushes the background to the
   // right and the vertical scrollbar gets a background-coloured right-border
-  padding: { left: 2px; top: 2px; }
-  outline: none;
-  cursor: url(white-text-cursor.cur), auto;
-  resize: none;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+      padding: { left: 2px; top: 2px; }
+      outline: none;
+       cursor: url(white-text-cursor.cur), auto;
+       resize: none;
+
   &[data-filename=output] { cursor: default; }
 }
 
@@ -132,14 +135,15 @@ div[class~='filename'] {
 
 .dialog {
   background: $lighter-color;
-  color: $darker-color;
-  display: table;
-  margin: { top: 0; bottom: auto; left: 45px; right: 45px; }
+       color: $darker-color;
+     display: table;
+      margin: { top: 0; bottom: auto; left: 45px; right: 45px; }
+
   a:link, a:visited { color: $lighter-color; }
 
   &.title {
     @include non-code-font();
     position: relative;
-    left: -45px;
+        left: -45px;
   }
 }

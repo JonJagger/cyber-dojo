@@ -51,7 +51,7 @@
 
   #traffic-lights {
         margin: { left: 5px; bottom: 0px; }
-         width: 720px;
+         width: 694px;
     overflow-x: auto;
     overflow-y: hidden;
     &::-webkit-scrollbar:horizontal { height: 0px; }
@@ -70,7 +70,7 @@
   .file_content {
     overflow-x: auto;
     overflow-y: auto;
-    &::-webkit-scrollbar:vertical   {  width: 4px; }
+    &::-webkit-scrollbar:vertical   {  width: 7px; }
     &::-webkit-scrollbar:horizontal { height: 0px; }
   }
 }
