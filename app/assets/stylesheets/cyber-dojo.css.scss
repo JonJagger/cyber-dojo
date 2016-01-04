@@ -108,11 +108,15 @@ div[class~='filename'] {
    text-align: right;
      overflow: hidden;
       display: block;
+       cursor: pointer;
       padding: { right: 4px; top: 2px; }
         width: 32px;
       outline: none;
      position: relative; // lose 1px gap to file-content
          left: 2px;
+
+    &.opaque { color: Gray; }
+    &:not(.opaque) { color: lighten($darker-color, 4%); }
 }
 
 .file_content {
@@ -125,7 +129,7 @@ div[class~='filename'] {
   // right and the vertical scrollbar gets a background-coloured right-border
       padding: { left: 2px; top: 2px; }
       outline: none;
-       cursor: url(white-text-cursor.cur), auto;
+       cursor: text;
        resize: none;
 
   &[data-filename=output] { cursor: default; }
