@@ -14,7 +14,8 @@ $(function() {
       if (dojo.empty) {
         cd.continueDialog('review', dojo.html).dialog('open');
       } else {
-        window.location.href = '/review/show/' + id;
+        window.location.href = cd.homePageUrl(id);
+        window.open('/review/show/' + id);
       }
     });
   });

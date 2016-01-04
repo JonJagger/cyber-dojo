@@ -5,10 +5,12 @@ var cyberDojo = (function(cd, $) {
 
   cd.reJoin = function(id, avatarName) {
     var url = '/kata/edit/' + id + '?avatar=' + avatarName;
-    window.location.href = url;
+    window.location.href = cd.homePageUrl(id);
+    window.open(url);
   };
 
-  // Used on the enter page by the [continue], [dashboard], and [review] buttons.
+  // Used on the enter page by the [continue], and also by the
+  //  [dashboard] and [review] buttons when the dojo is empty.
   cd.continueDialog = function(title, dialogHtml) {
     var buttons = { };
     buttons['cancel'] = function() { $(this).dialog('close'); };

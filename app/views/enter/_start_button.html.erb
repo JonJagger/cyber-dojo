@@ -4,9 +4,10 @@
 $(function() {
 
   var startDialog = function(title, id, avatarName, dialogHtml) {
+    var url = '/kata/edit/' + id + '?avatar=' + avatarName;
     var okOrCancel = function() {
-      var url = '/kata/edit/' + id + '?avatar=' + avatarName;
-      window.location.href = url;
+      window.location.href = cd.homePageUrl(id);
+      window.open(url);
     };
     $('<div class="dialog">')
       .html(dialogHtml)

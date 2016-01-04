@@ -23,6 +23,12 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  cd.homePageUrl = function(id) {
+    return '/dojo/index/' + id;
+  };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   cd.td = function(html) {
  	  return '<td>' + html + '</td>';
   };
