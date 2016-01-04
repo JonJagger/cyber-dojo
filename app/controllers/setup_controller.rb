@@ -26,6 +26,7 @@ class SetupController < ApplicationController
     language = languages[language_name + '-' + test_name]
     exercise = exercises[exercise_name]
     kata = katas.create_kata(language, exercise)
+
     render json: { id: kata.id }
   end
 
@@ -33,6 +34,5 @@ class SetupController < ApplicationController
 
   include SetupChooser
   include SetupWorker
-  include TimeNow
 
 end

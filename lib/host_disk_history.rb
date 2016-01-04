@@ -42,6 +42,13 @@ class HostDiskHistory
   # Katas
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
+  def create_kata(katas, manifest)
+    kata = Kata.new(katas, manifest[:id])
+    make_dir(kata)
+    dir(kata).write_json(manifest_filename, manifest)
+    kata
+  end
+
   def katas_complete_id(katas, id)
     # If at least 6 characters of the id are provided attempt to complete
     # it into the full 10 character id. Doing completion with fewer characters
@@ -67,11 +74,6 @@ class HostDiskHistory
   # - - - - - - - - - - - - - - - - - - - - - - - -
   # Kata
   # - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def create_kata(kata, manifest)
-    make_dir(kata)
-    dir(kata).write_json(manifest_filename, manifest)
-  end
 
   def kata_exists?(kata)
     dir(kata).exists?

@@ -33,26 +33,21 @@ class ForkerController < ApplicationController
     if !error
       language = kata.language
       tag = params['tag'].to_i
-      id = unique_id
-
       # don't use kata.exercise.name because
       # the exercise might have been renamed
-      exercise_name = kata.exercise_name
-
       manifest = {
+                         id: unique_id,
                     created: time_now,
-                         id: id,
                    language: language.name,
-                   exercise: exercise_name,
+                   exercise: kata.exercise_name,
         unit_test_framework: language.unit_test_framework,
                    tab_size: language.tab_size,
               visible_files: avatar.tags[tag].visible_files
       }
+      forked_kata = dojo.history.create_kata(katas, manifest)
 
-      forked_kata = Kata.new(katas, id)
-      dojo.history.create_kata(forked_kata, manifest)
       result[:forked] = true
-      result[:id] = id
+      result[:id] = forked_kata.id
     end
 
     respond_to do |format|
@@ -65,8 +60,8 @@ class ForkerController < ApplicationController
 
   private
 
-  include UniqueId
   include TimeNow
+  include UniqueId
 
 end
 
