@@ -48,7 +48,6 @@ $(function() {
         var avatar = $(this).data('avatar');
         var lastTag = -1;
         window.open(cd.showReviewUrl(id, avatar, lastTag, lastTag));
-        $(this).closest('.ui-dialog').remove();
       });
     }); // getJSON
   };
