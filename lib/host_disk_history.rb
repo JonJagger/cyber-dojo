@@ -210,14 +210,6 @@ class HostDiskHistory
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
-  # Sandbox
-  # - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def write(sandbox, filename, content)
-    dir(sandbox).write(filename, content)
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - -
   # Tag
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -231,6 +223,10 @@ class HostDiskHistory
   include OutputCleaner
   include OutputTruncater
   include IdSplitter
+
+  def write(sandbox, filename, content)
+    dir(sandbox).write(filename, content)
+  end
 
   def make_dir(obj)
     dir(obj).make
