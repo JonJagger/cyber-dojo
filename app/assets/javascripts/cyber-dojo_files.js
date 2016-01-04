@@ -132,8 +132,10 @@ var cyberDojo = (function(cd, $) {
     tr.append(td2);
     table.append(tr);
     div.append(table);
+
     cd.bindHotKeys(text);
     cd.tabber(text);
+
     return div;
   };
 

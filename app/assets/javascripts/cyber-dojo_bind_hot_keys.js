@@ -8,41 +8,42 @@ var cyberDojo = (function(cd, $) {
     event.preventDefault();
   };
 
-  cd.bindRunTests = function(event) {
+  var bindRunTests = function(event) {
     cancel(event);
     $('#test-button').click();
     return false;
   };
 
-  cd.bindLoadNextFile = function(event) {
+  var bindLoadNextFile = function(event) {
     cancel(event);
     cd.loadNextFile();
     return false;
   };
 
-  cd.bindLoadPreviousFile = function(event) {
+  var bindLoadPreviousFile = function(event) {
     cancel(event);
     cd.loadPreviousFile();
     return false;
   };
 
-  cd.bindShowOutputFile = function(event) {
+  var bindShowOutputFile = function(event) {
     cancel(event);
     cd.toggleOutputFile();
     return false;
   };
 
-  cd.runTestsHotKey         = function() { return 'Alt+t'; };
-  cd.loadNextFileHotKey     = function() { return 'Alt+j'; };
-  cd.loadPreviousFileHotKey = function() { return 'Alt+k'; };
-  cd.showOutputFileHotKey   = function() { return 'Alt+o'; };
+  var runTestsHotKey         = function() { return 'Alt+t'; };
+  var loadNextFileHotKey     = function() { return 'Alt+j'; };
+  var loadPreviousFileHotKey = function() { return 'Alt+k'; };
+  var showOutputFileHotKey   = function() { return 'Alt+o'; };
 
   cd.bindHotKeys = function(node) {
-    node.bind('keydown', cd.runTestsHotKey(),         cd.bindRunTests);
-    node.bind('keydown', cd.loadNextFileHotKey(),     cd.bindLoadNextFile);
-    node.bind('keydown', cd.loadPreviousFileHotKey(), cd.bindLoadPreviousFile);
-    node.bind('keydown', cd.showOutputFileHotKey(),   cd.bindShowOutputFile);
+    node.bind('keydown', runTestsHotKey(),         bindRunTests);
+    node.bind('keydown', loadNextFileHotKey(),     bindLoadNextFile);
+    node.bind('keydown', loadPreviousFileHotKey(), bindLoadPreviousFile);
+    node.bind('keydown', showOutputFileHotKey(),   bindShowOutputFile);
   };
 
   return cd;
+
 })(cyberDojo || {}, $);

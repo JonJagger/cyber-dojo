@@ -24,31 +24,31 @@ $(function() {
     cd.storeOutgoingFileHashes();
     $.ajax({
       timeout: 30000, // 30 seconds (twice server timeout)
-      type: 'POST',
-      url: form.attr('action'),
-      data: form.serialize(),
-      beforeSend: function(xhr,settings) {
+         type: 'POST',
+          url: form.attr('action'),
+         data: form.serialize(),
+
+      beforeSend: function(xhr, settings) {
         testButton.disable();
         testOverlay.insertAfter($('body'));
         testSpinner.show();
       },
-      success: function(data,status,xhr) {
+      success: function(data, status, xhr) {
         cd.rebuildFilenameList();
         cd.bindHotKeys(cd.fileContentFor('output'));
         cd.bindAllLineNumbers();
         cd.storeIncomingFileHashes();
       },
-      error: function(xhr,status,thrown) {
-        var errorMessage = '';
-        if (status === 'timeout') {
-          errorMessage = 'timeout: have you lost your network connection?';
+      error: function(xhr, status, thrown) {
+        var output = cd.fileContentFor('output');
+        if (status == 'timeout') {
+          output.val(status + ': have you lost your network connection?');
         }
-        if (status === 'error') {
-          errorMessage = 'error: is the cyber-dojo server down?';
+        if (status == 'error') {
+          output.val(status + ': is the cyber-dojo server down?');
         }
-        cd.fileContentFor('output').val(errorMessage);
       },
-      complete: function(xhr,status) {
+      complete: function(xhr, status) {
         var allTheWay = 100000;
         testSpinner.hide();
         testOverlay.remove();
@@ -57,7 +57,6 @@ $(function() {
         $('#traffic-lights').scrollLeft(allTheWay);
       }
     });
-
   });
 
 });
