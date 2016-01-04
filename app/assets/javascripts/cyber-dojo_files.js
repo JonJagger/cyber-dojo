@@ -165,5 +165,22 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  cd.newFileContent = function(filename, content) {
+    var newFile = cd.makeNewFile(filename, content);
+    $('#visible-files-container').append(newFile);
+    cd.bindLineNumbers(filename);
+    cd.rebuildFilenameList();
+    cd.loadFile(filename);
+  };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  cd.doDelete = function(filename) {
+    cd.fileDiv(filename).remove();
+    var filenames = cd.rebuildFilenameList();
+    var i = cd.nonBoringFilenameIndex(filenames);
+    cd.loadFile(filenames[i]);
+  };
+
   return cd;
 })(cyberDojo || {}, $);
