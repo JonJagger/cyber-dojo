@@ -19,7 +19,7 @@ var cyberDojo = (function(cd, $) {
     // I tried changing this to...
     //   return $('input:radio[name=filename]:checked').val();
     // (which would remove the need for the file
-    //    app/views/_current_filename.html.erb)
+    //    app/views/kata/_current_filename.html.erb)
     // This worked on Firefox but not on Chrome.
     // The problem seems to be that in Chrome the javascript handler
     // function invoked when the radio button filename is clicked sees
@@ -38,7 +38,6 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.sortedFilenames = function(filenames) {
-    // also called from cyber_dojo_dialog_history.js
     var lolights = [];
     var hilights = [];
     $.each(filenames, function(_, filename) {
@@ -141,7 +140,7 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.nonBoringFilenameIndex = function(filenames) {
-    // In << < > >> navigation the current file is
+    // In < > navigation the current file is
     // sometimes not present after the navigation
     // (eg the file has been renamed/deleted).
     // When this happens, try to select a non-boring file.
@@ -175,7 +174,7 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.doDelete = function(filename) {
+  cd.deleteFile = function(filename) {
     cd.fileDiv(filename).remove();
     var filenames = cd.rebuildFilenameList();
     var i = cd.nonBoringFilenameIndex(filenames);

@@ -58,7 +58,7 @@ var cyberDojo = (function(cd, $) {
 
   cd.radioEntrySwitch = function(previous, current) {
     // Used in test-page, setup-page, and history-dialog
-    if (previous !== undefined) {
+    if (previous != undefined) {
       previous.removeClass('selected');
     }
     current.addClass('selected');
@@ -71,7 +71,7 @@ var cyberDojo = (function(cd, $) {
     var all = cd.filenames();
     all.sort();
     $.each(all, function(n, filename) {
-      if (!cd.inArray(filename, cd.lowlightFilenames()) && filename !== 'output') {
+      if (!cd.inArray(filename, cd.lowlightFilenames()) && filename != 'output') {
         hilightFilenames.push(filename);
       }
     });
@@ -83,8 +83,8 @@ var cyberDojo = (function(cd, $) {
   cd.loadNextFile = function() {
     var hilightFilenames = cd.notLowlightFilenames();
     var index = $.inArray(cd.currentFilename(), hilightFilenames);
-    if (index === -1) {
-      index = 0; // output
+    if (index == -1) {
+      index = 0;
     } else {
       index = (index + 1) % hilightFilenames.length;
     }

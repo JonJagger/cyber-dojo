@@ -32,27 +32,16 @@ var cyberDojo = (function(cd, $) {
     return false;
   };
 
-  cd.runTestsHotKey = function() {
-    return 'Alt+t';
-  };
-
-  cd.loadNextFileHotKey = function() {
-    return 'Alt+j';
-  };
-
-  cd.loadPreviousFileHotKey = function() {
-    return 'Alt+k';
-  };
-
-  cd.showOutputFileHotKey = function() {
-    return 'Alt+o';
-  };
+  cd.runTestsHotKey         = function() { return 'Alt+t'; };
+  cd.loadNextFileHotKey     = function() { return 'Alt+j'; };
+  cd.loadPreviousFileHotKey = function() { return 'Alt+k'; };
+  cd.showOutputFileHotKey   = function() { return 'Alt+o'; };
 
   cd.bindHotKeys = function(node) {
-    node.bind('keydown', cd.runTestsHotKey(),     cd.bindRunTests);
-    node.bind('keydown', cd.loadNextFileHotKey(), cd.bindLoadNextFile);
+    node.bind('keydown', cd.runTestsHotKey(),         cd.bindRunTests);
+    node.bind('keydown', cd.loadNextFileHotKey(),     cd.bindLoadNextFile);
     node.bind('keydown', cd.loadPreviousFileHotKey(), cd.bindLoadPreviousFile);
-    node.bind('keydown', cd.showOutputFileHotKey(), cd.bindShowOutputFile);
+    node.bind('keydown', cd.showOutputFileHotKey(),   cd.bindShowOutputFile);
   };
 
   return cd;

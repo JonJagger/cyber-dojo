@@ -132,7 +132,7 @@ $(function() {
     //cd.deleteFile("<%= @avatar.name %>");
     var initialFilename = cd.currentFilename();
     var okInitiallyDisabled = false;
-    var okClicked = function(filename) { cd.doDelete(filename); };
+    var okClicked = function(filename) { cd.deleteFile(filename); };
     openDialog('delete', initialFilename, okInitiallyDisabled, okClicked, avatarName);
   });
 

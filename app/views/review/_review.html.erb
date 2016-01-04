@@ -519,7 +519,7 @@ $(function() {
   var deleteAllCurrentFiles = function() {
     $.each(cd.filenames(), function(_, filename) {
       if (filename !== 'output') {
-        cd.doDelete(filename);
+        cd.deleteFile(filename);
       }
     });
   };
