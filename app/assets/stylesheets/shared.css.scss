@@ -1,10 +1,10 @@
 
-@mixin right-align($margin-right) { margin: { left : auto; right: $margin-right; } }
-@mixin left-align($margin-left) { margin: { left : $margin-left; right: auto; } }
-@mixin center-align { text-align: center; margin: { left : auto; right: auto; } }
+@mixin  right-align($margin-right) { margin: { left : auto; right: $margin-right; } }
+@mixin   left-align($margin-left ) { margin: { left : $margin-left; right: auto; } }
+@mixin center-align                { text-align: center; margin: { left : auto; right: auto; } }
 
-.align-left { text-align: left; }
-.align-center { @include center-align; }
+.align-left    { text-align: left; }
+.align-center  { @include center-align; }
 .align-right   { text-align: right;  }
 
 .valign-top    { vertical-align: top;    }
@@ -16,34 +16,27 @@ a:link, a:visited { color: $text-color; }
 
 [data-cursor=pointer] { cursor: pointer; }
 
-#home-page-logo {
-  cursor: pointer;
-  position: relative;
-  top: 3px;
-}
-
 //----------------------------------------------
 
-@mixin edged-panel
-{
-  display: inline-block;
-  border: 1px dotted gray;
-  padding: 5px;
-  border-radius: 5px;
-  margin-left: 10px;
+@mixin edged-panel {
+  @include rounded-corner(5px);
   background: $darker-color;
+     display: inline-block;
+      border: 1px dotted gray;
+     padding: 5px;
+  margin: { left: 10px; }
 }
 
 .hover-tip {
   @include plaintext-font();
-  z-index: 3;
-  position: absolute;
-  background-color: lighten($darker-color, 6%);
-  color: darken($lighter-color, 6%);
-  border: 1px dotted darken($lighter-color, 6%);
-  font-size: 15px;
   @include rounded-corner(10px);
-  padding: 10px;
+  background: lighten($darker-color, 6%);
+     z-index: 3;
+    position: absolute;
+       color: darken($lighter-color, 6%);
+      border: 1px dotted darken($lighter-color, 6%);
+   font-size: 15px;
+     padding: 10px;
   text-align: left;
 }
 
@@ -62,102 +55,55 @@ a:link, a:visited { color: $text-color; }
 }
 
 .avatar-image img {
-  width: 30px;
-  height: 30px;
-  margin: 0px;
-  padding: 0px;
   @include rounded-corner(4px);
-  border: 1px solid lighten($darker-color, 15%);
+    width: 30px;
+   height: 30px;
+   margin: 0px;
+  padding: 0px;
+   border: 1px solid lighten($darker-color, 15%);
 }
 
 .traffic-light-count {
   font-size: 28px;
-  padding: { left: 4px; bottom: 0px; }
+    padding: { left: 4px; bottom: 0px; }
 }
 
 .avatar_name, #id { @include font-size-tiny(); text-align: right; }
 
 //----------------------------------------------
 
-#footer {
-  @include plaintext-font();
-  font-size: 1.05em;
-  position: fixed;
-  width: 100%;
-  text-align: left;
-  bottom: 0px;
-  padding: { left: 15px; bottom: 2px; top: 0px; }
-  background: lighten($darker-color, 6%);
-  color: $lighter-color;
-
-  #tweet-container {
-    #twitter-widget-0 {
-      position: relative; top: 5px;
-      margin-top: 7px;
-    }
-  }
-
-  .bullet {
-    margin: { left: 10px; right: 10px; }
-    $bullet: "\2022";
-    &:after { content: $bullet; }
-  }
-
-  #accu-container {
-    #accu-image {
-      padding: 5px;
-      background: CornSilk;
-      width: 50px;
-      margin-top: 7px;
-      @include rounded-corner(3px);
-    }
-  }
-
-  #learn-more-button {
-    @include non-code-font();
-    width: 80px;
-    padding-right: 10px;
-    color: darken($darker-color, 10%);
-    text-align: right;
-    font-size: 0.87em;
-    padding-bottom: 2px;
-    margin-top: 4px;
-  }
-}
-
 .avatar-background {
+  @include center-align();
   background: url('/images/avatars/all_avatars_background.png') no-repeat;
        width: 315px;
       height: 315px;
-  -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  @include center-align;
 
-  .centerer
-  {
-    display: inline-block;
-    height: 100%;
+  -webkit-background-size: cover;
+     -moz-background-size: cover;
+       -o-background-size: cover;
+          background-size: cover;
+
+  .centerer {
+           display: inline-block;
+            height: 100%;
     vertical-align: middle;
   }
-  .avatar_image
-  {
-     width: 162px;
-    height: 162px;
+
+  .avatar_image {
+             width: 162px;
+            height: 162px;
     vertical-align: middle;
   }
-  .dojo-id
-  {
-    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    background: lighten($green, 20%);
-    color: $darker-color;
-    @include font-size-largest();
-    margin: { top: 4px; bottom: 4px; right: 2px; }
-    padding: { right: 20px; bottom: 0px; top: 2px; }
-    text-align: right;
-    padding: { left: 10px; right: 10px; }
+
+  .dojo-id {
     @include gradient-lighten($green, 40%, 30%, 20%);
-    @include rounded-corner(6px);
+    @include rounded-corner(5px);
+    @include non-code-font();
+    @include font-size-largest();
+     background: lighten($green, 20%);
+          color: $darker-color;
+         margin: { left:  2px; right:  2px; top: 4px; bottom: 4px; }
+        padding: { left: 20px; right: 20px; top: 2px; bottom: 0px; }
+     text-align: right;
   }
 }
