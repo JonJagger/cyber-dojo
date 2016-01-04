@@ -30,9 +30,9 @@
 
     .filename {
       @include font-size-medium();
-        padding: { right: 5px; }
+        padding: { right: 0px; }
       font-size: 13pt !important;
-          width: 135px;
+          width: 145px;
       direction: ltr;
       &[class~='selected'] {
         font-style: bold;
@@ -76,15 +76,13 @@
 
 #setup-exercise-page {
 
-  margin: { left: 226px; }
+  margin: { left: 216px; }
 
   #exercises-container {
 
     padding: 10px !important;
 
-    #exercises-list {
-      width: 150px;
-    }
+    #exercises-list { width: 165px; }
 
     #instructions {
       @include code-font();
