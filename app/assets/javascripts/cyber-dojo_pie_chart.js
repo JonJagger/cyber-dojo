@@ -10,7 +10,7 @@ var cyberDojo = (function(cd, $) {
       segmentStrokeColor : '#757575',
       animationEasing : 'easeOutExpo'
     };
-    var plural = function(n,word) {
+    var plural = function(n, word) {
       return "" + n + " " + word + (n == 1 ? "" : "s");
     }
     nodes.each(function() {
@@ -35,7 +35,7 @@ var cyberDojo = (function(cd, $) {
       var totalCount = redCount + amberCount + greenCount + timedOutCount;
       var animation = ($.data(document.body, key) != totalCount);
       options['animation'] = animation;
-      new Chart(ctx).Pie(data,options);
+      new Chart(ctx).Pie(data, options);
       $.data(document.body, key, totalCount);
     });
   };

@@ -1,0 +1,34 @@
+
+<script type="text/javascript"><!--
+
+$(function() {
+
+  var ragCount = function(colour) {
+    var count = 0;
+    $('.diff-traffic-light').each(function(_, node) {
+      if ($(node).data('colour') == colour  ) {
+        count += 1;
+      }
+    });
+    return count;
+  };
+
+  $('#pie-chart').attr({
+    'class': 'pie',
+    'data-red-count': ragCount('red'),
+    'data-amber-count': ragCount('amber'),
+    'data-green-count': ragCount('green'),
+    'data-timed-out-count': ragCount('timed_out'),
+    'data-key': "<%= @avatar.name %>",
+    'width': 34,
+    'height': 34
+  });
+
+  cd.pieChart($('.pie'));
+
+});
+
+//--></script>
+
+<canvas id="pie-chart"></canvas>
+

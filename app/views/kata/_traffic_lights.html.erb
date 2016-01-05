@@ -21,7 +21,6 @@ $(function() {
     review.dialog('open');
   });
 
-  cd.pieChart($('#traffic-lights .pie'));
   cd.setupHoverTips();
 
   var allTheWay = 100000;
@@ -33,13 +32,20 @@ $(function() {
 
 <table>
   <tr class="row">
+
     <% @avatar.lights.each do |light| %>
 	    <td><%= raw diff_traffic_light(light) %></td>
     <% end %>
+
     <% if @avatar.active? %>
+
 	    <td><%= raw traffic_light_count(@avatar) %></td>
-	    <td><%= raw pie_chart(@avatar.lights, @avatar.name) %></td>
+
+      <td><%= render partial: 'pie_chart' %></td>
+
     <% end %>
+
     <td><%= render partial: 'avatar_image' %></td>
+
   </tr>
 </table>

@@ -13,12 +13,14 @@ module TrafficLightHelper # mix-in
 
   def diff_traffic_light(light)
     # used from test page and from dashboard page
-    number = light.number
     avatar = light.avatar
+    number = light.number
+    colour = light.colour
     "<div class='diff-traffic-light'" +
         " data-tip='ajax:traffic_light'" +
         " data-id='#{avatar.kata.id}'" +
         " data-avatar-name='#{avatar.name}'" +
+        " data-colour='#{colour}'" +
         " data-was-tag='#{number - 1}'" +
         " data-now-tag='#{number}'>" +
         traffic_light_image(light.colour) +
