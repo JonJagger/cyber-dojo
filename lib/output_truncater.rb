@@ -15,7 +15,7 @@ module OutputTruncater # mix-in
   end
 
   def max_output_length
-    50 * 1024
+    10 * 1024
   end
 
 end

@@ -94,10 +94,10 @@ class AvatarTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'EB2E11',
-    'test() does not truncate output less than or equal to 50*1024 characters' do
+    'test() does not truncate output less than or equal to 10*1024 characters' do
     kata = make_kata(unique_id, 'Java-JUnit')
     @avatar = kata.start_avatar
-    big = 'X' * 50*1024
+    big = 'X' * 10*1024
 
     runner.mock_run_output(@avatar, big)
 
@@ -108,10 +108,10 @@ class AvatarTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '4B2E5A',
-  'test() truncates output greater 50*1024 characters' do
+  'test() truncates output greater 10*1024 characters' do
     kata = make_kata(unique_id, 'Java-JUnit')
     @avatar = kata.start_avatar
-    big = 'X' * 50*1024
+    big = 'X' * 10*1024
     runner.mock_run_output(@avatar, big + 'truncated')
     _, @visible_files, @output = DeltaMaker.new(@avatar).run_test
     message = 'output truncated by cyber-dojo server'
