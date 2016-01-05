@@ -41,7 +41,7 @@ class DeltaMaker
     root = File.expand_path(File.dirname(__FILE__)) + '/../app_lib/test_output'
     path = "#{root}/#{@avatar.kata.language.unit_test_framework}/#{colour}"
     all_outputs = Dir.glob(path + '/*')
-    filename = all_outputs.shuffle[0]
+    filename = all_outputs.sample
     output = File.read(filename)
     @avatar.runner.mock_run_output(@avatar, output)
   end

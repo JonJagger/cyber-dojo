@@ -140,12 +140,11 @@ class HostDiskHistory
     write(avatar.sandbox, 'output', output)
     files['output'] = output
     write_avatar_manifest(avatar, files)
-
-    rags = avatar_increments(avatar) # Reds/Ambers/Greens
+    # Reds/Ambers/Greens
+    rags = avatar_increments(avatar)
     tag = rags.length + 1
     rags << { 'colour' => colour, 'time' => now, 'number' => tag }
     write_avatar_increments(avatar, rags)
-
     git.commit(path(avatar), tag)
     rags
   end
