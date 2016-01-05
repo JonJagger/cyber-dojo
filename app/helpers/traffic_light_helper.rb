@@ -20,7 +20,7 @@ module TrafficLightHelper # mix-in
         " data-tip='ajax:traffic_light'" +
         " data-id='#{avatar.kata.id}'" +
         " data-avatar-name='#{avatar.name}'" +
-#        " data-colour='#{colour}'" +
+        " data-colour='#{colour}'" +
         " data-was-tag='#{number - 1}'" +
         " data-now-tag='#{number}'>" +
         traffic_light_image(light.colour) +
