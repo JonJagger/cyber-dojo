@@ -3,10 +3,10 @@
 
 $(function() {
 
-  cd.updateTrafficLightCount = function() {
+  cd.updateTrafficLightsCount = function() {
     var totalRagCount = 0;
     var rags = $('.diff-traffic-light');
-    var tally = function(colour) {
+    var count = function(colour) {
       var n = cd.ragCount(rags, colour);
       totalRagCount += n;
       return n;
@@ -17,16 +17,14 @@ $(function() {
         'data-tip':'ajax:traffic_light_count',
         'data-id': "<%= @kata.id %>",
         'data-avatar-name': "<%= @avatar.name %>",
-        'data-red-count': tally('red'),
-        'data-amber-count': tally('amber'),
-        'data-green-count':  tally('green'),
-        'data-timed-out-count': tally('timed_out')
+        'data-red-count': count('red'),
+        'data-amber-count': count('amber'),
+        'data-green-count':  count('green'),
+        'data-timed-out-count': count('timed_out')
       }).text(totalRagCount);
 
     if (totalRagCount > 0) {
-      // don't show a zero if there are no traffic-lights yet
       $('.traffic-lights-count').html(newCount);
-      cd.updatePieChart();
     }
   };
 
@@ -35,22 +33,22 @@ $(function() {
   cd.updatePieChart = function() {
     var totalRagCount = 0;
     var rags = $('.diff-traffic-light');
-    var tally = function(colour) {
+    var count = function(colour) {
       var n = cd.ragCount(rags, colour);
       totalRagCount += n;
       return n;
     };
     var canvas = $('<canvas>', {
         'class': 'pie',
-        'data-red-count': tally('red'),
-        'data-amber-count': tally('amber'),
-        'data-green-count': tally('green'),
-        'data-timed-out-count': tally('timed_out'),
+        'data-red-count': count('red'),
+        'data-amber-count': count('amber'),
+        'data-green-count': count('green'),
+        'data-timed-out-count': count('timed_out'),
         'data-key': "<%= @avatar.name %>",
       });
+    // Canvas width/height have to be set as follows.
     // Setting them via attr({..}) above doesn't work.
     // Setting them via canvas.width(34) doesn't work.
-    // They have to be set like this.
     canvas.attr('width', '34');
     canvas.attr('height', '34');
 
@@ -58,6 +56,12 @@ $(function() {
       $('#pie-chart').empty().append(canvas);
       cd.pieChart($('.pie'));
     }
+  };
+
+  //- - - - - - - - - - - - - - - - - - - - - - -
+
+  cd.scrollAvatarImageIntoView = function() {
+    $('.avatar-image').scrollIntoView();
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - -
@@ -81,13 +85,10 @@ $(function() {
   });
 
 
-  cd.updateTrafficLightCount();
+  cd.updateTrafficLightsCount();
   cd.updatePieChart();
-
+  cd.scrollAvatarImageIntoView();
   //cd.setupHoverTips();
-
-  var allTheWay = 100000;
-  $('#traffic-lights').scrollLeft(allTheWay);
 
 });
 

@@ -30,12 +30,11 @@ var appendNewTrafficLight = function() {
 //- - - - - - - - - - - - - - - - - - - - - -
 
 appendNewTrafficLight();
-cd.updateTrafficLightCount();
+cd.updateTrafficLightsCount();
 cd.updatePieChart();
-
+cd.scrollAvatarImageIntoView();
 //cd.setupHoverTips();
-//console.log('6');
+
 $('#output')
   .html("<%= js_partial('output') %>");
-//console.log('7');
 
