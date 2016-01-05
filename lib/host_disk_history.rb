@@ -131,6 +131,12 @@ class HostDiskHistory
     colour = language.colour(output)
 
     # save the results
+    rags = avatar_ran_tests(avatar, delta, files, now, output, colour)
+
+    [rags, output]
+  end
+
+  def avatar_ran_tests(avatar, delta, files, now, output, colour)
     write(avatar.sandbox, 'output', output)
     files['output'] = output
     write_avatar_manifest(avatar, files)
@@ -141,8 +147,7 @@ class HostDiskHistory
     write_avatar_increments(avatar, rags)
 
     git.commit(path(avatar), tag)
-
-    [rags, output]
+    rags
   end
 
   def avatar_git_diff(avatar, was_tag, now_tag)
