@@ -25,11 +25,11 @@ class TipTests < AppHelpersTestBase
            'bulb_count' => 23
     }
     expected =
-      'lion has 23 traffic-lights<br/>' +
-      "<div>&bull; 14 <span class='red'>reds</span></div>" +
-      "<div>&bull; 3 <span class='amber'>ambers</span></div>" +
-      "<div>&bull; 5 <span class='green'>greens</span></div>" +
-      "<div>&bull; 1 <span class='timed_out'>timeout</span></div>"
+      'lion has<br/>' +
+      "<div>14 <span class='red'>reds</span></div>" +
+      "<div>3 <span class='amber'>ambers</span></div>" +
+      "<div>5 <span class='green'>greens</span></div>" +
+      "<div>1 <span class='timed_out'>timeout</span></div>"
     actual = traffic_light_count_tip_html(params)
     assert_equal expected, actual
   end
@@ -44,14 +44,13 @@ class TipTests < AppHelpersTestBase
             'red_count' => 14,
           'amber_count' => 3,
           'green_count' => 5,
-      'timed_out_count' => 0,
-           'bulb_count' => 22
+      'timed_out_count' => 0
     }
     expected =
-      'lion has 22 traffic-lights<br/>' +
-      "<div>&bull; 14 <span class='red'>reds</span></div>" +
-      "<div>&bull; 3 <span class='amber'>ambers</span></div>" +
-      "<div>&bull; 5 <span class='green'>greens</span></div>"
+      'lion has<br/>' +
+      "<div>14 <span class='red'>reds</span></div>" +
+      "<div>3 <span class='amber'>ambers</span></div>" +
+      "<div>5 <span class='green'>greens</span></div>"
     actual = traffic_light_count_tip_html(params)
     assert_equal expected, actual
   end
@@ -80,12 +79,12 @@ class TipTests < AppHelpersTestBase
     now_tag = 2
     now_tag_colour = 'green'
     expected =
-      "Click to review lion's " +
+      "Click to review lion's<br/>" +
       "<span class='#{was_tag_colour}'>#{was_tag}</span> " +
       "&harr; " +
       "<span class='#{now_tag_colour}'>#{now_tag}</span> diff" +
-      "<div>&bull; 1 added line</div>" +
-      "<div>&bull; 1 deleted line</div>"
+      "<div>1 added line</div>" +
+      "<div>1 deleted line</div>"
     actual = traffic_light_tip_html(lion, was_tag, now_tag)
     assert_equal expected, actual
   end

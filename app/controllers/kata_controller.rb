@@ -7,7 +7,10 @@ class KataController < ApplicationController
     @tab = @kata.language.tab
     @visible_files = @avatar.visible_files
     @traffic_lights = @avatar.lights
+
     @output = @visible_files['output']
+    @last_rag = @traffic_lights[-1].colour unless @traffic_lights.size == 0
+
     @title = 'test:' + @kata.id[0..5] + ':' + @avatar.name
   end
 
@@ -30,8 +33,9 @@ class KataController < ApplicationController
     visible_files = received_files
     now = time_now
     max_seconds = 15
+
     traffic_lights,@output = @avatar.test(delta, visible_files, now, max_seconds)
-    @rag = traffic_lights[-1]['colour']
+    @last_rag = traffic_lights[-1]['colour']
 
     respond_to do |format|
       format.js   { render layout: false }

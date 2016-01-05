@@ -1,0 +1,33 @@
+
+<script type="text/javascript"><!--
+
+$(function() {
+
+  var lights = $('.diff-traffic-light');
+  var totalRagCount = 0;
+
+  var tally = function(n) {
+    totalRagCount += n;
+    return n;
+  };
+
+  $('.traffic-light-count')
+    .attr({
+      'class': 'traffic-light-count ' + "<%= @last_rag %>",
+      'data-tip':'ajax:traffic_light_count',
+      'data-id': "<%= @kata.id %>",
+      'data-avatar-name': "<%= @avatar.name %>",
+      'data-red-count': tally(cd.ragCount(lights, 'red')),
+      'data-amber-count': tally(cd.ragCount(lights, 'amber')),
+      'data-green-count':  tally(cd.ragCount(lights, 'green')),
+      'data-timed-out-count': tally(cd.ragCount(lights, 'timed_out'))
+    })
+    .text(totalRagCount);
+
+  cd.setupHoverTips();
+
+});
+
+//--></script>
+
+

@@ -3,22 +3,14 @@
 
 $(function() {
 
-  var ragCount = function(colour) {
-    var count = 0;
-    $('.diff-traffic-light').each(function(_, node) {
-      if ($(node).data('colour') == colour  ) {
-        count += 1;
-      }
-    });
-    return count;
-  };
+  var lights = $('.diff-traffic-light');
 
-  $('#pie-chart').attr({
+  $('#pie-chart-canvas').attr({
     'class': 'pie',
-    'data-red-count': ragCount('red'),
-    'data-amber-count': ragCount('amber'),
-    'data-green-count': ragCount('green'),
-    'data-timed-out-count': ragCount('timed_out'),
+    'data-red-count': cd.ragCount(lights, 'red'),
+    'data-amber-count': cd.ragCount(lights, 'amber'),
+    'data-green-count': cd.ragCount(lights, 'green'),
+    'data-timed-out-count': cd.ragCount(lights, 'timed_out'),
     'data-key': "<%= @avatar.name %>",
     'width': 34,
     'height': 34
@@ -30,5 +22,5 @@ $(function() {
 
 //--></script>
 
-<canvas id="pie-chart"></canvas>
+<canvas id="pie-chart-canvas"></canvas>
 

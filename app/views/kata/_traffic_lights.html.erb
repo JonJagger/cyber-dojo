@@ -32,17 +32,23 @@ $(function() {
 
 <table>
   <tr class="row">
-
     <% @avatar.lights.each do |light| %>
 	    <td><%= raw diff_traffic_light(light) %></td>
     <% end %>
 
     <% if @avatar.active? %>
 
-	    <td><%= raw traffic_light_count(@avatar) %></td>
+      <td>
+        <div class="traffic-light-count">
+          <%= render partial: 'traffic_light_count' %>
+        </div>
+      </td>
 
-      <td><%= render partial: 'pie_chart' %></td>
-
+      <td>
+        <div id="pie-chart">
+          <%= render partial: 'pie_chart' %>
+        </div>
+      </td>
     <% end %>
 
     <td><%= render partial: 'avatar_image' %></td>

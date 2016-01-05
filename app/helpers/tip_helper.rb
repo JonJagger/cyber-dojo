@@ -11,7 +11,7 @@ module TipHelper # mix-in
     lights = avatar.lights
     tip = 'Click to review '
     tip += "#{avatar.name}'s"                  # panda's
-    tip += ' '
+    tip += '<br/>'
     tip += light_colour_tag(lights, was_tag)   # 13
     tip += ' '
     tip += "#{arrow}"                          # <->
@@ -21,8 +21,8 @@ module TipHelper # mix-in
     tip += 'diff'
     diff = avatar_git_diff(avatar, was_tag, now_tag)
     added_count, deleted_count = line_counts(diff)
-    tip += "<div>&bull; #{plural(added_count, 'added line')}</div>"
-    tip += "<div>&bull; #{plural(deleted_count, 'deleted line')}</div>"
+    tip += "<div>#{plural(added_count, 'added line')}</div>"
+    tip += "<div>#{plural(deleted_count, 'deleted line')}</div>"
     tip
   end
 
@@ -33,10 +33,8 @@ module TipHelper # mix-in
         amber_count = params['amber_count'    ].to_i
         green_count = params['green_count'    ].to_i
     timed_out_count = params['timed_out_count'].to_i
-    bulb_count = red_count + amber_count + green_count + timed_out_count
 
-    html = avatar_name + ' has ' +
-      plural(bulb_count, 'traffic-light') + '<br/>' +
+    html = avatar_name + ' has<br/>' +
       plural_colour(  red_count, 'red'  ) +
       plural_colour(amber_count, 'amber') +
       plural_colour(green_count, 'green')
@@ -52,7 +50,7 @@ module TipHelper # mix-in
   def plural_colour(count, colour)
     word = plural_word(colour, count)
     '<div>' +
-      "&bull; #{count} #{colour_tag(colour, word)}" +
+      "#{count} #{colour_tag(colour, word)}" +
     '</div>'
   end
 
