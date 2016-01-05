@@ -3,6 +3,32 @@
 
 $(function() {
 
+  cd.updateTrafficLightCount = function() {
+    var totalRagCount = 0;
+    var tally = function(n) {
+      totalRagCount += n;
+      return n;
+    };
+    var rags = $('.diff-traffic-light');
+    var colour = rags.last().data('colour');
+    var newCount = $('<div>', {
+        'class': 'traffic-light-count ' + colour,
+        'data-tip':'ajax:traffic_light_count',
+        'data-id': "<%= @kata.id %>",
+        'data-avatar-name': "<%= @avatar.name %>",
+        'data-red-count': tally(cd.ragCount(rags, 'red')),
+        'data-amber-count': tally(cd.ragCount(rags, 'amber')),
+        'data-green-count':  tally(cd.ragCount(rags, 'green')),
+        'data-timed-out-count': tally(cd.ragCount(rags, 'timed_out'))
+      }).text(totalRagCount);
+
+    if (totalRagCount > 0) {
+      $('.traffic-lights-count').html(newCount);
+    }
+  };
+
+  //- - - - - - - - - - - - - - - - - - - - - - -
+
   var review = $('#review-dialog')
     .dialog({
         dialogClass: 'no-title',
@@ -21,7 +47,9 @@ $(function() {
     review.dialog('open');
   });
 
-  cd.setupHoverTips();
+  //cd.setupHoverTips();
+
+  cd.updateTrafficLightCount();
 
   var allTheWay = 100000;
   $('#traffic-lights').scrollLeft(allTheWay);
@@ -30,22 +58,17 @@ $(function() {
 
 //--></script>
 
-<div id="traffic-lights-container">
-  <div id="traffic-lights">
-    <% @avatar.lights.each do |light| %>
-      <%= raw diff_traffic_light(light) %>
-    <% end %>
-
-    <% if @avatar.active? %>
-      <div class="traffic-lights-count">
-        <%= render partial: 'traffic_lights_count' %>
-      </div>
-      <div id="pie-chart">
-        <%= render partial: 'pie_chart' %>
-      </div>
-    <% end %>
-
-    <%= render partial: 'avatar_image' %>
-
-  </div>
+<div id="traffic-lights">
+  <table>
+    <tr>
+      <% @avatar.lights.each do |light| %>
+        <td><%= raw diff_traffic_light(light) %></td>
+      <% end %>
+      <td><div class="traffic-lights-count"></div></td>
+      <% if @avatar.active? %>
+        <td><div id="pie-chart"><Xcanvas id="pie-chart-canvas"></Xcanvas></div></td>
+      <% end %>
+      <td><%= render partial: 'avatar_image' %></td>
+    </tr>
+  </table>
 </div>

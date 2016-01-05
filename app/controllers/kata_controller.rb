@@ -7,21 +7,9 @@ class KataController < ApplicationController
     @tab = @kata.language.tab
     @visible_files = @avatar.visible_files
     @traffic_lights = @avatar.lights
-
     @output = @visible_files['output']
     @last_rag = @traffic_lights[-1].colour unless @traffic_lights.size == 0
-
     @title = 'test:' + @kata.id[0..5] + ':' + @avatar.name
-  end
-
-  def show_json
-    # https://atom.io/packages/cyber-dojo
-    render :json => {
-      'visible_files' => avatar.visible_files,
-             'avatar' => avatar.name,
-         'csrf_token' => form_authenticity_token,
-             'lights' => avatar.lights.map { |light| light.to_json }
-    }
   end
 
   def run_tests
@@ -41,6 +29,16 @@ class KataController < ApplicationController
       format.js   { render layout: false }
       format.json { show_json }
     end
+  end
+
+  def show_json
+    # https://atom.io/packages/cyber-dojo
+    render :json => {
+      'visible_files' => avatar.visible_files,
+             'avatar' => avatar.name,
+         'csrf_token' => form_authenticity_token,
+             'lights' => avatar.lights.map { |light| light.to_json }
+    }
   end
 
   private

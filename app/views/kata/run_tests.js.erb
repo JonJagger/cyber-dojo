@@ -1,6 +1,67 @@
 
-$('#traffic-lights')
-  .html("<%= js_partial('traffic_lights') %>");
+var lights = function() {
+  return $('.diff-traffic-light');
+};
 
-$('#output')
-  .html("<%= js_partial('output') %>");
+var lastRag = "<%= @last_rag %>";
+
+//- - - - - - - - - - - - - - - - - - - - - -
+
+var appendNewTrafficLight = function() {
+  var img = $('<img>', {
+    'src': '/images/bulb_' + lastRag + '.png',
+    'alt': lastRag + ' traffic-light'
+  });
+  var div = $('<div>', {
+    'class': 'diff-traffic-light',
+    'data-tip':'ajax:traffic_light',
+    'data-id': "<%= @kata.id %>",
+    'data-avatar-name': "<%= @avatar.name %>",
+    'data-colour': lastRag,
+    'data-was-tag': lights().size(),
+    'data-now-tag': lights().size() + 1
+  });
+  var td = $('<td>');
+  div.append(img);
+  td.append(div);
+  $('.traffic-lights-count').parent().before(td);
+};
+
+//- - - - - - - - - - - - - - - - - - - - - -
+
+var updatePieChart = function() {
+  //<canvas id="pie-chart-canvas"></canvas>
+
+  $('#pie-chart-canvas')
+    .attr({
+      'class': 'pie',
+      'data-red-count': cd.ragCount(lights(), 'red'),
+      'data-amber-count': cd.ragCount(lights(), 'amber'),
+      'data-green-count': cd.ragCount(lights(), 'green'),
+      'data-timed-out-count': cd.ragCount(lights(), 'timed_out'),
+      'data-key': "<%= @avatar.name %>",
+      'width': 34,
+      'height': 34
+    });
+
+  cd.pieChart($('.pie'));
+};
+
+//- - - - - - - - - - - - - - - - - - - - - -
+
+//console.log('1');
+appendNewTrafficLight();
+//console.log('2');
+cd.updateTrafficLightCount();
+//console.log('3');
+
+//appendNewTrafficLight();
+//console.log('4');
+//updatePieChart();
+//console.log('5');
+//cd.setupHoverTips();
+//console.log('6');
+//$('#output')
+//  .html("<%= js_partial('output') %>");
+//console.log('7');
+
