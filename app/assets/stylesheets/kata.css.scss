@@ -21,6 +21,24 @@
          width: 95px;
   }
 
+  #traffic-lights-container {
+    display: table;
+    #traffic-lights {
+      display: table-row;
+      .diff-traffic-light, .traffic-lights-count, #pie-chart, .avatar-image {
+        display: table-cell;
+      }
+      #pie-chart {
+        position: relative;
+        top: 5px;
+      }
+      .avatar-image {
+        position: relative;
+        top: 2px;
+      }
+    }
+  }
+
   #file-operations {
     margin: { top: 2px; bottom: 4px; left: 16px; right: 1px; }
     #new, #rename, #delete {
@@ -55,14 +73,8 @@
     &::-webkit-scrollbar:horizontal { height: 0px; }
 
     .diff-traffic-light {
-       margin: { left: 0px; right: 0px; }
-      padding: { left: 0px; right: 0px; }
-      img {
-          width: 22px;
-         height: 22px;
-        padding: { left: 1px; right: 0px; }
-         margin: { left: 0px; right: 0px; }
-      }
+      padding: { left: 2px; bottom: 9px; }
+      img { width: 22px; height: 22px; }
     }
   }
 
