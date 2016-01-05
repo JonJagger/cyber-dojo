@@ -95,10 +95,10 @@ class TrafficLightTests < AppHelpersTestBase
     avatar = Avatar.new(kata, 'hippo')
     def avatar.lights; [1]*7; end
     tag = 3
-    color = 'red'
+    colour = 'red'
     light = Tag.new(avatar, {
       'number' => tag,
-      'colour' => color
+      'colour' => colour
     })
     expected = '' +
       '<div' +
@@ -106,10 +106,11 @@ class TrafficLightTests < AppHelpersTestBase
       " data-tip='ajax:traffic_light'" +
       " data-id='ABCD1234'" +
       " data-avatar-name='hippo'" +
+      " data-colour='#{colour}'" +
       " data-was-tag='#{tag - 1}'" +
       " data-now-tag='#{tag}'>" +
-      "<img src='/images/bulb_#{color}.png'" +
-          " alt='#{color} traffic-light'/>" +
+      "<img src='/images/bulb_#{colour}.png'" +
+          " alt='#{colour} traffic-light'/>" +
       '</div>'
     actual = diff_traffic_light(light)
     assert_equal expected, actual
