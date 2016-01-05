@@ -35,7 +35,6 @@ class DockerMachineRunner
 
   # modifiers
 
-  #def run(sandbox, image_name, max_seconds)
   def run(avatar, delta, files, image_name, now, max_seconds)
     # save the files
     sandbox = avatar.sandbox

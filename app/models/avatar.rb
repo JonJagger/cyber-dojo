@@ -9,6 +9,7 @@ class Avatar
   # modifier
 
   def test(delta, files, now = time_now, max_seconds = 15)
+    # TODO: make this just call runner.run(...)
     history.avatar_run_tests(self, delta, files, now, max_seconds)
   end
 

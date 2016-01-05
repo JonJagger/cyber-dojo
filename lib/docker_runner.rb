@@ -69,9 +69,7 @@ class DockerRunner
   private
 
   include ExternalParentChainer
-  include OutputCleaner
   include OutputOrKilled
-  include OutputTruncater
 
   def runnable?(image_name)
     image_names.include?(image_name)
