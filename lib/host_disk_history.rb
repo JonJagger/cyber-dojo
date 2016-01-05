@@ -111,28 +111,12 @@ class HostDiskHistory
 
   def avatar_run_tests(avatar, delta, files, now = time_now, max_seconds = 15)
     language = avatar.language
-    sandbox = avatar.sandbox
-
-    # save the files
-    delta[:deleted].each do |filename|
-      git.rm(path(sandbox), filename)
-    end
-    delta[:new].each do |filename|
-      write(sandbox, filename, files[filename])
-      git.add(path(sandbox), filename)
-    end
-    delta[:changed].each do |filename|
-      write(sandbox, filename, files[filename])
-    end
-
-    # run the tests
-    raw = runner.run(sandbox, language.image_name, max_seconds)
+    raw = runner.run(avatar, delta, files, language.image_name, now, max_seconds)
     output = truncated(cleaned(raw))
-    colour = language.colour(output)
-
-    # save the results
-    rags = avatar_ran_tests(avatar, delta, files, now, output, colour)
-
+    colour = avatar.language.colour(output)
+    # save output
+    rags = history.avatar_ran_tests(avatar, delta, files, now, output, colour)
+    # TODO: return only last rag colour
     [rags, output]
   end
 
@@ -174,16 +158,16 @@ class HostDiskHistory
     end
   end
 
+  def write(sandbox, filename, content)
+    dir(sandbox).write(filename, content)
+  end
+
   private
 
   include ExternalParentChainer
   include OutputCleaner
   include OutputTruncater
-  include IdSplitter
-
-  def write(sandbox, filename, content)
-    dir(sandbox).write(filename, content)
-  end
+  include IdSplitter  # TODO: pull it into here? don't think anything else uses it now
 
   def make_dir(obj)
     dir(obj).make

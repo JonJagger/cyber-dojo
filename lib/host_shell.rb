@@ -18,7 +18,8 @@ class HostShell
   # modifiers
 
   def cd_exec(path, *commands)
-    exec(["cd #{path}"] + commands)
+    output,exit_status = exec(["cd #{path}"] + commands)
+    return output, exit_status
   end
 
   def daemon_exec(*commands)

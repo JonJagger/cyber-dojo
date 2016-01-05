@@ -102,11 +102,12 @@ class DockerMachineRunnerTests < LibTestBase
     mock_docker_machine_refresh_cache([node])
     kata = make_kata(unique_id, 'Python-py.test')
     lion = kata.start_avatar(['lion'])
+    image_name = lion.language.image_name
 
     args = [
       node,
       lion.sandbox.path,
-      lion.kata.language.image_name,
+      image_name,
       max_seconds
     ].join(space = ' ')
 
@@ -117,7 +118,8 @@ class DockerMachineRunnerTests < LibTestBase
       mock_exit_status
     )
 
-    runner.run(lion.sandbox, lion.language.image_name, max_seconds)
+    delta = { :deleted => [], :new => [], :changed => [] }
+    runner.run(lion, delta, files={}, image_name, now=time_now, max_seconds)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -150,6 +152,8 @@ class DockerMachineRunnerTests < LibTestBase
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  include TimeNow
 
 =begin
 

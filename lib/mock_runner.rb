@@ -27,8 +27,22 @@ class MockRunner
     save_mock(avatar, { :output => output })
   end
 
-  def run(sandbox, image_name, max_seconds)
-    read_mock(sandbox.avatar)
+  def run(avatar, delta, files, _image_name, _now, _max_seconds)
+    # have to save the files because the effects are
+    # asserted in tests and there is no shell_spy yet
+    sandbox = avatar.sandbox
+    delta[:deleted].each do |filename|
+      git.rm(history.path(sandbox), filename)
+    end
+    delta[:new].each do |filename|
+      history.write(sandbox, filename, files[filename])
+      git.add(history.path(sandbox), filename)
+    end
+    delta[:changed].each do |filename|
+      history.write(sandbox, filename, files[filename])
+    end
+
+    read_mock(avatar)
   end
 
   private

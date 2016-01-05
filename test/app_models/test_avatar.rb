@@ -231,11 +231,15 @@ class AvatarTests < AppModelTestBase
   end
 
   def assert_log_include?(command)
-    assert log.include?(command), log.to_s
+    assert log.include?(command), lines_of(log)
   end
 
   def pathed(command)
     "cd #{@avatar.sandbox.path} && #{command}"
+  end
+
+  def lines_of(log)
+    log.messages.join("\n")
   end
 
 end

@@ -5,6 +5,8 @@ class HostLog
     @messages = []
   end
 
+  attr_reader :messages
+
   def <<(message)
     @messages << message
   end

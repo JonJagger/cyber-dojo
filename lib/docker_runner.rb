@@ -36,7 +36,21 @@ class DockerRunner
 
   # modifiers
 
-  def run(sandbox, image_name, max_seconds)
+  def run(avatar, delta, files, image_name, now, max_seconds)
+    # save the files
+    sandbox = avatar.sandbox
+    delta[:deleted].each do |filename|
+      git.rm(history.path(sandbox), filename)
+    end
+    delta[:new].each do |filename|
+      history.write(sandbox, filename, files[filename])
+      git.add(history.path(sandbox), filename)
+    end
+    delta[:changed].each do |filename|
+      history.write(sandbox, filename, files[filename])
+    end
+
+    #run tests
     args = [
       sandbox.path,
       image_name,
@@ -55,7 +69,9 @@ class DockerRunner
   private
 
   include ExternalParentChainer
+  include OutputCleaner
   include OutputOrKilled
+  include OutputTruncater
 
   def runnable?(image_name)
     image_names.include?(image_name)
