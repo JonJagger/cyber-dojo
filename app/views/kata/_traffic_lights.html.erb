@@ -5,25 +5,58 @@ $(function() {
 
   cd.updateTrafficLightCount = function() {
     var totalRagCount = 0;
-    var tally = function(n) {
+    var rags = $('.diff-traffic-light');
+    var tally = function(colour) {
+      var n = cd.ragCount(rags, colour);
       totalRagCount += n;
       return n;
     };
-    var rags = $('.diff-traffic-light');
     var colour = rags.last().data('colour');
     var newCount = $('<div>', {
         'class': 'traffic-light-count ' + colour,
         'data-tip':'ajax:traffic_light_count',
         'data-id': "<%= @kata.id %>",
         'data-avatar-name': "<%= @avatar.name %>",
-        'data-red-count': tally(cd.ragCount(rags, 'red')),
-        'data-amber-count': tally(cd.ragCount(rags, 'amber')),
-        'data-green-count':  tally(cd.ragCount(rags, 'green')),
-        'data-timed-out-count': tally(cd.ragCount(rags, 'timed_out'))
+        'data-red-count': tally('red'),
+        'data-amber-count': tally('amber'),
+        'data-green-count':  tally('green'),
+        'data-timed-out-count': tally('timed_out')
       }).text(totalRagCount);
 
     if (totalRagCount > 0) {
+      // don't show a zero if there are no traffic-lights yet
       $('.traffic-lights-count').html(newCount);
+      cd.updatePieChart();
+    }
+  };
+
+  //- - - - - - - - - - - - - - - - - - - - - - -
+
+  cd.updatePieChart = function() {
+    var totalRagCount = 0;
+    var rags = $('.diff-traffic-light');
+    var tally = function(colour) {
+      var n = cd.ragCount(rags, colour);
+      totalRagCount += n;
+      return n;
+    };
+    var canvas = $('<canvas>', {
+        'class': 'pie',
+        'data-red-count': tally('red'),
+        'data-amber-count': tally('amber'),
+        'data-green-count': tally('green'),
+        'data-timed-out-count': tally('timed_out'),
+        'data-key': "<%= @avatar.name %>",
+      });
+    // Setting them via attr({..}) above doesn't work.
+    // Setting them via canvas.width(34) doesn't work.
+    // They have to be set like this.
+    canvas.attr('width', '34');
+    canvas.attr('height', '34');
+
+    if (totalRagCount > 0) {
+      $('#pie-chart').empty().append(canvas);
+      cd.pieChart($('.pie'));
     }
   };
 
@@ -47,9 +80,11 @@ $(function() {
     review.dialog('open');
   });
 
-  //cd.setupHoverTips();
 
   cd.updateTrafficLightCount();
+  cd.updatePieChart();
+
+  //cd.setupHoverTips();
 
   var allTheWay = 100000;
   $('#traffic-lights').scrollLeft(allTheWay);
@@ -65,9 +100,7 @@ $(function() {
         <td><%= raw diff_traffic_light(light) %></td>
       <% end %>
       <td><div class="traffic-lights-count"></div></td>
-      <% if @avatar.active? %>
-        <td><div id="pie-chart"><Xcanvas id="pie-chart-canvas"></Xcanvas></div></td>
-      <% end %>
+      <td><div id="pie-chart"></div></td>
       <td><%= render partial: 'avatar_image' %></td>
     </tr>
   </table>

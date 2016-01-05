@@ -29,39 +29,13 @@ var appendNewTrafficLight = function() {
 
 //- - - - - - - - - - - - - - - - - - - - - -
 
-var updatePieChart = function() {
-  //<canvas id="pie-chart-canvas"></canvas>
-
-  $('#pie-chart-canvas')
-    .attr({
-      'class': 'pie',
-      'data-red-count': cd.ragCount(lights(), 'red'),
-      'data-amber-count': cd.ragCount(lights(), 'amber'),
-      'data-green-count': cd.ragCount(lights(), 'green'),
-      'data-timed-out-count': cd.ragCount(lights(), 'timed_out'),
-      'data-key': "<%= @avatar.name %>",
-      'width': 34,
-      'height': 34
-    });
-
-  cd.pieChart($('.pie'));
-};
-
-//- - - - - - - - - - - - - - - - - - - - - -
-
-//console.log('1');
 appendNewTrafficLight();
-//console.log('2');
 cd.updateTrafficLightCount();
-//console.log('3');
+cd.updatePieChart();
 
-//appendNewTrafficLight();
-//console.log('4');
-//updatePieChart();
-//console.log('5');
 //cd.setupHoverTips();
 //console.log('6');
-//$('#output')
-//  .html("<%= js_partial('output') %>");
+$('#output')
+  .html("<%= js_partial('output') %>");
 //console.log('7');
 

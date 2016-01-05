@@ -10,14 +10,9 @@ var cyberDojo = (function(cd, $) {
       segmentStrokeColor : '#757575',
       animationEasing : 'easeOutExpo'
     };
-    var plural = function(n, word) {
-      return "" + n + " " + word + (n == 1 ? "" : "s");
-    }
     nodes.each(function() {
-      var self = $(this);
-      var count = function(of) {
-        return self.data(of + '-count');
-      };
+      var node = $(this);
+      var count = function(of) { return node.data(of + '-count'); };
       var      redCount = count('red');
       var    amberCount = count('amber');
       var    greenCount = count('green');
@@ -30,8 +25,8 @@ var cyberDojo = (function(cd, $) {
           { value: timedOutCount, color: 'darkGray' }
       ];
 
-      var ctx = $(this)[0].getContext('2d');
-      var key = $(this).data('key');
+      var ctx = node[0].getContext('2d');
+      var key = node.data('key');
       var totalCount = redCount + amberCount + greenCount + timedOutCount;
       var animation = ($.data(document.body, key) != totalCount);
       options['animation'] = animation;
