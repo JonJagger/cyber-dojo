@@ -5,10 +5,12 @@ class Dojo
   def languages; @languages ||= Languages.new(self, external_root); end
   def exercises; @exercises ||= Exercises.new(self, external_root); end
   def    caches; @caches    ||=    Caches.new(self, external_root); end
-  def     katas; @katas     ||=     Katas.new(self, external_root); end
 
-  def   history;   @history ||= external_object; end
   def    runner;    @runner ||= external_object; end
+
+  def     katas; @katas     ||=     Katas.new(self, external_root); end
+  def   history;   @history ||= external_object; end
+
   def     shell;     @shell ||= external_object; end
   def      disk;      @disk ||= external_object; end
   def       log;       @log ||= external_object; end

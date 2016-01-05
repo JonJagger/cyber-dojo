@@ -9,8 +9,16 @@ class Sandbox
 
   attr_reader :avatar
 
-  def path
-    avatar.path + 'sandbox' + '/'
+  def parent
+    avatar
   end
+
+  def path
+    history.path(self)
+  end
+
+  private
+
+  include ExternalParentChainer
 
 end

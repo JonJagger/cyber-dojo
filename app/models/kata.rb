@@ -25,7 +25,7 @@ class Kata
   end
 
   def path
-    parent.path + outer(id) + '/' + inner(id) + '/'
+    history.path(self)
   end
 
   def avatars
@@ -58,19 +58,18 @@ class Kata
   end
 
   def language_name
-    # used in forker_controller error diagnostic
+    # used in forker_controller
     manifest['language']
   end
 
   def exercise_name
-    # used in forker_controller error diagnostic
+    # used in forker_controller
     manifest['exercise']
   end
 
   private
 
   include ExternalParentChainer
-  include IdSplitter
   include ManifestProperty
 
   def manifest

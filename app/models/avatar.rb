@@ -21,7 +21,7 @@ class Avatar
   end
 
   def path
-    parent.path + name + '/'
+    history.path(self)
   end
 
   def language

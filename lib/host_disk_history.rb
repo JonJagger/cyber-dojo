@@ -1,32 +1,5 @@
 
-# - - - - - - - - - - - - - - - - - - - - - - - -
-# There are three main moving parts in cyber-dojo:
-#
-# 1. READ
-#    the [languages,exercises,caches] folders which are
-#    local to the cyber-dojo server and read-only.
-#
-# 2. EXECUTE
-#    the runners which produce an output file from a set
-#    of source files and a language's image_name. This
-#    output is regex'd to get its Red/Amber/Green colour.
-#
-# 3. WRITE
-#    the files+output from each [test] event are saved as
-#    a tag in a git repo associated with the avatar. There
-#    are also saves associated with creating each kata
-#    and starting each each avatar.
-#
-# - - - - - - - - - - - - - - - - - - - - - - - -
-# This class's methods holds all the reads/writes for 3.
-# Currently it uses the cyber-dojo server's file-system [katas]
-# folder using the same HostDisk object as 1 but this needs
-# decoupling (see avatar_run_tests comments below).
-#
-# Viz, this class represents the API needed on its own
-# dedicated web server.
-# - - - - - - - - - - - - - - - - - - - - - - - -
-
+# See comments at end of file
 
 class HostDiskHistory
 
@@ -89,21 +62,12 @@ class HostDiskHistory
   end
 
   def kata_start_avatar(kata, avatar_names = Avatars.names.shuffle)
-    # Starting an avatar needs to be atomic otherwise two
-    # laptops in a cyber-dojo could start as the same animal.
-    #
-    #   app/models/kata.rb    start_avatar()
-    #   app/models/avatars.rb started_avatars()
-    #
-    # On a non NFS POSIX file system I do this relying on
-    # mkdir being atomic.
-
     avatar_name = avatar_names.detect do |name|
       _, exit_status = shell.cd_exec(path(kata), "mkdir #{name} #{stderr_2_stdout}")
       exit_status == shell.success
     end
 
-    return nil if avatar_name.nil? # it's full!
+    return nil if avatar_name.nil? # full!
 
     avatar = Avatar.new(kata, avatar_name)
 
@@ -146,32 +110,6 @@ class HostDiskHistory
   end
 
   def avatar_run_tests(avatar, delta, files, now = time_now, max_seconds = 15)
-    # Currently works by saving the files to the file-system (in the avatar's
-    # sandbox) and *then* the runner makes use of these saved files
-    # (eg docker-runner's .sh file volume-mounts the sandbox).
-    #
-    # I plan to reverse this ordering and decouple the runners from the
-    # persistence strategy (the file-system + git). Namely...
-    #
-    # 1. Don't save the files to the file-system; let the runner decide what to
-    #    do. Maybe runner is hosted inside a web-server which receives the files,
-    #    saves them to a ram disk folder, which a docker image then volume-mounts.
-    #    Perhaps there are several such such servers for scalability. This also
-    #    suggests the the browser sending the files *directly* to such a web-server
-    #    rather than to the cyber-dojo server (which in turn sends them on to the
-    #    web-server).
-    #
-    # 2. Once the runner has finished, the output file is added to the files
-    #    sent from browser and persisted in one go (rather than two steps; one
-    #    for saving all the files except the output, another for saving just the
-    #    output).
-    #
-    # Note
-    # Step 2 can be executed as a background fire-and-forget task.
-    # The browser only needs the results of step 1.
-    # The rails view-code currently redraws *all* the traffic-lights
-    # but that needs refactoring.
-
     language = avatar.language
     sandbox = avatar.sandbox
 
@@ -219,6 +157,19 @@ class HostDiskHistory
     JSON.parse(git.show(path(avatar), "#{tag}:#{manifest_filename}"))
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - -
+  # Path
+  # - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def path(obj)
+    case obj.class.name
+    when 'Sandbox' then path(obj.parent) + 'sandbox' + '/'
+    when 'Avatar'  then path(obj.parent) + obj.name + '/'
+    when 'Kata'    then path(obj.parent) + outer(obj.id) + '/' + inner(obj.id) + '/'
+    when 'Katas'   then obj.path
+    end
+  end
+
   private
 
   include ExternalParentChainer
@@ -236,10 +187,6 @@ class HostDiskHistory
 
   def dir(obj)
     disk[path(obj)]
-  end
-
-  def path(obj)
-    obj.path
   end
 
   def write_avatar_manifest(avatar, files)
@@ -273,3 +220,79 @@ class HostDiskHistory
   end
 
 end
+
+# - - - - - - - - - - - - - - - - - - - - - - - -
+# There are three main moving parts in cyber-dojo:
+#
+# 1. READ
+#    the [languages,exercises,caches] folders which are
+#    local to the cyber-dojo server and read-only.
+#
+# 2. EXECUTE
+#    the runners which produce an output file from a set
+#    of source files and a language's image_name. This
+#    output is regex'd to get its Red/Amber/Green colour.
+#
+# 3. WRITE
+#    the files+output from each [test] event are saved as
+#    a tag in a git repo associated with the avatar. There
+#    are also saves associated with creating each kata
+#    and starting each each avatar.
+#
+# - - - - - - - - - - - - - - - - - - - - - - - -
+# This class's methods holds all the reads/writes for 3.
+# Currently it uses the cyber-dojo server's file-system [katas]
+# folder using the same HostDisk object as 1 but this needs
+# decoupling (see avatar_run_tests comments below).
+#
+# Viz, this class represents the API needed on its own
+# dedicated web server.
+# - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# kata_start_avatar(kata, avatar_names)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Starting an avatar needs to be atomic otherwise two
+# laptops in a cyber-dojo could start as the same animal.
+#
+#   app/models/kata.rb    start_avatar()
+#   app/models/avatars.rb started_avatars()
+#
+# On a non NFS POSIX file system I do this relying on
+# mkdir being atomic.
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# avatar_run_tests(avatar, delta, files, now, max_seconds)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Currently works by saving the files to the file-system (in the avatar's
+# sandbox) and *then* the runner makes use of these saved files
+# (eg docker-runner's .sh file volume-mounts the sandbox).
+#
+# I plan to reverse this ordering and decouple the runners from the
+# persistence strategy (the file-system + git). Namely...
+#
+# 1. Don't save the files to the file-system; let the runner decide what to
+#    do. Maybe runner is hosted inside a web-server which receives the files,
+#    saves them to a ram disk folder, which a docker image then volume-mounts.
+#    Perhaps there are several such such servers for scalability. This also
+#    suggests the the browser sending the files *directly* to such a web-server
+#    rather than to the cyber-dojo server (which in turn sends them on to the
+#    web-server).
+#
+# 2. Once the runner has finished, the output file is added to the files
+#    sent from browser and persisted in one go (rather than two steps; one
+#    for saving all the files except the output, another for saving just the
+#    output).
+#
+# Note
+# Step 2 can be executed as a background fire-and-forget task.
+# The browser only needs the results of step 1.
+# The rails view-code currently redraws *all* the traffic-lights
+# but that needs refactoring.
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
