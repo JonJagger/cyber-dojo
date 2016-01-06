@@ -82,7 +82,7 @@ class DashboardControllerTest < AppControllerTestBase
   test '3B04FE',
   'progress when avatar has only amber traffic-lights' do
     start # 0
-    runner.mock_run_colour(@avatar, :amber)
+    runner.stub_run_colour(@avatar, :amber)
     run_tests
     progress
   end

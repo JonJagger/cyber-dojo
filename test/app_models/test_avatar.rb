@@ -85,7 +85,7 @@ class AvatarTests < AppModelTestBase
     visible_files = @avatar.visible_files
     assert visible_files.keys.include?('output')
     assert_equal '', visible_files['output']
-    runner.mock_run_output(@avatar, expected = 'helloWorld')
+    runner.stub_run_output(@avatar, expected = 'helloWorld')
     _, @visible_files, @output = DeltaMaker.new(@avatar).run_test
     assert @visible_files.keys.include?('output')
     assert_file 'output', expected
@@ -98,9 +98,7 @@ class AvatarTests < AppModelTestBase
     kata = make_kata(unique_id, 'Java-JUnit')
     @avatar = kata.start_avatar
     big = 'X' * 10*1024
-
-    runner.mock_run_output(@avatar, big)
-
+    runner.stub_run_output(@avatar, big)
     _, @visible_files, @output = DeltaMaker.new(@avatar).run_test
     assert_file 'output', big
   end
@@ -112,7 +110,7 @@ class AvatarTests < AppModelTestBase
     kata = make_kata(unique_id, 'Java-JUnit')
     @avatar = kata.start_avatar
     big = 'X' * 10*1024
-    runner.mock_run_output(@avatar, big + 'truncated')
+    runner.stub_run_output(@avatar, big + 'truncated')
     _, @visible_files, @output = DeltaMaker.new(@avatar).run_test
     message = 'output truncated by cyber-dojo server'
     assert_file 'output', big + "\n" + message

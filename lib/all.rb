@@ -22,5 +22,5 @@
   time_now
   unique_id
   languages_display_names_splitter
-  mock_runner
+  stub_runner
 }.each { |sourcefile| require_relative './' + sourcefile }

@@ -9,7 +9,7 @@ class AppModelTestBase < TestBase
 
   def setup
     super
-    set_runner_class('MockRunner')
+    set_runner_class('StubRunner')
   end
 
   def teardown

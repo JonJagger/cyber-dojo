@@ -4,7 +4,7 @@
 # state is preserved from the setup to the call it has
 # to be saved to disk and then retrieved.
 
-class MockRunner
+class StubRunner
 
   def initialize(dojo)
     @dojo = dojo
@@ -18,13 +18,13 @@ class MockRunner
     languages.select { |language| runnable?(language.image_name) }
   end
 
-  def mock_run_colour(avatar, rag)
+  def stub_run_colour(avatar, rag)
     raise "invalid colour #{rag}" if ![:red,:amber,:green].include? rag
-    save_mock(avatar, { :colour => rag })
+    save_stub(avatar, { :colour => rag })
   end
 
-  def mock_run_output(avatar, output)
-    save_mock(avatar, { :output => output })
+  def stub_run_output(avatar, output)
+    save_stub(avatar, { :output => output })
   end
 
   def run(avatar, delta, files, _image_name, _now, _max_seconds)
@@ -42,7 +42,7 @@ class MockRunner
       history.write(sandbox, filename, files[filename])
     end
 
-    read_mock(avatar)
+    read_stub(avatar)
   end
 
   private
@@ -58,14 +58,14 @@ class MockRunner
     ].include?(image_name)
   end
 
-  def save_mock(avatar, json)
-    disk[avatar.path].write_json(mock_run_filename, json)
+  def save_stub(avatar, json)
+    disk[avatar.path].write_json(stub_run_filename, json)
   end
 
-  def read_mock(avatar)
+  def read_stub(avatar)
     dir = disk[avatar.path]
-    if dir.exists?(mock_run_filename)
-      json = dir.read_json(mock_run_filename)
+    if dir.exists?(stub_run_filename)
+      json = dir.read_json(stub_run_filename)
       output = json['output']
       return output if !output.nil?
       rag = json['colour']
@@ -89,8 +89,8 @@ class MockRunner
     %w(red amber green)
   end
 
-  def mock_run_filename
-    'mock_run.json'
+  def stub_run_filename
+    'stub_run.json'
   end
 
 end

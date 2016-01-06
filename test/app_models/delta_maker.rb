@@ -43,7 +43,7 @@ class DeltaMaker
     all_outputs = Dir.glob(path + '/*')
     filename = all_outputs.sample
     output = File.read(filename)
-    @avatar.runner.mock_run_output(@avatar, output)
+    @avatar.runner.stub_run_output(@avatar, output)
   end
 
   def run_test
