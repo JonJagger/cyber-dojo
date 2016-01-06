@@ -34,7 +34,7 @@ class Avatar
   end
 
   def diff(was_tag, now_tag)
-    history.avatar_git_diff(self, was_tag, now_tag)
+    history.tag_git_diff(self, was_tag, now_tag)
   end
 
   def active?

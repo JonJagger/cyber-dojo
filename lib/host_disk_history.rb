@@ -27,8 +27,10 @@ class HostDiskHistory
     # it into the full 10 character id. Doing completion with fewer characters
     # would likely result in a lot of disk activity and no unique outcome.
     if !id.nil? && id.length >= 6
+      # outer-dir has 2-characters
       outer_dir = disk[path(katas) + outer(id)]
       if outer_dir.exists?
+        # inner-dir has 8-characters
         dirs = outer_dir.each_dir.select { |inner_dir| inner_dir.start_with?(inner(id)) }
         id = outer(id) + dirs[0] if dirs.length == 1
       end
@@ -102,10 +104,12 @@ class HostDiskHistory
   end
 
   def avatar_increments(avatar)
+    # implicitly for current tag
     dir(avatar).read_json(increments_filename)
   end
 
   def avatar_visible_files(avatar)
+    # implicitly for current tag
     dir(avatar).read_json(manifest_filename)
   end
 
@@ -116,25 +120,26 @@ class HostDiskHistory
     colour = avatar.language.colour(output)
     # save output
     rags = history.avatar_ran_tests(avatar, delta, files, now, output, colour)
-    # TODO: return only last rag colour
+    # TODO: 1. call cleaned/truncated/avatar_ran_tests() from inside runner
+    #       and return only last rag colour. cleaned/truncated can be mix-in.
+    # TODO: 2. call runner directly from avatar.
+    # TODO: 3. drop this method
     [rags, output]
   end
 
   def avatar_ran_tests(avatar, delta, files, now, output, colour)
+    # update manifest
     write(avatar.sandbox, 'output', output)
     files['output'] = output
     write_avatar_manifest(avatar, files)
-    # Reds/Ambers/Greens
+    # update Red/Amber/Green increments
     rags = avatar_increments(avatar)
     tag = rags.length + 1
     rags << { 'colour' => colour, 'time' => now, 'number' => tag }
     write_avatar_increments(avatar, rags)
+    # git-commit the manifest, increments, and visible-files
     git.commit(path(avatar), tag)
     rags
-  end
-
-  def avatar_git_diff(avatar, was_tag, now_tag)
-    git.diff(path(avatar), was_tag, now_tag)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -142,7 +147,12 @@ class HostDiskHistory
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
   def tag_visible_files(avatar, tag)
+    # retrieve all the files in one go
     JSON.parse(git.show(path(avatar), "#{tag}:#{manifest_filename}"))
+  end
+
+  def tag_git_diff(avatar, was_tag, now_tag)
+    git.diff(path(avatar), was_tag, now_tag)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -223,15 +233,17 @@ end
 #
 # 3. WRITE
 #    the files+output from each [test] event are saved as
-#    a tag in a git repo associated with the avatar. There
-#    are also saves associated with creating each kata
-#    and starting each each avatar.
+#    a tag in a git repo associated with the kata+avatar.
+#    There are also writes associated with creating each
+#    kata and starting each each avatar.
 #
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # This class's methods holds all the reads/writes for 3.
 # Currently it uses the cyber-dojo server's file-system [katas]
 # folder using the same HostDisk object as 1 but this needs
 # decoupling (see avatar_run_tests comments below).
+# In fact, this is *an* implementation of katas.
+# Its HostDiskKatas.
 #
 # Viz, this class represents the API needed on its own
 # dedicated web server.
