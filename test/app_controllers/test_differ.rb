@@ -10,6 +10,7 @@ class DifferControllerTest < AppControllerTestBase
     @avatar = start # 0
     filename = 'Hiker.java'
     change_file(filename, content = '#include...')
+
     run_tests
     run_tests
     @was_tag = 1
@@ -18,10 +19,8 @@ class DifferControllerTest < AppControllerTestBase
     lights = json['lights']
     info = " " + @id + ":" + @avatar.name
     was_light = lights[@was_tag-1]
-    assert_equal 'amber', was_light['colour'], info
     assert_equal @was_tag, was_light['number'], info
     now_light = lights[@now_tag-1]
-    assert_equal 'amber', now_light['colour'], info
     assert_equal @now_tag, now_light['number'], info
     diffs = json['diffs']
     index = diffs.find_index{|diff| diff['filename'] == filename }
@@ -50,10 +49,8 @@ class DifferControllerTest < AppControllerTestBase
     lights = json['lights']
     info = " " + @id + ':' + @avatar.name + ':'
     was_light = lights[@was_tag-1]
-    assert_equal 'amber', was_light['colour'], info
     assert_equal @was_tag, was_light['number'], info
     now_light = lights[@now_tag-1]
-    assert_equal 'amber', now_light['colour'], info
     assert_equal @now_tag, now_light['number'], info
     diffs = json['diffs']
     index = diffs.find_index{|diff| diff['filename'] == filename }
