@@ -1,0 +1,37 @@
+
+<script type="text/javascript"><!--
+
+$(function() {
+
+  var updateTrafficLightsCount = function() {
+    var totalRagCount = 0;
+    var rags = $('.diff-traffic-light');
+    var count = function(colour) {
+      var n = cd.ragCount(rags, colour);
+      totalRagCount += n;
+      return n;
+    };
+    var colour = rags.last().data('colour');
+    var newCount = $('<div>', {
+        'class': 'traffic-light-count ' + colour,
+        'data-tip':'ajax:traffic_light_count',
+        'data-id': "<%= @kata.id %>",
+        'data-avatar-name': "<%= @avatar.name %>",
+        'data-red-count': count('red'),
+        'data-amber-count': count('amber'),
+        'data-green-count':  count('green'),
+        'data-timed-out-count': count('timed_out')
+      }).text(totalRagCount);
+
+    if (totalRagCount > 0) {
+      $('.traffic-lights-count').html(newCount);
+    }
+  };
+
+  updateTrafficLightsCount();
+
+});
+
+//--></script>
+
+<div class="traffic-lights-count"></div>

@@ -3,69 +3,6 @@
 
 $(function() {
 
-  cd.updateTrafficLightsCount = function() {
-    var totalRagCount = 0;
-    var rags = $('.diff-traffic-light');
-    var count = function(colour) {
-      var n = cd.ragCount(rags, colour);
-      totalRagCount += n;
-      return n;
-    };
-    var colour = rags.last().data('colour');
-    var newCount = $('<div>', {
-        'class': 'traffic-light-count ' + colour,
-        'data-tip':'ajax:traffic_light_count',
-        'data-id': "<%= @kata.id %>",
-        'data-avatar-name': "<%= @avatar.name %>",
-        'data-red-count': count('red'),
-        'data-amber-count': count('amber'),
-        'data-green-count':  count('green'),
-        'data-timed-out-count': count('timed_out')
-      }).text(totalRagCount);
-
-    if (totalRagCount > 0) {
-      $('.traffic-lights-count').html(newCount);
-    }
-  };
-
-  //- - - - - - - - - - - - - - - - - - - - - - -
-
-  cd.updatePieChart = function() {
-    var totalRagCount = 0;
-    var rags = $('.diff-traffic-light');
-    var count = function(colour) {
-      var n = cd.ragCount(rags, colour);
-      totalRagCount += n;
-      return n;
-    };
-    var canvas = $('<canvas>', {
-        'class': 'pie',
-        'data-red-count': count('red'),
-        'data-amber-count': count('amber'),
-        'data-green-count': count('green'),
-        'data-timed-out-count': count('timed_out'),
-        'data-key': "<%= @avatar.name %>",
-      });
-    // Canvas width/height have to be set as follows.
-    // Setting them via attr({..}) above doesn't work.
-    // Setting them via canvas.width(34) doesn't work.
-    canvas.attr('width', '34');
-    canvas.attr('height', '34');
-
-    if (totalRagCount > 0) {
-      $('#pie-chart').empty().append(canvas);
-      cd.pieChart($('.pie'));
-    }
-  };
-
-  //- - - - - - - - - - - - - - - - - - - - - - -
-
-  cd.scrollAvatarImageIntoView = function() {
-    $('.avatar-image').scrollIntoView();
-  };
-
-  //- - - - - - - - - - - - - - - - - - - - - - -
-
   var review = $('#review-dialog')
     .dialog({
         dialogClass: 'no-title',
@@ -84,10 +21,6 @@ $(function() {
     review.dialog('open');
   });
 
-
-  cd.updateTrafficLightsCount();
-  cd.updatePieChart();
-  cd.scrollAvatarImageIntoView();
   // TODO: drop added/deleted line counts in tip
   //cd.setupHoverTips();
   // TODO: add review-dialog click-handler for new traffic-light
@@ -102,8 +35,8 @@ $(function() {
       <% @avatar.lights.each do |light| %>
         <td><%= raw diff_traffic_light(light) %></td>
       <% end %>
-      <td><div class="traffic-lights-count"></div></td>
-      <td><div id="pie-chart"></div></td>
+      <td><%= render partial: 'traffic_lights_count' %></td>
+      <td><%= render partial: 'traffic_lights_pie_chart' %></td>
       <td><%= render partial: 'avatar_image' %></td>
     </tr>
   </table>

@@ -1,25 +1,19 @@
 
-var lights = function() {
-  return $('.diff-traffic-light');
-};
-
-var lastRag = "<%= @last_rag %>";
-
-//- - - - - - - - - - - - - - - - - - - - - -
-
-var appendNewTrafficLight = function() {
+var appendTestTrafficLight = function() {
+  var testRag = "<%= @last_rag %>";
+  var lightsCount = $('.diff-traffic-light').size();
   var img = $('<img>', {
-    'src': '/images/bulb_' + lastRag + '.png',
-    'alt': lastRag + ' traffic-light'
+    'src': '/images/bulb_' + testRag + '.png',
+    'alt': testRag + ' traffic-light'
   });
   var div = $('<div>', {
     'class': 'diff-traffic-light',
     'data-tip':'ajax:traffic_light',
     'data-id': "<%= @kata.id %>",
     'data-avatar-name': "<%= @avatar.name %>",
-    'data-colour': lastRag,
-    'data-was-tag': lights().size(),
-    'data-now-tag': lights().size() + 1
+    'data-colour': testRag,
+    'data-was-tag': lightsCount,
+    'data-now-tag': lightsCount + 1
   });
   var td = $('<td>');
   div.append(img);
@@ -29,12 +23,19 @@ var appendNewTrafficLight = function() {
 
 //- - - - - - - - - - - - - - - - - - - - - -
 
-appendNewTrafficLight();
-cd.updateTrafficLightsCount();
-cd.updatePieChart();
-cd.scrollAvatarImageIntoView();
-//cd.setupHoverTips();
-
 $('#output')
   .html("<%= js_partial('output') %>");
+
+appendTestTrafficLight();
+
+$('.traffic-lights-count')
+  .html("<%= js_partial('traffic_lights_count') %>");
+
+$('#traffic-lights-pie-chart')
+  .html("<%= js_partial('traffic_lights_pie_chart') %>");
+
+cd.scrollAvatarImageIntoView();
+
+//cd.setupHoverTips();
+
 
