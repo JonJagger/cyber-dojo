@@ -1,7 +1,6 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative './app_models_test_base'
-require_relative '../app_models/delta_maker'
 
 class KataTests < AppModelsTestBase
 
