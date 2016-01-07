@@ -26,32 +26,13 @@ module TipHelper # mix-in
     tip
   end
 
-  def traffic_light_count_tip_html(params)
-        avatar_name = params['avatar']
-             colour = params['current_colour']
-          red_count = params['red_count'      ].to_i
-        amber_count = params['amber_count'    ].to_i
-        green_count = params['green_count'    ].to_i
-    timed_out_count = params['timed_out_count'].to_i
-
-    html = avatar_name + ' has<br/>' +
-      plural_colour(  red_count, 'red'  ) +
-      plural_colour(amber_count, 'amber') +
-      plural_colour(green_count, 'green')
-    html += plural_colour(timed_out_count, 'timed_out') if timed_out_count != 0
-    html
-  end
-
   def light_colour_tag(lights, tag)
     colour = (tag == 0) ? 'none' : lights[tag-1].colour
     colour_tag(colour, tag)
   end
 
-  def plural_colour(count, colour)
-    word = plural_word(colour, count)
-    '<div>' +
-      "#{count} #{colour_tag(colour, word)}" +
-    '</div>'
+  def colour_tag(colour, tag)
+    "<span class='#{colour}'>#{tag}</span>"
   end
 
   def plural(count, text)
@@ -61,10 +42,6 @@ module TipHelper # mix-in
   def plural_word(word, count)
     word = 'timeout' if word == 'timed_out'
     word + (count == 1 ? '' : 's')
-  end
-
-  def colour_tag(colour, tag)
-    "<span class='#{colour}'>#{tag}</span>"
   end
 
   def arrow

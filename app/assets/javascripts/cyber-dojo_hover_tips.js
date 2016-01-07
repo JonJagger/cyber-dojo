@@ -14,18 +14,35 @@ var cyberDojo = (function(cd, $) {
     });
   };
 
+  // - - - - - - - - - - - - - - - - - - - -
+
+  var countHoverTipHtml = function(reds, ambers, greens, timeOuts) {
+    var colourWord = function(colour, word) {
+      return "<span class='" + colour + "'>" + word + '</span>';
+    };
+    var plural = function(count, colour) {
+      var word = colour + (count == 1 ? '' : 's');
+      return '<div>' + count + ' ' + colourWord(colour, word) + '</div>';
+    };
+    var html = '';
+    if (reds     > 0) { html += plural(reds    , 'red'    ); }
+    if (ambers   > 0) { html += plural(ambers  , 'amber'  ); }
+    if (greens   > 0) { html += plural(greens  , 'green'  ); }
+    if (timeOuts > 0) { html += plural(timeOuts, 'timeout'); }
+    return html;
+  };
+
+  // - - - - - - - - - - - - - - - - - - - -
+
   var setAjaxTrafficLightCountHoverTip = function(node) {
-    $.getJSON('/tipper/traffic_light_count_tip', {
-      avatar: node.data('avatar-name'),
-      bulb_count: node.data('bulb-count'),
-      current_colour: node.data('current-colour'),
-      red_count: node.data('red-count'),
-      amber_count: node.data('amber-count'),
-      green_count: node.data('green-count'),
-      timed_out_count: node.data('timed-out-count')
-    }, function(response) {
-      cd.setHoverTip(node, response.html);
-    });
+    var avatarName = node.data('avatar-name');
+    var redCount = node.data('red-count');
+    var amberCount = node.data('amber-count');
+    var greenCount = node.data('green-count');
+    var timeOutCount = node.data('timed-out-count');
+    var html = avatarName + ' has<br/>';
+    html += countHoverTipHtml(redCount, amberCount, greenCount, timeOutCount);
+    cd.setHoverTip(node, html);
   };
 
   // - - - - - - - - - - - - - - - - - - - -
@@ -42,7 +59,7 @@ var cyberDojo = (function(cd, $) {
         node.removeClass('mouse-has-left');
         if (tip == 'ajax:traffic_light') {
           setAjaxTrafficLightHoverTip(node);
-        } else if (tip == 'ajax:traffic_light_count') {
+        } else if (tip == 'traffic_light_count') {
           setAjaxTrafficLightCountHoverTip(node);
         } else {
           cd.setHoverTip(node, tip);

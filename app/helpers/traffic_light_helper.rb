@@ -55,7 +55,7 @@ module TrafficLightHelper # mix-in
     lights = avatar.lights
     colour = lights[-1].colour
     "<div class='traffic-light-count #{colour}'" +
-        " data-tip='ajax:traffic_light_count'" +
+        " data-tip='traffic_light_count'" +
         " data-id='#{avatar.kata.id}'" +
         " data-avatar-name='#{avatar.name}'" +
         " data-current-colour='#{colour}'" +
