@@ -41,7 +41,7 @@ class DockerRunner
     katas_save(sandbox, delta, files)
     #run tests
     args = [
-      sandbox.path,
+      path_of(sandbox),
       image_name,
       max_seconds
     ].join(space = ' ')

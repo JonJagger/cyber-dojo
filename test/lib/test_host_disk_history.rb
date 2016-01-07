@@ -97,7 +97,6 @@ class HostDiskHistoryTests < LibTestBase
 
     git_evidence = "git add '#{new_filename}'"
     refute_log_include?(pathed(git_evidence))
-    refute dir_of(@avatar.sandbox).exists?(new_filename)
 
     maker = DeltaMaker.new(@avatar)
     maker.new_file(new_filename, new_content = 'content for new file')
@@ -130,7 +129,7 @@ class HostDiskHistoryTests < LibTestBase
   end
 
   def assert_file(filename, expected)
-    assert_equal expected, dir_of(@avatar.sandbox).read(filename), 'saved_to_sandbox'
+    assert_equal expected, disk[path(@avatar.sandbox)].read(filename), 'saved_to_sandbox'
   end
 
   def assert_log_include?(command)

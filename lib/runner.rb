@@ -31,6 +31,10 @@ module Runner # mix-in
     (timeout = 128) + (kill = 9)
   end
 
+  def path_of(obj)
+    history.path(obj)
+  end
+
   include StringCleaner
   include StringTruncater
 

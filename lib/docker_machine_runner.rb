@@ -42,7 +42,7 @@ class DockerMachineRunner
     node = node_map[image_name].sample
     args = [
       node,
-      sandbox.path,
+      path_of(sandbox),
       image_name,
       max_seconds
     ].join(space = ' ')

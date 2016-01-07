@@ -38,7 +38,7 @@ class DockerDataContainerRunner
     sandbox = avatar.sandbox
     katas_save(sandbox, delta, files)
     args = [
-      sandbox.path,
+      path_of(sandbox),
       image_name,
       max_seconds
     ].join(space = ' ')

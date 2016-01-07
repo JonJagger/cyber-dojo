@@ -115,7 +115,7 @@ class DockerRunnerTests < LibTestBase
     lion = make_kata.start_avatar(['lion'])
 
     args = [
-      lion.sandbox.path,
+      path_of(lion.sandbox),
       lion.kata.language.image_name,
       max_seconds
     ].join(space = ' ')

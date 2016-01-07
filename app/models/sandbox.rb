@@ -13,10 +13,6 @@ class Sandbox
     avatar
   end
 
-  def path
-    history.path(self)
-  end
-
   private
 
   include ExternalParentChainer

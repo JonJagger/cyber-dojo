@@ -108,7 +108,7 @@ class DockerMachineRunnerTests < LibTestBase
 
     args = [
       node,
-      lion.sandbox.path,
+      path_of(lion.sandbox),
       image_name,
       max_seconds
     ].join(space = ' ')
@@ -172,7 +172,7 @@ class DockerMachineRunnerTests < LibTestBase
     script = lambda do |node|
       args = [
         node,
-        deer.sandbox.path,
+        history.path(deer.sandbox),
         deer.kata.language.image_name,
         max_seconds
       ].join(space = ' ')
