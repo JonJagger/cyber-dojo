@@ -46,10 +46,10 @@ class DeltaMaker
     @avatar.runner.stub_run_output(@avatar, output)
   end
 
-  def run_test
+  def run_test(at = time_now)
     delta = make_delta(@was, @now)
     visible_files = now
-    output,colour = @avatar.test(delta, visible_files)
+    output,colour = @avatar.test(delta, visible_files, at)
     [delta, visible_files, output]
   end
 
@@ -58,6 +58,8 @@ class DeltaMaker
   end
 
   private
+
+  include TimeNow
 
   def assert(&pred)
     fail RuntimeError.new('DeltaMaker.assert') unless pred.call

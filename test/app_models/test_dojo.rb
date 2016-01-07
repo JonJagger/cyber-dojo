@@ -1,13 +1,13 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_model_test_base'
+require_relative './app_models_test_base'
 
 class ExternalDouble
   def initialize(_dojo)
   end
 end
 
-class DojoTests < AppModelTestBase
+class DojoTests < AppModelsTestBase
 
   test 'E4EA30',
   'exercises path defaults to root-dir/exercises/' do

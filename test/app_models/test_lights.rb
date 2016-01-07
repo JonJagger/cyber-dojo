@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_model_test_base'
+require_relative './app_models_test_base'
 
-class LightsTests < AppModelTestBase
+class LightsTests < AppModelsTestBase
 
   test '881D3F',
   'lights initially empty' do

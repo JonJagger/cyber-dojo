@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_model_test_base'
+require_relative './app_models_test_base'
 
-class SandboxTests < AppModelTestBase
+class SandboxTests < AppModelsTestBase
 
   test '721FF6',
   "avatar's sandbox == sandbox's avatar" do

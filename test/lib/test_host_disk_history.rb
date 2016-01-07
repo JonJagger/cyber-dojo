@@ -9,7 +9,7 @@ class HostDiskHistoryTests < LibTestBase
   'katas has correct path format when set with trailing slash' do
     path = 'slashed/'
     set_katas_root(path)
-    assert_equal path, katas.path
+    assert_equal path, path(katas)
     assert correct_path_format?(katas)
   end
 
@@ -19,7 +19,7 @@ class HostDiskHistoryTests < LibTestBase
   'katas has correct path format when set without trailing slash' do
     path = 'unslashed'
     set_katas_root(path)
-    assert_equal path + '/', katas.path
+    assert_equal path + '/', path(katas)
     assert correct_path_format?(katas)
   end
 
@@ -29,6 +29,15 @@ class HostDiskHistoryTests < LibTestBase
   'kata has correct path format' do
     kata = make_kata
     assert correct_path_format?(kata)
+  end
+
+  #- - - - - - - - - - - - - - - -
+
+  test '1E4B7A',
+  'path is split ala git' do
+    kata = make_kata
+    split = kata.id[0..1] + '/' + kata.id[2..-1]
+    assert path(kata).include?(split)
   end
 
   #- - - - - - - - - - - - - - - -
@@ -48,7 +57,15 @@ class HostDiskHistoryTests < LibTestBase
     avatar = kata.start_avatar(Avatars.names)
     sandbox = avatar.sandbox
     assert correct_path_format?(sandbox)
-    assert sandbox.path.include?('sandbox')
+    assert path(sandbox).include?('sandbox')
+  end
+
+  #- - - - - - - - - - - - - - - -
+
+  test 'CE9083',
+  'make_kata saves manifest in kata dir' do
+    kata = make_kata
+    assert dir_of(kata).exists?('manifest.json')
   end
 
   #- - - - - - - - - - - - - - - -
@@ -57,8 +74,7 @@ class HostDiskHistoryTests < LibTestBase
   'sandbox dir is initially created' do
     kata = make_kata
     avatar = kata.start_avatar(['hippo'])
-    sandbox = avatar.sandbox
-    assert disk[sandbox.path].exists?
+    assert disk[path(avatar.sandbox)].exists?
   end
 
   #- - - - - - - - - - - - - - - -
@@ -108,9 +124,8 @@ class HostDiskHistoryTests < LibTestBase
   private
 
   def correct_path_format?(object)
-    path = object.path
-    ends_in_slash = path.end_with?('/')
-    has_doubled_separator = path.scan('/' * 2).length != 0
+    ends_in_slash = path(object).end_with?('/')
+    has_doubled_separator = path(object).scan('/' * 2).length != 0
     ends_in_slash && !has_doubled_separator
   end
 
@@ -131,7 +146,11 @@ class HostDiskHistoryTests < LibTestBase
   end
 
   def pathed(command)
-    "cd #{@avatar.sandbox.path} && #{command}"
+    "cd #{path(@avatar.sandbox)} && #{command}"
+  end
+
+  def path(object)
+    history.path(object)
   end
 
 end

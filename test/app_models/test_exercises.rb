@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_model_test_base'
+require_relative './app_models_test_base'
 
-class ExercisesTests < AppModelTestBase
+class ExercisesTests < AppModelsTestBase
 
   test '14AD4C',
   'exercises path has correct basic format when set with trailing slash' do

@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_model_test_base'
+require_relative './app_models_test_base'
 
-class LanguagesTests < AppModelTestBase
+class LanguagesTests < AppModelsTestBase
 
   test '71C327',
   'languages[name] is nil if name is not an existing language' do

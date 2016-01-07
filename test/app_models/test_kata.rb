@@ -1,8 +1,9 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_model_test_base'
+require_relative './app_models_test_base'
+require_relative '../app_models/delta_maker'
 
-class KataTests < AppModelTestBase
+class KataTests < AppModelsTestBase
 
   test 'F3B8B1',
   'attempting to access a Kata with an invalid is nil' do
@@ -34,21 +35,11 @@ class KataTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '1E4B7A',
-  'path is split ala git' do
-    kata = make_kata
-    split = kata.id[0..1] + '/' + kata.id[2..-1]
-    assert kata.path.include?(split)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '66C9AE',
-    'when kata exists but has no avatars' +
+    'when kata has no avatars' +
        ' then it is not active ' +
        ' and its age is zero' do
     kata = make_kata
-    assert dir_of(kata).exists?
     refute kata.active?
     assert_equal 0, kata.age
   end
@@ -56,7 +47,7 @@ class KataTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B9340E',
-    'when kata exists but all its avatars have 0 traffic-lights' +
+    "when kata's avatars have 0 traffic-lights" +
        ' then it is not active ' +
        ' and its age is zero' do
     kata = make_kata
@@ -69,32 +60,22 @@ class KataTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'F2CDD3',
-    'when kata exists and at least one avatar has 1 or more traffic-lights' +
+    'when kata has at least one avatar with 1 or more traffic-lights' +
        ' then kata is active ' +
        ' and age is from earliest traffic-light to now' do
     kata = make_kata
-    refute_nil kata.path
-    hippo = kata.start_avatar(['hippo'])
-    lion = kata.start_avatar(['lion'])
-    first =
-      {
-        'colour' => 'red',
-        'time'   => [2014, 2, 15, 8, 54, 6],
-        'number' => 1
-      }
-    second =
-      {
-        'colour' => 'green',
-        'time'   => [2014, 2, 15, 8, 54, 34],
-        'number' => 2
-      }
 
-    dir_of(hippo).write_json('increments.json', [second])
-    dir_of(lion).write_json('increments.json', [first])
+    hippo = kata.start_avatar(['hippo'])
+    first_time = [2014, 2, 15, 8, 54, 6]
+    DeltaMaker.new(hippo).run_test(first_time)
+
+    lion = kata.start_avatar(['lion'])
+    second_time = [2014, 2, 15, 8, 54, 34]
+    DeltaMaker.new(lion).run_test(second_time)
 
     assert kata.active?
-    now = first['time']
-    now[seconds = 5] += 17
+    now = first_time
+    now[seconds_slot = 5] += 17
     assert_equal 17, kata.age(now)
   end
 
@@ -108,14 +89,6 @@ class KataTests < AppModelTestBase
     past = Time.mktime(now.year, now.month, now.day, now.hour, now.min, now.sec)
     diff = created - past
     assert 0 <= diff && diff <= 1, "created=#{created}, past=#{past}, diff=#{past}"
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'CE9083',
-  'make_kata saves manifest in kata dir' do
-    kata = make_kata
-    assert dir_of(kata).exists?('manifest.json')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

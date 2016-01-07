@@ -1,9 +1,9 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_model_test_base'
+require_relative './app_models_test_base'
 require 'tempfile'
 
-class LanguageTests < AppModelTestBase
+class LanguageTests < AppModelsTestBase
 
   def setup
     super

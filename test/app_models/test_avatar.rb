@@ -1,9 +1,9 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_model_test_base'
+require_relative './app_models_test_base'
 require_relative './delta_maker'
 
-class AvatarTests < AppModelTestBase
+class AvatarTests < AppModelsTestBase
 
   test '4C9E81',
   "an avatar's kata is the kata it was created with" do

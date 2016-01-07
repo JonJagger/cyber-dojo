@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_model_test_base'
+require_relative './app_models_test_base'
 
-class AvatarsTests < AppModelTestBase
+class AvatarsTests < AppModelsTestBase
 
   test '631149',
   'there are 64 avatar names' do

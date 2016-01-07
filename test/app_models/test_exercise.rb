@@ -1,8 +1,8 @@
 #!/bin/bash ../test_wrapper.sh
 
-require_relative './app_model_test_base'
+require_relative './app_models_test_base'
 
-class ExerciseTests < AppModelTestBase
+class ExerciseTests < AppModelsTestBase
 
   test '73C3A7',
   'exercises[name] is nil if name is not an existing exercise' do
