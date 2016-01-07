@@ -32,19 +32,10 @@ $(function() {
     var newCount = $('<div>', { 'class': 'traffic-light-count ' + colour, }).text(count);
 
     if (count > 0) {
+      var tip = countHoverTipHtml(redCount, amberCount, greenCount, timeOutCount);
       $('.traffic-lights-count').html(newCount);
-      // setup tip
-      var node = $('.traffic-light-count');
-      var html = countHoverTipHtml(redCount, amberCount, greenCount, timeOutCount);
-      // TODO: refactor tip-plumbing duplication here...
-      node.mouseleave(function() {
-        node.addClass('mouse-has-left');
-        $('.hover-tip', node).remove();
-      });
-      node.mouseenter(function() {
-        node.removeClass('mouse-has-left');
-        cd.setHoverTip(node, html);
-      });
+      // cant reuse newCount, have to refind it
+      cd.setTip($('.traffic-light-count'), tip);
     }
   };
 

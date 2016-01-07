@@ -18,21 +18,12 @@ $(function() {
       var light = $(this);
       var wasTag = light.data('was-tag');
       var nowTag = light.data('now-tag');
+      var tip = 'Click to review<br/>' + wasTag + ' &harr; ' + nowTag;
       light.click(function() {
         cd.setReviewDialogData("<%= @kata.id %>", "<%= @avatar.name %>", wasTag, nowTag);
         review.dialog('open');
       });
-      // TODO: tip-plumbing duplication
-      light.mouseenter(function() {
-        light.removeClass('mouse-has-left');
-        var tip = 'Review ' + wasTag + '&harr;' + nowTag;
-        cd.setHoverTip(light, tip);
-      });
-      light.mouseleave(function() {
-        light.addClass('mouse-has-left');
-        $('.hover-tip', light).remove();
-      });
-
+      cd.setTip(light, tip);
     });
   };
 

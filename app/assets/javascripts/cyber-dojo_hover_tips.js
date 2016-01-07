@@ -3,22 +3,6 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.setHoverTip = function(node, tip) {
-    // mouseenter retrieves the tip via a slow ajax call
-    // which means mouseleave could have already occurred
-    // by the time the ajax returns to set the tip. The
-    // mouse-has-left attribute reduces this race's chance.
-    if (!node.hasClass('mouse-has-left')) {
-      node.append($('<span class="hover-tip">' + tip + '</span>'));
-      // dashboard auto-scroll requires forced positioning.
-      $('.hover-tip').position({
-        my: 'left top',
-        at: 'right bottom',
-        of: node
-      });
-    }
-  };
-
   var setAjaxTrafficLightHoverTip = function(light) {
     $.getJSON('/tipper/traffic_light_tip', {
       id: light.data('id'),
@@ -66,6 +50,39 @@ var cyberDojo = (function(cd, $) {
       });
     });
   };
+
+  // - - - - - - - - - - - - - - - - - - - -
+
+  cd.setHoverTip = function(node, tip) {
+    // mouseenter retrieves the tip via a slow ajax call
+    // which means mouseleave could have already occurred
+    // by the time the ajax returns to set the tip. The
+    // mouse-has-left attribute reduces this race's chance.
+    if (!node.hasClass('mouse-has-left')) {
+      node.append($('<span class="hover-tip">' + tip + '</span>'));
+      // dashboard auto-scroll requires forced positioning.
+      $('.hover-tip').position({
+        my: 'left top',
+        at: 'right bottom',
+        of: node
+      });
+    }
+  };
+
+  // - - - - - - - - - - - - - - - - - - - -
+
+  cd.setTip = function(node, tip) {
+    node.mouseenter(function() {
+      node.removeClass('mouse-has-left');
+      cd.setHoverTip(node, tip);
+    });
+    node.mouseleave(function() {
+      node.addClass('mouse-has-left');
+      $('.hover-tip', node).remove();
+    });
+  };
+
+  // - - - - - - - - - - - - - - - - - - - -
 
   return cd;
 
