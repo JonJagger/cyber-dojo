@@ -19,6 +19,7 @@ var appendTestTrafficLight = function() {
   div.append(img);
   td.append(div);
   $('.traffic-lights-count').parent().before(td);
+  cd.setupReviewTrafficLight(div);
 };
 
 //- - - - - - - - - - - - - - - - - - - - - -
@@ -35,7 +36,5 @@ $('#traffic-lights-pie-chart')
   .html("<%= js_partial('traffic_lights_pie_chart') %>");
 
 cd.scrollAvatarImageIntoView();
-
-//cd.setupHoverTips();
 
 

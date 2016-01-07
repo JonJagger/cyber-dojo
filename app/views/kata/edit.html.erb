@@ -13,7 +13,7 @@ $(function() {
   $.each(filenames, function(_,filename) {
     var file = cd.fileContentFor(filename);
     cd.bindHotKeys(file);
-    if (filename !== 'output') {
+    if (filename != 'output') {
       cd.tabber(file);
     }
   });
@@ -66,9 +66,3 @@ $(function() {
              } %>
 
 <% end %>
-
-<div style="display:none;">
-  <div id="review-dialog">
-    <%= render(:partial => 'review/review') %>
-  </div>
-</div>

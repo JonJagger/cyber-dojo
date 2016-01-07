@@ -19,7 +19,7 @@ class Tag
   end
 
   def output
-    # Very early dojos didn't store output in initial commit
+    # Very early dojos didn't store output in initial tag 0
     visible_files['output'] || ''
   end
 

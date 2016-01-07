@@ -11,7 +11,7 @@ $(function() {
   // The [checkout] button is available only from the review *dialog*.
   //---------------------------------------------------------------------
 
-  cd.setupReviewDialog = function(id, avatar, wasTag, nowTag) {
+  cd.setReviewDialogData = function(id, avatar, wasTag, nowTag) {
     param = { id:id, avatar:avatar, wasTag:wasTag, nowTag:nowTag };
     reviewRefresh();
   };

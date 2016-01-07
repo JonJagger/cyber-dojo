@@ -13,17 +13,17 @@ $(function() {
       closeOnEscape: true,
     });
 
-  $('.diff-traffic-light').click(function() {
-    var light = $(this);
-    var wasTag = light.data('was-tag');
-    var nowTag = light.data('now-tag');
-    cd.setupReviewDialog("<%= @kata.id %>", "<%= @avatar.name %>", wasTag, nowTag);
-    review.dialog('open');
-  });
+  cd.setupReviewTrafficLight = function(lights) {
+    lights.click(function() {
+      var wasTag = $(this).data('was-tag');
+      var nowTag = $(this).data('now-tag');
+      cd.setReviewDialogData("<%= @kata.id %>", "<%= @avatar.name %>", wasTag, nowTag);
+      review.dialog('open');
+    });
+    //TODO: also set simple hover-tip with no added/delete line counts
+  };
 
-  // TODO: drop added/deleted line counts in tip
-  //cd.setupHoverTips();
-  // TODO: add review-dialog click-handler for new traffic-light
+  cd.setupReviewTrafficLight($('.diff-traffic-light'));
 
 });
 
@@ -40,4 +40,10 @@ $(function() {
       <td><%= render partial: 'avatar_image' %></td>
     </tr>
   </table>
+</div>
+
+<div style="display:none;">
+  <div id="review-dialog">
+    <%= render(:partial => 'review/review') %>
+  </div>
 </div>
