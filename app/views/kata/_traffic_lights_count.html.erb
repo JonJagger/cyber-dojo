@@ -23,21 +23,20 @@ $(function() {
 
   var updateTrafficLightsCount = function() {
     var rags = $('.diff-traffic-light');
-    var redCount     = cd.ragCount(rags,'red');
-    var amberCount   = cd.ragCount(rags,'amber');
-    var greenCount   = cd.ragCount(rags,'green');
-    var timeOutCount = cd.ragCount(rags,'timed_out');
+    var redCount     = cd.ragCount(rags, 'red');
+    var amberCount   = cd.ragCount(rags, 'amber');
+    var greenCount   = cd.ragCount(rags, 'green');
+    var timeOutCount = cd.ragCount(rags, 'timed_out');
     var count = redCount + amberCount + greenCount + timeOutCount;
     var colour = rags.last().data('colour');
     var newCount = $('<div>', { 'class': 'traffic-light-count ' + colour, }).text(count);
 
     if (count > 0) {
       $('.traffic-lights-count').html(newCount);
+      // setup tip
       var node = $('.traffic-light-count');
       var html = countHoverTipHtml(redCount, amberCount, greenCount, timeOutCount);
-
-      // setup tip
-      // TODO: there is plumbing duplication here...
+      // TODO: refactor tip-plumbing duplication here...
       node.mouseleave(function() {
         node.addClass('mouse-has-left');
         $('.hover-tip', node).remove();

@@ -1,15 +1,15 @@
 
 var appendTestTrafficLight = function() {
-  var testRag = "<%= @last_rag %>";
+  var testColour = "<%= @last_rag %>";
   var lightsCount = $('.diff-traffic-light').size();
   var img = $('<img>', {
-    'src': '/images/bulb_' + testRag + '.png',
-    'alt': testRag + ' traffic-light'
+    'src': '/images/bulb_' + testColour + '.png',
+    'alt': testColour + ' traffic-light'
   });
   var div = $('<div>', {
     'class': 'diff-traffic-light',
     'data-tip':'simple_review_traffic_light',
-    'data-colour': testRag,
+    'data-colour': testColour,
     'data-was-tag': lightsCount,
     'data-now-tag': lightsCount + 1
   });

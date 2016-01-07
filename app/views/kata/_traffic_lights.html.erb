@@ -14,14 +14,26 @@ $(function() {
     });
 
   cd.setupReviewTrafficLight = function(lights) {
-    lights.click(function() {
+    lights.each(function() {
       var light = $(this);
       var wasTag = light.data('was-tag');
       var nowTag = light.data('now-tag');
-      cd.setReviewDialogData("<%= @kata.id %>", "<%= @avatar.name %>", wasTag, nowTag);
-      review.dialog('open');
+      light.click(function() {
+        cd.setReviewDialogData("<%= @kata.id %>", "<%= @avatar.name %>", wasTag, nowTag);
+        review.dialog('open');
+      });
+      // TODO: tip-plumbing duplication
+      light.mouseenter(function() {
+        light.removeClass('mouse-has-left');
+        var tip = 'Review ' + wasTag + '&harr;' + nowTag;
+        cd.setHoverTip(light, tip);
+      });
+      light.mouseleave(function() {
+        light.addClass('mouse-has-left');
+        $('.hover-tip', light).remove();
+      });
+
     });
-    cd.setupHoverTip(lights);
   };
 
   cd.setupReviewTrafficLight($('.diff-traffic-light'));

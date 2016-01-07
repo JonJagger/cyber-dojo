@@ -46,13 +46,6 @@ var cyberDojo = (function(cd, $) {
 
   // - - - - - - - - - - - - - - - - - - - -
 
-  var setSimpleReviewTrafficLightHoverTip = function(node) {
-    var html = 'Review ' + node.data('was-tag') + '&harr;' + node.data('now-tag');
-    cd.setHoverTip(node, html);
-  };
-
-  // - - - - - - - - - - - - - - - - - - - -
-
   cd.setupHoverTip = function(nodes) {
     nodes.each(function() {
       var node = $(this);
@@ -67,8 +60,6 @@ var cyberDojo = (function(cd, $) {
           setAjaxTrafficLightHoverTip(node);
         } else if (tip == 'ajax:traffic_light_count') {
           setAjaxTrafficLightCountHoverTip(node);
-        } else if (tip == 'simple_review_traffic_light') {
-          setSimpleReviewTrafficLightHoverTip(node);
         } else {
           cd.setHoverTip(node, tip);
         }
