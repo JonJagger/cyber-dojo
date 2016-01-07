@@ -44,8 +44,40 @@ var cyberDojo = (function(cd, $) {
     });
   };
 
-  cd.setupHoverTips = function() {
-    $('[data-tip]').each(function() {
+  // - - - - - - - - - - - - - - - - - - - -
+
+  var setSimpleReviewTrafficLightHoverTip = function(node) {
+    var html = 'Review ' + node.data('was-tag') + '&harr;' + node.data('now-tag');
+    setHoverTip(node, html);
+  };
+
+  // - - - - - - - - - - - - - - - - - - - -
+
+  var setSimpleReviewTrafficLightCountHoverTip = function(node) {
+    var colourTag = function(colour, tag) {
+      return "<span class='" + colour + "'>" + tag + '</span>';
+    };
+    var pluralWord = function(word, count) {
+      return word + (count == 1 ? '' : 's');
+    };
+    var pluralColour = function(count, colour) {
+      var word = pluralWord(colour, count);
+      return '<div>' + count + ' ' + colourTag(colour, word) + '</div>';
+    };
+    var timedOutCount= node.data('timed-out-count');
+    var html =
+      pluralColour(node.data('red-count'), 'red') +
+      pluralColour(node.data('amber-count'), 'amber') +
+      pluralColour(node.data('green-count'), 'green');
+
+    if (timedOutCount > 0) {
+      html += pluralColour(node.data('timed-out-count'), 'timout');
+    }
+    setHoverTip(node, html);
+  };
+
+  cd.setupHoverTip = function(nodes) {
+    nodes.each(function() {
       var node = $(this);
       var tip = node.data('tip');
       node.mouseleave(function() {
@@ -58,6 +90,10 @@ var cyberDojo = (function(cd, $) {
           setAjaxTrafficLightHoverTip(node);
         } else if (tip == 'ajax:traffic_light_count') {
           setAjaxTrafficLightCountHoverTip(node);
+        } else if (tip == 'simple_review_traffic_light') {
+          setSimpleReviewTrafficLightHoverTip(node);
+        } else if (tip == 'simple_traffic_light_count') {
+          setSimpleReviewTrafficLightCountHoverTip(node);
         } else {
           setHoverTip(node, tip);
         }

@@ -14,7 +14,7 @@ $(function() {
     var colour = rags.last().data('colour');
     var newCount = $('<div>', {
         'class': 'traffic-light-count ' + colour,
-        'data-tip':'ajax:traffic_light_count',
+        'data-tip':'simple_traffic_light_count',
         'data-id': "<%= @kata.id %>",
         'data-avatar-name': "<%= @avatar.name %>",
         'data-red-count': count('red'),
@@ -25,6 +25,7 @@ $(function() {
 
     if (totalRagCount > 0) {
       $('.traffic-lights-count').html(newCount);
+      cd.setupHoverTip($('.traffic-light-count'));
     }
   };
 

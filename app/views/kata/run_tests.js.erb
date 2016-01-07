@@ -8,9 +8,7 @@ var appendTestTrafficLight = function() {
   });
   var div = $('<div>', {
     'class': 'diff-traffic-light',
-    'data-tip':'ajax:traffic_light',
-    'data-id': "<%= @kata.id %>",
-    'data-avatar-name': "<%= @avatar.name %>",
+    'data-tip':'simple_review_traffic_light',
     'data-colour': testRag,
     'data-was-tag': lightsCount,
     'data-now-tag': lightsCount + 1

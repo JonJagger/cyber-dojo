@@ -15,12 +15,13 @@ $(function() {
 
   cd.setupReviewTrafficLight = function(lights) {
     lights.click(function() {
-      var wasTag = $(this).data('was-tag');
-      var nowTag = $(this).data('now-tag');
+      var light = $(this);
+      var wasTag = light.data('was-tag');
+      var nowTag = light.data('now-tag');
       cd.setReviewDialogData("<%= @kata.id %>", "<%= @avatar.name %>", wasTag, nowTag);
       review.dialog('open');
     });
-    //TODO: also set simple hover-tip with no added/delete line counts
+    cd.setupHoverTip(lights);
   };
 
   cd.setupReviewTrafficLight($('.diff-traffic-light'));
@@ -33,7 +34,7 @@ $(function() {
   <table>
     <tr>
       <% @avatar.lights.each do |light| %>
-        <td><%= raw diff_traffic_light(light) %></td>
+        <td><%= raw simple_diff_traffic_light(light) %></td>
       <% end %>
       <td><%= render partial: 'traffic_lights_count' %></td>
       <td><%= render partial: 'traffic_lights_pie_chart' %></td>
