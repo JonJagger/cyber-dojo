@@ -13,50 +13,6 @@ class TipTests < AppHelpersTestBase
 
   #- - - - - - - - - - - - - - - - - -
 
-  test 'FAE414',
-  'traffic light count tip includes time-out when there is a time-out' do
-    params = {
-               'avatar' => 'lion',
-       'current_colour' => 'red',
-            'red_count' => 14,
-          'amber_count' => 3,
-          'green_count' => 5,
-      'timed_out_count' => 1,
-           'bulb_count' => 23
-    }
-    expected =
-      'lion has<br/>' +
-      "<div>14 <span class='red'>reds</span></div>" +
-      "<div>3 <span class='amber'>ambers</span></div>" +
-      "<div>5 <span class='green'>greens</span></div>" +
-      "<div>1 <span class='timed_out'>timeout</span></div>"
-    actual = traffic_light_count_tip_html(params)
-    assert_equal expected, actual
-  end
-
-  #- - - - - - - - - - - - - - - - - -
-
-  test 'C2A9CD',
-  'traffic light count tip excludes time-out when there are no time-outs' do
-    params = {
-               'avatar' => 'lion',
-       'current_colour' => 'red',
-            'red_count' => 14,
-          'amber_count' => 3,
-          'green_count' => 5,
-      'timed_out_count' => 0
-    }
-    expected =
-      'lion has<br/>' +
-      "<div>14 <span class='red'>reds</span></div>" +
-      "<div>3 <span class='amber'>ambers</span></div>" +
-      "<div>5 <span class='green'>greens</span></div>"
-    actual = traffic_light_count_tip_html(params)
-    assert_equal expected, actual
-  end
-
-  #- - - - - - - - - - - - - - - - - -
-
   test 'BDAD52',
   'traffic light tip' do
     kata = make_kata

@@ -34,7 +34,7 @@ var cyberDojo = (function(cd, $) {
 
   // - - - - - - - - - - - - - - - - - - - -
 
-  var setAjaxTrafficLightCountHoverTip = function(node) {
+  var setTrafficLightCountHoverTip = function(node) {
     var avatarName = node.data('avatar-name');
     var redCount = node.data('red-count');
     var amberCount = node.data('amber-count');
@@ -60,7 +60,7 @@ var cyberDojo = (function(cd, $) {
         if (tip == 'ajax:traffic_light') {
           setAjaxTrafficLightHoverTip(node);
         } else if (tip == 'traffic_light_count') {
-          setAjaxTrafficLightCountHoverTip(node);
+          setTrafficLightCountHoverTip(node);
         } else {
           cd.setHoverTip(node, tip);
         }

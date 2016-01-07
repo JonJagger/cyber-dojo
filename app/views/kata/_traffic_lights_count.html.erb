@@ -3,24 +3,6 @@
 
 $(function() {
 
-  var countHoverTipHtml = function(reds, ambers, greens, timeOuts) {
-    var colourWord = function(colour, word) {
-      return "<span class='" + colour + "'>" + word + '</span>';
-    };
-    var plural = function(count, colour) {
-      var word = colour + (count == 1 ? '' : 's');
-      return '<div>' + count + ' ' + colourWord(colour, word) + '</div>';
-    };
-    var html = '';
-    if (reds     > 0) { html += plural(reds    , 'red'    ); }
-    if (ambers   > 0) { html += plural(ambers  , 'amber'  ); }
-    if (greens   > 0) { html += plural(greens  , 'green'  ); }
-    if (timeOuts > 0) { html += plural(timeOuts, 'timeout'); }
-    return html;
-  };
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   var updateTrafficLightsCount = function() {
     var rags = $('.diff-traffic-light');
     var redCount     = cd.ragCount(rags, 'red');
@@ -29,13 +11,20 @@ $(function() {
     var timeOutCount = cd.ragCount(rags, 'timed_out');
     var count = redCount + amberCount + greenCount + timeOutCount;
     var colour = rags.last().data('colour');
-    var newCount = $('<div>', { 'class': 'traffic-light-count ' + colour, }).text(count);
+    var newCount = $('<div>', {
+      'class': 'traffic-light-count ' + colour,
+      'data-avatar-name': "<%= @avatar.name %>",
+      'data-tip': 'traffic_light_count',
+      'data-red-count': redCount,
+      'data-amber-count': amberCount,
+      'data-green-count': greenCount,
+      'data-timed-out-count': timeOutCount
+    }).text(count);
 
     if (count > 0) {
-      var tip = countHoverTipHtml(redCount, amberCount, greenCount, timeOutCount);
       $('.traffic-lights-count').html(newCount);
       // cant reuse newCount, have to refind it
-      cd.setTip($('.traffic-light-count'), tip);
+      cd.setupHoverTip($('.traffic-light-count'));
     }
   };
 

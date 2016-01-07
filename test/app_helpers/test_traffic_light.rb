@@ -31,7 +31,7 @@ class TrafficLightTests < AppHelpersTestBase
       end
     expected =
       "<div class='traffic-light-count amber'" +
-          " data-tip='ajax:traffic_light_count'" +
+          " data-tip='traffic_light_count'" +
           " data-id='ABCD1234'" +
           " data-avatar-name='hippo'" +
           " data-current-colour='amber'" +
@@ -49,10 +49,10 @@ class TrafficLightTests < AppHelpersTestBase
 
   test '94DE41',
   'traffic_light_image' do
-    color = 'red'
-    expected = "<img src='/images/bulb_#{color}.png'" +
+    colour = 'red'
+    expected = "<img src='/images/bulb_#{colour}.png'" +
                " alt='red traffic-light'/>"
-    actual = traffic_light_image(color)
+    actual = traffic_light_image(colour)
     assert_equal expected, actual
   end
 

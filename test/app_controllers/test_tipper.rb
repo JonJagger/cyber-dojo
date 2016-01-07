@@ -17,22 +17,4 @@ class TipperControllerTest < AppControllerTestBase
     assert_response :success
   end
 
-  # - - - - - - - - - - - - - - - -
-
-  test 'BB7C60',
-  'traffic_light_count_tip' do
-    @id = create_kata
-    start
-    get 'tipper/traffic_light_count_tip',
-      format: :js,
-      avatar: @avatar.name,
-      bulb_count: 0,
-      current_colour: 'red',
-      red_count: 3,
-      amber_count: 5,
-      green_count: 6,
-      timed_out_count: 0
-    assert_response :success
-  end
-
 end
