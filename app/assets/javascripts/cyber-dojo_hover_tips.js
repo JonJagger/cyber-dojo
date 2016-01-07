@@ -3,14 +3,14 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  var setAjaxTrafficLightHoverTip = function(light) {
+  var showTrafficLightHoverTipViaAjax = function(light) {
     $.getJSON('/tipper/traffic_light_tip', {
-      id: light.data('id'),
-      avatar: light.data('avatar-name'),
+           id: light.data('id'),
+       avatar: light.data('avatar-name'),
       was_tag: light.data('was-tag'),
       now_tag: light.data('now-tag')
     }, function(response) {
-      cd.setHoverTip(light, response.html);
+      cd.showHoverTip(light, response.html);
     });
   };
 
@@ -34,15 +34,13 @@ var cyberDojo = (function(cd, $) {
 
   // - - - - - - - - - - - - - - - - - - - -
 
-  var setTrafficLightCountHoverTip = function(node) {
+  var getTrafficLightCountHoverTip = function(node) {
     var avatarName = node.data('avatar-name');
-    var redCount = node.data('red-count');
-    var amberCount = node.data('amber-count');
-    var greenCount = node.data('green-count');
-    var timeOutCount = node.data('timed-out-count');
-    var html = avatarName + ' has<br/>';
-    html += countHoverTipHtml(redCount, amberCount, greenCount, timeOutCount);
-    cd.setHoverTip(node, html);
+    var reds = node.data('red-count');
+    var ambers = node.data('amber-count');
+    var greens = node.data('green-count');
+    var timeOuts = node.data('timed-out-count');
+    return avatarName + ' has<br/>' + countHoverTipHtml(reds, ambers, greens, timeOuts);
   };
 
   // - - - - - - - - - - - - - - - - - - - -
@@ -51,27 +49,36 @@ var cyberDojo = (function(cd, $) {
     nodes.each(function() {
       var node = $(this);
       var tip = node.data('tip');
-      node.mouseleave(function() {
-        node.addClass('mouse-has-left');
-        $('.hover-tip', node).remove();
-      });
-      node.mouseenter(function() {
-        node.removeClass('mouse-has-left');
+      var setTipCallBack = function() {
         if (tip == 'ajax:traffic_light') {
-          setAjaxTrafficLightHoverTip(node);
+          showTrafficLightHoverTipViaAjax(node);
         } else if (tip == 'traffic_light_count') {
-          setTrafficLightCountHoverTip(node);
+          cd.showHoverTip(node, getTrafficLightCountHoverTip(node));
         } else {
-          cd.setHoverTip(node, tip);
+          cd.showHoverTip(node, tip);
         }
-      });
+      };
+      cd.setTip(node, setTipCallBack);
     });
   };
 
   // - - - - - - - - - - - - - - - - - - - -
 
-  cd.setHoverTip = function(node, tip) {
-    // mouseenter retrieves the tip via a slow ajax call
+  cd.setTip = function(node, setTipCallBack) {
+    node.mouseenter(function() {
+      node.removeClass('mouse-has-left');
+      setTipCallBack();
+    });
+    node.mouseleave(function() {
+      node.addClass('mouse-has-left');
+      $('.hover-tip', node).remove();
+    });
+  };
+
+  // - - - - - - - - - - - - - - - - - - - -
+
+  cd.showHoverTip = function(node, tip) {
+    // mouseenter may retrieve the tip via a slow ajax call
     // which means mouseleave could have already occurred
     // by the time the ajax returns to set the tip. The
     // mouse-has-left attribute reduces this race's chance.
@@ -85,21 +92,6 @@ var cyberDojo = (function(cd, $) {
       });
     }
   };
-
-  // - - - - - - - - - - - - - - - - - - - -
-
-  cd.setTip = function(node, tip) {
-    node.mouseenter(function() {
-      node.removeClass('mouse-has-left');
-      cd.setHoverTip(node, tip);
-    });
-    node.mouseleave(function() {
-      node.addClass('mouse-has-left');
-      $('.hover-tip', node).remove();
-    });
-  };
-
-  // - - - - - - - - - - - - - - - - - - - -
 
   return cd;
 

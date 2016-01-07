@@ -18,12 +18,14 @@ $(function() {
       var light = $(this);
       var wasTag = light.data('was-tag');
       var nowTag = light.data('now-tag');
-      var tip = 'Click to review<br/>' + wasTag + ' &harr; ' + nowTag;
       light.click(function() {
         cd.setReviewDialogData("<%= @kata.id %>", "<%= @avatar.name %>", wasTag, nowTag);
         review.dialog('open');
       });
-      cd.setTip(light, tip);
+      cd.setTip(light, function() {
+        var tip = 'Click to review<br/>' + wasTag + ' &harr; ' + nowTag;
+        cd.showHoverTip(light, tip);
+      });
     });
   };
 
