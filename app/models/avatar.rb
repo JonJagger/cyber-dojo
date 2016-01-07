@@ -23,10 +23,6 @@ class Avatar
     kata
   end
 
-  def path
-    history.path(self)
-  end
-
   def language
     # Each avatar does _not_ choose their own language+test.
     # The language+test is chosen for the _dojo_.
