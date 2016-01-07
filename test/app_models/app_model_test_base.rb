@@ -5,8 +5,6 @@ require_relative '../test_base'
 
 class AppModelTestBase < TestBase
 
-  include UniqueId
-
   def setup
     super
     set_runner_class('StubRunner')
