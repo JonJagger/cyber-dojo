@@ -31,11 +31,9 @@ class KatasTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B9916D',
-  'create_kata creates manifest.json file' do
+  'after create_kata() manifest file holds kata properties' do
     kata = make_kata
-    filename = 'manifest.json'
-    assert dir_of(kata).exists?(filename)
-    manifest = dir_of(kata).read_json(filename)
+    manifest = history.kata_manifest(kata)
     assert_equal kata.id, manifest['id']
     assert_equal kata.language.name, manifest['language']
     assert_equal kata.exercise.name, manifest['exercise']
@@ -86,27 +84,28 @@ class KatasTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '603735',
-  'katas.each() yields empty array when there are no katas' do
+  'each() yields empty array when there are no katas' do
     dir_of(katas).make
     assert_equal [], all_ids(katas)
   end
 
   test '5A2932',
-  'katas.each() yields array with the one kata-id when there is one kata' do
+  'each() yields array with the one kata-id when there is one kata' do
     kata = make_kata
     assert_equal [kata.id.to_s], all_ids(katas)
   end
 
   test '24894F',
-  'katas.each() with two unrelated ids' do
+  'each() with two unrelated ids' do
     kata1 = make_kata
     kata2 = make_kata
     assert_equal all_ids([kata1, kata2]).sort, all_ids(katas).sort
   end
 
   test '29DFD1',
-  'katas.each() with several ids with common first two characters' do
+  'each() with several ids with common first two characters' do
     id = 'ABCDE1234'
+    assert_equal 10-1, id.length
     kata1 = make_kata(id + '1')
     kata2 = make_kata(id + '2')
     kata3 = make_kata(id + '3')
@@ -121,7 +120,7 @@ class KatasTests < AppModelTestBase
   end
 
   def all_ids(katas)
-    katas.each.map { |kata| kata.id.to_s }
+    katas.map { |kata| kata.id.to_s }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -143,7 +142,7 @@ class KatasTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '42EA20',
-    'complete(id): does not complete when id is less than 6 chars in length' +
+    'complete(id) does not complete when id is less than 6 chars in length' +
        'because trying to complete from a short id will waste time going through ' +
        'lots of candidates with the likely outcome of no unique result' do
     id = unique_id[0..4]
@@ -154,7 +153,7 @@ class KatasTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '071A62',
-  'complete(id): does not complete when 6+ chars long and no matches' do
+  'complete(id) does not complete when 6+ chars long and no matches' do
     id = unique_id[0..5]
     assert_equal 6, id.length
     assert_equal id, katas.complete(id)
@@ -173,7 +172,7 @@ class KatasTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '0934BF',
-  'complete(id): completes (and uppercases) when 6+ chars and 1 match' do
+  'complete(id) completes when 6+ chars and 1 match' do
     id = 'A1B2C3D4E5'
     make_kata(id)
     assert_equal id, katas.complete(id.downcase[0..5])

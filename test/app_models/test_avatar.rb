@@ -95,7 +95,7 @@ class AvatarTests < AppModelTestBase
 
   test 'EB2E11',
     'test() does not truncate output less than or equal to 10*1024 characters' do
-    kata = make_kata(unique_id, 'Java-JUnit')
+    kata = make_kata
     @avatar = kata.start_avatar
     big = 'X' * 10*1024
     runner.stub_run_output(@avatar, big)
@@ -107,7 +107,7 @@ class AvatarTests < AppModelTestBase
 
   test '4B2E5A',
   'test() truncates output greater 10*1024 characters' do
-    kata = make_kata(unique_id, 'Java-JUnit')
+    kata = make_kata
     @avatar = kata.start_avatar
     big = 'X' * 10*1024
     runner.stub_run_output(@avatar, big + 'truncated')

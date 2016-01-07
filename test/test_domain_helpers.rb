@@ -17,14 +17,17 @@ module TestDomainHelpers # mix-in
   def git;       dojo.git;       end
   def disk;      dojo.disk;      end
 
-  include UniqueId
-
   def dir_of(object); disk[object.path]; end
 
   def make_kata(id = unique_id, language_name = 'C (clang)-assert', exercise_name = 'Fizz_Buzz')
     language = languages[language_name]
     exercise = exercises[exercise_name]
     katas.create_kata(language, exercise, id)
+  end
+
+  def unique_id
+    hex_chars = "0123456789ABCDEF".split(//)
+    Array.new(10) { hex_chars.sample }.shuffle.join
   end
 
 end
