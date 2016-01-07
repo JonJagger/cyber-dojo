@@ -79,7 +79,6 @@ class SetupChooserTests < AppLibTestBase
       languages = test_languages_names - [unknown_language]
       refute languages.include?(unknown_language)
       kata = make_kata(unique_id, unknown_language, test_exercises_names.sample)
-      assert dir_of(kata).exists?, 'kata.exists?'
       assert_is_randomly_chosen_language(languages, kata.id, katas)
     end
   end
@@ -92,7 +91,6 @@ class SetupChooserTests < AppLibTestBase
       exercises = test_exercises_names - [unknown_exercise]
       refute exercises.include?(unknown_exercise)
       kata = make_kata(unique_id, test_languages_names.sample, unknown_exercise)
-      assert dir_of(kata).exists?, 'kata.exists?'
       assert_is_randomly_chosen_exercise(exercises, kata.id, katas)
     end
   end

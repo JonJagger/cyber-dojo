@@ -108,7 +108,7 @@ class ForkerControllerTest < AppControllerTestBase
     url = /(.*)\/enter\/show\/(.*)/
     m = url.match(@response.location)
     forked_kata_id = m[2]
-    assert disk[katas[forked_kata_id].path].exists?
+    assert dir_of(katas[forked_kata_id]).exists?
   end
 
   #- - - - - - - - - - - - - - - - - -
@@ -118,7 +118,7 @@ class ForkerControllerTest < AppControllerTestBase
      'is ok then fork works and the new dojos id is returned' do
     @avatar = start # 0
     run_tests       # 1
-    dir = disk[katas[@id].path]
+    dir = dir_of(katas[@id])
     json = dir.read_json('manifest.json')
     not_exercise_name = 'exercise-name-that-does-not-exist'
     assert_nil exercises[not_exercise_name]
@@ -135,7 +135,7 @@ class ForkerControllerTest < AppControllerTestBase
     'is ok then fork works and the new dojos id is returned' do
     @avatar = start # 0
     run_tests       # 1
-    dir = disk[katas[@id].path]
+    dir = dir_of(katas[@id])
     json = dir.read_json('manifest.json')
     old_language_name = 'C#'
     assert_not_nil languages[old_language_name]

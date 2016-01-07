@@ -24,10 +24,6 @@ class Kata
     katas
   end
 
-  def path
-    history.path(self)
-  end
-
   def avatars
     Avatars.new(self)
   end

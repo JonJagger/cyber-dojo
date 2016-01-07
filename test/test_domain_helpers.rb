@@ -17,7 +17,7 @@ module TestDomainHelpers # mix-in
   def git;       dojo.git;       end
   def disk;      dojo.disk;      end
 
-  def dir_of(object); disk[object.path]; end
+  def dir_of(object); disk[history.path(object)]; end
 
   def make_kata(id = unique_id, language_name = 'C (clang)-assert', exercise_name = 'Fizz_Buzz')
     language = languages[language_name]

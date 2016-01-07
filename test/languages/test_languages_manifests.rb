@@ -155,7 +155,7 @@ class LanguagesManifestsTests < LanguagesTestBase
     exercise = exercises['Print_Diamond']
     assert !exercise.nil?, '!exercise.nil?'
     kata = katas.create_kata(language, exercise)
-    manifest = disk[kata.path].read_json('manifest.json')
+    manifest = history.kata_manifest(kata)
     lang = manifest['language']
     if lang.count('-') != 1
       message =

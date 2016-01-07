@@ -65,7 +65,7 @@ class HostDiskHistoryTests < LibTestBase
   test 'CE9083',
   'make_kata saves manifest in kata dir' do
     kata = make_kata
-    assert dir_of(kata).exists?('manifest.json')
+    assert disk[path(kata)].exists?('manifest.json')
   end
 
   #- - - - - - - - - - - - - - - -

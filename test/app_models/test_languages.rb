@@ -36,7 +36,7 @@ class LanguagesTests < AppModelsTestBase
     ' it is not the name of a test-framework, it is the docker-context' +
     ' for the language itself' do
     set_caches_root(tmp_root + 'caches/')
-    dir_of(caches).make
+    disk[caches.path].make
     languages.refresh_cache
     n = 0
     languages.each do |language|
@@ -64,7 +64,8 @@ class LanguagesTests < AppModelsTestBase
 
     not_there = languages['Not-There']
     refute_nil not_there
-    refute dir_of(not_there).exists?
+    dir = disk[not_there.path]
+    refute dir.exists?
 
     assert_equal display_name, not_there.display_name
     assert_equal image_name, not_there.image_name

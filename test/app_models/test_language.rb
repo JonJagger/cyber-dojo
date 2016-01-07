@@ -8,7 +8,7 @@ class LanguageTests < AppModelsTestBase
   def setup
     super
     set_languages_root(tmp_root + 'languages/')
-    dir_of(languages).make
+    disk[languages.path].make
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -70,7 +70,7 @@ class LanguageTests < AppModelsTestBase
     @language = make_language('C#', 'NUnit')
     filename = 'test_untitled.cs'
     spy_manifest({ 'visible_filenames' => [filename] })
-    dir_of(@language).write(filename, 'content')
+    disk[@language.path].write(filename, 'content')
     visible_files = @language.visible_files
     assert_equal({ filename => 'content' }, visible_files)
     assert_nil visible_files['output']
@@ -229,8 +229,9 @@ class LanguageTests < AppModelsTestBase
   test 'CF389F',
   'bad JSON in manifest raises exception naming the language+test' do
     @language = make_language(ruby='Ruby', test_unit='TestUnit')
-    dir_of(@language).make
-    dir_of(@language).write(manifest_filename, any_bad_json = '42')
+    dir = disk[@language.path]
+    dir.make
+    dir.write(manifest_filename, any_bad_json = '42')
     message = ''
     begin
       @language.tab_size
@@ -250,8 +251,9 @@ class LanguageTests < AppModelsTestBase
   end
 
   def spy_manifest(manifest)
-    dir_of(@language).make
-    dir_of(@language).write_json(manifest_filename, manifest)
+    dir = disk[@language.path]
+    dir.make
+    dir.write_json(manifest_filename, manifest)
   end
 
   def manifest_filename
