@@ -19,7 +19,7 @@ class TimeNowTests < LibTestBase
     assert_equal expected, time_now(FakeTime.new)
   end
 
-private
+  private
 
   include TimeNow
 

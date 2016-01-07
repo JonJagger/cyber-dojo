@@ -85,7 +85,6 @@ class HostDiskAvatarStarterTests < LibTestBase
     end
   end
 
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'A31DC1',

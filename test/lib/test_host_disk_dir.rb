@@ -220,7 +220,7 @@ class HostDiskDirTests < LibTestBase
     assert_equal ['c.txt','d.txt'], matches.sort
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  private
 
   def check_save_file(filename, content, expected_content, executable = false)
     dir.write(filename, content)

@@ -34,14 +34,6 @@ class KataTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '6F3999',
-  "kata's path has correct format" do
-    kata = make_kata
-    assert correct_path_format?(kata)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '1E4B7A',
   'path is split ala git' do
     kata = make_kata

@@ -5,8 +5,6 @@ require_relative './docker_test_helpers'
 
 class DockerMachineRunnerTests < LibTestBase
 
-  include DockerTestHelpers
-
   def setup
     super
     set_shell_class    'MockHostShell'
@@ -92,9 +90,9 @@ class DockerMachineRunnerTests < LibTestBase
     assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds.")
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   private
+
+  include DockerTestHelpers
 
   def mock_run_assert(node, expected_output, mock_output, mock_exit_status)
     assert_equal expected_output, mock_run(node, mock_output, mock_exit_status)
@@ -154,8 +152,6 @@ class DockerMachineRunnerTests < LibTestBase
     runner.refresh_cache
     assert disk[caches.path].exists?(runner.cache_filename), "cache exists"
   end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 =begin
 

@@ -4,8 +4,6 @@ require_relative './lib_test_base'
 
 class HostShellTests < LibTestBase
 
-  include TimeNow
-
   test 'C89DBB',
   'the daemon_exec command executes' do
     shell.daemon_exec("echo -n Hello > #{tmp_root}hello.txt")
@@ -38,6 +36,8 @@ class HostShellTests < LibTestBase
   # - - - - - - - - - - - - - - - - -
 
   private
+
+  include TimeNow
 
   def timed
     before = Time.mktime(*time_now)

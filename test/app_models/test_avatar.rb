@@ -5,15 +5,6 @@ require_relative './delta_maker'
 
 class AvatarTests < AppModelTestBase
 
-  test '2ED22E',
-  "an avatar's path has correct format" do
-    kata = make_kata
-    avatar = kata.start_avatar(Avatars.names)
-    assert correct_path_format?(avatar)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '4C9E81',
   "an avatar's kata is the kata it was created with" do
     kata = make_kata
@@ -43,18 +34,8 @@ class AvatarTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'E4EB88',
-  'an avatar is git configured with single quoted user.name/email' do
-    kata = make_kata
-    salmon = kata.start_avatar(['salmon'])
-    assert_log_include?("git config user.name 'salmon_#{kata.id}'")
-    assert_log_include?("git config user.email 'salmon@cyber-dojo.org'")
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '7DD92F',
-  'an avatar is not active? when it has zero traffic-lights' do
+  'when an avatar has zero traffic-lights it is not active? ' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     assert_equal [], lion.lights
@@ -64,7 +45,7 @@ class AvatarTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'BEABAB',
-  'an avatar is active? when it has one or more traffic-lights' do
+  'when an avatar has one or more traffic-lights it is active? ' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     DeltaMaker.new(lion).run_test
@@ -78,8 +59,7 @@ class AvatarTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '3FF0CA',
-    'after test() output-file is saved in sandbox/' +
-       ' and output is inserted into the visible_files' do
+  'test() output is added to visible_files' do
     kata = make_kata
     @avatar = kata.start_avatar
     visible_files = @avatar.visible_files
@@ -88,13 +68,12 @@ class AvatarTests < AppModelTestBase
     runner.stub_run_output(@avatar, expected = 'helloWorld')
     _, @visible_files, @output = DeltaMaker.new(@avatar).run_test
     assert @visible_files.keys.include?('output')
-    assert_file 'output', expected
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'EB2E11',
-    'test() does not truncate output less than or equal to 10*1024 characters' do
+  'test() does not truncate output less than or equal to 10K characters' do
     kata = make_kata
     @avatar = kata.start_avatar
     big = 'X' * 10*1024
@@ -106,7 +85,7 @@ class AvatarTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '4B2E5A',
-  'test() truncates output greater 10*1024 characters' do
+  'test() truncates output greater 10K characters' do
     kata = make_kata
     @avatar = kata.start_avatar
     big = 'X' * 10*1024
@@ -119,17 +98,15 @@ class AvatarTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '37E925',
-  'test():delta[:changed] files are saved' do
+  'test():delta[:changed] files are changed' do
     kata = make_kata
     @avatar = kata.start_avatar
     code_filename = 'hiker.c'
     test_filename = 'hiker.tests.c'
-
     maker = DeltaMaker.new(@avatar)
     maker.change_file(code_filename, new_code = 'changed content for code file')
     maker.change_file(test_filename, new_test = 'changed content for test file')
     _, @visible_files, _ = maker.run_test
-
     assert_file code_filename, new_code
     assert_file test_filename, new_test
   end
@@ -137,60 +114,35 @@ class AvatarTests < AppModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '83B749',
-  'test():delta[:unchanged] files are not saved' do
+  'test():delta[:unchanged] files are unchanged' do
     kata = make_kata
-    avatar = kata.start_avatar
-    assert avatar.visible_filenames.include? hiker_c
-    assert dir_of(avatar.sandbox).exists? hiker_c
-
-    # There is no dir.delete(filename)
-    File.delete(avatar.sandbox.path + hiker_c)
-    refute dir_of(avatar.sandbox).exists? hiker_c
-
-    avatar.test(*DeltaMaker.new(avatar).test_args)
-
-    refute dir_of(avatar.sandbox).exists? hiker_c
+    @avatar = kata.start_avatar
+    filename = 'hiker.c'
+    assert @avatar.visible_filenames.include? filename
+    content = @avatar.visible_files[filename]
+    maker = DeltaMaker.new(@avatar)
+    _, @visible_files, _ = maker.run_test
+    assert_file filename, content
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '8EF1A3',
-  'test():delta[:new] files are saved and git added' do
-    kata = make_kata
-    @avatar = kata.start_avatar
-    new_filename = 'ab.c'
-
-    evidence = "git add '#{new_filename}'"
-    refute_log_include?(pathed(evidence))
-    refute dir_of(@avatar.sandbox).exists?(new_filename)
-
-    maker = DeltaMaker.new(@avatar)
-    maker.new_file(new_filename, new_content = 'content for new file')
-    _, @visible_files, _ = maker.run_test
-
-    assert_log_include?(pathed(evidence))
-    assert_file new_filename, new_content
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'A66E09',
-  "test():delta[:deleted] files are git rm'd" do
+  test '9EC683',
+  'test():delta[:new] files are created' do
     kata = make_kata
     @avatar = kata.start_avatar
     maker = DeltaMaker.new(@avatar)
-    maker.delete_file(makefile)
+    filename = 'new_file.c'
+    content = 'once upon a time'
+    maker.new_file(filename, content)
     _, @visible_files, _ = maker.run_test
-
-    evidence = "git rm 'makefile'"
-    assert_log_include?(pathed(evidence))
-    refute @visible_files.keys.include? makefile
+    assert_file filename, content
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '19CDEC',
-  'diff(was_tag, now_tag) returns git-diff output' do
+  'diff(was_tag, now_tag) returns sandbox/git-diff output' do
     kata = make_kata
     @avatar = kata.start_avatar # tag 0
     maker = DeltaMaker.new(@avatar)
@@ -212,28 +164,16 @@ class AvatarTests < AppModelTestBase
 
   private
 
-  def makefile; 'makefile'; end
   def hiker_c; 'hiker.c'; end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def assert_file(filename, expected)
     assert_equal(expected, @output) if filename == 'output'
     assert_equal expected, @visible_files[filename], 'returned_to_browser'
     assert_equal expected, @avatar.visible_files[filename], 'saved_to_manifest'
-    assert_equal expected, dir_of(@avatar.sandbox).read(filename), 'saved_to_sandbox'
-  end
-
-  def refute_log_include?(command)
-    refute log.include?(command), log.to_s
   end
 
   def assert_log_include?(command)
     assert log.include?(command), lines_of(log)
-  end
-
-  def pathed(command)
-    "cd #{@avatar.sandbox.path} && #{command}"
   end
 
   def lines_of(log)

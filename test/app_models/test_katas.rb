@@ -5,28 +5,6 @@ require_relative './app_model_test_base'
 class KatasTests < AppModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # katas.path
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'B55710',
-  'katas path has correct format when set with trailing slash' do
-    path = 'slashed/'
-    set_katas_root(path)
-    assert_equal path, katas.path
-    assert correct_path_format?(katas)
-  end
-
-  #- - - - - - - - - - - - - - - -
-
-  test 'B2F787',
-  'katas path has correct format when set without trailing slash' do
-    path = 'unslashed'
-    set_katas_root(path)
-    assert_equal path + '/', katas.path
-    assert correct_path_format?(katas)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # katas.create_kata()
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

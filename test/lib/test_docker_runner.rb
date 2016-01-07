@@ -5,8 +5,6 @@ require_relative './docker_test_helpers'
 
 class DockerRunnerTests < LibTestBase
 
-  include DockerTestHelpers
-
   def setup
     super
     set_shell_class    'MockHostShell'
@@ -109,7 +107,9 @@ class DockerRunnerTests < LibTestBase
     assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds.")
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  private
+
+  include DockerTestHelpers
 
   def mock_run_setup(mock_output, mock_exit_status)
     lion = make_kata.start_avatar(['lion'])
@@ -129,16 +129,12 @@ class DockerRunnerTests < LibTestBase
    lion
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   def mock_run(mock_output, mock_exit_status)
     lion = mock_run_setup(mock_output, mock_exit_status)
     image_name = lion.language.image_name
     delta = { :deleted => [], :new => [], :changed => [] }
     runner.run(lion, delta, files={}, image_name, max_seconds)
   end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def mock_run_assert(expected_output, mock_output, mock_exit_status)
     output = mock_run(mock_output, mock_exit_status)

@@ -79,7 +79,7 @@ class HostGitTests < LibTestBase
     git.commit(path, tag)
   end
 
-  # - - - - - - - - - - - - - - - - -
+  private
 
   def expect(shell_commands)
     shell.mock_cd_exec(path, shell_commands, 'output', shell.success)

@@ -4,8 +4,6 @@ require_relative './lib_test_base'
 
 class UniqueIdTests < LibTestBase
 
-  include UniqueId
-
   test 'ED2021',
   'its a string' do
     assert_equal 'String', unique_id.class.name
@@ -32,5 +30,9 @@ class UniqueIdTests < LibTestBase
       end
     end
   end
+
+  private
+
+  include UniqueId
 
 end
