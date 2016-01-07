@@ -59,7 +59,7 @@ class HostDiskHistory
   end
 
   def kata_started_avatars(kata)
-    lines = output_of(shell.cd_exec(path(kata), 'ls -F | grep / | tr -d /'))
+    lines, _ = shell.cd_exec(path(kata), 'ls -F | grep / | tr -d /')
     lines.split("\n") & Avatars.names
   end
 
@@ -190,10 +190,6 @@ class HostDiskHistory
     # Each avatar's manifest stores a cache of the avatar's
     # current visible files [filenames and contents].
     'manifest.json'
-  end
-
-  def output_of(args)
-    args[0]
   end
 
   def stderr_2_stdout
