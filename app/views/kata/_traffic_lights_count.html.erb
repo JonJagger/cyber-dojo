@@ -3,29 +3,49 @@
 
 $(function() {
 
-  var updateTrafficLightsCount = function() {
-    var totalRagCount = 0;
-    var rags = $('.diff-traffic-light');
-    var count = function(colour) {
-      var n = cd.ragCount(rags, colour);
-      totalRagCount += n;
-      return n;
+  var countHoverTipHtml = function(reds, ambers, greens, timeOuts) {
+    var colourWord = function(colour, word) {
+      return "<span class='" + colour + "'>" + word + '</span>';
     };
-    var colour = rags.last().data('colour');
-    var newCount = $('<div>', {
-        'class': 'traffic-light-count ' + colour,
-        'data-tip':'simple_traffic_light_count',
-        'data-id': "<%= @kata.id %>",
-        'data-avatar-name': "<%= @avatar.name %>",
-        'data-red-count': count('red'),
-        'data-amber-count': count('amber'),
-        'data-green-count':  count('green'),
-        'data-timed-out-count': count('timed_out')
-      }).text(totalRagCount);
+    var plural = function(count, colour) {
+      var word = colour + (count == 1 ? '' : 's');
+      return '<div>' + count + ' ' + colourWord(colour, word) + '</div>';
+    };
+    var html = '';
+    if (reds     > 0) { html += plural(reds    , 'red'    ); }
+    if (ambers   > 0) { html += plural(ambers  , 'amber'  ); }
+    if (greens   > 0) { html += plural(greens  , 'green'  ); }
+    if (timeOuts > 0) { html += plural(timeOuts, 'timeout'); }
+    return html;
+  };
 
-    if (totalRagCount > 0) {
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  var updateTrafficLightsCount = function() {
+    var rags = $('.diff-traffic-light');
+    var redCount     = cd.ragCount(rags,'red');
+    var amberCount   = cd.ragCount(rags,'amber');
+    var greenCount   = cd.ragCount(rags,'green');
+    var timeOutCount = cd.ragCount(rags,'timed_out');
+    var count = redCount + amberCount + greenCount + timeOutCount;
+    var colour = rags.last().data('colour');
+    var newCount = $('<div>', { 'class': 'traffic-light-count ' + colour, }).text(count);
+
+    if (count > 0) {
       $('.traffic-lights-count').html(newCount);
-      cd.setupHoverTip($('.traffic-light-count'));
+      var node = $('.traffic-light-count');
+      var html = countHoverTipHtml(redCount, amberCount, greenCount, timeOutCount);
+
+      // setup tip
+      // TODO: there is plumbing duplication here...
+      node.mouseleave(function() {
+        node.addClass('mouse-has-left');
+        $('.hover-tip', node).remove();
+      });
+      node.mouseenter(function() {
+        node.removeClass('mouse-has-left');
+        cd.setHoverTip(node, html);
+      });
     }
   };
 

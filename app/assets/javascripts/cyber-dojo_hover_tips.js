@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  var setHoverTip = function(node, tip) {
+  cd.setHoverTip = function(node, tip) {
     // mouseenter retrieves the tip via a slow ajax call
     // which means mouseleave could have already occurred
     // by the time the ajax returns to set the tip. The
@@ -26,7 +26,7 @@ var cyberDojo = (function(cd, $) {
       was_tag: light.data('was-tag'),
       now_tag: light.data('now-tag')
     }, function(response) {
-      setHoverTip(light, response.html);
+      cd.setHoverTip(light, response.html);
     });
   };
 
@@ -40,7 +40,7 @@ var cyberDojo = (function(cd, $) {
       green_count: node.data('green-count'),
       timed_out_count: node.data('timed-out-count')
     }, function(response) {
-      setHoverTip(node, response.html);
+      cd.setHoverTip(node, response.html);
     });
   };
 
@@ -48,33 +48,10 @@ var cyberDojo = (function(cd, $) {
 
   var setSimpleReviewTrafficLightHoverTip = function(node) {
     var html = 'Review ' + node.data('was-tag') + '&harr;' + node.data('now-tag');
-    setHoverTip(node, html);
+    cd.setHoverTip(node, html);
   };
 
   // - - - - - - - - - - - - - - - - - - - -
-
-  var setSimpleReviewTrafficLightCountHoverTip = function(node) {
-    var colourTag = function(colour, tag) {
-      return "<span class='" + colour + "'>" + tag + '</span>';
-    };
-    var pluralWord = function(word, count) {
-      return word + (count == 1 ? '' : 's');
-    };
-    var pluralColour = function(count, colour) {
-      var word = pluralWord(colour, count);
-      return '<div>' + count + ' ' + colourTag(colour, word) + '</div>';
-    };
-    var timedOutCount= node.data('timed-out-count');
-    var html =
-      pluralColour(node.data('red-count'), 'red') +
-      pluralColour(node.data('amber-count'), 'amber') +
-      pluralColour(node.data('green-count'), 'green');
-
-    if (timedOutCount > 0) {
-      html += pluralColour(node.data('timed-out-count'), 'timout');
-    }
-    setHoverTip(node, html);
-  };
 
   cd.setupHoverTip = function(nodes) {
     nodes.each(function() {
@@ -92,10 +69,8 @@ var cyberDojo = (function(cd, $) {
           setAjaxTrafficLightCountHoverTip(node);
         } else if (tip == 'simple_review_traffic_light') {
           setSimpleReviewTrafficLightHoverTip(node);
-        } else if (tip == 'simple_traffic_light_count') {
-          setSimpleReviewTrafficLightCountHoverTip(node);
         } else {
-          setHoverTip(node, tip);
+          cd.setHoverTip(node, tip);
         }
       });
     });
