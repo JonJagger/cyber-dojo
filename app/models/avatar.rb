@@ -9,8 +9,7 @@ class Avatar
   # modifier
 
   def test(delta, files, now = time_now, max_seconds = 15)
-    raw = runner.run(self, delta, files, language.image_name, now, max_seconds)
-    output = truncated(cleaned(raw))
+    output = runner.run(self, delta, files, language.image_name, max_seconds)
     test_colour = language.colour(output)
     history.avatar_ran_tests(self, delta, files, now, output, test_colour)
     [output, test_colour]
@@ -30,7 +29,7 @@ class Avatar
 
   def language
     # Each avatar does _not_ choose their own language+test.
-    # The language+test is chosen for the _dojo.
+    # The language+test is chosen for the _dojo_.
     # cyber-dojo is a team-based Interactive Dojo Environment,
     # not an Individual Development Environment
     kata.language
@@ -72,8 +71,6 @@ class Avatar
   private
 
   include ExternalParentChainer
-  include StringCleaner
-  include StringTruncater
   include TimeNow
 
   def increments

@@ -27,27 +27,20 @@ class StubRunner
     save_stub(avatar, { :output => output })
   end
 
-  def run(avatar, delta, files, _image_name, _now, _max_seconds)
+  def run(avatar, delta, files, _image_name, max_seconds)
     # have to save the files because the effects are
     # asserted in tests and there is no shell_spy yet
     sandbox = avatar.sandbox
-    delta[:deleted].each do |filename|
-      git.rm(history.path(sandbox), filename)
-    end
-    delta[:new].each do |filename|
-      history.write(sandbox, filename, files[filename])
-      git.add(history.path(sandbox), filename)
-    end
-    delta[:changed].each do |filename|
-      history.write(sandbox, filename, files[filename])
-    end
-
-    read_stub(avatar)
+    katas_save(sandbox, delta, files)
+    output = read_stub(avatar)
+    # todo: stub timed_out ?
+    output_or_timed_out(output, success=0, max_seconds)
   end
 
   private
 
   include ExternalParentChainer
+  include Runner
 
   def runnable?(image_name)
     cdf = 'cyberdojofoundation'

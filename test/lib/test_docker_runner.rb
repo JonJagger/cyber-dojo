@@ -84,7 +84,8 @@ class DockerRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '6459A7',
-  'output is left untouched when run() does not time-out' do
+  'when run() completes and output is not large' +
+    'then output is left untouched' do
     syntax_error = 'syntax-error-line-1'
     mock_run_assert(syntax_error, syntax_error, success)
   end
@@ -92,15 +93,18 @@ class DockerRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '87A438',
-  'massive output is left untouched, (avatar does truncation) when run() does not time-out' do
+  'when run() completes and output is large ' +
+    'then output is truncated and message is appended ' do
     massive_output = '.' * 75*1024
-    mock_run_assert(massive_output, massive_output, success)
+    expected_output = '.' * 10*1024 + "\n" + 'output truncated by cyber-dojo server'
+    mock_run_assert(expected_output, massive_output, success)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B8750C',
-  'output is replaced by timed-out message when run() times out' do
+  'when run() times out ' +
+    'then output is replaced by unable-to-complete message ' do
     output = mock_run('ach-so-it-timed-out', times_out)
     assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds.")
   end
@@ -131,7 +135,7 @@ class DockerRunnerTests < LibTestBase
     lion = mock_run_setup(mock_output, mock_exit_status)
     image_name = lion.language.image_name
     delta = { :deleted => [], :new => [], :changed => [] }
-    runner.run(lion, delta, files={}, image_name, now=time_now, max_seconds)
+    runner.run(lion, delta, files={}, image_name, max_seconds)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -140,7 +144,5 @@ class DockerRunnerTests < LibTestBase
     output = mock_run(mock_output, mock_exit_status)
     assert_equal expected_output, output
   end
-
-  include TimeNow
 
 end

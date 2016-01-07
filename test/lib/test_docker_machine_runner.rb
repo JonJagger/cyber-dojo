@@ -67,7 +67,8 @@ class DockerMachineRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '2D792D',
-  'output is left untouched when run() does not time-out' do
+  'when run() completes and output is not large' +
+    'then output is left untouched' do
     syntax_error = 'syntax-error-line-1'
     mock_run_assert('node-00', syntax_error, syntax_error, success)
   end
@@ -75,15 +76,18 @@ class DockerMachineRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '678D62',
-  'output is not truncated and no message is added when run() does not time-out' do
+  'when run() completes and output is large ' +
+    'then output is truncated and message is appended ' do
     massive_output = '.' * 75*1024
-    mock_run_assert('node-00', massive_output, massive_output, success)
+    expected_output = '.' * 10*1024 + "\n" + 'output truncated by cyber-dojo server'
+    mock_run_assert('node-00', expected_output, massive_output, success)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '799891',
-  'output is replaced by timed-out message when run() times out' do
+  'when run() times out ' +
+    'then output is replaced by unable-to-complete message ' do
     output = mock_run('node-00', 'ach-so-it-timed-out', times_out)
     assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds.")
   end
@@ -119,7 +123,7 @@ class DockerMachineRunnerTests < LibTestBase
     )
 
     delta = { :deleted => [], :new => [], :changed => [] }
-    runner.run(lion, delta, files={}, image_name, now=time_now, max_seconds)
+    runner.run(lion, delta, files={}, image_name, max_seconds)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -152,8 +156,6 @@ class DockerMachineRunnerTests < LibTestBase
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  include TimeNow
 
 =begin
 

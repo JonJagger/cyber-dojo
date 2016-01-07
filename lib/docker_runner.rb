@@ -36,26 +36,17 @@ class DockerRunner
 
   # modifiers
 
-  def run(avatar, delta, files, image_name, now, max_seconds)
-    # save the files
+  def run(avatar, delta, files, image_name, max_seconds)
     sandbox = avatar.sandbox
-    delta[:deleted].each do |filename|
-      git.rm(history.path(sandbox), filename)
-    end
-    delta[:new].each do |filename|
-      history.write(sandbox, filename, files[filename])
-      git.add(history.path(sandbox), filename)
-    end
-    delta[:changed].each do |filename|
-      history.write(sandbox, filename, files[filename])
-    end
+    katas_save(sandbox, delta, files)
     #run tests
     args = [
       sandbox.path,
       image_name,
       max_seconds
     ].join(space = ' ')
-    output_or_killed(shell.cd_exec(path, "./docker_runner.sh #{args}"), max_seconds)
+    output, exit_status = shell.cd_exec(path, "./docker_runner.sh #{args}")
+    output_or_timed_out(output, exit_status, max_seconds)
   end
 
   def refresh_cache
@@ -68,7 +59,7 @@ class DockerRunner
   private
 
   include ExternalParentChainer
-  include OutputOrKilled
+  include Runner
 
   def runnable?(image_name)
     image_names.include?(image_name)

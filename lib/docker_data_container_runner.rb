@@ -34,13 +34,16 @@ class DockerDataContainerRunner
 
   # modifiers
 
-  def run(sandbox, image_name, max_seconds)
+  def run(avatar, delta, files, image_name, now, max_seconds)
+    sandbox = avatar.sandbox
+    katas_save(sandbox, delta, files)
     args = [
       sandbox.path,
       image_name,
       max_seconds
     ].join(space = ' ')
-    output_or_killed(shell.cd_exec(path, "./docker_data_container_runner.sh #{args}"), max_seconds)
+    output, exit_status = shell.cd_exec(path, "./docker_data_container_runner.sh #{args}")
+    output_or_timed_out(output, exit_status, max_seconds)
   end
 
   def refresh_cache
@@ -53,7 +56,7 @@ class DockerDataContainerRunner
   private
 
   include ExternalParentChainer
-  include OutputOrKilled
+  include Runner
 
   def runnable?(image_name)
     image_names.include?(image_name)

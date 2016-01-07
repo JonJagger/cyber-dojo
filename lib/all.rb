@@ -8,9 +8,9 @@
   id_splitter
   string_cleaner
   string_truncater
-  output_or_killed
-  docker_machine_runner
+  runner
   docker_runner
+  docker_machine_runner
   docker_data_container_runner
   host_disk_history
   host_shell
