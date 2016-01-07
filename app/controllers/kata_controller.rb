@@ -17,12 +17,11 @@ class KataController < ApplicationController
     incoming = params[:file_hashes_incoming]
     outgoing = params[:file_hashes_outgoing]
     delta = FileDeltaMaker.make_delta(incoming, outgoing)
-    visible_files = received_files
+    files = received_files
     now = time_now
     max_seconds = 15
 
-    traffic_lights,@output = @avatar.test(delta, visible_files, now, max_seconds)
-    @test_colour = traffic_lights[-1]['colour']
+    @output, @test_colour = @avatar.test(delta, files, now, max_seconds)
 
     respond_to do |format|
       format.js   { render layout: false }
@@ -49,7 +48,7 @@ class KataController < ApplicationController
   def received_files
     seen = {}
     (params[:file_content] || {}).each do |filename,content|
-      content = clean(content)
+      content = cleaned(content)
       # Cater for windows line endings from windows browser
       content = content.gsub(/\r\n/, "\n")
       seen[filename] = makefile_filter(filename, content)

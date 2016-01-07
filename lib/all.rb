@@ -7,8 +7,7 @@
 
   id_splitter
   string_cleaner
-  output_cleaner
-  output_truncater
+  string_truncater
   output_or_killed
   docker_machine_runner
   docker_runner

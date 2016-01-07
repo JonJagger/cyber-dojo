@@ -49,7 +49,6 @@ class DockerRunner
     delta[:changed].each do |filename|
       history.write(sandbox, filename, files[filename])
     end
-
     #run tests
     args = [
       sandbox.path,

@@ -113,20 +113,6 @@ class HostDiskHistory
     dir(avatar).read_json(manifest_filename)
   end
 
-  def avatar_run_tests(avatar, delta, files, now = time_now, max_seconds = 15)
-    language = avatar.language
-    raw = runner.run(avatar, delta, files, language.image_name, now, max_seconds)
-    output = truncated(cleaned(raw))
-    colour = avatar.language.colour(output)
-    # save output
-    rags = history.avatar_ran_tests(avatar, delta, files, now, output, colour)
-    # TODO: 1. call cleaned/truncated/avatar_ran_tests() from inside runner
-    #       and return only last rag colour. cleaned/truncated can be mix-in.
-    # TODO: 2. call runner directly from avatar.
-    # TODO: 3. drop this method
-    [rags, output]
-  end
-
   def avatar_ran_tests(avatar, delta, files, now, output, colour)
     # update manifest
     write(avatar.sandbox, 'output', output)
@@ -175,8 +161,6 @@ class HostDiskHistory
   private
 
   include ExternalParentChainer
-  include OutputCleaner
-  include OutputTruncater
   include IdSplitter  # TODO: pull it into here? don't think anything else uses it now
 
   def make_dir(obj)

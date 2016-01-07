@@ -38,7 +38,7 @@ class HostShell
     exit_status = $?.exitstatus
     log << output if output != ''
     log << "$?.exitstatus=#{exit_status}" if exit_status != success
-    return clean(output), exit_status
+    return cleaned(output), exit_status
   end
 
   private

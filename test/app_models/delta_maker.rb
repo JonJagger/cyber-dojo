@@ -49,7 +49,7 @@ class DeltaMaker
   def run_test
     delta = make_delta(@was, @now)
     visible_files = now
-    _, output = @avatar.test(delta, visible_files)
+    output,colour = @avatar.test(delta, visible_files)
     [delta, visible_files, output]
   end
 

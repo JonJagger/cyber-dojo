@@ -9,8 +9,11 @@ class Avatar
   # modifier
 
   def test(delta, files, now = time_now, max_seconds = 15)
-    # TODO: make this just call runner.run(...)
-    history.avatar_run_tests(self, delta, files, now, max_seconds)
+    raw = runner.run(self, delta, files, language.image_name, now, max_seconds)
+    output = truncated(cleaned(raw))
+    test_colour = language.colour(output)
+    history.avatar_ran_tests(self, delta, files, now, output, test_colour)
+    [output, test_colour]
   end
 
   # queries
@@ -69,6 +72,8 @@ class Avatar
   private
 
   include ExternalParentChainer
+  include StringCleaner
+  include StringTruncater
   include TimeNow
 
   def increments

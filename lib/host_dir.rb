@@ -54,7 +54,7 @@ class HostDir
   end
 
   def read(filename)
-    clean(IO.read(path + filename))
+    cleaned(IO.read(path + filename))
   end
 
   private
