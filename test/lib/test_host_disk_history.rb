@@ -5,6 +5,11 @@ require_relative '../app_models/delta_maker'
 
 class HostDiskHistoryTests < LibTestBase
 
+  def setup
+    super
+    set_runner_class('StubRunner')
+  end
+
   test 'B55710',
   'katas has correct path format when set with trailing slash' do
     path = 'slashed/'

@@ -17,6 +17,7 @@ class Dojo
   def languages; @languages ||= Languages.new(self); end
   def exercises; @exercises ||= Exercises.new(self); end
   def    caches; @caches    ||=    Caches.new(self); end
+
   def     katas; @katas     ||=     Katas.new(self); end
   def   history;   @history ||= external_object; end
 

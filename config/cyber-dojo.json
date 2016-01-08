@@ -7,10 +7,10 @@
   },
   "class": {
     "history": "HostDiskHistory",
-     "runner": "DockerMachineRunner",
-      "shell": "HostShell",
-       "disk": "HostDisk",
-        "log": "HostLog",
-        "git": "HostGit"
+     "runner":"DockerRunner",
+      "shell":"HostShell",
+       "disk":"HostDisk",
+        "log":"HostLog",
+        "git":"HostGit"
   }
 }
