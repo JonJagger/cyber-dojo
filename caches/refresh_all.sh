@@ -5,7 +5,7 @@ cyberDojoHome=/var/www/cyber-dojo
 echo "setting up the runner"
 echo "..setting config/bootstrap_config.json"
 configFilename=$cyberDojoHome/config/cyber-dojo.json
-cp $cyberDojoHome/config/bootstrap_config.json $configFilename
+cp $cyberDojoHome/config/runner_bootstrap_config.json $configFilename
 chmod 444 $configFilename
 chown www-data:www-data $configFilename
 
