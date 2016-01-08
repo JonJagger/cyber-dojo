@@ -21,7 +21,7 @@ module TestExternalHelpers # mix-in
 
   def teardown
     fail_if_setup_not_called('teardown')
-    IO.write(config_filename, JSON.unparse(@original_config))
+    IO.write(config_filename, @original_config)
     @original_config = nil
   end
 
@@ -55,30 +55,34 @@ module TestExternalHelpers # mix-in
 
   def cd_root_set(name, value)
     fail_if_setup_not_called("cd_root_set(#{name},#{value})")
-    config = read_config
+    config = read_json_config
     config['root'][name] = value
     IO.write(config_filename, JSON.unparse(config))
   end
 
   def cd_class_set(name, value)
     fail_if_setup_not_called("cd_class_set(#{name},#{value})")
-    config = read_config
+    config = read_json_config
     config['class'][name] = value
     IO.write(config_filename, JSON.unparse(config))
   end
 
   def cd_root_get(name)
-    read_config['root'][name]
+    read_json_config['root'][name]
   end
 
   def cd_class_get(name)
-    read_config['class'][name]
+    read_json_config['class'][name]
   end
 
   # - - - - - - - - - - - - - - - - - - -
 
+  def read_json_config
+    JSON.parse(read_config)
+  end
+
   def read_config
-    JSON.parse(IO.read(config_filename))
+    IO.read(config_filename)
   end
 
   def config_filename
