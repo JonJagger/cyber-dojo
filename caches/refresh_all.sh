@@ -8,8 +8,13 @@ $cyberDojoHome/exercises/refresh_cache.rb
 echo "refreshing languages cache"
 $cyberDojoHome/languages/refresh_cache.rb
 
-echo "refreshing runners caches"
-$cyberDojoHome/lib/refresh_docker_runner_cache.rb
-$cyberDojoHome/lib/refresh_docker_machine_runner_cache.rb
+echo "refreshing runners"
+configFilename=$cyberDojoHome/config/cyber-dojo.json
+cp $cyberDojoHome/config/bootstrap.cyber-dojo.json $configFilename
+chmod 444 $configFilename
+chown www-data:www-data $configFilename
+
+$cyberDojoHome/lib/docker_runner_refresh.rb
+$cyberDojoHome/lib/docker_machine_runner_refresh.rb
 
 

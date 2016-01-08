@@ -19,24 +19,10 @@ class DockerRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '329309',
-  'installed? is true when [docker --version] succeeds and cache exists' do
-    set_caches_root(tmp_root + 'caches')
-    dir = disk[caches.path]
-    dir.make
-    dir.write(runner.cache_filename, 'present')
+  'installed? is true when [docker --version] succeeds' do
     shell.mock_exec(['docker --version'], '', success)
     assert_equal 'DockerRunner', runner.class.name
     assert runner.installed?
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'E2EC2C',
-  'installed? is false when [docker --version] succeeds but cache does not exist' do
-    set_caches_root(tmp_root + 'caches')
-    shell.mock_exec(['docker --version'], '', success)
-    assert_equal 'DockerRunner', runner.class.name
-    refute runner.installed?
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -46,6 +32,16 @@ class DockerRunnerTests < LibTestBase
     shell.mock_exec(['docker --version'], '', not_success)
     assert_equal 'DockerRunner', runner.class.name
     refute runner.installed?
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '8092EF',
+  'config_filename exists and names DockerRunner as the runner' do
+    dir = disk[runner.path]
+    assert dir.exists?(runner.config_filename)
+    config = dir.read_json(runner.config_filename)
+    assert_equal 'DockerRunner', config['class']['runner']
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

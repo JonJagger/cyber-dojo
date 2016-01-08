@@ -1,9 +1,8 @@
 
 # test runner providing isolation/protection/security
-# via Docker containers https://www.docker.io/
-# and relying on docker volume mounts of the host
-# file system to give the running docker container
-# access to .../katas/...
+# via Docker containers https://www.docker.io/ and relying
+# on docker volume mounts of the host file system to give
+# the running docker container access to .../katas/...
 
 class DockerRunner
 
@@ -23,7 +22,7 @@ class DockerRunner
 
   def installed?
     _, exit_status = shell.exec('docker --version')
-    exit_status == shell.success && disk[caches.path].exists?(cache_filename)
+    exit_status == shell.success
   end
 
   def runnable_languages
@@ -32,6 +31,10 @@ class DockerRunner
 
   def cache_filename
     'docker_runner_cache.json'
+  end
+
+  def config_filename
+    'docker_runner_config.json'
   end
 
   # modifiers

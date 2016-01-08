@@ -2,6 +2,10 @@
 
 class Dojo
 
+  def root_dir
+    File.expand_path('../..', File.dirname(__FILE__))  # /var/www/cyber-dojo
+  end
+
   def config_filename
     root_dir + '/config/cyber-dojo.json'
   end
@@ -21,11 +25,6 @@ class Dojo
   def      disk;      @disk ||= external_object; end
   def       log;       @log ||= external_object; end
   def       git;       @git ||= external_object; end
-
-  def root_dir
-    # /var/www/cyber-dojo
-    File.expand_path('../..', File.dirname(__FILE__))
-  end
 
   private
 

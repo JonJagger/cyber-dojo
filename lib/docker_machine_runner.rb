@@ -22,7 +22,7 @@ class DockerMachineRunner
 
   def installed?
     _, exit_status = shell.exec('docker-machine --version')
-    exit_status == shell.success && disk[caches.path].exists?(cache_filename)
+    exit_status == shell.success
   end
 
   def runnable_languages
@@ -31,6 +31,10 @@ class DockerMachineRunner
 
   def cache_filename
     'docker_machine_runner_cache.json'
+  end
+
+  def config_filename
+    'docker_machine_runner_config.json'
   end
 
   # modifiers
