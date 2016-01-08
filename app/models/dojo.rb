@@ -2,15 +2,30 @@
 
 class Dojo
 
-  def languages; @languages ||= Languages.new(self, external_root); end
-  def exercises; @exercises ||= Exercises.new(self, external_root); end
-  def    caches; @caches    ||=    Caches.new(self, external_root); end
+  def config
+    @config ||= JSON.parse(IO.read(root_dir + '/config/cyber-dojo.json'))
+=begin
+    {
+      'root' => {
+        'languages' => external_root('languages'),
+        'exercises' => external_root('exercises'),
+        'caches'    => external_root('caches'),
+        'katas'     => external_root('katas')
+      }
+      'class' => {
 
-  def    runner;    @runner ||= external_object; end
+      }
+    }
+=end
+  end
 
-  def     katas; @katas     ||=     Katas.new(self, external_root); end
+  def languages; @languages ||= Languages.new(self); end
+  def exercises; @exercises ||= Exercises.new(self); end
+  def    caches; @caches    ||=    Caches.new(self); end
+  def     katas; @katas     ||=     Katas.new(self); end
   def   history;   @history ||= external_object; end
 
+  def    runner;    @runner ||= external_object; end
   def     shell;     @shell ||= external_object; end
   def      disk;      @disk ||= external_object; end
   def       log;       @log ||= external_object; end
@@ -25,9 +40,9 @@ class Dojo
 
   include NameOfCaller
 
-  def external_root
-    var = 'CYBER_DOJO_' + name_of(caller).upcase + '_ROOT'
-    default = "#{root_dir}/#{name_of(caller)}"
+  def external_root(name = name_of(caller))
+    var = 'CYBER_DOJO_' + name.upcase + '_ROOT'
+    default = "#{root_dir}/#{name}"
     root = ENV[var] || default
     root + (root.end_with?('/') ? '' : '/')
   end

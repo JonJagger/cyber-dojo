@@ -2,6 +2,7 @@
 %w(
   name_of_caller
   manifest_property
+  slashed
 
   dojo
   caches

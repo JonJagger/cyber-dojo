@@ -6,14 +6,16 @@ class Languages
     'languages_cache.json'
   end
 
-  def initialize(dojo, path)
+  def initialize(dojo)
     @dojo = dojo
-    @path = path
+    @path = config['root']['languages']
   end
 
   # queries
 
-  attr_reader :path
+  def path
+    slashed(@path)
+  end
 
   def parent
     @dojo
@@ -49,6 +51,7 @@ class Languages
 
   include ExternalParentChainer
   include LanguagesRename
+  include Slashed
 
   def languages
     @languages ||= read_cache

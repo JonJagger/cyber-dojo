@@ -6,14 +6,16 @@ class Exercises
     'exercises_cache.json'
   end
 
-  def initialize(dojo, path)
+  def initialize(dojo)
     @dojo = dojo
-    @path = path
+    @path = config['root']['exercises']
   end
 
   # queries
 
-  attr_reader :path
+  def path
+    slashed(@path)
+  end
 
   def parent
     @dojo
@@ -40,6 +42,7 @@ class Exercises
 
   include ExternalParentChainer
   include ExternalDir
+  include Slashed
 
   def exercises
     @exercises ||= read_cache

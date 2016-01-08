@@ -17,15 +17,28 @@ module TestExternalHelpers # mix-in
 
   # - - - - - - - - - - - - - - - - - - -
 
-  def set_languages_root(value); cd_set(languages_key, value); end
-  def set_exercises_root(value); cd_set(exercises_key, value); end
-  def    set_caches_root(value); cd_set(   caches_key, value); end
-  def     set_katas_root(value); cd_set(    katas_key, value); end
+  def set_languages_root(value); cd_root_set('languages', value); end
+  def set_exercises_root(value); cd_root_set('exercises', value); end
+  def    set_caches_root(value); cd_root_set(   'caches', value); end
+  def     set_katas_root(value); cd_root_set(    'katas', value); end
 
-  def get_languages_root; cd_get(languages_key); end
-  def get_exercises_root; cd_get(exercises_key); end
-  def    get_caches_root; cd_get(   caches_key); end
-  def     get_katas_root; cd_get(    katas_key); end
+  def cd_root_set(name, value)
+    #p "cd_root_set(#{name}), #{value}"
+    config = read_config
+    config['root'][name] = value
+    IO.write(config_filename, JSON.unparse(config))
+  end
+
+  def get_languages_root; cd_root_get('languages'); end
+  def get_exercises_root; cd_root_get('exercises'); end
+  def    get_caches_root; cd_root_get(   'caches'); end
+  def     get_katas_root; cd_root_get(    'katas'); end
+
+  def cd_root_get(name)
+    got = read_config['root'][name]
+    #p "cd_root_get(#{name}) = #{got}"
+    got
+  end
 
   # - - - - - - - - - - - - - - - - - - -
 
@@ -43,7 +56,17 @@ module TestExternalHelpers # mix-in
 
   # - - - - - - - - - - - - - - - - - - -
 
+  def read_config
+    JSON.parse(IO.read(config_filename))
+  end
+
+  def config_filename
+    File.expand_path('../config', File.dirname(__FILE__)) + '/cyber-dojo.json'
+  end
+
   def store_env_vars
+    @original_config = read_config
+
     @store_env_vars_called = true
     @exported = {}
     @unset = []
@@ -58,6 +81,8 @@ module TestExternalHelpers # mix-in
 
   def restore_env_vars
     fail "store_env_vars() not called" if @store_env_vars_called.nil?
+    IO.write(config_filename, JSON.unparse(@original_config))
+
     @exported.each { |var, value| ENV[var] = @exported[var] }
     @exported = {}
     @unset.each { |var| cd_unset(var) }

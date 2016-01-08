@@ -1,12 +1,14 @@
 
 class Caches
 
-  def initialize(dojo, path)
+  def initialize(dojo)
     @dojo = dojo
-    @path = path
+    @path = config['root']['caches']
   end
 
-  attr_reader :path
+  def path
+    slashed(@path)
+  end
 
   def parent
     @dojo
@@ -16,6 +18,7 @@ class Caches
 
   include ExternalParentChainer
   include ExternalDir
+  include Slashed
 
   send :public, :write_json, :read_json
 

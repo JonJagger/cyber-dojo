@@ -67,23 +67,16 @@ class DojoTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '01CD52',
-  'path always has a trailing slash even if environment variable value does not' do
+  'path always has a trailing slash even if config value does not' do
+    set_exercises_root(exercises_path = '/fake_exercises_path')
+    set_languages_root(languages_path = '/fake_languages_path')
+    set_katas_root(katas_path = '/fake_katas_path')
+    set_caches_root(caches_path = '/fake_caches_path')
 
-    path = '/fake_exercises_path'
-    set_exercises_root(path)
-    assert_equal path + '/', dojo.exercises.path
-
-    path = '/fake_languages_path'
-    set_languages_root(path)
-    assert_equal path + '/', dojo.languages.path
-
-    path = '/fake_katas_path'
-    set_katas_root(path)
-    assert_equal path + '/', dojo.katas.path
-
-    path = '/fake_caches_path'
-    set_caches_root(path)
-    assert_equal path + '/', dojo.caches.path
+    assert_equal exercises_path + '/', dojo.exercises.path
+    assert_equal languages_path + '/', dojo.languages.path
+    assert_equal     katas_path + '/', dojo.katas.path
+    assert_equal    caches_path + '/', dojo.caches.path
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -

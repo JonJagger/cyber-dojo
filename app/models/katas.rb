@@ -2,12 +2,14 @@
 class Katas
   include Enumerable
 
-  def initialize(dojo, path)
+  def initialize(dojo)
     @dojo = dojo
-    @path = path
+    @path = config['root']['katas']
   end
 
-  attr_reader :path
+  def path
+    slashed(@path)
+  end
 
   def parent
     @dojo
@@ -51,6 +53,7 @@ class Katas
   private
 
   include ExternalParentChainer
+  include Slashed
   include TimeNow
   include UniqueId
 
