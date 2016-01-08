@@ -9,8 +9,27 @@ end
 
 class DojoTests < AppModelsTestBase
 
+  test '1B4C30',
+  'root value not present in config raises' do
+    write_empty_root_config
+    assert_raises(NameError) { languages.path }
+    assert_raises(NameError) { exercises.path }
+    assert_raises(NameError) { caches.path }
+    assert_raises(NameError) { katas.path }
+  end
+
+  test 'CE3ED1',
+  'class value not present in config raises' do
+    write_empty_class_config
+    assert_raises(StandardError) { runner.class }
+    assert_raises(StandardError) { shell.class }
+    assert_raises(StandardError) { disk.class }
+    assert_raises(StandardError) { git.class }
+    assert_raises(StandardError) { log.class }
+  end
+
   #- - - - - - - - - - - - - - - - - - - - - - - - -
-  # config classes and root-paths
+  # config classes
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'D51880',
@@ -22,13 +41,7 @@ class DojoTests < AppModelsTestBase
   test 'B0E7E4',
   'runner set to non-existant-class raises' do
     set_runner_class(does_not_exist)
-    assert_raises(NameError) { runner.class }
-  end
-
-  test 'CE3ED1',
-  'runner not present in config raises' do
-    write_empty_config
-    assert_raises(NameError) { runner.class }
+    assert_raises(StandardError) { runner.class }
   end
 
   # - - - - - -
@@ -42,13 +55,7 @@ class DojoTests < AppModelsTestBase
   test 'BB2F80',
   'disk set to non-existant-class raises' do
     set_disk_class(does_not_exist)
-    assert_raises(NameError) { disk.class }
-  end
-
-  test '03849E',
-  'disk not present in config raises' do
-    write_empty_config
-    assert_raises(NameError) { disk.class }
+    assert_raises(StandardError) { disk.class }
   end
 
   # - - - - - -
@@ -62,13 +69,7 @@ class DojoTests < AppModelsTestBase
   test '3C8DAF',
   'shell set to non-existant-class raises' do
     set_shell_class(does_not_exist)
-    assert_raises(NameError) { shell.class }
-  end
-
-  test '431F9A',
-  'shell not present in config raises' do
-    write_empty_config
-    assert_raises(NameError) { shell.class }
+    assert_raises(StandardError) { shell.class }
   end
 
   # - - - - - -
@@ -82,13 +83,7 @@ class DojoTests < AppModelsTestBase
   test '3BC12E',
   'git set to non-existant-class raises' do
     set_git_class(does_not_exist)
-    assert_raises(NameError) { git.class }
-  end
-
-  test '4B5378',
-  'git not present in config raises' do
-    write_empty_config
-    assert_raises(NameError) { git.class }
+    assert_raises(StandardError) { git.class }
   end
 
   # - - - - - -
@@ -102,17 +97,12 @@ class DojoTests < AppModelsTestBase
   test '4A413E',
   'log set to non-existant-class raises' do
     set_log_class(does_not_exist)
-    assert_raises(NameError) { log.class }
+    assert_raises(StandardError) { log.class }
   end
 
-  test 'C24C96',
-  'log not present in config raises' do
-    write_empty_config
-    assert_raises(NameError) { log.class }
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # - - - - - - - - - - - - - - - - - - - - - - - - - -
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
+  # config roots
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '209EA1',
   'exercises.path can be set' do
@@ -151,55 +141,11 @@ class DojoTests < AppModelsTestBase
     assert_equal    caches_path + '/', caches.path
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
-  # TODO: Have no defaults
-  # all settings must be
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'E4EA30',
-  'exercises.path config default is root-dir/exercises/' do
-    assert_equal dojo.root_dir + '/exercises/', exercises.path
-  end
-
-  test '5EEF16',
-  'languages.path config default is root-dir/languages/' do
-    assert_equal dojo.root_dir + '/languages/', languages.path
-  end
-
-  test '2AF58E',
-  'caches.path default is root-dir/caches/' do
-    assert_equal dojo.root_dir + '/caches/', caches.path
-  end
+  # - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'CBFF2D',
-  'katas.path config default is root-dir/katas/ but in test/app_models setup' +
-    ' it is already reset because tests write to katas' do
+  'katas.path is set away from genuine katas because tests write to katas' do
     refute_equal dojo.root_dir + '/katas/', katas.path
-  end
-
-  #test '17909E',
-  #'external runner object is DockerRunner' do  'StubRunner'
-  #  assert_equal 'DockerRunner', runner.class.name
-  #end
-
-  test 'E640DD',
-  'external git object is HostGit' do
-    assert_equal HostGit, git.class
-  end
-
-  test '228760',
-  'external disk object default is HostDisk' do
-    assert_equal HostDisk, disk.class
-  end
-
-  test '511E3E',
-  'external shell object default is HostShell' do
-    assert_equal HostShell, shell.class
-  end
-
-  test '03170A',
-  'external log object default is HostLog' do
-    assert_equal HostLog, log.class
   end
 
   private
@@ -208,8 +154,17 @@ class DojoTests < AppModelsTestBase
     'DoesNotExist'
   end
 
-  def write_empty_config
-    IO.write(dojo.config_filename, "{}")
+  def write_empty_class_config
+    write_config({ "class" => {} })
   end
+
+  def write_empty_root_config
+    write_config({ "root" => {} })
+  end
+
+  def write_config(json)
+    IO.write(dojo.config_filename, JSON.unparse(json))
+  end
+
 
 end
