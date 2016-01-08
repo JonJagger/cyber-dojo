@@ -27,10 +27,11 @@ class StubRunner
     save_stub(avatar, { :output => output })
   end
 
-  def run(avatar, delta, files, _image_name, max_seconds)
+  def run(id, name, delta, files, _image_name, max_seconds)
+    avatar = katas[id].avatars[name]
+    sandbox = avatar.sandbox
     # have to save the files because the effects are
     # asserted in tests and there is no shell_spy yet
-    sandbox = avatar.sandbox
     katas_save(sandbox, delta, files)
     output = read_stub(avatar)
     # todo: stub timed_out ?
@@ -53,7 +54,7 @@ class StubRunner
 
   def save_stub(avatar, json)
     # not good to rely on history.path here. Would be better if
-    # I could get test's hex-id and combine that withuse avater.name
+    # I could get test's hex-id and combine that with avater.name
     disk[history.path(avatar)].write_json(stub_run_filename, json)
   end
 
@@ -71,7 +72,7 @@ class StubRunner
   end
 
   def sample(avatar, rag)
-    # ?better in test/languages/test_output
+    # ?better in test/languages/outputs
     raise "#{rag} must be red/amber/green" if !red_amber_green.include?(rag)
     root = File.expand_path(File.dirname(__FILE__) + '/../test') + '/app_lib/test_output'
     path = "#{root}/#{avatar.kata.language.unit_test_framework}/#{rag}"

@@ -36,8 +36,8 @@ class DockerRunner
 
   # modifiers
 
-  def run(avatar, delta, files, image_name, max_seconds)
-    sandbox = avatar.sandbox
+  def run(id, name, delta, files, image_name, max_seconds)
+    sandbox = katas[id].avatars[name].sandbox
     katas_save(sandbox, delta, files)
     #run tests
     args = [

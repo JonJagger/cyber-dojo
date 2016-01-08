@@ -82,7 +82,7 @@ class DockerRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '6459A7',
-  'when run() completes and output is not large' +
+  'when run() completes and output is not large ' +
     'then output is left untouched' do
     syntax_error = 'syntax-error-line-1'
     mock_run_assert(syntax_error, syntax_error, success)
@@ -111,15 +111,35 @@ class DockerRunnerTests < LibTestBase
 
   include DockerTestHelpers
 
-  def mock_run_setup(mock_output, mock_exit_status)
-    lion = make_kata.start_avatar(['lion'])
+  def mock_run(mock_output, mock_exit_status)
+    lion = mock_run_setup(mock_output, mock_exit_status)
+    image_name = lion.language.image_name
+    delta = { :deleted => [], :new => [], :changed => [] }
+    runner.run(lion.kata.id, lion.name, delta, files={}, image_name, max_seconds)
+  end
 
+  def mock_run_assert(expected_output, mock_output, mock_exit_status)
+    output = mock_run(mock_output, mock_exit_status)
+    assert_equal expected_output, output
+  end
+
+  def mock_run_setup(mock_output, mock_exit_status)
+    kata = make_kata
+    lion = kata.start_avatar(['lion'])
     args = [
       path_of(lion.sandbox),
       lion.kata.language.image_name,
       max_seconds
     ].join(space = ' ')
 
+    # DockerRunner does katas[id].avatars[name].sandbox
+    # and avatars[name] does kata_started_avatars(kata)
+    shell.mock_cd_exec(
+      path_of(kata),
+      ['ls -F | grep / | tr -d /'],
+      'lion',
+      0
+    )
     shell.mock_cd_exec(
       runner.path,
       ["./docker_runner.sh #{args}"],
@@ -127,18 +147,6 @@ class DockerRunnerTests < LibTestBase
       mock_exit_status
    )
    lion
-  end
-
-  def mock_run(mock_output, mock_exit_status)
-    lion = mock_run_setup(mock_output, mock_exit_status)
-    image_name = lion.language.image_name
-    delta = { :deleted => [], :new => [], :changed => [] }
-    runner.run(lion, delta, files={}, image_name, max_seconds)
-  end
-
-  def mock_run_assert(expected_output, mock_output, mock_exit_status)
-    output = mock_run(mock_output, mock_exit_status)
-    assert_equal expected_output, output
   end
 
 end

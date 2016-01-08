@@ -113,6 +113,14 @@ class DockerMachineRunnerTests < LibTestBase
       max_seconds
     ].join(space = ' ')
 
+    # DockerMachineRunner does katas[id].avatars[name].sandbox
+    # and avatars[name] does kata_started_avatars(kata)
+    shell.mock_cd_exec(
+      path_of(kata),
+      ['ls -F | grep / | tr -d /'],
+      'lion',
+      0
+    )
     shell.mock_cd_exec(
       runner.path,
       ["sudo -u cyber-dojo ./docker_machine_runner.sh #{args}"],
@@ -121,7 +129,7 @@ class DockerMachineRunnerTests < LibTestBase
     )
 
     delta = { :deleted => [], :new => [], :changed => [] }
-    runner.run(lion, delta, files={}, image_name, max_seconds)
+    runner.run(kata.id, lion.name, delta, files={}, image_name, max_seconds)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

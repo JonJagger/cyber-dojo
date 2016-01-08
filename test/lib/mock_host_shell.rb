@@ -3,16 +3,16 @@ class MockHostShell
 
   def initialize(dojo)
     @target = HostShell.new(dojo)
-    @cd_exec_mock = []
-    @exec_mock = []
+    @cd_exec_mock     = []
+    @exec_mock        = []
     @daemon_exec_mock = []
   end
 
   # - - - - - - - - - - - - - - - - -
 
   def teardown
-    raise "#{self.class.name} unused #{@cd_exec_mock}"     unless @cd_exec_mock == []
-    raise "#{self.class.name} unused #{@exec_mock}"        unless @exec_mock == []
+    raise "#{self.class.name} unused #{@cd_exec_mock}"     unless @cd_exec_mock     == []
+    raise "#{self.class.name} unused #{@exec_mock}"        unless @exec_mock        == []
     raise "#{self.class.name} unused #{@daemon_exec_mock}" unless @daemon_exec_mock == []
   end
 
@@ -20,10 +20,10 @@ class MockHostShell
 
   def mock_cd_exec(path, commands, output, exit_status)
     @cd_exec_mock << {
-      :path => path,
-      :commands => commands,
-      :output => output,
-      :exit_status => exit_status
+             path: path,
+         commands: commands,
+           output: output,
+      exit_status: exit_status
     }
   end
 
@@ -31,9 +31,9 @@ class MockHostShell
 
   def mock_exec(commands, output, exit_status)
     @exec_mock << {
-      :commands => commands,
-      :output => output,
-      :exit_status => exit_status
+         commands: commands,
+           output: output,
+      exit_status: exit_status
     }
   end
 
@@ -41,7 +41,7 @@ class MockHostShell
 
   def mock_daemon_exec(command)
     @daemon_exec_mock << {
-      :command => command
+      command: command
     }
   end
 
@@ -51,7 +51,7 @@ class MockHostShell
     return @target.cd_exec(path, *commands) if @cd_exec_mock == []
     mock = @cd_exec_mock.shift
     if [path,commands] != [mock[:path],mock[:commands]]
-      raise "cd_exec(#{path},#{commands}), expected cd_exec(#{mock[:path]}, #{mock[:commands]}"
+      complain('cd_exec', "#{mock[:path]}, #{mock[:commands]}", "#{path}, #{commands}")
     end
     return mock[:output], mock[:exit_status]
   end
@@ -62,7 +62,7 @@ class MockHostShell
     return @target.exec(*commands) if @exec_mock == []
     mock = @exec_mock.shift
     if commands != mock[:commands]
-      raise "exec(#{commands}), expected exec(#{mock[:commands]})"
+      complain('exec', "#{mock[:commands]}", "#{commands}")
     end
     return mock[:output], mock[:exit_status]
   end
@@ -73,7 +73,7 @@ class MockHostShell
     return @target.daemon_exec(command) if @daemon_exec_mock == []
     mock = @daemon_exec_mock.shift
     if command != mock[:command]
-      raise "daemon_exec(#{command}), expected daemon_exec(#{mock[:command]})"
+      complain('daemon_exec', "#{mock[:command]}", "#{command}")
     end
   end
 
@@ -81,6 +81,16 @@ class MockHostShell
 
   def success
     0
+  end
+
+  private
+
+  def complain(cmd, expected, actual)
+    raise [
+      self.class.name,
+      "expected: #{cmd}(#{expected})",
+      "  actual: #{cmd}(#{actual})"
+    ].join("\n") + "\n"
   end
 
 end

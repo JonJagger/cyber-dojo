@@ -9,7 +9,7 @@ class Avatar
   # modifier
 
   def test(delta, files, now = time_now, max_seconds = 15)
-    output = runner.run(self, delta, files, language.image_name, max_seconds)
+    output = runner.run(kata.id, name, delta, files, language.image_name, max_seconds)
     test_colour = language.colour(output)
     history.avatar_ran_tests(self, delta, files, now, output, test_colour)
     [output, test_colour]
