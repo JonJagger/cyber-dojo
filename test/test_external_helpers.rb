@@ -8,12 +8,14 @@ module TestExternalHelpers # mix-in
   module_function
 
   def setup
-    store_env_vars
+    store_config
     setup_tmp_root
     set_katas_root(tmp_root + 'katas')
   end
 
-  def teardown; restore_env_vars; end
+  def teardown
+    restore_config
+  end
 
   # - - - - - - - - - - - - - - - - - - -
 
@@ -23,7 +25,6 @@ module TestExternalHelpers # mix-in
   def     set_katas_root(value); cd_root_set(    'katas', value); end
 
   def cd_root_set(name, value)
-    #p "cd_root_set(#{name}), #{value}"
     config = read_config
     config['root'][name] = value
     IO.write(config_filename, JSON.unparse(config))
@@ -35,24 +36,32 @@ module TestExternalHelpers # mix-in
   def     get_katas_root; cd_root_get(    'katas'); end
 
   def cd_root_get(name)
-    got = read_config['root'][name]
-    #p "cd_root_get(#{name}) = #{got}"
-    got
+    read_config['root'][name]
   end
 
   # - - - - - - - - - - - - - - - - - - -
 
-  def   set_runner_class(value); cd_set(   runner_key, value); end
-  def    set_shell_class(value); cd_set(    shell_key, value); end
-  def     set_disk_class(value); cd_set(     disk_key, value); end
-  def      set_git_class(value); cd_set(      git_key, value); end
-  def      set_log_class(value); cd_set(      log_key, value); end
+  def   set_runner_class(value); cd_class_set(   'runner', value); end
+  def    set_shell_class(value); cd_class_set(    'shell', value); end
+  def     set_disk_class(value); cd_class_set(     'disk', value); end
+  def      set_git_class(value); cd_class_set(      'git', value); end
+  def      set_log_class(value); cd_class_set(      'log', value); end
 
-  def   get_runner_class; cd_get(   runner_key); end
-  def    get_shell_class; cd_get(    shell_key); end
-  def     get_disk_class; cd_get(     disk_key); end
-  def      get_git_class; cd_get(      git_key); end
-  def      get_log_class; cd_get(      log_key); end
+  def cd_class_set(name, value)
+    config = read_config
+    config['class'][name] = value
+    IO.write(config_filename, JSON.unparse(config))
+  end
+
+  def   get_runner_class; cd_class_get('runner'); end
+  def    get_shell_class; cd_class_get( 'shell'); end
+  def     get_disk_class; cd_class_get(  'disk'); end
+  def      get_git_class; cd_class_get(   'git'); end
+  def      get_log_class; cd_class_get(   'log'); end
+
+  def cd_class_get(name)
+    read_config['class'][name]
+  end
 
   # - - - - - - - - - - - - - - - - - - -
 
@@ -61,67 +70,17 @@ module TestExternalHelpers # mix-in
   end
 
   def config_filename
+    # TODO: dojo.config_filename
     File.expand_path('../config', File.dirname(__FILE__)) + '/cyber-dojo.json'
   end
 
-  def store_env_vars
+  def store_config
     @original_config = read_config
-
-    @store_env_vars_called = true
-    @exported = {}
-    @unset = []
-    env_vars.each do |var, default|
-      if ENV[var].nil?
-        @unset << var
-      else
-        @exported[var] = ENV[var]
-      end
-    end
   end
 
-  def restore_env_vars
-    fail "store_env_vars() not called" if @store_env_vars_called.nil?
+  def restore_config
+    fail "store_config() not called" if @original_config.nil?
     IO.write(config_filename, JSON.unparse(@original_config))
-
-    @exported.each { |var, value| ENV[var] = @exported[var] }
-    @exported = {}
-    @unset.each { |var| cd_unset(var) }
-    @unset = []
   end
-
-  def env_vars
-    root_dir = File.expand_path('..', File.dirname(__FILE__))
-    {
-      languages_key => root_dir + '/languages',
-      exercises_key => root_dir + '/exercises',
-      katas_key     => root_dir + '/katas',
-      caches_key    => root_dir + '/caches',
-
-      runner_key    => 'DockerRunner',
-      shell_key     => 'HostShell',
-      disk_key      => 'HostDisk',
-      git_key       => 'HostGit',
-      log_key       => 'HostLog',
-    }
-  end
-
-  def languages_key; root('LANGUAGES'); end
-  def exercises_key; root('EXERCISES'); end
-  def     katas_key; root(    'KATAS'); end
-  def    caches_key; root(   'CACHES'); end
-
-  def    runner_key; klass('RUNNER'  ); end
-  def     shell_key; klass('SHELL'   ); end
-  def      disk_key; klass('DISK'    ); end
-  def       git_key; klass('GIT'     ); end
-  def       log_key; klass('LOG'     ); end
-
-  def root (key); cd(key + '_ROOT' ); end
-  def klass(key); cd(key + '_CLASS'); end
-
-  def cd_unset(key); ENV.delete(key); end
-  def cd_set(key, value); ENV[key] = value; end
-  def cd_get(key); ENV[key] || env_vars[key]; end
-  def cd(key); 'CYBER_DOJO_' + key; end
 
 end

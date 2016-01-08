@@ -2,21 +2,12 @@
 
 class Dojo
 
-  def config
-    @config ||= JSON.parse(IO.read(root_dir + '/config/cyber-dojo.json'))
-=begin
-    {
-      'root' => {
-        'languages' => external_root('languages'),
-        'exercises' => external_root('exercises'),
-        'caches'    => external_root('caches'),
-        'katas'     => external_root('katas')
-      }
-      'class' => {
+  def config_filename
+    root_dir + '/config/cyber-dojo.json'
+  end
 
-      }
-    }
-=end
+  def config
+    @config ||= JSON.parse(IO.read(config_filename))
   end
 
   def languages; @languages ||= Languages.new(self); end
@@ -40,56 +31,17 @@ class Dojo
 
   include NameOfCaller
 
-  def external_root(name = name_of(caller))
-    var = 'CYBER_DOJO_' + name.upcase + '_ROOT'
-    default = "#{root_dir}/#{name}"
-    root = ENV[var] || default
-    root + (root.end_with?('/') ? '' : '/')
-  end
-
   def external_object
     key = name_of(caller)
-    var = 'CYBER_DOJO_' + key.upcase + '_CLASS'
-    Object.const_get(ENV[var] || object_defaults(key)).new(self)
-  end
-
-  def object_defaults(key)
-    # be very careful about recursion here since
-    # default_runner uses runner.installed? checks
-    # which will lead to shell.exec calls...
-    return default_runner if key == 'runner'
-    @defaults ||= {
-      'history'  => 'HostDiskHistory',
-      'shell'    => 'HostShell',
-      'disk'     => 'HostDisk',
-      'log'      => 'HostLog',
-      'git'      => 'HostGit'
-    }
-    @defaults[key]
-  end
-
-  def default_runner
-    return 'DockerMachineRunner' if DockerMachineRunner.new(self).installed?
-    return 'DockerRunner'        if DockerRunner.new(self).installed?
+    var = config['class'][key]
+    Object.const_get(var).new(self)
   end
 
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# External paths can be set via these environment variables.
-#
-# CYBER_DOJO_LANGUAGES_ROOT
-# CYBER_DOJO_EXERCISES_ROOT
-# CYBER_DOJO_KATAS_ROOT
-# CYBER_DOJO_CACHES_ROOT
-#
-# External objects can be set via these environment variables.
-#
-# CYBER_DOJO_RUNNER_CLASS
-# CYBER_DOJO_SHELL_CLASS
-# CYBER_DOJO_DISK_CLASS
-# CYBER_DOJO_LOG_CLASS
-# CYBER_DOJO_GIT_CLASS
+# External paths can be set via the config file.
+# External objects can be set via the config file.
 #
 # The main reason for this arrangement is testability.
 # For example, I can run controller tests by setting the
