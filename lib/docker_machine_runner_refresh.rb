@@ -8,6 +8,7 @@ if runner.installed?
 
   puts 'setting runner=DockerMachineRunner in config/cyber-dojo.json'
   config_filename = dojo.config_filename
+  `chmod --silent 666 #{config_filename}`
   `cp #{runner.path}#{runner.config_filename} #{config_filename}`
   `chmod 444 #{config_filename}`
   `chown www-data:www-data #{config_filename}`
