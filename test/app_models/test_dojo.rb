@@ -150,42 +150,4 @@ class DojoTests < AppModelsTestBase
     assert_equal 'ExternalDouble', log.class.name
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
-
-  private
-
-=begin
-    test '81CB08',
-    'external runner object default is to DockerRunner' do
-       'if docker-machine is installed and its cache exists' do
-      #unset('RUNNER')
-      #unset('SHELL')
-      set_shell_class('MockHostShell')
-      shell.mock_exec(['docker-machine --version'], 'any', shell.success)
-      set_caches_root(tmp_root + 'caches')
-      dir = disk[caches.path]
-      dir.make
-      dir.write('docker_machine_runner_cache.json', 'any')
-      assert_equal 'DockerMachineRunner', dojo.runner.class.name
-      shell.teardown
-    end
-
-    test 'BFF893',
-    'external runner object defaults to DockerRunner ' +
-       'if docker-machine is not installed and ' +
-       'docker is installed and its cache exists' do
-      unset('RUNNER')
-      unset('SHELL')
-      set_shell_class('MockHostShell')
-      shell.mock_exec(['docker-machine --version'], 'any', shell_failure=42)
-      shell.mock_exec(['docker --version'], 'any', shell.success)
-      set_caches_root(tmp_root + 'caches')
-      dir = disk[caches.path]
-      dir.make
-      dir.write('docker_runner_cache.json', 'any')
-      assert_equal 'DockerRunner', dojo.runner.class.name
-      shell.teardown
-    end
-=end
-
 end
