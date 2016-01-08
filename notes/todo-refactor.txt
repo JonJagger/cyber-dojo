@@ -1,5 +1,10 @@
 
 --------------------------------------
+Possible exercise...
+Find equations using 4 numbers to calculate 24
+6,6,6,6 => 6+6+6+6
+1,2,3,4 => 1*2*3*4
+--------------------------------------
 line-numbers checkbox can be reworked so simply
 clicking on the line-numbers column toggles them on/off
 --------------------------------------
