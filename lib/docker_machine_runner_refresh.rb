@@ -3,7 +3,9 @@
 require_relative '../admin_scripts/lib_domain'
 
 runner = DockerMachineRunner.new(dojo)
-if runner.installed?
+if !runner.installed?
+  puts 'docker-machine is NOT installed'
+else
   puts 'docker-machine is installed'
 
   puts 'setting runner=DockerMachineRunner in config/cyber-dojo.json'
@@ -19,6 +21,4 @@ if runner.installed?
   runner.refresh_cache
   `chmod 444 #{cache_filename}`
   `chown www-data:www-data #{cache_filename}`
-else
-  puts 'docker-machine is NOT installed'
 end
