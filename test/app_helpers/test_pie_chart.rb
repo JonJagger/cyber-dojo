@@ -10,18 +10,12 @@ class PieChartTests < AppHelpersTestBase
   'pie-chart from avatar.lights' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
-    dir_of(lion).write_json('increments.json', [
-      {
-        'colour' => 'red',
-          'time' => [2014, 2, 15, 8, 54, 6],
-        'number' => 1
-      },
-      {
-        'colour' => 'green',
-          'time' => [2014, 2, 15, 8, 54, 34],
-        'number' => 2
-      }
-    ])
+
+    maker = DeltaMaker.new(lion)
+    maker.stub_colour(:red)
+    maker.run_test
+    maker.stub_colour(:green)
+    maker.run_test
 
     size = 34
     expected = '' +

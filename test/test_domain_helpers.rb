@@ -25,7 +25,7 @@ module TestDomainHelpers # mix-in
     hash[:exercise] ||= 'Fizz_Buzz'
     language = languages[hash[:language]]
     exercise = exercises[hash[:exercise]]
-    history.create_kata(language, exercise,hash[:id])
+    history.create_kata(language, exercise, hash[:id])
   end
 
   def unique_id
