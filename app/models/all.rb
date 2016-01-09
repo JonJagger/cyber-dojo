@@ -2,7 +2,6 @@
 %w(
   name_of_caller
   manifest_property
-  slashed
 
   dojo
   caches
@@ -11,10 +10,9 @@
   languages
   exercise
   exercises
+  kata
   avatar
   avatars
-  kata
-  katas
   sandbox
   tag
 ).each { |sourcefile| require_relative './' + sourcefile }

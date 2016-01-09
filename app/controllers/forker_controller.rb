@@ -44,7 +44,7 @@ class ForkerController < ApplicationController
                    tab_size: language.tab_size,
               visible_files: avatar.tags[tag].visible_files
       }
-      forked_kata = dojo.history.create_kata_from_manifest(katas, manifest)
+      forked_kata = katas.create_kata_from_manifest(manifest)
 
       result[:forked] = true
       result[:id] = forked_kata.id

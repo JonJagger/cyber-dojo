@@ -11,7 +11,7 @@ class Avatar
   def test(delta, files, now = time_now, max_seconds = 15)
     output = runner.run(kata.id, name, delta, files, language.image_name, max_seconds)
     test_colour = language.colour(output)
-    history.avatar_ran_tests(self, delta, files, now, output, test_colour)
+    katas.avatar_ran_tests(self, delta, files, now, output, test_colour)
     [output, test_colour]
   end
 
@@ -32,7 +32,7 @@ class Avatar
   end
 
   def diff(was_tag, now_tag)
-    history.tag_git_diff(self, was_tag, now_tag)
+    katas.tag_git_diff(self, was_tag, now_tag)
   end
 
   def active?
@@ -40,7 +40,7 @@ class Avatar
     # instructions. I don't want these avatars appearing on the dashboard.
     # When forking a new kata you can enter as one animal to sanity check
     # it is ok (but not press [test])
-    history.avatar_exists?(self) && !lights.empty?
+    katas.avatar_exists?(self) && !lights.empty?
   end
 
   def tags
@@ -56,7 +56,7 @@ class Avatar
   end
 
   def visible_files
-    history.avatar_visible_files(self)
+    katas.avatar_visible_files(self)
   end
 
   def sandbox
@@ -70,7 +70,7 @@ class Avatar
   include TimeNow
 
   def increments
-    history.avatar_increments(self)
+    katas.avatar_increments(self)
   end
 
   def tag0

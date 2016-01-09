@@ -25,7 +25,7 @@ class SetupController < ApplicationController
     exercise_name = params['exercise']
     language = languages[language_name + '-' + test_name]
     exercise = exercises[exercise_name]
-    kata = history.create_kata(language, exercise)
+    kata = katas.create_kata(language, exercise)
     render json: { id: kata.id }
   end
 

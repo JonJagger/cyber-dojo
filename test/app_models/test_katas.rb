@@ -11,7 +11,7 @@ class KatasTests < AppModelsTestBase
   test 'B9916D',
   'after create_kata() manifest file holds kata properties' do
     kata = make_kata
-    manifest = history.kata_manifest(kata)
+    manifest = katas.kata_manifest(kata)
     assert_equal kata.id, manifest['id']
     assert_equal kata.language.name, manifest['language']
     assert_equal kata.exercise.name, manifest['exercise']
@@ -63,20 +63,20 @@ class KatasTests < AppModelsTestBase
 
   test '603735',
   'each() yields empty array when there are no katas' do
-    assert_equal [], all_ids(katas)
+    assert_equal [], all_ids
   end
 
   test '5A2932',
   'each() yields array with the one kata-id when there is one kata' do
     kata = make_kata
-    assert_equal [kata.id.to_s], all_ids(katas)
+    assert_equal [kata.id.to_s], all_ids
   end
 
   test '24894F',
   'each() with two unrelated ids' do
     kata1 = make_kata
     kata2 = make_kata
-    assert_equal all_ids([kata1, kata2]).sort, all_ids(katas).sort
+    assert_equal all_ids([kata1, kata2]).sort, all_ids.sort
   end
 
   test '29DFD1',
@@ -86,18 +86,18 @@ class KatasTests < AppModelsTestBase
     kata1 = make_kata({ id:id + '1' })
     kata2 = make_kata({ id:id + '2' })
     kata3 = make_kata({ id:id + '3' })
-    assert_equal all_ids([kata1, kata2, kata3]).sort, all_ids(katas).sort
+    assert_equal all_ids([kata1, kata2, kata3]).sort, all_ids.sort
   end
 
   test 'F71C21',
   'is Enumerable: so .each not needed if doing map' do
     kata1 = make_kata
     kata2 = make_kata
-    assert_equal all_ids([kata1, kata2]).sort, all_ids(katas).sort
+    assert_equal all_ids([kata1, kata2]).sort, all_ids.sort
   end
 
-  def all_ids(katas)
-    katas.map { |kata| kata.id.to_s }
+  def all_ids(k = katas)
+    k.each.map { |kata| kata.id.to_s }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

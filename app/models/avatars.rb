@@ -47,7 +47,7 @@ class Avatars
   include ExternalParentChainer
 
   def started_avatars
-    names = history.kata_started_avatars(kata)
+    names = katas.kata_started_avatars(kata)
     Hash[names.map { |name| [name, Avatar.new(kata, name)] }]
   end
 

@@ -4,17 +4,19 @@
 %w{
   external_parent_chainer
   external_dir
+
   time_now
   unique_id
   id_splitter
   string_cleaner
   string_truncater
+  slashed
 
   runner
   docker_runner
   docker_machine_runner
   docker_data_container_runner
-  host_disk_history
+  host_disk_katas
   host_shell
   host_disk
   host_dir

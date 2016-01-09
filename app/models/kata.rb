@@ -11,7 +11,7 @@ class Kata
   # modifiers
 
   def start_avatar(avatar_names = Avatars.names.shuffle)
-    name = history.kata_start_avatar(self, avatar_names)
+    name = katas.kata_start_avatar(self, avatar_names)
     return nil if name.nil?
     Avatar.new(self, name)
   end
@@ -69,7 +69,7 @@ class Kata
   include ManifestProperty
 
   def manifest
-    @manifest ||= history.kata_manifest(self)
+    @manifest ||= katas.kata_manifest(self)
   end
 
   def earliest_light

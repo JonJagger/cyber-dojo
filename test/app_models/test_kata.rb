@@ -100,7 +100,7 @@ class KataTests < AppModelsTestBase
     exercise = exercises['Fizz_Buzz']
     id = unique_id
     now = [2014, 7, 17, 21, 15, 45]
-    kata = history.create_kata(language, exercise, id, now)
+    kata = katas.create_kata(language, exercise, id, now)
     assert_equal id, kata.id.to_s
     assert_equal Time.mktime(*now), kata.created
     assert_equal language.name, kata.language.name

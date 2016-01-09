@@ -53,13 +53,13 @@ class StubRunner
   end
 
   def save_stub(avatar, json)
-    # not good to rely on history.path here. Would be better if
+    # not good to rely on katas.path here. Would be better if
     # I could get test's hex-id and combine that with avater.name
-    disk[history.path(avatar)].write_json(stub_run_filename, json)
+    disk[katas.path(avatar)].write_json(stub_run_filename, json)
   end
 
   def read_stub(avatar)
-    dir = disk[history.path(avatar)]
+    dir = disk[katas.path(avatar)]
     if dir.exists?(stub_run_filename)
       json = dir.read_json(stub_run_filename)
       output = json['output']

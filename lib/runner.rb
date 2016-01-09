@@ -5,14 +5,14 @@ module Runner # mix-in
 
   def katas_save(sandbox, delta, files)
     delta[:deleted].each do |filename|
-      git.rm(history.path(sandbox), filename)
+      git.rm(path_of(sandbox), filename)
     end
     delta[:new].each do |filename|
-      history.write(sandbox, filename, files[filename])
-      git.add(history.path(sandbox), filename)
+      katas.write(sandbox, filename, files[filename])
+      git.add(path_of(sandbox), filename)
     end
     delta[:changed].each do |filename|
-      history.write(sandbox, filename, files[filename])
+      katas.write(sandbox, filename, files[filename])
     end
   end
 
@@ -32,7 +32,7 @@ module Runner # mix-in
   end
 
   def path_of(obj)
-    history.path(obj)
+    katas.path(obj)
   end
 
   include StringCleaner

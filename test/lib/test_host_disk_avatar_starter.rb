@@ -10,11 +10,11 @@ class HostDiskAvatarStarterTests < LibTestBase
   end
 
   def start_avatar(avatar_names = Avatars.names.shuffle)
-    history.kata_start_avatar(@kata, avatar_names)
+    katas.kata_start_avatar(@kata, avatar_names)
   end
 
   def started_avatars
-    history.kata_started_avatars(@kata)
+    katas.kata_started_avatars(@kata)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -

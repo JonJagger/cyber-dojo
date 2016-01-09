@@ -15,7 +15,7 @@ class Tag
   end
 
   def visible_files
-    @manifest ||= history.tag_visible_files(avatar, number)
+    @manifest ||= katas.tag_visible_files(avatar, number)
   end
 
   def output

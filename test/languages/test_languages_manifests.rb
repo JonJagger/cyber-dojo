@@ -154,8 +154,8 @@ class LanguagesManifestsTests < LanguagesTestBase
     assert !language.nil?, '!language.nil?'
     exercise = exercises['Print_Diamond']
     assert !exercise.nil?, '!exercise.nil?'
-    kata = history.create_kata(language, exercise)
-    manifest = history.kata_manifest(kata)
+    kata = katas.create_kata(language, exercise)
+    manifest = katas.kata_manifest(kata)
     lang = manifest['language']
     if lang.count('-') != 1
       message =

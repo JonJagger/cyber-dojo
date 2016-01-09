@@ -7,15 +7,13 @@ module TestDomainHelpers # mix-in
 
   def languages; dojo.languages; end
   def exercises; dojo.exercises; end
-  def katas;     dojo.katas;     end
   def caches;    dojo.caches;    end
-
-  def history;   dojo.history;   end
   def runner;    dojo.runner;    end
+  def katas;     dojo.katas;     end
   def shell;     dojo.shell;     end
+  def disk;      dojo.disk;      end
   def log;       dojo.log;       end
   def git;       dojo.git;       end
-  def disk;      dojo.disk;      end
 
   def make_kata(hash = {})
     hash[:id] ||= unique_id
@@ -23,7 +21,7 @@ module TestDomainHelpers # mix-in
     hash[:exercise] ||= default_exercise_name
     language = languages[hash[:language]]
     exercise = exercises[hash[:exercise]]
-    history.create_kata(language, exercise, hash[:id])
+    katas.create_kata(language, exercise, hash[:id])
   end
 
   def unique_id

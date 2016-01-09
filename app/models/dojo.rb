@@ -18,10 +18,8 @@ class Dojo
   def exercises; @exercises ||= Exercises.new(self); end
   def    caches; @caches    ||=    Caches.new(self); end
 
-  def     katas;     @katas ||= Katas.new(self); end
-  def   history;   @history ||= external_object; end
-
   def    runner;    @runner ||= external_object; end
+  def     katas;     @katas ||= external_object; end
   def     shell;     @shell ||= external_object; end
   def      disk;      @disk ||= external_object; end
   def       log;       @log ||= external_object; end

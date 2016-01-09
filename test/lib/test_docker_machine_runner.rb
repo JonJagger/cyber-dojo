@@ -176,7 +176,7 @@ class DockerMachineRunnerTests < LibTestBase
     script = lambda do |node|
       args = [
         node,
-        history.path(deer.sandbox),
+        katas.path(deer.sandbox),
         deer.kata.language.image_name,
         max_seconds
       ].join(space = ' ')

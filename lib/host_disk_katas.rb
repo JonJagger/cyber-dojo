@@ -1,10 +1,12 @@
 
 # See comments at end of file
 
-class HostDiskHistory
+class HostDiskKatas
+  include Enumerable
 
   def initialize(dojo)
     @dojo = dojo
+    @path = slashed(config['root']['katas'])
   end
 
   def parent
@@ -35,23 +37,23 @@ class HostDiskHistory
 
   def create_kata(language, exercise, id = unique_id, now = time_now)
     manifest = create_manifest(language, exercise, id, now)
-    create_kata_from_manifest(katas, manifest)
+    create_kata_from_manifest(manifest)
   end
 
-  def create_kata_from_manifest(katas, manifest)
-    kata = Kata.new(katas, manifest[:id])
+  def create_kata_from_manifest(manifest)
+    kata = Kata.new(self, manifest[:id])
     make_dir(kata)
     dir(kata).write_json(manifest_filename, manifest)
     kata
   end
 
-  def katas_complete_id(katas, id)
+  def complete(id)
     # If at least 6 characters of the id are provided attempt to complete
     # it into the full 10 character id. Doing completion with fewer characters
     # would likely result in a lot of disk activity and no unique outcome.
     if !id.nil? && id.length >= 6
       # outer-dir has 2-characters
-      outer_dir = disk[path(katas) + outer(id)]
+      outer_dir = disk[@path + outer(id)]
       if outer_dir.exists?
         # inner-dir has 8-characters
         dirs = outer_dir.each_dir.select { |inner_dir| inner_dir.start_with?(inner(id)) }
@@ -61,10 +63,11 @@ class HostDiskHistory
     id || ''
   end
 
-  def katas_each(katas)
-    disk[path(katas)].each_dir do |outer_dir|
-      disk[path(katas) + outer_dir].each_dir do |inner_dir|
-        yield outer_dir + inner_dir
+  def each
+    return enum_for(:each) unless block_given?
+    disk[@path].each_dir do |outer_dir|
+      disk[@path + outer_dir].each_dir do |inner_dir|
+        yield  Kata.new(self, outer_dir + inner_dir)
       end
     end
   end
@@ -73,7 +76,13 @@ class HostDiskHistory
   # Kata
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def kata_exists?(kata)
+  def [](id)
+    return nil if !valid?(id)
+    kata = Kata.new(self, id)
+    kata_exists?(kata) ? kata : nil
+  end
+
+  def kata_exists?(kata) # TODO: private?
     dir(kata).exists?
   end
 
@@ -173,7 +182,7 @@ class HostDiskHistory
     when 'Sandbox' then path(obj.parent) + 'sandbox' + '/'
     when 'Avatar'  then path(obj.parent) + obj.name + '/'
     when 'Kata'    then path(obj.parent) + outer(obj.id) + '/' + inner(obj.id) + '/'
-    when 'Katas'   then obj.path
+    when self.class.name then @path
     end
   end
 
@@ -187,6 +196,17 @@ class HostDiskHistory
   include IdSplitter
   include TimeNow
   include UniqueId
+  include Slashed
+
+  def valid?(id)
+    id.class.name == 'String' &&
+      id.length == 10 &&
+        id.chars.all? { |char| hex?(char) }
+  end
+
+  def hex?(char)
+    '0123456789ABCDEF'.include?(char)
+  end
 
   def make_dir(obj)
     dir(obj).make

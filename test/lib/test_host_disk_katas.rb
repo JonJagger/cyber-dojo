@@ -3,7 +3,7 @@
 require_relative './lib_test_base'
 require_relative '../app_models/delta_maker'
 
-class HostDiskHistoryTests < LibTestBase
+class HostDiskKatasTests < LibTestBase
 
   def setup
     super
@@ -154,7 +154,7 @@ class HostDiskHistoryTests < LibTestBase
   end
 
   def path(object)
-    history.path(object)
+    katas.path(object)
   end
 
 end
