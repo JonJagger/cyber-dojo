@@ -21,5 +21,4 @@ admin_scripts/stats/exceptions.log
 exercises/*cache.json
 languages/*cache.json
 
-test/lib/disk_stub_cache.json
 test/*/coverage/

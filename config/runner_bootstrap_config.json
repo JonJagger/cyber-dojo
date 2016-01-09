@@ -1,6 +1,6 @@
 {
   "class": {
-    "shell":"HostShell",
-    "log":"HostLog"
+    "shell": "HostShell",
+      "log": "HostLog"
   }
 }

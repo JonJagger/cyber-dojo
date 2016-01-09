@@ -6,7 +6,7 @@ There are three crucial pieces of information per language+test.
    eg "Ruby, RSpec"
    To the left of the comma is the name of the language.
    To the right of the comma is the name of the test framework.
-   These two names appear in create page lists.
+   These two names appear in create choose-language+test page lists.
 2. It's folder under languages/
    eg languages/Ruby1.9.3/Rspec
    This is where the manifest.json file lives.
@@ -33,8 +33,8 @@ The languages_cache.json maps from the display-name to
 2. the test dir
 3. the image name
 caches/languages_cache.json, app/models/languages.rb, and app/models/language.rb
-are designed so that the create page gets all the information it needs to
-display the languages and tests list via a *single* disk access.
+are designed so that the create choose-language+test page gets all the information it
+needs to display the languages and tests list via a *single* disk access.
 
 
 exercises_cache.json
@@ -42,8 +42,8 @@ exercises_cache.json
 This is a simple cache of each exercise's
 1. folder-name
 2. instructions file content
-Again this allows the create page to get all the information it needs to display
-the exercises list and their instructions via a *single* disk access.
+Again this allows the create page choose-exercise to get all the information it needs
+to display the exercises list and their instructions via a *single* disk access.
 
 
 runner caches
@@ -51,7 +51,6 @@ runner caches
 The docker runners, eg lib/docker_machine_runner.rb each have a cache
 related to which docker-images have been pulled and are *already* present
 and usable on the server.
-It is NOT the case that the create page lists all the languages+tests
+It is NOT the case that the create languages+test page lists *all* the languages+tests
 and when you press test the language+tests's docker image is pulled on demand.
-That would be too slow and unreliable.
-
+That would be too slow.

@@ -262,14 +262,8 @@ end
 #
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # This class's methods holds all the reads/writes for 3.
-# Currently it uses the cyber-dojo server's file-system [katas]
-# folder using the same HostDisk object as 1 but this needs
-# decoupling (see avatar_run_tests comments below).
-# In fact, this is *an* implementation of katas.
-# Its HostDiskKatas.
-#
-# Viz, this class represents the API needed on its own
-# dedicated web server.
+# It uses the cyber-dojo server's file-system [katas] folder.
+# This is *an* implementation of katas.
 # - - - - - - - - - - - - - - - - - - - - - - - -
 
 
@@ -291,7 +285,7 @@ end
 # avatar_run_tests(avatar, delta, files, now, max_seconds)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Currently works by saving the files to the file-system (in the avatar's
-# sandbox) and *then* the runner makes use of these saved files
+# sandbox) and *then* the docker-runner makes use of these saved files
 # (eg docker-runner's .sh file volume-mounts the sandbox).
 #
 # I plan to reverse this ordering and decouple the runners from the
@@ -300,21 +294,14 @@ end
 # 1. Don't save the files to the file-system; let the runner decide what to
 #    do. Maybe runner is hosted inside a web-server which receives the files,
 #    saves them to a ram disk folder, which a docker image then volume-mounts.
-#    Perhaps there are several such such servers for scalability. This also
-#    suggests the the browser sending the files *directly* to such a web-server
-#    rather than to the cyber-dojo server (which in turn sends them on to the
-#    web-server).
+#    Perhaps there are several such such servers for scalability.
 #
 # 2. Once the runner has finished, the output file is added to the files
 #    sent from browser and persisted in one go (rather than two steps; one
 #    for saving all the files except the output, another for saving just the
 #    output).
-#
-# Note
-# Step 2 can be executed as a background fire-and-forget task.
-# The browser only needs the results of step 1.
-# The rails view-code currently redraws *all* the traffic-lights
-# but that needs refactoring.
+#    This step 2 can be executed as a background fire-and-forget task.
+#    The browser only needs the results of step 1.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
