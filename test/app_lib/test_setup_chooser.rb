@@ -17,7 +17,7 @@ class SetupChooserTests < AppLibTestBase
   'when id is given and katas[id].language exists then choose that language' do
     cmd = test_languages_names.map{ |name| name.split('-').join(', ') }
     test_languages_names.each_with_index do |language, n|
-      kata = make_kata(unique_id, language, test_exercises_names.sample)
+      kata = make_kata({ language:language, exercise:test_exercises_names.sample })
       assert_equal n, choose_language(cmd, kata.id, katas), language
     end
   end
@@ -27,7 +27,7 @@ class SetupChooserTests < AppLibTestBase
   test 'D9C2F2',
   'when id is given and katas[id].exercise exists then choose that exercise' do
     test_exercises_names.each_with_index do |exercise, n|
-      kata = make_kata(unique_id, test_languages_names.sample, exercise)
+      kata = make_kata({ language:test_languages_names.sample, exercise:exercise })
       assert_equal n, choose_exercise(test_exercises_names, kata.id, katas)
     end
   end
@@ -78,7 +78,7 @@ class SetupChooserTests < AppLibTestBase
     test_languages_names.each do |unknown_language|
       languages = test_languages_names - [unknown_language]
       refute languages.include?(unknown_language)
-      kata = make_kata(unique_id, unknown_language, test_exercises_names.sample)
+      kata = make_kata({ language:unknown_language, exercise:test_exercises_names.sample })
       assert_is_randomly_chosen_language(languages, kata.id, katas)
     end
   end
@@ -90,7 +90,7 @@ class SetupChooserTests < AppLibTestBase
     test_exercises_names.each do |unknown_exercise|
       exercises = test_exercises_names - [unknown_exercise]
       refute exercises.include?(unknown_exercise)
-      kata = make_kata(unique_id, test_languages_names.sample, unknown_exercise)
+      kata = make_kata({ language:test_languages_names.sample, exercise:unknown_exercise })
       assert_is_randomly_chosen_exercise(exercises, kata.id, katas)
     end
   end

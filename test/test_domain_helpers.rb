@@ -19,10 +19,13 @@ module TestDomainHelpers # mix-in
 
   def dir_of(object); disk[history.path(object)]; end
 
-  def make_kata(id = unique_id, language_name = 'C (clang)-assert', exercise_name = 'Fizz_Buzz')
-    language = languages[language_name]
-    exercise = exercises[exercise_name]
-    history.create_kata(language, exercise, id)
+  def make_kata(hash = {})
+    hash[:id] ||= unique_id
+    hash[:language] ||= 'C (clang)-assert'
+    hash[:exercise] ||= 'Fizz_Buzz'
+    language = languages[hash[:language]]
+    exercise = exercises[hash[:exercise]]
+    history.create_kata(language, exercise,hash[:id])
   end
 
   def unique_id

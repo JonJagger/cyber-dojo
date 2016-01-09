@@ -12,8 +12,8 @@ class DockerMachineRunnerTests < LibTestBase
   end
 
   def teardown
-    shell.teardown
     super
+    shell.teardown
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -98,7 +98,7 @@ class DockerMachineRunnerTests < LibTestBase
 
   def mock_run(node, mock_output, mock_exit_status)
     mock_docker_machine_refresh_cache([node])
-    kata = make_kata(unique_id, 'Python-py.test')
+    kata = make_kata({ language:'Python-py.test' })
     lion = kata.start_avatar(['lion'])
     image_name = lion.language.image_name
 

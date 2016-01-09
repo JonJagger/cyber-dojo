@@ -28,7 +28,7 @@ class KataTests < AppModelsTestBase
   test '677A57',
   'id reads back as set' do
     id = unique_id
-    kata = make_kata(id)
+    kata = make_kata({ id:id })
     assert_equal id, kata.id
   end
 

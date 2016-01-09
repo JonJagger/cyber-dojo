@@ -84,9 +84,9 @@ class KatasTests < AppModelsTestBase
   'each() with several ids with common first two characters' do
     id = 'ABCDE1234'
     assert_equal 10-1, id.length
-    kata1 = make_kata(id + '1')
-    kata2 = make_kata(id + '2')
-    kata3 = make_kata(id + '3')
+    kata1 = make_kata({ id:id + '1' })
+    kata2 = make_kata({ id:id + '2' })
+    kata3 = make_kata({ id:id + '3' })
     assert_equal all_ids([kata1, kata2, kata3]).sort, all_ids(katas).sort
   end
 
@@ -142,8 +142,8 @@ class KatasTests < AppModelsTestBase
   test '23B4F1',
   'complete(id) does not complete when 6+ chars and 2+ matches' do
     id = 'ABCDE1'
-    make_kata(id + '2345')
-    make_kata(id + '2346')
+    make_kata({ id:id + '2345' })
+    make_kata({ id:id + '2346' })
     assert_equal id, katas.complete(id)
   end
 
@@ -152,7 +152,7 @@ class KatasTests < AppModelsTestBase
   test '0934BF',
   'complete(id) completes when 6+ chars and 1 match' do
     id = 'A1B2C3D4E5'
-    make_kata(id)
+    make_kata({ id:id })
     assert_equal id, katas.complete(id.downcase[0..5])
   end
 
