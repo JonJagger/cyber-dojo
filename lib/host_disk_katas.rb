@@ -44,7 +44,7 @@ class HostDiskKatas
 
   def create_kata_from_manifest(manifest)
     kata = Kata.new(self, manifest[:id])
-    make_dir(kata)
+    dir(kata).make
     dir(kata).write_json(manifest_filename, manifest)
     kata
   end
@@ -118,7 +118,7 @@ class HostDiskKatas
     git.add(path_of(avatar), increments_filename)
 
     sandbox = Sandbox.new(avatar)
-    make_dir(sandbox)
+    dir(sandbox).make
     avatar.visible_files.each do |filename, content|
       write(sandbox, filename, content)
       git.add(path_of(sandbox), filename)
@@ -179,6 +179,10 @@ class HostDiskKatas
   # Path
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
+  def dir(obj)
+    disk[path_of(obj)]
+  end
+
   def path_of(obj)
     case obj.class.name
     when 'Sandbox' then path_of(obj.parent) + 'sandbox' + '/'
@@ -208,14 +212,6 @@ class HostDiskKatas
 
   def hex?(char)
     '0123456789ABCDEF'.include?(char)
-  end
-
-  def make_dir(obj)
-    dir(obj).make
-  end
-
-  def dir(obj)
-    disk[path_of(obj)]
   end
 
   def write_avatar_manifest(avatar, files)

@@ -14,7 +14,7 @@ class HostDiskKatasTests < LibTestBase
   'katas has correct path format when set with trailing slash' do
     path = '/tmp/slashed/'
     set_katas_root(path)
-    assert_equal path, path_of(katas)
+    assert_equal path, katas.path
     assert correct_path_format?(katas)
   end
 
@@ -24,7 +24,7 @@ class HostDiskKatasTests < LibTestBase
   'katas has correct path format when set without trailing slash' do
     path = '/tmp/unslashed'
     set_katas_root(path)
-    assert_equal path + '/', path_of(katas)
+    assert_equal path + '/', katas.path
     assert correct_path_format?(katas)
   end
 
@@ -70,7 +70,7 @@ class HostDiskKatasTests < LibTestBase
   test 'CE9083',
   'make_kata saves manifest in kata dir' do
     kata = make_kata
-    assert disk[path_of(kata)].exists?('manifest.json')
+    assert katas.dir(kata).exists?('manifest.json')
   end
 
   #- - - - - - - - - - - - - - - -
@@ -79,7 +79,7 @@ class HostDiskKatasTests < LibTestBase
   'sandbox dir is initially created' do
     kata = make_kata
     avatar = kata.start_avatar(['hippo'])
-    assert disk[path_of(avatar.sandbox)].exists?
+    assert katas.dir(avatar.sandbox).exists?
   end
 
   #- - - - - - - - - - - - - - - -
@@ -134,7 +134,7 @@ class HostDiskKatasTests < LibTestBase
   end
 
   def assert_file(filename, expected)
-    assert_equal expected, disk[path_of(@avatar.sandbox)].read(filename), 'saved_to_sandbox'
+    assert_equal expected, katas.dir(@avatar.sandbox).read(filename), 'saved_to_sandbox'
   end
 
   def assert_log_include?(command)
