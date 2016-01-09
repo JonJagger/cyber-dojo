@@ -4,8 +4,9 @@ class ParamsMaker
 
   def initialize(avatar)
     @visible_files = avatar.visible_files
-    @incoming,@outgoing = {},{}
-    avatar.visible_files.each do |filename,content|
+    @incoming = {}
+    @outgoing = {}
+    avatar.visible_files.each do |filename, content|
       @incoming[filename] = hash(content)
       @outgoing[filename] = hash(content)
     end
