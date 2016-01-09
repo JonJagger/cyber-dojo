@@ -9,6 +9,8 @@ class HostDiskKatas
     @path = slashed(config['root']['katas'])
   end
 
+  attr_reader :path
+
   def parent
     @dojo
   end
@@ -53,7 +55,7 @@ class HostDiskKatas
     # would likely result in a lot of disk activity and no unique outcome.
     if !id.nil? && id.length >= 6
       # outer-dir has 2-characters
-      outer_dir = disk[@path + outer(id)]
+      outer_dir = disk[path + outer(id)]
       if outer_dir.exists?
         # inner-dir has 8-characters
         dirs = outer_dir.each_dir.select { |inner_dir| inner_dir.start_with?(inner(id)) }
@@ -65,8 +67,8 @@ class HostDiskKatas
 
   def each
     return enum_for(:each) unless block_given?
-    disk[@path].each_dir do |outer_dir|
-      disk[@path + outer_dir].each_dir do |inner_dir|
+    disk[path].each_dir do |outer_dir|
+      disk[path + outer_dir].each_dir do |inner_dir|
         yield  Kata.new(self, outer_dir + inner_dir)
       end
     end
@@ -91,13 +93,13 @@ class HostDiskKatas
   end
 
   def kata_started_avatars(kata)
-    lines, _ = shell.cd_exec(path(kata), 'ls -F | grep / | tr -d /')
+    lines, _ = shell.cd_exec(path_of(kata), 'ls -F | grep / | tr -d /')
     lines.split("\n") & Avatars.names
   end
 
   def kata_start_avatar(kata, avatar_names = Avatars.names.shuffle)
     avatar_name = avatar_names.detect do |name|
-      _, exit_status = shell.cd_exec(path(kata), "mkdir #{name} #{stderr_2_stdout}")
+      _, exit_status = shell.cd_exec(path_of(kata), "mkdir #{name} #{stderr_2_stdout}")
       exit_status == shell.success
     end
 
@@ -107,22 +109,22 @@ class HostDiskKatas
 
     user_name = avatar.name + '_' + kata.id
     user_email = avatar.name + '@cyber-dojo.org'
-    git.setup(path(avatar), user_name, user_email)
+    git.setup(path_of(avatar), user_name, user_email)
 
     write_avatar_manifest(avatar, kata.visible_files)
-    git.add(path(avatar), manifest_filename)
+    git.add(path_of(avatar), manifest_filename)
 
     write_avatar_increments(avatar, [])
-    git.add(path(avatar), increments_filename)
+    git.add(path_of(avatar), increments_filename)
 
     sandbox = Sandbox.new(avatar)
     make_dir(sandbox)
     avatar.visible_files.each do |filename, content|
       write(sandbox, filename, content)
-      git.add(path(sandbox), filename)
+      git.add(path_of(sandbox), filename)
     end
 
-    git.commit(path(avatar), tag=0)
+    git.commit(path_of(avatar), tag=0)
 
     avatar_name
   end
@@ -156,7 +158,7 @@ class HostDiskKatas
     rags << { 'colour' => colour, 'time' => now, 'number' => tag }
     write_avatar_increments(avatar, rags)
     # git-commit the manifest, increments, and visible-files
-    git.commit(path(avatar), tag)
+    git.commit(path_of(avatar), tag)
     rags
   end
 
@@ -166,23 +168,23 @@ class HostDiskKatas
 
   def tag_visible_files(avatar, tag)
     # retrieve all the files in one go
-    JSON.parse(git.show(path(avatar), "#{tag}:#{manifest_filename}"))
+    JSON.parse(git.show(path_of(avatar), "#{tag}:#{manifest_filename}"))
   end
 
   def tag_git_diff(avatar, was_tag, now_tag)
-    git.diff(path(avatar), was_tag, now_tag)
+    git.diff(path_of(avatar), was_tag, now_tag)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
   # Path
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def path(obj)
+  def path_of(obj)
     case obj.class.name
-    when 'Sandbox' then path(obj.parent) + 'sandbox' + '/'
-    when 'Avatar'  then path(obj.parent) + obj.name + '/'
-    when 'Kata'    then path(obj.parent) + outer(obj.id) + '/' + inner(obj.id) + '/'
-    when self.class.name then @path
+    when 'Sandbox' then path_of(obj.parent) + 'sandbox' + '/'
+    when 'Avatar'  then path_of(obj.parent) + obj.name + '/'
+    when 'Kata'    then path_of(obj.parent) + outer(obj.id) + '/' + inner(obj.id) + '/'
+    when self.class.name then path
     end
   end
 
@@ -213,7 +215,7 @@ class HostDiskKatas
   end
 
   def dir(obj)
-    disk[path(obj)]
+    disk[path_of(obj)]
   end
 
   def write_avatar_manifest(avatar, files)

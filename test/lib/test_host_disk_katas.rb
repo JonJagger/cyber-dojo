@@ -12,9 +12,9 @@ class HostDiskKatasTests < LibTestBase
 
   test 'B55710',
   'katas has correct path format when set with trailing slash' do
-    path = 'slashed/'
+    path = '/tmp/slashed/'
     set_katas_root(path)
-    assert_equal path, path(katas)
+    assert_equal path, path_of(katas)
     assert correct_path_format?(katas)
   end
 
@@ -22,9 +22,9 @@ class HostDiskKatasTests < LibTestBase
 
   test 'B2F787',
   'katas has correct path format when set without trailing slash' do
-    path = 'unslashed'
+    path = '/tmp/unslashed'
     set_katas_root(path)
-    assert_equal path + '/', path(katas)
+    assert_equal path + '/', path_of(katas)
     assert correct_path_format?(katas)
   end
 
@@ -42,7 +42,7 @@ class HostDiskKatasTests < LibTestBase
   'path is split ala git' do
     kata = make_kata
     split = kata.id[0..1] + '/' + kata.id[2..-1]
-    assert path(kata).include?(split)
+    assert path_of(kata).include?(split)
   end
 
   #- - - - - - - - - - - - - - - -
@@ -62,7 +62,7 @@ class HostDiskKatasTests < LibTestBase
     avatar = kata.start_avatar(Avatars.names)
     sandbox = avatar.sandbox
     assert correct_path_format?(sandbox)
-    assert path(sandbox).include?('sandbox')
+    assert path_of(sandbox).include?('sandbox')
   end
 
   #- - - - - - - - - - - - - - - -
@@ -70,7 +70,7 @@ class HostDiskKatasTests < LibTestBase
   test 'CE9083',
   'make_kata saves manifest in kata dir' do
     kata = make_kata
-    assert disk[path(kata)].exists?('manifest.json')
+    assert disk[path_of(kata)].exists?('manifest.json')
   end
 
   #- - - - - - - - - - - - - - - -
@@ -79,7 +79,7 @@ class HostDiskKatasTests < LibTestBase
   'sandbox dir is initially created' do
     kata = make_kata
     avatar = kata.start_avatar(['hippo'])
-    assert disk[path(avatar.sandbox)].exists?
+    assert disk[path_of(avatar.sandbox)].exists?
   end
 
   #- - - - - - - - - - - - - - - -
@@ -128,13 +128,13 @@ class HostDiskKatasTests < LibTestBase
   private
 
   def correct_path_format?(object)
-    ends_in_slash = path(object).end_with?('/')
-    has_doubled_separator = path(object).scan('/' * 2).length != 0
+    ends_in_slash = path_of(object).end_with?('/')
+    has_doubled_separator = path_of(object).scan('/' * 2).length != 0
     ends_in_slash && !has_doubled_separator
   end
 
   def assert_file(filename, expected)
-    assert_equal expected, disk[path(@avatar.sandbox)].read(filename), 'saved_to_sandbox'
+    assert_equal expected, disk[path_of(@avatar.sandbox)].read(filename), 'saved_to_sandbox'
   end
 
   def assert_log_include?(command)
@@ -150,11 +150,11 @@ class HostDiskKatasTests < LibTestBase
   end
 
   def pathed(command)
-    "cd #{path(@avatar.sandbox)} && #{command}"
+    "cd #{path_of(@avatar.sandbox)} && #{command}"
   end
 
-  def path(object)
-    katas.path(object)
+  def path_of(object)
+    katas.path_of(object)
   end
 
 end

@@ -119,13 +119,13 @@ class DojoTests < AppModelsTestBase
   test '5C25B8',
   'caches.path can be set' do
     set_caches_root(path = '/fake_caches_path/')
-    assert_equal path, dojo.caches.path
+    assert_equal path, caches.path
   end
 
   test 'B6CC06',
   'katas.path can be set' do
     set_katas_root(path = '/tmp/fake_katas_path/')
-    assert_equal path, katas.path(katas)
+    assert_equal path, katas.path
   end
 
   test '01CD52',
@@ -137,7 +137,7 @@ class DojoTests < AppModelsTestBase
 
     assert_equal exercises_path + '/', exercises.path
     assert_equal languages_path + '/', languages.path
-    assert_equal     katas_path + '/', katas.path(katas)
+    assert_equal     katas_path + '/', katas.path
     assert_equal    caches_path + '/', caches.path
   end
 
@@ -145,7 +145,7 @@ class DojoTests < AppModelsTestBase
 
   test 'CBFF2D',
   'katas.path is set away from genuine katas because tests write to katas' do
-    refute_equal dojo.root_dir + '/katas/', katas.path(katas)
+    refute_equal dojo.root_dir + '/katas/', katas.path
   end
 
   private

@@ -48,7 +48,7 @@ class KataControllerTest  < AppControllerTestBase
 
   def assert_file(filename, expected)
     assert_equal expected, @avatar.visible_files[filename], 'saved_to_manifest'
-    assert_equal expected, disk[katas.path(@avatar.sandbox)].read(filename), 'saved_to_sandbox'
+    assert_equal expected, disk[katas.path_of(@avatar.sandbox)].read(filename), 'saved_to_sandbox'
   end
 
   def makefile_with_leading_tab

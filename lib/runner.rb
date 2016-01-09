@@ -32,7 +32,7 @@ module Runner # mix-in
   end
 
   def path_of(obj)
-    katas.path(obj)
+    katas.path_of(obj)
   end
 
   include StringCleaner

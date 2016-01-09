@@ -8,7 +8,7 @@ class DownloadControllerTest < AppControllerTestBase
     super
     @id = create_kata
     kata = katas[@id]
-    @zip_dir = "#{katas.path(katas)}/../zips/"
+    @zip_dir = "#{katas.path}/../zips/"
     `mkdir -p #{@zip_dir}`
   end
 

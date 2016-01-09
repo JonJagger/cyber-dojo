@@ -30,7 +30,7 @@ module DockerTestHelpers # mix-in
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def path_of(obj); katas.path(obj); end
+  def path_of(obj); katas.path_of(obj); end
 
   def max_seconds; 5; end
 
