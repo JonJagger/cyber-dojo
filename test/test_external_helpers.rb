@@ -90,8 +90,7 @@ module TestExternalHelpers # mix-in
   end
 
   def config_filename
-    # TODO: dojo.config_filename
-    File.expand_path('../config', File.dirname(__FILE__)) + '/cyber-dojo.json'
+    dojo.config_filename
   end
 
   def fail_if_setup_not_called(at)
