@@ -47,8 +47,7 @@ CyberDojo::Application.routes.draw do
   end
 
   scope path: '/review', controller: :review do
-    get 'show(/:id)'        => :show
-    get 'dialog_show(/:id)' => :dialog_show
+    get 'show(/:id)' => :show
   end
 
   scope path: '/tipper', controller: :tipper do
