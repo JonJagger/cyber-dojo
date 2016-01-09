@@ -47,7 +47,7 @@ CyberDojo::Application.routes.draw do
   end
 
   scope path: '/review', controller: :review do
-    get 'show(/:id)' => :show
+    get 'show(/:id)'        => :show
     get 'dialog_show(/:id)' => :dialog_show
   end
 
@@ -56,9 +56,9 @@ CyberDojo::Application.routes.draw do
   end
 
 
-  get 'differ/diff' => 'differ#diff', :constraints => { :format => :json }
+  get 'differ/diff'       => 'differ#diff',     :constraints => { :format => :json }
   get 'forker/fork(/:id)' => 'forker#fork'
-  get 'reverter/revert' => 'reverter#revert', :constraints => { :format => :json }
+  get 'reverter/revert'   => 'reverter#revert', :constraints => { :format => :json }
 
   get 'downloader/download(/:id)' => 'downloader#download'
 

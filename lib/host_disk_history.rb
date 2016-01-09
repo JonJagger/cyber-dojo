@@ -161,6 +161,7 @@ class HostDiskHistory
   private
 
   include ExternalParentChainer
+  include IdSplitter
 
   def make_dir(obj)
     dir(obj).make
@@ -194,14 +195,6 @@ class HostDiskHistory
 
   def stderr_2_stdout
     '2>&1'
-  end
-
-  def outer(id)
-    id.upcase[0..1]  # 'E5'
-  end
-
-  def inner(id)
-    id.upcase[2..-1] # '6A3327FE'
   end
 
 end

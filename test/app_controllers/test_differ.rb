@@ -9,7 +9,7 @@ class DifferControllerTest < AppControllerTestBase
     @id = create_kata('Java, JUnit')
     @avatar = start # 0
     filename = 'Hiker.java'
-    change_file(filename, content = '#include...')
+    change_file(filename, content = 'import...')
 
     run_tests
     run_tests
