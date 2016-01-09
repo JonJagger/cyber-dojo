@@ -124,7 +124,7 @@ class DojoTests < AppModelsTestBase
 
   test 'B6CC06',
   'katas.path can be set' do
-    set_katas_root(path = '/fake_katas_path/')
+    set_katas_root(path = '/tmp/fake_katas_path/')
     assert_equal path, katas.path
   end
 
@@ -132,7 +132,7 @@ class DojoTests < AppModelsTestBase
   'paths always have trailing slash even if config value does not' do
     set_exercises_root(exercises_path = '/fake_exercises_path')
     set_languages_root(languages_path = '/fake_languages_path')
-    set_katas_root(katas_path = '/fake_katas_path')
+    set_katas_root(katas_path = '/tmp/fake_katas_path')
     set_caches_root(caches_path = '/fake_caches_path')
 
     assert_equal exercises_path + '/', exercises.path

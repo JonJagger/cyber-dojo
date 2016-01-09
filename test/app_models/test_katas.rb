@@ -63,7 +63,6 @@ class KatasTests < AppModelsTestBase
 
   test '603735',
   'each() yields empty array when there are no katas' do
-    dir_of(katas).make
     assert_equal [], all_ids(katas)
   end
 

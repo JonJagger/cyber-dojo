@@ -30,7 +30,11 @@ module TestExternalHelpers # mix-in
   def set_languages_root(value); cd_root_set('languages', value); end
   def set_exercises_root(value); cd_root_set('exercises', value); end
   def    set_caches_root(value); cd_root_set(   'caches', value); end
-  def     set_katas_root(value); cd_root_set(    'katas', value); end
+
+  def     set_katas_root(value)
+    cd_root_set('katas', value)
+    `mkdir -p #{get_katas_root}`
+  end
 
   def   set_runner_class(value); cd_class_set(   'runner', value); end
   def    set_shell_class(value); cd_class_set(    'shell', value); end
