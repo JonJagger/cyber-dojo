@@ -32,7 +32,7 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def create_kata(language_name = random_language, exercise_name = random_exercise)
+  def create_kata(language_name = default_language, exercise_name = default_exercise)
     parts = language_name.split(',')
     params = {
       language: parts[0].strip,
@@ -101,15 +101,12 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
 
   private
 
-  def random_language
-    # languages.collect....
-    # will cause TestRunner.runnable?() to be executed...
-    # which means I can't later Stub a different TestRunner...
-    'Ruby, TestUnit'  # todo
+  def default_language
+    'Ruby, TestUnit'
   end
 
-  def random_exercise
-    'Yatzy' # todo
+  def default_exercise
+    'Yatzy'
   end
 
 end

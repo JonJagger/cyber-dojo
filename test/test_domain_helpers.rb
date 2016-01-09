@@ -17,12 +17,10 @@ module TestDomainHelpers # mix-in
   def git;       dojo.git;       end
   def disk;      dojo.disk;      end
 
-  def dir_of(object); disk[history.path(object)]; end
-
   def make_kata(hash = {})
     hash[:id] ||= unique_id
-    hash[:language] ||= 'C (clang)-assert'
-    hash[:exercise] ||= 'Fizz_Buzz'
+    hash[:language] ||= default_language_name
+    hash[:exercise] ||= default_exercise_name
     language = languages[hash[:language]]
     exercise = exercises[hash[:exercise]]
     history.create_kata(language, exercise, hash[:id])
@@ -31,6 +29,14 @@ module TestDomainHelpers # mix-in
   def unique_id
     hex_chars = "0123456789ABCDEF".split(//)
     Array.new(10) { hex_chars.sample }.shuffle.join
+  end
+
+  def default_language_name
+    'C (clang)-assert'
+  end
+
+  def default_exercise_name
+    'Fizz_Buzz'
   end
 
 end

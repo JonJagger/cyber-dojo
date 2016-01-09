@@ -4,13 +4,6 @@ require_relative './app_controller_test_base'
 
 class ForkerControllerTest < AppControllerTestBase
 
-  def setup
-    super
-    @id = create_kata('Java, JUnit')
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '892AFE',
   'when id is invalid ' +
     'then fork fails ' +
@@ -24,14 +17,24 @@ class ForkerControllerTest < AppControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'EAE021',
-  'when language folder no longer exists ' +
-      'the fork fails ' +
-        'and the reason given is language' do
-    kata = katas[@id]
-    bad_language = 'doesNot-Exist'
-    dir_of(kata).make
-    dir_of(kata).write_json('manifest.json', { language: bad_language })
-    fork(@id, 'hippo', tag = 1)
+  'when language no longer exists, the fork fails, and the reason given is language' do
+    id = unique_id
+    language = languages['C#-NUnit']
+    bad_language = 'does-not-exist'
+    manifest = {
+                       id: id,
+                  created: [2016,1,9,17,50,45],
+                 language: bad_language,
+                 exercise: default_exercise_name,
+      unit_test_framework: language.unit_test_framework,
+                 tab_size: language.tab_size
+    }
+    manifest[:visible_files] = language.visible_files
+    manifest[:visible_files]['output'] = ''
+    manifest[:visible_files]['instructions'] = 'your task...'
+    kata = history.create_kata_from_manifest(katas, manifest)
+
+    fork(kata.id, 'hippo', tag = 1)
     refute forked?
     assert_reason_is("language(#{bad_language})")
     assert_nil forked_kata_id
@@ -40,10 +43,9 @@ class ForkerControllerTest < AppControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '67725B',
-  'when avatar not started ' +
-    'the fork fails ' +
-      'and the reason given is avatar' do
-    fork(@id, bad_avatar = 'hippo', tag = 1)
+  'when avatar not started, the fork fails, and the reason given is avatar' do
+    id = create_kata
+    fork(id, bad_avatar = 'hippo', tag = 1)
     refute forked?
     assert_reason_is("avatar(#{bad_avatar})")
     assert_nil forked_kata_id
@@ -52,9 +54,8 @@ class ForkerControllerTest < AppControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '4CCCA7',
-  'when tag is bad ' +
-    'the fork fails ' +
-      'and the reason given is traffic_light' do
+  'when tag is bad, the fork fails, and the reason given is traffic_light' do
+    @id = create_kata
     @avatar = start
     bad_tag_test('xx')      # !is_tag
     bad_tag_test('-14')     # tag <= 0
@@ -78,6 +79,7 @@ class ForkerControllerTest < AppControllerTestBase
   'when id,language,avatar,tag are all ok ' +
     'format=json fork works ' +
       "and the new dojo's id is returned" do
+    @id = create_kata
     @avatar = start # 0
     run_tests       # 1
     fork(@id, @avatar.name, tag = 1)
@@ -101,6 +103,7 @@ class ForkerControllerTest < AppControllerTestBase
     'format=html fork works ' +
       'and you are redirected to the enter page ' +
         "with the new dojo's id" do
+    @id = create_kata
     @avatar = start # 0
     run_tests       # 1
     fork(@id, @avatar.name, tag = 1, :html)
@@ -108,7 +111,6 @@ class ForkerControllerTest < AppControllerTestBase
     url = /(.*)\/enter\/show\/(.*)/
     m = url.match(@response.location)
     forked_kata_id = m[2]
-    assert dir_of(katas[forked_kata_id]).exists?
   end
 
   #- - - - - - - - - - - - - - - - - -
@@ -116,14 +118,24 @@ class ForkerControllerTest < AppControllerTestBase
   test '5EA04E',
   'when the exercise no longer exists and everything else ' +
      'is ok then fork works and the new dojos id is returned' do
+    @id = unique_id
+    language = languages[default_language_name]
+    manifest = {
+                       id: @id,
+                  created: [2016,1,9,17,50,45],
+                 language: language.name,
+                 exercise: 'exercise-name-that-does-not-exist',
+      unit_test_framework: language.unit_test_framework,
+                 tab_size: language.tab_size
+    }
+    manifest[:visible_files] = language.visible_files
+    manifest[:visible_files]['output'] = ''
+    manifest[:visible_files]['instructions'] = 'your task...'
+    kata = history.create_kata_from_manifest(katas, manifest)
+    @id = kata.id
     @avatar = start # 0
     run_tests       # 1
-    dir = dir_of(katas[@id])
-    json = dir.read_json('manifest.json')
-    not_exercise_name = 'exercise-name-that-does-not-exist'
-    assert_nil exercises[not_exercise_name]
-    json['exercise'] = not_exercise_name
-    dir.write_json('manifest.json', json)
+
     fork(@id, @avatar.name, tag = 1)
     assert forked?
   end
@@ -133,14 +145,24 @@ class ForkerControllerTest < AppControllerTestBase
   test '9D85BF',
   'when language has been renamed and everything else ' +
     'is ok then fork works and the new dojos id is returned' do
+    @id = unique_id
+    language = languages['C#-NUnit']
+    manifest = {
+                       id: @id,
+                  created: [2016,1,9,17,50,45],
+                 language: 'C#', #old-name
+                 exercise: default_exercise_name,
+      unit_test_framework: language.unit_test_framework,
+                 tab_size: language.tab_size
+    }
+    manifest[:visible_files] = language.visible_files
+    manifest[:visible_files]['output'] = ''
+    manifest[:visible_files]['instructions'] = 'your task...'
+    kata = history.create_kata_from_manifest(katas, manifest)
+    @id = kata.id
     @avatar = start # 0
     run_tests       # 1
-    dir = dir_of(katas[@id])
-    json = dir.read_json('manifest.json')
-    old_language_name = 'C#'
-    assert_not_nil languages[old_language_name]
-    json['language'] = old_language_name
-    dir.write_json('manifest.json', json)
+
     fork(@id, @avatar.name, tag = 1)
     assert forked?
   end
