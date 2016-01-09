@@ -98,9 +98,9 @@ class KataTests < AppModelsTestBase
        'all read from manifest' do
     language = languages['Java-JUnit']
     exercise = exercises['Fizz_Buzz']
-    now = [2014, 7, 17, 21, 15, 45]
     id = unique_id
-    kata = katas.create_kata(language, exercise, id, now)
+    now = [2014, 7, 17, 21, 15, 45]
+    kata = history.create_kata(language, exercise, id, now)
     assert_equal id, kata.id.to_s
     assert_equal Time.mktime(*now), kata.created
     assert_equal language.name, kata.language.name

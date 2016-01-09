@@ -22,7 +22,7 @@ module TestDomainHelpers # mix-in
   def make_kata(id = unique_id, language_name = 'C (clang)-assert', exercise_name = 'Fizz_Buzz')
     language = languages[language_name]
     exercise = exercises[exercise_name]
-    katas.create_kata(language, exercise, id)
+    history.create_kata(language, exercise, id)
   end
 
   def unique_id

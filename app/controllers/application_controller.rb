@@ -14,7 +14,9 @@ class ApplicationController < ActionController::Base
 
   def languages; dojo.languages; end
   def exercises; dojo.exercises; end
+
   def     katas; dojo.katas    ; end
+  def   history; dojo.history  ; end
 
   def id         ; @id ||= katas.complete(params[:id]); end
   def kata       ; katas[id]           ; end

@@ -15,7 +15,30 @@ class HostDiskHistory
   # Katas
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def create_kata(katas, manifest)
+  def create_manifest(language, exercise, id = unique_id, now = time_now)
+    # a kata's id has 10 hex chars. This gives 16^10 possibilities
+    # which is 1,099,511,627,776 which is big enough to not
+    # need to check that a kata with the id already exists.
+    manifest = {
+                       id: id,
+                  created: now,
+                 language: language.name,
+                 exercise: exercise.name,
+      unit_test_framework: language.unit_test_framework,
+                 tab_size: language.tab_size
+    }
+    manifest[:visible_files] = language.visible_files
+    manifest[:visible_files]['output'] = ''
+    manifest[:visible_files]['instructions'] = exercise.instructions
+    manifest
+  end
+
+  def create_kata(language, exercise, id = unique_id, now = time_now)
+    manifest = create_manifest(language, exercise, id, now)
+    create_kata_from_manifest(katas, manifest)
+  end
+
+  def create_kata_from_manifest(katas, manifest)
     kata = Kata.new(katas, manifest[:id])
     make_dir(kata)
     dir(kata).write_json(manifest_filename, manifest)
@@ -162,6 +185,8 @@ class HostDiskHistory
 
   include ExternalParentChainer
   include IdSplitter
+  include TimeNow
+  include UniqueId
 
   def make_dir(obj)
     dir(obj).make

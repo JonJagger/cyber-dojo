@@ -4,10 +4,12 @@
 %w{
   external_parent_chainer
   external_dir
-
+  time_now
+  unique_id
   id_splitter
   string_cleaner
   string_truncater
+
   runner
   docker_runner
   docker_machine_runner
@@ -18,8 +20,6 @@
   host_dir
   host_git
   host_log
-  time_now
-  unique_id
   languages_display_names_splitter
   stub_runner
 }.each { |sourcefile| require_relative './' + sourcefile }
