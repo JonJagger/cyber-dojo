@@ -52,7 +52,6 @@ class DockerRunnerTests < LibTestBase
 
     real_caches_path = get_caches_root
     set_caches_root(tmp_root + 'caches/')
-    disk[caches.path].make
 
     cp_command = "cp #{real_caches_path}/#{Languages.cache_filename} #{caches.path}"
     `#{cp_command}`
@@ -114,10 +113,14 @@ class DockerRunnerTests < LibTestBase
     runner.run(lion.kata.id, lion.name, delta, files={}, image_name, max_seconds)
   end
 
+  # - - - - - - - - - - - - - - -
+
   def mock_run_assert(expected_output, mock_output, mock_exit_status)
     output = mock_run(mock_output, mock_exit_status)
     assert_equal expected_output, output
   end
+
+  # - - - - - - - - - - - - - - -
 
   def mock_run_setup(mock_output, mock_exit_status)
     kata = make_kata

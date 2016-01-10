@@ -20,6 +20,7 @@ module TestExternalHelpers # mix-in
     raise "setup already called" if !@original_config.nil?
     @original_config = read_config
     setup_tmp_root
+    # we never want tests to write to the real katas root
     set_katas_root(tmp_root + 'katas')
   end
 
@@ -65,7 +66,7 @@ module TestExternalHelpers # mix-in
     config['root'][name] = value
     IO.write(config_filename, JSON.unparse(config))
     `mkdir -p #{value}` if name == 'katas'
-    #TODO: what about caches?
+    `mkdir -p #{value}` if name == 'caches'
   end
 
   def set_class(name, value)

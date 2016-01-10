@@ -43,16 +43,13 @@ end
 #
 # The main reason for this arrangement is testability.
 # For example, I can run controller tests by setting the
-# environment variables, then run the test which issue
-# a GET/POST, let the call work its way through the rails stack,
+# config, then run the test which issue a GET/POST,
+# let the call work its way through the rails stack,
 # eventually reaching dojo.rb where it creates
-# Disk/Runner/Git/Shell/etc objects as named in ENV[]
+# Disk/Runner/Git/Shell/etc objects as named in the config.
 #
 # The external objects are held using
 #    @name ||= ...
-# This could be coded without the ||= cache since
-# the externals are stateless - the externals they
-# represent maintain the state.
 # I use ||= partly for optimization and partly for testing
 # (where it is handy that it is the same object)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

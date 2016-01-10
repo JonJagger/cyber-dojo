@@ -133,7 +133,6 @@ class DockerMachineRunnerTests < LibTestBase
   def mock_docker_machine_refresh_cache(nodes)
     real_caches_root = get_caches_root
     set_caches_root(tmp_root + 'caches/')
-    disk[caches.path].make
     # We have reset caches_root so we don't overwrite the true runner's cache
     # But we still need to be able to read the languages and exercises caches.
     `cp #{real_caches_root}/#{Languages.cache_filename} #{caches.path}`
