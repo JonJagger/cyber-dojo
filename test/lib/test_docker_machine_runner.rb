@@ -156,6 +156,8 @@ class DockerMachineRunnerTests < LibTestBase
     assert disk[caches.path].exists?(runner.cache_filename), "cache exists"
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 =begin
 
   # TODO: restore

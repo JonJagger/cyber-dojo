@@ -106,8 +106,8 @@ end
 #   },
 # ]
 #
-# At the moment the only gui action that creates an
-# increments.json file entry is a [test] event.
+# At the moment the only event that creates an
+# increments.json file entry is a [test].
 #
 # However, I may create finer grained tags than
 # just [test] events...
@@ -130,9 +130,10 @@ end
 # always the current length of increments.json (even if
 # that is zero) which is also the latest tag number.
 #
-# The inclusive lower bound for n in avatar.tags[n] is
-# zero. When an animal does a diff of [1] what is run is
-# a diff between
-#   avatar.tags[0] and avatar.tags[1]
+# The inclusive lower bound for n in avatar.tags[n] is zero.
+# When an animal does a diff of [1] what is run is a diff
+# between
+#   avatar.tags[0] and
+#   avatar.tags[1]
 #
 # ------------------------------------------------------
