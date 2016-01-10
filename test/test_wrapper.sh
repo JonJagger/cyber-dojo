@@ -6,17 +6,17 @@ if [ "$#" -eq 0 ]; then
   echo
   echo '  How to use test_wrapper.sh'
   echo
-  echo '  1. running a single test'
+  echo '  1. running specific tests in one folder'
   echo "     $ cd $cyberDojoHome/test/app_model"
-  echo '     $ ./avatar_test.rb <ARGS>'
+  echo '     $ ./run.sh <ID*>'
   echo
   echo '  2. running all the tests in one folder'
   echo "     $ cd $cyberDojoHome/app_model"
-  echo '     $ ./run_all.sh <ARGS>'
+  echo '     $ ./run.sh'
   echo
   echo '  3. running all the tests in all the folders'
   echo "     $ cd $cyberDojoHome"
-  echo '     $ ./run_all.sh <ARGS>'
+  echo '     $ ./run.sh'
   echo
   exit
 fi

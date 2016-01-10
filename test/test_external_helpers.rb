@@ -62,6 +62,11 @@ module TestExternalHelpers # mix-in
     config = read_json_config
     config['root'][name] = value
     IO.write(config_filename, JSON.unparse(config))
+
+    #TODO: what about caches?
+    #TODO: drop cd prefix
+    #TODO: make helper for config
+
   end
 
   def cd_class_set(name, value)
