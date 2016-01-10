@@ -97,7 +97,7 @@ class KatasTests < AppModelsTestBase
   end
 
   def all_ids(k = katas)
-    k.each.map { |kata| kata.id.to_s }
+    k.map { |kata| kata.id }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

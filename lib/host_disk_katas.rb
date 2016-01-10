@@ -19,7 +19,12 @@ class HostDiskKatas
   # Katas
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def create_manifest(language, exercise, id = unique_id, now = time_now)
+  def create_kata(language, exercise, id = unique_id, now = time_now)
+    manifest = create_manifest(language, exercise, id, now)
+    create_kata_from_manifest(manifest)
+  end
+
+  def create_manifest(language, exercise, id, now)
     # a kata's id has 10 hex chars. This gives 16^10 possibilities
     # which is 1,099,511,627,776 which is big enough to not
     # need to check that a kata with the id already exists.
@@ -37,11 +42,6 @@ class HostDiskKatas
     manifest
   end
 
-  def create_kata(language, exercise, id = unique_id, now = time_now)
-    manifest = create_manifest(language, exercise, id, now)
-    create_kata_from_manifest(manifest)
-  end
-
   def create_kata_from_manifest(manifest)
     kata = Kata.new(self, manifest[:id])
     dir(kata).make
@@ -53,6 +53,9 @@ class HostDiskKatas
     # If at least 6 characters of the id are provided attempt to complete
     # it into the full 10 character id. Doing completion with fewer characters
     # would likely result in a lot of disk activity and no unique outcome.
+    # Also, if completion was attempted for a very short id (say 3 characters)
+    # it would provide a way for anyone to find the full id of a cyber-dojo
+    # and potentially interfere with a live session.
     if !id.nil? && id.length >= 6
       # outer-dir has 2-characters
       outer_dir = disk[path + outer(id)]
@@ -79,13 +82,9 @@ class HostDiskKatas
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
   def [](id)
-    return nil if !valid?(id)
+    return nil unless valid?(id)
     kata = Kata.new(self, id)
-    kata_exists?(kata) ? kata : nil
-  end
-
-  def kata_exists?(kata) # TODO: private?
-    dir(kata).exists?
+    exists?(kata) ? kata : nil
   end
 
   def kata_manifest(kata)
@@ -120,7 +119,7 @@ class HostDiskKatas
     sandbox = Sandbox.new(avatar)
     dir(sandbox).make
     avatar.visible_files.each do |filename, content|
-      write(sandbox, filename, content)
+      dir(sandbox).write(filename, content)
       git.add(path_of(sandbox), filename)
     end
 
@@ -134,7 +133,7 @@ class HostDiskKatas
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
   def avatar_exists?(avatar)
-    dir(avatar).exists?
+    exists?(avatar)
   end
 
   def avatar_increments(avatar)
@@ -149,7 +148,7 @@ class HostDiskKatas
 
   def avatar_ran_tests(avatar, delta, files, now, output, colour)
     # update manifest
-    write(avatar.sandbox, 'output', output)
+    dir(avatar.sandbox).write('output', output)
     files['output'] = output
     write_avatar_manifest(avatar, files)
     # update Red/Amber/Green increments
@@ -192,7 +191,7 @@ class HostDiskKatas
     end
   end
 
-  def write(sandbox, filename, content)
+  def write(sandbox, filename, content) # TODO: few tests still rely on this
     dir(sandbox).write(filename, content)
   end
 
@@ -203,6 +202,10 @@ class HostDiskKatas
   include TimeNow
   include UniqueId
   include Slashed
+
+  def exists?(obj)
+    dir(obj).exists?
+  end
 
   def valid?(id)
     id.class.name == 'String' &&
