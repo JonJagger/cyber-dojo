@@ -2,6 +2,8 @@
 class Avatar
 
   def initialize(kata, name)
+    # Does *not* validate.
+    # All access to avatar object must come through dojo.katas[id].avatars[name]
     @kata = kata
     @name = name
   end
