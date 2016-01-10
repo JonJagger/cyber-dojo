@@ -11,7 +11,7 @@ class HostDiskKatasTests < LibTestBase
   end
 
   test 'B55710',
-  'katas has correct path format when set with trailing slash' do
+  'katas-path has correct format when set with trailing slash' do
     path = '/tmp/slashed/'
     set_katas_root(path)
     assert_equal path, katas.path
@@ -21,7 +21,7 @@ class HostDiskKatasTests < LibTestBase
   #- - - - - - - - - - - - - - - -
 
   test 'B2F787',
-  'katas has correct path format when set without trailing slash' do
+  'katas-path has correct format when set without trailing slash' do
     path = '/tmp/unslashed'
     set_katas_root(path)
     assert_equal path + '/', katas.path
@@ -31,7 +31,7 @@ class HostDiskKatasTests < LibTestBase
   #- - - - - - - - - - - - - - - -
 
   test '6F3999',
-  'kata has correct path format' do
+  'kata-path has correct format' do
     kata = make_kata
     assert correct_path_format?(kata)
   end
@@ -39,7 +39,7 @@ class HostDiskKatasTests < LibTestBase
   #- - - - - - - - - - - - - - - -
 
   test '1E4B7A',
-  'path is split ala git' do
+  'kata-path is split ala git' do
     kata = make_kata
     split = kata.id[0..1] + '/' + kata.id[2..-1]
     assert path_of(kata).include?(split)
@@ -48,7 +48,7 @@ class HostDiskKatasTests < LibTestBase
   #- - - - - - - - - - - - - - - -
 
   test '2ED22E',
-  "avatar has correct path format" do
+  "avatar-path has correct format" do
     kata = make_kata
     avatar = kata.start_avatar(Avatars.names)
     assert correct_path_format?(avatar)
@@ -57,7 +57,7 @@ class HostDiskKatasTests < LibTestBase
   #- - - - - - - - - - - - - - - -
 
   test 'B7E4D5',
-  'sandbox has correct path format' do
+  'sandbox-path has correct format' do
     kata = make_kata
     avatar = kata.start_avatar(Avatars.names)
     sandbox = avatar.sandbox
@@ -71,15 +71,6 @@ class HostDiskKatasTests < LibTestBase
   'make_kata saves manifest in kata dir' do
     kata = make_kata
     assert katas.dir(kata).exists?('manifest.json')
-  end
-
-  #- - - - - - - - - - - - - - - -
-
-  test '2D9F15',
-  'sandbox dir is initially created' do
-    kata = make_kata
-    avatar = kata.start_avatar(['hippo'])
-    assert katas.dir(avatar.sandbox).exists?
   end
 
   #- - - - - - - - - - - - - - - -
@@ -123,6 +114,86 @@ class HostDiskKatasTests < LibTestBase
     git_evidence = "git rm 'makefile'"
     assert_log_include?(pathed(git_evidence))
     refute @visible_files.keys.include? 'makefile'
+  end
+
+  #- - - - - - - - - - - - - - - -
+
+  test '2D9F15',
+  'sandbox dir is initially created' do
+    kata = make_kata
+    avatar = kata.start_avatar(['hippo'])
+    assert katas.dir(avatar.sandbox).exists?
+  end
+
+  #- - - - - - - - - - - - - - - -
+
+  test '4C08A1',
+  'start_avatar on multiple threads doesnt start the same avatar twice' do
+    # Have to call setup at the start of each loop
+    # And have to make sure setups/teardowns balance.
+    # See test/test_external_helpers.rb
+    teardown
+    repeat = 20
+    repeat.times do |n|
+      begin
+        setup
+        kata = make_kata
+        started = []
+        semaphore = Mutex.new
+        size = 4
+        animals = Avatars.names[0...size].shuffle
+        threads = Array.new(size * 2)
+        names = Array.new(size * 2)
+        threads.size.times { |i|
+          threads[i] = Thread.new {
+            avatar = kata.start_avatar(animals)
+            names[i] = avatar.name unless avatar.nil?
+          }
+        }
+        threads.size.times { |i| threads[i].join }
+        names.compact!
+        assert_equal animals.sort, names.sort
+        assert_equal names.sort, kata.avatars.map(&:name).sort
+      ensure
+        teardown if n != (repeat-1)
+      end
+    end
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'A31DC1',
+  'start_avatar on multiple processes doesnt start the same avatar twice' do
+    # Have to call setup at the start of each loop
+    # And have to make sure setups/teardowns balance.
+    # See test/test_external_helpers.rb
+    teardown
+    repeat = 20
+    20.times do |n|
+      begin
+        setup
+        kata = make_kata
+        started = []
+        size = 4
+        animals = Avatars.names[0...size].shuffle
+        names = Array.new(size * 2)
+        read_pipe, write_pipe = IO.pipe
+        names.size.times {
+          Process.fork {
+            avatar = kata.start_avatar(animals)
+            write_pipe.puts avatar.name unless avatar.nil?
+          }
+        }
+        names.size.times { Process.wait }
+        write_pipe.close
+        names = read_pipe.read.split
+        read_pipe.close
+        assert_equal animals.sort, names.sort
+        assert_equal names.sort, kata.avatars.map(&:name).sort
+      ensure
+        teardown if n != (repeat-1)
+      end
+    end
   end
 
   private
