@@ -111,20 +111,35 @@ class KataTests < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '139C43',
-    'start_avatar with specific avatar-name' +
-       ' (useful for testing) succeeds if avatar has not yet started' do
+  test '0A5632',
+  'started_avatars is initially empty array' do
+    @kata = make_kata
+    assert_equal [], avatars_names
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '8BDB48',
+  'start_avatar with name that is not a known avatar is nil' do
     kata = make_kata
-    hippo = kata.start_avatar(['hippo'])
+    assert_nil kata.start_avatar(['sellotape'])
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '139C43',
+    'start_avatar with specific name succeeds if avatar has not yet started' do
+    @kata = make_kata
+    hippo = @kata.start_avatar(['hippo'])
+    refute_nil hippo
     assert_equal 'hippo', hippo.name
-    assert_equal ['hippo'], kata.avatars.map(&:name)
+    assert_equal ['hippo'], avatars_names
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'A653FA',
-    'start_avatar with specific avatar-name' +
-       ' (useful for testing) fails if avatar has already started' do
+    'start_avatar with specific name is nil if avatar has already started' do
     kata = make_kata
     kata.start_avatar(['hippo'])
     avatar = kata.start_avatar(['hippo'])
@@ -134,35 +149,50 @@ class KataTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '4C66C8',
-    'start_avatar with specific avatar-names arg is used' +
-       '(useful for testing)' do
-    kata = make_kata
-    names = %w(panda lion cheetah)
-    panda = kata.start_avatar(names)
-    assert_equal 'panda', panda.name
-    lion = kata.start_avatar(names)
-    assert_equal 'lion', lion.name
-    cheetah = kata.start_avatar(names)
+    'start_avatar with specific names tries them in order' do
+    @kata = make_kata
+    names = %w(cheetah lion panda)
+
+    cheetah = @kata.start_avatar(names)
+    refute_nil cheetah
     assert_equal 'cheetah', cheetah.name
-    assert_nil kata.start_avatar(names)
-    avatars_names = kata.avatars.map(&:name)
-    assert_equal names.sort, avatars_names.sort
+    assert_equal ['cheetah'], avatars_names
+
+    lion = @kata.start_avatar(names)
+    refute_nil lion
+    assert_equal 'lion', lion.name
+    assert_equal ['cheetah','lion'], avatars_names
+
+    panda = @kata.start_avatar(names)
+    refute_nil panda
+    assert_equal 'panda', panda.name
+    assert_equal ['cheetah','lion','panda'], avatars_names
+
+    assert_nil @kata.start_avatar(names)
+    assert_equal names.sort, avatars_names
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '08141A',
-  'start_avatar succeeds once for each avatar name then fails' do
+  'start_avatar succeeds once for each avatar name then its full and is nil' do
     kata = make_kata
     created = []
     Avatars.names.length.times do
       avatar = kata.start_avatar
       refute_nil avatar
-      created << avatar
+      created << avatar.name
     end
-    assert_equal Avatars.names.sort, created.collect(&:name).sort
-    avatar = kata.start_avatar
-    assert_nil avatar
+    assert_equal Avatars.names.sort, created.sort
+    assert_nil kata.start_avatar
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  private
+
+  def avatars_names
+    @kata.avatars.map(&:name).sort
   end
 
 end

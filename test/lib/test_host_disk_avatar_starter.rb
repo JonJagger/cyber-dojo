@@ -19,54 +19,6 @@ class HostDiskAvatarStarterTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '0A5632',
-  'started_avatars is initially empty array' do
-    assert_equal [], started_avatars
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test '449306',
-  'start_avatar(names) starts first unstarted avatar in names' do
-    avatar_name = start_avatar(['lion','panda','salmon'])
-    assert_equal 'lion', avatar_name
-    assert_equal ['lion'], started_avatars
-    avatar_name = start_avatar(['lion','panda','salmon'])
-    assert_equal 'panda', avatar_name
-    assert_equal ['lion','panda'], started_avatars
-    avatar_name = start_avatar(['lion','panda','salmon'])
-    assert_equal 'salmon', avatar_name
-    assert_equal ['lion','panda', 'salmon'], started_avatars
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'C8549B',
-  'start_avatar is nil when the dojo is full' do
-    animals = ['lion','panda','salmon']
-    animals.size.times do
-      avatar_name = start_avatar(animals)
-      refute_nil avatar_name
-    end
-    avatar_name = start_avatar(animals)
-    assert_nil avatar_name
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'D6379A',
-  'start_avatar is nil when the dojo is full (without default argument)' do
-    Avatars.names.size.times do
-      avatar_name = start_avatar
-      refute_nil avatar_name
-    end
-    assert_equal Avatars.names, started_avatars
-    avatar_name = start_avatar
-    assert_nil avatar_name
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '4C08A1',
   'start_avatar on multiple threads doesnt start the same avatar twice' do
     # Have to call setup at the start of each loop
