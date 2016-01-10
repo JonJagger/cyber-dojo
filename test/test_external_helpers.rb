@@ -37,6 +37,7 @@ module TestExternalHelpers # mix-in
   def     set_katas_root(value); set_root(    'katas', value); end
 
   def   set_runner_class(value); set_class(   'runner', value); end
+  def    set_katas_class(value); set_class(    'katas', value); end
   def    set_shell_class(value); set_class(    'shell', value); end
   def     set_disk_class(value); set_class(     'disk', value); end
   def      set_git_class(value); set_class(      'git', value); end
@@ -50,6 +51,7 @@ module TestExternalHelpers # mix-in
   def     get_katas_root; get_root(    'katas'); end
 
   def   get_runner_class; get_class('runner'); end
+  def    get_katas_class; get_class( 'katas'); end
   def    get_shell_class; get_class( 'shell'); end
   def     get_disk_class; get_class(  'disk'); end
   def      get_git_class; get_class(   'git'); end

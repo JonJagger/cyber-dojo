@@ -46,16 +46,16 @@ class DojoTests < AppModelsTestBase
 
   # - - - - - -
 
-  test 'F062B9',
-  'disk can be set' do
-    set_disk_class('ExternalDouble')
-    assert_equal ExternalDouble, disk.class
+  test '4A9DEC',
+  'katas can be set' do
+    set_katas_class('ExternalDouble')
+    assert_equal ExternalDouble, katas.class
   end
 
-  test 'BB2F80',
-  'disk set to non-existant-class raises' do
-    set_disk_class(does_not_exist)
-    assert_raises(StandardError) { disk.class }
+  test '31FEC4',
+  'katas set to non-existant-class raises' do
+    set_katas_class(does_not_exist)
+    assert_raises(StandardError) { katas.class }
   end
 
   # - - - - - -
@@ -70,6 +70,20 @@ class DojoTests < AppModelsTestBase
   'shell set to non-existant-class raises' do
     set_shell_class(does_not_exist)
     assert_raises(StandardError) { shell.class }
+  end
+
+  # - - - - - -
+
+  test 'F062B9',
+  'disk can be set' do
+    set_disk_class('ExternalDouble')
+    assert_equal ExternalDouble, disk.class
+  end
+
+  test 'BB2F80',
+  'disk set to non-existant-class raises' do
+    set_disk_class(does_not_exist)
+    assert_raises(StandardError) { disk.class }
   end
 
   # - - - - - -
@@ -106,34 +120,34 @@ class DojoTests < AppModelsTestBase
 
   test '209EA1',
   'exercises.path can be set' do
-    set_exercises_root(path = '/fake_exercises_path/')
+    set_exercises_root(path = tmp_root + 'fake_exercises_path/')
     assert_equal path, exercises.path
   end
 
   test '27A597',
   'languages.path can be set' do
-    set_languages_root(path = '/fake_languages_path/')
+    set_languages_root(path = tmp_root + 'fake_languages_path/')
     assert_equal path, languages.path
   end
 
   test '5C25B8',
   'caches.path can be set' do
-    set_caches_root(path = '/fake_caches_path/')
+    set_caches_root(path = tmp_root + 'fake_caches_path/')
     assert_equal path, caches.path
   end
 
   test 'B6CC06',
   'katas.path can be set' do
-    set_katas_root(path = '/tmp/fake_katas_path/')
+    set_katas_root(path = tmp_root + 'fake_katas_path/')
     assert_equal path, katas.path
   end
 
   test '01CD52',
   'paths always have trailing slash even if config value does not' do
-    set_exercises_root(exercises_path = '/fake_exercises_path')
-    set_languages_root(languages_path = '/fake_languages_path')
-    set_katas_root(katas_path = '/tmp/fake_katas_path')
-    set_caches_root(caches_path = '/fake_caches_path')
+    set_exercises_root(exercises_path = tmp_root + 'fake_exercises_path')
+    set_languages_root(languages_path = tmp_root + 'fake_languages_path')
+    set_katas_root(        katas_path = tmp_root + 'fake_katas_path')
+    set_caches_root(      caches_path = tmp_root + 'fake_caches_path')
 
     assert_equal exercises_path + '/', exercises.path
     assert_equal languages_path + '/', languages.path
