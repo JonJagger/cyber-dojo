@@ -1,8 +1,4 @@
 
-# env vars can be set before running a test
-# if they are not set they get their defaults
-# at the end of each test the env vars are restored.
-
 module TestExternalHelpers # mix-in
 
   module_function
