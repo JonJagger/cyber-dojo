@@ -6,5 +6,5 @@
 configDir=/var/www/cyber-dojo/config
 
 cp $configDir/stub-runner-cyber-dojo.json $configDir/cyber-dojo.json
-rails s -e development
+rails s $*
 cp $configDir/default-cyber-dojo.json $configDir/cyber-dojo.json
