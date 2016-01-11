@@ -8,7 +8,7 @@ class GitDiffTests < AppLibTestBase
   include GitDiff
 
   test '5F8D2A',
-  'git_diff with modified file' do
+  'avatar_git_diff() with modified file' do
     set_runner_class('StubRunner')
 
     kata = make_kata

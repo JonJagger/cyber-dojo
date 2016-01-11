@@ -12,17 +12,20 @@
   string_truncater
   slashed
   redirect
+  languages_display_names_splitter
 
   runner
+  stub_runner
   docker_runner
   docker_machine_runner
   docker_data_container_runner
+
+  create_kata_manifest
   host_disk_katas
+
   host_shell
   host_disk
   host_dir
   host_git
   host_log
-  languages_display_names_splitter
-  stub_runner
 }.each { |sourcefile| require_relative './' + sourcefile }
