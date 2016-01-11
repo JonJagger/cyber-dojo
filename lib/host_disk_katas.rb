@@ -107,6 +107,7 @@ class HostDiskKatas
     return nil if name.nil? # full!
 
     avatar = Avatar.new(kata, name)
+    # it's dir has already been created in the mkdir above
 
     user_name = name + '_' + kata.id
     user_email = name + '@cyber-dojo.org'
@@ -148,7 +149,7 @@ class HostDiskKatas
     dir(avatar).read_json(manifest_filename)
   end
 
-  def avatar_ran_tests(avatar, delta, files, now, output, colour)
+  def avatar_ran_tests(avatar, files, now, output, colour)
     # update manifest
     dir(avatar.sandbox).write('output', output)
     files['output'] = output

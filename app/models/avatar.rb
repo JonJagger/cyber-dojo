@@ -13,7 +13,7 @@ class Avatar
   def test(delta, files, now = time_now, max_seconds = 15)
     output = runner.run(kata.id, name, delta, files, language.image_name, max_seconds)
     test_colour = language.colour(output)
-    katas.avatar_ran_tests(self, delta, files, now, output, test_colour)
+    katas.avatar_ran_tests(self, files, now, output, test_colour)
     [output, test_colour]
   end
 
