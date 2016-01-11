@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # parameters
-sandbox_path=$1
+files_path=$1
 image_name=$2
 max_seconds=$3
 
@@ -20,7 +20,7 @@ timeout --signal=${kill} $((max_seconds+5))s \
     --user=www-data \
     --net=none \
     --volumes-from="cyber-dojo-katas-data-container" \
-    --workdir=${sandbox_path}  \
+    --workdir=${files_path}  \
     ${image_name} \
     /bin/bash -c "timeout --signal=${kill} $((max_seconds))s ./cyber-dojo.sh 2>&1" 2>/dev/null
 

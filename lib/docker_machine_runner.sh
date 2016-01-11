@@ -3,7 +3,7 @@
 
 # parameters
 node_name=$1
-sandbox_path=$2
+files_path=$2
 image_name=$3
 max_seconds=$4
 
@@ -27,7 +27,7 @@ kill=9
 #    $ setfacl -d -m group:www-data:rwx cyber-dojo
 #    $ setfacl    -m group:www-data:rwx cyber-dojo
 
-docker-machine scp -r ${sandbox_path} ${node_name}:/tmp/cyber-dojo/${tmp_name}/
+docker-machine scp -r ${files_path} ${node_name}:/tmp/cyber-dojo/${tmp_name}/
 
 # - - - - - - - - - - - - - -
 # 2. run avatar's test in node's container
@@ -47,7 +47,7 @@ exit_status=$?
 
 # - - - - - - - - - - - - - -
 # 3. scp avatar's files back from the node?
-# Turned off because not yet needed (eg in Approval style tests)
+# Not yet needed (eg in Approval style tests)
 # Note this script is being run as cyber-dojo user (not www-data)
 
 # - - - - - - - - - - - - - -

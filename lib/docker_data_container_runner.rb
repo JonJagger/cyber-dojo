@@ -10,10 +10,6 @@
 
 class DockerDataContainerRunner
 
-  def self.cache_filename
-    'docker_runner_cache.json'
-  end
-
   def initialize(dojo)
     @dojo = dojo
   end
@@ -50,7 +46,11 @@ class DockerDataContainerRunner
     output, _ = shell.exec('docker images')
     lines = output.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
     image_names = lines.collect { |line| line.split[0] }
-    caches.write_json(self.class.cache_filename, image_names)
+    caches.write_json(cache_filename, image_names)
+  end
+
+  def cache_filename
+    'docker_runner_cache.json'
   end
 
   private

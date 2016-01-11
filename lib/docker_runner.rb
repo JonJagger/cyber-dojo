@@ -41,14 +41,21 @@ class DockerRunner
 
   def run(id, name, delta, files, image_name, max_seconds)
     sandbox = katas[id].avatars[name].sandbox
+
+    # replace with save to tmp folder
     katas_save(sandbox, delta, files)
+
     #run tests
     args = [
-      path_of(sandbox),
+      path_of(sandbox), # use temp folder
       image_name,
       max_seconds
     ].join(space = ' ')
+
     output, exit_status = shell.cd_exec(path, "./docker_runner.sh #{args}")
+
+    # fork { remove tmp folder }
+
     output_or_timed_out(output, exit_status, max_seconds)
   end
 
