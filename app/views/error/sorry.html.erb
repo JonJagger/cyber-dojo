@@ -1,54 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-  <style type="text/css">
-	body
-	{
-	  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-	  background-color: #666;
-	  color: Khaki;
-	  text-align: center;
-	}
-	h1
-	{
-	  font-size: 2em;
-	  font-weight: normal;
-	}
-	.align-center
-	{
-	  text-align: center;
-	  margin-left: auto;
-	  margin-right: auto;
-	}
-  </style>
-</head>
-
-<body class="panel">
-
-  <% index = 0 %>
-  <% avatars = Avatars.names.shuffle %>
-  <% size = 50 %>
-
-  <h1>sorry - we can't do that</h1>
-
-  <table class="align-center">
-	<% 8.times.each do %>
-	<tr>
-	  <% 8.times.each do %>
-	     <td>
- 		     <img alt="<%= avatars[index] %>"
-            style="display:block"
-			     height="<%= size %>"
-			      width="<%= size %>"
- 		          src="/images/avatars/bw/<%= avatars[index]%>.jpg" />
-  		 </td>
-       <% index += 1 %>
-	  <% end %>
-	</tr>
-	<% end %>
-  </table>
-
-</body>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <style type="text/css">
+  	body {
+  	  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  	  background-color: #262626;
+  	  color: Khaki;
+  	  text-align: center;
+  	}
+  	h1 {
+  	  font-size: 2em;
+  	  font-weight: normal;
+  	}
+  	.align-center {
+      width: 50%;
+      margin: 0 auto;
+  	}
+    </style>
+  </head>
+  <body>
+    <h1>sorry - we can't do that</h1>
+    <div style="align-center">
+      <img height="450"
+            width="450"
+              src="/images/avatars/all_avatars_background.png" />
+    </div>
+  </body>
 </html>
