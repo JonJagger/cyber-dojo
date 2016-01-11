@@ -3,6 +3,7 @@ module Runner # mix-in
 
   module_function
 
+  # TODO: move this into host_disk_katas
   def katas_save(sandbox, delta, files)
     delta[:deleted].each do |filename|
       git.rm(path_of(sandbox), filename)
@@ -31,6 +32,7 @@ module Runner # mix-in
     (timeout = 128) + (kill = 9)
   end
 
+  # TODO: drop this
   def path_of(obj)
     katas.path_of(obj)
   end

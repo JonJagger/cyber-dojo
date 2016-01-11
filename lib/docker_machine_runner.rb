@@ -40,17 +40,26 @@ class DockerMachineRunner
   # modifiers
 
   def run(id, name, delta, files, image_name, max_seconds)
-    sandbox = katas[id].avatars[name].sandbox
+    # TODO: _id _name _delta (unused)
+    sandbox = katas[id].avatars[name].sandbox # TODO: drop
+
+    # TODO: make new tmp folder (runner mix-in)
+    # TODO: replace with save *all* files to tmp folder (runner mix-in)
     katas_save(sandbox, delta, files)
+
     #run tests
     node = node_map[image_name].sample
     args = [
       node,
-      path_of(sandbox),
+      path_of(sandbox),  # TODO: use tmp folder
       image_name,
       max_seconds
     ].join(space = ' ')
+
     output, exit_status = shell.cd_exec(path, sudo("./docker_machine_runner.sh #{args}"));
+
+    # TODO:fork { remove tmp folder } (runner mix-in)
+
     output_or_timed_out(output, exit_status, max_seconds)
   end
 

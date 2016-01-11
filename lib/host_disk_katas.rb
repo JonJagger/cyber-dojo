@@ -184,6 +184,7 @@ class HostDiskKatas
     end
   end
 
+  # TODO: make private?
   def write(sandbox, filename, content) # TODO: few tests still rely on this
     dir(sandbox).write(filename, content)
   end
