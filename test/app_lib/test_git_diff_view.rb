@@ -7,7 +7,7 @@ class GitDiffViewTests < AppLibTestBase
   include GitDiff
 
   test '836292',
-  'example' do
+  'simple example going from red to green' do
     diffs =
     {
       'hiker.rb' =>

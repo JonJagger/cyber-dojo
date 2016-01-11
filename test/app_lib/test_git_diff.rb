@@ -1,10 +1,61 @@
 #!/bin/bash ../test_wrapper.sh
 
 require_relative './app_lib_test_base'
+require_relative '../app_models/delta_maker'
 
 class GitDiffTests < AppLibTestBase
 
   include GitDiff
+
+  test '5F8D2A',
+  'git_diff with modified file' do
+    set_runner_class('StubRunner')
+
+    kata = make_kata
+    lion = kata.start_avatar(['lion']) # tag 0
+    maker = DeltaMaker.new(lion)
+    maker.stub_colour(:red)
+    maker.run_test # tag 1
+    assert_equal :red, lion.lights[-1].colour
+
+    filename = 'hiker.c'
+    assert maker.file?(filename)
+    content = maker.content(filename)
+    refute_nil content
+    maker.change_file(filename, content.sub('6 * 9', '6 * 7'))
+    maker.stub_colour(:green)
+    maker.run_test # tag 2
+
+    assert_equal :green, lion.lights[-1].colour
+
+    diffs = avatar_git_diff(lion, was_tag=1, now_tag=2)
+
+    expected =
+    {
+      'hiker.c' =>
+      [
+        { :line => "#include \"hiker.h\"\r", :type => :same,    :number => 1 },
+        { :line => "\r",                     :type => :same,    :number => 2 },
+        { :line => "int answer(void)\r",     :type => :same,    :number => 3 },
+        { :line => "{\r",                    :type => :same,    :number => 4 },
+        {                                    :type => :section, :index => 0 },
+        { :line => "    return 6 * 9;\r",    :type => :deleted, :number => 5 },
+        { :line => "    return 6 * 7;\r",    :type => :added,   :number => 5 },
+        { :line => "}\r",                    :type => :same,    :number => 6 },
+      ],
+      'hiker.tests.c' => sameify(lion.visible_files['hiker.tests.c']),
+      'cyber-dojo.sh' => sameify(lion.visible_files['cyber-dojo.sh'])
+    }
+
+    filename = 'hiker.c'
+    assert_equal expected[filename], diffs[filename]
+    filename = 'hiker.tests.c'
+    assert_equal expected[filename], diffs[filename]
+    filename = 'cyber-dojo.sh'
+    assert_equal expected[filename], diffs[filename]
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '74CA5C',
   'empty file is deleted' do
