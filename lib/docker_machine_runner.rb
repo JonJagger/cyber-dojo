@@ -21,7 +21,8 @@ class DockerMachineRunner
   end
 
   def installed?
-    _, exit_status = shell.exec('docker-machine --version')
+    #TODO: add stderr_2_stdout to the exec
+    _, exit_status = shell.exec("docker-machine --version > /dev/null #{stderr_2_stdout}")
     exit_status == shell.success
   end
 

@@ -201,8 +201,9 @@ class HostDiskKatas
   include ExternalParentChainer
   include IdSplitter
   include TimeNow
-  include UniqueId
   include Slashed
+  include Redirect
+  include UniqueId
 
   def exists?(obj)
     dir(obj).exists?
@@ -238,10 +239,6 @@ class HostDiskKatas
     # Each avatar's manifest stores a cache of the avatar's
     # current visible files [filenames and contents].
     'manifest.json'
-  end
-
-  def stderr_2_stdout
-    '2>&1'
   end
 
 end

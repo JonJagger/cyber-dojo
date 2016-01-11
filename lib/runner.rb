@@ -37,5 +37,6 @@ module Runner # mix-in
 
   include StringCleaner
   include StringTruncater
+  include Redirect
 
 end

@@ -20,7 +20,7 @@ class DockerRunnerTests < LibTestBase
 
   test '329309',
   'installed? is true when [docker --version] succeeds' do
-    shell.mock_exec(['docker --version'], '', success)
+    shell.mock_exec(['docker --version > /dev/null 2>&1'], '', success)
     assert_equal 'DockerRunner', runner.class.name
     assert runner.installed?
   end
@@ -29,7 +29,7 @@ class DockerRunnerTests < LibTestBase
 
   test 'FDE315',
   ' installed? is false when [docker --version] does not succeed' do
-    shell.mock_exec(['docker --version'], '', not_success)
+    shell.mock_exec(['docker --version > /dev/null 2>&1'], '', not_success)
     assert_equal 'DockerRunner', runner.class.name
     refute runner.installed?
   end

@@ -11,6 +11,7 @@
   string_cleaner
   string_truncater
   slashed
+  redirect
 
   runner
   docker_runner
