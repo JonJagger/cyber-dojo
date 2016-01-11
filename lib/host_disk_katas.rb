@@ -97,9 +97,10 @@ class HostDiskKatas
   end
 
   def kata_start_avatar(kata, avatar_names = Avatars.names.shuffle)
-    valid_names = Avatars.names.shuffle & avatar_names
-    avatar_name = valid_names.sort.detect do |name|
-      _, exit_status = shell.cd_exec(path_of(kata), "mkdir #{name} #{stderr_2_stdout}")
+    # don't do the & with operands swapped as you lose randomness
+    valid_names = avatar_names & Avatars.names
+    avatar_name = valid_names.detect do |name|
+      _, exit_status = shell.cd_exec(path_of(kata), "mkdir #{name} > /dev/null #{stderr_2_stdout}")
       exit_status == shell.success
     end
 

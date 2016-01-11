@@ -189,6 +189,21 @@ class KataTests < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'FE8A3D',
+  'start_avatar starts avatars in random order' do
+    kata = make_kata
+    created = []
+    Avatars.names.length.times do
+      avatar = kata.start_avatar
+      refute_nil avatar
+      created << avatar.name
+    end
+    assert_equal Avatars.names.sort, created.sort
+    refute_equal created, created.sort
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   private
 
   def avatars_names
