@@ -11,9 +11,7 @@ class Kata
   # modifiers
 
   def start_avatar(avatar_names = Avatars.names.shuffle)
-    name = katas.kata_start_avatar(self, avatar_names)
-    return nil if name.nil?
-    Avatar.new(self, name)
+    katas.kata_start_avatar(self, avatar_names)
   end
 
   # queries

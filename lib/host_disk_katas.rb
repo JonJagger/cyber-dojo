@@ -99,17 +99,17 @@ class HostDiskKatas
   def kata_start_avatar(kata, avatar_names = Avatars.names.shuffle)
     # don't do the & with operands swapped as you lose randomness
     valid_names = avatar_names & Avatars.names
-    avatar_name = valid_names.detect do |name|
-      _, exit_status = shell.cd_exec(path_of(kata), "mkdir #{name} > /dev/null #{stderr_2_stdout}")
+    name = valid_names.detect do |valid_name|
+      _, exit_status = shell.cd_exec(path_of(kata), "mkdir #{valid_name} > /dev/null #{stderr_2_stdout}")
       exit_status == shell.success
     end
 
-    return nil if avatar_name.nil? # full!
+    return nil if name.nil? # full!
 
-    avatar = Avatar.new(kata, avatar_name)
+    avatar = Avatar.new(kata, name)
 
-    user_name = avatar.name + '_' + kata.id
-    user_email = avatar.name + '@cyber-dojo.org'
+    user_name = name + '_' + kata.id
+    user_email = name + '@cyber-dojo.org'
     git.setup(path_of(avatar), user_name, user_email)
 
     write_avatar_manifest(avatar, kata.visible_files)
@@ -127,7 +127,7 @@ class HostDiskKatas
 
     git.commit(path_of(avatar), tag=0)
 
-    avatar_name
+    avatar
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
