@@ -4,7 +4,7 @@
 # parameters
 node_name=$1
 sandbox_path=$2
-container_name=$3
+image_name=$3
 max_seconds=$4
 
 # local variables
@@ -40,7 +40,7 @@ docker run \
   --net=none \
   --volume=/tmp/cyber-dojo/${tmp_name}:/sandbox:rw \
   --workdir=/sandbox  \
-  ${container_name} \
+  ${image_name} \
   /bin/bash -c "timeout --signal=${kill} ${max_seconds}s ./cyber-dojo.sh 2>&1"
 
 exit_status=$?

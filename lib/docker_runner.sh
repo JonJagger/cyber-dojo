@@ -2,7 +2,7 @@
 
 # parameters
 sandbox_path=$1
-container_name=$2
+image_name=$2
 max_seconds=$3
 
 # local variables
@@ -21,7 +21,7 @@ timeout --signal=${kill} $((max_seconds+5))s \
     --net=none \
     --volume="${sandbox_path}:/sandbox:rw" \
     --workdir=/sandbox  \
-    ${container_name} \
+    ${image_name} \
     /bin/bash -c "timeout --signal=${kill} $((max_seconds))s ./cyber-dojo.sh 2>&1" 2>/dev/null
 
 exit_status=$?
