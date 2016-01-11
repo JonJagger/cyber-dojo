@@ -11,9 +11,7 @@ class Avatar
   # modifier
 
   def test(delta, files, max_seconds)
-    output = runner.run(kata.id, name, delta, files, language.image_name, max_seconds)
-    test_colour = language.colour(output)
-    [output, test_colour]
+    runner.run(kata.id, name, delta, files, language.image_name, max_seconds)
   end
 
   # queries

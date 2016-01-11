@@ -18,7 +18,9 @@ class KataController < ApplicationController
     outgoing = params[:file_hashes_outgoing]
     delta = FileDeltaMaker.make_delta(incoming, outgoing)
     files = received_files
-    @output, @test_colour = @avatar.test(delta, files, max_seconds=15)
+    max_seconds = 15
+    @output = @avatar.test(delta, files, max_seconds)
+    @test_colour = kata.language.colour(@output)
     katas.avatar_ran_tests(@avatar, files, time_now, @output, @test_colour)
 
     respond_to do |format|

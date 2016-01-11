@@ -49,7 +49,8 @@ class DeltaMaker
   def run_test(at = time_now, max_seconds = 15)
     delta = make_delta(@was, @now)
     visible_files = now
-    output, colour = @avatar.test(delta, visible_files, max_seconds)
+    output = @avatar.test(delta, visible_files, max_seconds)
+    colour = @avatar.language.colour(output)
     @avatar.katas.avatar_ran_tests(@avatar, visible_files, at, output, colour)
     [delta, visible_files, output]
   end
