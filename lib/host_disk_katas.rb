@@ -155,6 +155,8 @@ class HostDiskKatas
     # When that happens, the delta parameter of
     # avatar.test(delta, files, max_seconds)
     # can be dropped. Viz delta will move to here.
+    # lib/runner.kata_save() will come to here and the
+    # delta will be very useful to enable the [git rm] command.
 
     # update manifest
     dir(avatar.sandbox).write('output', output)
