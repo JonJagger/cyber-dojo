@@ -10,10 +10,9 @@ class Avatar
 
   # modifier
 
-  def test(delta, files, now = time_now, max_seconds = 15)
+  def test(delta, files, max_seconds)
     output = runner.run(kata.id, name, delta, files, language.image_name, max_seconds)
     test_colour = language.colour(output)
-    katas.avatar_ran_tests(self, files, now, output, test_colour)
     [output, test_colour]
   end
 
@@ -62,7 +61,9 @@ class Avatar
   end
 
   def sandbox
-    # The avatar's sandbox holds its source files
+    # An avatar's source files are _not_ held in its own folder
+    # (but in the it's sandbox folder) because its own folder
+    # is used for the manifest.json and increments.json files.
     Sandbox.new(self)
   end
 
