@@ -149,7 +149,13 @@ class HostDiskKatas
     dir(avatar).read_json(manifest_filename)
   end
 
-  def avatar_ran_tests(avatar, files, now, output, colour)
+  def avatar_ran_tests(avatar, delta, files, now, output, colour)
+    # delta is not currently used, but will be once the
+    # runner is properly decoupled from katas (persistance).
+    # When that happens, the delta parameter of
+    # avatar.test(delta, files, max_seconds)
+    # can be dropped. Viz delta will move to here.
+
     # update manifest
     dir(avatar.sandbox).write('output', output)
     files['output'] = output
