@@ -3,7 +3,7 @@
 cyberDojoHome=/var/www/cyber-dojo
 
 echo "setting up the runner"
-echo "..setting config/runner_bootstrap_config.json"
+echo "..initializing bootstrap config file"
 configFilename=$cyberDojoHome/config/cyber-dojo.json
 chmod --silent 666 $configFilename
 cp $cyberDojoHome/config/runner_bootstrap_config.json $configFilename

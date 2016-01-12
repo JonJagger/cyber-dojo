@@ -2,9 +2,11 @@
 
 require_relative '../admin_scripts/lib_domain'
 
+puts '..seeing if docker is installed'
+
 runner = DockerRunner.new(dojo)
 if !runner.installed?
-  puts '..docker is NOT installed!!'
+  puts '..docker is *****NOT***** installed!!'
 else
   puts '..docker IS installed'
 
@@ -16,8 +18,8 @@ else
   `chown www-data:www-data #{config_filename}`
 
   # Do not use runner anymore. It is bound to the *old* config
-  puts '..refreshing DockerRunner cache'
   cache_filename = dojo.caches.path + dojo.runner.cache_filename
+  puts "..refreshing #{cache_filename}"
   `chmod --silent 666 #{cache_filename}`
   dojo.runner.refresh_cache
   `chmod 444 #{cache_filename}`
