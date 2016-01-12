@@ -1,8 +1,9 @@
 
 # test runner providing isolation/protection/security
-# via Docker containers https://www.docker.io/ and relying
-# on docker volume mounts of the host file system to give
-# the running docker container access to .../katas/...
+# via docker-run images https://www.docker.io/
+# Saves the incoming files off /tmp/ and then relies
+# on its associated .sh file to do a [docker run] command
+# which volume mounts the tmp folder.
 
 class DockerRunner
 

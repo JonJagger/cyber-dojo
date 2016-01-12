@@ -1,8 +1,14 @@
 
 # test runner providing isolation/protection/security
-# via DockerMachine run containers https://www.docker.io/
-# and relying on docker volume mounts to temporary rsync'd
-# locations to give docker containers access to .../katas/...
+# via docker-machine run images https://www.docker.io/
+# Saves the incoming files off /tmp/ and then relies on
+# its associated .sh file to
+# o) issue a [docker-machine env $(node)]
+# o) issue a [docker-machine scp ... $(node)] to copy the
+#    files to the node
+# o) issue a [docker run ...] to run the container on the node
+#    which will volume mount the folder where step 2 scp'd
+#    the files to.
 
 class DockerMachineRunner
 
