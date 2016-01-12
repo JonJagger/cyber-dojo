@@ -108,7 +108,7 @@ class DockerRunnerTests < LibTestBase
 
   def mock_run(mock_output, mock_exit_status)
     kata = mock_run_setup(mock_output, mock_exit_status)
-    runner.run(nil, nil, nil, files={}, kata.language.image_name, max_seconds)
+    runner.run(nil, nil, files={}, kata.language.image_name, max_seconds)
   end
 
   # - - - - - - - - - - - - - - -

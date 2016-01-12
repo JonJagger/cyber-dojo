@@ -12,19 +12,18 @@ class KataController < ApplicationController
   end
 
   def run_tests
-    @kata   = kata
+    raise "sorry can't do that" if kata.nil? || avatar.nil?
     @avatar = avatar
+
     incoming = params[:file_hashes_incoming]
     outgoing = params[:file_hashes_outgoing]
     delta = FileDeltaMaker.make_delta(incoming, outgoing)
 
     files = received_files
-    max_seconds = 15
-    @output = @avatar.test(delta, files, max_seconds)
+    @output = @avatar.test(files, max_seconds = 15)
     @test_colour = kata.language.colour(@output)
 
     fork do
-      # lots of stuff above can come into here
       katas.avatar_ran_tests(@avatar, delta, files, time_now, @output, @test_colour)
     end
 

@@ -4,6 +4,23 @@ require_relative './app_controller_test_base'
 
 class KataControllerTest  < AppControllerTestBase
 
+  test 'E1F76E',
+    'run_tests with bad kata id raises' do
+    params = { :format => :js, :id => 'bad' }
+    assert_raises(StandardError) { post 'kata/run_tests', params }
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '80C3FD',
+    'run_tests with good kata id but bad avatar name raises' do
+    kata_id = create_kata('C (gcc), assert')
+    params = { :format => :js, :id => kata_id, :avatar => 'bad' }
+    assert_raises(StandardError) { post 'kata/run_tests', params }
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test '9390F6',
   'edit and then run-tests' do
     create_kata('C (gcc), assert')

@@ -42,7 +42,7 @@ class DockerMachineRunner
 
   # modifiers
 
-  def run(_id, _name, _delta, files, image_name, max_seconds)
+  def run(_id, _name, files, image_name, max_seconds)
     write_files(tmp_path, files)
     node = cached_node_map[image_name].sample
     args = [ node, tmp_path, image_name, max_seconds ].join(space = ' ')
