@@ -3,40 +3,36 @@ require 'digest/md5'
 class ParamsMaker
 
   def initialize(avatar)
-    @visible_files = avatar.visible_files
     @incoming = {}
-    @outgoing = {}
+    @live = {}
     avatar.visible_files.each do |filename, content|
-      @incoming[filename] = hash(content)
-      @outgoing[filename] = hash(content)
+      @incoming[filename] = content
+      @live[filename] = content
     end
   end
 
   def new_file(filename, content)
     refute_file(filename, 'new_file')
-    @visible_files[filename] = content
-    @outgoing[filename] = hash(content)
+    @live[filename] = content
   end
 
   def delete_file(filename)
     assert_file(filename, 'delete_file')
-    @visible_files.delete(filename)
-    @outgoing.delete(filename)
+    @live.delete(filename)
   end
 
   def change_file(filename, content)
     assert_file(filename, 'change_file')
     message = [ info(filename, 'change_file'), "\t unchanged!" ].join("\n")
-    refute(message) { @visible_files[filename] == content }
-    @visible_files[filename] = content
-    @outgoing[filename] = hash(content)
+    refute(message) { @live[filename] == content }
+    @live[filename] = content
   end
 
   def params
     {
-      file_content: @visible_files,
       file_hashes_incoming: @incoming,
-      file_hashes_outgoing: @outgoing
+      file_hashes_outgoing: @live,
+      file_content: @live
     }
   end
 
@@ -68,7 +64,7 @@ private
   end
 
   def filenames
-    @visible_files.keys
+    @live.keys
   end
 
   def assert(message, &block)
@@ -77,10 +73,6 @@ private
 
   def refute(message, &block)
     fail message if block.call
-  end
-
-  def hash(content)
-    Digest::MD5.hexdigest(content)
   end
 
 end

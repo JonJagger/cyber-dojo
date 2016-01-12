@@ -23,10 +23,7 @@ class KataController < ApplicationController
     @output = @avatar.test(delta, files, max_seconds)
     @test_colour = kata.language.colour(@output)
 
-    fork do
-      # lots of stuff above can come into here
-      katas.avatar_ran_tests(@avatar, delta, files, time_now, @output, @test_colour)
-    end
+    fork { katas.avatar_ran_tests(@avatar, delta, files, time_now, @output, @test_colour) }
 
     respond_to do |format|
       format.js   { render layout: false }
