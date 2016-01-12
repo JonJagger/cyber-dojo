@@ -39,6 +39,8 @@ class KataControllerTest  < AppControllerTestBase
     @avatar = start
     delete_file(makefile)
     run_tests
+    # ran_tests() is in a fork. Have to pause to wait for fork to finish. Ugh.
+    sleep 1
     new_file(makefile, makefile_with_leading_spaces)
     run_tests
     assert_file makefile, makefile_with_leading_tab

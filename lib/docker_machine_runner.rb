@@ -8,9 +8,12 @@ class DockerMachineRunner
 
   def initialize(dojo)
     @dojo = dojo
+    @tmp_path = unique_tmp_path
   end
 
   # queries
+
+  attr_reader :tmp_path
 
   def parent
     @dojo
@@ -39,27 +42,12 @@ class DockerMachineRunner
 
   # modifiers
 
-  def run(id, name, delta, files, image_name, max_seconds)
-    # TODO: _id _name _delta (unused)
-    sandbox = katas[id].avatars[name].sandbox # TODO: drop
-
-    # TODO: make new tmp folder (runner mix-in)
-    # TODO: replace with save *all* files to tmp folder (runner mix-in)
-    katas_save(sandbox, delta, files)
-
-    #run tests
+  def run(_id, _name, _delta, files, image_name, max_seconds)
+    write_files(tmp_path, files)
     node = cached_node_map[image_name].sample
-    args = [
-      node,
-      path_of(sandbox),  # TODO: use tmp folder
-      image_name,
-      max_seconds
-    ].join(space = ' ')
-
+    args = [ node, tmp_path, image_name, max_seconds ].join(space = ' ')
     output, exit_status = shell.cd_exec(path, sudo("./docker_machine_runner.sh #{args}"));
-
-    # TODO:fork { remove tmp folder } (runner mix-in)
-
+    fork { shell.exec("rm -rf #{tmp_path}") }
     output_or_timed_out(output, exit_status, max_seconds)
   end
 

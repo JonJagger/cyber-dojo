@@ -3,20 +3,6 @@ module Runner # mix-in
 
   module_function
 
-  # TODO: move this into host_disk_katas
-  def katas_save(sandbox, delta, files)
-    delta[:deleted].each do |filename|
-      git.rm(path_of(sandbox), filename)
-    end
-    delta[:new].each do |filename|
-      katas.write(sandbox, filename, files[filename])
-      git.add(path_of(sandbox), filename)
-    end
-    delta[:changed].each do |filename|
-      katas.write(sandbox, filename, files[filename])
-    end
-  end
-
   def output_or_timed_out(output, exit_status, max_seconds)
     exit_status != timed_out ? truncated(cleaned(output)) : did_not_complete(max_seconds)
   end
@@ -32,9 +18,20 @@ module Runner # mix-in
     (timeout = 128) + (kill = 9)
   end
 
-  # TODO: drop this
-  def path_of(obj)
-    katas.path_of(obj)
+  def write_files(tmp_path, files)
+    dir = disk[tmp_path]
+    dir.make
+    files.each { |filename, content| dir.write(filename, content) }
+    tmp_path
+  end
+
+  def unique_tmp_path
+    uuid = Array.new(10) { hex_chars.sample }.shuffle.join
+    '/tmp/cyber-dojo-' + uuid + '/'
+  end
+
+  def hex_chars
+    "0123456789ABCDEF".split(//)
   end
 
   include StringCleaner

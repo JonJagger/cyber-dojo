@@ -29,10 +29,6 @@ class StubRunner
 
   def run(id, name, delta, files, _image_name, max_seconds)
     avatar = katas[id].avatars[name]
-    sandbox = avatar.sandbox
-    # have to save the files because the effects are
-    # asserted in tests and there is no shell_spy yet
-    katas_save(sandbox, delta, files)
     output = read_stub(avatar)
     # todo: stub timed_out ?
     output_or_timed_out(output, success=0, max_seconds)

@@ -107,10 +107,8 @@ class DockerRunnerTests < LibTestBase
   include DockerTestHelpers
 
   def mock_run(mock_output, mock_exit_status)
-    lion = mock_run_setup(mock_output, mock_exit_status)
-    image_name = lion.language.image_name
-    delta = { :deleted => [], :new => [], :changed => [] }
-    runner.run(lion.kata.id, lion.name, delta, files={}, image_name, max_seconds)
+    kata = mock_run_setup(mock_output, mock_exit_status)
+    runner.run(nil, nil, nil, files={}, kata.language.image_name, max_seconds)
   end
 
   # - - - - - - - - - - - - - - -
@@ -124,28 +122,20 @@ class DockerRunnerTests < LibTestBase
 
   def mock_run_setup(mock_output, mock_exit_status)
     kata = make_kata
-    lion = kata.start_avatar(['lion'])
+
     args = [
-      path_of(lion.sandbox),
-      lion.kata.language.image_name,
+      runner.tmp_path,
+      kata.language.image_name,
       max_seconds
     ].join(space = ' ')
 
-    # DockerRunner does katas[id].avatars[name].sandbox
-    # and avatars[name] does kata_started_avatars(kata)
-    shell.mock_cd_exec(
-      path_of(kata),
-      ['ls -F | grep / | tr -d /'],
-      'lion',
-      0
-    )
     shell.mock_cd_exec(
       runner.path,
       ["./docker_runner.sh #{args}"],
       mock_output,
       mock_exit_status
    )
-   lion
+   kata
   end
 
 end

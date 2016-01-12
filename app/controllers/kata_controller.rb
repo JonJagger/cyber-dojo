@@ -17,13 +17,16 @@ class KataController < ApplicationController
     incoming = params[:file_hashes_incoming]
     outgoing = params[:file_hashes_outgoing]
     delta = FileDeltaMaker.make_delta(incoming, outgoing)
+
     files = received_files
     max_seconds = 15
     @output = @avatar.test(delta, files, max_seconds)
     @test_colour = kata.language.colour(@output)
 
-    # TODO: do in a fork {}
-    katas.avatar_ran_tests(@avatar, delta, files, time_now, @output, @test_colour)
+    fork do
+      # lots of stuff above can come into here
+      katas.avatar_ran_tests(@avatar, delta, files, time_now, @output, @test_colour)
+    end
 
     respond_to do |format|
       format.js   { render layout: false }

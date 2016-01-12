@@ -79,7 +79,12 @@ class HostDiskKatas
   end
 
   def kata_start_avatar(kata, avatar_names = Avatars.names.shuffle)
-    # don't do the & with operands swapped as you lose randomness
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Needs to be atomic otherwise two laptops in a cyber-dojo
+    # could start as the same animal. This relies on mkdir being
+    # atomic on a non NFS POSIX file system.
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # don't do the & with operands swapped - you lose randomness
     valid_names = avatar_names & Avatars.names
     name = valid_names.detect do |valid_name|
       _, exit_status = shell.cd_exec(path_of(kata), "mkdir #{valid_name} > /dev/null #{stderr_2_stdout}")
@@ -132,19 +137,23 @@ class HostDiskKatas
   end
 
   def avatar_ran_tests(avatar, delta, files, now, output, colour)
-    # delta is not currently used, but will be once the
-    # runner is properly decoupled from katas (persistance).
-    # When that happens, the delta parameter of
-    # avatar.test(delta, files, max_seconds)
-    # can be dropped. Viz delta will move to here.
-    # lib/runner.kata_save() will come to here and the
-    # delta will enable the vital [git rm] command.
-
-    # update manifest
+    # save the files
+    sandbox = avatar.sandbox
+    delta[:deleted].each do |filename|
+      git.rm(path_of(sandbox), filename)
+    end
+    delta[:new].each do |filename|
+      katas.write(sandbox, filename, files[filename])
+      git.add(path_of(sandbox), filename)
+    end
+    delta[:changed].each do |filename|
+      katas.write(sandbox, filename, files[filename])
+    end
+    # update the manifest
     dir(avatar.sandbox).write('output', output)
     files['output'] = output
     write_avatar_manifest(avatar, files)
-    # update Red/Amber/Green increments
+    # update the increments Red/Amber/Green
     rags = avatar_increments(avatar)
     tag = rags.length + 1
     rags << { 'colour' => colour, 'time' => now, 'number' => tag }
@@ -260,44 +269,13 @@ end
 # It uses the cyber-dojo server's file-system [katas] folder.
 # This is *an* implementation of katas.
 # - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# kata_start_avatar(kata, avatar_names)
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Starting an avatar needs to be atomic otherwise two
-# laptops in a cyber-dojo could start as the same animal.
-#
-#   app/models/kata.rb    start_avatar()
-#   app/models/avatars.rb started_avatars()
-#
-# On a non NFS POSIX file system I do this relying on
-# mkdir being atomic.
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# avatar_run_tests(avatar, delta, files, now, max_seconds)
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Currently works by saving the files to the file-system (in the avatar's
-# sandbox) and *then* the docker-runner makes use of these saved files
-# (eg docker-runner's .sh file volume-mounts the sandbox).
-#
-# I plan to reverse this ordering and decouple the runners from the
-# persistence strategy (the file-system + git). Namely...
-#
-# 1. Don't save the files to the file-system; let the runner decide what to
-#    do. Maybe runner is hosted inside a web-server which receives the files,
-#    saves them to a ram disk folder, which a docker image then volume-mounts.
-#    Perhaps there are several such such servers for scalability.
-#
-# 2. Once the runner has finished, the output file is added to the files
-#    sent from browser and persisted in one go (rather than two steps; one
-#    for saving all the files except the output, another for saving just the
-#    output).
-#    This step 2 can be executed as a background fire-and-forget task.
-#    The browser only needs the results of step 1.
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-
+# An alternative implementation could save the manifest containing
+# the files for each test to a database. Then, to get a git diff
+# it could create a temporary git repository, saves the files
+# from was_tag to it, tag and commit, save the files from
+# now_tag to it, tag and commit, then do a diff.
+# There is probably a library to do this in ram bypassing
+# the need for a file-system completely.
+# However, this would make creation of the tar file for
+# a whole cyber-dojo potentially very slow.
+# - - - - - - - - - - - - - - - - - - - - - - - -
