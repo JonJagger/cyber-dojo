@@ -2,7 +2,7 @@
 
 var cyberDojo = (function(cd, $) {
   "use strict";
-  
+
   var hashOf = function(content) {
     var hash, i;
     for (hash = 0, i = 0; i < content.length; ++i) {
@@ -10,20 +10,20 @@ var cyberDojo = (function(cd, $) {
       hash &= hash;
     }
     return hash;
-  };  
+  };
 
   var outgoingHashContainer = function() {
     return $('#file_hashes_outgoing_container');
   };
-  
+
   var incomingHashContainer = function() {
     return $('#file_hashes_incoming_container');
   };
-    
+
   var storeOutgoingFileHash = function(filename) {
     var node = cd.fileContentFor(filename);
-    var hash = hashOf(node.val());    
-    $('input[data-filename="'+filename+'"]',outgoingHashContainer()).remove();    
+    var hash = hashOf(node.val());
+    $('input[data-filename="'+filename+'"]', outgoingHashContainer()).remove();
     outgoingHashContainer().append(
       $('<input>', {
         'type': 'hidden',
@@ -33,19 +33,19 @@ var cyberDojo = (function(cd, $) {
       })
     );
   };
-  
+
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   var allFilesSameAsCurrentTrafficLight = function() {
     // Could be used to selectively enable/disable buttons
     var outgoingFilenames = cd.filenames();
-    var incomingFilenames = [ ];    
+    var incomingFilenames = [ ];
     $('input',incomingHashContainer()).each(function() {
       var filename = $(this).data('filename');
       incomingFilenames.push(filename);
-    });    
+    });
     incomingFilenames.sort();
-    outgoingFilenames.sort();    
+    outgoingFilenames.sort();
     if (JSON.stringify(incomingFilenames) != JSON.stringify(outgoingFilenames)) {
       return false;
     }
@@ -60,18 +60,18 @@ var cyberDojo = (function(cd, $) {
     });
     return allSame;
   };
-  
+
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   cd.storeOutgoingFileHashes = function() {
     outgoingHashContainer().empty();
     $.each(cd.filenames(), function(_,filename) {
       storeOutgoingFileHash(filename);
-    });    
+    });
   };
-    
+
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   cd.storeIncomingFileHashes = function() {
     incomingHashContainer().empty();
     $.each(cd.filenames(), function(_,filename) {
@@ -88,7 +88,7 @@ var cyberDojo = (function(cd, $) {
       );
     });
   };
-      
+
   return cd;
 })(cyberDojo || {}, $);
 

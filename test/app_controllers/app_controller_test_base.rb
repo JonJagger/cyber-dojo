@@ -25,9 +25,6 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
   def setup
     super
     set_runner_class('StubRunner')
-    # Note that merely writing runner.class.name in the assert uses
-    # runner and therefore causes the @runner ||= code to run!
-    assert_equal 'StubRunner', runner.class.name
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
