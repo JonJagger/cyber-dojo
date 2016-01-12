@@ -143,11 +143,11 @@ class HostDiskKatas
       git.rm(path_of(sandbox), filename)
     end
     delta[:new].each do |filename|
-      katas.write(sandbox, filename, files[filename])
+      write(sandbox, filename, files[filename])
       git.add(path_of(sandbox), filename)
     end
     delta[:changed].each do |filename|
-      katas.write(sandbox, filename, files[filename])
+      write(sandbox, filename, files[filename])
     end
     # update the manifest
     dir(avatar.sandbox).write('output', output)
@@ -193,11 +193,6 @@ class HostDiskKatas
     end
   end
 
-  # TODO: make private?
-  def write(sandbox, filename, content) # TODO: few tests still rely on this
-    dir(sandbox).write(filename, content)
-  end
-
   private
 
   include CreateKataManifest
@@ -208,8 +203,13 @@ class HostDiskKatas
   include Redirect
   include UniqueId
 
+
   def exists?(obj)
     dir(obj).exists?
+  end
+
+  def write(sandbox, filename, content)
+    dir(sandbox).write(filename, content)
   end
 
   def valid?(id)
