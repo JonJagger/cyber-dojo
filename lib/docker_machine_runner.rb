@@ -22,7 +22,7 @@ class DockerMachineRunner
 
   def installed?
     _, exit_status = shell.exec("docker-machine --version > /dev/null #{stderr_2_stdout}")
-    exit_status == shell.success
+    exit_status == shell.success && node_map != {}
   end
 
   def runnable_languages
@@ -48,7 +48,7 @@ class DockerMachineRunner
     katas_save(sandbox, delta, files)
 
     #run tests
-    node = node_map[image_name].sample
+    node = cached_node_map[image_name].sample
     args = [
       node,
       path_of(sandbox),  # TODO: use tmp folder
@@ -64,18 +64,6 @@ class DockerMachineRunner
   end
 
   def refresh_cache
-    node_map = {}
-    output, _exit_status = shell.exec(sudo('docker-machine ls -q'))
-    nodes = output.split
-    nodes.each do |node|
-      output, _exit_status = shell.exec(sudo("docker-machine ssh #{node} -- sudo docker images"))
-      lines = output.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
-      image_names = lines.collect { |line| line.split[0] }
-      image_names.each do |image_name|
-        node_map[image_name] ||= []
-        node_map[image_name] << node
-      end
-    end
     caches.write_json(cache_filename, node_map)
   end
 
@@ -85,11 +73,27 @@ class DockerMachineRunner
   include Runner
 
   def runnable?(image_name)
-    !node_map[image_name].nil?
+    !cached_node_map[image_name].nil?
   end
 
   def node_map
-    @node_map ||= caches.read_json(cache_filename)
+    map = {}
+    output, _exit_status = shell.exec(sudo('docker-machine ls -q'))
+    nodes = output.split
+    nodes.each do |node|
+      output, _exit_status = shell.exec(sudo("docker-machine ssh #{node} -- sudo docker images"))
+      lines = output.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
+      image_names = lines.collect { |line| line.split[0] }
+      image_names.each do |image_name|
+        map[image_name] ||= []
+        map[image_name] << node
+      end
+    end
+    map
+  end
+
+  def cached_node_map
+    @cached_node_map ||= caches.read_json(cache_filename)
   end
 
   def sudo(command)

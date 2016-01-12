@@ -18,20 +18,47 @@ class DockerMachineRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '6DAA25',
-  'installed? is true when [docker-machine --version] succeeds' do
-    shell.mock_exec(['docker-machine --version > /dev/null 2>&1'], '', success)
-    assert_equal 'DockerMachineRunner', runner.class.name
-    assert runner.installed?
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'C35391',
   ' installed? is false when [docker-machine --version] does not succeed' do
     shell.mock_exec(['docker-machine --version > /dev/null 2>&1'], '', not_success)
     assert_equal 'DockerMachineRunner', runner.class.name
     refute runner.installed?
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '4B6027',
+  'installed? is false when [docker-machine --version] succeeds ' +
+    'but there are no nodes' do
+    shell.mock_exec(['docker-machine --version > /dev/null 2>&1'], '', success)
+    shell.mock_exec([sudo('docker-machine ls -q')], no_nodes='', success)
+    refute runner.installed?
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '5B29B5',
+  'installed? is false when [docker-machine --version] succeeds ' +
+    'and there are nodes, but none of them have any cdf images' do
+    shell.mock_exec(['docker-machine --version > /dev/null 2>&1'], '', success)
+    node = 'cdf-node-01'
+    shell.mock_exec([sudo('docker-machine ls -q')], node, success)
+    non_cdf_image = 'busybox'
+    shell.mock_exec([sudo("docker-machine ssh #{node} -- sudo docker images")], non_cdf_image, success)
+    refute runner.installed?
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '6DAA25',
+  'installed? is true when [docker-machine --version] succeeds' +
+    'and there are nodes and at least one of them has a cdf image' do
+    shell.mock_exec(['docker-machine --version > /dev/null 2>&1'], '', success)
+    node = 'cdf-node-01'
+    shell.mock_exec([sudo('docker-machine ls -q')], node, success)
+    cdf_image = 'cyberdojofoundation/gcc_assert'
+    shell.mock_exec([sudo("docker-machine ssh #{node} -- sudo docker images")], cdf_image, success)
+    assert runner.installed?
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -156,7 +183,11 @@ class DockerMachineRunnerTests < LibTestBase
     assert disk[caches.path].exists?(runner.cache_filename), "cache exists"
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  private
+
+  def sudo(command)
+    'sudo -u cyber-dojo ' + command
+  end
 
 =begin
 
