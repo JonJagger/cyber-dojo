@@ -42,7 +42,7 @@ class DockerRunner
 
   # modifiers
 
-  def run(_id, _name, files, image_name, max_seconds)
+  def run(_id, _name, _delta, files, image_name, max_seconds)
     write_files(tmp_path, files)
     args = [ tmp_path, image_name, max_seconds ].join(space = ' ')
     output, exit_status = shell.cd_exec(path, "./docker_runner.sh #{args}")

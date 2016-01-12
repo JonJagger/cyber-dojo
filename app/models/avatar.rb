@@ -10,8 +10,8 @@ class Avatar
 
   # modifier
 
-  def test(files, max_seconds)
-    runner.run(kata.id, name, files, language.image_name, max_seconds)
+  def test(delta, files, max_seconds)
+    runner.run(kata.id, name, delta, files, language.image_name, max_seconds)
   end
 
   # queries

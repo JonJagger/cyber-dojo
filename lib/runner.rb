@@ -22,7 +22,6 @@ module Runner # mix-in
     dir = disk[tmp_path]
     dir.make
     files.each { |filename, content| dir.write(filename, content) }
-    tmp_path
   end
 
   def unique_tmp_path

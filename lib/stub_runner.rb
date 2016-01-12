@@ -27,7 +27,7 @@ class StubRunner
     save_stub(avatar, { :output => output })
   end
 
-  def run(id, name, files, _image_name, max_seconds)
+  def run(id, name, _delta, _files, _image_name, max_seconds)
     avatar = katas[id].avatars[name]
     output = read_stub(avatar)
     # todo: stub timed_out ?

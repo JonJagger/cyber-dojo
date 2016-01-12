@@ -16,7 +16,8 @@ class HostShellTests < LibTestBase
   test 'E180B8',
   'daemon_exec runs as a detached process' +
   ' so it returns immediately even if command is long-lived' do
-    assert_equal 0, timed { shell.daemon_exec('sleep 5') }
+    how_long = timed { shell.daemon_exec('sleep 5') }
+    assert how_long <= 1
     # this will *not* give coverage of the commands inside the daemon_exec's fork!
   end
 

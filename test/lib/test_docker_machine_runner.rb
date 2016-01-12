@@ -142,7 +142,7 @@ class DockerMachineRunnerTests < LibTestBase
       mock_exit_status
     )
 
-    runner.run(nil, nil, files={}, image_name, max_seconds)
+    runner.run(nil, nil, nil, files={}, image_name, max_seconds)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

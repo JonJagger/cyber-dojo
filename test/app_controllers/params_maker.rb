@@ -4,43 +4,37 @@
 class ParamsMaker
 
   def initialize(avatar)
-    @incoming = {} # what browser receives
-    @current = {} # what browser submits
+    @incoming = {}
+    @live = {}
     avatar.visible_files.each do |filename, content|
       @incoming[filename] = content
-      @current[filename] = content
+      @live[filename] = content
     end
   end
 
   def new_file(filename, content)
     refute_file(filename, 'new_file')
-    @current[filename] = content
+    @live[filename] = content
   end
 
   def delete_file(filename)
     assert_file(filename, 'delete_file')
-    @current.delete(filename)
+    @live.delete(filename)
   end
 
   def change_file(filename, content)
     assert_file(filename, 'change_file')
     message = [ info(filename, 'change_file'), "\t unchanged!" ].join("\n")
-    refute(message) { @current[filename] == content }
-    @current[filename] = content
+    refute(message) { @live[filename] == content }
+    @live[filename] = content
   end
 
   def params
-    result = {
-      file_content: @current,
+    {
       file_hashes_incoming: @incoming,
-      file_hashes_outgoing: @current
+      file_hashes_outgoing: @live,
+      file_content: @live
     }
-    # called at test() only
-    @incoming = {}
-    @current.each do |filename, content|
-      @incoming[filename] = content
-    end
-    result
   end
 
 private
@@ -71,7 +65,7 @@ private
   end
 
   def filenames
-    @current.keys
+    @live.keys
   end
 
   def assert(message, &block)
