@@ -22,3 +22,4 @@ exercises/*cache.json
 languages/*cache.json
 
 test/*/coverage/
+coverage

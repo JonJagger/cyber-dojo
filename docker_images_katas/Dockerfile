@@ -10,4 +10,4 @@ RUN mkdir -p /var/www/cyber-dojo/katas
 RUN chown -R 33:33 /var/www/cyber-dojo/katas
 VOLUME ["/var/www/cyber-dojo/katas"]
 
-CMD ["can not run - data container"]
+CMD ["not runnable - a data container"]
