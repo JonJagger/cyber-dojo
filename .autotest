@@ -1,5 +1,0 @@
-require 'autotest/growl'
-
-Autotest.add_hook :initialize do |autotest|
-    %w{log .approvals katas}.each { |e| autotest.add_exception(e) }
-end

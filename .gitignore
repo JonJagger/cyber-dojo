@@ -10,6 +10,7 @@ tmp
 .approvals
 .ruby-gemset
 .ruby-version
+.tm_properties
 
 zipped_dojos.zip
 cyberDojo.db
