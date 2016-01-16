@@ -1,1 +1,16 @@
-{"root":{"languages":"/var/www/cyber-dojo/languages/","exercises":"/var/www/cyber-dojo/exercises/","caches":"/var/www/cyber-dojo/caches/","katas":"/mnt/ram-disk/cyber-dojo/katas"},"class":{"runner":"DockerRunner","katas":"HostDiskKatas","shell":"MockHostShell","disk":"HostDisk","log":"HostLog","git":"HostGit"}}
+{
+  "root": {
+    "languages": "/var/www/cyber-dojo/languages/",
+    "exercises": "/var/www/cyber-dojo/exercises/",
+       "caches": "/var/www/cyber-dojo/caches/",
+        "katas": "/var/www/cyber-dojo/katas/"
+  },
+  "class": {
+    "runner": "DockerRunner",
+     "katas": "HostDiskKatas",
+     "shell": "HostShell",
+      "disk": "HostDisk",
+       "log": "HostLog",
+       "git": "HostGit"
+  }
+}
