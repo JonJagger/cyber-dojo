@@ -6,7 +6,7 @@ $(function() {
   var button = $('#dashboard-button');
 
   button.click(function() {
-    var id = $('#kata-id-input').val();
+    var id = $('#full-kata-id').val();
     var cursor = button.css('cursor');
     button.css('cursor', 'wait');
     $.getJSON('/enter/continue', { id: id }, function(dojo) {

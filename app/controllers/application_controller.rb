@@ -16,12 +16,13 @@ class ApplicationController < ActionController::Base
   def exercises; dojo.exercises; end
   def     katas; dojo.katas    ; end
 
-  def id         ; @id ||= katas.complete(params[:id]); end
+  def id         ; params[:id     ]; end
+  def avatar_name; params[:avatar ]; end
+  def was_tag    ; params[:was_tag]; end
+  def now_tag    ; params[:now_tag]; end
+
   def kata       ; katas[id]           ; end
   def avatars    ; kata.avatars        ; end
-  def avatar_name; params[:avatar]     ; end
   def avatar     ; avatars[avatar_name]; end
-  def was_tag    ; params[:was_tag]    ; end
-  def now_tag    ; params[:now_tag]    ; end
 
 end

@@ -1,8 +1,8 @@
 
+<% id       = @kata.id[0..5] %>
 <% language = @kata.language.display_name.split(',')[0].strip %>
 <% test     = @kata.language.display_name.split(',')[1].strip %>
 <% exercise = @kata.exercise.name.gsub('_',' ') %>
-<% id       = @kata.id.to_s[0..5] %>
 
 <div id="footer">
   <table>

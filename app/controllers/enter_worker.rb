@@ -3,10 +3,6 @@ module EnterWorker # mix-in
 
   module_function
 
-  def dojo_exists
-    @dojo_exists ||= !katas[id].nil?
-  end
-
   def started_avatar_names
     @started_avatar_names ||= avatars.each.collect { |avatar| avatar.name }
   end

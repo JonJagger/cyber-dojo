@@ -31,7 +31,8 @@ class HostDiskKatas
     kata
   end
 
-  def complete(id)
+  def completed(id)
+    # Used only in enter_controller/check
     # If at least 6 characters of the id are provided attempt to complete
     # it into the full 10 character id. Doing completion with fewer characters
     # would likely result in a lot of disk activity and no unique outcome.

@@ -28,47 +28,41 @@ class SetupControllerTest < AppControllerTestBase
 
   test 'D79BA3',
   'setup/show_languages_and_tests defaults to language and exercise of kata' +
-    ' whose id is passed in URL (to encourage repetition)' +
-    ' using completion if necessary' do
-    [6,10].each do |n|
-      languages_display_names = runner.runnable_languages.map(&:display_name).sort
-      language_display_name = languages_display_names.sample
-      exercises_names = exercises.map(&:name).sort
-      exercise_name = exercises_names.sample
-      id = create_kata(language_display_name, exercise_name)
+    ' whose full-id is passed in URL (to encourage repetition)' do
+    languages_display_names = runner.runnable_languages.map(&:display_name).sort
+    language_display_name = languages_display_names.sample
+    exercises_names = exercises.map(&:name).sort
+    exercise_name = exercises_names.sample
+    id = create_kata(language_display_name, exercise_name)
 
-      get 'setup/show_languages_and_tests', :id => id[0...n]
-      assert_response :success
+    get 'setup/show_languages_and_tests', :id => id
+    assert_response :success
 
-      # next bit is trickier than it should be because language.display_name
-      # contains the name of the test framework too.
-      md = /var selectedLanguage = \$\('#language_' \+ (\d+)/.match(html)
-      languages_names = languages_display_names.map { |name| get_language_from(name) }.uniq.sort
-      selected_language = languages_names[md[1].to_i]
-      assert_equal get_language_from(language_display_name), selected_language, 'language'
-    end
+    # next bit is tricky because language.display_name
+    # contains the name of the test framework too.
+    md = /var selectedLanguage = \$\('#language_' \+ (\d+)/.match(html)
+    languages_names = languages_display_names.map { |name| get_language_from(name) }.uniq.sort
+    selected_language = languages_names[md[1].to_i]
+    assert_equal get_language_from(language_display_name), selected_language, 'language'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test '82562A',
   'setup/show_exercises defaults to exercise of kata' +
-    ' whose id is passed in URL (to encourage repetition)' +
-    ' by using completion if necessary' do
-    [6,10].each do |n|
-      languages_display_names = runner.runnable_languages.map(&:display_name).sort
-      language_display_name = languages_display_names.sample
-      exercises_names = exercises.map(&:name).sort
-      exercise_name = exercises_names.sample
-      id = create_kata(language_display_name, exercise_name)
+    ' whose full-id is passed in URL (to encourage repetition)' do
+    languages_display_names = runner.runnable_languages.map(&:display_name).sort
+    language_display_name = languages_display_names.sample
+    exercises_names = exercises.map(&:name).sort
+    exercise_name = exercises_names.sample
+    id = create_kata(language_display_name, exercise_name)
 
-      get 'setup/show_exercises', :id => id[0...n]
-      assert_response :success
+    get 'setup/show_exercises', :id => id
+    assert_response :success
 
-      md = /var selectedExercise = \$\('#exercise_' \+ (\d+)/.match(html)
-      selected_exercise = exercises_names[md[1].to_i]
-      assert_equal exercise_name, selected_exercise, 'exercise'
-    end
+    md = /var selectedExercise = \$\('#exercise_' \+ (\d+)/.match(html)
+    selected_exercise = exercises_names[md[1].to_i]
+    assert_equal exercise_name, selected_exercise, 'exercise'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
