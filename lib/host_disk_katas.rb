@@ -260,20 +260,35 @@ end
 #    the files+output from each [test] event are saved as
 #    a tag in a git repo associated with the kata+avatar.
 #    There are also writes associated with creating each
-#    kata and starting each each avatar.
+#    kata and starting each avatar.
 #
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # This class's methods holds all the reads/writes for 3.
 # It uses the cyber-dojo server's file-system [katas] folder.
 # This is *an* implementation of katas.
+#
+# There are two good reasons for using this implementation.
+#
+# 1. Suppose your cyber-dojo.sh files do an incremental make.
+#    In this case, the date-time stamp of the source files
+#    is important and you want untouched files to retain
+#    their old date-time stamp. This means you need to save
+#    only the changed files from each test event and you
+#    need the unchanged files to still be where you left
+#    them last time.
+#
+# 2. Creating the download page's tar file which includes all
+#    the git repos of all the animals. This is obviously quite
+#    trivial if the animals git repos have been updated every
+#    test event.
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # An alternative implementation could save the manifest containing
-# the files for each test to a database. Then, to get a git diff
-# it could create a temporary git repository, saves the files
-# from was_tag to it, tag and commit, save the files from
+# the visible files for each test to a database. Then, to get a
+# git diff it could create a temporary git repository, save the
+# files from was_tag to it, tag and commit, save the files from
 # now_tag to it, tag and commit, then do a diff.
 # There is probably a library to do this in ram bypassing
 # the need for a file-system completely.
-# However, this would make creation of the tar file for
+# This would make creation of the tar file for
 # a whole cyber-dojo potentially very slow.
 # - - - - - - - - - - - - - - - - - - - - - - - -
