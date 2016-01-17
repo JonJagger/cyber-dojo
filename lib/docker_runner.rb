@@ -4,6 +4,10 @@
 # Saves the incoming files off /tmp/ and then relies
 # on its associated .sh file to do a [docker run] command
 # which volume mounts the tmp folder.
+# Each run event saves the incoming visible-files to a *new*
+# tmp folder. Each saved file will have a new date-time stamp.
+# No state is retained across run events. This means cyber-dojo.sh
+# will not be able to do incremental makes (for example).
 
 class DockerRunner
 
