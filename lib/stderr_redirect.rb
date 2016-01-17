@@ -1,5 +1,5 @@
 
-module Redirect # mix-in
+module StderrRedirect # mix-in
 
   module_function
 

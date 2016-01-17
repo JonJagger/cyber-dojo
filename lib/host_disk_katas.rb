@@ -196,9 +196,9 @@ class HostDiskKatas
   include CreateKataManifest
   include ExternalParentChainer
   include IdSplitter
-  include TimeNow
   include Slashed
-  include Redirect
+  include StderrRedirect
+  include TimeNow
   include UniqueId
 
 

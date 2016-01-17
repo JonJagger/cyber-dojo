@@ -11,7 +11,7 @@
   string_cleaner
   string_truncater
   slashed
-  redirect
+  stderr_redirect
   languages_display_names_splitter
 
   runner
