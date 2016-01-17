@@ -99,7 +99,6 @@ class DockerMachineRunner
     # to be run as a user which can have environment variables.
     # Which means it can't be www-data (which doesn't have a login shell).
     # The username I choose is cyber-dojo.
-    # Note that this is a real user (the rsync cyber-dojo user is not).
     'sudo -u cyber-dojo ' + command
   end
 

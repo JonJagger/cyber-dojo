@@ -80,12 +80,10 @@ class HostDiskKatas
   end
 
   def kata_start_avatar(kata, avatar_names = Avatars.names.shuffle)
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Needs to be atomic otherwise two laptops in a cyber-dojo
     # could start as the same animal. This relies on mkdir being
     # atomic on a non NFS POSIX file system.
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # don't do the & with operands swapped - you lose randomness
+    # Don't do the & with operands swapped - you lose randomness
     valid_names = avatar_names & Avatars.names
     name = valid_names.detect do |valid_name|
       _, exit_status = shell.cd_exec(path_of(kata), "mkdir #{valid_name} > /dev/null #{stderr_2_stdout}")
@@ -161,7 +159,6 @@ class HostDiskKatas
     write_avatar_increments(avatar, rags)
     # git-commit the manifest, increments, and visible-files
     git.commit(path_of(avatar), tag)
-    rags
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
