@@ -19,7 +19,7 @@ class DockerTmpRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '329309',
-  'installed? is true when [docker --version] succeeds' do
+  'installed? is true when docker is installed' do
     shell.mock_exec(['docker --version > /dev/null 2>&1'], '', success)
     assert_equal 'DockerTmpRunner', runner.class.name
     assert runner.installed?
@@ -28,7 +28,7 @@ class DockerTmpRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'FDE315',
-  ' installed? is false when [docker --version] does not succeed' do
+  ' installed? is false when docker is not installed' do
     shell.mock_exec(['docker --version > /dev/null 2>&1'], '', not_success)
     assert_equal 'DockerTmpRunner', runner.class.name
     refute runner.installed?
@@ -37,7 +37,7 @@ class DockerTmpRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '8092EF',
-  'config_filename exists and names DockerRunner as the runner' do
+  'config_filename exists and names DockerTmpRunner as the runner' do
     dir = disk[runner.path]
     assert dir.exists?(runner.config_filename)
     config = dir.read_json(runner.config_filename)
