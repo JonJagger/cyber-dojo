@@ -14,10 +14,22 @@ kill=9
 # - - - - - - - - - - - - - -
 # 1. scp avatar's files to the node
 # This relies on /tmp/cyber-dojo on the target node having the right
-# sticky-bit settings so files created underneath /tmp/cyber-dojo
-# can be seen by the www-data user (the --user in docker run)
+# sticky-bit settings for the www-data user (the --user in the docker run)
+# I am not sure if these sticky-bit settings need to be on the
+# server's /tmp/... folder where the files are copied from, or on the
+# node's /tmp/... folder where the files are copied to.
+# I did it on both to be sure
 #
-#    $ ...ON THE NODE...
+#    $ ...ON THE SERVER...
+#    $ cd /tmp
+#    $ chmod 777 .
+#    $ chown www-data:www-data .
+#    $ chmod g+rwsx .
+#    $ apt-get install -y acl
+#    $ setfacl -d -m group:www-data:rwx .
+#    $ setfacl    -m group:www-data:rwx .
+#
+#    $ ...ON THE NODES...
 #    $ cd /tmp
 #    $ mkdir cyber-dojo
 #    $ chmod 777 cyber-dojo
@@ -26,6 +38,7 @@ kill=9
 #    $ apt-get install -y acl
 #    $ setfacl -d -m group:www-data:rwx cyber-dojo
 #    $ setfacl    -m group:www-data:rwx cyber-dojo
+
 
 docker-machine scp -r ${files_path} ${node_name}:/tmp/cyber-dojo/${tmp_name}/
 

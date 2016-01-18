@@ -136,17 +136,9 @@ class HostDiskKatas
   end
 
   def avatar_ran_tests(avatar, delta, files, now, output, colour)
-    # save the files
-    sandbox = avatar.sandbox
-    delta[:deleted].each do |filename|
-      git.rm(path_of(sandbox), filename)
-    end
-    delta[:new].each do |filename|
-      write(sandbox, filename, files[filename])
-      git.add(path_of(sandbox), filename)
-    end
-    delta[:changed].each do |filename|
-      write(sandbox, filename, files[filename])
+    if runner.class.name != 'DockerKatasRunner'
+      # save the files
+      sandbox_save(avatar.sandbox, delta, files)
     end
     # update the manifest
     dir(avatar.sandbox).write('output', output)
@@ -159,6 +151,23 @@ class HostDiskKatas
     write_avatar_increments(avatar, rags)
     # git-commit the manifest, increments, and visible-files
     git.commit(path_of(avatar), tag)
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - -
+  # Sandbox
+  # - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def sandbox_save(sandbox, delta, files)
+    delta[:deleted].each do |filename|
+      git.rm(path_of(sandbox), filename)
+    end
+    delta[:new].each do |filename|
+      write(sandbox, filename, files[filename])
+      git.add(path_of(sandbox), filename)
+    end
+    delta[:changed].each do |filename|
+      write(sandbox, filename, files[filename])
+    end
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
