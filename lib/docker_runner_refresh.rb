@@ -4,13 +4,13 @@ require_relative '../admin_scripts/lib_domain'
 
 puts '..seeing if docker is installed'
 
-runner = DockerRunner.new(dojo)
+runner = DockerTmpRunner.new(dojo)
 if !runner.installed?
   puts '..docker is *****NOT***** installed!!'
 else
   puts '..docker IS installed'
 
-  puts '..setting runner=DockerRunner in config/cyber-dojo.json'
+  puts '..setting runner=DockerTmpRunner in config/cyber-dojo.json'
   config_filename = dojo.config_filename
   `chmod --silent 666 #{config_filename}`
   `cp #{runner.path}#{runner.config_filename} #{config_filename}`

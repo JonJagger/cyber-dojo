@@ -17,6 +17,8 @@
   runner
   stub_runner
   docker_runner
+  docker_tmp_runner
+  docker_katas_runner
   docker_machine_runner
   docker_data_container_runner
 

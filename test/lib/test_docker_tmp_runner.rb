@@ -3,12 +3,12 @@
 require_relative './lib_test_base'
 require_relative './docker_test_helpers'
 
-class DockerRunnerTests < LibTestBase
+class DockerTmpRunnerTests < LibTestBase
 
   def setup
     super
     set_shell_class    'MockHostShell'
-    set_runner_class   'DockerRunner'
+    set_runner_class   'DockerTmpRunner'
   end
 
   def teardown
@@ -21,7 +21,7 @@ class DockerRunnerTests < LibTestBase
   test '329309',
   'installed? is true when [docker --version] succeeds' do
     shell.mock_exec(['docker --version > /dev/null 2>&1'], '', success)
-    assert_equal 'DockerRunner', runner.class.name
+    assert_equal 'DockerTmpRunner', runner.class.name
     assert runner.installed?
   end
 
@@ -30,7 +30,7 @@ class DockerRunnerTests < LibTestBase
   test 'FDE315',
   ' installed? is false when [docker --version] does not succeed' do
     shell.mock_exec(['docker --version > /dev/null 2>&1'], '', not_success)
-    assert_equal 'DockerRunner', runner.class.name
+    assert_equal 'DockerTmpRunner', runner.class.name
     refute runner.installed?
   end
 
@@ -41,7 +41,7 @@ class DockerRunnerTests < LibTestBase
     dir = disk[runner.path]
     assert dir.exists?(runner.config_filename)
     config = dir.read_json(runner.config_filename)
-    assert_equal 'DockerRunner', config['class']['runner']
+    assert_equal 'DockerTmpRunner', config['class']['runner']
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

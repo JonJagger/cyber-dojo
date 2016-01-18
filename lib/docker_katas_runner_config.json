@@ -6,11 +6,11 @@
         "katas": "/var/www/cyber-dojo/katas/"
   },
   "class": {
-    "runner": "DockerTmpRunner",
-     "katas": "HostDiskKatas",
-     "shell": "HostShell",
-      "disk": "HostDisk",
-       "log": "HostLog",
-       "git": "HostGit"
+     "runner": "DockerKatasRunner",
+      "shell": "HostShell",
+      "katas": "HostDiskKatas",
+       "disk": "HostDisk",
+        "log": "HostLog",
+        "git": "HostGit"
   }
 }
