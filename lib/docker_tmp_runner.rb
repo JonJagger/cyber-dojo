@@ -3,12 +3,12 @@
 # via docker-run images https://www.docker.io/
 #
 # Saves the incoming files off /tmp/ and then relies
-# on its associated .sh file to do a [docker run] command
+# on the associated .sh file to do a [docker run] command
 # which volume mounts the tmp sub-folder.
 #
 # o) Each test saves the visible-files to a *new* tmp folder.
 # o) State is *not* retained across tests.
-# o) Untouched files nevertheless get a *new* date-time stamp.
+# o) Untouched files get a *new* date-time stamp.
 # o) cyber-dojo.sh *cannot* do incremental makes.
 # o) Horizontal scaling of this runner is *not* tied to HostDiskKatas.
 

@@ -3,7 +3,7 @@
 # via docker-run images https://www.docker.io/
 #
 # Saves the incoming files off .../katas/ and then relies
-# on its associated .sh file to do a [docker run] command
+# on the associated .sh file to do a [docker run] command
 # which volume mounts the .../katas/ sub-folder.
 #
 # o) Each test saves the visible-files to the *same* katas sub-folder.
