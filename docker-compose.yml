@@ -14,6 +14,14 @@ web:
   ports:
     - "3000:3000"
 
+nginx:
+  build: .
+  dockerfile: ./docker/nginx_image/Dockerfile
+  ports:
+      - "80:80"
+  links:
+      - "web:cyberdojo_web"
+
 tmp_data:
   build: ./docker/tmp_image
   entrypoint: /bin/sh
