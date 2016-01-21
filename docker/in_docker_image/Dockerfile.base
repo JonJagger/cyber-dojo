@@ -1,5 +1,0 @@
-FROM ruby
-MAINTAINER Jon Jagger <jon@jaggersoft.com>
-
-COPY . /var/www/cyber-dojo/
-
