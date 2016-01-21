@@ -167,8 +167,9 @@ DEPENDENCIES
   faker
   jquery-rails (= 2.1.3)
   json (>= 1.8.3)
-  minitest (>= 5.8.0)
+  minitest (= 5.8.1)
   rails (= 4.1)
+  rake (= 10.4.2)
   rspec
   rspec-rails
   sass-rails (~> 4.0.3)

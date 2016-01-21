@@ -1,9 +1,9 @@
 {
   "root": {
-    "languages": "/var/www/cyber-dojo/languages/",
-    "exercises": "/var/www/cyber-dojo/exercises/",
-       "caches": "/var/www/cyber-dojo/caches/",
-        "katas": "/var/www/cyber-dojo/katas/"
+    "languages": "/usr/src/app/languages/",
+    "exercises": "/usr/src/app/exercises/",
+       "caches": "/usr/src/app/caches/",
+        "katas": "/usr/src/app/katas/"
   },
   "class": {
      "runner": "DockerTmpRunner",
