@@ -28,7 +28,7 @@ $(function() {
   // Only accept hex input
   kataIdInput.keypress(function(e) {
     var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-    if (str.match(/[a-eA-E0-9]/)) { return true; }
+    if (str.match(/[a-fA-F0-9]/)) { return true; }
     e.preventDefault();
     return false;
   });
