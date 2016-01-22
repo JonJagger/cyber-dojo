@@ -83,7 +83,7 @@ end
 # under the *same* language name in the language? column.
 # This is why a language/test's  manifest.json file has a display_name entry.
 # It is the display_name that governs the language/test's names as they appear
-# on the create page. Not the folder names. Not the docker container image_name.
+# on the create page. Not the folder names. Not the docker image_name.
 #
 # Further, if you upgrade a language/test to a newer version
 # and delete the old version of the docker container from your server,
