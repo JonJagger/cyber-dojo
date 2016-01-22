@@ -1,7 +1,0 @@
-FROM cyber-dojo-base
-MAINTAINER Jon Jagger <jon@jaggersoft.com>
-
-WORKDIR /var/www/cyber-dojo
-RUN rm Gemfile.lock
-RUN bundle install --without development test
-
