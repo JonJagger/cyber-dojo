@@ -26,7 +26,8 @@ class ExercisesTests < AppModelsTestBase
 
   test '789739',
   'cache is automatically created on demand' do
-    set_caches_root(tmp_root)
+    set_caches_root(tmp_root + 'caches')
+    cache_filename = 'exercises_cache.json'
 
     refute caches.exists?(cache_filename)
     exercises_names = exercises.map(&:name).sort
@@ -35,13 +36,6 @@ class ExercisesTests < AppModelsTestBase
     doors = '100_doors'
     assert exercises_names.include?(doors)
     assert exercises['100_doors'].instructions.start_with?('100 doors in a row')
-
-  end
-
-  private
-
-  def cache_filename
-    'exercises_cache.json'
   end
 
 end

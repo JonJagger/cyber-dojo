@@ -35,8 +35,7 @@ class LanguagesTests < AppModelsTestBase
   'refresh_cache ignores nested _docker_context folder because' +
     ' it is not the name of a test-framework, it is the docker-context' +
     ' for the language itself' do
-    set_caches_root(tmp_root + 'caches/')
-    disk[caches.path].make
+    set_caches_root_tmp
     languages.refresh_cache
     n = 0
     languages.each do |language|
@@ -50,7 +49,7 @@ class LanguagesTests < AppModelsTestBase
 
   test '7D53C5',
   'use of cached info does *not* reaccess manifest.json' do
-    set_caches_root(tmp_root)
+    set_caches_root_tmp
     display_name = 'Not, There'
     image_name = 'cyberdojofoundation/not_there'
     cache = {
@@ -75,7 +74,7 @@ class LanguagesTests < AppModelsTestBase
 
   test '15BD19',
   'no languages when cache is empty' do
-    set_caches_root(tmp_root)
+    set_caches_root_tmp
     caches.write_json(cache_filename, {})
     assert_equal [], languages.to_a
   end
@@ -84,7 +83,7 @@ class LanguagesTests < AppModelsTestBase
 
   test '09A1D4',
   'languages from cache when cache is not empty' do
-    set_caches_root(tmp_root)
+    set_caches_root_tmp
     cache = {
       'Asm, assert' => {
              dir_name: 'Asm',
@@ -286,6 +285,10 @@ class LanguagesTests < AppModelsTestBase
 
   def cache_filename
     Languages.cache_filename
+  end
+
+  def set_caches_root_tmp
+    set_caches_root(tmp_root + 'caches')
   end
 
 end
