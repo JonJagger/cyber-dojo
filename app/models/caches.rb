@@ -20,7 +20,7 @@ class Caches
   include ExternalDir
   include Slashed
 
-  send :public, :write_json, :read_json
+  send :public, :exists?, :write_json, :read_json
 
 end
 
