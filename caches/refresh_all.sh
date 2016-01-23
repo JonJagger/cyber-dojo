@@ -12,9 +12,3 @@ chown www-data:www-data $configFilename
 
 $cyberDojoHome/lib/docker_runner_refresh.rb
 $cyberDojoHome/lib/docker_machine_runner_refresh.rb
-
-echo "setting up the exercises"
-$cyberDojoHome/exercises/refresh_cache.rb
-
-echo "setting up the languages"
-$cyberDojoHome/languages/refresh_cache.rb

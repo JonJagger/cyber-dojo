@@ -144,10 +144,10 @@ class DojoTests < AppModelsTestBase
 
   test '01CD52',
   'paths always have trailing slash even if config value does not' do
-    set_exercises_root(exercises_path = tmp_root + 'fake_exercises_path')
-    set_languages_root(languages_path = tmp_root + 'fake_languages_path')
-    set_katas_root(        katas_path = tmp_root + 'fake_katas_path')
-    set_caches_root(      caches_path = tmp_root + 'fake_caches_path')
+    set_exercises_root(exercises_path = root_dir + '/exercises')
+    set_languages_root(languages_path = root_dir + '/languages')
+    set_katas_root(        katas_path = root_dir + '/fake_katas_path')
+    set_caches_root(      caches_path = tmp_root + '/fake_caches_path')
 
     assert_equal exercises_path + '/', exercises.path
     assert_equal languages_path + '/', languages.path
@@ -158,8 +158,9 @@ class DojoTests < AppModelsTestBase
   # - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'CBFF2D',
-  'katas.path is set away from genuine katas because tests write to katas' do
+  'katas.path is set *away* from genuine katas because tests write to katas' do
     refute_equal dojo.root_dir + '/katas/', katas.path
+    refute_equal dojo.root_dir + '/katas', katas.path
   end
 
   private
@@ -180,5 +181,8 @@ class DojoTests < AppModelsTestBase
     IO.write(dojo.config_filename, JSON.unparse(json))
   end
 
+  def root_dir
+    dojo.root_dir
+  end
 
 end

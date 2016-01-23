@@ -53,7 +53,7 @@ class DockerTmpRunnerTests < LibTestBase
     real_caches_path = get_caches_root
     set_caches_root(tmp_root + 'caches/')
 
-    cp_command = "cp #{real_caches_path}/#{Languages.cache_filename} #{caches.path}"
+    cp_command = "cp #{real_caches_path}/languages_cache.json #{caches.path}"
     `#{cp_command}`
 
     shell.mock_exec(['docker images'], docker_images_python_pytest, success)

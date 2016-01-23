@@ -1,10 +1,5 @@
 #!/bin/bash
 
-sudo -E ../languages/refresh_cache.rb
-sudo -E ../exercises/refresh_cache.rb
-
-# - - - - - - - - - - - - - - - - - - - - - - - -
-
 ramDisk=/mnt/ram-disk
 sudo ../admin_scripts/make_ram_disk.sh $ramDisk 1g
 

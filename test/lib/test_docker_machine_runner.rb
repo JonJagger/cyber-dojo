@@ -152,8 +152,8 @@ class DockerMachineRunnerTests < LibTestBase
     set_caches_root(tmp_root + 'caches/')
     # We have reset caches_root so we don't overwrite the true runner's cache
     # But we still need to be able to read the languages and exercises caches.
-    `cp #{real_caches_root}/#{Languages.cache_filename} #{caches.path}`
-    `cp #{real_caches_root}/#{Exercises.cache_filename} #{caches.path}`
+    `cp #{real_caches_root}/languages_cache.json #{caches.path}`
+    `cp #{real_caches_root}/exercises_cache.json #{caches.path}`
 
     shell.mock_exec(
       ['sudo -u cyber-dojo docker-machine ls -q'],

@@ -36,7 +36,6 @@ class LanguagesTests < AppModelsTestBase
     ' it is not the name of a test-framework, it is the docker-context' +
     ' for the language itself' do
     set_caches_root_tmp
-    languages.refresh_cache
     n = 0
     languages.each do |language|
       n += 1
@@ -68,38 +67,6 @@ class LanguagesTests < AppModelsTestBase
 
     assert_equal display_name, not_there.display_name
     assert_equal image_name, not_there.image_name
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - -
-
-  test '15BD19',
-  'no languages when cache is empty' do
-    set_caches_root_tmp
-    caches.write_json(cache_filename, {})
-    assert_equal [], languages.to_a
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - -
-
-  test '09A1D4',
-  'languages from cache when cache is not empty' do
-    set_caches_root_tmp
-    cache = {
-      'Asm, assert' => {
-             dir_name: 'Asm',
-        test_dir_name: 'assert'
-      },
-      'C++ (g++), assert' => {
-             dir_name: 'g++4.8.4',
-        test_dir_name: 'assert'
-      }
-    }
-    caches.write_json(cache_filename, cache)
-    languages_names = languages.map(&:name).sort
-
-    assert_equal ['Asm-assert', 'C++ (g++)-assert'], languages_names
-    assert_equal 'Asm, assert', languages['Asm-assert'].display_name
-    assert_equal 'C++ (g++), assert', languages['C++ (g++)-assert'].display_name
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
@@ -284,7 +251,7 @@ class LanguagesTests < AppModelsTestBase
   end
 
   def cache_filename
-    Languages.cache_filename
+    'languages_cache.json'
   end
 
   def set_caches_root_tmp

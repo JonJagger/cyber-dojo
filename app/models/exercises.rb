@@ -5,7 +5,7 @@ class Exercises
   def initialize(dojo)
     @dojo = dojo
     @path = config['root']['exercises']
-    caches.write_once(cache_filename) { make_cache }
+    caches.once(cache_filename) { make_cache }
   end
 
   # queries
@@ -53,12 +53,12 @@ class Exercises
     cache
   end
 
-  def make_exercise(name, instructions = nil)
-    Exercise.new(self, name, instructions)
-  end
-
   def cache_filename
     'exercises_cache.json'
+  end
+
+  def make_exercise(name, instructions = nil)
+    Exercise.new(self, name, instructions)
   end
 
 end

@@ -14,7 +14,7 @@ class Caches
     @dojo
   end
 
-  def write_once(filename, &block)
+  def once(filename, &block)
     return if exists?(filename)
     cache_filename = path + filename
     File.open(cache_filename, File::RDWR|File::CREAT, 0644) do |fd|
