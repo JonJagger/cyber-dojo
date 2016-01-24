@@ -139,7 +139,6 @@ class HostDiskKatasTests < LibTestBase
         setup
         kata = make_kata
         started = []
-        semaphore = Mutex.new
         size = 4
         animals = Avatars.names[0...size].shuffle
         threads = Array.new(size * 2)

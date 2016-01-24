@@ -10,8 +10,6 @@ class LanguagesDisplayNamesSplitterTests < LibTestBase
     # At present
     # o) the languages' display_names combine the name of the
     #    language *and* the name of the test framework.
-    # o) The languages/ folder does *not* have a nested structure.
-    #    It probably should have.
     #
     # It makes sense to mirror the pattern of each language having its
     # own docker image, and sub folders underneath it add their

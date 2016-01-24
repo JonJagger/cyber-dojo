@@ -5,7 +5,7 @@ class Languages
   def initialize(dojo)
     @dojo = dojo
     @path = config['root']['languages']
-    caches.once(cache_filename) { make_cache }
+    caches.write_json_once(cache_filename) { make_cache }
   end
 
   # queries

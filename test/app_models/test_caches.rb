@@ -33,4 +33,34 @@ class CachesTests < AppModelsTestBase
     assert_equal 0, array[0]
   end
 
+  #- - - - - - - - - - - - - - - -
+
+  test '0289F2',
+  'write_json_once() across multiple threads succeeds only once' do
+    set_caches_root(tmp_root + 'fake-caches')
+    cache_filename = '0289F2.json'
+    repeat = 25
+    repeat.times do |n|
+      size = 42
+      threads = Array.new(size)
+      called = Array.new(size, false)
+      `rm -f #{caches.path}#{cache_filename}`
+      threads.size.times { |i|
+        threads[i] = Thread.new {
+          caches.write_json_once(cache_filename) {
+            called[i] = true
+            { "a"=>1, "b"=>2 }
+          }
+        }
+      }
+      threads.size.times { |i| threads[i].join }
+      assert_equal 1, called.count(true), n.to_s
+    end
+  end
+
+  #- - - - - - - - - - - - - - - -
+
+  # once() across multiple processes succeeds only once
+  # once() if json creation raises other waiting threads are interrupted
+
 end

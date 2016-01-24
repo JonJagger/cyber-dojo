@@ -14,11 +14,12 @@ class Caches
     @dojo
   end
 
-  def once(filename, &block)
+  def write_json_once(filename, &block)
     return if exists?(filename)
     cache_filename = path + filename
     File.open(cache_filename, File::RDWR|File::CREAT, 0644) do |fd|
       if fd.flock(File::LOCK_EX|File::LOCK_NB)
+        # block.call must return a json object
         write_json(filename, block.call)
       else # something else is making the cache, wait till it completes
         fd.flock(File::LOCK_EX)
