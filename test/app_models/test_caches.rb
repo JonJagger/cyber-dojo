@@ -39,12 +39,11 @@ class CachesTests < AppModelsTestBase
   'write_json_once() across multiple threads succeeds only once' do
     set_caches_root(tmp_root + 'fake-caches')
     cache_filename = '0289F2.json'
-    repeat = 25
-    repeat.times do |n|
+    25.times do |n|
+      `rm -f #{caches.path}#{cache_filename}`
       size = 42
       threads = Array.new(size)
       called = Array.new(size, false)
-      `rm -f #{caches.path}#{cache_filename}`
       threads.size.times { |i|
         threads[i] = Thread.new {
           caches.write_json_once(cache_filename) {
@@ -60,7 +59,32 @@ class CachesTests < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  # once() across multiple processes succeeds only once
-  # once() if json creation raises other waiting threads are interrupted
+  test '9D1EB1',
+  'write_json_once() across multiple processes succeeds only once' do
+    set_caches_root(tmp_root + 'fake-caches')
+    cache_filename = '9D1EB1.json'
+    13.times do |n|
+      `rm -f #{caches.path}#{cache_filename}`
+      read_pipe, write_pipe = IO.pipe
+      pids = Array.new(15)
+      pids.size.times { |i|
+        pids[i] = Process.fork {
+          caches.write_json_once(cache_filename) {
+            write_pipe.puts i.to_s
+            { "a"=>1, "b"=>2 }
+          }
+        }
+      }
+      pids.each { |pid| Process.wait(pid) }
+      write_pipe.close
+      called = read_pipe.read.split
+      read_pipe.close
+      assert_equal 1, called.size, called
+    end
+  end
+
+  #- - - - - - - - - - - - - - - -
+
+  # once() if json creation raises other waiting threads/processes are interrupted
 
 end

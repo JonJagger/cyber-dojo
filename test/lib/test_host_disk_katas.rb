@@ -168,22 +168,22 @@ class HostDiskKatasTests < LibTestBase
     # See test/test_external_helpers.rb
     teardown
     repeat = 20
-    20.times do |n|
+    repeat.times do |n|
       begin
         setup
         kata = make_kata
         started = []
         size = 4
         animals = Avatars.names[0...size].shuffle
-        names = Array.new(size * 2)
+        pids = Array.new(size * 2)
         read_pipe, write_pipe = IO.pipe
-        names.size.times {
-          Process.fork {
+        pids.size.times { |i|
+          pids[i] = Process.fork {
             avatar = kata.start_avatar(animals)
             write_pipe.puts avatar.name unless avatar.nil?
           }
         }
-        names.size.times { Process.wait }
+        pids.each { |pid| Process.wait(pid) }
         write_pipe.close
         names = read_pipe.read.split
         read_pipe.close
