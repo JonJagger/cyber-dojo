@@ -15,14 +15,10 @@ class Caches
   end
 
   def write_json_once(filename)
-    return if exists?(filename)
-    cache_filename = path + filename
-    begin
-      File.open(cache_filename, File::WRONLY|File::CREAT|File::EXCL, 0644) do |fd|
-        write_json(filename, yield) # yield must return a json object
-      end
-    rescue Errno::EEXIST
+    File.open(path + filename, File::WRONLY|File::CREAT|File::EXCL, 0644) do |fd|
+      fd.write(JSON.unparse(yield)) # yield must return a json object
     end
+    rescue Errno::EEXIST
   end
 
   private
@@ -42,6 +38,3 @@ end
 # cyber-dojo would need to read *each* language+tests manifest.json
 # file to determine its docker image_name and then see if the
 # runner could run it.
-# Caches are created by the caches/refresh_all.sh script
-# which is called from admin_scripts/pull.sh
-# Once a cyber-dojo server is running caches is read-only.
