@@ -1,5 +1,4 @@
 # docker-compose build --no-cache
-# docker-compose rm -f web
 # docker-compose up
 
 web:
