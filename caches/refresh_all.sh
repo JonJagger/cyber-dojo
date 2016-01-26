@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cyberDojoHome=/usr/src/app/
+cyberDojoHome=/var/www/cyber-dojo/
 
 echo "setting up the runner"
 echo "..initializing bootstrap config file"

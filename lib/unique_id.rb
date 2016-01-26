@@ -1,10 +1,11 @@
+require 'uuidtools'
 
 module UniqueId # mix-in
 
   module_function
 
   def unique_id
-    `uuidgen`.strip.delete('-')[0...10].upcase
+    UUIDTools::UUID.random_create.to_s.strip.delete('-')[0...10].upcase
   end
 
 end

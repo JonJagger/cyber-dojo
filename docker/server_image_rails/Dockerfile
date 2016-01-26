@@ -1,14 +1,11 @@
 FROM rails:4.1
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-RUN apt-get update \
-    && apt-get install -y uuid-runtime
-
-RUN mkdir /usr/src/app
-COPY Gemfile /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir -p /var/www/cyber-dojo
+COPY Gemfile /var/www/cyber-dojo
+WORKDIR /var/www/cyber-dojo
 RUN bundle install --without development test
-COPY . /usr/src/app
+COPY . /var/www/cyber-dojo
 EXPOSE 3000
 
 CMD [ "bash", "-c", "caches/refresh_all.sh && rails server" ]
