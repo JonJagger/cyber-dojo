@@ -101,7 +101,7 @@ class LanguagesTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - -
 
   test '9E1B38',
-  '[name] when name has no - and was renamed' do
+  '[name] when name has no hyphen and was renamed' do
     [
        # from way back when test name was not part of language name
       'BCPL', 'C', 'C++', 'C#', 'CoffeeScript','Erlang','Go',
@@ -112,7 +112,7 @@ class LanguagesTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - -
 
   test '931D03',
-  '[name] when name has - and was renamed' do
+  '[name] when name has hyphen and was renamed' do
     [
       # renamed
       # 'Java-ApprovalTests', # offline

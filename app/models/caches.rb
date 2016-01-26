@@ -18,7 +18,7 @@ class Caches
     File.open(path + filename, File::WRONLY|File::CREAT|File::EXCL, 0644) do |fd|
       fd.write(JSON.unparse(yield)) # yield must return a json object
     end
-    rescue Errno::EEXIST
+  rescue Errno::EEXIST
   end
 
   private

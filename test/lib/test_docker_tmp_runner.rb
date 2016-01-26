@@ -7,8 +7,11 @@ class DockerTmpRunnerTests < LibTestBase
 
   def setup
     super
-    set_shell_class    'MockHostShell'
-    set_runner_class   'DockerTmpRunner'
+    set_shell_class 'MockHostShell'
+    set_runner_class 'DockerTmpRunner'
+    set_caches_root tmp_root + 'caches'
+    # runner auto-creates cache on first access
+    shell.mock_exec(['docker images'], docker_images_python_pytest, success)
   end
 
   def teardown
@@ -18,49 +21,24 @@ class DockerTmpRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '329309',
-  'installed? is true when docker is installed' do
-    shell.mock_exec(['docker --version > /dev/null 2>&1'], '', success)
-    assert_equal 'DockerTmpRunner', runner.class.name
-    assert runner.installed?
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'FDE315',
-  ' installed? is false when docker is not installed' do
-    shell.mock_exec(['docker --version > /dev/null 2>&1'], '', not_success)
-    assert_equal 'DockerTmpRunner', runner.class.name
-    refute runner.installed?
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '8092EF',
-  'config_filename exists and names DockerTmpRunner as the runner' do
-    dir = disk[runner.path]
-    assert dir.exists?(runner.config_filename)
-    config = dir.read_json(runner.config_filename)
+  'config/cyber-dojo.json exists and names DockerTmpRunner as the runner' do
+    runner
+    dir = disk[dojo.root_dir + '/config']
+    assert dir.exists?
+    config = dir.read_json('cyber-dojo.json')
     assert_equal 'DockerTmpRunner', config['class']['runner']
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '75909D',
-  'refresh_cache() executes [docker images]' +
-    ' and creates new cache-file in caches/ which determines runnability' do
-
-    real_caches_path = get_caches_root
-    set_caches_root(tmp_root + 'caches/')
-
-    cp_command = "cp #{real_caches_path}/languages_cache.json #{caches.path}"
-    `#{cp_command}`
-
-    shell.mock_exec(['docker images'], docker_images_python_pytest, success)
-
-    refute disk[caches.path].exists?(runner.cache_filename)
-    runner.refresh_cache
-    assert disk[caches.path].exists?(runner.cache_filename)
+  'first use of runner automatically creates cache by executing [docker images]' +
+    ' which determines runnability' do
+    cache_filename = 'runner_cache.json'
+    refute disk[caches.path].exists?(cache_filename)
+    runner
+    assert disk[caches.path].exists?(cache_filename)
 
     expected = ['Python, py.test']
     actual = runner.runnable_languages.map { |language| language.display_name }.sort
@@ -135,6 +113,7 @@ class DockerTmpRunnerTests < LibTestBase
       mock_output,
       mock_exit_status
    )
+
    kata
   end
 

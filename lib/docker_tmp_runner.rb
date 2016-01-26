@@ -17,6 +17,7 @@ class DockerTmpRunner
   def initialize(dojo)
     @dojo = dojo
     @tmp_path = unique_tmp_path
+    caches.write_json_once(cache_filename) { make_cache }
   end
 
   # queries
@@ -25,10 +26,6 @@ class DockerTmpRunner
 
   def parent
     @dojo
-  end
-
-  def config_filename
-    'docker_tmp_runner_config.json'
   end
 
   # modifiers

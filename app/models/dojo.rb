@@ -3,7 +3,7 @@
 class Dojo
 
   def root_dir
-    File.expand_path('../..', File.dirname(__FILE__))  # /var/www/cyber-dojo
+    File.expand_path('../..', File.dirname(__FILE__)) # /var/www/cyber-dojo
   end
 
   def config_filename
