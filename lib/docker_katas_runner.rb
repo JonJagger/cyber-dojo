@@ -17,16 +17,13 @@ class DockerKatasRunner
   def initialize(dojo)
     @dojo = dojo
     raise "sorry can't do that" if katas.class.name != 'HostDiskKatas'
+    caches.write_json_once(cache_filename) { make_cache }
   end
 
   # queries
 
   def parent
     @dojo
-  end
-
-  def config_filename
-    'docker_katas_runner_config.json'
   end
 
   # modifiers
