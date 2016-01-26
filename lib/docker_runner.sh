@@ -17,10 +17,9 @@ rm --force ${cidfile}
 timeout --signal=${kill} $((max_seconds+5))s \
   docker run \
     --cidfile="${cidfile}" \
-    --user=www-data \
     --net=none \
-    --volume="${files_path}:/sandbox:rw" \
-    --workdir=/sandbox  \
+    --volumes-from cyber-dojo-tmp-data-container \
+    --workdir=${files_path}  \
     ${image_name} \
     /bin/bash -c "timeout --signal=${kill} $((max_seconds))s ./cyber-dojo.sh 2>&1" 2>/dev/null
 

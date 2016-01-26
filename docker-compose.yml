@@ -1,0 +1,33 @@
+# docker-compose build --no-cache
+# docker-compose rm -f web
+# docker-compose up
+
+web:
+  build: .
+  dockerfile: ./docker/server_image_rails/Dockerfile
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /usr/local/bin/docker:/bin/docker
+  volumes_from:
+    - tmp_data
+    - katas_data
+  ports:
+    - "3000:3000"
+
+nginx:
+  build: .
+  dockerfile: ./docker/nginx_image/Dockerfile
+  ports:
+      - "80:80"
+  links:
+      - "web:cyberdojo_web"
+
+tmp_data:
+  build: ./docker/tmp_image
+  entrypoint: /bin/sh
+  container_name: cyber-dojo-tmp-data-container
+
+katas_data:
+  build: ./docker/katas_image
+  entrypoint: /bin/sh
+  container_name: cyber-dojo-katas-data-container
