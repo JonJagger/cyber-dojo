@@ -1,18 +1,6 @@
 # docker-compose build --no-cache
 # docker-compose up
 
-web:
-  build: .
-  dockerfile: ./docker/server_image_rails/Dockerfile
-  volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-    - /usr/local/bin/docker:/bin/docker
-  volumes_from:
-    - tmp_data
-    - katas_data
-  ports:
-    - "3000:3000"
-
 nginx:
   build: .
   dockerfile: ./docker/nginx_image/Dockerfile
@@ -21,12 +9,41 @@ nginx:
   links:
       - "web:cyberdojo_web"
 
-tmp_data:
+
+web:
+  build: .
+  dockerfile: ./docker/server_image_rails/Dockerfile
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /usr/local/bin/docker:/bin/docker
+  volumes_from:
+    - exercises:ro
+    - languages:ro
+    - tmp:rw
+    - katas:rw
+  ports:
+    - "3000:3000"
+
+
+exercises:
+  build: ./exercises
+  entrypoint: /bin/sh
+  container_name: cyber-dojo-exercises-data-container
+
+
+languages:
+  build: ./languages
+  entrypoint: /bin/sh
+  container_name: cyber-dojo-languages-data-container
+
+
+tmp:
   build: ./docker/tmp_image
   entrypoint: /bin/sh
   container_name: cyber-dojo-tmp-data-container
 
-katas_data:
+
+katas:
   build: ./docker/katas_image
   entrypoint: /bin/sh
   container_name: cyber-dojo-katas-data-container

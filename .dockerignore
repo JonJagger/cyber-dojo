@@ -1,4 +1,12 @@
 .git
+coverage
+docs
+exercises
 katas
+languages
+languages_offline
+notes
+spec
+test
 tmp
 zips
