@@ -28,16 +28,16 @@ nginx:
 
 web:
   build: .
-  dockerfile: ./docker/server_image_rails/Dockerfile
+  dockerfile: ./docker/rails_image/Dockerfile
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - /usr/bin/docker:/usr/bin/docker
     - /usr/lib/x86_64-linux-gnu/libapparmor.so.1.2.0:/usr/lib/x86_64-linux-gnu/libapparmor.so.1
+    - /var/www/cyber-dojo/katas:/var/www/cyber-dojo/katas:rw
   volumes_from:
     - exercises:ro
     - languages:ro
     - tmp:rw
-    - katas:rw
   ports:
     - "3000:3000"
 
@@ -50,20 +50,12 @@ exercises:
   entrypoint: /bin/sh
   container_name: cyber-dojo-exercises-data-container
 
-
 languages:
   build: ./languages
   entrypoint: /bin/sh
   container_name: cyber-dojo-languages-data-container
 
-
 tmp:
   build: ./docker/tmp_image
   entrypoint: /bin/sh
   container_name: cyber-dojo-tmp-data-container
-
-
-katas:
-  build: ./docker/katas_image
-  entrypoint: /bin/sh
-  container_name: cyber-dojo-katas-data-container
