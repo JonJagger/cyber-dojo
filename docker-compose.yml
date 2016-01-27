@@ -13,10 +13,16 @@ nginx:
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# For running on a debian-jessie server after installing docker
-# and docker-compose as per instructions on Docker web pages.
 # For info on the apparmour volume mount fix see
 # https://github.com/SvenDowideit/dockerfiles/issues/17
+#
+# For running on a debian-jessie server after installing docker
+# and docker-compose as per instructions on Docker web pages you need
+#    - /usr/lib/x86_64-linux-gnu/libapparmor.so.1.2.0:/usr/lib/x86_64-linux-gnu/libapparmor.so.1
+#
+# For running on an Ubuntu 14.04 server the apparmor version is
+# different and the volume mount needs to be
+#    - /usr/lib/x86_64-linux-gnu/libapparmor.so.1.1.0:/usr/lib/x86_64-linux-gnu/libapparmor.so.1
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 web:

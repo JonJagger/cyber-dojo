@@ -1,6 +1,6 @@
 
 After you have pulled a new cyberdojofoundation/language image
-you have to delete the runner cache *inside* the web server
+you have to delete the runner's cache *inside* the web server
 to force the web server to recreate it. Like this...
 
 docker exec cyberdojo_web_1 rm /var/www/cyber-dojo/caches/runner_cache.json
