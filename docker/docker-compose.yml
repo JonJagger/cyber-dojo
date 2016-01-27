@@ -5,7 +5,7 @@
 
 
 nginx:
-  build: .
+  build: ..
   dockerfile: ./nginx_image/Dockerfile
   ports:
     - "80:80"
@@ -27,7 +27,7 @@ nginx:
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 web:
-  build: .
+  build: ..
   dockerfile: ./rails_image/Dockerfile
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
