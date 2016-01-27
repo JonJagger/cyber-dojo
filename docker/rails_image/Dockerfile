@@ -1,4 +1,4 @@
-FROM ruby:2.1
+FROM rails:4.1
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 RUN mkdir -p /var/www/cyber-dojo
