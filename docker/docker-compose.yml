@@ -28,7 +28,7 @@ nginx:
 
 web:
   build: ..
-  dockerfile: ./rails_image/Dockerfile
+  dockerfile: ./docker/rails_image/Dockerfile
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - /usr/bin/docker:/usr/bin/docker
