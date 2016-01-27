@@ -15,7 +15,7 @@ module GitDiff # mix-in
 
   def git_diff(diff_lines, visible_files)
     view = {}
-    diffs = GitDiff::GitDiffParser.new(diff_lines).parse_all
+    diffs = GitDiffParser.new(diff_lines).parse_all
     diffs.each do |sandbox_name, diff|
       md = %r{^(.)/sandbox/(.*)}.match(sandbox_name)
       if md
