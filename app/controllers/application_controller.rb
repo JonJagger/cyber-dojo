@@ -2,8 +2,8 @@
 require 'json'
 require_relative '../../lib/all'
 require_relative '../lib/all'
-#require_relative '../helpers/all'
-#require_relative '../models/all'
+require_relative '../helpers/all'
+require_relative '../models/all'
 
 class ApplicationController < ActionController::Base
 
