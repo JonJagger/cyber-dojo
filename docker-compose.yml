@@ -12,8 +12,9 @@ nginx:
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# For running on a debian-jessie server.
-# For into on the apparmour volume mount see
+# For running on a debian-jessie server after installing docker
+# and docker-compose as per instructions on Docker web pages.
+# For info on the apparmour volume mount fix see
 # https://github.com/SvenDowideit/dockerfiles/issues/17
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
