@@ -1,6 +1,4 @@
 
-module GitDiff
-
   # Parses the output of 'git diff' command.
   # Used in app/lib/git_diff_parser.rb git_diff()
   # See test/lib/git_diff_parser_tests.rb
@@ -203,7 +201,6 @@ module GitDiff
     end
 
   end
-end
 
 #--------------------------------------------------------------
 # Git diff format notes
