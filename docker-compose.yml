@@ -1,5 +1,6 @@
-# docker-compose build --no-cache
-# docker-compose up
+# 1. pull the cyberdojofoundation images for languages you want
+# 2. docker-compose build --no-cache
+# 3. docker-compose up
 # Don't forget to ensure port 80 is open
 
 
