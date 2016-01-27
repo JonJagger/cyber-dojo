@@ -5,7 +5,7 @@
 
 
 nginx:
-  build: ./docker/nginx_image
+  build: ./nginx_image
   ports:
     - "80:80"
   links:
