@@ -4,7 +4,7 @@ def rooted(filename)
   root + '/' + filename
 end
 
-load rooted('all.rb')
+#load rooted('all.rb')
 
 class ApplicationController < ActionController::Base
 
