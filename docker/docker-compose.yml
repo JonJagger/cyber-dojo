@@ -47,11 +47,13 @@ web:
 
 exercises:
   build: ../exercises
+  dockerfile: ../docker/exercises_image/Dockerfile
   entrypoint: /bin/sh
   container_name: cyber-dojo-exercises-data-container
 
 languages:
   build: ../languages
+  dockerfile: ../docker/languages_image/Dockerfile
   entrypoint: /bin/sh
   container_name: cyber-dojo-languages-data-container
 
