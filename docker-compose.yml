@@ -2,6 +2,7 @@
 # docker-compose up
 # Don't forget to ensure port 80 is open
 
+
 nginx:
   build: .
   dockerfile: ./docker/nginx_image/Dockerfile
