@@ -4,11 +4,7 @@ def rooted(filename)
   root + '/' + filename
 end
 
-require 'json'
-load rooted('lib/all.rb')
-load rooted('app/helpers/all'
-load rooted('app/lib/all'
-load rooted('app/models/all'
+load rooted('all.rb')
 
 class ApplicationController < ActionController::Base
 

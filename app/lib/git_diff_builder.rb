@@ -1,4 +1,6 @@
 
+module GitDiff
+
   # Combines diff and lines to build a data structure that
   # containes a complete view of a file;
   #    the lines that were deleted
@@ -59,3 +61,5 @@
     end
 
   end
+
+end
