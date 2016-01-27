@@ -6,11 +6,11 @@
 
 nginx:
   build: .
-  dockerfile: ./docker/nginx_image/Dockerfile
+  dockerfile: ./nginx_image/Dockerfile
   ports:
-      - "80:80"
+    - "80:80"
   links:
-      - "web:cyberdojo_web"
+    - "web:cyberdojo_web"
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -28,7 +28,7 @@ nginx:
 
 web:
   build: .
-  dockerfile: ./docker/rails_image/Dockerfile
+  dockerfile: ./rails_image/Dockerfile
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - /usr/bin/docker:/usr/bin/docker
@@ -46,16 +46,16 @@ web:
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 exercises:
-  build: ./exercises
+  build: ../exercises
   entrypoint: /bin/sh
   container_name: cyber-dojo-exercises-data-container
 
 languages:
-  build: ./languages
+  build: ../languages
   entrypoint: /bin/sh
   container_name: cyber-dojo-languages-data-container
 
 tmp:
-  build: ./docker/tmp_image
+  build: ./tmp_image
   entrypoint: /bin/sh
   container_name: cyber-dojo-tmp-data-container
