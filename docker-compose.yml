@@ -1,5 +1,6 @@
 # docker-compose build --no-cache
 # docker-compose up
+# Don't forget to ensure port 80 is open
 
 nginx:
   build: .
@@ -10,12 +11,19 @@ nginx:
       - "web:cyberdojo_web"
 
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# For running on a debian-jessie server.
+# For into on the apparmour volume mount see
+# https://github.com/SvenDowideit/dockerfiles/issues/17
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 web:
   build: .
   dockerfile: ./docker/server_image_rails/Dockerfile
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
-    - /usr/local/bin/docker:/bin/docker
+    - /usr/bin/docker:/usr/bin/docker
+    - /usr/lib/x86_64-linux-gnu/libapparmor.so.1.2.0:/usr/lib/x86_64-linux-gnu/libapparmor.so.1
   volumes_from:
     - exercises:ro
     - languages:ro
@@ -24,6 +32,9 @@ web:
   ports:
     - "3000:3000"
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# data-containers
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 exercises:
   build: ./exercises
