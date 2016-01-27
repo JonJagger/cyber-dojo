@@ -18,8 +18,3 @@ image_names.sort.each do |image_name|
   print cmd + "\n"
   `#{cmd}`
 end
-
-puts "# -----------------------"
-puts "# now refresh the caches"
-puts "$ cd #{cyber_dojo_root}/admin_scripts"
-puts "$ ./refresh_all_caches.sh"
