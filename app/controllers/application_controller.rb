@@ -1,9 +1,14 @@
 
+def rooted(filename)
+  root = File.absolute_path(File.dirname(__FILE__) + '/../../')
+  root + '/' + filename
+end
+
 require 'json'
-require_relative '../../lib/all'
-require_relative '../../app/helpers/all'
-require_relative '../../app/lib/all'
-require_relative '../../app/models/all'
+load rooted('lib/all.rb')
+load rooted('app/helpers/all'
+load rooted('app/lib/all'
+load rooted('app/models/all'
 
 class ApplicationController < ActionController::Base
 
