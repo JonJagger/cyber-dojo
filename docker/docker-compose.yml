@@ -1,23 +1,4 @@
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# 1. ensure you have the app images
-#    $cd docker && ./pull-all.sh
-#
-# 2. get the language images you want
-#    $docker pull cyberdojofoundation/gcc_assert
-#
-# 3 ensure port 80 is open
-#
-# On Debian Jessie
-# 4. $cd docker && docker-compose -f debian-jessie.yml up
-#
-# On Ubuntu 14.04
-# 4. $cd docker && docker-compose -f ubuntu-14.04.yml up
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# note the tmp data container name must match
-# the name used in lib/docker_runner.sh
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 nginx:
   image: cyberdojofoundation/nginx
   links:
