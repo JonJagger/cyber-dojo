@@ -13,7 +13,7 @@ do
   popd
 done
 
-names=(tmp rails web nginx)
+folders=(tmp rails web nginx)
 for folder in ${folders[*]}
 do
   pushd docker/${folder}_image
