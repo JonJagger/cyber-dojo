@@ -56,6 +56,6 @@ languages:
   container_name: cyber-dojo-languages-data-container
 
 tmp:
-  image: cyberdojofoundation/languages
+  image: cyberdojofoundation/tmp
   entrypoint: /bin/sh
   container_name: cyber-dojo-tmp-data-container
