@@ -1,0 +1,15 @@
+
+nginx:
+  image: cyberdojofoundation/nginx
+
+web:
+  image: cyberdojofoundation/web
+
+exercises:
+  image: cyberdojofoundation/exercises
+
+languages:
+  image: cyberdojofoundation/languages
+
+tmp:
+  image: cyberdojofoundation/tmp
