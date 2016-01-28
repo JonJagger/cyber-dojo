@@ -2,18 +2,7 @@
 
 pushd /var/www/cyber-dojo
 
-folders=(exercises)
-for folder in ${folders[*]}
-do
-  pushd ${folder}
-  echo "---------------------------------------"
-  echo "BUILDING: cyberdojofoundation/${folder}"
-  echo "---------------------------------------"
-  ./build-docker-image.sh
-  popd
-done
-
-folders=(languages tmp rails web nginx)
+folders=(languages exercises tmp rails web nginx)
 for folder in ${folders[*]}
 do
   pushd docker/${folder}_image
