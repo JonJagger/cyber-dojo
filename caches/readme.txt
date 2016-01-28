@@ -1,4 +1,18 @@
 
+The caches/ folder holds three specific cache files as detailed below.
+These are created on-demand at the first use from within the web server.
+
+
+runner_cache.json
+-----------------
+The docker runners, eg lib/docker_tmp_runner.rb each have a cache
+related to which docker-images have been pulled and are *already* present
+and usable on the server (and possibly on which node they reside)
+It is NOT the case that the create languages+test page lists *all* the languages+tests
+and when you press test the language+tests's docker image is pulled on demand.
+That would be too slow.
+
+
 languages_cache.json
 --------------------
 There are three crucial pieces of information per language+test.
@@ -46,11 +60,3 @@ Again this allows the create page choose-exercise to get all the information it 
 to display the exercises list and their instructions via a *single* disk access.
 
 
-runner caches
--------------
-The docker runners, eg lib/docker_machine_runner.rb each have a cache
-related to which docker-images have been pulled and are *already* present
-and usable on the server.
-It is NOT the case that the create languages+test page lists *all* the languages+tests
-and when you press test the language+tests's docker image is pulled on demand.
-That would be too slow.
