@@ -44,7 +44,7 @@ web:
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # note the tmp data container has a specific
-# name used in lib/docker_runner.sh
+# name which used in lib/docker_runner.sh
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 exercises:
@@ -58,4 +58,4 @@ languages:
 tmp:
   image: cyberdojofoundation/tmp
   entrypoint: /bin/sh
-  container_name: cyber-dojo-tmp-data-container
+  container_name: cyberdojo_tmp_data_container

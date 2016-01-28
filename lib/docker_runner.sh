@@ -18,7 +18,7 @@ timeout --signal=${kill} $((max_seconds+5))s \
   docker run \
     --cidfile="${cidfile}" \
     --net=none \
-    --volumes-from cyber-dojo-tmp-data-container \
+    --volumes-from cyberdojo_tmp_data_container \
     --workdir=${files_path}  \
     ${image_name} \
     /bin/bash -c "timeout --signal=${kill} $((max_seconds))s ./cyber-dojo.sh 2>&1" 2>/dev/null
