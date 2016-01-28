@@ -1,5 +1,17 @@
 
+nginx:
+  build: ./docker/web_image
+
 web:
   build: .
   dockerfile: ./docker/web_image/Dockerfile
+
+languages:
+  build: ./languages
+
+exercises:
+  build: ./exercises
+
+tmp:
+  build: ./docker/tmp_image
 
