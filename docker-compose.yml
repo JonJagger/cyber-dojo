@@ -5,12 +5,11 @@
 
 
 nginx:
-  build: .
-  dockerfile: ./docker/nginx_image/Dockerfile
-  ports:
-    - "80:80"
+  image: cyberdojofoundation/nginx
   links:
     - "web:cyberdojo_web"
+  ports:
+    - "80:80"
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
