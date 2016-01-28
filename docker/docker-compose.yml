@@ -1,11 +1,11 @@
 
 # Running
 # 1. ensure you have the app images
-#    $cd docker && ./docker-pull-all.sh
+#    $cd docker && ./pull-all.sh
 # 2. get the language images you want
 #    $docker pull cyberdojofoundation/gcc_assert
 # 3 ensure port 80 is open
-# 4. $docker-compose up
+# 4. $cd docker && docker-compose up
 
 
 nginx:
