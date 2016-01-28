@@ -1,9 +1,11 @@
 .git
 admin_scripts
 coverage
+db
 docs
 katas
 languages_offline
+log
 notes
 spec
 test
