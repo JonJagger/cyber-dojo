@@ -2,7 +2,7 @@
 
 pushd /var/www/cyber-dojo
 
-folders=(languages exercises)
+folders=(exercises)
 for folder in ${folders[*]}
 do
   pushd ${folder}
@@ -13,7 +13,7 @@ do
   popd
 done
 
-folders=(tmp rails web nginx)
+folders=(languages tmp rails web nginx)
 for folder in ${folders[*]}
 do
   pushd docker/${folder}_image
