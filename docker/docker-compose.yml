@@ -1,12 +1,22 @@
 
-# Running
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 1. ensure you have the app images
 #    $cd docker && ./pull-all.sh
+#
 # 2. get the language images you want
 #    $docker pull cyberdojofoundation/gcc_assert
+#
 # 3 ensure port 80 is open
-# 4. $cd docker && docker-compose up
-
+#
+# On Debian Jessie
+# 4. $cd docker && docker-compose -f debian-jessie.yml up
+#
+# On Ubuntu 14.04
+# 4. $cd docker && docker-compose -f ubuntu-14.04.yml up
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# note the tmp data container name must match
+# the name used in lib/docker_runner.sh
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 nginx:
   image: cyberdojofoundation/nginx
@@ -15,18 +25,6 @@ nginx:
   ports:
     - "80:80"
 
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# For info on the apparmour volume mount fix see
-# https://github.com/SvenDowideit/dockerfiles/issues/17
-#
-# For running on a debian-jessie server after installing docker
-# and docker-compose as per instructions on Docker web pages you need
-#    - /usr/lib/x86_64-linux-gnu/libapparmor.so.1.2.0:/usr/lib/x86_64-linux-gnu/libapparmor.so.1
-#
-# For running on an Ubuntu 14.04 server the apparmor version is
-# different and the volume mount needs to be
-#    - /usr/lib/x86_64-linux-gnu/libapparmor.so.1.1.0:/usr/lib/x86_64-linux-gnu/libapparmor.so.1
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 web:
@@ -34,7 +32,6 @@ web:
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - /usr/bin/docker:/usr/bin/docker
-    - /usr/lib/x86_64-linux-gnu/libapparmor.so.1.2.0:/usr/lib/x86_64-linux-gnu/libapparmor.so.1
     - /var/www/cyber-dojo/katas:/var/www/cyber-dojo/katas:rw
   volumes_from:
     - exercises:ro
@@ -43,20 +40,19 @@ web:
   ports:
     - "3000:3000"
 
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# note the tmp data container has a specific
-# name which used in lib/docker_runner.sh
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 languages:
   image: cyberdojofoundation/languages
   entrypoint: /bin/sh
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 exercises:
   image: cyberdojofoundation/exercises
   entrypoint: /bin/sh
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 tmp:
   image: cyberdojofoundation/tmp

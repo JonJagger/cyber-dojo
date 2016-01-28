@@ -1,0 +1,9 @@
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# For info on the apparmour volume mount see
+# https://github.com/SvenDowideit/dockerfiles/issues/17
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+web:
+  volumes:
+    - /usr/lib/x86_64-linux-gnu/libapparmor.so.1.2.0:/usr/lib/x86_64-linux-gnu/libapparmor.so.1
