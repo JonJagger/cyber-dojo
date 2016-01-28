@@ -1,23 +1,11 @@
-# Building
-# $ cd languages
-# $ ./build-docker-image.sh
-# $ cd exercises
-# $ ./build-docker-image.sh
-
-# $ cd docker/tmp_image
-# $ ./build-docker-image.sh
-# $ cd docker/nginx_image
-# $ ./build-docker-image.sh
-# $ cd docker/rails_image
-# $ ./build-docker-image.sh
-# $ cd docker/web_image
-# $ ./build-docker-image.sh
-
 
 # Running
-# pull the cyberdojofoundation images for languages you want
-# ensure port 80 is open
-# $ docker-compose -f docker-compose.yml up
+# 1. ensure you have the app images
+#    $cd docker && ./docker-pull-all.sh
+# 2. get the language images you want
+#    $docker pull cyberdojofoundation/gcc_assert
+# 3 ensure port 80 is open
+# 4. $docker-compose up
 
 
 nginx:
