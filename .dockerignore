@@ -1,5 +1,6 @@
 .git
 admin_scripts
+caches
 coverage
 docs
 exercises
