@@ -3,5 +3,9 @@
 names=(languages exercises tmp rails web nginx)
 for name in ${names[*]}
 do
-  docker push cyberdojofoundation/${name}
+  image=cyberdojofoundation/${name}
+  echo "---------------------------------------"
+  echo "PUSHING: ${image}"
+  echo "---------------------------------------"
+  docker push ${image}
 done
