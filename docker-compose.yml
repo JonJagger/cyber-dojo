@@ -46,7 +46,7 @@ web:
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 exercises:
-  build: ./exercises
+  image: cyberdojofoundation/exercises
   entrypoint: /bin/sh
   container_name: cyber-dojo-exercises-data-container
 
