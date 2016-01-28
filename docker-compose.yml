@@ -27,8 +27,7 @@ nginx:
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 web:
-  build: .
-  dockerfile: ./docker/web_image/Dockerfile
+  image: cyberdojofoundation/web
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - /usr/bin/docker:/usr/bin/docker
@@ -40,6 +39,8 @@ web:
     - tmp:rw
   ports:
     - "3000:3000"
+
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # data-containers
