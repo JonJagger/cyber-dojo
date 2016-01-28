@@ -27,7 +27,8 @@ nginx:
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 web:
-  image: cyberdojofoundation/web
+  build: .
+  dockerfile: ./docker/web_image/Dockerfile
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - /usr/bin/docker:/usr/bin/docker

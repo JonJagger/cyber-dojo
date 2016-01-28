@@ -2,11 +2,13 @@
 admin_scripts
 coverage
 docs
+docker
 exercises
 katas
 languages
 languages_offline
 notes
+public
 spec
 test
 tmp
