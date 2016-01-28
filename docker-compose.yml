@@ -5,7 +5,6 @@
 
 
 nginx:
-  image: cyberdojofoundation/nginx
   links:
     - "web:cyberdojo_web"
   ports:
@@ -26,8 +25,6 @@ nginx:
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 web:
-  build: .
-  dockerfile: ./docker/web_image/Dockerfile
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - /usr/bin/docker:/usr/bin/docker
@@ -48,14 +45,11 @@ web:
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 exercises:
-  image: cyberdojofoundation/exercises
   entrypoint: /bin/sh
 
 languages:
-  image: cyberdojofoundation/languages
   entrypoint: /bin/sh
 
 tmp:
-  image: cyberdojofoundation/tmp
   entrypoint: /bin/sh
   container_name: cyberdojo_tmp_data_container
