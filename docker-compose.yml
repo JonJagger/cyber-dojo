@@ -51,7 +51,7 @@ exercises:
   container_name: cyber-dojo-exercises-data-container
 
 languages:
-  build: ./languages
+  image: cyberdojofoundation/languages
   entrypoint: /bin/sh
   container_name: cyber-dojo-languages-data-container
 
