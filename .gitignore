@@ -1,7 +1,7 @@
 *~
 log/*
 db/*.sqlite3
-tmp
+/tmp
 
 .DS_Store
 .sass-cache/
