@@ -1,6 +1,8 @@
 #!/bin/bash
 
-pushd /var/www/cyber-dojo
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+pushd ${DIR}
 
 folders=(languages exercises tmp rails web nginx)
 for folder in ${folders[*]}

@@ -11,11 +11,11 @@ if [ "$#" -eq 0 ]; then
   echo '     $ ./run.sh <ID*>'
   echo
   echo '  2. running all the tests in one folder'
-  echo "     $ cd $cyberDojoHome/app_model"
+  echo "     $ cd $cyberDojoHome/test/app_model"
   echo '     $ ./run.sh'
   echo
   echo '  3. running all the tests in all the folders'
-  echo "     $ cd $cyberDojoHome"
+  echo "     $ cd $cyberDojoHome/test"
   echo '     $ ./run.sh'
   echo
   exit
