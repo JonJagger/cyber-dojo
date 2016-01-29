@@ -4,10 +4,10 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pushd ${DIR}
 
-folders=(languages exercises tmp rails web nginx)
+folders=(exercises languages nginx rails tmp web)
 for folder in ${folders[*]}
 do
-  pushd docker/${folder}_image
+  pushd ${folder}
   echo "---------------------------------------"
   echo "BUILDING: cyberdojofoundation/${folder}"
   echo "---------------------------------------"
