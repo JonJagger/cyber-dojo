@@ -10,7 +10,7 @@ curl -O ${branch}/debian_jessie/app_up.sh
 curl -O ${branch}/docker-compose.yml
 
 chmod +x install_docker.sh
-install_docker.sh
+./install_docker.sh
 
 docker pull cyberdojofoundation/gcc_assert
 
