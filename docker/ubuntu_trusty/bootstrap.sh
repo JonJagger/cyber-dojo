@@ -4,8 +4,10 @@
 
 branch=https://raw.githubusercontent.com/JonJagger/cyber-dojo/runner-auto-cache/docker
 
+mkdir -p /var/www/cyber-dojo
+
 curl -O ${branch}/ubuntu_trusty/install_docker.sh
-curl -O ${branch}/ubuntu_trusty/docker-compose.yml
+curl -O ${branch}/ubuntu_trusty/docker-compose.ubunt_trusty.yml
 curl -O ${branch}/ubuntu_trusty/app_up.sh
 curl -O ${branch}/docker-compose.yml
 
