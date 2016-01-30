@@ -31,10 +31,10 @@ class Caches
 
 end
 
-# The caches object represents the dir holding the caches
-# for the languages, exercises, and runners.
-# The primary reason for having caches is the setup page.
-# Without caches to determine which languages to display
+# The caches object represents the caches dir.
+# It holds cache files for the languages, exercises, and runner.
+# The primary reason for having caches is to speed up setup and test.
+# Without caches to determine which languages to display at setup
 # cyber-dojo would need to read *each* language+tests manifest.json
 # file to determine its docker image_name and then see if the
 # runner could run it.
