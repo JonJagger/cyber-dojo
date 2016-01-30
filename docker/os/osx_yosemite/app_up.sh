@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Brings up cyber-dojo on OSX. Assumes yml files are
-# in their respective git repo folders.
+# Brings up cyber-dojo in OSX Docker Quickstart Terminal.
+# Assumes yml files are in their respective git repo folders.
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
