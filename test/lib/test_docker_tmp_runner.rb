@@ -10,8 +10,7 @@ class DockerTmpRunnerTests < LibTestBase
     set_shell_class 'MockHostShell'
     set_runner_class 'DockerTmpRunner'
     set_caches_root tmp_root + 'caches'
-    # runner auto-creates cache on first access
-    shell.mock_exec(['docker images'], docker_images_python_pytest, success)
+    setup_shell_mock_execs_used_to_create_runner_cache
   end
 
   def teardown
@@ -22,7 +21,7 @@ class DockerTmpRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '8092EF',
-  'config/cyber-dojo.json exists and names DockerTmpRunner as the runner' do
+  'config/cyber-dojo.json exists and names DockerTmpRunner as the default runner' do
     runner
     dir = disk[dojo.root_dir + '/config']
     assert dir.exists?
@@ -55,7 +54,7 @@ class DockerTmpRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '6459A7',
-  'when run() completes and output is not large ' +
+  'when run() completes and output is less than 10K ' +
     'then output is left untouched' do
     syntax_error = 'syntax-error-line-1'
     mock_run_assert(syntax_error, syntax_error, success)
@@ -64,8 +63,8 @@ class DockerTmpRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '87A438',
-  'when run() completes and output is large ' +
-    'then output is truncated and message is appended ' do
+  'when run() completes and output is larger than 10K ' +
+    'then output is truncated to 10K and message is appended ' do
     massive_output = '.' * 75*1024
     expected_output = '.' * 10*1024 + "\n" + 'output truncated by cyber-dojo server'
     mock_run_assert(expected_output, massive_output, success)
@@ -83,6 +82,12 @@ class DockerTmpRunnerTests < LibTestBase
   private
 
   include DockerTestHelpers
+
+  def setup_shell_mock_execs_used_to_create_runner_cache
+    shell.mock_exec(['docker images'], docker_images_python_pytest, success)
+  end
+
+  # - - - - - - - - - - - - - - -
 
   def mock_run(mock_output, mock_exit_status)
     kata = mock_run_setup(mock_output, mock_exit_status)

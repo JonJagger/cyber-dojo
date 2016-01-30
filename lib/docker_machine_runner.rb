@@ -38,7 +38,7 @@ class DockerMachineRunner
 
   def run(_id, _name, _delta, files, image_name, max_seconds)
     write_files(tmp_path, files)
-    node = cached_node_map[image_name].sample
+    node = node_map[image_name].sample
     args = [ node, tmp_path, image_name, max_seconds ].join(space = ' ')
     output, exit_status = shell.cd_exec(path, sudo("./docker_machine_runner.sh #{args}"));
     fork { shell.exec("rm -rf #{tmp_path}") }

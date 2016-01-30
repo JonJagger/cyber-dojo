@@ -13,7 +13,7 @@ module TestExternalHelpers # mix-in
   # so the final teardown will restore the overwritten config! Oops.
 
   def setup
-    raise "setup already called" if !@original_config.nil?
+    raise "setup already called" unless @original_config.nil?
     @original_config = read_config
     setup_tmp_root
     # we never want tests to write to the real katas root
@@ -94,8 +94,8 @@ module TestExternalHelpers # mix-in
     dojo.config_filename
   end
 
-  def fail_if_setup_not_called(at)
-    fail "#{at} NOT executed because store_config() not yet called" if @original_config.nil?
+  def fail_if_setup_not_called(cmd)
+    fail "#{cmd} NOT executed because setup() not yet called" if @original_config.nil?
   end
 
 end

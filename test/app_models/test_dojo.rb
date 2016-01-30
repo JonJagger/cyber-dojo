@@ -146,7 +146,7 @@ class DojoTests < AppModelsTestBase
   'paths always have trailing slash even if config value does not' do
     set_exercises_root(exercises_path = root_dir + '/exercises')
     set_languages_root(languages_path = root_dir + '/languages')
-    set_katas_root(        katas_path = root_dir + '/fake_katas_path')
+    set_katas_root(        katas_path = tmp_root + '/fake_katas_path')
     set_caches_root(      caches_path = tmp_root + '/fake_caches_path')
 
     assert_equal exercises_path + '/', exercises.path
