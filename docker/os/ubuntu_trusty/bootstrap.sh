@@ -3,7 +3,11 @@
 # Installs docker and cyber-dojo onto a raw Trusty (ubuntu 14.04) node.
 # Use curl to get this file, chmod +x it, then run it.
 
-branch=https://raw.githubusercontent.com/JonJagger/cyber-dojo/runner-auto-cache/docker
+branch=https://raw.githubusercontent.com/JonJagger/cyber-dojo/runner-auto-cache/docker/os
+
+# Volumes are still relative to /var/www/cyber-dojo folder
+# to maintain backward compatibility with
+# /var/www/cyber-dojo/katas.
 
 mkdir -p /var/www/cyber-dojo
 
