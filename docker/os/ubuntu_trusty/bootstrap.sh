@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Trust = Ubuntu 14.04
+# Script to install docker and cyber-dojo onto a raw Trust (ubuntu 14.04) node.
+# use curl to get this file, chmod +x it, then run it
 
 branch=https://raw.githubusercontent.com/JonJagger/cyber-dojo/runner-auto-cache/docker
 
