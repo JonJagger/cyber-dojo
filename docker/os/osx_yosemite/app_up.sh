@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# script to bring up cyber-dojo on osx. Assumes yml files are
+# Brings up cyber-dojo on OSX. Assumes yml files are
 # in their respective git repo folders.
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"

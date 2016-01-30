@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Script to install docker and cyber-dojo onto a raw Jessie (Debian 8) node.
-# use curl to get this file, chmod +x it, then run it
+# Installs docker and cyber-dojo onto a raw Jessie (Debian 8) node.
+# Use curl to get this file, chmod +x it, then run it.
 
 branch=https://raw.githubusercontent.com/JonJagger/cyber-dojo/runner-auto-cache/docker
 

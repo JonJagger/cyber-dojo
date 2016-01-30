@@ -1,7 +1,7 @@
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Docker QuickStart Terminal for OSX does not put the docker
-# binary into /usr/bin/docker (as per Ubuntu/Debian)
+# Docker Quickstart Terminal for OSX puts the docker binary into
+# /usr/local/bin/ and not /usr/bin/ (as per Ubuntu/Debian)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 web:
