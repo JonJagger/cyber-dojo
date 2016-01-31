@@ -9,33 +9,31 @@ end
 
 class DojoTests < AppModelsTestBase
 
-=begin
-  test '1B4C30',
-  'root value not present in config raises' do
-    write_empty_root_config
-    assert_raises(NameError) { languages.path }
-    assert_raises(NameError) { exercises.path }
-    assert_raises(NameError) { caches.path }
-    assert_raises(NameError) { katas.path }
-  end
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
+  # config defaults
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'CE3ED1',
-  'class value not present in config raises' do
-    write_empty_class_config
-    assert_raises(StandardError) { runner.class }
-    assert_raises(StandardError) { shell.class }
-    assert_raises(StandardError) { disk.class }
-    assert_raises(StandardError) { git.class }
-    assert_raises(StandardError) { log.class }
+  test 'AACE2A',
+  'config/cyber-dojo.json defaults' do
+    class_of = dojo.config['class']
+    assert_equal 'DockerTmpRunner', class_of['runner']
+    assert_equal 'HostShell',       class_of['shell']
+    assert_equal 'HostDisk',        class_of['disk']
+    assert_equal 'HostGit',         class_of['git']
+    assert_equal 'HostLog',         class_of['log']
+    root_of = dojo.config['root']
+    assert_equal '/var/www/cyber-dojo/languages/', root_of['languages']
+    assert_equal '/var/www/cyber-dojo/exercises/', root_of['exercises']
+    assert_equal '/var/www/cyber-dojo/caches/',    root_of['caches']
+    assert_equal '/var/www/cyber-dojo/katas/',     root_of['katas']
   end
-=end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
   # config classes
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'D51880',
-  'runner can be set' do
+  'runner can be set to alternative class' do
     set_runner_class('ExternalDouble')
     assert_equal ExternalDouble, runner.class
   end
@@ -49,7 +47,7 @@ class DojoTests < AppModelsTestBase
   # - - - - - -
 
   test '4A9DEC',
-  'katas can be set' do
+  'katas can be set to alternative class' do
     set_katas_class('ExternalDouble')
     assert_equal ExternalDouble, katas.class
   end
@@ -63,7 +61,7 @@ class DojoTests < AppModelsTestBase
   # - - - - - -
 
   test 'D45887',
-  'shell can be set' do
+  'shell can be set to alternative class' do
     set_shell_class('ExternalDouble')
     assert_equal ExternalDouble, shell.class
   end
@@ -77,7 +75,7 @@ class DojoTests < AppModelsTestBase
   # - - - - - -
 
   test 'F062B9',
-  'disk can be set' do
+  'disk can be set to alternative class' do
     set_disk_class('ExternalDouble')
     assert_equal ExternalDouble, disk.class
   end
@@ -91,7 +89,7 @@ class DojoTests < AppModelsTestBase
   # - - - - - -
 
   test 'A6C799',
-  'git can be set' do
+  'git can be set to alternative class' do
     set_git_class('ExternalDouble')
     assert_equal ExternalDouble, git.class
   end
@@ -105,7 +103,7 @@ class DojoTests < AppModelsTestBase
   # - - - - - -
 
   test '87B411',
-  'log can be set' do
+  'log can be set to alternative class' do
     set_log_class('ExternalDouble')
     assert_equal ExternalDouble, log.class
   end
@@ -121,31 +119,31 @@ class DojoTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '209EA1',
-  'exercises.path can be set' do
+  'exercises.path can be set to an alternative' do
     set_exercises_root(path = tmp_root + 'fake_exercises_path/')
     assert_equal path, exercises.path
   end
 
   test '27A597',
-  'languages.path can be set' do
+  'languages.path can be set to an alternative' do
     set_languages_root(path = tmp_root + 'fake_languages_path/')
     assert_equal path, languages.path
   end
 
   test '5C25B8',
-  'caches.path can be set' do
+  'caches.path can be set to an alternative' do
     set_caches_root(path = tmp_root + 'fake_caches_path/')
     assert_equal path, caches.path
   end
 
   test 'B6CC06',
-  'katas.path can be set' do
+  'katas.path can be set to an alternative' do
     set_katas_root(path = tmp_root + 'fake_katas_path/')
     assert_equal path, katas.path
   end
 
   test '01CD52',
-  'paths always have trailing slash even if config value does not' do
+  'paths always have trailing slash even when config value does not' do
     set_exercises_root(exercises_path = tmp_root + '/exercises')
     set_languages_root(languages_path = tmp_root + '/languages')
     set_katas_root(        katas_path = tmp_root + '/fake_katas_path')
@@ -160,7 +158,7 @@ class DojoTests < AppModelsTestBase
   # - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'CBFF2D',
-  'katas.path is automatically overriden because tests write to katas' do
+  'katas.path is automatically overriden by test setup because tests write to katas' do
     default_path = dojo.config['root']['katas']
     refute_equal default_path + '/', katas.path
     refute_equal default_path,       katas.path
