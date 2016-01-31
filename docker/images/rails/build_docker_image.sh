@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/rails .
+docker build --no-cache -t cyberdojofoundation/rails .

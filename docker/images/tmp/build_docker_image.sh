@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/tmp .
+docker build --no-cache -t cyberdojofoundation/tmp .

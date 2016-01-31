@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/languages -f ./Dockerfile ../../..
+docker build --no-cache -t cyberdojofoundation/languages -f ./Dockerfile ../../..

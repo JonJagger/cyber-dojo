@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/nginx -f ./Dockerfile ../../..
+docker build --no-cache -t cyberdojofoundation/nginx -f ./Dockerfile ../../..

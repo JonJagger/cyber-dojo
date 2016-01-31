@@ -1,5 +1,4 @@
 
-
 # volumes_from entries *replace* values from the original service
 # See https://docs.docker.com/compose/extends/
 
@@ -7,6 +6,7 @@ web:
   volumes_from:
     - exercises:ro
     - languages:ro
+    - katas:rw
     - tmp:rw
     - test:rw
 

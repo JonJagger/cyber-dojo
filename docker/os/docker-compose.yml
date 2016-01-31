@@ -15,11 +15,10 @@ nginx:
 web:
   image: cyberdojofoundation/web
   user: www-data
-  volumes:
-    - /var/www/cyber-dojo/katas:/var/www/cyber-dojo/katas:rw
   volumes_from:
     - exercises:ro
     - languages:ro
+    - katas:rw
     - tmp:rw
   ports:
     - "3000:3000"
@@ -34,6 +33,12 @@ languages:
 
 exercises:
   image: cyberdojofoundation/exercises
+  entrypoint: /bin/sh
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+katas:
+  image: cyberdojofoundation/katas
   entrypoint: /bin/sh
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

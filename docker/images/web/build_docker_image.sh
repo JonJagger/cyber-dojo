@@ -14,6 +14,7 @@ do
 done
 
 docker build \
+  --no-cache \
   -t cyberdojofoundation/web \
   -f ./Dockerfile \
   ../../..

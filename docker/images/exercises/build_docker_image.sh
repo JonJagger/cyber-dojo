@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/exercises -f ./Dockerfile ../../..
+docker build --no-cache -t cyberdojofoundation/exercises -f ./Dockerfile ../../..

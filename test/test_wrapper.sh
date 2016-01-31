@@ -29,7 +29,6 @@ fi
 
 if [ $(whoami) != 'www-data' ]; then
   cmd="sudo -E -u www-data ${0} $*"
-  #echo "ENSURING TEST ARE RUN AS www-data USER >>>>>OFF<<<<<"
   $cmd
   exit
 fi
