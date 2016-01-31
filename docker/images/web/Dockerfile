@@ -1,6 +1,10 @@
 FROM cyberdojofoundation/rails
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
+COPY pems      /var/www/cyber-dojo/pems
+
+USER www-data
+
 COPY app       /var/www/cyber-dojo/app
 COPY config    /var/www/cyber-dojo/config
 COPY lib       /var/www/cyber-dojo/lib

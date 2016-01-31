@@ -2,10 +2,23 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Docker Quickstart Terminal for OSX puts the docker binary into
 # /usr/local/bin/ and not /usr/bin/ (as per Ubuntu/Debian)
+#
+# Docker Quickstart Terminal uses docker-machine to forward
+# docker commands to a default boot2docker VM. This means I
+# do *not* need to volume mount the docker socket.
+#
+# The cyber-dojo web container is a docker-in-docker container,
+# it calls docker commands (eg to see what language-images are pulled).
+# So inside the web container I need the DOCKER_XXX env vars and
+# I need the pem files in the pointed to DOCKER_CERT_PATH to be readable.
+# Also see comments in docker/images/web/build_docker_image.sh
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 web:
   volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
     - /usr/local/bin/docker:/usr/local/bin/docker
-
+  environment:
+    - DOCKER_CERT_PATH=/var/www/cyber-dojo/pems
+    - DOCKER_HOST
+    - DOCKER_MACHINE_NAME
+    - DOCKER_TLS_VERIFY

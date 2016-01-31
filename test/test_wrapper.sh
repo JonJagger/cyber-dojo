@@ -23,11 +23,15 @@ fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # make sure this is being run as www-data
+# The test run needs rights to
+#   o) create fake folders off tmp_root
+#   o) create the WRAPPED file off test sub-folders
 
 if [ $(whoami) != 'www-data' ]; then
   cmd="sudo -E -u www-data ${0} $*"
-  #$cmd
-  #exit
+  #echo "ENSURING TEST ARE RUN AS www-data USER >>>>>OFF<<<<<"
+  $cmd
+  exit
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -44,11 +48,14 @@ while (( "$#" )); do
 done
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Ruby (on my mac book) is *not* ignoring the first shebang line
-# in test/*.rb files. So I'm creating a temp file by stripping the
-# first shebang line. Yeuch!
+# It seems Ruby does *not* ignore the first shebang line
+# in test/*.rb files when running a .rb file explicitly ala
+#    $ ruby test_parity.rb
+# So I create a temp file with the first line stripped off.
+# Yeuch!
 # This makes the line-number in any diagnostic off by one.
 # I fix that by putting an extra line at the top of the temp file.
+# Yeuch!
 # It also makes the (temp) filename wrong in any diagnostics.
 # If a single test file is being run I base the temp filename on
 # its filename which helps.
@@ -59,8 +66,10 @@ else
   filename='all_tests'
 fi
 wrapped_filename="$filename.WRAPPED"
-echo '' > $wrapped_filename
-cat ${testFiles[*]} | tail -n +2 >> $wrapped_filename
+(echo ''; (cat ${testFiles[*]}) | tail -n +2) > $wrapped_filename
+
+#echo "EARLY EXIT"
+#exit
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # check if tests alter the current git user!
@@ -72,7 +81,9 @@ gitUserNameBefore=`git config user.name`
 rm -rf ../../coverage/.resultset.json
 mkdir -p coverage
 wrapper_test_log='coverage/WRAPPER.log.tmp'
+
 ruby $wrapped_filename -- ${args[*]} 2>&1 | tee $wrapper_test_log
+
 rm $wrapped_filename
 cp -R ../../coverage .
 #pwd                       # eg  /var/www/cyber-dojo/test/app_lib

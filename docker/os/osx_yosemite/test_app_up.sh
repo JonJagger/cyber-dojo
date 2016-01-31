@@ -5,10 +5,14 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+#usermod -aG docker www-data
+#
+#exit
+
 pushd ${DIR}
 
 # remove existing containers
-docker rm -f $(docker ps -aq)
+docker ps -aq | xargs docker rm -f
 
 # remove existing images
 ../../rm_untagged_images.sh
