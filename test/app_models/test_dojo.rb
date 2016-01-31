@@ -146,8 +146,8 @@ class DojoTests < AppModelsTestBase
 
   test '01CD52',
   'paths always have trailing slash even if config value does not' do
-    set_exercises_root(exercises_path = root_dir + '/exercises')
-    set_languages_root(languages_path = root_dir + '/languages')
+    set_exercises_root(exercises_path = tmp_root + '/exercises')
+    set_languages_root(languages_path = tmp_root + '/languages')
     set_katas_root(        katas_path = tmp_root + '/fake_katas_path')
     set_caches_root(      caches_path = tmp_root + '/fake_caches_path')
 
@@ -160,19 +160,16 @@ class DojoTests < AppModelsTestBase
   # - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'CBFF2D',
-  'katas.path is set *away* from genuine katas because tests write to katas' do
-    refute_equal dojo.root_dir + '/katas/', katas.path
-    refute_equal dojo.root_dir + '/katas', katas.path
+  'katas.path is automatically overriden because tests write to katas' do
+    default_path = dojo.config['root']['katas']
+    refute_equal default_path + '/', katas.path
+    refute_equal default_path,       katas.path
   end
 
   private
 
   def does_not_exist
     'DoesNotExist'
-  end
-
-  def root_dir
-    dojo.root_dir
   end
 
 end

@@ -22,11 +22,8 @@ class DockerTmpRunnerTests < LibTestBase
 
   test '8092EF',
   'config/cyber-dojo.json exists and names DockerTmpRunner as the default runner' do
-    runner
-    dir = disk[dojo.root_dir + '/config']
-    assert dir.exists?
-    config = dir.read_json('cyber-dojo.json')
-    assert_equal 'DockerTmpRunner', config['class']['runner']
+    runner # because of mock_exec
+    assert_equal 'DockerTmpRunner', dojo.config['class']['runner']
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

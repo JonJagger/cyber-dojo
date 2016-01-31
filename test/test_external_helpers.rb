@@ -3,10 +3,6 @@ module TestExternalHelpers # mix-in
 
   module_function
 
-  # The config has to actually be written to the file system
-  # because controller tests go through the rails stack and
-  # thus create a new dojo object in a new thread.
-  #
   # Calling setup twice in a row without an intervening teardown
   # is bad because an intervening set_katas_root() call (say)
   # means the second setup will read the overwritten config
@@ -24,9 +20,9 @@ module TestExternalHelpers # mix-in
 
   def teardown
     fail_if_setup_not_called('teardown')
-    # in ENV and not in config means it was set with no previous value -> delete
+    # set and no previous value -> delete
     (ENV.keys - @config.keys).each { |key| ENV.delete(key) }
-    # in ENV and     in config means it was set with  a previous value -> reset
+    # set but has previous value -> restore
     (ENV.keys + @config.keys).each { |key| ENV[key] = @config[key] }
     @setup_called = nil
   end
@@ -47,37 +43,29 @@ module TestExternalHelpers # mix-in
 
   # - - - - - - - - - - - - - - - - - - -
 
-  def get_languages_root; get_root('languages'); end
-  def get_exercises_root; get_root('exercises'); end
-  def    get_caches_root; get_root(   'caches'); end
-  def     get_katas_root; get_root(    'katas'); end
+  def get_languages_root; dojo.get_root('languages'); end
+  def get_exercises_root; dojo.get_root('exercises'); end
+  def    get_caches_root; dojo.get_root(   'caches'); end
+  def     get_katas_root; dojo.get_root(    'katas'); end
 
-  def   get_runner_class; get_class('runner'); end
-  def    get_katas_class; get_class( 'katas'); end
-  def    get_shell_class; get_class( 'shell'); end
-  def     get_disk_class; get_class(  'disk'); end
-  def      get_git_class; get_class(   'git'); end
-  def      get_log_class; get_class(   'log'); end
+  def   get_runner_class; dojo.get_class('runner'); end
+  def    get_katas_class; dojo.get_class( 'katas'); end
+  def    get_shell_class; dojo.get_class( 'shell'); end
+  def     get_disk_class; dojo.get_class(  'disk'); end
+  def      get_git_class; dojo.get_class(   'git'); end
+  def      get_log_class; dojo.get_class(   'log'); end
 
   # - - - - - - - - - - - - - - - - - - -
 
   def set_root(name, value)
     fail_if_setup_not_called("set_root(#{name}, #{value})")
-    ENV['CYBER_DOJO_'+name.upcase+'_ROOT'] = value
+    ENV['CYBER_DOJO_' + name.upcase + '_ROOT'] = value
     `mkdir -p #{value}`
   end
 
   def set_class(name, value)
     fail_if_setup_not_called("set_class(#{name}, #{value})")
-    ENV['CYBER_DOJO_'+name.upcase+'_CLASS'] = value
-  end
-
-  def get_root(name)
-    dojo.get_root(name)
-  end
-
-  def get_class(name)
-    dojo.get_class(name)
+    ENV['CYBER_DOJO_' + name.upcase + '_CLASS'] = value
   end
 
   # - - - - - - - - - - - - - - - - - - -

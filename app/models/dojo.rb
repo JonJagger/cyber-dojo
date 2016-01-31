@@ -2,22 +2,6 @@
 
 class Dojo
 
-  def root_dir
-    File.expand_path('../..', File.dirname(__FILE__)) # /var/www/cyber-dojo
-  end
-
-  def config_filename
-    root_dir + '/config/cyber-dojo.json'
-  end
-
-  def get_root(name)
-    ENV[env_root(name)] || config['root'][name]
-  end
-
-  def get_class(name)
-    ENV[env_class(name)] || config['class'][name]
-  end
-
   def languages; @languages ||= Languages.new(self, get_root('languages')); end
   def exercises; @exercises ||= Exercises.new(self, get_root('exercises')); end
   def    caches; @caches    ||=    Caches.new(self, get_root('caches'   )); end
@@ -29,6 +13,12 @@ class Dojo
   def       log;       @log ||= external_object; end
   def       git;       @git ||= external_object; end
 
+  def get_root(name); ENV[env_root(name)] || config['root'][name]; end
+
+  def get_class(name); ENV[env_class(name)] || config['class'][name]; end
+
+  def config; JSON.parse(IO.read(config_filename)); end
+
   private
 
   include NameOfCaller
@@ -39,34 +29,30 @@ class Dojo
     Object.const_get(var).new(self)
   end
 
-  def env_root(name)
-    env(name, 'ROOT')
-  end
+  def env_root(name); env(name, 'ROOT'); end
 
-  def env_class(name)
-    env(name, 'CLASS')
-  end
+  def env_class(name); env(name, 'CLASS'); end
 
-  def env(name, suffix)
-    'CYBER_DOJO_' + name.upcase + '_' + suffix
-  end
+  def env(name, suffix); 'CYBER_DOJO_' + name.upcase + '_' + suffix; end
 
-  def config
-    JSON.parse(IO.read(config_filename))
-  end
+  def config_filename; root_dir + '/config/cyber-dojo.json'; end
+
+  def root_dir; File.expand_path('../..', File.dirname(__FILE__)); end
 
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# External paths can be set via the config file.
-# External objects can be set via the config file.
+# External root-paths and class-names have defaults as set in config/cyber-dojo.json.
+# Root-path and class-name defaults can be overridden by setting environment variables.
+#   eg  export CYBER_DOJO_KATAS_ROOT=/var/www/cyber-dojo/katas
+#   eg  export CYBER_DOJO_RUNNER_CLASS=DockerTmpRunner
 #
-# The main reason for this arrangement is testability.
-# For example, I can run controller tests by setting the
-# config, then run the test which issue a GET/POST,
-# let the call work its way through the rails stack,
-# eventually reaching dojo.rb where it creates
-# Disk/Runner/Git/Shell/etc objects as named in the config.
+# This is for testability. It's a way of doing Parameterize From Above
+# in a way that can tunnel through a *deep* stack. For example,
+# I can set an environment variable and then run a controller test,
+# which issues GETs/POSTs, which work their way through the rails stack,
+# eventually reaching app/models.dojo.rb (possibly in a different thread)
+# where the specific Double/Mock/Stub class or fake-root-path takes effect.
 #
 # The external objects are held using
 #    @name ||= ...
