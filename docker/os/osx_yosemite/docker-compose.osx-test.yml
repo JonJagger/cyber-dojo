@@ -1,51 +1,14 @@
 
-# Partial docker-compose.yml file for bringing up cyber-dojo.
-# Must be combined with a docker-compose extension file which
-# adds web volume mounts for docker itself (docker in docker).
 
-nginx:
-  image: cyberdojofoundation/nginx
-  links:
-    - "web:cyberdojo_web"
-  ports:
-    - "80:80"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# volumes_from entries *replace* values from the original service
+# See https://docs.docker.com/compose/extends/
 
 web:
-  image: cyberdojofoundation/web
-  volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-    - /usr/local/bin/docker:/usr/local/bin/docker
-    - /var/www/cyber-dojo/katas:/var/www/cyber-dojo/katas:rw
   volumes_from:
     - exercises:ro
     - languages:ro
     - tmp:rw
     - test:rw
-  ports:
-    - "3000:3000"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-languages:
-  image: cyberdojofoundation/languages
-  entrypoint: /bin/sh
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-exercises:
-  image: cyberdojofoundation/exercises
-  entrypoint: /bin/sh
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-tmp:
-  image: cyberdojofoundation/tmp
-  entrypoint: /bin/sh
-  container_name: cyberdojo_tmp_data_container
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 test:
   image: cyberdojofoundation/test
