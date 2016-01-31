@@ -2,9 +2,9 @@
 class Exercises
   include Enumerable
 
-  def initialize(dojo)
+  def initialize(dojo, path)
     @dojo = dojo
-    @path = config['root']['exercises']
+    @path = path
     caches.write_json_once(cache_filename) { make_cache }
   end
 

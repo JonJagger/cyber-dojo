@@ -13,8 +13,10 @@ module TestExternalHelpers # mix-in
   # so the final teardown will restore the overwritten config! Oops.
 
   def setup
-    raise "setup already called" unless @original_config.nil?
-    @original_config = read_config
+    raise "setup already called" unless @setup_called.nil?
+    @setup_called = true
+    @config = {}
+    ENV.each { |key,value| @config[key] = value }
     setup_tmp_root
     # we never want tests to write to the real katas root
     set_katas_root(tmp_root + 'katas')
@@ -22,8 +24,11 @@ module TestExternalHelpers # mix-in
 
   def teardown
     fail_if_setup_not_called('teardown')
-    IO.write(config_filename, @original_config)
-    @original_config = nil
+    # in ENV and not in config means it was set with no previous value -> delete
+    (ENV.keys - @config.keys).each { |key| ENV.delete(key) }
+    # in ENV and     in config means it was set with  a previous value -> reset
+    (ENV.keys + @config.keys).each { |key| ENV[key] = @config[key] }
+    @setup_called = nil
   end
 
   # - - - - - - - - - - - - - - - - - - -
@@ -58,44 +63,27 @@ module TestExternalHelpers # mix-in
 
   def set_root(name, value)
     fail_if_setup_not_called("set_root(#{name}, #{value})")
-    config = read_json_config
-    config['root'][name] = value
-    IO.write(config_filename, JSON.unparse(config))
-    `mkdir -p #{value}` if name == 'katas'
-    `mkdir -p #{value}` if name == 'caches'
+    ENV['CYBER_DOJO_'+name.upcase+'_ROOT'] = value
+    `mkdir -p #{value}`
   end
 
   def set_class(name, value)
     fail_if_setup_not_called("set_class(#{name}, #{value})")
-    config = read_json_config
-    config['class'][name] = value
-    IO.write(config_filename, JSON.unparse(config))
+    ENV['CYBER_DOJO_'+name.upcase+'_CLASS'] = value
   end
 
   def get_root(name)
-    read_json_config['root'][name]
+    dojo.get_root(name)
   end
 
   def get_class(name)
-    read_json_config['class'][name]
+    dojo.get_class(name)
   end
 
   # - - - - - - - - - - - - - - - - - - -
 
-  def read_json_config
-    JSON.parse(read_config)
-  end
-
-  def read_config
-    IO.read(config_filename)
-  end
-
-  def config_filename
-    dojo.config_filename
-  end
-
   def fail_if_setup_not_called(cmd)
-    fail "#{cmd} NOT executed because setup() not yet called" if @original_config.nil?
+    fail "#{cmd} NOT executed because setup() not yet called" if @setup_called.nil?
   end
 
 end

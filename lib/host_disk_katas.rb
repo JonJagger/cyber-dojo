@@ -6,7 +6,7 @@ class HostDiskKatas
 
   def initialize(dojo)
     @dojo = dojo
-    @path = slashed(config['root']['katas'])
+    @path = slashed(dojo.get_root('katas'))
   end
 
   attr_reader :path

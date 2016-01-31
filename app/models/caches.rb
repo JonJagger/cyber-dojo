@@ -1,9 +1,9 @@
 
 class Caches
 
-  def initialize(dojo)
+  def initialize(dojo, path)
     @dojo = dojo
-    @path = config['root']['caches']
+    @path = path
   end
 
   def path

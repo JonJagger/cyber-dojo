@@ -3,12 +3,13 @@
 require_relative './app_models_test_base'
 
 class ExternalDouble
-  def initialize(_dojo)
+  def initialize(_dojo, _path = nil)
   end
 end
 
 class DojoTests < AppModelsTestBase
 
+=begin
   test '1B4C30',
   'root value not present in config raises' do
     write_empty_root_config
@@ -27,6 +28,7 @@ class DojoTests < AppModelsTestBase
     assert_raises(StandardError) { git.class }
     assert_raises(StandardError) { log.class }
   end
+=end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
   # config classes
@@ -167,18 +169,6 @@ class DojoTests < AppModelsTestBase
 
   def does_not_exist
     'DoesNotExist'
-  end
-
-  def write_empty_class_config
-    write_config({ "class" => {} })
-  end
-
-  def write_empty_root_config
-    write_config({ "root" => {} })
-  end
-
-  def write_config(json)
-    IO.write(dojo.config_filename, JSON.unparse(json))
   end
 
   def root_dir

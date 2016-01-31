@@ -2,9 +2,9 @@
 class Languages
   include Enumerable
 
-  def initialize(dojo)
+  def initialize(dojo, path)
     @dojo = dojo
-    @path = config['root']['languages']
+    @path = path
     caches.write_json_once(cache_filename) { make_cache }
   end
 

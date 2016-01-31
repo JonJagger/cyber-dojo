@@ -10,13 +10,17 @@ class Dojo
     root_dir + '/config/cyber-dojo.json'
   end
 
-  def config
-    @config ||= JSON.parse(IO.read(config_filename))
+  def get_root(name)
+    ENV[env_root(name)] || config['root'][name]
   end
 
-  def languages; @languages ||= Languages.new(self); end
-  def exercises; @exercises ||= Exercises.new(self); end
-  def    caches; @caches    ||=    Caches.new(self); end
+  def get_class(name)
+    ENV[env_class(name)] || config['class'][name]
+  end
+
+  def languages; @languages ||= Languages.new(self, get_root('languages')); end
+  def exercises; @exercises ||= Exercises.new(self, get_root('exercises')); end
+  def    caches; @caches    ||=    Caches.new(self, get_root('caches'   )); end
 
   def    runner;    @runner ||= external_object; end
   def     katas;     @katas ||= external_object; end
@@ -31,8 +35,24 @@ class Dojo
 
   def external_object
     key = name_of(caller)
-    var = config['class'][key]
+    var = get_class(key)
     Object.const_get(var).new(self)
+  end
+
+  def env_root(name)
+    env(name, 'ROOT')
+  end
+
+  def env_class(name)
+    env(name, 'CLASS')
+  end
+
+  def env(name, suffix)
+    'CYBER_DOJO_' + name.upcase + '_' + suffix
+  end
+
+  def config
+    JSON.parse(IO.read(config_filename))
   end
 
 end
