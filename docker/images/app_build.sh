@@ -11,7 +11,7 @@ do
   echo "---------------------------------------"
   echo "BUILDING: cyberdojofoundation/${folder}"
   echo "---------------------------------------"
-  ./build-docker-image.sh
+  ./build_docker_image.sh
   popd
 done
 

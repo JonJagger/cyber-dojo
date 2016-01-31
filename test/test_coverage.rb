@@ -2,7 +2,7 @@ require 'simplecov'
 
 module SimpleCov::Configuration
   def clean_filters
-    @filters = [ ]
+    @filters = []
   end
 end
 

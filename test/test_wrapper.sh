@@ -26,8 +26,8 @@ fi
 
 if [ $(whoami) != 'www-data' ]; then
   cmd="sudo -E -u www-data ${0} $*"
-  $cmd
-  exit
+  #$cmd
+  #exit
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
