@@ -5,15 +5,11 @@ class HostDiskKatas
   include Enumerable
 
   def initialize(dojo)
-    @dojo = dojo
+    @parent = dojo
     @path = slashed(dojo.get_root('katas'))
   end
 
-  attr_reader :path
-
-  def parent
-    @dojo
-  end
+  attr_reader :path, :parent
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
   # Katas
@@ -209,7 +205,6 @@ class HostDiskKatas
   include StderrRedirect
   include TimeNow
   include UniqueId
-
 
   def exists?(obj)
     dir(obj).exists?

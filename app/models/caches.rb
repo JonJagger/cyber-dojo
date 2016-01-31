@@ -2,17 +2,11 @@
 class Caches
 
   def initialize(dojo, path)
-    @dojo = dojo
-    @path = path
+    @parent = dojo
+    @path = slashed(path)
   end
 
-  def path
-    slashed(@path)
-  end
-
-  def parent
-    @dojo
-  end
+  attr_reader :path, :parent
 
   def write_json_once(filename)
     File.open(path + filename, File::WRONLY|File::CREAT|File::EXCL, 0644) do |fd|

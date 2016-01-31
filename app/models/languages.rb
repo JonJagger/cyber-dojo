@@ -3,20 +3,14 @@ class Languages
   include Enumerable
 
   def initialize(dojo, path)
-    @dojo = dojo
-    @path = path
+    @parent = dojo
+    @path = slashed(path)
     caches.write_json_once(cache_filename) { make_cache }
   end
 
   # queries
 
-  def path
-    slashed(@path)
-  end
-
-  def parent
-    @dojo
-  end
+  attr_reader :path, :parent
 
   def each(&block)
     languages.values.each(&block)
