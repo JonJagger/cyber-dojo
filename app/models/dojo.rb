@@ -14,8 +14,10 @@ class Dojo
   def       git;       @git ||= external_object; end
 
   def get_root(name); ENV[env_root(name)] || config['root'][name]; end
+  def env_root(name); env(name, 'ROOT'); end
 
   def get_class(name); ENV[env_class(name)] || config['class'][name]; end
+  def env_class(name); env(name, 'CLASS'); end
 
   def config; JSON.parse(IO.read(config_filename)); end
 
@@ -28,10 +30,6 @@ class Dojo
     var = get_class(key)
     Object.const_get(var).new(self)
   end
-
-  def env_root(name); env(name, 'ROOT'); end
-
-  def env_class(name); env(name, 'CLASS'); end
 
   def env(name, suffix); 'CYBER_DOJO_' + name.upcase + '_' + suffix; end
 

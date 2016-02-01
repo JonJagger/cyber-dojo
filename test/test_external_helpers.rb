@@ -59,13 +59,13 @@ module TestExternalHelpers # mix-in
 
   def set_root(name, value)
     fail_if_setup_not_called("set_root(#{name}, #{value})")
-    ENV['CYBER_DOJO_' + name.upcase + '_ROOT'] = value
+    ENV[dojo.env_root(name)] = value
     `mkdir -p #{value}`
   end
 
   def set_class(name, value)
     fail_if_setup_not_called("set_class(#{name}, #{value})")
-    ENV['CYBER_DOJO_' + name.upcase + '_CLASS'] = value
+    ENV[dojo.env_class(name)] = value
   end
 
   # - - - - - - - - - - - - - - - - - - -
