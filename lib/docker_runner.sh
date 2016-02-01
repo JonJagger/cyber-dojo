@@ -1,22 +1,31 @@
 #!/bin/bash
 
-# parameters
+# Parameters
 files_path=$1
 image_name=$2
 max_seconds=$3
 
-# local variables
+# Local variables
 cidfile=`mktemp --tmpdir=/tmp cyber-dojo.XXXXX`
 kill=9
+user=www-data
 
 # - - - - - - - - - - - - - -
-# run avatar's test in host container
-
+# A named cidfile it must *not* exist
 rm --force ${cidfile}
 
+# - - - - - - - - - - - - - -
+# Inside the container give www-data user the ability to create files.
+# I think this relies on www-data's uid being the same on the host
+# as inside the container.
+setfacl -m group:${user}:rwx ${files_path}
+
+# - - - - - - - - - - - - - -
+# Run avatar's test in host container
 timeout --signal=${kill} $((max_seconds+5))s \
   docker run \
     --cidfile="${cidfile}" \
+    --user=${user} \
     --net=none \
     --volumes-from cyberdojo_tmp_data_container \
     --workdir=${files_path}  \
