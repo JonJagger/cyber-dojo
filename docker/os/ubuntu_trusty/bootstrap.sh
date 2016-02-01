@@ -13,7 +13,7 @@ mkdir -p /var/www/cyber-dojo
 
 curl -O ${branch}/../docker-compose.yml
 curl -O ${branch}/install_docker.sh
-curl -O ${branch}/docker-compose.ubunt_trusty.yml
+curl -O ${branch}/docker-compose.ubuntu_trusty.yml
 curl -O ${branch}/app_up.sh
 
 chmod +x install_docker.sh
