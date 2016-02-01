@@ -22,18 +22,6 @@ if [ "$#" -eq 0 ]; then
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# make sure this is being run as www-data
-# The test run needs rights to
-#   o) create fake folders off tmp_root
-#   o) create the WRAPPED file off test sub-folders
-
-if [ $(whoami) != 'www-data' ]; then
-  cmd="sudo -E -u www-data ${0} $*"
-  $cmd
-  exit
-fi
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # collect trailing arguments to forward to tests
 
 while (( "$#" )); do

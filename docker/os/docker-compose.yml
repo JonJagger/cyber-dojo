@@ -19,7 +19,7 @@ web:
     - languages:ro
     - katas:rw
     - tmp:rw
-    - test:ro
+    - test:rw
   ports:
     - "3000:3000"
 
