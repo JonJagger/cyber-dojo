@@ -14,12 +14,20 @@ docker ps -aq | xargs docker rm -f
 ../../rm_untagged_images.sh
 
 # get test changes
-cd ../../images/test
+cd ../..
+cd images/test
 ./build_docker_image.sh
 
 # get code changes
-cd ../../images/web
+cd ../..
+cd images/web
 ./osx_build_docker_image.sh
+
+# get nginx changes
+cd ../..
+cd images/nginx
+./build_docker_image.sh
+
 
 # bring up cyber-dojo + tests
 cd ../../os/osx_yosemite
