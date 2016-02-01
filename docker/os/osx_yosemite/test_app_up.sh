@@ -5,7 +5,7 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-pushd ${DIR}
+pushd ${DIR} > /dev/null
 
 # remove existing containers
 docker ps -aq | xargs docker rm -f
@@ -33,7 +33,7 @@ cd images/nginx
 cd ../../os/osx_yosemite
 ./app_up.sh
 
-popd
+popd > /dev/null
 
 # after this tests can be run *inside* the container, eg
 # $ docker exec os_web_1 bash -c "cd /var/www/cyber-dojo/test/app_models && ./test_dojo.rb"

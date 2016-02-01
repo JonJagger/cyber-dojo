@@ -6,6 +6,6 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-pushd ${DIR}
+pushd ${DIR} > /dev/null
 docker-compose -f docker-compose.yml -f docker-compose.ubuntu_trusty.yml up &
-popd
+popd > /dev/null

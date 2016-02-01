@@ -17,9 +17,11 @@ curl -O ${branch}/docker-compose.debian_jessie.yml
 curl -O ${branch}/app_up.sh
 
 chmod +x install_docker.sh
+chmod +x app_up.sh
+
+# do these seprately?
 ./install_docker.sh
 
 docker pull cyberdojofoundation/gcc_assert
 
-chmod +x app_up.sh
 ./app_up.sh
