@@ -11,17 +11,15 @@ kill=9
 user=www-data
 
 # - - - - - - - - - - - - - -
-# A named cidfile it must *not* exist
-rm --force ${cidfile}
-
-# - - - - - - - - - - - - - -
-# Inside the container give www-data user the ability to create files.
-# I think this relies on www-data's uid being the same on the host
-# as inside the container.
+# Inside the run-tests-container give www-data user the ability to create files.
+# This relies on www-data's uid being the same on the web-container
+# as inside the run-tests-container.
 setfacl -m group:${user}:rwx ${files_path}
 
 # - - - - - - - - - - - - - -
-# Run avatar's test in host container
+# Run avatar's test in the languages' container
+rm --force ${cidfile}
+
 timeout --signal=${kill} $((max_seconds+5))s \
   docker run \
     --cidfile="${cidfile}" \
