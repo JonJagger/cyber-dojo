@@ -8,8 +8,8 @@ COPY lib       /var/www/cyber-dojo/lib
 COPY script    /var/www/cyber-dojo/script
 COPY config.ru /var/www/cyber-dojo
 
-RUN mkdir /var/www/cyber-dojo/caches
-RUN mkdir /var/www/cyber-dojo/log
-RUN mkdir /var/www/cyber-dojo/tmp
+RUN mkdir      /var/www/cyber-dojo/caches
+RUN mkdir      /var/www/cyber-dojo/log
+RUN mkdir      /var/www/cyber-dojo/tmp
 
 CMD [ "bash", "-c", "rails server" ]
