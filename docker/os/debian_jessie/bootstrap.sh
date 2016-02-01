@@ -5,7 +5,7 @@
 
 branch=https://raw.githubusercontent.com/JonJagger/cyber-dojo/runner-auto-cache/docker/os
 
-# Volumes are still relative to /var/www/cyber-dojo folder
+# Volumes are currently still relative to /var/www/cyber-dojo folder
 # to maintain backward compatibility with
 # /var/www/cyber-dojo/katas.
 

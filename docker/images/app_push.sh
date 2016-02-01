@@ -1,6 +1,6 @@
 #!/bin/bash
 
-names=(exercises languages katas tmp rails web nginx)
+names=(exercises languages katas tmp rails web test nginx)
 for name in ${names[*]}
 do
   image=cyberdojofoundation/${name}

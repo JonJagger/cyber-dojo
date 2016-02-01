@@ -1,6 +1,8 @@
 FROM cyberdojofoundation/rails
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
+COPY pems      /var/www/cyber-dojo/pems
+
 COPY app       /var/www/cyber-dojo/app
 COPY config    /var/www/cyber-dojo/config
 COPY lib       /var/www/cyber-dojo/lib
@@ -8,6 +10,8 @@ COPY lib       /var/www/cyber-dojo/lib
 COPY script    /var/www/cyber-dojo/script
 COPY config.ru /var/www/cyber-dojo
 
+# NB: there is already a www-data (33) user in the base rails image
+USER www-data
 RUN mkdir /var/www/cyber-dojo/caches
 RUN mkdir /var/www/cyber-dojo/log
 RUN mkdir /var/www/cyber-dojo/tmp

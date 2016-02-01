@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pushd ${DIR}
 
-folders=(exercises languages katas tmp rails web nginx)
+folders=(exercises languages katas tmp rails web test nginx)
 for folder in ${folders[*]}
 do
   pushd ${folder}

@@ -14,12 +14,12 @@ nginx:
 
 web:
   image: cyberdojofoundation/web
-  user: www-data
   volumes_from:
     - exercises:ro
     - languages:ro
     - katas:rw
     - tmp:rw
+    - test:ro
   ports:
     - "3000:3000"
 
@@ -47,3 +47,9 @@ tmp:
   image: cyberdojofoundation/tmp
   entrypoint: /bin/sh
   container_name: cyberdojo_tmp_data_container
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+test:
+  image: cyberdojofoundation/test
+  entrypoint: /bin/sh

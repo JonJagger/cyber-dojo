@@ -5,7 +5,7 @@
 #
 # Docker Quickstart Terminal uses docker-machine to forward
 # docker commands to a default boot2docker VM. This means I
-# do *not* need to volume mount the docker socket.
+# do *not* need to volume mount the docker socket or libapparmour.
 #
 # The cyber-dojo web container is a docker-in-docker container,
 # it calls docker commands (eg to see what language-images are pulled).

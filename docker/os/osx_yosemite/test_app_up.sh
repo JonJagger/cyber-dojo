@@ -19,11 +19,11 @@ cd ../../images/test
 
 # get code changes
 cd ../../images/web
-./build_docker_image.sh
+./osx_build_docker_image.sh
 
 # bring up cyber-dojo + tests
 cd ../../os/osx_yosemite
-docker-compose -f ../docker-compose.yml -f docker-compose.osx.yml -f docker-compose.osx-test.yml up &
+./app_up.sh
 
 popd
 
