@@ -11,7 +11,7 @@
 # it calls docker commands (eg to see what language-images are pulled).
 # So inside the web container I need the DOCKER_XXX env vars and
 # I need the pem files in the pointed to DOCKER_CERT_PATH to be readable.
-# Also see comments in docker/images/web/build_docker_image.sh
+# See also docker/images/web/osx_build_docker_image.sh
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 web:
