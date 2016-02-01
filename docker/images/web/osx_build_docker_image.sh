@@ -13,9 +13,14 @@ do
   chmod +r ${pems_in_context}/${pem_file}
 done
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+pushd ${DIR} > /dev/null
+
 docker build \
   -t cyberdojofoundation/web \
   -f ./Dockerfile.osx \
   ../../..
 
 rm -rf ${pems_in_context}
+
+popd > /dev/null

@@ -7,12 +7,10 @@ function build {
   pushd ${DIR} > /dev/null
   for image in ${images[*]}
   do
-    pushd ${image} > /dev/null
     echo "---------------------------------------"
     echo "BUILDING: cyberdojofoundation/${image}"
     echo "---------------------------------------"
-    ./build_docker_image.sh
-    popd > /dev/null
+    ./${image}/build_docker_image.sh
   done
   popd > /dev/null
 }
