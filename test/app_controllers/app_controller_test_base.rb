@@ -6,13 +6,8 @@ require 'minitest/autorun'
 
 root = './../..'
 
-require_relative root + '/test/test_coverage'
 require_relative root + '/test/all'
 require_relative root + '/config/environment'
-require_relative root + '/test/test_domain_helpers'
-require_relative root + '/test/test_external_helpers'
-require_relative root + '/test/test_hex_id_helpers'
-require_relative root + '/test/test_tmp_root_helpers'
 require_relative './params_maker'
 
 class AppControllerTestBase < ActionDispatch::IntegrationTest

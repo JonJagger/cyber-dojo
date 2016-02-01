@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# NB: at the moment this ram-disk is coupled to running the tests
+#     inside a OSX VirtualBox Ubuntu VM which fuse-mounts the /var/www/cyber-dojo/ src
+#     When the web app is run from inside a docker, the tests will be too and
+#     the ram-disk will be dropped.
+
 ramDisk=/mnt/ram-disk
 sudo ../admin_scripts/make_ram_disk.sh $ramDisk 1g
 
