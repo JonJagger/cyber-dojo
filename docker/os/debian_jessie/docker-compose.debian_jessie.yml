@@ -1,6 +1,6 @@
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# For info on the apparmour volume mount see
+# For info on the apparmor volume mount see
 # https://github.com/SvenDowideit/dockerfiles/issues/17
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
