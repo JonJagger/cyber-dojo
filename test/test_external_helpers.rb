@@ -67,6 +67,31 @@ module TestExternalHelpers # mix-in
     ENV[dojo.env_class(name)] = value
   end
 
+  # - - - - - - - - - - - - - - - - - - -
+
+  def tmp_root
+    '/tmp/cyber-dojo/'
+  end
+
+  def setup_tmp_root
+    # the Teardown-Before-Setup pattern gives good diagnostic info if
+    # a test fails but these backtick command mean the tests cannot be
+    # run in parallel...
+    success = 0
+
+    command = "rm -rf #{tmp_root}"
+    output = `#{command}`
+    exit_status = $?.exitstatus
+    puts "#{command}\n\t->#{output}\n\t->#{exit_status}" unless exit_status == success
+
+    command = "mkdir -p #{tmp_root}"
+    output = `#{command}`
+    exit_status = $?.exitstatus
+    puts "#{command}\n\t->#{output}\n\t->#{exit_status}" unless exit_status == success
+  end
+
+  # - - - - - - - - - - - - - - - - - - -
+
   def fail_if_setup_not_called(cmd)
     fail "#{cmd} NOT executed because setup() not yet called" if @setup_called.nil?
   end

@@ -15,7 +15,6 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
   include TestDomainHelpers
   include TestExternalHelpers
   include TestHexIdHelpers
-  include TestTmpRootHelpers
 
   def setup
     super
