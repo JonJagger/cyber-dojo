@@ -129,33 +129,23 @@ class HostDiskKatasTests < LibTestBase
 
   test '4C08A1',
   'start_avatar on multiple threads doesnt start the same avatar twice' do
-    # Have to call setup at the start of each loop
-    # And have to make sure setups/teardowns balance.
-    # See test/test_external_helpers.rb
-    teardown
-    repeat = 20
-    repeat.times do |n|
-      begin
-        setup
-        kata = make_kata
-        started = []
-        size = 4
-        animals = Avatars.names[0...size].shuffle
-        threads = Array.new(size * 2)
-        names = Array.new(size * 2)
-        threads.size.times { |i|
-          threads[i] = Thread.new {
-            avatar = kata.start_avatar(animals)
-            names[i] = avatar.name unless avatar.nil?
-          }
+    20.times do
+      kata = make_kata
+      started = []
+      size = 4
+      animals = Avatars.names[0...size].shuffle
+      threads = Array.new(size * 2)
+      names = Array.new(size * 2)
+      threads.size.times { |i|
+        threads[i] = Thread.new {
+          avatar = kata.start_avatar(animals)
+          names[i] = avatar.name unless avatar.nil?
         }
-        threads.size.times { |i| threads[i].join }
-        names.compact!
-        assert_equal animals.sort, names.sort
-        assert_equal names.sort, kata.avatars.map(&:name).sort
-      ensure
-        teardown if n != (repeat-1)
-      end
+      }
+      threads.size.times { |i| threads[i].join }
+      names.compact!
+      assert_equal animals.sort, names.sort
+      assert_equal names.sort, kata.avatars.map(&:name).sort
     end
   end
 
@@ -163,35 +153,25 @@ class HostDiskKatasTests < LibTestBase
 
   test 'A31DC1',
   'start_avatar on multiple processes doesnt start the same avatar twice' do
-    # Have to call setup at the start of each loop
-    # And have to make sure setups/teardowns balance.
-    # See test/test_external_helpers.rb
-    teardown
-    repeat = 20
-    repeat.times do |n|
-      begin
-        setup
-        kata = make_kata
-        started = []
-        size = 4
-        animals = Avatars.names[0...size].shuffle
-        pids = Array.new(size * 2)
-        read_pipe, write_pipe = IO.pipe
-        pids.size.times { |i|
-          pids[i] = Process.fork {
-            avatar = kata.start_avatar(animals)
-            write_pipe.puts avatar.name unless avatar.nil?
-          }
+    20.times do
+      kata = make_kata
+      started = []
+      size = 4
+      animals = Avatars.names[0...size].shuffle
+      pids = Array.new(size * 2)
+      read_pipe, write_pipe = IO.pipe
+      pids.size.times { |i|
+        pids[i] = Process.fork {
+          avatar = kata.start_avatar(animals)
+          write_pipe.puts "#{avatar.name} " unless avatar.nil?
         }
-        pids.each { |pid| Process.wait(pid) }
-        write_pipe.close
-        names = read_pipe.read.split
-        read_pipe.close
-        assert_equal animals.sort, names.sort
-        assert_equal names.sort, kata.avatars.map(&:name).sort
-      ensure
-        teardown if n != (repeat-1)
-      end
+      }
+      pids.each { |pid| Process.wait(pid) }
+      write_pipe.close
+      names = read_pipe.read.split
+      read_pipe.close
+      assert_equal animals.sort, names.sort
+      assert_equal names.sort, kata.avatars.map(&:name).sort
     end
   end
 

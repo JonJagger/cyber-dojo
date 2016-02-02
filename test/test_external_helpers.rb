@@ -3,11 +3,6 @@ module TestExternalHelpers # mix-in
 
   module_function
 
-  # Calling setup twice in a row without an intervening teardown
-  # is bad because an intervening set_katas_root() call (say)
-  # means the second setup will read the overwritten config
-  # so the final teardown will restore the overwritten config! Oops.
-
   def setup
     raise "setup already called" unless @setup_called.nil?
     @setup_called = true
@@ -71,8 +66,6 @@ module TestExternalHelpers # mix-in
     fail_if_setup_not_called("set_class(#{name}, #{value})")
     ENV[dojo.env_class(name)] = value
   end
-
-  # - - - - - - - - - - - - - - - - - - -
 
   def fail_if_setup_not_called(cmd)
     fail "#{cmd} NOT executed because setup() not yet called" if @setup_called.nil?
