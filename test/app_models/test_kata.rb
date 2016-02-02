@@ -35,9 +35,9 @@ class KataTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '66C9AE',
-    'when kata has no avatars' +
-       ' then it is not active ' +
-       ' and its age is zero' do
+  'when kata has no avatars',
+  'then it is not active',
+  'and its age is zero' do
     kata = make_kata
     refute kata.active?
     assert_equal 0, kata.age
@@ -46,9 +46,9 @@ class KataTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B9340E',
-    "when kata's avatars have 0 traffic-lights" +
-       ' then it is not active ' +
-       ' and its age is zero' do
+  "when kata's avatars have 0 traffic-lights",
+  'then it is not active',
+  'and its age is zero' do
     kata = make_kata
     kata.start_avatar(['hippo'])
     kata.start_avatar(['lion'])
@@ -59,9 +59,9 @@ class KataTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'F2CDD3',
-    'when kata has at least one avatar with 1 or more traffic-lights' +
-       ' then kata is active ' +
-       ' and age is from earliest traffic-light to now' do
+  'when kata has at least one avatar with 1 or more traffic-lights',
+  'then kata is active',
+  'and age is from earliest traffic-light to now' do
     kata = make_kata
 
     hippo = kata.start_avatar(['hippo'])
@@ -93,9 +93,9 @@ class KataTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '6AF51F',
-    'kata.id, kata.created, kata.language_name,' +
-       'kata.exercise_name, kata.visible_files ' +
-       'all read from manifest' do
+  'kata.id, kata.created, kata.language_name,',
+  'kata.exercise_name, kata.visible_files',
+  'all read from manifest' do
     language = languages['Java-JUnit']
     exercise = exercises['Fizz_Buzz']
     id = unique_id
@@ -128,7 +128,7 @@ class KataTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '139C43',
-    'start_avatar with specific name succeeds if avatar has not yet started' do
+  'start_avatar with specific name succeeds if avatar has not yet started' do
     @kata = make_kata
     hippo = @kata.start_avatar(['hippo'])
     refute_nil hippo
@@ -139,7 +139,7 @@ class KataTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'A653FA',
-    'start_avatar with specific name is nil if avatar has already started' do
+  'start_avatar with specific name is nil if avatar has already started' do
     kata = make_kata
     kata.start_avatar(['hippo'])
     avatar = kata.start_avatar(['hippo'])
@@ -149,7 +149,7 @@ class KataTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '4C66C8',
-    'start_avatar with specific names tries them in order' do
+  'start_avatar with specific names tries them in order' do
     @kata = make_kata
     names = %w(cheetah lion panda)
 

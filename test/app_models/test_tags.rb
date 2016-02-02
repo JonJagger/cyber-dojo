@@ -6,9 +6,9 @@ require_relative './delta_maker'
 class TagsTest < AppModelsTestBase
 
   test 'A30AF3',
-    'tag zero exists after avatar is started ' +
-       'and before first [test] is run ' +
-       'and contains all visible files' do
+  'tag zero exists after avatar is started',
+  'and before first [test] is run',
+  'and contains all visible files' do
     language = languages['C (clang)-assert']
     exercise = exercises['Fizz_Buzz']
     kata = make_kata({ language:'C (clang)-assert', exercise:'Fizz_Buzz' })

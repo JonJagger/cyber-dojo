@@ -119,9 +119,9 @@ class KatasTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '42EA20',
-    'completed(id) does not complete when id is less than 6 chars in length' +
-       'because trying to complete from a short id will waste time going through ' +
-       'lots of candidates with the likely outcome of no unique result' do
+  'completed(id) does not complete when id is less than 6 chars in length',
+  'because trying to complete from a short id will waste time going through',
+  'lots of candidates with the likely outcome of no unique result' do
     id = unique_id[0..4]
     assert_equal 5, id.length
     assert_equal id, katas.completed(id)

@@ -15,10 +15,10 @@ class AvatarTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'F70D2B',
-    "an avatar's' initial visible_files are:" +
-       ' 1. the language visible_files,' +
-       ' 2. the exercise instructions,' +
-       ' 3. empty output' do
+  "an avatar's' initial visible_files are:",
+  '1. the language visible_files,',
+  '2. the exercise instructions,',
+  '3. empty output' do
     kata = make_kata
     language = kata.language
     avatar = kata.start_avatar

@@ -64,9 +64,9 @@ class DeltaMakerTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '6385D8',
-    'new_file(filename) succeeds if filename is new' +
-       ', adds filename to visible_files' +
-       ', delta[:new] includes filename' do
+  'new_file(filename) succeeds if filename is new',
+  ', adds filename to visible_files',
+  ', delta[:new] includes filename' do
     content = 'Snaeda'
     @maker.new_file(@new_filename, content)
     delta, now = *@maker.test_args
@@ -78,9 +78,9 @@ class DeltaMakerTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'AE99D7',
-    'change_file(filename) succeeds if filename is not new and content is new' +
-       ", updates filename's content in visible_files" +
-       ', delta[:changed] includes filename' do
+  'change_file(filename) succeeds if filename is not new and content is new',
+  ", updates filename's content in visible_files",
+  ', delta[:changed] includes filename' do
     new_content = 'Snaeda'
     @maker.change_file(@existing_filename, new_content)
     delta, now = *@maker.test_args
@@ -92,9 +92,9 @@ class DeltaMakerTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '439B76',
-    'delete_file(filename) succeeds if filename is not new' +
-       ', removes filename from visible_files' +
-       ', delta[:deleted] includes filename' do
+  'delete_file(filename) succeeds if filename is not new',
+  ', removes filename from visible_files',
+  ', delta[:deleted] includes filename' do
     @maker.delete_file(@existing_filename)
     delta, now = *@maker.test_args
     refute now.keys.include?(@existing_filename)

@@ -41,9 +41,9 @@ class LanguageTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '3D9F75',
-    'when :visible_filenames is not in manifest' +
-       'then visible_files is empty hash ' +
-       'and visible_filenames is empty array' do
+  'when :visible_filenames is not in manifest',
+  'then visible_files is empty hash',
+  'and visible_filenames is empty array' do
     @language = make_language('C#', 'NUnit')
     spy_manifest({})
     assert_equal({}, @language.visible_files)
@@ -53,9 +53,9 @@ class LanguageTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B426B4',
-    'when :visible_filenames is empty array in manifest' +
-       'then visible_files is empty hash' +
-       'and visible_filenames is empty array' do
+  'when :visible_filenames is empty array in manifest',
+  'then visible_files is empty hash',
+  'and visible_filenames is empty array' do
     @language = make_language('C#', 'NUnit')
     spy_manifest({ 'visible_filenames' => [] })
     assert_equal({}, @language.visible_files)
@@ -65,8 +65,8 @@ class LanguageTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'EA1DCE',
-    'when :visible_filenames is non-empty array in manifest' +
-       'then visible_files are loaded but not output and not instructions' do
+  'when :visible_filenames is non-empty array in manifest',
+  'then visible_files are loaded but not output and not instructions' do
     @language = make_language('C#', 'NUnit')
     filename = 'test_untitled.cs'
     spy_manifest({ 'visible_filenames' => [filename] })
@@ -103,9 +103,9 @@ class LanguageTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '7E3D8B',
-    "lowlight_filenames defaults to" +
-       "['cyberdojo.sh','makefile','Makefile','unity.license.txt']" +
-       "when there is no entry for highlight_filenames" do
+  "lowlight_filenames defaults to",
+  "['cyberdojo.sh','makefile','Makefile','unity.license.txt']",
+  "when there is no entry for highlight_filenames" do
     @language = make_language('C#', 'NUnit')
     visible_filenames = ['wibble.cs', 'fubar.cs']
     spy_manifest({ 'visible_filenames' => visible_filenames })
@@ -116,8 +116,8 @@ class LanguageTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '829855',
-    'lowlight_filenames is visible_filenames - highlight_filenames' +
-       'when there is an entry for highlight_filenames' do
+  'lowlight_filenames is visible_filenames - highlight_filenames',
+  'when there is an entry for highlight_filenames' do
     @language = make_language('C++', 'assert')
     visible_filenames = ['wibble.hpp', 'wibble.cpp', 'fubar.hpp', 'fubar.cpp']
     highlight_filenames = ['wibble.hpp', 'wibble.cpp']

@@ -32,9 +32,9 @@ class LanguagesTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - -
 
   test '8D0EBB',
-  'refresh_cache ignores nested _docker_context folder because' +
-    ' it is not the name of a test-framework, it is the docker-context' +
-    ' for the language itself' do
+  'refresh_cache ignores nested _docker_context folder because',
+  'it is not the name of a test-framework, it is the docker-context',
+  'for the language itself' do
     set_caches_root_tmp
     n = 0
     languages.each do |language|
