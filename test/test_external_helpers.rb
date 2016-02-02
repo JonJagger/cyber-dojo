@@ -16,6 +16,10 @@ module TestExternalHelpers # mix-in
     setup_tmp_root
     # we never want tests to write to the real katas root
     set_katas_root(tmp_root + 'katas')
+    # wipe caches, but not via caches.path because that will *set* dojo.caches
+    `rm -rf #{get_caches_root}/exercises_cache.json`
+    `rm -rf #{get_caches_root}/languages_cache.json`
+    `rm -rf #{get_caches_root}/runner_cache.json`
   end
 
   def teardown

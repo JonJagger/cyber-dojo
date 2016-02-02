@@ -1,7 +1,7 @@
 
 require 'json'
 
-require_relative './test_coverage'
+#require_relative './test_coverage'
 require_relative './test_base'
 
 require_relative '../lib/all'

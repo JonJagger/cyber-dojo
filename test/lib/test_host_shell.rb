@@ -6,9 +6,10 @@ class HostShellTests < LibTestBase
 
   test 'C89DBB',
   'the daemon_exec command executes' do
-    shell.daemon_exec("echo -n Hello > #{tmp_root}hello.txt")
+    shell.daemon_exec("echo Hello > #{tmp_root}hello.txt")
     sleep 1
-    assert_equal 'Hello', `cat #{tmp_root}hello.txt`
+    written = `cat #{tmp_root}hello.txt`
+    assert written.start_with?('Hello'), written
   end
 
   # - - - - - - - - - - - - - - - - -

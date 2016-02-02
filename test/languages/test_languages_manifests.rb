@@ -83,8 +83,9 @@ class LanguagesManifestsTests < LanguagesTestBase
     assert cyberdojo_sh_exists?
     assert cyberdojo_sh_has_execute_permission?
     assert colour_method_for_unit_test_framework_output_exists?
-    refute any_files_owner_is_root?
-    refute any_files_group_is_root?
+    # Not applicable when running *inside* a container (as root)
+    #refute any_files_owner_is_root?
+    #refute any_files_group_is_root?
     refute any_file_is_unreadable?
     assert created_kata_manifests_language_entry_round_trips?
   end

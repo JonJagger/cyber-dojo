@@ -182,6 +182,3 @@ DEPENDENCIES
   shoulda-matchers
   simplecov (>= 0.9.0)
   uuidtools (>= 2.1.5)
-
-BUNDLED WITH
-   1.10.6
