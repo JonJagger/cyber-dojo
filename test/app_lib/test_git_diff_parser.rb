@@ -1171,9 +1171,9 @@ class GitDiffParserTests < AppLibTestBase
   #-----------------------------------------------------
 
   test '438922',
-    'when there is less than 7 unchanged lines' +
-       'between 2 changed lines ' +
-       'they are merged into one chunk' do
+    'when there is less than 7 unchanged lines',
+    'between 2 changed lines',
+    'they are merged into one chunk' do
 
     lines =
     [
@@ -1239,8 +1239,8 @@ class GitDiffParserTests < AppLibTestBase
   #-----------------------------------------------------
 
   test 'C1C274',
-    '7 unchanged lines between two changed lines' +
-       'creates two chunks' do
+    '7 unchanged lines between two changed lines',
+    'creates two chunks' do
 
     lines =
     [
@@ -1320,8 +1320,8 @@ class GitDiffParserTests < AppLibTestBase
   #-----------------------------------------------------
 
   test '3F08E3',
-    'no-newline-at-end-of-file line at end of' +
-       'common section is gobbled' do
+    'no-newline-at-end-of-file line at end of',
+    'common section is gobbled' do
 
     # James Grenning has built his own cyber-dojo server
     # which he uses for training. He noticed that a file

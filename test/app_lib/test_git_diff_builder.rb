@@ -66,8 +66,8 @@ class GitDiffBuilderTests < AppLibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test 'D19F10',
-    'two chunks with leading and trailing same lines' +
-       'and no newline at eof' do
+    'two chunks with leading and trailing',
+    'same lines and no newline at eof' do
 
     @diff_lines =
     [
@@ -137,8 +137,8 @@ class GitDiffBuilderTests < AppLibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test '2191C8',
-    'diffs 7 lines apart are not merged' +
-       'into contiguous sections in one chunk' do
+    'diffs 7 lines apart are not merged',
+    'into contiguous sections in one chunk' do
 
     @diff_lines =
     [
@@ -196,8 +196,8 @@ class GitDiffBuilderTests < AppLibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test '3F8C58',
-    'one chunk with two sections' +
-       'each with one line added and one line deleted' do
+    'one chunk with two sections',
+    'each with one line added and one line deleted' do
 
     @diff_lines =
     [
@@ -359,8 +359,8 @@ class GitDiffBuilderTests < AppLibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test '970ED0',
-    'one chunk with one section' +
-       'with more lines deleted than added' do
+    'one chunk with one section',
+    'with more lines deleted than added' do
 
     @diff_lines =
     [
@@ -419,8 +419,8 @@ class GitDiffBuilderTests < AppLibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test '56BCAD',
-    'one chunk with one section' +
-       'with more lines added than deleted' do
+    'one chunk with one section',
+    'with more lines added than deleted' do
 
     @diff_lines =
     [
@@ -484,8 +484,8 @@ class GitDiffBuilderTests < AppLibTestBase
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test 'A42951',
-    'one chunk with one section' +
-       'with one line deleted and one line added' do
+    'one chunk with one section',
+    'with one line deleted and one line added' do
 
     @diff_lines =
     [

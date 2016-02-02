@@ -14,7 +14,13 @@ module TestHexIdHelpers # mix-in
     @@args = (ARGV.sort.uniq - ['--']).map(&:upcase)  # eg  2DD6F3 or 2dd
     @@seen = []
 
-    def test(id = nil, name, &block)
+    def hex?(id)
+      id.chars.all? { |ch| "0123456789ABCDEF".include? ch }
+    end
+
+    def test(id, *lines, &block)
+      raise "NO LEADING HEX: #{lines.join}" unless hex?(id)
+      name = lines.join(' ')
       line = 'X' * 35
       id ||= Digest::MD5.hexdigest(name).upcase[0..5]
       if id == ''
