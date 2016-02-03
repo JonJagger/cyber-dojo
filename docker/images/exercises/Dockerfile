@@ -1,8 +1,10 @@
 FROM busybox
 MAINTAINER Jon Jagger
 
-RUN mkdir -p /var/www/cyber-dojo/exercises
-COPY       . /var/www/cyber-dojo/exercises
-VOLUME     ["/var/www/cyber-dojo/exercises"]
+ARG  CYBER_DOJO_ROOT
+
+RUN mkdir -p ${CYBER_DOJO_ROOT}/exercises
+COPY       . ${CYBER_DOJO_ROOT}/exercises
+VOLUME     ["${CYBER_DOJO_ROOT}/exercises"]
 
 CMD ["not runnable - a data container"]

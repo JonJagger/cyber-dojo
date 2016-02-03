@@ -13,6 +13,11 @@ nginx:
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 web:
+  environment:
+    - CYBER_DOJO_LANGUAGES_ROOT=${CYBER_DOJO_ROOT}/languages
+    - CYBER_DOJO_EXERCISES_ROOT=${CYBER_DOJO_ROOT}/exercises
+    - CYBER_DOJO_CACHES_ROOT=${CYBER_DOJO_ROOT}/caches
+    - CYBER_DOJO_KATAS_ROOT=${CYBER_DOJO_ROOT}/katas
   image: cyberdojofoundation/web
   volumes_from:
     - exercises:ro

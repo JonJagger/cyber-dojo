@@ -18,7 +18,7 @@ web:
   volumes:
     - /usr/local/bin/docker:/usr/local/bin/docker
   environment:
-    - DOCKER_CERT_PATH=/var/www/cyber-dojo/pems
+    - DOCKER_CERT_PATH=${CYBER_DOJO_ROOT}/pems
     - DOCKER_HOST
     - DOCKER_MACHINE_NAME
     - DOCKER_TLS_VERIFY

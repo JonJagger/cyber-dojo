@@ -6,5 +6,10 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pushd ${DIR} > /dev/null
-docker-compose -f ../docker-compose.yml -f docker-compose.osx.yml up &
+
+# create and start containers
+docker-compose \
+  --file ../docker-compose.yml \
+  --file docker-compose.osx.yml up &
+
 popd > /dev/null

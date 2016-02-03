@@ -1,16 +1,17 @@
 #!/bin/bash
 
-images=(exercises languages katas tmp rails web test nginx)
+IMAGES=(exercises languages katas tmp rails web test nginx)
 
 function build {
+  CYBER_DOJO_ROOT='/var/www/cyber-dojo'
   DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
   pushd ${DIR} > /dev/null
-  for image in ${images[*]}
+  for image in ${IMAGES[*]}
   do
     echo "---------------------------------------"
     echo "BUILDING: cyberdojofoundation/${image}"
     echo "---------------------------------------"
-    ./${image}/build_docker_image.sh
+    ./${image}/build_docker_image.sh ${CYBER_DOJO_ROOT}
   done
   popd > /dev/null
 }
@@ -18,7 +19,7 @@ function build {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 function push {
-  for image in ${images[*]}
+  for image in ${IMAGES[*]}
   do
     hub_image=cyberdojofoundation/${image}
     echo "---------------------------------------"
@@ -31,7 +32,7 @@ function push {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 function pull {
-  for image in ${images[*]}
+  for image in ${IMAGES[*]}
   do
     hub_image=cyberdojofoundation/${image}
     echo "---------------------------------------"
