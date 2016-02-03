@@ -48,11 +48,11 @@ class KataControllerTest  < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-=begin
   test 'B547AF',
   'run_tests() saves *new* makefile with leading spaces converted to tabs',
   'and these changes are made to the visible_files parameter too',
   'so they also occur in the manifest file' do
+    skip
     create_kata('C (gcc), assert')
     @avatar = start
     delete_file(makefile)
@@ -63,7 +63,6 @@ class KataControllerTest  < AppControllerTestBase
     # need to get files seen by stub-runner
     assert_file makefile, makefile_with_leading_tab
   end
-=end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -35,7 +35,7 @@ class AvatarTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '7DD92F',
-  'when an avatar has zero traffic-lights it is not active? ' do
+  'when an avatar has zero traffic-lights it is not active?' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     assert_equal [], lion.lights
@@ -45,7 +45,7 @@ class AvatarTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'BEABAB',
-  'when an avatar has one or more traffic-lights it is active? ' do
+  'when an avatar has one or more traffic-lights it is active?' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     DeltaMaker.new(lion).run_test

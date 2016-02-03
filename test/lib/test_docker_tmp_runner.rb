@@ -61,7 +61,7 @@ class DockerTmpRunnerTests < LibTestBase
 
   test '87A438',
   'when run() completes and output is larger than 10K',
-  'then output is truncated to 10K and message is appended ' do
+  'then output is truncated to 10K and message is appended' do
     massive_output = '.' * 75*1024
     expected_output = '.' * 10*1024 + "\n" + 'output truncated by cyber-dojo server'
     mock_run_assert(expected_output, massive_output, success)
@@ -71,7 +71,7 @@ class DockerTmpRunnerTests < LibTestBase
 
   test 'B8750C',
   'when run() times out',
-  'then output is replaced by unable-to-complete message ' do
+  'then output is replaced by unable-to-complete message' do
     output = mock_run('ach-so-it-timed-out', times_out)
     assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds.")
   end

@@ -1,7 +1,5 @@
-require 'digest/md5'
 
-# Adds hex-id to each test so the id can be
-# used to selectively run specific tests.
+# Uses hex-id on each test to selectively run specific tests.
 
 module TestHexIdHelpers # mix-in
 
@@ -14,34 +12,24 @@ module TestHexIdHelpers # mix-in
     @@args = (ARGV.sort.uniq - ['--']).map(&:upcase)  # eg  2DD6F3 or 2dd
     @@seen = []
 
-    def hex?(id)
-      id.chars.all? { |ch| "0123456789ABCDEF".include? ch }
-    end
-
     def test(id, *lines, &block)
-      raise "NO LEADING HEX: #{lines.join}" unless hex?(id)
-      name = lines.join(' ')
-      line = 'X' * 35
-      id ||= Digest::MD5.hexdigest(name).upcase[0..5]
-      if id == ''
-        puts
-        puts line
-        puts "test '', is missing it's uuid"
-        puts "#{name}"
-        puts line
-        puts
-        raise "test '',..."
-      end
+      diagnostic = "'#{id}',#{lines.join}"
+      hex_chars = "0123456789ABCDEF"
+      hex_id = lambda { id.chars.all? { |ch| hex_chars.include? ch } }
+      spaced_line = lambda { lines.any? { |line| line.strip != line } }
+      empty_line = lambda { lines.any? { |line| line.strip == '' }}
+
+      raise "no hex-ID: #{diagnostic}" unless id != ''
+      raise "bad hex-ID: #{diagnostic}" unless hex_id.call
+      raise "empty name line: #{diagnostic}" if empty_line.call
+      raise "lead/trail spaces: #{diagnostic}" if spaced_line.call
+
       if @@args == [] || @@args.any?{ |arg| id.include?(arg) }
         if @@seen.include?(id)
-          puts
-          puts line
-          puts "test with id #{id} has already been seen"
-          puts "#{name}"
-          puts line
-          puts
+          raise "duplicate hex_ID: #{diagnostic}"
         else
           @@seen << id
+          name = lines.join(' ')
           define_method("test_ '#{id}',\n #{name}\n".to_sym, &block)
         end
       end
@@ -51,10 +39,12 @@ module TestHexIdHelpers # mix-in
       seen_args = @@args.find_all { |arg| @@seen.any? { |id| id.include?(arg) } }
       unseen_args = @@args - seen_args
       if unseen_args != []
-        line = 'X' * 35
+        # can't raise in a finalizer
+        message = 'the following test id arguments were *not* found'
+        line = 'X' * message.length
         puts
         puts line
-        puts 'the following test id arguments were *not* found'
+        puts message
         puts "#{unseen_args}"
         puts line
         puts

@@ -9,8 +9,7 @@ class GitDiffHtmlTests <  AppLibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '748980',
-    'non-empty same/added/deleted lines',
-    'stay as themselves' do
+  'non-empty same/added/deleted lines stay as themselves' do
 
     @diff_lines =
     [
@@ -58,8 +57,8 @@ class GitDiffHtmlTests <  AppLibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '2117D9',
-    'empty same/added/deleted lines become',
-    '&thinsp; to prevent empty lines collapsing in browser ' do
+  'empty same/added/deleted lines become',
+  '&thinsp; to prevent empty lines collapsing in browser' do
 
     @diff_lines =
     [
@@ -90,8 +89,8 @@ class GitDiffHtmlTests <  AppLibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B1C72E',
-    'each diff-chunk is preceeded by section info',
-    'to allow auto-scrolling in browser' do
+  'each diff-chunk is preceeded by section info',
+  'to allow auto-scrolling in browser' do
 
     @diff_lines =
     [
