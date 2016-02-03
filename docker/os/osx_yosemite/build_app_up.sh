@@ -5,6 +5,11 @@
 #
 # $1 = CYBER_DOJO_ROOT
 
+if [ -z "$1" ]; then
+  echo "./build_app_up.sh  <CYBER_DOJO_ROOT>"
+  exit
+fi
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pushd ${DIR} > /dev/null
@@ -48,61 +53,17 @@ if [ $? -ne 0 ]; then
   exit
 fi
 
-cd ../..
-cd images/exercises
-./build_docker_image.sh ${1}
-if [ $? -ne 0 ]; then
-  echo "BUILDING cyberdojofoundation/exercises FAILED"
-  exit
-fi
-
-cd ../..
-cd images/katas
-./build_docker_image.sh ${1}
-if [ $? -ne 0 ]; then
-  echo "BUILDING cyberdojofoundation/katas FAILED"
-  exit
-fi
-
-cd ../..
-cd images/languages
-./build_docker_image.sh ${1}
-if [ $? -ne 0 ]; then
-  echo "BUILDING cyberdojofoundation/languages FAILED"
-  exit
-fi
-
-cd ../..
-cd images/nginx
-./build_docker_image.sh ${1}
-if [ $? -ne 0 ]; then
-  echo "BUILDING cyberdojofoundation/nginx FAILED"
-  exit
-fi
-
-cd ../..
-cd images/katas
-./build_docker_image.sh ${1}
-if [ $? -ne 0 ]; then
-  echo "BUILDING cyberdojofoundation/katas FAILED"
-  exit
-fi
-
-cd ../..
-cd images/test
-./build_docker_image.sh ${1}
-if [ $? -ne 0 ]; then
-  echo "BUILDING cyberdojofoundation/test FAILED"
-  exit
-fi
-
-cd ../..
-cd images/tmp
-./build_docker_image.sh ${1}
-if [ $? -ne 0 ]; then
-  echo "BUILDING cyberdojofoundation/tmp FAILED"
-  exit
-fi
+IMAGES=(exercises katas languages nginx test tmp)
+for image in ${IMAGES[*]}
+do
+  cd ../..
+  cd images/${image}
+  ./build_docker_image.sh ${1}
+  if [ $? -ne 0 ]; then
+    echo "BUILDING cyberdojofoundation/${image} FAILED"
+    exit
+  fi
+done
 
 # - - - - - - - - - - - - - - - - - - - - - -
 # bring up cyber-dojo + tests
