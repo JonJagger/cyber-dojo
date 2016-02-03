@@ -21,9 +21,9 @@ class DockerMachineRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '75919D',
-  'first use of runner automatically creates cache by executing' +
-    ' [docker-machine ls -q] and then' +
-    ' [sudo -u cyber-dojo docker-machine ssh NODE -- sudo docker images] for each node' do
+  'first use of runner automatically creates cache by executing',
+  '[docker-machine ls -q] and then',
+  '[sudo -u cyber-dojo docker-machine ssh NODE -- sudo docker images] for each node' do
     cache_filename = 'runner_cache.json'
     refute disk[caches.path].exists?(cache_filename)
     runner
@@ -37,8 +37,8 @@ class DockerMachineRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '2D792D',
-  'when run() completes and output is less thank 10K ' +
-    'then output is left untouched' do
+  'when run() completes and output is less thank 10K',
+  'then output is left untouched' do
     syntax_error = 'syntax-error-line-1'
     mock_run_assert('node-00', syntax_error, syntax_error, success)
   end
@@ -46,8 +46,8 @@ class DockerMachineRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '678D62',
-  'when run() completes and output is larger than 10K ' +
-    'then output is truncated to 10K and message is appended ' do
+  'when run() completes and output is larger than 10K',
+  'then output is truncated to 10K and message is appended ' do
     massive_output = '.' * 75*1024
     expected_output = '.' * 10*1024 + "\n" + 'output truncated by cyber-dojo server'
     mock_run_assert('node-00', expected_output, massive_output, success)
@@ -56,8 +56,8 @@ class DockerMachineRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '799891',
-  'when run() times out ' +
-    'then output is replaced by unable-to-complete message ' do
+  'when run() times out',
+  'then output is replaced by unable-to-complete message ' do
     output = mock_run('node-00', 'ach-so-it-timed-out', times_out)
     assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds.")
   end

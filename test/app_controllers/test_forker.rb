@@ -5,9 +5,7 @@ require_relative './app_controller_test_base'
 class ForkerControllerTest < AppControllerTestBase
 
   test '892AFE',
-  'when id is invalid ' +
-    'then fork fails ' +
-      'and the reason given is dojo' do
+  'when id is invalid then fork fails and the reason given is dojo' do
     fork(bad_id = 'bad-id', 'hippo', tag = 1)
     refute forked?
     assert_reason_is("dojo(#{bad_id})")
@@ -76,9 +74,9 @@ class ForkerControllerTest < AppControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '2C432F',
-  'when id,language,avatar,tag are all ok ' +
-    'format=json fork works ' +
-      "and the new dojo's id is returned" do
+  'when id,language,avatar,tag are all ok',
+  'format=json fork works',
+  "and the new dojo's id is returned" do
     @id = create_kata
     @avatar = start # 0
     run_tests       # 1
@@ -99,10 +97,9 @@ class ForkerControllerTest < AppControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'F65835',
-  'when id,language,avatar,tag are all ok ' +
-    'format=html fork works ' +
-      'and you are redirected to the enter page ' +
-        "with the new dojo's id" do
+  'when id,language,avatar,tag are all ok',
+  'format=html fork works',
+  "and you are redirected to the enter page with the new dojo's id" do
     @id = create_kata
     @avatar = start # 0
     run_tests       # 1
@@ -116,8 +113,8 @@ class ForkerControllerTest < AppControllerTestBase
   #- - - - - - - - - - - - - - - - - -
 
   test '5EA04E',
-  'when the exercise no longer exists and everything else ' +
-     'is ok then fork works and the new dojos id is returned' do
+  'when the exercise no longer exists and everything else',
+  'is ok then fork works and the new dojos id is returned' do
     @id = unique_id
     language = languages[default_language_name]
     manifest = {
@@ -143,8 +140,8 @@ class ForkerControllerTest < AppControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '9D85BF',
-  'when language has been renamed and everything else ' +
-    'is ok then fork works and the new dojos id is returned' do
+  'when language has been renamed and everything else',
+  'is ok then fork works and the new dojos id is returned' do
     @id = unique_id
     language = languages['C#-NUnit']
     manifest = {

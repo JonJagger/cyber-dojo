@@ -27,8 +27,8 @@ class SetupControllerTest < AppControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'D79BA3',
-  'setup/show_languages_and_tests defaults to language and exercise of kata' +
-    ' whose full-id is passed in URL (to encourage repetition)' do
+  'setup/show_languages_and_tests defaults to language and exercise of kata',
+  'whose full-id is passed in URL (to encourage repetition)' do
     languages_display_names = runner.runnable_languages.map(&:display_name).sort
     language_display_name = languages_display_names.sample
     exercises_names = exercises.map(&:name).sort
@@ -49,8 +49,8 @@ class SetupControllerTest < AppControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test '82562A',
-  'setup/show_exercises defaults to exercise of kata' +
-    ' whose full-id is passed in URL (to encourage repetition)' do
+  'setup/show_exercises defaults to exercise of kata',
+  'whose full-id is passed in URL (to encourage repetition)' do
     languages_display_names = runner.runnable_languages.map(&:display_name).sort
     language_display_name = languages_display_names.sample
     exercises_names = exercises.map(&:name).sort

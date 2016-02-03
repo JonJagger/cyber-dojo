@@ -29,8 +29,8 @@ class DockerTmpRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '75909D',
-  'first use of runner automatically creates cache by executing [docker images]' +
-    ' which determines runnability' do
+  'first use of runner automatically creates cache by executing [docker images]',
+  'which determines runnability' do
     cache_filename = 'runner_cache.json'
     refute disk[caches.path].exists?(cache_filename)
     runner
@@ -51,8 +51,8 @@ class DockerTmpRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '6459A7',
-  'when run() completes and output is less than 10K ' +
-    'then output is left untouched' do
+  'when run() completes and output is less than 10K',
+  'then output is left untouched' do
     syntax_error = 'syntax-error-line-1'
     mock_run_assert(syntax_error, syntax_error, success)
   end
@@ -60,8 +60,8 @@ class DockerTmpRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '87A438',
-  'when run() completes and output is larger than 10K ' +
-    'then output is truncated to 10K and message is appended ' do
+  'when run() completes and output is larger than 10K',
+  'then output is truncated to 10K and message is appended ' do
     massive_output = '.' * 75*1024
     expected_output = '.' * 10*1024 + "\n" + 'output truncated by cyber-dojo server'
     mock_run_assert(expected_output, massive_output, success)
@@ -70,8 +70,8 @@ class DockerTmpRunnerTests < LibTestBase
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'B8750C',
-  'when run() times out ' +
-    'then output is replaced by unable-to-complete message ' do
+  'when run() times out',
+  'then output is replaced by unable-to-complete message ' do
     output = mock_run('ach-so-it-timed-out', times_out)
     assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds.")
   end
