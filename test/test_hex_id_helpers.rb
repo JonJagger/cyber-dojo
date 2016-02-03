@@ -14,24 +14,23 @@ module TestHexIdHelpers # mix-in
 
     def test(id, *lines, &block)
       diagnostic = "'#{id}',#{lines.join}"
-      hex_chars = "0123456789ABCDEF"
-      hex_id = lambda { id.chars.all? { |ch| hex_chars.include? ch } }
-      spaced_line = lambda { lines.any? { |line| line.strip != line } }
-      empty_line = lambda { lines.any? { |line| line.strip == '' }}
+      hex_chars = '0123456789ABCDEF'
+      is_hex_id = id.chars.all? { |ch| hex_chars.include? ch }
+      has_empty_line = lines.any? { |line| line.strip == '' }
+      has_space_line = lines.any? { |line| line.strip != line }
 
-      raise "no hex-ID: #{diagnostic}" unless id != ''
-      raise "bad hex-ID: #{diagnostic}" unless hex_id.call
-      raise "empty name line: #{diagnostic}" if empty_line.call
-      raise "lead/trail spaces: #{diagnostic}" if spaced_line.call
+      raise "non hex-ID: #{diagnostic}" unless id != ''
+      raise "bad hex-ID: #{diagnostic}" unless is_hex_id
+      raise "empty line: #{diagnostic}" if has_empty_line
+      raise "space line: #{diagnostic}" if has_space_line
 
-      if @@args == [] || @@args.any?{ |arg| id.include?(arg) }
-        if @@seen.include?(id)
-          raise "duplicate hex_ID: #{diagnostic}"
-        else
-          @@seen << id
-          name = lines.join(' ')
-          define_method("test_ '#{id}',\n #{name}\n".to_sym, &block)
-        end
+      no_args = @@args == []
+      an_arg_is_part_of_id = @@args.any?{ |arg| id.include?(arg) }
+      if no_args || an_arg_is_part_of_id
+        raise "duplicate hex_ID: #{diagnostic}" if @@seen.include?(id)
+        @@seen << id
+        name = lines.join(' ')
+        define_method("test_'#{id}',\n #{name}\n".to_sym, &block)
       end
     end
 
@@ -41,13 +40,9 @@ module TestHexIdHelpers # mix-in
       if unseen_args != []
         # can't raise in a finalizer
         message = 'the following test id arguments were *not* found'
-        line = 'X' * message.length
-        puts
-        puts line
-        puts message
-        puts "#{unseen_args}"
-        puts line
-        puts
+        bar = 'X' * message.length
+        lines = [ '', bar, message, "#{unseen_args}", bar, '' ]
+        lines.each { |line| puts line }
       end
     })
 
