@@ -12,16 +12,17 @@ EXPOSE 3000
 COPY script    ${CYBER_DOJO_ROOT}/script
 COPY config.ru ${CYBER_DOJO_ROOT}
 
-RUN mkdir      ${CYBER_DOJO_ROOT}/caches
-RUN mkdir      ${CYBER_DOJO_ROOT}/log
-RUN mkdir      ${CYBER_DOJO_ROOT}/tmp
+ENV EMPTY_DIRS ${CYBER_DOJO_ROOT}/caches \
+               ${CYBER_DOJO_ROOT}/log \
+               ${CYBER_DOJO_ROOT}/tmp
+
+RUN mkdir $EMPTY_DIRS
 
 COPY exercises ${CYBER_DOJO_ROOT}/exercises
 COPY languages ${CYBER_DOJO_ROOT}/languages
-
+COPY config    ${CYBER_DOJO_ROOT}/config
 COPY test      ${CYBER_DOJO_ROOT}/test
 COPY app       ${CYBER_DOJO_ROOT}/app
-COPY config    ${CYBER_DOJO_ROOT}/config
 COPY lib       ${CYBER_DOJO_ROOT}/lib
 
 CMD [ "bash", "-c", "rails server" ]

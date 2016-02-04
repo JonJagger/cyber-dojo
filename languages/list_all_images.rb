@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 #
-# From the server you can run this via
+# Assuming the web container is called os_web_1 you can run this via
 #
 #   $ docker exec os_web_1 bash -c "./languages/list_all_images.rb"
 #

@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Assumes yml files are in their respective git repo folders.
-# After [up] tests can be run *inside* the container, eg
-# $ docker exec os_web_1 bash -c "cd test/app_models && ./test_dojo.rb"
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 IMAGES=(tmp web nginx)
 
@@ -29,13 +25,14 @@ function clean {
 # - - - - - - - - - - - - - - - - - - - - - -
 
 function build {
+  # Assumes Dockerfiles are in their github cyber-dojo repo folders.
   exit_if_no_root
   # build images via Dockerfiles
   pushd ${DIR} > /dev/null
     for image in ${IMAGES[*]}
     do
       cd ../../images/${image}
-      ./build_docker_image.sh ${ROOT}
+      ./build-docker-image.sh ${ROOT}
       if [ $? -ne 0 ]; then
         echo "BUILDING cyberdojofoundation/${image} FAILED"
         exit
@@ -73,6 +70,9 @@ function pull {
 # - - - - - - - - - - - - - - - - - - - - - -
 
 function up {
+  # Assumes yml files are in their github cyber-dojo repo folders.
+  # After [up] tests can be run *inside* the container, eg
+  # $ docker exec os_web_1 bash -c "cd test/app_models && ./test_dojo.rb"
   exit_if_no_root
   exit_if_bad_up
   pushd ${DIR} > /dev/null
