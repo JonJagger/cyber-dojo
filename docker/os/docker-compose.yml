@@ -26,25 +26,10 @@ web:
     - CYBER_DOJO_GIT_CLASS=HostGit
   image: cyberdojofoundation/web
   volumes_from:
-    - exercises:ro
-    - languages:ro
     - katas:rw
     - tmp:rw
-    - test:rw
   ports:
     - "3000:3000"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-languages:
-  image: cyberdojofoundation/languages
-  entrypoint: /bin/sh
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-exercises:
-  image: cyberdojofoundation/exercises
-  entrypoint: /bin/sh
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -58,9 +43,3 @@ tmp:
   image: cyberdojofoundation/tmp
   entrypoint: /bin/sh
   container_name: cyberdojo_tmp_data_container
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-test:
-  image: cyberdojofoundation/test
-  entrypoint: /bin/sh

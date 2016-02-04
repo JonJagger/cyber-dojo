@@ -14,7 +14,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pushd ${DIR} > /dev/null
 
-IMAGES=(rails web exercises katas languages nginx test tmp)
+IMAGES=(web katas nginx tmp)
 
 # remove existing containers
 docker ps -aq | xargs docker rm -f
@@ -34,7 +34,6 @@ done
 
 export CYBER_DOJO_ROOT=${1}
 
-IMAGES=(rails web exercises katas languages nginx test tmp)
 for image in ${IMAGES[*]}
 do
   cd ../..
@@ -54,4 +53,4 @@ cd ../../os/osx_yosemite
 popd > /dev/null
 
 # after this tests can be run *inside* the container, eg
-# $ docker exec os_web_1 bash -c "cd /var/www/cyber-dojo/test/app_models && ./test_dojo.rb"
+# $ docker exec os_web_1 bash -c "cd test/app_models && ./test_dojo.rb"
