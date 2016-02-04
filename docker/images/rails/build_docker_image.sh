@@ -6,7 +6,6 @@ pushd ${DIR} > /dev/null
 cp ../../../Gemfile .
 
 docker build \
-  --no-cache \
   --build-arg CYBER_DOJO_ROOT=$1 \
   --tag cyberdojofoundation/rails \
   --file ./Dockerfile \

@@ -10,6 +10,7 @@ pushd ${DIR} > /dev/null
 # create and start containers
 docker-compose \
   --file ../docker-compose.yml \
-  --file docker-compose.osx.yml up &
+  --file docker-compose.osx.yml \
+  up &
 
 popd > /dev/null

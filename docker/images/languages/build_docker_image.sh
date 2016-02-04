@@ -7,7 +7,6 @@ cp ./Dockerfile ../../../languages
 pushd ../../../languages > /dev/null
 
 docker build \
-  --no-cache \
   --build-arg CYBER_DOJO_ROOT=$1 \
   --tag cyberdojofoundation/languages \
   --file ./Dockerfile \

@@ -7,7 +7,6 @@ cp ./Dockerfile ../../../test
 pushd ../../../test > /dev/null
 
 docker build \
-  --no-cache \
   --build-arg CYBER_DOJO_ROOT=$1 \
   --tag cyberdojofoundation/test \
   --file ./Dockerfile \
