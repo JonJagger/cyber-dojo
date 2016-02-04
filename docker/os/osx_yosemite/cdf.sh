@@ -84,6 +84,12 @@ function up {
 
 if [ -z "${CYBER_DOJO_ROOT}" ]; then
   echo "cdf: CYBER_DOJO_ROOT environment variable must be set"
+  echo "     eg  export CYBER_DOJO_ROOT=/var/www/cyber-dojo"
+  exit
+fi
+if [ -z "${CYBER_DOJO_MODE}" ]; then
+  echo "cdf: CYBER_DOJO_MODE environment variable must be set"
+  echo "     eg  export CYBER_DOJO_MODE=development"
   exit
 fi
 
