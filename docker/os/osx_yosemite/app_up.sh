@@ -6,11 +6,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd ${DIR} > /dev/null
 
-# create and start containers
-CYBER_DOJO_ROOT=${1:-/var/www/cyber-dojo}
-export CYBER_DOJO_ROOT=${CYBER_DOJO_ROOT}
-CYBER_DOJO_MODE=${2:-production}
-export CYBER_DOJO_MODE=${CYBER_DOJO_MODE}
+export CYBER_DOJO_ROOT=${1:-/var/www/cyber-dojo}
+export CYBER_DOJO_UP=${2:-production}
 
 docker-compose \
   --file ../docker-compose.yml \

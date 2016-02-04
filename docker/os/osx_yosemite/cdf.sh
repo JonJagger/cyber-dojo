@@ -29,12 +29,13 @@ function clean {
 # - - - - - - - - - - - - - - - - - - - - - -
 
 function build {
-  # this needs access to the Dockerfiles
+  exit_if_no_root
+  # build images via Dockerfiles
   pushd ${DIR} > /dev/null
     for image in ${IMAGES[*]}
     do
       cd ../../images/${image}
-      ./build_docker_image.sh ${CYBER_DOJO_ROOT}
+      ./build_docker_image.sh ${ROOT}
       if [ $? -ne 0 ]; then
         echo "BUILDING cyberdojofoundation/${image} FAILED"
         exit
@@ -72,7 +73,11 @@ function pull {
 # - - - - - - - - - - - - - - - - - - - - - -
 
 function up {
+  exit_if_no_root
+  exit_if_bad_up
   pushd ${DIR} > /dev/null
+  export CYBER_DOJO_ROOT=${ROOT}
+  export CYBER_DOJO_UP=${UP}
   docker-compose \
     --file ../docker-compose.yml \
     --file docker-compose.osx.yml \
@@ -82,57 +87,76 @@ function up {
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-if [ -z "${CYBER_DOJO_ROOT}" ]; then
-  echo "cdf: CYBER_DOJO_ROOT environment variable must be set"
-  echo "     eg  export CYBER_DOJO_ROOT=/var/www/cyber-dojo"
-  exit
-fi
-if [ -z "${CYBER_DOJO_MODE}" ]; then
-  echo "cdf: CYBER_DOJO_MODE environment variable must be set"
-  echo "     eg  export CYBER_DOJO_MODE=development"
-  exit
-fi
+function show_use {
+  echo "cdf.sh --reset"
+  echo "cdf.sh --clean"
+  echo "cdf.sh --build --root=ROOT "
+  echo "cdf.sh --push"
+  echo "cdf.sh --pull"
+  echo "cdf.sh --up=development --root=ROOT"
+  echo "cdf.sh --up=production  --root=ROOT"
+  echo "...or combined"
+  echo "cdf.sh --clean --build --root=ROOT --up=development"
+  echo
+}
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-if [ -z $1 ]; then
-  echo
-  echo "USE: cdf [reset | clean | build | up | push | pull]"
-  echo
-  exit
-fi
+function exit_if_no_root {
+  if [ -z "${ROOT}" ]; then
+    show_use
+    echo "--root=ROOT must be set"
+    exit
+  fi
+}
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
+function exit_if_bad_up {
+  if [ "${UP}" != "development" ] && [ "${UP}" != "production" ]; then
+    show_use
+    echo "--up=development OR --up=production"
+    exit
+  fi
+}
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
 for arg in "$@"
 do
-    case "$arg" in
-        reset)
-          doReset=true
-          ;;
-        clean)
-          doClean=true
-          ;;
-        build)
-          doBuild=true
-          ;;
-        up)
-          doUp=true
-          ;;
-        push)
-          doPush=true
-          ;;
-        pull)
-          doPull=true
-          ;;
-        *)
-          echo "unknown command line argument ${arg}"
-          exit
-          ;;
-    esac
+  case ${arg} in
+    --root=*)
+      ROOT="${arg#*=}"
+      ;;
+    --reset)
+      doReset=true
+      ;;
+    --clean)
+      doClean=true
+      ;;
+    --build)
+      doBuild=true
+      ;;
+    --up=*)
+      UP="${arg#*=}"
+      doUp=true
+      ;;
+    --push)
+      doPush=true
+      ;;
+    --pull)
+      doPull=true
+      ;;
+    *)
+      show_use
+      echo "unknown command line argument ${arg}"
+      exit
+      ;;
+  esac
 done
 
 # - - - - - - - - - - - - - - - - - - - - - -
+# Do in sensible order...
 
 if [ "$doReset" == true ]; then reset; fi
 if [ "$doClean" == true ]; then clean; fi

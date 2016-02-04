@@ -13,7 +13,7 @@ nginx:
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 web:
-  command: rails server -e ${CYBER_DOJO_MODE}
+  command: rails server --environment=${CYBER_DOJO_UP}
   environment:
     - CYBER_DOJO_LANGUAGES_ROOT=${CYBER_DOJO_ROOT}/languages
     - CYBER_DOJO_EXERCISES_ROOT=${CYBER_DOJO_ROOT}/exercises
