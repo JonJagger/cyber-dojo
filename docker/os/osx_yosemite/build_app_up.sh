@@ -1,20 +1,19 @@
 #!/bin/bash
 
-# Brings up cyber-dojo plus tests volume in OSX Docker Quickstart Terminal.
+# Brings up cyber-dojo in OSX Docker Quickstart Terminal.
 # Assumes yml files are in their respective git repo folders.
 #
 # $1 = CYBER_DOJO_ROOT
 
 if [ -z "$1" ]; then
-  echo "./build_app_up.sh  <CYBER_DOJO_ROOT>"
+  echo "./build_app_up.sh CYBER_DOJO_ROOT"
   exit
 fi
+export CYBER_DOJO_ROOT=${1}
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pushd ${DIR} > /dev/null
-
-IMAGES=(tmp web nginx)
 
 # remove existing containers
 docker ps -aq | xargs docker rm -f
@@ -23,6 +22,7 @@ docker ps -aq | xargs docker rm -f
 ../../rm_untagged_images.sh
 
 # remove existing images
+IMAGES=(tmp web nginx)
 for image in ${IMAGES[*]}
 do
   #docker rmi -f cyberdojofoundation/${image} 2&> /dev/null
@@ -31,8 +31,6 @@ done
 
 # - - - - - - - - - - - - - - - - - - - - - -
 # rebuild images
-
-export CYBER_DOJO_ROOT=${1}
 
 for image in ${IMAGES[*]}
 do

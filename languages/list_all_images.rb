@@ -1,5 +1,11 @@
 #!/usr/bin/env ruby
 
+#
+# From the server you can run this via
+#
+#   $ docker exec os_web_1 bash -c "./languages/list_all_images.rb"
+#
+
 require 'json'
 
 cyber_dojo_root = File.expand_path('..', File.dirname(__FILE__))

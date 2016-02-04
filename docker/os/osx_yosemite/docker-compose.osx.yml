@@ -22,7 +22,7 @@
 #       IP/port, set DOCKER_MACHINE_NAME to the server's name,
 #       set DOCKER_TLS_VERIFY to 1. Then the docker binary, when
 #       called from inside the container, will not attempt to access
-#       the docker-socket but will instead tunnel out to the
+#       the docker-socket but will instead ssh tunnel out to the
 #       server itself, and the server will run the command, and the
 #       server will have access to the docker-socket.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
