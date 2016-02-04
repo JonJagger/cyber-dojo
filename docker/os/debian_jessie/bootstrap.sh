@@ -27,5 +27,5 @@ echo 'To (re)install docker'
 echo '   $ ./install_docker.sh '
 echo
 echo 'To bring the cyber-dojo app up'
-echo '   $ ./app_up.sh CYBER_DOJO_ROOT'
+echo '   $ ./app_up.sh'
 echo

@@ -29,6 +29,7 @@ function clean {
 # - - - - - - - - - - - - - - - - - - - - - -
 
 function build {
+  # this needs access to the Dockerfiles
   pushd ${DIR} > /dev/null
     for image in ${IMAGES[*]}
     do
