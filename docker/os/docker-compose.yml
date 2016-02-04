@@ -27,17 +27,11 @@ web:
   image: cyberdojofoundation/web
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
+    - ${CYBER_DOJO_ROOT}/katas:${CYBER_DOJO_ROOT}/katas
   volumes_from:
-    - katas:rw
     - tmp:rw
   ports:
     - "3000:3000"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-katas:
-  image: cyberdojofoundation/katas
-  entrypoint: /bin/sh
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

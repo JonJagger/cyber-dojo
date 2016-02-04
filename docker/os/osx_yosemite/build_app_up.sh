@@ -14,7 +14,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pushd ${DIR} > /dev/null
 
-IMAGES=(web katas nginx tmp)
+IMAGES=(tmp web nginx)
 
 # remove existing containers
 docker ps -aq | xargs docker rm -f
