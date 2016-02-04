@@ -25,6 +25,8 @@ web:
     - CYBER_DOJO_LOG_CLASS=HostLog
     - CYBER_DOJO_GIT_CLASS=HostGit
   image: cyberdojofoundation/web
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
   volumes_from:
     - katas:rw
     - tmp:rw
