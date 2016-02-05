@@ -11,7 +11,8 @@
 # to work *inside* the web container.
 #
 #    1. volume-mount the docker-binary and docker-socket
-#       from the boot2docker VM on the server.
+#       from the boot2docker VM on the server. It turns out that
+#       different OS's need different tweaks on how to do this.
 #
 #    2. install the docker-client *inside* the image
 #       as part of its Dockerfile.
