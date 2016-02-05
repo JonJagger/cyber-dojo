@@ -24,10 +24,7 @@ ENV EMPTY_DIRS ${CYBER_DOJO_ROOT}/caches \
 
 RUN mkdir $EMPTY_DIRS
 
-COPY exercises ${CYBER_DOJO_ROOT}/exercises
-COPY languages ${CYBER_DOJO_ROOT}/languages
 COPY config    ${CYBER_DOJO_ROOT}/config
-COPY test      ${CYBER_DOJO_ROOT}/test
 COPY app       ${CYBER_DOJO_ROOT}/app
 COPY lib       ${CYBER_DOJO_ROOT}/lib
 

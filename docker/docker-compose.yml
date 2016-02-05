@@ -39,7 +39,28 @@ web:
     - /var/run/docker.sock:/var/run/docker.sock
     - ${CYBER_DOJO_ROOT}/katas:${CYBER_DOJO_ROOT}/katas
   volumes_from:
+    - languages:ro
+    - exercises:ro
+    - test:rw
     - tmp:rw
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+languages:
+  entrypoint: /bin/sh
+  image: cyberdojofoundation/languages
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+exercises:
+  entrypoint: /bin/sh
+  image: cyberdojofoundation/exercises
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+test:
+  entrypoint: /bin/sh
+  image: cyberdojofoundation/test
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
