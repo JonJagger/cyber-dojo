@@ -1,10 +1,10 @@
 FROM busybox
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-ARG            DIR=test
 ARG            CYBER_DOJO_ROOT
-RUN mkdir -p ${CYBER_DOJO_ROOT}/${DIR}
-COPY .       ${CYBER_DOJO_ROOT}/${DIR}
-VOLUME     ["${CYBER_DOJO_ROOT}/${DIR}"]
+ARG            DIR=${CYBER_DOJO_ROOT}/test
+RUN mkdir -p ${DIR}
+COPY .       ${DIR}
+VOLUME     ["${DIR}"]
 
 CMD ["not runnable - a data container"]
