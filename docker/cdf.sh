@@ -6,21 +6,21 @@ HUB=cyberdojofoundation
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
+function clean {
+  # remove *ALL* existing containers
+  docker ps -aq | xargs docker rm -f
+  # remove untagged images
+  docker images -q --filter "dangling=true" | xargs docker rmi
+}
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
 function reset {
   # remove existing images
   for IMAGE in ${IMAGES[*]}
   do
     docker rmi -f ${HUB}/${IMAGE} 2&> /dev/null
   done
-}
-
-# - - - - - - - - - - - - - - - - - - - - - -
-
-function clean {
-  # remove *ALL* existing containers
-  docker ps -aq | xargs docker rm -f
-  # remove untagged images
-  docker images -q --filter "dangling=true" | xargs docker rmi
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -85,8 +85,8 @@ function up {
 # - - - - - - - - - - - - - - - - - - - - - -
 
 function show_use {
-  echo "./cdf.sh --reset"
   echo "./cdf.sh --clean"
+  echo "./cdf.sh --reset"
   echo "./cdf.sh --build --root=ROOT "
   echo "./cdf.sh --push"
   echo "./cdf.sh --pull"
@@ -160,8 +160,8 @@ done
 # - - - - - - - - - - - - - - - - - - - - - -
 # Do in sensible order...
 
-if [ "$doReset" == true ]; then reset; fi
 if [ "$doClean" == true ]; then clean; fi
+if [ "$doReset" == true ]; then reset; fi
 if [ "$doBuild" == true ]; then build; fi
 if [ "$doUp"    == true ]; then up   ; fi
 if [ "$doPush"  == true ]; then push ; fi
