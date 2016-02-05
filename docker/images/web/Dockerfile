@@ -9,6 +9,9 @@ WORKDIR        ${CYBER_DOJO_ROOT}
 RUN bundle install --without development test
 EXPOSE 3000
 
+RUN curl -O https://get.docker.com/builds/Linux/x86_64/docker-latest && mv docker-latest /usr/bin/docker
+RUN chmod +x /usr/bin/docker
+
 COPY script    ${CYBER_DOJO_ROOT}/script
 COPY config.ru ${CYBER_DOJO_ROOT}
 

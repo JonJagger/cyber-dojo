@@ -12,7 +12,6 @@ export CYBER_DOJO_UP=${2:-production}
 
 docker-compose \
   --file docker-compose.yml \
-  --file docker-compose.ubuntu_trusty.yml \
   up &
 
 popd > /dev/null
