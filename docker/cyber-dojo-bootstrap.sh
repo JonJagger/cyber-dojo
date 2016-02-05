@@ -33,7 +33,7 @@ echo
 echo 1. Install docker using one of
 for OS in ${OSES[*]}
 do
-  echo '   $ ./install-docker-on-${OS}.sh '
+  echo "   $ ./install-docker-on-${OS}.sh "
 done
 echo
 
