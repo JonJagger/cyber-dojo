@@ -3,7 +3,7 @@
 # Installs docker and cyber-dojo onto a raw server.
 # Use curl to get this file, chmod +x it, then run it.
 
-BRANCH=https://raw.githubusercontent.com/JonJagger/cyber-dojo/runner-auto-cache/images
+BRANCH=https://raw.githubusercontent.com/JonJagger/cyber-dojo/runner-auto-cache/docker
 
 # - - - - - - - - - - - - - - - - - - - - - - -
 # katas/ is relative to /var/www/cyber-dojo folder
