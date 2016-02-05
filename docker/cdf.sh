@@ -1,15 +1,16 @@
 #!/bin/bash
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 IMAGES=(tmp web nginx)
+HUB=cyberdojofoundation
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
 function reset {
   # remove existing images
-  for image in ${IMAGES[*]}
+  for IMAGE in ${IMAGES[*]}
   do
-    docker rmi -f cyberdojofoundation/${image} 2&> /dev/null
+    docker rmi -f ${HUB}/${IMAGE} 2&> /dev/null
   done
 }
 
@@ -28,13 +29,12 @@ function build {
   # Assumes Dockerfiles are in their github cyber-dojo repo folders.
   exit_if_no_root
   # build images via Dockerfiles
-  pushd ${DIR} > /dev/null
-    for image in ${IMAGES[*]}
+  pushd ${MY_DIR} > /dev/null
+    for IMAGE in ${IMAGES[*]}
     do
-      cd ../../images/${image}
-      ./build-docker-image.sh ${ROOT}
+      ./${IMAGE}/build-docker-image.sh ${ROOT}
       if [ $? -ne 0 ]; then
-        echo "BUILDING cyberdojofoundation/${image} FAILED"
+        echo "BUILDING ${HUB}/${IMAGE} FAILED"
         exit
       fi
     done
@@ -44,26 +44,24 @@ function build {
 # - - - - - - - - - - - - - - - - - - - - - -
 
 function push {
-  for image in ${IMAGES[*]}
+  for IMAGE in ${IMAGES[*]}
   do
-    hub_image=cyberdojofoundation/${image}
     echo "---------------------------------------"
-    echo "PUSHING: ${hub_image}"
+    echo "PUSHING: ${HUB}/${IMAGE}"
     echo "---------------------------------------"
-    docker push ${hub_image}
+    docker push ${HUB}/${IMAGE}
   done
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 function pull {
-  for image in ${IMAGES[*]}
+  for IMAGE in ${IMAGES[*]}
   do
-    hub_image=cyberdojofoundation/${image}
     echo "---------------------------------------"
-    echo "PULLING: ${hub_image}"
+    echo "PULLING: ${HUB}/${IMAGE}"
     echo "---------------------------------------"
-    docker pull ${hub_image}
+    docker pull ${HUB}/${IMAGE}
   done
 }
 
@@ -75,11 +73,11 @@ function up {
   # $ docker exec os_web_1 bash -c "cd test/app_models && ./test_dojo.rb"
   exit_if_no_root
   exit_if_bad_up
-  pushd ${DIR} > /dev/null
+  pushd ${MY_DIR} > /dev/null
   export CYBER_DOJO_ROOT=${ROOT}
   export CYBER_DOJO_UP=${UP}
   docker-compose \
-    --file ../docker-compose.yml \
+    --file ./docker-compose.yml \
     up &
   popd > /dev/null
 }

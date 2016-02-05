@@ -4,10 +4,9 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd ${DIR} > /dev/null
 
 docker build \
-  --build-arg CYBER_DOJO_ROOT=$1 \
-  --tag cyberdojofoundation/web \
+  --tag cyberdojofoundation/nginx \
   --file ./Dockerfile \
-  ../../..
+  ../..
 
 EXIT_STATUS=$?
 

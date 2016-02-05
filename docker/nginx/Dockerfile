@@ -5,4 +5,4 @@ RUN      rm -rf /usr/share/nginx/html
 COPY     public /usr/share/nginx/html
 RUN chmod -R +r /usr/share/nginx/html
 
-COPY docker/images/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
