@@ -7,26 +7,29 @@ BRANCH=https://raw.githubusercontent.com/JonJagger/cyber-dojo/runner-auto-cache/
 
 # - - - - - - - - - - - - - - - - - - - - - - -
 # katas/ is relative to /var/www/cyber-dojo folder
-# to maintain backward compatibility with
-# /var/www/cyber-dojo/katas.
+# to maintain backward compatibility
+
 mkdir -p /var/www/cyber-dojo
 
 # - - - - - - - - - - - - - - - - - - - - - - -
+SCRIPTS=(cyber-dojo-up.sh)
+
 OSES=(debian-jessie ubuntu-trusty)
 for OS in ${OSES[*]}
 do
   FILE=install-docker-on-${OS}.sh
-  curl -O ${BRANCH}/${FILE}
-  chmod +x ${FILE}
+  SCRIPTS+=($FILE)
+done
+
+for SCRIPT in ${SCRIPTS[*]}
+do
+  curl -O ${BRANCH}/${SCRIPT}
+  chmod +x ${SCRIPT}
 done
 
 # - - - - - - - - - - - - - - - - - - - - - - -
-FILES=(cyber-dojo-up.sh docker-compose.yml)
-for FILE in ${FILES[*]}
-do
-  curl -O ${BRANCH}/${FILE}
-  chmod +x ${FILE}
-done
+CONFIG=docker-compose.yml
+curl -O ${BRANCH}/${CONFIG}
 
 # - - - - - - - - - - - - - - - - - - - - - - -
 echo
