@@ -1,20 +1,30 @@
 #!/bin/bash
 
-ROOT=${1:-/var/www/cyber-dojo}
-DIR=test
 MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd ${MY_DIR} > /dev/null
 
-cp Dockerfile ../../${DIR}
+ROOT=${1:-/var/www/cyber-dojo}
+DIR=test
+CONTEXT_DIR=./../../${DIR}
+CONFIG_FILES=(Dockerfile)
+
+for CONFIG_FILE in ${CONFIG_FILES[*]}
+do
+  cp ./${CONFIG_FILE} ${CONTEXT_DIR}
+done
 
 docker build \
-  --build-arg CYBER_DOJO_ROOT=${ROOT} \
-  --tag cyberdojofoundation/${DIR} \
-  ../../${DIR}
+  --build-arg=CYBER_DOJO_ROOT=${ROOT} \
+  --tag=cyberdojofoundation/${DIR} \
+  --file=${CONTEXT_DIR}/Dockerfile \
+  ${CONTEXT_DIR}
 
 EXIT_STATUS=$?
 
-rm ../../${DIR}/Dockerfile
+for CONFIG_FILE in ${CONFIG_FILES[*]}
+do
+  rm ${CONTEXT_DIR}/${CONFIG_FILE}
+done
 
 popd > /dev/null
 

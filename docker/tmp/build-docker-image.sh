@@ -1,12 +1,14 @@
 #!/bin/bash
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-pushd ${DIR} > /dev/null
+MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+pushd ${MY_DIR} > /dev/null
+
+CONTEXT_DIR=.
 
 docker build \
-  --tag cyberdojofoundation/tmp \
-  --file ./Dockerfile \
-  .
+  --tag=cyberdojofoundation/tmp \
+  --file=${CONTEXT_DIR}/Dockerfile \
+    ${CONTEXT_DIR}
 
 EXIT_STATUS=$?
 
