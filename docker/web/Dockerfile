@@ -3,15 +3,18 @@ MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 ARG              CYBER_DOJO_ROOT
 
+# install gems first as they change least and take longest
 RUN mkdir -p   ${CYBER_DOJO_ROOT}
 COPY Gemfile   ${CYBER_DOJO_ROOT}
 WORKDIR        ${CYBER_DOJO_ROOT}
 RUN bundle install --without development test
 EXPOSE 3000
 
+# install docker-client (see docker/readme.txt)
 RUN curl -O https://get.docker.com/builds/Linux/x86_64/docker-latest && mv docker-latest /usr/bin/docker
 RUN chmod +x /usr/bin/docker
 
+# now install cyber-dojo
 COPY script    ${CYBER_DOJO_ROOT}/script
 COPY config.ru ${CYBER_DOJO_ROOT}
 
