@@ -80,7 +80,6 @@ function up {
   export CYBER_DOJO_UP=${UP}
   docker-compose \
     --file ../docker-compose.yml \
-    --file docker-compose.osx.yml \
     up &
   popd > /dev/null
 }

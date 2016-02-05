@@ -18,13 +18,13 @@ curl -O ${branch}/../docker-compose.yml
 chmod +x install_docker.sh
 chmod +x app_up.sh
 
-# Hack: Ensure there is one language image so create page works
-docker pull cyberdojofoundation/gcc_assert
-
 echo
-echo 'To (re)install docker'
+echo 1. Install docker
 echo '   $ ./install_docker.sh '
 echo
-echo 'To bring the cyber-dojo app up'
+echo 2. Ensure at least one language container exists
+echo '   $ docker pull cyberdojofoundation/gcc_assert'
+echo
+echo 3. Bring up cyber-dojo
 echo '   $ ./app_up.sh'
 echo

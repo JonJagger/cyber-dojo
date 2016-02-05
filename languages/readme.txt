@@ -21,9 +21,10 @@ regularity.
 New docker images are pushed to their cyberdojofoundation hub
 https://hub.docker.com/u/cyberdojofoundation/
 as follows
+
 $ docker login
 username: jonjagger
 password: ...
 email: ...
-$ docker push cyberdojofoundation/NAME
 
+$ docker push cyberdojofoundation/NAME

@@ -6,4 +6,4 @@ to force the web server to recreate it. Like this...
 
 $ docker exec <WEB-CONTAINER-NAME> rm /var/www/cyber-dojo/caches/runner_cache.json
 
-Or, you can delete the web container and recreate it.
+Or, you can stop/rm the web container and start it again.
