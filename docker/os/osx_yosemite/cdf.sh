@@ -88,15 +88,15 @@ function up {
 # - - - - - - - - - - - - - - - - - - - - - -
 
 function show_use {
-  echo "cdf.sh --reset"
-  echo "cdf.sh --clean"
-  echo "cdf.sh --build --root=ROOT "
-  echo "cdf.sh --push"
-  echo "cdf.sh --pull"
-  echo "cdf.sh --up=development --root=ROOT"
-  echo "cdf.sh --up=production  --root=ROOT"
+  echo "./cdf.sh --reset"
+  echo "./cdf.sh --clean"
+  echo "./cdf.sh --build --root=ROOT "
+  echo "./cdf.sh --push"
+  echo "./cdf.sh --pull"
+  echo "./cdf.sh --up=development --root=ROOT"
+  echo "./cdf.sh --up=production  --root=ROOT"
   echo "...or combined"
-  echo "cdf.sh --clean --build --root=ROOT --up=development"
+  echo "./cdf.sh --clean --build --root=ROOT --up=development"
   echo
 }
 
@@ -121,6 +121,11 @@ function exit_if_bad_up {
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
+
+if [  $# -eq 0 ]; then
+  show_use
+  exit
+fi
 
 for arg in "$@"
 do

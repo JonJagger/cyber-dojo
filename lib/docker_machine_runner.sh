@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Called from lib/docker_machine_runner.rb DockerMachineRunner.run()
 
 # parameters
@@ -38,7 +39,6 @@ kill=9
 #    $ apt-get install -y acl
 #    $ setfacl -d -m group:www-data:rwx cyber-dojo
 #    $ setfacl    -m group:www-data:rwx cyber-dojo
-
 
 docker-machine scp -r ${files_path} ${node_name}:/tmp/cyber-dojo/${tmp_name}/
 
