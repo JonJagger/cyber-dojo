@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-IMAGES=(exercises languages nginx test tmp web)
+IMAGES=(exercises katas languages nginx test tmp web)
 HUB=cyberdojofoundation
 
 # - - - - - - - - - - - - - - - - - - - - - -

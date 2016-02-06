@@ -41,6 +41,7 @@ web:
   volumes_from:
     - languages:ro
     - exercises:ro
+    - katas:rw
     - test:rw
     - tmp:rw
 
@@ -55,6 +56,12 @@ languages:
 exercises:
   entrypoint: /bin/sh
   image: cyberdojofoundation/exercises
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+katas:
+  entrypoint: /bin/sh
+  image: cyberdojofoundation/katas
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
