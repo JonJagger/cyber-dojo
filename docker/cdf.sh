@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-IMAGES=(test languages exercises tmp web nginx)
+IMAGES=(exercises languages nginx test tmp web)
 HUB=cyberdojofoundation
 
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -77,7 +77,7 @@ function up {
   export CYBER_DOJO_ROOT=${ROOT}
   export CYBER_DOJO_UP=${UP}
   docker-compose \
-    --file ./docker-compose.yml \
+    --file=./docker-compose.yml \
     up &
   popd > /dev/null
 }

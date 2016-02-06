@@ -1,14 +1,17 @@
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-A running cyber-dojo app comprises 3 docker containers, built from 3 images:
+A running cyber-dojo app comprises 6 docker containers, built from 6 images:
 (D = data container, R = regular container)
 
       nginx - (R) load balancer for web
         web - (R) main rails app
+  languages - (D) read-only languages config info
+  exercises - (D) read-only exercises config info
+       test - (D) read-write test
         tmp - (D) where src files are stored ready for the runner
 
-Each folder contains a Dockerfile and a script to build the image from the Dockerfile.
-
+Each folder contains a Dockerfile and a build-docker-image.sh script
+to build the image from the Dockerfile.
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Launching a docker app that itself uses docker is different
