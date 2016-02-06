@@ -16,17 +16,12 @@ RUN curl -O https://get.docker.com/builds/Linux/x86_64/docker-latest \
             && chmod +x /usr/bin/docker
 
 # install cyber-dojo
-COPY script    ${CYBER_DOJO_ROOT}/script
-COPY config.ru ${CYBER_DOJO_ROOT}
+COPY .    ${CYBER_DOJO_ROOT}
 
 ENV EMPTY_DIRS ${CYBER_DOJO_ROOT}/caches \
                ${CYBER_DOJO_ROOT}/log \
                ${CYBER_DOJO_ROOT}/tmp
 
 RUN mkdir $EMPTY_DIRS
-
-COPY config    ${CYBER_DOJO_ROOT}/config
-COPY app       ${CYBER_DOJO_ROOT}/app
-COPY lib       ${CYBER_DOJO_ROOT}/lib
 
 CMD [ "bash", "-c", "rails server" ]

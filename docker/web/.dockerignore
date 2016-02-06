@@ -1,17 +1,10 @@
-.git
-admin_scripts
-caches
-coverage
-db
-docs
-exercises
-katas
-languages
-languages_offline
-log
-notes
-public
-spec
-test
-tmp
-zips
+# Ignore everything...
+*
+# ...Except 
+!Gemfile
+!script
+!config.ru
+!config
+!app
+!lib
+
