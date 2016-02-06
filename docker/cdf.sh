@@ -7,11 +7,14 @@ HUB=cyberdojofoundation
 # - - - - - - - - - - - - - - - - - - - - - -
 
 function clean {
-  # remove containers except katas
-  # TODO: NOT KATAS
-  docker ps -aq | xargs echo
-  #docker ps -aq | xargs docker rm -f
-
+  # remove containers (but not katas)
+  for IMAGE in ${IMAGES[*]}
+  do
+    docker ps -a \
+    | grep ${HUB}/${IMAGE} \
+    | awk '{print $1}' \
+    | xargs docker rm -f
+  done
   # remove untagged images
   docker images -q --filter "dangling=true" | xargs docker rmi
 }
