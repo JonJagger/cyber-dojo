@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Called from lib/docker_from_docker_runner.rb
 
@@ -6,17 +6,17 @@ FILES_PATH=$1
 IMAGE_NAME=$2
 MAX_SECONDS=$3
 
-CIDFILE=`mktemp --tmpdir=/tmp cyber-dojo.XXXXX`
+CIDFILE=`mktemp`
 KILL=9
-USER=www-data
+USER=root
 
 # - - - - - - - - - - - - - -
 
 setfacl -m group:${USER}:rwx ${FILES_PATH}
 
-rm --force ${CIDFILE}
+rm -f ${CIDFILE}
 
-timeout --signal=${KILL} $((MAX_SECONDS+5))s \
+timeout -s ${KILL} -t $((MAX_SECONDS+5)) \
   docker run \
     --cidfile="${CIDFILE}" \
     --user=${USER} \
@@ -24,14 +24,16 @@ timeout --signal=${KILL} $((MAX_SECONDS+5))s \
     --volumes-from=cyberdojo_tmp_data_container \
     --workdir=${FILES_PATH} \
     ${IMAGE_NAME} \
-    /bin/bash -c "timeout --signal=${KILL} $((MAX_SECONDS))s ./cyber-dojo.sh 2>&1" 2>/dev/null
+    /bin/bash -c "timeout -s ${KILL} $((MAX_SECONDS))s ./cyber-dojo.sh 2>&1"
+
+#/bin/bash -c "timeout --signal=${KILL} $((MAX_SECONDS))s ./cyber-dojo.sh 2>&1" 2>/dev/null
 
 EXIT_STATUS=$?
 
 if [ -f ${CIDFILE} ]; then
   docker stop       `cat ${CIDFILE}` &>/dev/null
   docker rm --force `cat ${CIDFILE}` &>/dev/null
-  rm --force ${CIDFILE}
+  rm -f ${CIDFILE}
 fi
 
 exit ${EXIT_STATUS}

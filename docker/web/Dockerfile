@@ -1,27 +1,58 @@
-FROM rails:4.1
+FROM alpine:3.2
+# http://blog.kontena.io/building-minimal-docker-image-for-rails/
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
+
+# - - - - - - - - - - - - - - - - - - - - - -
+# install docker-client (see docker/readme.txt) +git +acl
+RUN apk --update add curl \
+    && curl -O https://get.docker.com/builds/Linux/x86_64/docker-latest \
+    && mv docker-latest /usr/bin/docker \
+    && chmod +x /usr/bin/docker \
+    && apk del curl
+
+RUN apk update \
+    && apk --update add \
+      ruby \
+      ruby-json \
+      ruby-rake \
+      ruby-bigdecimal \
+      libstdc++ \
+      tzdata \
+      postgresql-client \
+      nodejs \
+      git \
+      acl
+#     ruby-io-console \
+#     ruby-irb \
 
 ARG CYBER_DOJO_ROOT
 
-# install gems first - they change least and take longest to install
-RUN mkdir -p   ${CYBER_DOJO_ROOT}
-COPY Gemfile   ${CYBER_DOJO_ROOT}
-WORKDIR        ${CYBER_DOJO_ROOT}
-RUN bundle install --without development test
+RUN  mkdir -p     ${CYBER_DOJO_ROOT}
+COPY Gemfile      ${CYBER_DOJO_ROOT}
+COPY Gemfile.lock ${CYBER_DOJO_ROOT}
+COPY .gemrc       ${CYBER_DOJO_ROOT}
+RUN apk --update add --virtual \
+      build-dependencies \
+      build-base \
+      ruby-dev \
+      openssl-dev \
+      postgresql-dev \
+      libc-dev \
+      linux-headers \
+    && gem install bundler --no-ri --no-rdoc \
+    && cd ${CYBER_DOJO_ROOT} ; bundle install --without development test \
+    && apk del build-dependencies
+
 EXPOSE 3000
 
-# install docker-client (see docker/readme.txt)
-RUN curl -O https://get.docker.com/builds/Linux/x86_64/docker-latest \
-            && mv docker-latest /usr/bin/docker \
-            && chmod +x /usr/bin/docker
-
+# - - - - - - - - - - - - - - - - - - - - - -
 # install cyber-dojo
-COPY .    ${CYBER_DOJO_ROOT}
-
-ENV EMPTY_DIRS ${CYBER_DOJO_ROOT}/caches \
-               ${CYBER_DOJO_ROOT}/log \
-               ${CYBER_DOJO_ROOT}/tmp
+COPY . ${CYBER_DOJO_ROOT}
+ENV EMPTY_DIRS \
+    ${CYBER_DOJO_ROOT}/caches \
+    ${CYBER_DOJO_ROOT}/log \
+    ${CYBER_DOJO_ROOT}/tmp
 
 RUN mkdir $EMPTY_DIRS
-
+WORKDIR ${CYBER_DOJO_ROOT}
 CMD [ "bash", "-c", "rails server" ]

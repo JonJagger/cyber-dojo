@@ -3,6 +3,8 @@
 
 # ...Except
 !Gemfile
+!Gemfile.lock
+!.gemrc
 !script
 !config.ru
 !config
