@@ -1,7 +1,7 @@
 FROM rails:4.1
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-ARG              CYBER_DOJO_ROOT
+ARG CYBER_DOJO_ROOT
 
 # install gems first - they change least and take longest to install
 RUN mkdir -p   ${CYBER_DOJO_ROOT}

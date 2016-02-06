@@ -1,4 +1,4 @@
 # Ignore everything...
 *
 # ...Except 
-!languages
+!test

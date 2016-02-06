@@ -3,10 +3,10 @@
 MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd ${MY_DIR} > /dev/null
 
-ROOT=${1:-/var/www/cyber-dojo}
-DIR=test
-CONTEXT_DIR=./../../${DIR}
-CONFIG_FILES=(Dockerfile)
+ROOT=${1:-/usr/app/cyber-dojo}
+DIR=${PWD##*/}
+CONTEXT_DIR=./../..
+CONFIG_FILES=(Dockerfile .dockerignore)
 
 for CONFIG_FILE in ${CONFIG_FILES[*]}
 do

@@ -1,7 +1,9 @@
 FROM busybox
 MAINTAINER Jon Jagger
 
-RUN mkdir -p /tmp
-VOLUME     ["/tmp"]
+ARG IMAGE=tmp
+
+RUN mkdir -p /${IMAGE}
+VOLUME     ["/${IMAGE}"]
 
 CMD ["not runnable - a data container"]
