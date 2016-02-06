@@ -1,4 +1,3 @@
-# Ignore everything...
-*
-# ...Except 
-!languages
+.dockerignore
+Dockerfile
+**/_docker_context

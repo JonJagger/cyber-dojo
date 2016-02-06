@@ -5,7 +5,7 @@ pushd ${MY_DIR} > /dev/null
 
 ROOT=${1:-/usr/app/cyber-dojo}
 DIR=${PWD##*/}
-CONTEXT_DIR=./../..
+CONTEXT_DIR=./../../${DIR}
 CONFIG_FILES=(Dockerfile .dockerignore)
 
 for CONFIG_FILE in ${CONFIG_FILES[*]}

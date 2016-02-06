@@ -1,4 +1,2 @@
-# Ignore everything...
-*
-# ...Except 
-!exercises
+.dockerignore
+Dockerfile

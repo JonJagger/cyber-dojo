@@ -1,6 +1,7 @@
 # Ignore everything...
 *
-# ...Except 
+
+# ...Except
 !Gemfile
 !script
 !config.ru

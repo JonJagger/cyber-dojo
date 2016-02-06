@@ -4,7 +4,7 @@ MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd ${MY_DIR} > /dev/null
 
 CONTEXT_DIR=./../../public
-CONFIG_FILES=(nginx.conf Dockerfile)
+CONFIG_FILES=(nginx.conf Dockerfile .dockerignore)
 
 for CONFIG_FILE in ${CONFIG_FILES[*]}
 do

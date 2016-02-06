@@ -2,11 +2,10 @@ FROM busybox
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 ARG CYBER_DOJO_ROOT
-ARG IMAGE=exercises
-ARG DIR=${CYBER_DOJO_ROOT}/${IMAGE}
+ARG DIR=${CYBER_DOJO_ROOT}/exercises
 
 RUN mkdir -p    ${DIR}
-COPY ${IMAGE}   ${DIR}
+COPY .          ${DIR}
 RUN chmod -R +r ${DIR}
 VOLUME        ["${DIR}"]
 
