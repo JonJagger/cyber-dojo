@@ -1,14 +1,17 @@
 #!/bin/bash
 
 MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-IMAGES=(exercises katas languages nginx test tmp web)
+IMAGES=(exercises languages nginx test tmp web)
 HUB=cyberdojofoundation
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
 function clean {
-  # remove *ALL* existing containers
-  docker ps -aq | xargs docker rm -f
+  # remove containers except katas
+  # TODO: NOT KATAS
+  docker ps -aq | xargs echo
+  #docker ps -aq | xargs docker rm -f
+
   # remove untagged images
   docker images -q --filter "dangling=true" | xargs docker rmi
 }
@@ -30,14 +33,16 @@ function build {
   exit_if_no_root
   # build images via Dockerfiles
   pushd ${MY_DIR} > /dev/null
-    for IMAGE in ${IMAGES[*]}
-    do
-      ./${IMAGE}/build-docker-image.sh ${ROOT}
-      if [ $? -ne 0 ]; then
-        echo "BUILDING ${HUB}/${IMAGE} FAILED"
-        exit
-      fi
-    done
+  ALL_IMAGES=("${IMAGES[*]}" katas)
+  for IMAGE in ${ALL_IMAGES[*]}
+  do
+    echo ${IMAGE}
+    ./${IMAGE}/build-docker-image.sh ${ROOT}
+    if [ $? -ne 0 ]; then
+      echo "BUILDING ${HUB}/${IMAGE} FAILED"
+      exit
+    fi
+  done
   popd > /dev/null
 }
 
@@ -48,7 +53,6 @@ function push {
   do
     echo "---------------------------------------"
     echo "PUSHING: ${HUB}/${IMAGE}"
-    echo "---------------------------------------"
     docker push ${HUB}/${IMAGE}
   done
 }
@@ -60,7 +64,6 @@ function pull {
   do
     echo "---------------------------------------"
     echo "PULLING: ${HUB}/${IMAGE}"
-    echo "---------------------------------------"
     docker pull ${HUB}/${IMAGE}
   done
 }

@@ -3,28 +3,13 @@
 MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd ${MY_DIR} > /dev/null
 
-ROOT=${1:-/usr/app/cyber-dojo}
-DIR=${PWD##*/}
-CONTEXT_DIR=./../../${DIR}
-CONFIG_FILES=(Dockerfile .dockerignore)
+# Building the katas image (data container) from any
+# existing files in the /var/www/cyber-dojo/katas folder.
+# This is part of installing a new cyber-dojo server.
 
-for CONFIG_FILE in ${CONFIG_FILES[*]}
-do
-  cp ./${CONFIG_FILE} ${CONTEXT_DIR}
-done
-
-docker build \
-  --build-arg=CYBER_DOJO_ROOT=${ROOT} \
-  --tag=cyberdojofoundation/${DIR} \
-  --file=${CONTEXT_DIR}/Dockerfile \
-  ${CONTEXT_DIR}
+../build-katas-image.sh
 
 EXIT_STATUS=$?
-
-for CONFIG_FILE in ${CONFIG_FILES[*]}
-do
-  rm ${CONTEXT_DIR}/${CONFIG_FILE}
-done
 
 popd > /dev/null
 

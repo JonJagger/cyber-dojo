@@ -4,17 +4,9 @@
 # Use curl to get this file, chmod +x it, then run it.
 
 BRANCH=https://raw.githubusercontent.com/JonJagger/cyber-dojo/runner-auto-cache/docker
-
-# - - - - - - - - - - - - - - - - - - - - - - -
-# katas/ is relative to /var/www/cyber-dojo folder
-# to maintain backward compatibility
-
-mkdir -p /var/www/cyber-dojo
-
-# - - - - - - - - - - - - - - - - - - - - - - -
-SCRIPTS=(cyber-dojo-up.sh)
-
 OSES=(debian-jessie ubuntu-trusty)
+SCRIPTS=(cyber-dojo-up.sh build-katas-image.sh)
+
 for OS in ${OSES[*]}
 do
   FILE=install-docker-on-${OS}.sh
@@ -28,8 +20,11 @@ do
 done
 
 # - - - - - - - - - - - - - - - - - - - - - - -
-CONFIG=docker-compose.yml
-curl -O ${BRANCH}/${CONFIG}
+CONFIG_FILES=(docker-compose.yml Dockerfile.katas .dockerignore.katas)
+for CONFIG_FILE in ${CONFIG_FILES[*]}
+do
+  curl -O ${BRANCH}/${CONFIG_FILE}
+done
 
 # - - - - - - - - - - - - - - - - - - - - - - -
 echo
@@ -40,10 +35,14 @@ do
 done
 echo
 
-echo 2. Ensure at least one language container exists
+echo 2. Build your katas data-container
+echo '   $ ./build-katas-image.sh'
+echo
+
+echo 3. Ensure at least one language container exists
 echo '   $ docker pull cyberdojofoundation/gcc_assert'
 echo
 
-echo 3. Bring up cyber-dojo
+echo 4. Bring up cyber-dojo
 echo '   $ ./cyber-dojo-up.sh'
 echo

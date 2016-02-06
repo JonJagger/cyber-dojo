@@ -1,8 +1,6 @@
 #!/usr/bin/ruby
 
-def cyber_dojo_root
-  '/var/www/cyber-dojo'
-end
+cyber_dojo_root = File.expand_path('..', File.dirname(__FILE__))
 
 def docker_context_dir_name
   '_docker_context'

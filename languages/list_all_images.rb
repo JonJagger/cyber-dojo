@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
 #
-# Assuming the web container is called os_web_1 you can run this via
+# Assuming the web container is called web_1 you can run this via
 #
-#   $ docker exec os_web_1 bash -c "./languages/list_all_images.rb"
+#   $ docker exec web_1 bash -c "./languages/list_all_images.rb"
 #
 
 require 'json'
