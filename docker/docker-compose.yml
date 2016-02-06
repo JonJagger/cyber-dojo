@@ -37,7 +37,6 @@ web:
     - "3000:3000"
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
-    - ${CYBER_DOJO_ROOT}/katas:${CYBER_DOJO_ROOT}/katas
   volumes_from:
     - languages:ro
     - exercises:ro
