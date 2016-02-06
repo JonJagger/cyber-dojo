@@ -13,26 +13,17 @@ RUN apk --update add curl \
 RUN apk update \
     && apk --update add \
       ruby \
-      ruby-json \
-      ruby-rake \
       ruby-bigdecimal \
-      libstdc++ \
       tzdata \
-      postgresql-client \
-      nodejs \
       git \
       acl
-#     ruby-io-console \
-#     ruby-irb \
 
 ARG CYBER_DOJO_ROOT
 
 RUN  mkdir -p     ${CYBER_DOJO_ROOT}
 COPY Gemfile      ${CYBER_DOJO_ROOT}
-COPY Gemfile.lock ${CYBER_DOJO_ROOT}
 COPY .gemrc       ${CYBER_DOJO_ROOT}
-RUN apk --update add --virtual \
-      build-dependencies \
+RUN apk --update add --virtual build-dependencies \
       build-base \
       ruby-dev \
       openssl-dev \
