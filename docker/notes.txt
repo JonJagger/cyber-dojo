@@ -1,0 +1,44 @@
+
+Add file for OSX too (sw_vers is the command)
+On OSX Docker-Quickstart-Terminal you will need to...
+$ docker-machine ssh default
+run commands from there (which ones? what is default based on?)
+Answer=Tiny Core. Has sh not bash
+
+Checkout the procedure on a Windows box too
+
+Auto-detect which version of linux I'm on (lsb_release) ?
+
+
+Keep the image names
+--------------------
+As opposed to, eg, making them all have an alpine prefix
+   cyberdojofoundation/gcc_assert -> cyberdojofoundation/alpine_gcc_assert
+If I keep the old-style names then someone on an old style server
+will be ok if they do a admin_scripts/pull.sh but they don't
+do a docker pull. Have to check that. Does it only rely on big old-style
+images having bash and sh? It's a reasonable use case.
+
+If they also do a docker pull they'll get a new smaller image.
+Could it still work?
+I think it could. On an old style server the runner will be
+DockerTmpRunner with its own .sh file.
+That could be updated as part of the pull.sh
+I'd need to change the runner's sh file...
+  o) change /bin/bash to /bin/sh
+  o) change cidfile=`mktemp --tmpdir=/tmp cyber-dojo.XXXXX` to cidfile=`mktemp`
+  o) change rm --force to rm -f (twice)
+  o) change --signal=9 to -s 9
+  o) change 10s to -t 10
+  o) change "timeout ./cyber-dojo.sh" to "timeout sh -c ./cyber-dojo.sh"
+This allows an old-style server to benefit from the smaller images.
+Does pull.sh still do an image update check?
+It still calls caches/refresh_all.sh *after* the git pull.
+So refresh_all could be updated to reinstate the image update.
+
+Old style servers run with user=www-data inside apache.
+An old style server with new alpine based images will still be www-data.
+So new alpine-based images have to work as www-data.
+That way they work for old-style and new-style server.
+
+Also, this way I don't double the number of images on the hub.
