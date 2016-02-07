@@ -24,6 +24,5 @@ done
 
 for SCRIPT in ${SCRIPTS[*]}
 do
-  echo ${SCRIPT}
-  #./${SCRIPT}
+  ./${SCRIPT}
 done
