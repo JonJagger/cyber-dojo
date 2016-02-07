@@ -1,7 +1,9 @@
 #!/bin/sh
 
-IMAGES=(gcc_assert)
 HUB=cyberdojofoundation
+
+IMAGES=()
+IMAGES+=(gcc_assert)
 
 for IMAGE in ${IMAGES[*]}
 do
