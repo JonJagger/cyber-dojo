@@ -20,29 +20,10 @@ do
 done
 
 # - - - - - - - - - - - - - - - - - - - - - - -
-CONFIG_FILES=(docker-compose.yml Dockerfile.katas .dockerignore.katas)
+CONFIG_FILES=(docker-compose.yml Dockerfile.katas .dockerignore.katas instructions.txt)
 for CONFIG_FILE in ${CONFIG_FILES[*]}
 do
   curl -O ${BRANCH}/${CONFIG_FILE}
 done
 
-# - - - - - - - - - - - - - - - - - - - - - - -
-echo
-echo 1. Install docker using one of
-for OS in ${OSES[*]}
-do
-  echo "   $ ./install-docker-on-${OS}.sh "
-done
-echo
-
-echo 2. Build your katas data-container
-echo '   $ ./build-katas-image.sh'
-echo
-
-echo 3. Ensure at least one language container exists
-echo '   $ docker pull cyberdojofoundation/gcc_assert'
-echo
-
-echo 4. Bring up cyber-dojo
-echo '   $ ./cyber-dojo-up.sh'
-echo
+cat instructions.txt
