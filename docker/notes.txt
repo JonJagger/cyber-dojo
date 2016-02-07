@@ -38,7 +38,16 @@ So refresh_all could be updated to reinstate the image update.
 
 Old style servers run with user=www-data inside apache.
 An old style server with new alpine based images will still be www-data.
-So new alpine-based images have to work as www-data.
-That way they work for old-style and new-style server.
+But it doesn't have to be! That can be altered in the pull.sh too.
+So new alpine-based images can be any user (not root).
+Except that doesn't work if you do a pull.sh but don't update the
+languages images. Best is to use www-data in the new alpine images.
+
+So www-data needs same uid on
+o) apache server (33)
+o) language images and web image (all based on alpine)
+   cat /etc/passwd shows already a user with uid=33
+   xfs:x:33:33:X Font Server:/etc/X11/fs:/sbin/nologin
+
 
 Also, this way I don't double the number of images on the hub.
