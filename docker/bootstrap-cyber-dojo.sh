@@ -1,7 +1,7 @@
 #!/bin/bash
 
-BRANCH=https://raw.githubusercontent.com/JonJagger/cyber-dojo/runner-auto-cache/docker
-OS=$1
+BRANCH=$1
+OS=$2
 # TODO: check $1
 
 SCRIPTS=(install-docker-on-${OS}.sh)
