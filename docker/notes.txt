@@ -37,6 +37,51 @@ I think
 docker_from_docker_runner.sh === docker_tmp_runner.sh !!!!
 docker_from_docker_runner.rb === docker_tmp_runner.rb !!!!
 
+Problem is the syntax of timeout is different.
+On Alpine linux images its
+  timeout  [-s SIG] [-t SECS] PROG ARGS
+On the original Ubuntu language image the call is
+  timeout --signal=${KILL} $((MAX_SECONDS))s ./cyber-dojo.sh
+where
+  timeout [OPTION] SECS PROG ARGS
+    OPTIONS -s SIG is the same
+            -t *NOT* AN OPTION
+Can I work around this?
+Can't alter original Ubuntu based images.
+Could I put an adapter script into Alpine?
+which timeout says  /usr/bin/timeout
+echo $PATH is
+  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+So I could but an adapter timeout file into  /usr/local/bin say
+that called /usr/bin/timeout explicitly.
+s is default for seconds on Ubuntu. So call be Ubuntu based (no -t)
+
+   timeout -s ${KILL} $((MAX_SECONDS)) ./cyber-dojo.sh
+      $1=-s
+      $2=SIGNAL
+      $3=DURATION
+      $4=PROG
+And adapter in Alpine linux can be /usr/local/bin/timeout (no .sh, chmod +x)
+#!/bin/sh
+/usr/bin/timeout -s $2 -t $3 $4 $5 $6
+
+The other way round wont work. I can't edit already pulled images
+which are Ubuntu based and cannot have an adpater inserted.
+
+The approach allows me to upgrade the language containers one at a time.
+I can upgrade the common ones the release the dockerized web with
+new instructions. Then I can upgrade the other ones.
+
+Note also that this means cyber-dojo.sh needs to work when it is
+run in bash in Ubuntu based containers and when it is run in sh
+in Alpine based containers.
+
+
+
+
+
+
+
 Does pull.sh still do an image update check?
 It still calls caches/refresh_all.sh *after* the git pull.
 So refresh_all could be updated to reinstate the image update.

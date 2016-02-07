@@ -45,7 +45,7 @@ timeout -s ${KILL} -t $((MAX_SECONDS+5)) \
     --volume=${FILES_PATH}:${SANDBOX}:rw \
     --workdir=${SANDBOX} \
     ${IMAGE_NAME} \
-    sh -c "timeout -s ${KILL} -t $((MAX_SECONDS)) sh -c ./cyber-dojo.sh 2>&1" 2>/dev/null
+    sh -c "timeout -s ${KILL} $((MAX_SECONDS)) ./cyber-dojo.sh 2>&1" 2>/dev/null
 
 EXIT_STATUS=$?
 

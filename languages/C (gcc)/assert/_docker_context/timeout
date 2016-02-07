@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# cyber-dojo first ran as a regular web server with large
+# Ubuntu based language images. The docker_tmp_runner.sh
+# file issues a
+#
+#      timeout -s 9 10 ./cyber-dojo.sh
+#
+# call which is in Ubuntu syntax (9=kill signal, 10=10seconds).
+#
+# Now the architecture is docker-in-docker - the web server
+# runs in a docker container based on Alpine-linux and the
+# language images are being refactored to smaller Alpine-linux
+# based images. Alpine linux is based on TinyCore (not Ubuntu)
+# and its timeout command has different syntax (note the -t)
+#
+#       timeout -s 9 -t 10 ./cyber-dojo.sh
+#
+# To maintain compatibility in cases where there is an old-style
+# (non docker-in-docker) server but the language containers have
+# been upgraded to the new smaller Alpine based images I need the
+# timeout syntax of docker_tmp_runner.sh to remain Ubuntu based
+# (for non upgraded images) and for upgraded Alpine-linux based
+# images to work with the Ubuntu syntax. To do this I insert this
+# adapter into /usr/loca/bin/ which is in the path ahead of
+# /usr/bin/ which is where the real timeout lives.
+#
+# This adapter has to be called timeout (no .sh suffix) so it
+# needs a #! shebang. This means a call of
+#
+#      timeout -s 9 10 ./cyber-dojo.sh
+#
+# will be seen as
+#
+#      timeout -s   9  10  sh  -c  ./cyber-dojo.sh
+#              $1  $2  $3  $4  $5  $6
+#
+# So there's 37 lines of comment for 1 line of code!
+
+/usr/bin/timeout -s $2 -t $3 $4 $5 $6
