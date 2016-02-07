@@ -2,8 +2,7 @@
 
 HUB=cyberdojofoundation
 
-IMAGES=()
-IMAGES+=(gcc_assert)
+IMAGES=(gcc_assert)
 
 for IMAGE in ${IMAGES[*]}
 do
