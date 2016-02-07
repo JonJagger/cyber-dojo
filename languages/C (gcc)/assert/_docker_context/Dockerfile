@@ -1,9 +1,4 @@
-FROM alpine:3.2
+FROM cyberdojofoundation/alpine_base
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 RUN apk --update add gcc make musl-dev
-
-RUN deluser xfs
-RUN adduser -G www-data -D -H -u 33 www-data
-
-COPY timeout /usr/local/bin

@@ -33,41 +33,6 @@ I'd need to change the runner's sh file...
   o) change "timeout ./cyber-dojo.sh" to "timeout sh -c ./cyber-dojo.sh"
 This allows an old-style server to benefit from the smaller images.
 
-I think
-docker_from_docker_runner.sh === docker_tmp_runner.sh !!!!
-docker_from_docker_runner.rb === docker_tmp_runner.rb !!!!
-
-Problem is the syntax of timeout is different.
-On Alpine linux images its
-  timeout  [-s SIG] [-t SECS] PROG ARGS
-On the original Ubuntu language image the call is
-  timeout --signal=${KILL} $((MAX_SECONDS))s ./cyber-dojo.sh
-where
-  timeout [OPTION] SECS PROG ARGS
-    OPTIONS -s SIG is the same
-            -t *NOT* AN OPTION
-Can I work around this?
-Can't alter original Ubuntu based images.
-Could I put an adapter script into Alpine?
-which timeout says  /usr/bin/timeout
-echo $PATH is
-  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-So I could but an adapter timeout file into  /usr/local/bin say
-that called /usr/bin/timeout explicitly.
-s is default for seconds on Ubuntu. So call be Ubuntu based (no -t)
-
-   timeout -s ${KILL} $((MAX_SECONDS)) ./cyber-dojo.sh
-      $1=-s
-      $2=SIGNAL
-      $3=DURATION
-      $4=PROG
-And adapter in Alpine linux can be /usr/local/bin/timeout (no .sh, chmod +x)
-#!/bin/sh
-/usr/bin/timeout -s $2 -t $3 $4 $5 $6
-
-The other way round wont work. I can't edit already pulled images
-which are Ubuntu based and cannot have an adpater inserted.
-
 The approach allows me to upgrade the language containers one at a time.
 I can upgrade the common ones the release the dockerized web with
 new instructions. Then I can upgrade the other ones.
@@ -77,37 +42,10 @@ run in bash in Ubuntu based containers and when it is run in sh
 in Alpine based containers.
 
 
-
-
-
-
-
 Does pull.sh still do an image update check?
 It still calls caches/refresh_all.sh *after* the git pull.
 So refresh_all could be updated to reinstate the image update.
 
-Old style servers run with user=www-data (33) inside apache.
-An old style server with new alpine based images will still be www-data.
-So new alpine images need to be run as www-data (33) so they have a
-chance of working on old style server.
-
-So www-data needs same uid on
-o) apache server (33)
-o) language images and web image (all based on alpine)
-   cat /etc/passwd shows already a user with uid=33
-   xfs:x:33:33:X Font Server:/etc/X11/fs:/sbin/nologin
-
-   deluser xfs
-      Alpine-linux base image has a user called xfs (X Font Server)
-      with uid=33. For backwards compatibility with old-style
-      (not docker-in-docker) servers I need the user with uid=33
-
-   adduser -G www-data -D -H -u 33 www-data
-     -G group == add user to existing group
-     -D       == don't assign a password
-     -H       == don't create a home directory
-     -u 33    == user-id
-     www-data == name
 
 
 Also, this way I don't double the number of images on the hub.

@@ -23,6 +23,10 @@
 # Alpine-linux which has sh (but not bash) and supports simple [-s 9]
 # style command option format but not longer [--signal=9] format.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# NB: the timeout call is in Ubuntu syntax and *NOT* in Alpine syntax.
+# This is deliberate and is explained at length in
+#     languages/alpine_base/_docker_context/timeout
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 FILES_PATH=$1
 IMAGE_NAME=$2

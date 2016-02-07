@@ -21,20 +21,25 @@
 # been upgraded to the new smaller Alpine based images I need the
 # timeout syntax of docker_tmp_runner.sh to remain Ubuntu based
 # (for non upgraded images) and for upgraded Alpine-linux based
-# images to work with the Ubuntu syntax. To do this I insert this
+# images to work with the Ubuntu syntax. To do this I put this
 # adapter into /usr/loca/bin/ which is in the path ahead of
-# /usr/bin/ which is where the real timeout lives.
+# /usr/bin/ which is where the real timeout lives (and it calls)
 #
 # This adapter has to be called timeout (no .sh suffix) so it
-# needs a #! shebang. This means a call of
+# needs a #! shebang. A call is
 #
-#      timeout -s 9 10 ./cyber-dojo.sh
+#      timeout -s   9  10  ./cyber-dojo.sh
+#              $1  $2  $3  $4
 #
-# will be seen as
+# this needs [sh -c] added otherwise you get an Exec format error
 #
 #      timeout -s   9  10  sh  -c  ./cyber-dojo.sh
-#              $1  $2  $3  $4  $5  $6
+#              $1  $2  $3          $4
 #
-# So there's 37 lines of comment for 1 line of code!
+# This means cyber-dojo.sh needs to work when it is run in
+#    o) bash in Ubuntu based containers
+#    o)   sh in Alpine based containers
+#
+# 41 lines of comment for 1 line of code!
 
-/usr/bin/timeout -s $2 -t $3 $4 $5 $6
+/usr/bin/timeout -s $2 -t $3 sh -c $4
