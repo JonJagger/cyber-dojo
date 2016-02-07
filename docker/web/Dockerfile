@@ -1,5 +1,5 @@
+# Based on http://blog.kontena.io/building-minimal-docker-image-for-rails/
 FROM alpine:3.2
-# http://blog.kontena.io/building-minimal-docker-image-for-rails/
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -19,7 +19,6 @@ ARG CYBER_DOJO_ROOT
 
 RUN  mkdir -p     ${CYBER_DOJO_ROOT}
 COPY Gemfile      ${CYBER_DOJO_ROOT}
-COPY .gemrc       ${CYBER_DOJO_ROOT}
 RUN apk --update add --virtual build-dependencies \
       build-base \
       ruby-dev \

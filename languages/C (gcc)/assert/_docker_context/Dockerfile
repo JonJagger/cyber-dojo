@@ -1,3 +1,4 @@
-FROM       cyberdojofoundation/gcc-4.8.4
+FROM alpine:3.2
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
+RUN apk --update add gcc make musl-dev

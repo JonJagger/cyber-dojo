@@ -24,9 +24,7 @@ timeout -s ${KILL} -t $((MAX_SECONDS+5)) \
     --volumes-from=cyberdojo_tmp_data_container \
     --workdir=${FILES_PATH} \
     ${IMAGE_NAME} \
-    /bin/bash -c "timeout -s ${KILL} $((MAX_SECONDS))s ./cyber-dojo.sh 2>&1"
-
-#/bin/bash -c "timeout --signal=${KILL} $((MAX_SECONDS))s ./cyber-dojo.sh 2>&1" 2>/dev/null
+    sh -c "timeout -s ${KILL} -t $((MAX_SECONDS)) sh -c ./cyber-dojo.sh 2>&1" 2>/dev/null
 
 EXIT_STATUS=$?
 
