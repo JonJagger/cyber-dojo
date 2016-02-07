@@ -1,6 +1,6 @@
 
-# Note that variable-substition happens in docker-compose yml
-# files such as this one, but *not* in env_file:'s
+# Variable-substition happens in docker-compose yml files
+# such as this one, but *not* in env_file:'s
 # Since I use variable-substitution in my ROOT environment
 # variables I don't use an env_file:
 
