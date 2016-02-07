@@ -1,16 +1,13 @@
 #!/bin/bash
 
-# Use curl to get this file, chmod +x it, then run it.
-
 BRANCH=https://raw.githubusercontent.com/JonJagger/cyber-dojo/runner-auto-cache/docker
-OSES=(debian-jessie ubuntu-trusty)
-SCRIPTS=(cyber-dojo-up.sh build-katas-image.sh show_instructions.sh)
+OS=$1
+# TODO: check $1
 
-for OS in ${OSES[*]}
-do
-  FILE=install-docker-on-${OS}.sh
-  SCRIPTS+=($FILE)
-done
+SCRIPTS=(install-docker-on-${OS}.sh)
+SCRIPTS+=(docker-build-katas-image.sh)
+SCRIPTS+=(docker-pull-common-languages.sh)
+SCRIPTS+=(cyber-dojo-up.sh)
 
 for SCRIPT in ${SCRIPTS[*]}
 do
@@ -18,11 +15,15 @@ do
   chmod +x ${SCRIPT}
 done
 
-# - - - - - - - - - - - - - - - - - - - - - - -
-CONFIG_FILES=(docker-compose.yml Dockerfile.katas .dockerignore.katas)
-for CONFIG_FILE in ${CONFIG_FILES[*]}
+# TODO: add readme.txt with info on installing new languages
+FILES=(docker-compose.yml Dockerfile.katas .dockerignore.katas)
+for FILE in ${FILES[*]}
 do
-  curl -O ${BRANCH}/${CONFIG_FILE}
+  curl -O ${BRANCH}/${FILE}
 done
 
-./show_instructions.sh
+for SCRIPT in ${SCRIPTS[*]}
+do
+  echo ${SCRIPT}
+  #./${SCRIPT}
+done
