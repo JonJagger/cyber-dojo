@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Called from lib/docker_from_docker_runner.rb
+# Called from lib/docker_tmp_runner.rb
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # I keep user=www-data (33) for backwards compatibility.
@@ -17,7 +17,7 @@
 #    So the web-container's view of USER could affect things.
 #  - the *process* reading the files is inside the language's docker-container.
 #    So the language's-container's view of USER could affect things.
-# To be sure you need all three places to agree on USER {www-data (33)}
+# To be sure you need all three to agree on USER {www-data (33)}
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # On a new-style docker-in-docker server the web-container is based on
 # Alpine-linux which has sh (but not bash) and supports simple [-s 9]

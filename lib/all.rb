@@ -19,7 +19,7 @@
   docker_runner
   docker_katas_runner
   docker_machine_runner
-  docker_from_docker_runner
+  docker_tmp_runner
 
   create_kata_manifest
   host_disk_katas

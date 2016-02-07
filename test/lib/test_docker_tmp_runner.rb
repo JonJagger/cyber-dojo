@@ -111,7 +111,7 @@ class DockerTmpRunnerTests < LibTestBase
 
     shell.mock_cd_exec(
       runner.path,
-      ["./docker_runner.sh #{args}"],
+      ["./docker_tmp_runner.sh #{args}"],
       mock_output,
       mock_exit_status
    )
