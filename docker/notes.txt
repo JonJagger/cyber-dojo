@@ -36,12 +36,10 @@ Does pull.sh still do an image update check?
 It still calls caches/refresh_all.sh *after* the git pull.
 So refresh_all could be updated to reinstate the image update.
 
-Old style servers run with user=www-data inside apache.
+Old style servers run with user=www-data (33) inside apache.
 An old style server with new alpine based images will still be www-data.
-But it doesn't have to be! That can be altered in the pull.sh too.
-So new alpine-based images can be any user (not root).
-Except that doesn't work if you do a pull.sh but don't update the
-languages images. Best is to use www-data in the new alpine images.
+So new alpine images need to be run as www-data (33) so they have a
+chance of working on old style server.
 
 So www-data needs same uid on
 o) apache server (33)
@@ -49,5 +47,7 @@ o) language images and web image (all based on alpine)
    cat /etc/passwd shows already a user with uid=33
    xfs:x:33:33:X Font Server:/etc/X11/fs:/sbin/nologin
 
+   deluser xfs
+   adduser -G www-data -D -H -u 33 www-data
 
 Also, this way I don't double the number of images on the hub.

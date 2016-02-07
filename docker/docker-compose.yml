@@ -33,12 +33,12 @@ web:
     - "3000:3000"
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
+    - /tmp:/tmp:rw
   volumes_from:
     - languages:ro
     - exercises:ro
     - katas:rw
     - test:rw
-    - tmp:rw
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -64,9 +64,3 @@ test:
   entrypoint: /bin/sh
   image: cyberdojofoundation/test
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-tmp:
-  container_name: cyberdojo_tmp_data_container
-  entrypoint: /bin/sh
-  image: cyberdojofoundation/tmp

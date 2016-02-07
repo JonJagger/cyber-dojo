@@ -7,7 +7,7 @@ pushd ${MY_DIR} > /dev/null
 # existing files in the /var/www/cyber-dojo/katas folder.
 # This is part of installing a new cyber-dojo server.
 
-../build-katas-image.sh
+../docker-build-katas-image.sh
 
 EXIT_STATUS=$?
 

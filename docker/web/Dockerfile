@@ -46,4 +46,8 @@ RUN mkdir $EMPTY_DIRS
 WORKDIR ${CYBER_DOJO_ROOT}
 
 EXPOSE 3000
+
+RUN deluser xfs
+RUN adduser -G www-data -D -H -u 33 www-data
+
 CMD [ "bash", "-c", "rails server" ]
