@@ -32,6 +32,11 @@ I'd need to change the runner's sh file...
   o) change 10s to -t 10
   o) change "timeout ./cyber-dojo.sh" to "timeout sh -c ./cyber-dojo.sh"
 This allows an old-style server to benefit from the smaller images.
+
+I think
+docker_from_docker_runner.sh === docker_tmp_runner.sh !!!!
+docker_from_docker_runner.rb === docker_tmp_runner.rb !!!!
+
 Does pull.sh still do an image update check?
 It still calls caches/refresh_all.sh *after* the git pull.
 So refresh_all could be updated to reinstate the image update.
@@ -48,6 +53,16 @@ o) language images and web image (all based on alpine)
    xfs:x:33:33:X Font Server:/etc/X11/fs:/sbin/nologin
 
    deluser xfs
+      Alpine-linux base image has a user called xfs (X Font Server)
+      with uid=33. For backwards compatibility with old-style
+      (not docker-in-docker) servers I need the user with uid=33
+
    adduser -G www-data -D -H -u 33 www-data
+     -G group == add user to existing group
+     -D       == don't assign a password
+     -H       == don't create a home directory
+     -u 33    == user-id
+     www-data == name
+
 
 Also, this way I don't double the number of images on the hub.

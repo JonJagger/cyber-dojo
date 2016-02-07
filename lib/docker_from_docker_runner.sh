@@ -80,8 +80,10 @@ exit ${EXIT_STATUS}
 #
 # --volume=${FILES_PATH}:/sandbox:rw
 #
-#   I initially tried a tmp-data-container (with a /tmp volume) like this
-#       --volumes-from=tmp_data_container --workdir=/tmp/cyber-dojo.23456765
+#   On the new docker-in-docker server I initially tried a tmp-data-container
+#   (with a /tmp volume) like this...
+#       --volumes-from=tmp_data_container
+#       --workdir=/tmp/cyber-dojo.23456765
 #   where 23456765 was a random id and the source files had been copied into
 #   /tmp/cyber-dojo.23456765  This worked but was flawed since inside the
 #   docker-run you had access not just to /tmp/cyber-dojo.23456765 but also
