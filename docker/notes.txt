@@ -9,85 +9,8 @@ Checkout the procedure on a Windows box too
 
 Auto-detect which version of linux I'm on (lsb_release) ?
 
-
-Keep the image names
---------------------
-As opposed to, eg, making them all have an alpine prefix
-   cyberdojofoundation/gcc_assert -> cyberdojofoundation/alpine_gcc_assert
-If I keep the old-style names then someone on an old style server
-will be ok if they do a admin_scripts/pull.sh but they don't
-do a docker pull. Have to check that. Does it only rely on big old-style
-images having bash and sh? It's a reasonable use case.
-
-If they also do a docker pull they'll get a new smaller image.
-Could it still work?
-I think it could. On an old style server the runner will be
-DockerTmpRunner with its own .sh file.
-That could be updated as part of the pull.sh
-I'd need to change the runner's sh file...
-  o) change /bin/bash to /bin/sh
-  o) change cidfile=`mktemp --tmpdir=/tmp cyber-dojo.XXXXX` to cidfile=`mktemp`
-  o) change rm --force to rm -f (twice)
-  o) change --signal=9 to -s 9
-  o) change 10s to -t 10
-  o) change "timeout ./cyber-dojo.sh" to "timeout sh -c ./cyber-dojo.sh"
-This allows an old-style server to benefit from the smaller images.
-
-The approach allows me to upgrade the language containers one at a time.
-I can upgrade the common ones the release the dockerized web with
-new instructions. Then I can upgrade the other ones.
-
-Note also that this means cyber-dojo.sh needs to work when it is
-run in bash in Ubuntu based containers and when it is run in sh
-in Alpine based containers.
-
-Having trouble getting old-style Ubuntu timeouts working in
-Alpine linux.
-There are 2!!!! timeout calls, the outer one and the inner one.
-Also the current runner.sh call does this...
-
-timeout --signal=9 15s \
-   docker run \
-     ... \
-   /bin/bash -c "timeout --signal=10s ./cyber-dojo.sh"
-
-
-So to maintain compatibility I need to
-1) install bash (there is an Alpine linux package for bash)
-   I need bash anyway since runner sh file has a bash shebang.
-2) use the adapter to convert --signal=9 (one arg) to -s 9 (two args)
-3) parse the s off 15s and 10s
-
-And there's more. Old style runner sh uses
-   rm --force
-   mktemp --tmpdir
-So I will need adapters for both of those too? Yes.
-Is it worth it? No.
-Should I just draw a line in the sand and say to upgrade servers.
-They would then build a dind (docker-in-docker) server, convert the
-katas folder to a katas data-container. But I'd still like to be able
-to release Alpine language containers up one at a time.
-That means old-style bash-based language images have to still
-work from the dind web server.
-Hmmm - do old style bash based language images also have sh?
-Yes they do.
-
-what about the language containers?
-Would they would be all right? inside the dind server they'd
-be using runner sh file that was alpine specific. It could
- use sh
- use -f  (not --force) short forms
- use mktemp that worked on the dind web server
- Only the final timeout call *inside* the language container
- needs to work for bash
-
-
-
-
 Does pull.sh still do an image update check?
 It still calls caches/refresh_all.sh *after* the git pull.
 So refresh_all could be updated to reinstate the image update.
-
-
 
 Also, this way I don't double the number of images on the hub.

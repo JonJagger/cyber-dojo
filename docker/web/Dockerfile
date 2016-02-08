@@ -45,10 +45,6 @@ ENV EMPTY_DIRS \
 RUN mkdir $EMPTY_DIRS
 WORKDIR ${CYBER_DOJO_ROOT}
 
-# See comment in timeout script itself
-COPY ./timeout /usr/local/bin
-RUN chmod +x /usr/local/bin/timeout
-
 EXPOSE 3000
 
 CMD [ "bash", "-c", "rails server" ]

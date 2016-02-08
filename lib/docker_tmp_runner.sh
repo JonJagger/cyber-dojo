@@ -1,29 +1,24 @@
 #!/bin/sh
 
 # Called from lib/docker_tmp_runner.rb
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# I keep user=www-data (33) for backwards compatibility.
-# e.g., suppose you are using a old-style (pre docker-in-docker) server
-# but have pulled new-style alpine-linux based images. To cater for
-# this new-style alpine-linux based images need to run as the same
-# user as old-style (pre docker-in-docker) images.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # cyber-dojo.sh needs permission to create files in its /sandbox
-# In a docker-in-docker web-container...
+# as user=www-data (33). In a docker-in-docker web-container...
 #  - the files *exist* in /sandbox but that's really /tmp/... which is on the host.
 #    So the hosts view of USER could affect things.
-#  - the process *running* setfacl is inside the web-container.
+#  - the process *running* setfacl is inside the web-container
+#    (its Dockerfile installs setfacl into Alpine)
 #    So the web-container's view of USER could affect things.
 #  - the *process* reading the files is inside the language's docker-container.
 #    So the language's-container's view of USER could affect things.
 # To be sure you need all three to agree on USER {www-data (33)}
-#    See comments in languages/alpine_base/_docker_context/Dockerfile
+# See comments in languages/alpine_base/_docker_context/Dockerfile
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# NB: 1. The timeout call is in Ubuntu bash syntax *NOT* in Alpine sh syntax.
-#     2. The shell used is /bin/sh *not* /bin/bash
-#     3. These decisions are deliberate and explained at length in
-#        languages/alpine_base/_docker_context/timeout
+# NB:
+# - the timeout call is in Ubuntu bash syntax *NOT* in Alpine sh syntax.
+# - the shell used is /bin/sh *not* /bin/bash
+# - these decisions are deliberate and explained at length in
+#   languages/alpine_base/_docker_context/timeout
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 FILES_PATH=$1
@@ -35,7 +30,6 @@ CIDFILE=`mktemp`
 KILL=9
 SANDBOX=/sandbox
 
-# TODO: DOES THIS WORK INSIDE ALPINE? DOES IT NEED TO?
 setfacl -m group:${USER}:rwx ${FILES_PATH}
 
 rm -f ${CIDFILE}
@@ -48,7 +42,7 @@ timeout --signal=${KILL} $((MAX_SECONDS+5))s \
     --volume=${FILES_PATH}:${SANDBOX}:rw \
     --workdir=${SANDBOX} \
     ${IMAGE_NAME} \
-    /bin/sh -c "timeout --signal=${KILL} $((MAX_SECONDS))s ./cyber-dojo.sh 2>&1" #2>/dev/null
+    /bin/sh -c "timeout --signal=${KILL} $((MAX_SECONDS))s ./cyber-dojo.sh 2>&1" 2>/dev/null
 
 EXIT_STATUS=$?
 
