@@ -1,5 +1,5 @@
 # Based on http://blog.kontena.io/building-minimal-docker-image-for-rails/
-FROM alpine:3.2
+FROM cyberdojofoundation/alpine_base
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -45,9 +45,10 @@ ENV EMPTY_DIRS \
 RUN mkdir $EMPTY_DIRS
 WORKDIR ${CYBER_DOJO_ROOT}
 
-EXPOSE 3000
+# See comment in timeout script itself
+COPY ./timeout /usr/local/bin
+RUN chmod +x /usr/local/bin/timeout
 
-RUN deluser xfs
-RUN adduser -G www-data -D -H -u 33 www-data
+EXPOSE 3000
 
 CMD [ "bash", "-c", "rails server" ]

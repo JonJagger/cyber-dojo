@@ -19,10 +19,6 @@
 #    So the language's-container's view of USER could affect things.
 # To be sure you need all three to agree on USER {www-data (33)}
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# On a new-style docker-in-docker server the web-container is based on
-# Alpine-linux which has sh (but not bash) and supports simple [-s 9]
-# style command option format but not longer [--signal=9] format.
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # NB: the timeout call is in Ubuntu syntax and *NOT* in Alpine syntax.
 # This is deliberate and is explained at length in
 #     languages/alpine_base/_docker_context/timeout
@@ -41,7 +37,7 @@ setfacl -m group:${USER}:rwx ${FILES_PATH}
 
 rm -f ${CIDFILE}
 
-timeout -s ${KILL} -t $((MAX_SECONDS+5)) \
+timeout --signal=${KILL} $((MAX_SECONDS+5))s \
   docker run \
     --cidfile="${CIDFILE}" \
     --user=${USER} \
@@ -49,7 +45,7 @@ timeout -s ${KILL} -t $((MAX_SECONDS+5)) \
     --volume=${FILES_PATH}:${SANDBOX}:rw \
     --workdir=${SANDBOX} \
     ${IMAGE_NAME} \
-    sh -c "timeout -s ${KILL} $((MAX_SECONDS)) ./cyber-dojo.sh 2>&1" 2>/dev/null
+    /bin/bash -c "timeout --signal=${KILL} $((MAX_SECONDS))s ./cyber-dojo.sh 2>&1" #2>/dev/null
 
 EXIT_STATUS=$?
 

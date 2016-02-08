@@ -26,6 +26,9 @@ MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 RUN deluser xfs && adduser -G www-data -D -H -u 33 www-data
 
-# See comment in timeout script itself
-COPY timeout /usr/local/bin
-RUN chmod +x /usr/local/bin/timeout
+# Old style servers called docker run /bin/bash -c ...
+# so to maintain compatibility new images need to have bash
+# See comments for timeout.
+
+RUN apk --update add bash
+

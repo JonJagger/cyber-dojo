@@ -13,6 +13,8 @@ do
   cp ./${CONFIG_FILE} ${CONTEXT_DIR}
 done
 
+cp '../../languages/C (gcc)/assert/_docker_context/timeout' ${CONTEXT_DIR}
+
 docker build \
   --build-arg=CYBER_DOJO_ROOT=${ROOT} \
   --tag=cyberdojofoundation/${DIR} \

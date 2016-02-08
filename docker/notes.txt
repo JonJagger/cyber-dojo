@@ -41,6 +41,25 @@ Note also that this means cyber-dojo.sh needs to work when it is
 run in bash in Ubuntu based containers and when it is run in sh
 in Alpine based containers.
 
+Having trouble getting old-style Ubuntu timeouts working in
+Alpine linux.
+There are 2!!!! timeout calls, the outer one and the inner one.
+Also the current runner.sh call does this...
+
+timeout --signal=9 15s \
+   docker run \
+     ... \
+   /bin/bash -c "timeout --signal=10s ./cyber-dojo.sh"
+
+
+So to maintain compatibility I need to
+1) install bash (there is an Alpine linux package for bash)
+   I need bash anyway since runner sh file has a bash shebang.
+2) use the adapter to convert --signal=9 (one arg) to -s 9 (two args)
+3) parse the s off 15s and 10s
+
+
+
 
 Does pull.sh still do an image update check?
 It still calls caches/refresh_all.sh *after* the git pull.
