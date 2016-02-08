@@ -33,8 +33,7 @@ function reset {
 
 function build {
   # Assumes Dockerfiles are in their github cyber-dojo repo folders.
-  exit_if_no_root
-  # build images via Dockerfiles
+  # build images (+katas) from Dockerfiles
   pushd ${MY_DIR} > /dev/null
   ALL_IMAGES=("${IMAGES[*]}" katas)
   for IMAGE in ${ALL_IMAGES[*]}
@@ -76,8 +75,7 @@ function pull {
 function up {
   # Assumes yml files are in their github cyber-dojo repo folders.
   # After [up] tests can be run *inside* the container, eg
-  # $ docker exec os_web_1 bash -c "cd test/app_models && ./test_dojo.rb"
-  exit_if_no_root
+  # $ docker exec web_1 bash -c "cd test/app_models && ./test_dojo.rb"
   exit_if_bad_up
   pushd ${MY_DIR} > /dev/null
   export CYBER_DOJO_ROOT=${ROOT}
@@ -93,24 +91,14 @@ function up {
 function show_use {
   echo "./cdf.sh --clean"
   echo "./cdf.sh --reset"
-  echo "./cdf.sh --build --root=ROOT "
+  echo "./cdf.sh --build [--root=ROOT]"
   echo "./cdf.sh --push"
   echo "./cdf.sh --pull"
-  echo "./cdf.sh --up=development --root=ROOT"
-  echo "./cdf.sh --up=production  --root=ROOT"
+  echo "./cdf.sh --up=development [--root=ROOT]"
+  echo "./cdf.sh --up=production  [--root=ROOT]"
   echo "...or combined"
-  echo "./cdf.sh --clean --build --root=ROOT --up=development"
+  echo "./cdf.sh --clean --build --up=development [--root=ROOT]"
   echo
-}
-
-# - - - - - - - - - - - - - - - - - - - - - -
-
-function exit_if_no_root {
-  if [ -z "${ROOT}" ]; then
-    show_use
-    echo "--root=ROOT must be set"
-    exit
-  fi
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -129,6 +117,8 @@ if [  $# -eq 0 ]; then
   show_use
   exit
 fi
+
+ROOT=/usr/app/cyber-dojo
 
 for arg in "$@"
 do
