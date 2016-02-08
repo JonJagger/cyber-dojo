@@ -1,5 +1,5 @@
 
-A running cyber-dojo app comprises 7 docker containers, built from 7 images:
+A running cyber-dojo app comprises 6 docker containers, built from 6 images:
 (D = data container, R = regular container)
 
       nginx - (R) cache for web
@@ -8,7 +8,6 @@ A running cyber-dojo app comprises 7 docker containers, built from 7 images:
   exercises - (D) exercises config info, read-only
       katas - (D) practice sessions, read-write
        test - (D) read-write
-        tmp - (D) stores src files ready for the runner, read-write
 
 Each folder contains a build-docker-image.sh script which builds its
 image from its Dockerfile.

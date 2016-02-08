@@ -45,6 +45,11 @@ ENV EMPTY_DIRS \
 RUN mkdir $EMPTY_DIRS
 WORKDIR ${CYBER_DOJO_ROOT}
 
+# - - - - - - - - - - - - - - - - - - - - - -
+# scripts (mostly in test) are bash based
+
+RUN apk --update add bash
+
 EXPOSE 3000
 
 CMD [ "bash", "-c", "rails server" ]
