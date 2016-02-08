@@ -1,21 +1,19 @@
 #!/bin/bash
 
-cyberDojoHome=/var/www/cyber-dojo
-
 if [ "$#" -eq 0 ]; then
   echo
   echo '  How to use test_wrapper.sh'
   echo
   echo '  1. running specific tests in one folder'
-  echo "     $ cd $cyberDojoHome/test/app_model"
+  echo "     $ cd test/app_model"
   echo '     $ ./run.sh <ID*>'
   echo
   echo '  2. running all the tests in one folder'
-  echo "     $ cd $cyberDojoHome/test/app_model"
+  echo "     $ cd test/app_model"
   echo '     $ ./run.sh'
   echo
   echo '  3. running all the tests in all the folders'
-  echo "     $ cd $cyberDojoHome/test"
+  echo "     $ cd test"
   echo '     $ ./run.sh'
   echo
   exit
