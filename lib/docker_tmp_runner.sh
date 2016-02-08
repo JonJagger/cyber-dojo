@@ -16,7 +16,7 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # NB:
 # - the timeout call is in Ubuntu bash syntax *NOT* in Alpine sh syntax.
-# - the shell used is /bin/sh *not* /bin/bash
+# - the shell used is /bin/bash
 # - these decisions are deliberate and explained at length in
 #   languages/alpine_base/_docker_context/timeout
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -42,7 +42,7 @@ timeout --signal=${KILL} $((MAX_SECONDS+5))s \
     --volume=${FILES_PATH}:${SANDBOX}:rw \
     --workdir=${SANDBOX} \
     ${IMAGE_NAME} \
-    /bin/sh -c "timeout --signal=${KILL} $((MAX_SECONDS))s ./cyber-dojo.sh 2>&1" 2>/dev/null
+    /bin/bash -c "timeout --signal=${KILL} $((MAX_SECONDS))s ./cyber-dojo.sh 2>&1" 2>/dev/null
 
 EXIT_STATUS=$?
 

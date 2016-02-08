@@ -24,7 +24,7 @@ MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 RUN deluser xfs && adduser -G www-data -D -H -u 33 www-data
 
-# See comments in timeout script itself
+# See comments in timeout script
 COPY ./timeout /usr/local/bin
 RUN chmod +x /usr/local/bin/timeout
-
+RUN apk --update add bash
