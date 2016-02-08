@@ -1,13 +1,10 @@
 FROM alpine:3.2
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-# Old style servers run with user=www-data (33) inside apache.
-# New Alpine based images are run as www-data (33) so they will
-# work on old-style servers.
-#
-# For maximum compatibility the www-data user needs same uid on
-# o) apache server (33)
-# o) language images and web image (all based on alpine)
+# Need to run old style Ubuntu containers and new style Alpine
+# containers (at least while they are upgraded).
+# Old style Ubuntu containers ran as user=www-data (33).
+# So for compatibility new style Alpine containers have to too.
 #
 # On the Alpine base image there is already a user with uid=33
 # as revealed by [cat /etc/passwd]
@@ -26,9 +23,7 @@ MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 RUN deluser xfs && adduser -G www-data -D -H -u 33 www-data
 
-# Old style servers called docker run /bin/bash -c ...
-# so to maintain compatibility new images need to have bash
-# See comments for timeout.
+# TODO: DROP
 
 RUN apk --update add bash
 

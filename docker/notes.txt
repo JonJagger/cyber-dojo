@@ -58,6 +58,29 @@ So to maintain compatibility I need to
 2) use the adapter to convert --signal=9 (one arg) to -s 9 (two args)
 3) parse the s off 15s and 10s
 
+And there's more. Old style runner sh uses
+   rm --force
+   mktemp --tmpdir
+So I will need adapters for both of those too? Yes.
+Is it worth it? No.
+Should I just draw a line in the sand and say to upgrade servers.
+They would then build a dind (docker-in-docker) server, convert the
+katas folder to a katas data-container. But I'd still like to be able
+to release Alpine language containers up one at a time.
+That means old-style bash-based language images have to still
+work from the dind web server.
+Hmmm - do old style bash based language images also have sh?
+Yes they do.
+
+what about the language containers?
+Would they would be all right? inside the dind server they'd
+be using runner sh file that was alpine specific. It could
+ use sh
+ use -f  (not --force) short forms
+ use mktemp that worked on the dind web server
+ Only the final timeout call *inside* the language container
+ needs to work for bash
+
 
 
 

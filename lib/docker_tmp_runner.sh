@@ -18,10 +18,12 @@
 #  - the *process* reading the files is inside the language's docker-container.
 #    So the language's-container's view of USER could affect things.
 # To be sure you need all three to agree on USER {www-data (33)}
+#    See comments in languages/alpine_base/_docker_context/Dockerfile
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# NB: the timeout call is in Ubuntu syntax and *NOT* in Alpine syntax.
-# This is deliberate and is explained at length in
-#     languages/alpine_base/_docker_context/timeout
+# NB: 1. The timeout call is in Ubuntu bash syntax *NOT* in Alpine sh syntax.
+#     2. The shell used is /bin/sh *not* /bin/bash
+#     3. These decisions are deliberate and explained at length in
+#        languages/alpine_base/_docker_context/timeout
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 FILES_PATH=$1
@@ -33,6 +35,7 @@ CIDFILE=`mktemp`
 KILL=9
 SANDBOX=/sandbox
 
+# TODO: DOES THIS WORK INSIDE ALPINE? DOES IT NEED TO?
 setfacl -m group:${USER}:rwx ${FILES_PATH}
 
 rm -f ${CIDFILE}
@@ -45,7 +48,7 @@ timeout --signal=${KILL} $((MAX_SECONDS+5))s \
     --volume=${FILES_PATH}:${SANDBOX}:rw \
     --workdir=${SANDBOX} \
     ${IMAGE_NAME} \
-    /bin/bash -c "timeout --signal=${KILL} $((MAX_SECONDS))s ./cyber-dojo.sh 2>&1" #2>/dev/null
+    /bin/sh -c "timeout --signal=${KILL} $((MAX_SECONDS))s ./cyber-dojo.sh 2>&1" #2>/dev/null
 
 EXIT_STATUS=$?
 
