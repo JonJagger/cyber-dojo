@@ -11,25 +11,23 @@
 #     containers from Ubuntu to Alpine at the same time.
 #  2. I'm supporting running the old Ubuntu language containers
 #     from the new dind web server.
-#  3. I'm *not* supporting running new Alpine language containers
+#  3. I'm *also* supporting running new Alpine language containers
 #     from the old pre-dind web server.
 #  4. I don't want two sets of images in the cyberdojofoundation
 #     hub so the new language image names are unchanged.
-#  5. cyber-dojo.sh files needs to work when run in
+#  5. cyber-dojo.sh files need to work when run in
 #     o) bash in Ubuntu based containers
 #     o)   sh in Alpine based containers
 #     Note that cyber-dojo.sh files don't use a shebang.
 #
-# This means the runner .sh inside the dind web server has to
+# This means the runner's .sh inside the dind web server has to
 # work, at least for a while, with old style Ubuntu containers
 # and new style Alpine containers. This has two consequences:
 #
 # 1. Shell
 # --------
-# Alpine containers have sh not bash.
-# Ubuntu containers have sh and bash.
-# However, old style servers inner timeout (see below) uses
-# bash so I have to install bash into Alpine.
+# Old style servers inner timeout (see below) uses bash so
+# I have to install bash into Alpine.
 #
 # 2. Timeout
 # ----------
