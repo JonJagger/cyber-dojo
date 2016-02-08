@@ -1,19 +1,28 @@
 #!/usr/bin/env ruby
 
-#
-# Assuming the web container is called web_1 you can run this via
-#
-#   $ docker exec web_1 bash -c "./languages/list_all_images.rb"
-#
+# List all language+test's docker image name.
+# Run it inside a docker container supporting ruby (eg web)
+# with the languages data container mounted - this is what
+# the associated list_all_images.sh does.
 
 require 'json'
 
 cyber_dojo_root = File.expand_path('..', File.dirname(__FILE__))
 
-image_names = []
+image_names = {}
 Dir.glob("#{cyber_dojo_root}/languages/*/*/manifest.json") do |file|
   manifest = JSON.parse(IO.read(file))
-  image_names << (manifest['image_name'] + ' == ' + manifest['display_name'])
+  language_name, test_name = manifest['display_name'].split(',').map { |s| s.strip }
+  image_name = manifest['image_name']
+  image_names[language_name] ||= {}
+  image_names[language_name][test_name] = image_name
 end
 
-puts image_names.sort
+image_names.sort.map do |language_name,tests|
+  puts language_name
+  tests.sort.map do |name, image_name|
+    puts "  " + name + " -> " + image_name
+  end
+  puts
+end
+

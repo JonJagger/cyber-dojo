@@ -16,6 +16,7 @@ def print_and_run(command)
 end
 
 print_and_run build_docker_image_in("#{cyber_dojo_root}/languages/build-essential")
+# alpine_base
 
 Dir.glob("#{cyber_dojo_root}/languages/*/").sort.each do |language_dir|
   print_and_run(build_docker_image_in(language_dir))
