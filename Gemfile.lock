@@ -174,7 +174,6 @@ DEPENDENCIES
   json (>= 1.8.3)
   minitest (= 5.8.1)
   rails (= 4.1)
-  rake (= 10.4.2)
   rspec
   rspec-rails
   sass-rails (~> 4.0.3)

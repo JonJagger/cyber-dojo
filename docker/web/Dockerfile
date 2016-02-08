@@ -5,7 +5,7 @@ MAINTAINER Jon Jagger <jon@jaggersoft.com>
 # - - - - - - - - - - - - - - - - - - - - - -
 # install docker-client (see docker/docker-from-docker-readme.txt)
 # install ruby, ruby-bigdecimal, tzdata (for rails server)
-# install git and acl (for cyber-dojo)
+# install git (for cyber-dojo)
 
 RUN    apk --update add curl \
     && curl -O https://get.docker.com/builds/Linux/x86_64/docker-latest \
@@ -14,7 +14,7 @@ RUN    apk --update add curl \
     && apk del curl \
     && apk --update add \
           ruby ruby-bigdecimal tzdata \
-          git acl
+          git
 
 ARG CYBER_DOJO_ROOT
 

@@ -1,28 +1,10 @@
 #!/bin/bash
 
-# Alpine upgrade
-# --------------
-# The new architecture is docker-in-docker (dind). The web server
-# now runs in a docker container based on Alpine-linux and the
-# large Ubuntu based language images are being refactored to
-# smaller Alpine based images.
-#
-#  1. I don't want to have to upgrade *all* the language
-#     containers from Ubuntu to Alpine at the same time.
-#  2. I'm supporting running the old Ubuntu language containers
-#     from the new dind web server.
-#  3. I'm *also* supporting running new Alpine language containers
-#     from the old pre-dind web server.
-#  4. I don't want two sets of images in the cyberdojofoundation
-#     hub so the new language image names are unchanged.
-#  5. cyber-dojo.sh files need to work when run in
-#     o) bash in Ubuntu based containers
-#     o)   sh in Alpine based containers
-#     Note that cyber-dojo.sh files don't use a shebang.
-#
-# This means the runner's .sh inside the dind web server has to
+# The runner's .sh inside the dind web server has to
 # work, at least for a while, with old style Ubuntu containers
-# and new style Alpine containers. This has two consequences:
+# and new style Alpine containers.
+# See .../languages/alpine_base/_docker_context/Dockerfile
+# This has two consequences:
 #
 # 1. Shell
 # --------

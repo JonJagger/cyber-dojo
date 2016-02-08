@@ -1,24 +1,12 @@
 #!/bin/sh
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Called from lib/docker_tmp_runner.rb
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# cyber-dojo.sh needs permission to create files in its /sandbox
-# as user=www-data (33). In a docker-in-docker web-container...
-#  - the files *exist* in /sandbox but that's really /tmp/... which is on the host.
-#    So the hosts view of USER could affect things.
-#  - the process *running* setfacl is inside the web-container
-#    (its Dockerfile installs setfacl into Alpine)
-#    So the web-container's view of USER could affect things.
-#  - the *process* reading the files is inside the language's docker-container.
-#    So the language's-container's view of USER could affect things.
-# To be sure you need all three to agree on USER {www-data (33)}
-# See comments in languages/alpine_base/_docker_context/Dockerfile
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # NB:
 # - the timeout call is in Ubuntu bash syntax *NOT* in Alpine sh syntax.
 # - the shell used is /bin/bash
-# - these decisions are deliberate and explained at length in
-#   languages/alpine_base/_docker_context/timeout
+# These decisions are deliberate and explained at length in
+# .../languages/alpine_base/_docker_context/timeout
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 FILES_PATH=$1
@@ -29,8 +17,6 @@ USER=www-data
 CIDFILE=`mktemp`
 KILL=9
 SANDBOX=/sandbox
-
-setfacl -m group:${USER}:rwx ${FILES_PATH}
 
 rm -f ${CIDFILE}
 
@@ -99,6 +85,6 @@ exit ${EXIT_STATUS}
 #
 #   Thus /tmp must exist on the *host* and be volume mounted into the web-container
 #   and then this script (run from inside the web-container) itself volume mounts
-#   an isolated sub-folder of /tmp.
+#   an *isolated* sub-folder of /tmp.
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
