@@ -22,21 +22,17 @@ module Runner # mix-in
     dir = disk[tmp_path]
     dir.make
     files.each { |filename, content| dir.write(filename, content) }
-    shell.exec("chown -R #{user}:#{user} #{tmp_path}")
   end
 
   def unique_tmp_path
+    # Relies on the web-container volume-mounting /tmp
+    # See docker/docker-compose.yml
     uuid = Array.new(10) { hex_chars.sample }.shuffle.join
     '/tmp/cyber-dojo-' + uuid + '/'
   end
 
   def hex_chars
     "0123456789ABCDEF".split(//)
-  end
-
-  def user
-    # see comments in languages/alpine_base/_docker_context/Dockerfile
-    'www-data'
   end
 
   include StringCleaner

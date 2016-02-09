@@ -1,4 +1,6 @@
 
+# used by docker_tmp_runner.rb and docker_katas_runner.rb
+
 module DockerRunner # mixin
 
   def path
@@ -19,6 +21,8 @@ module DockerRunner # mixin
     # then [docker images] must be made by a user that has sufficient rights.
     # The default user is root, but this can be altered in the Dockerfile.
     output, _ = shell.exec('docker images')
+    # This will put all image names (eg alpine_base) into the runner cache,
+    # even base image names such as alpine_base. This is harmless.
     lines = output.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
     lines.collect { |line| line.split[0] }
   end

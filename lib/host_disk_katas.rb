@@ -154,6 +154,8 @@ class HostDiskKatas
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
   def sandbox_save(sandbox, delta, files)
+    # Unchanged files are *not* re-saved.
+    # lib/docker_katas_runner.rb relies on this.
     delta[:deleted].each do |filename|
       git.rm(path_of(sandbox), filename)
     end
@@ -288,9 +290,14 @@ end
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # An alternative implementation could save the manifest containing
 # the visible files for each test to a database. Then, to get a
-# git diff it could create a temporary git repository, save the
-# files from was_tag to it, tag and commit, save the files from
-# now_tag to it, tag and commit, then do a diff.
+# git diff it could
+#    o) create a temporary git repository
+#    o) save the files from was_tag to it
+#    o) git tag and git commit
+#    o) save the files from now_tag to it
+#    o) git tag and git commit
+#    o) do a git diff
+#    o) delete the temporary git repository
 # There is probably a library to do this in ram bypassing
 # the need for a file-system completely.
 # This would make creation of the tar file for

@@ -41,7 +41,7 @@ class DockerMachineRunner
     node = node_map[image_name].sample
     args = [ node, tmp_path, image_name, max_seconds ].join(space = ' ')
     output, exit_status = shell.cd_exec(path, sudo("./docker_machine_runner.sh #{args}"));
-    fork { shell.exec("rm -rf #{tmp_path}") }
+    shell.exec("rm -rf #{tmp_path}")
     output_or_timed_out(output, exit_status, max_seconds)
   end
 

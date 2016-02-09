@@ -2,21 +2,16 @@
 # test runner providing isolation/protection/security
 # via docker-run images https://www.docker.io/
 #
-# Saves the incoming files off .../katas/ and then relies
-# on the associated .sh file to do a [docker run] command
-# which volume mounts the .../katas/ sub-folder.
-#
-# o) Each test saves the visible-files to the *same* katas sub-folder.
+# o) Each test saves *changed* files to the avatar's katas/... sub-folder.
 # o) State *is* retained across tests.
 # o) Untouched files retain the *same* date-time stamp.
 # o) cyber-dojo.sh *can* do incremental makes.
-# o) Horizontal scaling of this runner *is* tied to HostDiskKatas.
+# o) Horizontal scaling of this runner *is* tied to katas/....
 
 class DockerKatasRunner
 
   def initialize(dojo)
     @dojo = dojo
-    raise "sorry can't do that" if katas.class.name != 'HostDiskKatas'
     caches.write_json_once(cache_filename) { make_cache }
   end
 
@@ -31,7 +26,9 @@ class DockerKatasRunner
   def run(id, name, delta, files, image_name, max_seconds)
     sandbox = katas[id].avatars[name].sandbox
     katas.sandbox_save(sandbox, delta, files)
-    args = [ katas.path_of(sandbox), image_name, max_seconds ].join(space = ' ')
+    katas_sandbox_path = katas.path_of(sandbox)
+    shell.exec("chown -R #{user}:#{user} #{katas_sandbox_path}")
+    args = [ katas_sandbox_path, image_name, max_seconds, user ].join(space = ' ')
     output, exit_status = shell.cd_exec(path, "./docker_runner.sh #{args}")
     output_or_timed_out(output, exit_status, max_seconds)
   end
@@ -39,5 +36,10 @@ class DockerKatasRunner
   private
 
   include DockerRunner
+
+  def user
+    # see comments in languages/alpine_base/_docker_context/Dockerfile
+    'www-data'
+  end
 
 end

@@ -7,7 +7,7 @@ IMAGES=(nginx web)
 # - - - - - - - - - - - - - - - - - - - - - -
 
 function clean {
-  # remove containers (but not katas)
+  # remove containers
   for IMAGE in ${IMAGES[*]}
   do
     docker ps -a \
@@ -32,8 +32,6 @@ function reset {
 # - - - - - - - - - - - - - - - - - - - - - -
 
 function build {
-  # Assumes Dockerfiles are in their github cyber-dojo repo folders.
-  # build images (+katas) from Dockerfiles
   pushd ${MY_DIR} > /dev/null
   for IMAGE in ${IMAGES[*]}
   do

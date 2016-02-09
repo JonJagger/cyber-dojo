@@ -3,7 +3,10 @@
 # such as this one, but *not* in env_file:'s
 # Since I use variable-substitution in my ROOT environment
 # variables I don't use an env_file:
-
+#
+# I originally used a data-container for tmp/
+# However, in the avatar's test docker-run I could not find a way
+# to limit access only to its sub-folder of tmp/.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 nginx:
@@ -22,7 +25,7 @@ web:
     - CYBER_DOJO_EXERCISES_ROOT=${CYBER_DOJO_ROOT}/exercises
     - CYBER_DOJO_CACHES_ROOT=${CYBER_DOJO_ROOT}/caches
     - CYBER_DOJO_KATAS_ROOT=${CYBER_DOJO_ROOT}/katas
-    - CYBER_DOJO_RUNNER_CLASS=DockerTmpRunner
+    - CYBER_DOJO_RUNNER_CLASS=DockerKatasRunner
     - CYBER_DOJO_KATAS_CLASS=HostDiskKatas
     - CYBER_DOJO_SHELL_CLASS=HostShell
     - CYBER_DOJO_DISK_CLASS=HostDisk
