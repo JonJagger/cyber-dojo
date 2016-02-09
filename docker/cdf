@@ -14,24 +14,24 @@ KATAS=/usr/app/cyber-dojo/katas
 RAILS_ENV=${RAILS_ENV_DEFAULT}
 RUNNER=${RUNNER_DEFAULT}
 
-# - - - - - - - - - - - - - - - - - - - - - -
-
 ME="$(basename $0)"
+
+# - - - - - - - - - - - - - - - - - - - - - -
 
 function show_use {
   echo "Usage: ${ME} COMMAND..."
   echo "       ${ME} help"
   echo
-  echo "Eg: ${ME} build up"
-  echo
   echo 'Commands:'
-  echo '    build                  build cyber-dojo server images'
-  echo '    pull                   pull cyber-dojo server images from hub'
-  echo '    push                   push cyber-dojo server images to hub'
-  echo '    rm                     remove cyber-dojo server containers'
-  echo '    rmi                    remove cyber-dojo server images'
-  echo '    test [PATH] [ARG...]   run PATH tests inside cyber-dojo container'
-  echo '    up [OPTIONS]           bring up cyber-dojo server'
+  echo '    bash                   Shell into cyber-dojo server container'
+  echo '    build                  Build cyber-dojo server images'
+ #echo '    exec COMMAND...        Exec a command in cyber-dojo server container'
+  echo '    pull                   Pull cyber-dojo server images from hub'
+  echo '    push                   Push cyber-dojo server images to hub'
+  echo '    rm                     Remove cyber-dojo server containers'
+  echo '    rmi                    Remove cyber-dojo server images'
+ #echo '    test [PATH] [ARG...]   Run PATH tests inside cyber-dojo container'
+  echo '    up [OPTIONS]           Bring up cyber-dojo server'
   echo
   echo 'Options:'
   echo "    katas=PATH (default=${KATAS})"
@@ -39,25 +39,69 @@ function show_use {
   echo "    runner=[DockerTmpRunner|DockerKatasRunner] (default=${RUNNER_DEFAULT})"
 }
 
-function exit_if_bad_rails_env {
-  if [ "${RAILS_ENV}" != 'development' ] && [ "${RAILS_ENV}" != 'production' ]; then
-    echo "??? rails_env=${RAILS_ENV}"
-    show_use
-    exit
-  fi
-}
-
 function exit_if_bad_katas {
   # TODO: check katas folder exists
   true
 }
 
-function exit_if_bad_runner {
-  if [ "${RUNNER}" != 'DockerTmpRunner' ] && [ "${RUNNER}" != 'DockerKatasRunner' ]; then
-    echo "??? runner=${RUNNER}"
-    show_use
+function exit_if_bad_rails_env {
+  if [ "${RAILS_ENV}" != 'development' ] && [ "${RAILS_ENV}" != 'production' ]; then
+    echo "${ME} rails_env=${RAILS_ENV} ?"
+    echo "See ${ME} help"
     exit
   fi
+}
+
+function exit_if_bad_runner {
+  if [ "${RUNNER}" != 'DockerTmpRunner' ] && [ "${RUNNER}" != 'DockerKatasRunner' ]; then
+    echo "${ME} runner=${RUNNER} ?"
+    echo "See ${ME} help"
+    exit
+  fi
+}
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
+function bash {
+  docker run --rm -it ${HUB}/web bash
+}
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
+function build {
+  pushd ${MY_DIR} > /dev/null
+  for IMAGE in ${IMAGES[*]}
+  do
+    echo ${IMAGE}
+    ./${IMAGE}/build-docker-image.sh ${HOME}
+    if [ $? -ne 0 ]; then
+      echo "BUILDING ${HUB}/${IMAGE} FAILED"
+      exit
+    fi
+  done
+  popd > /dev/null
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+function pull {
+  for IMAGE in ${IMAGES[*]}
+  do
+    echo "---------------------------------------"
+    echo "PULLING: ${HUB}/${IMAGE}"
+    docker pull ${HUB}/${IMAGE}
+  done
+}
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
+function push {
+  for IMAGE in ${IMAGES[*]}
+  do
+    echo "---------------------------------------"
+    echo "PUSHING: ${HUB}/${IMAGE}"
+    docker push ${HUB}/${IMAGE}
+  done
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -85,57 +129,19 @@ function rmi {
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function build {
-  pushd ${MY_DIR} > /dev/null
-  for IMAGE in ${IMAGES[*]}
-  do
-    echo ${IMAGE}
-    ./${IMAGE}/build-docker-image.sh ${HOME}
-    if [ $? -ne 0 ]; then
-      echo "BUILDING ${HUB}/${IMAGE} FAILED"
-      exit
-    fi
-  done
-  popd > /dev/null
-}
-
-# - - - - - - - - - - - - - - - - - - - - - -
-
-function push {
-  for IMAGE in ${IMAGES[*]}
-  do
-    echo "---------------------------------------"
-    echo "PUSHING: ${HUB}/${IMAGE}"
-    docker push ${HUB}/${IMAGE}
-  done
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-function pull {
-  for IMAGE in ${IMAGES[*]}
-  do
-    echo "---------------------------------------"
-    echo "PULLING: ${HUB}/${IMAGE}"
-    docker pull ${HUB}/${IMAGE}
-  done
+function test {
+  # After [up] tests can be run *inside* the container, eg
+  # $ docker exec web_1 bash -c "cd test/app_models && ./test_dojo.rb"
+  # TODO:
+  true
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
 function up {
-  # After [up] tests can be run *inside* the container, eg
-  # $ docker exec web_1 bash -c "cd test/app_models && ./test_dojo.rb"
   pushd ${MY_DIR} > /dev/null
   ./cyber-dojo up rails_env=${RAILS_ENV} katas=${KATAS} runner=${RUNNER}
   popd > /dev/null
-}
-
-# - - - - - - - - - - - - - - - - - - - - - -
-
-function test {
-
-
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -152,34 +158,40 @@ do
       show_use
       exit
       ;;
-    rmi)
-      doRmi=true
-      ;;
-    rm)
-      doRm=true
+    bash)
+      doBash=true
       ;;
     build)
       doBuild=true
       ;;
-    push)
-      doPush=true
-      ;;
+    #exec)
+    #  doExec=true
+    #  ;;
     pull)
       doPull=true
       ;;
+    push)
+      doPush=true
+      ;;
+    rm)
+      doRm=true
+      ;;
+    rmi)
+      doRmi=true
+      ;;
+    #test)
+    #  doTest=true
+    #  ;;
     up)
       doUp=true
-      ;;
-    test)
-      doTest=true
-      ;;
-    rails_env=*)
-      RAILS_ENV="${arg#*=}"
-      exit_if_bad_rails_env
       ;;
     katas=*)
       KATAS="${arg#*=}"
       exit_if_bad_katas
+      ;;
+    rails_env=*)
+      RAILS_ENV="${arg#*=}"
+      exit_if_bad_rails_env
       ;;
     runner=*)
       RUNNER="${arg#*=}"
@@ -193,16 +205,17 @@ do
   esac
 done
 
+if [ "$doBash" == true ]; then bash; exit; fi
+#if [ "$doExec" == true ]; then exec; exit; fi
+if [ "$doPull" == true ]; then pull; exit; fi
+if [ "$doPush" == true ]; then push; exit; fi
+
 # - - - - - - - - - - - - - - - - - - - - - -
 # Do in sensible order...
 
 if [ "$doRm"    == true ]; then rm   ; fi
-if [ "$doRmi"   == true ]; then rm  i; fi
-
-if [ "$doPull"  == true ]; then pull ; fi
+if [ "$doRmi"   == true ]; then rmi  ; fi
 if [ "$doBuild" == true ]; then build; fi
-
 if [ "$doUp"    == true ]; then up   ; fi
-if [ "$doTest"  == true ]; then test ; fi
+#if [ "$doTest"  == true ]; then test ; fi
 
-if [ "$doPush"  == true ]; then push ; fi

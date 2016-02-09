@@ -14,20 +14,20 @@ KATAS=/usr/app/cyber-dojo/katas
 RAILS_ENV=${RAILS_ENV_DEFAULT}
 RUNNER=${RUNNER_DEFAULT}
 
-# - - - - - - - - - - - - - - - - - - - - - -
-
 ME="$(basename $0)"
+
+# - - - - - - - - - - - - - - - - - - - - - -
 
 function show_use {
   echo "Usage: ${ME} COMMAND"
   echo "       ${ME} help"
   echo
   echo 'Commands:'
-  echo '    bootstrap         pull common language images and bring up'
-  echo '    latest            pull latest pulled language images'
-  echo '    ls                list all cyber-dojo language images'
-  echo '    pull=IMAGE        pull cyber-dojo language IMAGE'
-  echo '    up [OPTIONS]      bring up cyber-dojo server'
+  echo '    bootstrap         Pull common language images and bring up'
+  echo '    latest            Pull latest language images'
+  echo '    ls                List all cyber-dojo language images'
+  echo '    pull=IMAGE        Pull cyber-dojo language IMAGE'
+  echo '    up [OPTIONS]      Bring up cyber-dojo server'
   echo
   echo 'Options:'
   echo "    katas=PATH (default=${KATAS})"
