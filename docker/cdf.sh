@@ -4,6 +4,66 @@ MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 HUB=cyberdojofoundation
 IMAGES=(nginx web)
 
+HOME=/usr/app/cyber-dojo          # the rails home folder inside web-image
+
+# defaults
+RAILS_ENV_DEFAULT=development
+RUNNER_DEFAULT=DockerTmpRunner
+
+KATAS=/usr/app/cyber-dojo/katas
+RAILS_ENV=${RAILS_ENV_DEFAULT}
+RUNNER=${RUNNER_DEFAULT}
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
+ME="$(basename $0)"
+
+function show_use {
+  echo "#"
+  echo "# ${ME} [clean | reset | build | push | pull]"
+  echo "# ${ME} up DEFAULTS"
+  echo "#"
+  echo "# DEFAULTS"
+  echo "# katas=${KATAS}"
+  echo "# rails_env=${RAILS_ENV_DEFAULT}"
+  echo "# runner=${RUNNER_DEFAULT}"
+  echo "#"
+  echo "# OPTIONS"
+  echo "# rails_env=production"
+  echo "# runner=DockerKatasRunner"
+  echo ""
+}
+
+function exit_if_bad_rails_env {
+  if [ "${RAILS_ENV}" != 'development' ] && [ "${RAILS_ENV}" != 'production' ]; then
+    echo "# ??? rails_env=${RAILS_ENV}"
+    echo "# ${ME} rails_env=development"
+    echo "# ${ME} rails_env=production"
+    show_use
+    exit
+  fi
+}
+
+function exit_if_bad_katas {
+  # TODO: check katas folder exists
+  true
+}
+
+function exit_if_bad_runner {
+  if [ "${RUNNER}" != 'DockerTmpRunner' ] && [ "${RUNNER}" != 'DockerKatasRunner' ]; then
+    echo "# ??? runner=${RUNNER}"
+    echo "# ${ME} runner=development"
+    echo "# ${ME} runner=production"
+    show_use
+    exit
+  fi
+}
+
+if [  $# -eq 0 ]; then
+  show_use
+  exit
+fi
+
 # - - - - - - - - - - - - - - - - - - - - - -
 
 function clean {
@@ -36,7 +96,7 @@ function build {
   for IMAGE in ${IMAGES[*]}
   do
     echo ${IMAGE}
-    ./${IMAGE}/build-docker-image.sh ${ROOT}
+    ./${IMAGE}/build-docker-image.sh ${HOME}
     if [ $? -ne 0 ]; then
       echo "BUILDING ${HUB}/${IMAGE} FAILED"
       exit
@@ -70,77 +130,47 @@ function pull {
 # - - - - - - - - - - - - - - - - - - - - - -
 
 function up {
-  # Assumes yml files are in their github cyber-dojo repo folders.
   # After [up] tests can be run *inside* the container, eg
   # $ docker exec web_1 bash -c "cd test/app_models && ./test_dojo.rb"
-  exit_if_bad_up
   pushd ${MY_DIR} > /dev/null
-  export CYBER_DOJO_ROOT=${ROOT}
-  export CYBER_DOJO_UP=${UP}
-  docker-compose \
-    --file=./docker-compose.yml \
-    up &
+  ./cyber-dojo-up.sh --rails_env=${RAILS_ENV} --home=${HOME} --katas=${KATAS} --runner=${RUNNER}
   popd > /dev/null
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function show_use {
-  echo "./cdf.sh --clean"
-  echo "./cdf.sh --reset"
-  echo "./cdf.sh --build [--root=ROOT]"
-  echo "./cdf.sh --push"
-  echo "./cdf.sh --pull"
-  echo "./cdf.sh --up=development [--root=ROOT]"
-  echo "./cdf.sh --up=production  [--root=ROOT]"
-  echo "...or combined"
-  echo "./cdf.sh --clean --build --up=development [--root=ROOT]"
-  echo
-}
-
-# - - - - - - - - - - - - - - - - - - - - - -
-
-function exit_if_bad_up {
-  if [ "${UP}" != "development" ] && [ "${UP}" != "production" ]; then
-    show_use
-    echo "--up=development OR --up=production"
-    exit
-  fi
-}
-
-# - - - - - - - - - - - - - - - - - - - - - -
-
-if [  $# -eq 0 ]; then
-  show_use
-  exit
-fi
-
-ROOT=/usr/app/cyber-dojo
-
 for arg in "$@"
 do
   case ${arg} in
-    --root=*)
-      ROOT="${arg#*=}"
-      ;;
-    --reset)
+    reset)
       doReset=true
       ;;
-    --clean)
+    clean)
       doClean=true
       ;;
-    --build)
+    build)
       doBuild=true
       ;;
-    --up=*)
-      UP="${arg#*=}"
-      doUp=true
-      ;;
-    --push)
+    push)
       doPush=true
       ;;
-    --pull)
+    pull)
       doPull=true
+      ;;
+    up)
+      doUp=true
+      ;;
+    rails_env=*)
+      RAILS_ENV="${arg#*=}"
+      exit_if_bad_rails_env
+      ;;
+    katas=*)
+      KATAS="${arg#*=}"
+      exit_if_bad_katas
+      ;;
+    runner=*)
+      RUNNER="${arg#*=}"
+      exit_if_bad_runner
       ;;
     *)
       show_use

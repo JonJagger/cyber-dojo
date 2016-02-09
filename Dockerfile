@@ -16,13 +16,13 @@ RUN    apk --update add curl \
           ruby ruby-bigdecimal tzdata \
           git
 
-ARG CYBER_DOJO_ROOT
+ARG CYBER_DOJO_HOME
 
 # - - - - - - - - - - - - - - - - - - - - - -
 # bundle install from cyber-dojo's Gemfile
 
-RUN  mkdir -p     ${CYBER_DOJO_ROOT}
-COPY Gemfile      ${CYBER_DOJO_ROOT}
+RUN  mkdir -p     ${CYBER_DOJO_HOME}
+COPY Gemfile      ${CYBER_DOJO_HOME}
 RUN apk --update add --virtual build-dependencies \
       build-base \
       ruby-dev \
@@ -31,19 +31,19 @@ RUN apk --update add --virtual build-dependencies \
       libc-dev \
       linux-headers \
     && gem install bundler --no-ri --no-rdoc \
-    && cd ${CYBER_DOJO_ROOT} ; bundle install --without development test \
+    && cd ${CYBER_DOJO_HOME} ; bundle install --without development test \
     && apk del build-dependencies
 
 # - - - - - - - - - - - - - - - - - - - - - -
 # copy cyber-dojo rails app
 
-COPY . ${CYBER_DOJO_ROOT}
+COPY . ${CYBER_DOJO_HOME}
 ENV EMPTY_DIRS \
-    ${CYBER_DOJO_ROOT}/caches \
-    ${CYBER_DOJO_ROOT}/log \
-    ${CYBER_DOJO_ROOT}/tmp
+    ${CYBER_DOJO_HOME}/caches \
+    ${CYBER_DOJO_HOME}/log \
+    ${CYBER_DOJO_HOME}/tmp
 RUN mkdir $EMPTY_DIRS
-WORKDIR ${CYBER_DOJO_ROOT}
+WORKDIR ${CYBER_DOJO_HOME}
 
 EXPOSE 3000
 

@@ -4,21 +4,24 @@ BRANCH=$1
 OS=$2
 # TODO: validate $1
 
-FILES=(docker-compose.yml)
-# TODO: FILES+=(installing-more-languages-readme.txt)
-for FILE in ${FILES[*]}
-do
-  curl -O ${BRANCH}/${FILE}
-done
+FILE=docker-compose.yml
+curl -O ${BRANCH}/${FILE}
 
-SCRIPTS=(install-docker-on-${OS}.sh)
-#SCRIPTS+=(move-katas-folder.sh)
-SCRIPTS+=(docker-pull-common-languages.sh)
-SCRIPTS+=(cyber-dojo-up.sh)
+# TODO: FILE=installing-more-languages-readme.txt
 
-for SCRIPT in ${SCRIPTS[*]}
-do
-  curl -O ${BRANCH}/${SCRIPT}
-  chmod +x ${SCRIPT}
-  ./${SCRIPT}
-done
+SCRIPT=install-docker-on-${OS}.sh
+curl -O ${BRANCH}/${SCRIPT}
+chmod +x ${SCRIPT}
+./${SCRIPT}
+
+SCRIPT=docker-pull-common-languages.sh
+curl -O ${BRANCH}/${SCRIPT}
+chmod +x ${SCRIPT}
+./${SCRIPT}
+
+SCRIPT=cyber-dojo-up.sh
+curl -O ${BRANCH}/${SCRIPT}
+chmod +x ${SCRIPT}
+
+# Put info on making this call on the blog page
+#./${SCRIPT} --katas=....
