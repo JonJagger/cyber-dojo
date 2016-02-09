@@ -38,11 +38,11 @@ RUN apk --update add --virtual build-dependencies \
 # copy cyber-dojo rails app
 
 COPY . ${CYBER_DOJO_HOME}
-ENV EMPTY_DIRS \
+RUN mkdir \
     ${CYBER_DOJO_HOME}/caches \
     ${CYBER_DOJO_HOME}/log \
     ${CYBER_DOJO_HOME}/tmp
-RUN mkdir $EMPTY_DIRS
+
 WORKDIR ${CYBER_DOJO_HOME}
 
 EXPOSE 3000

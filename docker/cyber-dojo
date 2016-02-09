@@ -1,6 +1,10 @@
 #!/bin/bash
 
-HOME=/usr/app/cyber-dojo
+# TODO: check docker installed
+# TODO: check docker-compose is installed
+
+HOME=/usr/app/cyber-dojo          # home folder inside the web-image
+HUB=cyberdojofoundation           # docker hub username
 
 # defaults
 RAILS_ENV_DEFAULT=production
@@ -12,34 +16,28 @@ RUNNER=${RUNNER_DEFAULT}
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-USE="USE: $(basename $0)"
+ME="$(basename $0)"
 
 function show_use {
-  echo "#"
-  echo "# ${USE} [help]"
-  echo "# ${USE} up DEFAULTS"
-  echo "# ${USE} clean"
-  echo "# ${USE} list"
-  echo "# ${USE} update"
-  echo "# ${USE} pull=IMAGE"
-  echo "#"
-  echo "# DEFAULTS"
-  echo "# katas=${KATAS}"
-  echo "# rails_env=${RAILS_ENV_DEFAULT}"
-  echo "# runner=${RUNNER_DEFAULT}"
-  echo "#"
-  echo "# OPTIONS"
-  echo "# rails_env=development"
-  echo "# runner=DockerKatasRunner"
-  echo ""
+  echo "Usage: ${ME} COMMAND"
+  echo "       ${ME} help"
+  echo
+  echo 'Commands:'
+  echo '    latest            pull latest pulled language images'
+  echo '    ls                list all cyber-dojo language images'
+  echo '    pull=IMAGE        pull cyber-dojo language IMAGE'
+  echo '    up [OPTIONS]      bring up cyber-dojo server'
+  echo
+  echo 'Options:'
+  echo "    katas=PATH (default=${KATAS})"
+  echo "    rails_env=[development|production] (default=${RAILS_ENV_DEFAULT})"
+  echo "    runner=[DockerTmpRunner|DockerKatasRunner] (default=${RUNNER_DEFAULT})"
 }
 
 function exit_if_bad_rails_env {
   if [ "${RAILS_ENV}" != 'development' ] && [ "${RAILS_ENV}" != 'production' ]; then
-    echo "# ??? rails_env=${RAILS_ENV}"
-    echo "# ${USE} rails_env=development"
-    echo "# ${USE} rails_env=production"
-    show_use
+    echo "${ME}: rails_env=${RAILS_ENV} ?"
+    echo "See ${ME} help"
     exit
   fi
 }
@@ -51,18 +49,45 @@ function exit_if_bad_katas {
 
 function exit_if_bad_runner {
   if [ "${RUNNER}" != 'DockerTmpRunner' ] && [ "${RUNNER}" != 'DockerKatasRunner' ]; then
-    echo "# ??? runner=${RUNNER}"
-    echo "# ${USE} runner=development"
-    echo "# ${USE} runner=production"
-    show_use
+    echo "${ME}: runner=${RUNNER} ?"
+    echo "See ${ME} help"
     exit
   fi
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
+function list_all_language_images {
+  docker run --rm ${HUB}/web bash -c "./languages/list_all_images.rb"
+}
+
+function ls {
+  list_all_language_images
+}
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
+function pull {
+  docker pull ${HUB}/${IMAGE}
+}
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
+function latest {
+  ALL_LANGUAGE_IMAGES=`list_all_language_images | awk '{print $NF}' | sort`
+  PULLED_IMAGES=`docker images | grep ${HUB} | awk '{print $1}'`
+  SPLIT=${PULLED_IMAGES//\/// }
+  PULLED_IMAGES=`echo "${SPLIT}" | awk '{print $NF}' | sort`
+  PULLED_LANGUAGE_IMAGES=`comm -12 <(echo "${ALL_LANGUAGE_IMAGES}") <(echo "${PULLED_IMAGES}")`
+  for IMAGE in ${PULLED_LANGUAGE_IMAGES[*]}
+  do
+    pull ${IMAGE}
+  done
+}
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
 function up {
-  # check docker-compose is installed?
   export CYBER_DOJO_RAILS_ENV=${RAILS_ENV}
   export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/languages
   export CYBER_DOJO_EXERCISES_ROOT=${HOME}/exercises
@@ -76,17 +101,11 @@ function up {
   export CYBER_DOJO_GIT_CLASS=HostGit
   DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
   pushd ${DIR} > /dev/null
+  # TODO: curl download docker-compose.yml
   docker-compose \
     --file=./docker-compose.yml \
     up &
   popd > /dev/null
-}
-
-# - - - - - - - - - - - - - - - - - - - - - -
-
-function list {
-  #check docker installed?
-  docker run --rm cyberdojofoundation/web bash -c "./languages/list_all_images.rb"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -103,16 +122,18 @@ do
       show_use
       exit
       ;;
+    ls)
+      doLs=true
+      ;;
+    latest)
+      doLatest=true
+      ;;
+    pull=*)
+      IMAGE="${arg#*=}"
+      doPull=true
+      ;;
     up)
       doUp=true
-      ;;
-    list)
-      doList=true
-      ;;
-    #pull) # =*
-    #  ;;
-    home=*)
-      HOME="${arg#*=}"
       ;;
     katas=*)
       KATAS="${arg#*=}"
@@ -127,8 +148,8 @@ do
       exit_if_bad_rails_env
       ;;
     *)
-      echo "# <${arg}> ?"
-      show_use
+      echo "${ME}: ${arg} ?"
+      echo "See '${ME} help"
       exit
       ;;
   esac
@@ -136,7 +157,8 @@ done
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-if [ "$doUp"   == true ]; then   up; fi
-if [ "$doList" == true ]; then list; fi
-
+if [ "$doLs"     == true ]; then     ls; exit; fi
+if [ "$doPull"   == true ]; then   pull; exit; fi
+if [ "$doLatest" == true ]; then latest; exit; fi
+if [ "$doUp"     == true ]; then     up; exit; fi
 

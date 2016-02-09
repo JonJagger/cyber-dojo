@@ -7,28 +7,41 @@
 
 require 'json'
 
-cyber_dojo_root = File.expand_path('..', File.dirname(__FILE__))
+cyber_dojo_home = File.expand_path('..', File.dirname(__FILE__))
 
-longest_test_name=""
+$longest_test=""
+$longest_language=""
 
-image_names = {}
-Dir.glob("#{cyber_dojo_root}/languages/*/*/manifest.json") do |file|
-  manifest = JSON.parse(IO.read(file))
-  language_name, test_name = manifest['display_name'].split(',').map { |s| s.strip }
-  longest_test_name = test_name if test_name.size > longest_test_name.size
-  full_image_name = manifest['image_name']
-  image_name=full_image_name.split('/')[1].strip
-  image_names[language_name] ||= {}
-  image_names[language_name][test_name] = image_name
+def max_size(lhs, rhs)
+  lhs.size > rhs.size ? lhs : rhs
 end
 
-puts "#"
-image_names.sort.map do |language_name,tests|
-  puts "# #{language_name}"
-  tests.sort.map do |name, image_name|
-    dots = '.' * (longest_test_name.size - name.size)
-    puts '#   ' + dots + ' ' + name + ' -> ' + image_name
+images = {}
+Dir.glob("#{cyber_dojo_home}/languages/*/*/manifest.json") do |file|
+  manifest = JSON.parse(IO.read(file))
+  language, test = manifest['display_name'].split(',').map { |s| s.strip }
+  $longest_language = max_size($longest_language, language)
+  $longest_test = max_size($longest_test, test)
+  image=manifest['image_name'].split('/')[1].strip
+  images[language] ||= {}
+  images[language][test] = image
+end
+
+def spacer(longest, name)
+  ' ' * (longest.size - name.size)
+end
+
+def show(language, test, image)
+  language_spacer = spacer($longest_language, language)
+  test_spacer = spacer($longest_test, test)
+  spacer = ' ' * 5
+  puts language + language_spacer + spacer + test + test_spacer + spacer + image
+end
+
+show('LANGUAGE', 'TESTS', 'IMAGE')
+images.sort.map do |language,tests|
+  tests.sort.map do |test, image|
+    show(language, test, image)
   end
 end
-puts "#"
 
