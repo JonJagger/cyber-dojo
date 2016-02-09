@@ -23,6 +23,7 @@ function show_use {
   echo "# ${USE} help"
   echo "# ${USE} [clean | reset | build | push | pull]"
   echo "# ${USE} up DEFAULTS"
+# echo "# ${USE} test PATH ARGS"
   echo "#"
   echo "# DEFAULTS"
   echo "# katas=${KATAS}"
