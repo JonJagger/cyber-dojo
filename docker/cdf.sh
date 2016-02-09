@@ -133,7 +133,7 @@ function up {
   # After [up] tests can be run *inside* the container, eg
   # $ docker exec web_1 bash -c "cd test/app_models && ./test_dojo.rb"
   pushd ${MY_DIR} > /dev/null
-  ./cyber-dojo-up.sh --rails_env=${RAILS_ENV} --home=${HOME} --katas=${KATAS} --runner=${RUNNER}
+  ./cyber-dojo-up.sh rails_env=${RAILS_ENV} home=${HOME} katas=${KATAS} runner=${RUNNER}
   popd > /dev/null
 }
 
