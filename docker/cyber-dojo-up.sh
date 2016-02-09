@@ -16,7 +16,7 @@ ME="$(basename $0)"
 
 function show_use {
   echo "#"
-  echo "# ${ME} DEFAULTS"
+  echo "# ${ME} [help] DEFAULTS"
   echo "#"
   echo "# DEFAULTS"
   echo "# katas=${KATAS}"
@@ -59,6 +59,10 @@ function exit_if_bad_runner {
 for arg in "$@"
 do
   case ${arg} in
+    help)
+      show_use
+      exit
+      ;;
     home=*)
       HOME="${arg#*=}"
       ;;
@@ -75,8 +79,8 @@ do
       exit_if_bad_rails_env
       ;;
     *)
+      echo "# <${arg}> ?"
       show_use
-      echo "unknown command line argument ${arg}"
       exit
       ;;
   esac

@@ -20,6 +20,7 @@ ME="$(basename $0)"
 
 function show_use {
   echo "#"
+  echo "# ${ME} help"
   echo "# ${ME} [clean | reset | build | push | pull]"
   echo "# ${ME} up DEFAULTS"
   echo "#"
@@ -142,6 +143,10 @@ function up {
 for arg in "$@"
 do
   case ${arg} in
+    help)
+      show_use
+      exit
+      ;;
     reset)
       doReset=true
       ;;
@@ -173,8 +178,8 @@ do
       exit_if_bad_runner
       ;;
     *)
+      echo "# <${arg}> ?"
       show_use
-      echo "unknown command line argument ${arg}"
       exit
       ;;
   esac
