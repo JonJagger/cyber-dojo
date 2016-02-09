@@ -12,11 +12,11 @@ RUNNER=${RUNNER_DEFAULT}
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-ME="$(basename $0)"
+USE="USE: $(basename $0)"
 
 function show_use {
   echo "#"
-  echo "# ${ME} [help] DEFAULTS"
+  echo "# ${USE} ${ME} [help] DEFAULTS"
   echo "#"
   echo "# DEFAULTS"
   echo "# katas=${KATAS}"
@@ -32,8 +32,8 @@ function show_use {
 function exit_if_bad_rails_env {
   if [ "${RAILS_ENV}" != 'development' ] && [ "${RAILS_ENV}" != 'production' ]; then
     echo "# ??? rails_env=${RAILS_ENV}"
-    echo "# ${ME} rails_env=development"
-    echo "# ${ME} rails_env=production"
+    echo "# ${USE} rails_env=development"
+    echo "# ${USE} ${ME} rails_env=production"
     show_use
     exit
   fi
@@ -47,8 +47,8 @@ function exit_if_bad_katas {
 function exit_if_bad_runner {
   if [ "${RUNNER}" != 'DockerTmpRunner' ] && [ "${RUNNER}" != 'DockerKatasRunner' ]; then
     echo "# ??? runner=${RUNNER}"
-    echo "# ${ME} runner=development"
-    echo "# ${ME} runner=production"
+    echo "# USE: ${ME} runner=development"
+    echo "# USE: ${ME} runner=production"
     show_use
     exit
   fi
