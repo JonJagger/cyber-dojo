@@ -2,7 +2,7 @@
 
 MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 HUB=cyberdojofoundation
-IMAGES=(exercises languages nginx test web)
+IMAGES=(nginx web)
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
@@ -35,8 +35,7 @@ function build {
   # Assumes Dockerfiles are in their github cyber-dojo repo folders.
   # build images (+katas) from Dockerfiles
   pushd ${MY_DIR} > /dev/null
-  ALL_IMAGES=("${IMAGES[*]}" katas)
-  for IMAGE in ${ALL_IMAGES[*]}
+  for IMAGE in ${IMAGES[*]}
   do
     echo ${IMAGE}
     ./${IMAGE}/build-docker-image.sh ${ROOT}

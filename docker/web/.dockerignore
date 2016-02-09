@@ -1,4 +1,4 @@
-# Ignore everything...
+# Ignore everything (including katas)
 *
 
 # ...Except
@@ -8,4 +8,6 @@
 !config
 !app
 !lib
-
+!exercises
+!languages
+!test
