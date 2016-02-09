@@ -23,6 +23,7 @@ function show_use {
   echo "       ${ME} help"
   echo
   echo 'Commands:'
+  echo '    bootstrap         pull common language images and bring up'
   echo '    latest            pull latest pulled language images'
   echo '    ls                list all cyber-dojo language images'
   echo '    pull=IMAGE        pull cyber-dojo language IMAGE'
@@ -57,6 +58,16 @@ function exit_if_bad_runner {
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
+function bootstrap {
+  IMAGES=(gcc_assert ruby_mini_test)
+  for IMAGE in ${IMAGES[*]}
+  do
+    pull ${IMAGE}
+  done
+}
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
 function list_all_language_images {
   docker run --rm ${HUB}/web bash -c "./languages/list_all_images.rb"
 }
@@ -68,7 +79,7 @@ function ls {
 # - - - - - - - - - - - - - - - - - - - - - -
 
 function pull {
-  docker pull ${HUB}/${IMAGE}
+  docker pull ${HUB}/${IMAGE}:latest
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -122,6 +133,9 @@ do
       show_use
       exit
       ;;
+    bootstrap)
+      doBootstrap=true
+      ;;
     ls)
       doLs=true
       ;;
@@ -157,8 +171,9 @@ done
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-if [ "$doLs"     == true ]; then     ls; exit; fi
-if [ "$doPull"   == true ]; then   pull; exit; fi
-if [ "$doLatest" == true ]; then latest; exit; fi
-if [ "$doUp"     == true ]; then     up; exit; fi
+if [ "$doBootstrap" == true ]; then  bootstrap; exit; fi
+if [ "$doLs"        == true ]; then         ls; exit; fi
+if [ "$doPull"      == true ]; then       pull; exit; fi
+if [ "$doLatest"    == true ]; then     latest; exit; fi
+if [ "$doUp"        == true ]; then         up; exit; fi
 
