@@ -12,32 +12,46 @@ KATAS=${KATAS_DEFAULT}
 RAILS_ENV=${RAILS_ENV_DEFAULT}
 RUNNER=${RUNNER_DEFAULT}
 
-ME="$(basename ${0})"
+ME="./$(basename ${0})"
 
 # - - - - - - - - - - - - - - - - - - - - - -
+
+INSTALL_DOCKER_CURL_CMD="curl -sSL https://get.docker.com/ | sh"
 
 show_how_to_install_docker()
 {
   echo
   echo 'To install docker:'
-  echo '    $ curl -sSL https://get.docker.com/ | sh'
+  echo "$ ${ME} install_docker"
+  echo 'which does'
+  echo "$ ${INSTALL_DOCKER_CURL_CMD}"
 }
+
+INSTALL_DOCKER_MACHINE_CURL_CMD="curl -L https://github.com/docker/machine/releases/download/v0.6.0/docker-machine-`uname -s`-`uname -m` > /usr/local/bin/docker-machine"
+INSTALL_DOCKER_MACHINE_CHMOD_CMD="chmod +x /usr/local/bin/docker-machine"
 
 show_how_to_install_docker_machine()
 {
   echo
   echo 'To install docker-machine:'
-  echo "    $ curl -L https://github.com/docker/machine/releases/download/v0.6.0/docker-machine-`uname -s`-`uname -m` > /usr/local/bin/docker-machine"
-  echo "    $ chmod +x /usr/local/bin/docker-machine"
+  echo "$ ${ME} install_docker"
+  echo 'which does'
+  echo "$ ${INSTALL_DOCKER_MACHINE_CURL_CMD}"
+  echo "$ ${INSTALL_DOCKER_MACHINE_CHMOD_CMD}"
   echo "To check for new releases visit https://docs.docker.com/machine/install-machine/"
 }
+
+INSTALL_DOCKER_COMPOSE_CURL_CMD="curl -L https://github.com/docker/compose/releases/download/1.6.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
+INSTALL_DOCKER_COMPOSE_CHMOD_CMD="chmod +x /usr/local/bin/docker-compose"
 
 show_how_to_install_docker_compose()
 {
   echo
   echo 'To install docker-compose:'
-  echo "    $ curl -L https://github.com/docker/compose/releases/download/1.6.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
-  echo "    $ chmod +x /usr/local/bin/docker-compose"
+  echo "$ ${ME} install_docker"
+  echo 'which does'
+  echo "$ ${INSTALL_DOCKER_COMPOSE_CURL_CMD}"
+  echo "$ ${INSTALL_DOCKER_COMPOSE_CHMOD_CMD}"
   echo "To check for new releases visit https://github.com/docker/compose/releases"
 }
 
@@ -50,6 +64,7 @@ show_use()
   echo "       ${ME} help"
   echo
   echo 'Commands:'
+  echo '    install_docker    Installs docker, docker-machine, and docker-compose'
   echo '    latest            Pull bug fixes and upgrades'
   echo '    ls                List pulled cyber-dojo language images'
   echo '    ls_hub            List all cyber-dojo language images'
@@ -117,6 +132,36 @@ pulled_language_images()
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
+install_docker()
+{
+  #<<<<<<<<< ECHOING <<<<<<<<<
+  echo 'installing docker'
+  echo "${INSTALL_DOCKER_CURL_CMD}"
+  echo 'installing docker-machine'
+  echo "${INSTALL_DOCKER_MACHINE_CURL_CMD}"
+  echo "${INSTALL_DOCKER_MACHINE_CHMOD_CMD}"
+  echo 'installing docker-compose'
+  echo "${INSTALL_DOCKER_COMPOSE_CURL_CMD}"
+  echo "${INSTALL_DOCKER_COMPOSE_CHMOD_CMD}"
+}
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
+latest()
+{
+  LS_HUB=`ls_hub`
+  PULLED=`pulled_language_images`
+  echo "${PULLED}" | while read IMAGE ; do
+    pull ${IMAGE}
+  done
+  IMAGE=nginx
+  pull
+  IMAGE=web
+  pull
+}
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
 ls()
 {
   LS_HUB=`ls_hub`
@@ -141,21 +186,6 @@ pull()
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-latest()
-{
-  LS_HUB=`ls_hub`
-  PULLED=`pulled_language_images`
-  echo "${PULLED}" | while read IMAGE ; do
-    pull ${IMAGE}
-  done
-  IMAGE=nginx
-  pull
-  IMAGE=web
-  pull
-}
-
-# - - - - - - - - - - - - - - - - - - - - - -
-
 pull_common_languages_if_none()
 {
   LS_HUB=`ls_hub`
@@ -174,6 +204,10 @@ pull_common_languages_if_none()
 
 up()
 {
+  exit_if_bad_katas
+  exit_if_bad_runner
+  exit_if_bad_rails_env
+
   pull_common_languages_if_none
 
   export CYBER_DOJO_RAILS_ENV=${RAILS_ENV}
@@ -198,7 +232,60 @@ up()
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
+
+if [ $# -eq 0 ]; then
+  show_use
+  exit
+fi
+
 # - - - - - - - - - - - - - - - - - - - - - -
+
+for arg in "$@"
+do
+  case ${arg} in
+    help)
+      show_use
+      exit
+      ;;
+    install_docker)
+      doInstall=true
+      ;;
+    latest)
+      doLatest=true
+      ;;
+    ls)
+      doLs=true
+      ;;
+    ls_hub)
+      doLsHub=true
+      ;;
+    pull=*)
+      IMAGE="${arg#*=}"
+      doPull=true
+      ;;
+    up)
+      doUp=true
+      ;;
+    katas=*)
+      KATAS="${arg#*=}"
+      ;;
+    runner=*)
+      RUNNER="${arg#*=}"
+      ;;
+    rails_env=*)
+      RAILS_ENV="${arg#*=}"
+      ;;
+    *)
+      echo "${ME}: ${arg} ?"
+      echo "See '${ME} help"
+      exit
+      ;;
+  esac
+done
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
+if [ -n "${doInstall}" ]; then install_docker; exit; fi
 
 if ! type "docker" > /dev/null; then
   echo
@@ -232,61 +319,9 @@ fi
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-if [ $# -eq 0 ]; then
-  show_use
-  exit
-fi
-
-# - - - - - - - - - - - - - - - - - - - - - -
-
-for arg in "$@"
-do
-  case ${arg} in
-    help)
-      show_use
-      exit
-      ;;
-    latest)
-      doLatest=true
-      ;;
-    ls)
-      doLs=true
-      ;;
-    ls_hub)
-      doLsHub=true
-      ;;
-    pull=*)
-      IMAGE="${arg#*=}"
-      doPull=true
-      ;;
-    up)
-      doUp=true
-      ;;
-    katas=*)
-      KATAS="${arg#*=}"
-      exit_if_bad_katas
-      ;;
-    runner=*)
-      RUNNER="${arg#*=}"
-      exit_if_bad_runner
-      ;;
-    rails_env=*)
-      RAILS_ENV="${arg#*=}"
-      exit_if_bad_rails_env
-      ;;
-    *)
-      echo "${ME}: ${arg} ?"
-      echo "See '${ME} help"
-      exit
-      ;;
-  esac
-done
-
-# - - - - - - - - - - - - - - - - - - - - - -
-
-if [ -n "${doLatest}" ]; then     latest; exit; fi
-if [ -n "${doLs}"     ]; then         ls; exit; fi
-if [ -n "${doLsHub}"  ]; then     ls_hub; exit; fi
-if [ -n "${doPull}"   ]; then       pull; exit; fi
-if [ -n "${doUp}"     ]; then         up; exit; fi
+if [ -n "${doLatest}"  ]; then         latest; exit; fi
+if [ -n "${doLs}"      ]; then             ls; exit; fi
+if [ -n "${doLsHub}"   ]; then         ls_hub; exit; fi
+if [ -n "${doPull}"    ]; then           pull; exit; fi
+if [ -n "${doUp}"      ]; then             up; exit; fi
 
