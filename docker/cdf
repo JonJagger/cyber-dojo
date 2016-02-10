@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 HUB=cyberdojofoundation
 IMAGES=(nginx web)
 
@@ -73,7 +73,7 @@ function exit_if_bad_runner
 
 function bash
 {
-  docker run --rm -it ${HUB}/web bash
+  docker run --rm --interactive --tty ${HUB}/web bash
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -238,17 +238,17 @@ done
 # - - - - - - - - - - - - - - - - - - - - - -
 # Single commands
 
-if [ "$doBash" == true ]; then bash; exit; fi
-#if [ "$doExec" == true ]; then exec; exit; fi
-if [ "$doPull" == true ]; then pull; exit; fi
-if [ "$doPush" == true ]; then push; exit; fi
+if [ -n "${doBash}" ]; then bash; exit; fi
+#if [ -n "${doExec}" ]; then exec; exit; fi
+if [ -n "${doPull}" ]; then pull; exit; fi
+if [ -n "${doPush}" ]; then push; exit; fi
 
 # - - - - - - - - - - - - - - - - - - - - - -
 # Chained commands
 
-if [ "$doRm"    == true ]; then rm   ; fi
-if [ "$doRmi"   == true ]; then rmi  ; fi
-if [ "$doBuild" == true ]; then build; fi
-if [ "$doUp"    == true ]; then up   ; fi
-#if [ "$doTest"  == true ]; then test ; fi
+if [ -n "${doRm}"     ]; then rm   ; fi
+if [ -n "${doRmi}"    ]; then rmi  ; fi
+if [ -n "${doBuild}"  ]; then build; fi
+if [ -n "${doUp}"     ]; then up   ; fi
+#if [ -n "${doTest}"   ]; then test ; fi
 
