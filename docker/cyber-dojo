@@ -3,15 +3,16 @@
 HOME=/usr/app/cyber-dojo   # home folder *inside* the web-image
 REPO=cyberdojofoundation   # username on docker hub
 
-KATAS_DEFAULT=/usr/app/cyber-dojo/katas # where katas are stored on the *host*
+KATAS_DEFAULT=/usr/app/cyber-dojo/katas
 RAILS_ENV_DEFAULT=production
 RUNNER_DEFAULT=DockerTmpRunner
 
-KATAS=${KATAS_DEFAULT}
-RAILS_ENV=${RAILS_ENV_DEFAULT}
-RUNNER=${RUNNER_DEFAULT}
+KATAS=${KATAS_DEFAULT}           # where katas are stored on the *host*
+RAILS_ENV=${RAILS_ENV_DEFAULT}   # rails server -e ${RAILS_ENV}
+RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 
 ME="./$(basename ${0})"
+MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -192,7 +193,6 @@ up()
   export CYBER_DOJO_LOG_CLASS=HostLog
   export CYBER_DOJO_GIT_CLASS=HostGit
 
-  MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
   CWD=`pwd`
   cd "${MY_DIR}" > /dev/null
   echo 'downloading the latest docker-compose.yml'
