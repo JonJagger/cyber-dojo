@@ -16,14 +16,14 @@ ME="$(basename $0)"
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function show_how_to_install_docker
+show_how_to_install_docker()
 {
   echo
   echo 'To install docker:'
   echo '    $ curl -sSL https://get.docker.com/ | sh'
 }
 
-function show_how_to_install_docker_machine
+show_how_to_install_docker_machine()
 {
   echo
   echo 'To install docker-machine:'
@@ -32,7 +32,7 @@ function show_how_to_install_docker_machine
   echo "To check for new releases visit https://docs.docker.com/machine/install-machine/"
 }
 
-function show_how_to_install_docker_compose
+show_how_to_install_docker_compose()
 {
   echo
   echo 'To install docker-compose:'
@@ -43,7 +43,7 @@ function show_how_to_install_docker_compose
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function show_use
+show_use()
 {
   echo
   echo "Usage: ${ME} COMMAND"
@@ -63,7 +63,7 @@ function show_use
   echo
 }
 
-function exit_if_bad_rails_env
+exit_if_bad_rails_env()
 {
   if [ "${RAILS_ENV}" != 'development' ] && [ "${RAILS_ENV}" != 'production' ]; then
     echo "${ME}: rails_env=${RAILS_ENV} ?"
@@ -72,7 +72,7 @@ function exit_if_bad_rails_env
   fi
 }
 
-function exit_if_bad_katas
+exit_if_bad_katas()
 {
   # if KATAS==KATAS_DEFAULT assume this cyber-dojo server is *not*
   # being hosted where a previous (non dockerized) server lived.
@@ -86,7 +86,7 @@ function exit_if_bad_katas
   fi
 }
 
-function exit_if_bad_runner
+exit_if_bad_runner()
 {
   if [ "${RUNNER}" != 'DockerTmpRunner' ] && [ "${RUNNER}" != 'DockerKatasRunner' ]; then
     echo "${ME}: runner=${RUNNER} ?"
@@ -97,7 +97,7 @@ function exit_if_bad_runner
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function pulled_language_images
+pulled_language_images()
 {
   ALL_LANGUAGE_IMAGES=`echo "${LS_HUB}" | awk '{print $NF}' | sort`
   PULLED_IMAGES=`docker images | grep ${HUB} | awk '{print $1}'`
@@ -117,7 +117,7 @@ function pulled_language_images
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function ls
+ls()
 {
   LS_HUB=`ls_hub`
   PULLED=`pulled_language_images`
@@ -127,21 +127,21 @@ function ls
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function ls_hub
+ls_hub()
 {
   docker run --rm ${HUB}/web bash -c "./languages/list_all_images.rb"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function pull
+pull()
 {
   docker pull ${HUB}/${IMAGE}:latest
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function latest
+latest()
 {
   LS_HUB=`ls_hub`
   PULLED=`pulled_language_images`
@@ -157,7 +157,7 @@ function latest
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function pull_common_languages_if_none
+pull_common_languages_if_none()
 {
   LS_HUB=`ls_hub`
   PULLED=`pulled_language_images`
@@ -175,7 +175,7 @@ function pull_common_languages_if_none
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function up
+up()
 {
   pull_common_languages_if_none
 
