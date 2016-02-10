@@ -13,48 +13,7 @@ RUNNER=${RUNNER_DEFAULT}
 
 ME="./$(basename ${0})"
 
-# - - - - - - - - - - - - - - - - - - - - - -
-
-INSTALL_DOCKER_CURL_CMD="curl -sSL https://get.docker.com/ | sh"
-
-show_how_to_install_docker()
-{
-  echo
-  echo 'To install docker:'
-  echo "$ ${ME} install_docker"
-  echo 'which does'
-  echo "$ ${INSTALL_DOCKER_CURL_CMD}"
-}
-
-INSTALL_DOCKER_MACHINE_CURL_CMD="curl -L https://github.com/docker/machine/releases/download/v0.6.0/docker-machine-`uname -s`-`uname -m` > /usr/local/bin/docker-machine"
-INSTALL_DOCKER_MACHINE_CHMOD_CMD="chmod +x /usr/local/bin/docker-machine"
-
-show_how_to_install_docker_machine()
-{
-  echo
-  echo 'To install docker-machine:'
-  echo "$ ${ME} install_docker"
-  echo 'which does'
-  echo "$ ${INSTALL_DOCKER_MACHINE_CURL_CMD}"
-  echo "$ ${INSTALL_DOCKER_MACHINE_CHMOD_CMD}"
-  echo "To check for new releases visit https://docs.docker.com/machine/install-machine/"
-}
-
-INSTALL_DOCKER_COMPOSE_CURL_CMD="curl -L https://github.com/docker/compose/releases/download/1.6.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
-INSTALL_DOCKER_COMPOSE_CHMOD_CMD="chmod +x /usr/local/bin/docker-compose"
-
-show_how_to_install_docker_compose()
-{
-  echo
-  echo 'To install docker-compose:'
-  echo "$ ${ME} install_docker"
-  echo 'which does'
-  echo "$ ${INSTALL_DOCKER_COMPOSE_CURL_CMD}"
-  echo "$ ${INSTALL_DOCKER_COMPOSE_CHMOD_CMD}"
-  echo "To check for new releases visit https://github.com/docker/compose/releases"
-}
-
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 show_use()
 {
@@ -77,36 +36,49 @@ show_use()
   echo
 }
 
-exit_if_bad_rails_env()
+# - - - - - - - - - - - - - - - - - - - - - -
+
+INSTALL_DOCKER_CURL_CMD="curl -sSL https://get.docker.com/ | sh"
+
+show_how_to_install_docker()
 {
-  if [ "${RAILS_ENV}" != 'development' ] && [ "${RAILS_ENV}" != 'production' ]; then
-    echo "${ME}: rails_env=${RAILS_ENV} ?"
-    echo "See ${ME} help"
-    exit
-  fi
+  echo
+  echo 'To install docker:'
+  echo "$ ${ME} install_docker"
+  echo 'which does'
+  echo "$ ${INSTALL_DOCKER_CURL_CMD}"
 }
 
-exit_if_bad_katas()
-{
-  # if KATAS==KATAS_DEFAULT assume this cyber-dojo server is *not*
-  # being hosted where a previous (non dockerized) server lived.
-  # In this case the KATAS volume mount in docker-compose.yml will
-  # create the KATAS_DEFAULT directory on the host.
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  if [ "${KATAS}" != "${KATAS_DEFAULT}" ] && [ ! -d "${KATAS}" ]; then
-    echo "${ME}: katas=${KATAS} ? ${KATAS} directory does not exist"
-    echo "See ${ME} help"
-    exit
-  fi
+INSTALL_DOCKER_MACHINE_CURL_CMD="curl -L https://github.com/docker/machine/releases/download/v0.6.0/docker-machine-`uname -s`-`uname -m` > /usr/local/bin/docker-machine"
+INSTALL_DOCKER_MACHINE_CHMOD_CMD="chmod +x /usr/local/bin/docker-machine"
+
+show_how_to_install_docker_machine()
+{
+  echo
+  echo 'To install docker-machine:'
+  echo "$ ${ME} install_docker"
+  echo 'which does'
+  echo "$ ${INSTALL_DOCKER_MACHINE_CURL_CMD}"
+  echo "$ ${INSTALL_DOCKER_MACHINE_CHMOD_CMD}"
+  echo "To check for new releases visit https://docs.docker.com/machine/install-machine/"
 }
 
-exit_if_bad_runner()
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+INSTALL_DOCKER_COMPOSE_CURL_CMD="curl -L https://github.com/docker/compose/releases/download/1.6.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
+INSTALL_DOCKER_COMPOSE_CHMOD_CMD="chmod +x /usr/local/bin/docker-compose"
+
+show_how_to_install_docker_compose()
 {
-  if [ "${RUNNER}" != 'DockerTmpRunner' ] && [ "${RUNNER}" != 'DockerKatasRunner' ]; then
-    echo "${ME}: runner=${RUNNER} ?"
-    echo "See ${ME} help"
-    exit
-  fi
+  echo
+  echo 'To install docker-compose:'
+  echo "$ ${ME} install_docker"
+  echo 'which does'
+  echo "$ ${INSTALL_DOCKER_COMPOSE_CURL_CMD}"
+  echo "$ ${INSTALL_DOCKER_COMPOSE_CHMOD_CMD}"
+  echo "To check for new releases visit https://github.com/docker/compose/releases"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -133,15 +105,14 @@ pulled_language_images()
 
 install_docker()
 {
-  #<<<<<<<<< ECHOING <<<<<<<<<
   echo 'installing docker'
-  echo "${INSTALL_DOCKER_CURL_CMD}"
+  ${INSTALL_DOCKER_CURL_CMD}
   echo 'installing docker-machine'
-  echo "${INSTALL_DOCKER_MACHINE_CURL_CMD}"
-  echo "${INSTALL_DOCKER_MACHINE_CHMOD_CMD}"
+  ${INSTALL_DOCKER_MACHINE_CURL_CMD}
+  ${INSTALL_DOCKER_MACHINE_CHMOD_CMD}
   echo 'installing docker-compose'
-  echo "${INSTALL_DOCKER_COMPOSE_CURL_CMD}"
-  echo "${INSTALL_DOCKER_COMPOSE_CHMOD_CMD}"
+  ${INSTALL_DOCKER_COMPOSE_CURL_CMD}
+  ${INSTALL_DOCKER_COMPOSE_CHMOD_CMD}
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -228,6 +199,37 @@ up()
   curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/docker-compose.yml
   docker-compose --file=./docker-compose.yml up &
   cd "${CWD}" > /dev/null
+}
+
+exit_if_bad_rails_env()
+{
+  if [ "${RAILS_ENV}" != 'development' ] && [ "${RAILS_ENV}" != 'production' ]; then
+    echo "${ME}: rails_env=${RAILS_ENV} ?"
+    echo "See ${ME} help"
+    exit
+  fi
+}
+
+exit_if_bad_katas()
+{
+  # if KATAS==KATAS_DEFAULT assume this cyber-dojo server is *not*
+  # being hosted where a previous (non dockerized) server lived.
+  # In this case the KATAS volume mount in docker-compose.yml will
+  # create the KATAS_DEFAULT directory on the host.
+  if [ "${KATAS}" != "${KATAS_DEFAULT}" ] && [ ! -d "${KATAS}" ]; then
+    echo "${ME}: katas=${KATAS} ? ${KATAS} directory does not exist"
+    echo "See ${ME} help"
+    exit
+  fi
+}
+
+exit_if_bad_runner()
+{
+  if [ "${RUNNER}" != 'DockerTmpRunner' ] && [ "${RUNNER}" != 'DockerKatasRunner' ]; then
+    echo "${ME}: runner=${RUNNER} ?"
+    echo "See ${ME} help"
+    exit
+  fi
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
