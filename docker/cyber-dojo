@@ -101,7 +101,7 @@ pulled_language_images()
 {
   ALL_LANGUAGE_IMAGES=`echo "${LS_HUB}" | awk '{print $NF}' | sort`
   PULLED_IMAGES=`docker images | grep ${HUB} | awk '{print $1}'`
-  SPLIT=${PULLED_IMAGES//\/// }
+  SPLIT=$(echo "${PULLED_IMAGES}" | sed 's/\// /g')
   PULLED_IMAGES=`echo "${SPLIT}" | awk '{print $NF}' | sort`
 
   TMP_FILE_1=/tmp/cyber-dojo.comm1.txt
@@ -161,7 +161,7 @@ pull_common_languages_if_none()
 {
   LS_HUB=`ls_hub`
   PULLED=`pulled_language_images`
-  if [ "${PULLED}" == "" ]; then
+  if [ -z "${PULLED}" ]; then
     echo 'No language images pulled'
     echo 'Pulling a small starting collection of common language images'
     IMAGE=gcc_assert
