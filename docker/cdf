@@ -73,7 +73,7 @@ function exit_if_bad_runner
 
 function bash
 {
-  docker run --rm -it ${HUB}/web bash
+  docker run --rm --interactive --tty ${HUB}/web bash
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
