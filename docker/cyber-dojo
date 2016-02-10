@@ -197,7 +197,7 @@ up()
   cd "${MY_DIR}" > /dev/null
   echo 'downloading the latest docker-compose.yml'
   curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/docker-compose.yml
-  docker-compose --file=./docker-compose.yml up &
+  docker-compose --file=./docker-compose.yml up -d
   cd "${CWD}" > /dev/null
 }
 
