@@ -143,9 +143,11 @@ up()
   exit_if_bad_rails_env
   exit_if_bad_runner
 
-  pushd ${MY_DIR} > /dev/null
+  MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
+  CWD=`pwd`
+  cd "${MY_DIR}" > /dev/null
   ./cyber-dojo up rails_env=${RAILS_ENV} katas=${KATAS} runner=${RUNNER}
-  popd > /dev/null
+  cd "${CWD}" > /dev/null
 }
 
 exit_if_bad_katas()
