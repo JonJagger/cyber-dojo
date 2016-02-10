@@ -6,7 +6,6 @@ IMAGES=(nginx web)
 
 HOME=/usr/app/cyber-dojo          # home folder *inside* the web-image
 
-# defaults
 KATAS_DEFAULT=/usr/app/cyber-dojo/katas
 RAILS_ENV_DEFAULT=development
 RUNNER_DEFAULT=DockerTmpRunner
@@ -17,16 +16,16 @@ RUNNER=${RUNNER_DEFAULT}
 
 ME="./$(basename $0)"
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-function show_use
+show_use()
 {
   echo
   echo "Usage: ${ME} COMMAND..."
   echo "       ${ME} help"
   echo
   echo 'Commands:'
-  echo '    bash                   Shell into cyber-dojo server container'
+  echo '    bash                   Open a shell inside the cyber-dojo server container'
   echo '    build                  Build cyber-dojo server images'
  #echo '    exec COMMAND...        Exec a command in cyber-dojo server container'
   echo '    pull                   Pull cyber-dojo server images from hub'
@@ -43,42 +42,16 @@ function show_use
   echo
 }
 
-function exit_if_bad_katas
-{
-  # TODO: check katas folder exists
-  true
-}
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-function exit_if_bad_rails_env
-{
-  if [ "${RAILS_ENV}" != 'development' ] &&
-     [ "${RAILS_ENV}" != 'production' ]; then
-    echo "${ME} rails_env=${RAILS_ENV} ?"
-    echo "See ${ME} help"
-    exit
-  fi
-}
-
-function exit_if_bad_runner
-{
-  if [ "${RUNNER}" != 'DockerTmpRunner' ] &&
-     [ "${RUNNER}" != 'DockerKatasRunner' ]; then
-    echo "${ME} runner=${RUNNER} ?"
-    echo "See ${ME} help"
-    exit
-  fi
-}
-
-# - - - - - - - - - - - - - - - - - - - - - -
-
-function bash
+bash()
 {
   docker run --rm --interactive --tty ${HUB}/web bash
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-function build
+build()
 {
   pushd ${MY_DIR} > /dev/null
   for IMAGE in ${IMAGES[*]}
@@ -93,9 +66,9 @@ function build
   popd > /dev/null
 }
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-function pull
+pull()
 {
   for IMAGE in ${IMAGES[*]}
   do
@@ -105,9 +78,9 @@ function pull
   done
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-function push
+push()
 {
   # TODO: this works from a terminal
   #     docker push cyberdojofoundation/web
@@ -129,9 +102,9 @@ function push
   done
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-function rm
+rm()
 {
   for IMAGE in ${IMAGES[*]}
   do
@@ -142,9 +115,9 @@ function rm
   done
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-function rmi
+rmi()
 {
   for IMAGE in ${IMAGES[*]}
   do
@@ -152,9 +125,9 @@ function rmi
   done
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-function test
+test()
 {
   # After [up] tests can be run *inside* the container, eg
   # $ docker exec web_1 bash -c "cd test/app_models && ./test_dojo.rb"
@@ -162,24 +135,58 @@ function test
   true
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-function up
+up()
 {
-  pushd ${MY_DIR} > /dev/null
+  exit_if_bad_katas
+  exit_if_bad_rails_env
+  exit_if_bad_runner
+
+  MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
+  CWD=`pwd`
+  cd "${MY_DIR}" > /dev/null
   ./cyber-dojo up rails_env=${RAILS_ENV} katas=${KATAS} runner=${RUNNER}
-  popd > /dev/null
+  cd "${CWD}" > /dev/null
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
-# - - - - - - - - - - - - - - - - - - - - - -
+exit_if_bad_katas()
+{
+  # if KATAS==KATAS_DEFAULT assume this cyber-dojo server is *not*
+  # being hosted where a previous (non dockerized) server lived.
+  # In this case the KATAS volume mount in docker-compose.yml will
+  # create the KATAS_DEFAULT directory on the host.
+  if [ "${KATAS}" != "${KATAS_DEFAULT}" ] && [ ! -d "${KATAS}" ]; then
+    echo "${ME}: katas=${KATAS} ? ${KATAS} directory does not exist"
+    echo "See ${ME} help"
+    exit
+  fi
+}
 
-if [  $# -eq 0 ]; then
+exit_if_bad_rails_env()
+{
+  if [ "${RAILS_ENV}" != 'development' ] && [ "${RAILS_ENV}" != 'production' ]; then
+    echo "${ME} rails_env=${RAILS_ENV} ?"
+    echo "See ${ME} help"
+    exit
+  fi
+}
+
+exit_if_bad_runner()
+{
+  if [ "${RUNNER}" != 'DockerTmpRunner' ] && [ "${RUNNER}" != 'DockerKatasRunner' ]; then
+    echo "${ME} runner=${RUNNER} ?"
+    echo "See ${ME} help"
+    exit
+  fi
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+if [ $# -eq 0 ]; then
   show_use
   exit
 fi
-
-# - - - - - - - - - - - - - - - - - - - - - -
 
 for arg in "$@"
 do
@@ -217,15 +224,12 @@ do
       ;;
     katas=*)
       KATAS="${arg#*=}"
-      exit_if_bad_katas
       ;;
     rails_env=*)
       RAILS_ENV="${arg#*=}"
-      exit_if_bad_rails_env
       ;;
     runner=*)
       RUNNER="${arg#*=}"
-      exit_if_bad_runner
       ;;
     *)
       echo "${ME}: ${arg} ?"
@@ -235,7 +239,7 @@ do
   esac
 done
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Single commands
 
 if [ -n "${doBash}" ]; then bash; exit; fi
@@ -243,7 +247,7 @@ if [ -n "${doBash}" ]; then bash; exit; fi
 if [ -n "${doPull}" ]; then pull; exit; fi
 if [ -n "${doPush}" ]; then push; exit; fi
 
-# - - - - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Chained commands
 
 if [ -n "${doRm}"     ]; then rm   ; fi
