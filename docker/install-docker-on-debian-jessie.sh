@@ -15,7 +15,7 @@ apt-get install -y docker-engine
 service docker start
 
 # install docker-machine
-curl -L https://github.com/docker/machine/releases/download/v0.4.0/docker-machine_linux-amd64 > /usr/local/bin/docker-machine
+curl -L https://github.com/docker/machine/releases/download/v0.6.0/docker-machine-`uname -s`-`uname -m` > /usr/local/bin/docker-machine
 chmod +x /usr/local/bin/docker-machine
 
 # install docker-compose

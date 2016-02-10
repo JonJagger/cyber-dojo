@@ -1,4 +1,6 @@
 
+# docker-compose file used by the docker/cyber-dojo script.
+#
 # Variable-substition happens in docker-compose yml files
 # such as this one, but *not* in env_file:'s
 # Since I use variable-substitution in my ROOT environment

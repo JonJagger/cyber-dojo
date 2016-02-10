@@ -4,13 +4,14 @@ MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 HUB=cyberdojofoundation
 IMAGES=(nginx web)
 
-HOME=/usr/app/cyber-dojo          # home folder inside the web-image
+HOME=/usr/app/cyber-dojo          # home folder *inside* the web-image
 
 # defaults
+KATAS_DEFAULT=/usr/app/cyber-dojo/katas
 RAILS_ENV_DEFAULT=development
 RUNNER_DEFAULT=DockerTmpRunner
 
-KATAS=/usr/app/cyber-dojo/katas
+KATAS=${KATAS_DEFAULT}
 RAILS_ENV=${RAILS_ENV_DEFAULT}
 RUNNER=${RUNNER_DEFAULT}
 
@@ -36,9 +37,9 @@ function show_use
   echo '    up [OPTIONS]           Bring up cyber-dojo server'
   echo
   echo 'Options:'
-  echo "    katas=/var/www/cyber-dojo/katas            default:     katas=${KATAS}"
-  echo "    rails_env=[development|production]         default: rails_env=${RAILS_ENV_DEFAULT}"
-  echo "    runner=[DockerTmpRunner|DockerKatasRunner] default:    runner=${RUNNER_DEFAULT}"
+  echo "        katas=/var/www/cyber-dojo/katas            default:     katas=${KATAS_DEFAULT}"
+  echo "    rails_env=[development|production]             default: rails_env=${RAILS_ENV_DEFAULT}"
+  echo "       runner=[DockerTmpRunner|DockerKatasRunner]  default:    runner=${RUNNER_DEFAULT}"
   echo
 }
 
@@ -50,7 +51,8 @@ function exit_if_bad_katas
 
 function exit_if_bad_rails_env
 {
-  if [ "${RAILS_ENV}" != 'development' ] && [ "${RAILS_ENV}" != 'production' ]; then
+  if [ "${RAILS_ENV}" != 'development' ] &&
+     [ "${RAILS_ENV}" != 'production' ]; then
     echo "${ME} rails_env=${RAILS_ENV} ?"
     echo "See ${ME} help"
     exit
@@ -59,7 +61,8 @@ function exit_if_bad_rails_env
 
 function exit_if_bad_runner
 {
-  if [ "${RUNNER}" != 'DockerTmpRunner' ] && [ "${RUNNER}" != 'DockerKatasRunner' ]; then
+  if [ "${RUNNER}" != 'DockerTmpRunner' ] &&
+     [ "${RUNNER}" != 'DockerKatasRunner' ]; then
     echo "${ME} runner=${RUNNER} ?"
     echo "See ${ME} help"
     exit
@@ -106,6 +109,18 @@ function pull
 
 function push
 {
+  # TODO: this works from a terminal
+  #     docker push cyberdojofoundation/web
+  # but
+  #     ./cdf push
+  # fails?! with
+  # unauthorized: access to the requested resource is not authorized
+  #
+  # $ docker login
+  # username: jonjagger
+  # password: ...
+  # email: ...
+
   for IMAGE in ${IMAGES[*]}
   do
     echo "---------------------------------------"
@@ -157,11 +172,14 @@ function up
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - -
 
 if [  $# -eq 0 ]; then
   show_use
   exit
 fi
+
+# - - - - - - - - - - - - - - - - - - - - - -
 
 for arg in "$@"
 do

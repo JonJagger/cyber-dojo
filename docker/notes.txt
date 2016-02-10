@@ -25,3 +25,5 @@ The kata data container suffers from the same problem as the
 tmp data container. It does not seem possible to limit the runner's
 view of it to just its sub-folder.
 So it seems volume mounting katas from the outside is back on the cards.
+
+# TODO: FILE=installing-more-languages-readme.txt ?
