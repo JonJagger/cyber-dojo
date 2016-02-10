@@ -6,7 +6,6 @@ IMAGES=(nginx web)
 
 HOME=/usr/app/cyber-dojo          # home folder *inside* the web-image
 
-# defaults
 KATAS_DEFAULT=/usr/app/cyber-dojo/katas
 RAILS_ENV_DEFAULT=development
 RUNNER_DEFAULT=DockerTmpRunner

@@ -3,7 +3,6 @@
 HOME=/usr/app/cyber-dojo   # home folder *inside* the web-image
 HUB=cyberdojofoundation    # docker hub username
 
-# defaults
 KATAS_DEFAULT=/usr/app/cyber-dojo/katas # where katas are stored on the *host*
 RAILS_ENV_DEFAULT=production
 RUNNER_DEFAULT=DockerTmpRunner
