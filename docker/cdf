@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
-HUB=cyberdojofoundation
+REPO=cyberdojofoundation
 IMAGES=(nginx web)
 
 HOME=/usr/app/cyber-dojo          # home folder *inside* the web-image
@@ -28,10 +28,10 @@ show_use()
   echo '    bash                   Open a shell inside the cyber-dojo server container'
   echo '    build                  Build cyber-dojo server images'
  #echo '    exec COMMAND...        Exec a command in cyber-dojo server container'
-  echo '    pull                   Pull cyber-dojo server images from hub'
-  echo '    push                   Push cyber-dojo server images to hub'
-  echo '    rm                     Remove cyber-dojo server containers'
-  echo '    rmi                    Remove cyber-dojo server images'
+  echo '    pull                   Pull cyber-dojo server images from repo'
+  echo '    push                   Push cyber-dojo server images to repo'
+  echo '    rm                     Remove local cyber-dojo server containers'
+  echo '    rmi                    Remove local cyber-dojo server images'
  #echo '    test [PATH] [ARG...]   Run PATH tests inside cyber-dojo container'
   echo '    up [OPTIONS]           Bring up cyber-dojo server'
   echo
@@ -46,7 +46,7 @@ show_use()
 
 bash()
 {
-  docker run --rm --interactive --tty ${HUB}/web bash
+  docker run --rm --interactive --tty ${REPO}/web bash
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -59,7 +59,7 @@ build()
     echo ${IMAGE}
     ./${IMAGE}/build-docker-image.sh ${HOME}
     if [ $? -ne 0 ]; then
-      echo "BUILDING ${HUB}/${IMAGE} FAILED"
+      echo "BUILDING ${REPO}/${IMAGE} FAILED"
       exit
     fi
   done
@@ -73,8 +73,8 @@ pull()
   for IMAGE in ${IMAGES[*]}
   do
     echo "---------------------------------------"
-    echo "PULLING: ${HUB}/${IMAGE}"
-    docker pull ${HUB}/${IMAGE}
+    echo "PULLING: ${REPO}/${IMAGE}"
+    docker pull ${REPO}/${IMAGE}
   done
 }
 
@@ -97,8 +97,8 @@ push()
   for IMAGE in ${IMAGES[*]}
   do
     echo "---------------------------------------"
-    echo "PUSHING: ${HUB}/${IMAGE}"
-    docker push ${HUB}/${IMAGE}
+    echo "PUSHING: ${REPO}/${IMAGE}"
+    docker push ${REPO}/${IMAGE}
   done
 }
 
@@ -109,7 +109,7 @@ rm()
   for IMAGE in ${IMAGES[*]}
   do
     docker ps -a \
-    | grep ${HUB}/${IMAGE} \
+    | grep ${REPO}/${IMAGE} \
     | awk '{print $1}' \
     | xargs docker rm -f
   done
@@ -121,7 +121,7 @@ rmi()
 {
   for IMAGE in ${IMAGES[*]}
   do
-    docker rmi -f ${HUB}/${IMAGE} 2&> /dev/null
+    docker rmi -f ${REPO}/${IMAGE} 2&> /dev/null
   done
 }
 

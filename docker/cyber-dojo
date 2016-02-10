@@ -1,7 +1,7 @@
 #!/bin/sh
 
 HOME=/usr/app/cyber-dojo   # home folder *inside* the web-image
-HUB=cyberdojofoundation    # docker hub username
+REPO=cyberdojofoundation   # username on docker hub
 
 KATAS_DEFAULT=/usr/app/cyber-dojo/katas # where katas are stored on the *host*
 RAILS_ENV_DEFAULT=production
@@ -25,7 +25,7 @@ show_use()
   echo '    install_docker    Installs docker, docker-machine, and docker-compose'
   echo '    latest            Pull bug fixes and upgrades'
   echo '    ls                List pulled cyber-dojo language images'
-  echo '    ls_hub            List all cyber-dojo language images'
+  echo '    ls_repo           List all cyber-dojo language images'
   echo '    pull=IMAGE        Pull cyber-dojo language IMAGE'
   echo '    up [OPTIONS]      Bring up cyber-dojo server'
   echo
@@ -85,8 +85,8 @@ show_how_to_install_docker_compose()
 
 pulled_language_images()
 {
-  ALL_LANGUAGE_IMAGES=`echo "${LS_HUB}" | awk '{print $NF}' | sort`
-  PULLED_IMAGES=`docker images | grep ${HUB} | awk '{print $1}'`
+  ALL_LANGUAGE_IMAGES=`echo "${LS_REPO}" | awk '{print $NF}' | sort`
+  PULLED_IMAGES=`docker images | grep ${REPO} | awk '{print $1}'`
   SPLIT=$(echo "${PULLED_IMAGES}" | sed 's/\// /g')
   PULLED_IMAGES=`echo "${SPLIT}" | awk '{print $NF}' | sort`
 
@@ -106,20 +106,20 @@ pulled_language_images()
 install_docker()
 {
   echo 'installing docker'
-  ${INSTALL_DOCKER_CURL_CMD}
+  eval ${INSTALL_DOCKER_CURL_CMD}
   echo 'installing docker-machine'
-  ${INSTALL_DOCKER_MACHINE_CURL_CMD}
-  ${INSTALL_DOCKER_MACHINE_CHMOD_CMD}
+  eval ${INSTALL_DOCKER_MACHINE_CURL_CMD}
+  eval ${INSTALL_DOCKER_MACHINE_CHMOD_CMD}
   echo 'installing docker-compose'
-  ${INSTALL_DOCKER_COMPOSE_CURL_CMD}
-  ${INSTALL_DOCKER_COMPOSE_CHMOD_CMD}
+  eval ${INSTALL_DOCKER_COMPOSE_CURL_CMD}
+  eval ${INSTALL_DOCKER_COMPOSE_CHMOD_CMD}
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 latest()
 {
-  LS_HUB=`ls_hub`
+  LS_REPO=`ls_repo`
   PULLED=`pulled_language_images`
   echo "${PULLED}" | while read IMAGE ; do
     pull ${IMAGE}
@@ -134,31 +134,31 @@ latest()
 
 ls()
 {
-  LS_HUB=`ls_hub`
+  LS_REPO=`ls_repo`
   PULLED=`pulled_language_images`
-  echo "${LS_HUB}" | grep 'LANGUAGE'
-  echo "${LS_HUB}" | grep "${PULLED}"
+  echo "${LS_REPO}" | grep 'LANGUAGE'
+  echo "${LS_REPO}" | grep "${PULLED}"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-ls_hub()
+ls_repo()
 {
-  docker run --rm ${HUB}/web bash -c "./languages/list_all_images.rb"
+  docker run --rm ${REPO}/web bash -c "./languages/list_all_images.rb"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 pull()
 {
-  docker pull ${HUB}/${IMAGE}:latest
+  docker pull ${REPO}/${IMAGE}:latest
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 pull_common_languages_if_none()
 {
-  LS_HUB=`ls_hub`
+  LS_REPO=`ls_repo`
   PULLED=`pulled_language_images`
   if [ -z "${PULLED}" ]; then
     echo 'No language images pulled'
@@ -234,11 +234,6 @@ exit_if_bad_runner()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if [ $# -eq 0 ]; then
-  show_use
-  exit
-fi
-
 for arg in "$@"
 do
   case ${arg} in
@@ -255,8 +250,8 @@ do
     ls)
       doLs=true
       ;;
-    ls_hub)
-      doLsHub=true
+    ls_repo)
+      doLsRepo=true
       ;;
     pull=*)
       IMAGE="${arg#*=}"
@@ -318,9 +313,14 @@ fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if [ -n "${doLatest}"  ]; then         latest; exit; fi
-if [ -n "${doLs}"      ]; then             ls; exit; fi
-if [ -n "${doLsHub}"   ]; then         ls_hub; exit; fi
-if [ -n "${doPull}"    ]; then           pull; exit; fi
-if [ -n "${doUp}"      ]; then             up; exit; fi
+if [ $# -eq 0 ]; then
+  show_use
+  exit
+fi
+
+if [ -n "${doLatest}" ]; then         latest; exit; fi
+if [ -n "${doLs}"     ]; then             ls; exit; fi
+if [ -n "${doLsRepo}" ]; then        ls_repo; exit; fi
+if [ -n "${doPull}"   ]; then           pull; exit; fi
+if [ -n "${doUp}"     ]; then             up; exit; fi
 
