@@ -1,20 +1,20 @@
 #!/bin/sh
 
-MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
-REPO=cyberdojofoundation
-IMAGES=(nginx web)
-
-HOME=/usr/app/cyber-dojo          # home folder *inside* the web-image
+HOME=/usr/app/cyber-dojo   # home folder *inside* the web-image
+REPO=cyberdojofoundation   # username on docker hub
 
 KATAS_DEFAULT=/usr/app/cyber-dojo/katas
 RAILS_ENV_DEFAULT=development
 RUNNER_DEFAULT=DockerTmpRunner
 
-KATAS=${KATAS_DEFAULT}
-RAILS_ENV=${RAILS_ENV_DEFAULT}
-RUNNER=${RUNNER_DEFAULT}
+KATAS=${KATAS_DEFAULT}           # where katas are stored on the *host*
+RAILS_ENV=${RAILS_ENV_DEFAULT}   # rails server -e ${RAILS_ENV}
+RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 
 ME="./$(basename $0)"
+MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
+
+IMAGES=(nginx web)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -53,17 +53,18 @@ bash()
 
 build()
 {
-  pushd ${MY_DIR} > /dev/null
+  CWD=`pwd`
+  cd "${MY_DIR}" > /dev/null
   for IMAGE in ${IMAGES[*]}
   do
-    echo ${IMAGE}
+    echo ${REPO}/${IMAGE}
     ./${IMAGE}/build-docker-image.sh ${HOME}
     if [ $? -ne 0 ]; then
       echo "BUILDING ${REPO}/${IMAGE} FAILED"
       exit
     fi
   done
-  popd > /dev/null
+  cd "${CWD}" > /dev/null
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -72,7 +73,6 @@ pull()
 {
   for IMAGE in ${IMAGES[*]}
   do
-    echo "---------------------------------------"
     echo "PULLING: ${REPO}/${IMAGE}"
     docker pull ${REPO}/${IMAGE}
   done
@@ -96,7 +96,6 @@ push()
 
   for IMAGE in ${IMAGES[*]}
   do
-    echo "---------------------------------------"
     echo "PUSHING: ${REPO}/${IMAGE}"
     docker push ${REPO}/${IMAGE}
   done
@@ -142,8 +141,6 @@ up()
   exit_if_bad_katas
   exit_if_bad_rails_env
   exit_if_bad_runner
-
-  MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
   CWD=`pwd`
   cd "${MY_DIR}" > /dev/null
   ./cyber-dojo up rails_env=${RAILS_ENV} katas=${KATAS} runner=${RUNNER}
