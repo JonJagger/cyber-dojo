@@ -146,7 +146,7 @@ latest()
   LS_HUB=`ls_hub`
   PULLED=`pulled_language_images`
   echo "${PULLED}" | while read IMAGE ; do
-      pull ${IMAGE}
+    pull ${IMAGE}
   done
   IMAGE=nginx
   pull
