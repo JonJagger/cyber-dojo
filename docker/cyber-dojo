@@ -12,7 +12,7 @@ KATAS=${KATAS_DEFAULT}
 RAILS_ENV=${RAILS_ENV_DEFAULT}
 RUNNER=${RUNNER_DEFAULT}
 
-ME="$(basename $0)"
+ME="$(basename ${0})"
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
@@ -57,9 +57,9 @@ show_use()
   echo '    up [OPTIONS]      Bring up cyber-dojo server'
   echo
   echo 'Options:'
-  echo "        katas=/var/www/cyber-dojo/katas            default:     katas=${KATAS}"
-  echo "    rails_env=[development|production]             default: rails_env=${RAILS_ENV_DEFAULT}"
-  echo "       runner=[DockerTmpRunner|DockerKatasRunner]  default:    runner=${RUNNER_DEFAULT}"
+  echo "    katas=/var/www/cyber-dojo/katas            default: katas=${KATAS}"
+  echo "    rails_env=[development|production]         default: rails_env=${RAILS_ENV_DEFAULT}"
+  echo "    runner=[DockerTmpRunner|DockerKatasRunner] default: runner=${RUNNER_DEFAULT}"
   echo
 }
 
@@ -164,12 +164,10 @@ pull_common_languages_if_none()
   if [ "${PULLED}" == "" ]; then
     echo 'No language images pulled'
     echo 'Pulling a small starting collection of common language images'
-    IMAGES=(gcc_assert ruby_mini_test)
-    #TODO: smaller images for: ruby_minit_test java_junit csharp_nunit
-    for IMAGE in ${IMAGES[*]}
-    do
-      pull ${IMAGE}
-    done
+    IMAGE=gcc_assert
+    pull
+    IMAGE=ruby_mini_test
+    pull
   fi
 }
 
@@ -191,7 +189,8 @@ up()
   export CYBER_DOJO_LOG_CLASS=HostLog
   export CYBER_DOJO_GIT_CLASS=HostGit
 
-  DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+  DIR="$( cd "$( dirname "${0}" )" && pwd )"
+  echo "${DIR}"
   pushd ${DIR} > /dev/null
   echo 'downloading the latest docker-compose.yml'
   curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/docker-compose.yml
@@ -234,7 +233,7 @@ fi
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-if [  $# -eq 0 ]; then
+if [ $# -eq 0 ]; then
   show_use
   exit
 fi
@@ -286,9 +285,9 @@ done
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-if [ "$doLatest"    == true ]; then     latest; exit; fi
-if [ "$doLs"        == true ]; then         ls; exit; fi
-if [ "$doLsHub"     == true ]; then     ls_hub; exit; fi
-if [ "$doPull"      == true ]; then       pull; exit; fi
-if [ "$doUp"        == true ]; then         up; exit; fi
+if [ -n "${doLatest}" ]; then     latest; exit; fi
+if [ -n "${doLs}"     ]; then         ls; exit; fi
+if [ -n "${doLsHub}"  ]; then     ls_hub; exit; fi
+if [ -n "${doPull}"   ]; then       pull; exit; fi
+if [ -n "${doUp}"     ]; then         up; exit; fi
 
