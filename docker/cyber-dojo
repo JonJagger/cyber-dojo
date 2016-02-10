@@ -281,7 +281,7 @@ done
 
 if [ -n "${doInstall}" ]; then install_docker; exit; fi
 
-if ! type "docker" > /dev/null; then
+if ! type "docker" &> /dev/null; then
   echo
   echo 'cyber-dojo requires docker'
   show_how_to_install_docker
@@ -293,7 +293,7 @@ fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if ! type "docker-machine" > /dev/null; then
+if ! type "docker-machine" &> /dev/null; then
   echo
   echo 'cyber-dojo requires docker-machine'
   show_how_to_install_docker_machine
@@ -303,7 +303,7 @@ fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if ! type "docker-compose" > /dev/null; then
+if ! type "docker-compose" &> /dev/null; then
   echo
   echo 'cyber-dojo requires docker-compose'
   show_how_to_install_docker_compose
