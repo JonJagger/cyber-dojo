@@ -145,9 +145,8 @@ latest()
 {
   LS_HUB=`ls_hub`
   PULLED=`pulled_language_images`
-  for IMAGE in ${PULLED[*]}
-  do
-    pull ${IMAGE}
+  echo "${PULLED}" | while read IMAGE ; do
+      pull ${IMAGE}
   done
   IMAGE=nginx
   pull
