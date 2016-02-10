@@ -27,7 +27,7 @@ function show_use
   echo 'Commands:'
   echo '    latest            Repull pulled language images'
   echo '    ls                List pulled cyber-dojo language images'
-  echo '    ls_hub            List all available language images'
+  echo '    ls_hub            List all cyber-dojo language images'
   echo '    pull=IMAGE        Pull cyber-dojo language IMAGE'
   echo '    up [OPTIONS]      Bring up cyber-dojo server'
   echo
@@ -71,7 +71,7 @@ function exit_if_bad_runner
 
 function pulled_language_images
 {
-  ALL_LANGUAGE_IMAGES=`ls_hub | awk '{print $NF}' | sort`
+  ALL_LANGUAGE_IMAGES=`echo "${LS_HUB}" | awk '{print $NF}' | sort`
   PULLED_IMAGES=`docker images | grep ${HUB} | awk '{print $1}'`
   SPLIT=${PULLED_IMAGES//\/// }
   PULLED_IMAGES=`echo "${SPLIT}" | awk '{print $NF}' | sort`
@@ -89,8 +89,10 @@ function pulled_language_images
 
 function ls
 {
+  LS_HUB=`ls_hub`
   PULLED=`pulled_language_images`
-  docker images | grep "$PULLED"
+  echo "${LS_HUB}" | grep 'LANGUAGE'
+  echo "${LS_HUB}" | grep "${PULLED}"
 }
 
 function ls_hub
@@ -129,9 +131,9 @@ function pull_common_languages
 
 function up
 {
-  # TODO: install common language images if no languages
+  # TODO: install common language images if no languages (and say we're doing it)
 
-  # TODO: curl download latest docker-compose.yml
+  # TODO: curl download latest docker-compose.yml (and say we're doing it)
 
   export CYBER_DOJO_RAILS_ENV=${RAILS_ENV}
   export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/languages
