@@ -36,7 +36,7 @@ show_use()
   echo
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 INSTALL_DOCKER_CURL_CMD="curl -sSL https://get.docker.com/ | sh"
 
@@ -81,7 +81,7 @@ show_how_to_install_docker_compose()
   echo "To check for new releases visit https://github.com/docker/compose/releases"
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 pulled_language_images()
 {
@@ -101,7 +101,7 @@ pulled_language_images()
   echo "${PULLED_LANGUAGE_IMAGES}"
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 install_docker()
 {
@@ -115,7 +115,7 @@ install_docker()
   ${INSTALL_DOCKER_COMPOSE_CHMOD_CMD}
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 latest()
 {
@@ -130,7 +130,7 @@ latest()
   pull
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ls()
 {
@@ -140,21 +140,21 @@ ls()
   echo "${LS_HUB}" | grep "${PULLED}"
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ls_hub()
 {
   docker run --rm ${HUB}/web bash -c "./languages/list_all_images.rb"
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 pull()
 {
   docker pull ${HUB}/${IMAGE}:latest
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 pull_common_languages_if_none()
 {
@@ -170,7 +170,7 @@ pull_common_languages_if_none()
   fi
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 up()
 {
@@ -232,14 +232,12 @@ exit_if_bad_runner()
   fi
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 if [ $# -eq 0 ]; then
   show_use
   exit
 fi
-
-# - - - - - - - - - - - - - - - - - - - - - -
 
 for arg in "$@"
 do
@@ -284,7 +282,7 @@ do
   esac
 done
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 if [ -n "${doInstall}" ]; then install_docker; exit; fi
 
@@ -298,7 +296,7 @@ if ! type "docker" > /dev/null; then
   exit
 fi
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 if ! type "docker-machine" > /dev/null; then
   echo
@@ -308,7 +306,7 @@ if ! type "docker-machine" > /dev/null; then
   exit
 fi
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 if ! type "docker-compose" > /dev/null; then
   echo
@@ -318,7 +316,7 @@ if ! type "docker-compose" > /dev/null; then
   exit
 fi
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 if [ -n "${doLatest}"  ]; then         latest; exit; fi
 if [ -n "${doLs}"      ]; then             ls; exit; fi
