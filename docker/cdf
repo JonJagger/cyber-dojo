@@ -15,7 +15,7 @@ KATAS=${KATAS_DEFAULT}
 RAILS_ENV=${RAILS_ENV_DEFAULT}
 RUNNER=${RUNNER_DEFAULT}
 
-ME="$(basename $0)"
+ME="./$(basename $0)"
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
