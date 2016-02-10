@@ -18,7 +18,9 @@ ME="$(basename $0)"
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function show_use {
+function show_use
+{
+  echo
   echo "Usage: ${ME} COMMAND..."
   echo "       ${ME} help"
   echo
@@ -34,17 +36,20 @@ function show_use {
   echo '    up [OPTIONS]           Bring up cyber-dojo server'
   echo
   echo 'Options:'
-  echo "    katas=PATH (default=${KATAS})"
-  echo "    rails_env=[development|production] (default=${RAILS_ENV_DEFAULT})"
+  echo "    katas=PATH                                 (default=${KATAS})"
+  echo "    rails_env=[development|production]         (default=${RAILS_ENV_DEFAULT})"
   echo "    runner=[DockerTmpRunner|DockerKatasRunner] (default=${RUNNER_DEFAULT})"
+  echo
 }
 
-function exit_if_bad_katas {
+function exit_if_bad_katas
+{
   # TODO: check katas folder exists
   true
 }
 
-function exit_if_bad_rails_env {
+function exit_if_bad_rails_env
+{
   if [ "${RAILS_ENV}" != 'development' ] && [ "${RAILS_ENV}" != 'production' ]; then
     echo "${ME} rails_env=${RAILS_ENV} ?"
     echo "See ${ME} help"
@@ -52,7 +57,8 @@ function exit_if_bad_rails_env {
   fi
 }
 
-function exit_if_bad_runner {
+function exit_if_bad_runner
+{
   if [ "${RUNNER}" != 'DockerTmpRunner' ] && [ "${RUNNER}" != 'DockerKatasRunner' ]; then
     echo "${ME} runner=${RUNNER} ?"
     echo "See ${ME} help"
@@ -62,13 +68,15 @@ function exit_if_bad_runner {
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function bash {
+function bash
+{
   docker run --rm -it ${HUB}/web bash
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function build {
+function build
+{
   pushd ${MY_DIR} > /dev/null
   for IMAGE in ${IMAGES[*]}
   do
@@ -84,7 +92,8 @@ function build {
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-function pull {
+function pull
+{
   for IMAGE in ${IMAGES[*]}
   do
     echo "---------------------------------------"
@@ -95,7 +104,8 @@ function pull {
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function push {
+function push
+{
   for IMAGE in ${IMAGES[*]}
   do
     echo "---------------------------------------"
@@ -106,8 +116,8 @@ function push {
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function rm {
-  # remove containers
+function rm
+{
   for IMAGE in ${IMAGES[*]}
   do
     docker ps -a \
@@ -119,8 +129,8 @@ function rm {
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function rmi {
-  # remove images
+function rmi
+{
   for IMAGE in ${IMAGES[*]}
   do
     docker rmi -f ${HUB}/${IMAGE} 2&> /dev/null
@@ -129,7 +139,8 @@ function rmi {
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function test {
+function test
+{
   # After [up] tests can be run *inside* the container, eg
   # $ docker exec web_1 bash -c "cd test/app_models && ./test_dojo.rb"
   # TODO:
@@ -138,7 +149,8 @@ function test {
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function up {
+function up
+{
   pushd ${MY_DIR} > /dev/null
   ./cyber-dojo up rails_env=${RAILS_ENV} katas=${KATAS} runner=${RUNNER}
   popd > /dev/null
@@ -198,12 +210,15 @@ do
       exit_if_bad_runner
       ;;
     *)
-      echo "# <${arg}> ?"
-      show_use
+      echo "${ME}: ${arg} ?"
+      echo "See '${ME} help"
       exit
       ;;
   esac
 done
+
+# - - - - - - - - - - - - - - - - - - - - - -
+# Single commands
 
 if [ "$doBash" == true ]; then bash; exit; fi
 #if [ "$doExec" == true ]; then exec; exit; fi
@@ -211,7 +226,7 @@ if [ "$doPull" == true ]; then pull; exit; fi
 if [ "$doPush" == true ]; then push; exit; fi
 
 # - - - - - - - - - - - - - - - - - - - - - -
-# Do in sensible order...
+# Chained commands
 
 if [ "$doRm"    == true ]; then rm   ; fi
 if [ "$doRmi"   == true ]; then rmi  ; fi

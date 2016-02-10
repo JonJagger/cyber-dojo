@@ -18,24 +18,28 @@ ME="$(basename $0)"
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function show_use {
+function show_use
+{
+  echo
   echo "Usage: ${ME} COMMAND"
   echo "       ${ME} help"
   echo
   echo 'Commands:'
-  echo '    bootstrap         Pull common language images and bring up'
-  echo '    latest            Pull latest language images'
-  echo '    ls                List all cyber-dojo language images'
+  echo '    latest            Repull pulled language images'
+  echo '    ls                List pulled cyber-dojo language images'
+  echo '    ls_hub            List all available language images'
   echo '    pull=IMAGE        Pull cyber-dojo language IMAGE'
   echo '    up [OPTIONS]      Bring up cyber-dojo server'
   echo
   echo 'Options:'
-  echo "    katas=PATH (default=${KATAS})"
-  echo "    rails_env=[development|production] (default=${RAILS_ENV_DEFAULT})"
+  echo "    katas=PATH                                 (default=${KATAS})"
+  echo "    rails_env=[development|production]         (default=${RAILS_ENV_DEFAULT})"
   echo "    runner=[DockerTmpRunner|DockerKatasRunner] (default=${RUNNER_DEFAULT})"
+  echo
 }
 
-function exit_if_bad_rails_env {
+function exit_if_bad_rails_env
+{
   if [ "${RAILS_ENV}" != 'development' ] && [ "${RAILS_ENV}" != 'production' ]; then
     echo "${ME}: rails_env=${RAILS_ENV} ?"
     echo "See ${ME} help"
@@ -43,12 +47,19 @@ function exit_if_bad_rails_env {
   fi
 }
 
-function exit_if_bad_katas {
-  # TODO: check katas folder exists
+function exit_if_bad_katas
+{
+  # Explicitly specified katas PATH corresponds to volume-mounting
+  # an existing katas folder from old-style cyber-dojo server.
+  #
+  # TODO: if this is a new server does the default katas PATH have to exist?
+  #       does the volume-mount create it if its not there?
+
   true
 }
 
-function exit_if_bad_runner {
+function exit_if_bad_runner
+{
   if [ "${RUNNER}" != 'DockerTmpRunner' ] && [ "${RUNNER}" != 'DockerKatasRunner' ]; then
     echo "${ME}: runner=${RUNNER} ?"
     echo "See ${ME} help"
@@ -58,7 +69,49 @@ function exit_if_bad_runner {
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function bootstrap {
+function pulled_language_images
+{
+  ALL_LANGUAGE_IMAGES=`hub_ls | awk '{print $NF}' | sort`
+  PULLED_IMAGES=`docker images | grep ${HUB} | awk '{print $1}'`
+  SPLIT=${PULLED_IMAGES//\/// }
+  PULLED_IMAGES=`echo "${SPLIT}" | awk '{print $NF}' | sort`
+  PULLED_LANGUAGE_IMAGES=`comm -12 <(echo "${ALL_LANGUAGE_IMAGES}") <(echo "${PULLED_IMAGES}")`
+  echo "${PULLED_LANGUAGE_IMAGES}"
+}
+
+function ls
+{
+  PULLED=`pulled_language_images`
+  docker images | grep "$PULLED"
+}
+
+function ls_hub
+{
+  docker run --rm ${HUB}/web bash -c "./languages/list_all_images.rb"
+}
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
+function pull
+{
+  docker pull ${HUB}/${IMAGE}:latest
+}
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
+function latest
+{
+  PULLED=`pulled_language_images`
+  for IMAGE in ${PULLED[*]}
+  do
+    pull ${IMAGE}
+  done
+}
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
+function pull_common_languages
+{
   IMAGES=(gcc_assert ruby_mini_test)
   for IMAGE in ${IMAGES[*]}
   do
@@ -66,39 +119,12 @@ function bootstrap {
   done
 }
 
-# - - - - - - - - - - - - - - - - - - - - - -
+function up
+{
+  # TODO: install common language images if no languages
 
-function list_all_language_images {
-  docker run --rm ${HUB}/web bash -c "./languages/list_all_images.rb"
-}
+  # TODO: curl download latest docker-compose.yml
 
-function ls {
-  list_all_language_images
-}
-
-# - - - - - - - - - - - - - - - - - - - - - -
-
-function pull {
-  docker pull ${HUB}/${IMAGE}:latest
-}
-
-# - - - - - - - - - - - - - - - - - - - - - -
-
-function latest {
-  ALL_LANGUAGE_IMAGES=`list_all_language_images | awk '{print $NF}' | sort`
-  PULLED_IMAGES=`docker images | grep ${HUB} | awk '{print $1}'`
-  SPLIT=${PULLED_IMAGES//\/// }
-  PULLED_IMAGES=`echo "${SPLIT}" | awk '{print $NF}' | sort`
-  PULLED_LANGUAGE_IMAGES=`comm -12 <(echo "${ALL_LANGUAGE_IMAGES}") <(echo "${PULLED_IMAGES}")`
-  for IMAGE in ${PULLED_LANGUAGE_IMAGES[*]}
-  do
-    pull ${IMAGE}
-  done
-}
-
-# - - - - - - - - - - - - - - - - - - - - - -
-
-function up {
   export CYBER_DOJO_RAILS_ENV=${RAILS_ENV}
   export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/languages
   export CYBER_DOJO_EXERCISES_ROOT=${HOME}/exercises
@@ -112,7 +138,6 @@ function up {
   export CYBER_DOJO_GIT_CLASS=HostGit
   DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
   pushd ${DIR} > /dev/null
-  # TODO: curl download docker-compose.yml
   docker-compose \
     --file=./docker-compose.yml \
     up &
@@ -133,14 +158,14 @@ do
       show_use
       exit
       ;;
-    bootstrap)
-      doBootstrap=true
+    latest)
+      doLatest=true
       ;;
     ls)
       doLs=true
       ;;
-    latest)
-      doLatest=true
+    ls_hub)
+      doHubLs=true
       ;;
     pull=*)
       IMAGE="${arg#*=}"
@@ -171,9 +196,9 @@ done
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-if [ "$doBootstrap" == true ]; then  bootstrap; exit; fi
-if [ "$doLs"        == true ]; then         ls; exit; fi
-if [ "$doPull"      == true ]; then       pull; exit; fi
 if [ "$doLatest"    == true ]; then     latest; exit; fi
+if [ "$doLs"        == true ]; then         ls; exit; fi
+if [ "$doLsHub"     == true ]; then     ls_hub; exit; fi
+if [ "$doPull"      == true ]; then       pull; exit; fi
 if [ "$doUp"        == true ]; then         up; exit; fi
 
