@@ -1,10 +1,70 @@
 #!/bin/sh
 
-# TODO: check docker installed
-# TODO: check docker-compose is installed
+APP=cyber-dojo
 
-HOME=/usr/app/cyber-dojo          # home folder inside the web-image
-HUB=cyberdojofoundation           # docker hub username
+# - - - - - - - - - - - - - - - - - - - - - -
+
+function show_how_to_install_docker
+{
+  echo
+  echo 'To install docker:'
+  echo '    $ curl -sSL https://get.docker.com/ | sh'
+}
+
+function show_how_to_install_docker_machine
+{
+  #TODO: add message showing URL to check latest version
+  echo
+  echo 'To install docker-machine:'
+  echo "    $ curl -L https://github.com/docker/machine/releases/download/v0.6.0/docker-machine-`uname -s`-`uname -m` > /usr/local/bin/docker-machine"
+  echo "    $ chmod +x /usr/local/bin/docker-machine"
+}
+
+function show_how_to_install_docker_compose
+{
+  #TODO: add message showing URL to check latest version
+  echo
+  echo 'To install docker-compose:'
+  echo "    $ curl -L https://github.com/docker/compose/releases/download/1.6.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
+  echo "    $ chmod +x /usr/local/bin/docker-compose"
+}
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
+if ! type "docker" > /dev/null; then
+  echo
+  echo 'cyber-dojo depends on docker'
+  show_how_to_install_docker
+  show_how_to_install_docker_machine
+  show_how_to_install_docker_compose
+  echo
+  exit
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
+if ! type "docker-machine" > /dev/null; then
+  echo
+  echo 'cyber-dojo depends on docker-machine'
+  show_how_to_install_docker_machine
+  echo
+  exit
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
+if ! type "docker-compose" > /dev/null; then
+  echo
+  echo 'cyber-dojo depends on docker-compose'
+  show_how_to_install_docker_compose
+  echo
+  exit
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - -
+
+HOME=/usr/app/cyber-dojo   # home folder inside the web-image
+HUB=cyberdojofoundation    # docker hub username
 
 # defaults
 RAILS_ENV_DEFAULT=production
@@ -32,9 +92,9 @@ function show_use
   echo '    up [OPTIONS]      Bring up cyber-dojo server'
   echo
   echo 'Options:'
-  echo "    katas=PATH                                 (default=${KATAS})"
-  echo "    rails_env=[development|production]         (default=${RAILS_ENV_DEFAULT})"
-  echo "    runner=[DockerTmpRunner|DockerKatasRunner] (default=${RUNNER_DEFAULT})"
+  echo "    katas=/var/www/cyber-dojo/katas            default:     katas=${KATAS}"
+  echo "    rails_env=[development|production]         default: rails_env=${RAILS_ENV_DEFAULT}"
+  echo "    runner=[DockerTmpRunner|DockerKatasRunner] default:    runner=${RUNNER_DEFAULT}"
   echo
 }
 
@@ -49,8 +109,7 @@ function exit_if_bad_rails_env
 
 function exit_if_bad_katas
 {
-  # Explicitly specified katas PATH corresponds to volume-mounting
-  # an existing katas folder from old-style cyber-dojo server.
+  # If explicitly specifying katas PATH (does not equal default) then check path exists
   #
   # TODO: if this is a new server does the default katas PATH have to exist?
   #       does the volume-mount create it if its not there?
@@ -120,8 +179,11 @@ function latest
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
-function pull_common_languages
+function pull_common_languages_if_none
 {
+  # TODO: if none...
+
+  echo 'Pulling starting collection of common language images'
   IMAGES=(gcc_assert ruby_mini_test)
   for IMAGE in ${IMAGES[*]}
   do
@@ -131,9 +193,7 @@ function pull_common_languages
 
 function up
 {
-  # TODO: install common language images if no languages (and say we're doing it)
-
-  # TODO: curl download latest docker-compose.yml (and say we're doing it)
+  #pull_common_languages_if_none
 
   export CYBER_DOJO_RAILS_ENV=${RAILS_ENV}
   export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/languages
@@ -146,11 +206,15 @@ function up
   export CYBER_DOJO_DISK_CLASS=HostDisk
   export CYBER_DOJO_LOG_CLASS=HostLog
   export CYBER_DOJO_GIT_CLASS=HostGit
+
   DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
   pushd ${DIR} > /dev/null
-  docker-compose \
-    --file=./docker-compose.yml \
-    up &
+  echo 'downloading the latest docker-compose.yml'
+  # <<<<<<<<<<<<<<<<<<<<<
+  # THIS HAS THE NON-master BRANCH
+  # <<<<<<<<<<<<<<<<<<<<<
+  curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/runner-auto-cache/docker/docker-compose.yml
+  docker-compose --file=./docker-compose.yml up &
   popd > /dev/null
 }
 

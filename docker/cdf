@@ -36,9 +36,9 @@ function show_use
   echo '    up [OPTIONS]           Bring up cyber-dojo server'
   echo
   echo 'Options:'
-  echo "    katas=PATH                                 (default=${KATAS})"
-  echo "    rails_env=[development|production]         (default=${RAILS_ENV_DEFAULT})"
-  echo "    runner=[DockerTmpRunner|DockerKatasRunner] (default=${RUNNER_DEFAULT})"
+  echo "    katas=/var/www/cyber-dojo/katas            default:     katas=${KATAS}"
+  echo "    rails_env=[development|production]         default: rails_env=${RAILS_ENV_DEFAULT}"
+  echo "    runner=[DockerTmpRunner|DockerKatasRunner] default:    runner=${RUNNER_DEFAULT}"
   echo
 }
 
