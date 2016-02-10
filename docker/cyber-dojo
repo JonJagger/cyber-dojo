@@ -189,13 +189,13 @@ up()
   export CYBER_DOJO_LOG_CLASS=HostLog
   export CYBER_DOJO_GIT_CLASS=HostGit
 
-  DIR="$( cd "$( dirname "${0}" )" && pwd )"
-  echo "${DIR}"
-  pushd ${DIR} > /dev/null
+  MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
+  CWD=`pwd`
+  cd "${MY_DIR}" > /dev/null
   echo 'downloading the latest docker-compose.yml'
   curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/docker-compose.yml
   docker-compose --file=./docker-compose.yml up &
-  popd > /dev/null
+  cd "${CWD}" > /dev/null
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
