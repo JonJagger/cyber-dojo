@@ -57,7 +57,9 @@ TODO:
 
    $ ./cyber-dojo up katas=/var/www/cyber-dojo/katas
 
-   ......installing-more-languages-readme.txt ? Describe on blog
+   HOW TO LIST LANGUAGE
+   HOW TO INSTALL A NEW LANGUAGE
+
 
 
 1. Info on installing in Windows
