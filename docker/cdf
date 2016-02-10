@@ -25,7 +25,7 @@ show_use()
   echo "       ${ME} help"
   echo
   echo 'Commands:'
-  echo '    bash                   Shell into cyber-dojo server container'
+  echo '    bash                   Open a shell inside the cyber-dojo server container'
   echo '    build                  Build cyber-dojo server images'
  #echo '    exec COMMAND...        Exec a command in cyber-dojo server container'
   echo '    pull                   Pull cyber-dojo server images from hub'
