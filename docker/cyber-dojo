@@ -138,7 +138,6 @@ ls_repo()
 
 pull()
 {
-  # TODO: WARN if ${IMAGE} is not in ls_repo
   docker pull ${REPO}/${IMAGE}:latest
 }
 
@@ -146,7 +145,6 @@ pull()
 
 rmi()
 {
-  # TODO: WARN if ${IMAGE} is not in ls_repo
   docker rm ${REPO}/${IMAGE}
 }
 
@@ -190,8 +188,6 @@ up()
 
   CWD=`pwd`
   cd "${MY_DIR}" > /dev/null
-  echo 'downloading the latest docker-compose.yml'
-  curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/docker-compose.yml
   docker-compose --file=./docker-compose.yml up -d
   cd "${CWD}" > /dev/null
 }
@@ -231,13 +227,19 @@ exit_if_bad_runner()
 
 upgrade()
 {
+  echo 'upgrading cyber-dojo app images'
+  CWD=`pwd`
+  cd "${MY_DIR}" > /dev/null
+  curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/docker-compose.yml
+  SERVICES=`docker-compose config --services 2> /dev/null`
+  cd "${CWD}" > /dev/null
+  echo "${SERVICES}" | while read IMAGE ; do
+    pull ${IMAGE}
+  done
+  echo 'upgrading cyber-dojo pulled language images'
   LS_REPO=`ls_repo`
   PULLED=`pulled_language_images`
   echo "${PULLED}" | while read IMAGE ; do
-    pull ${IMAGE}
-  done
-  SERVICES=`docker-compose config --services 2> /dev/null`
-  echo "${SERVICES}" | while read IMAGE ; do
     pull ${IMAGE}
   done
 }
