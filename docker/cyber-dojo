@@ -146,7 +146,7 @@ pull()
 
 rmi()
 {
-  docker rm ${REPO}/${IMAGE}
+  docker rmi ${REPO}/${IMAGE}
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -228,9 +228,9 @@ exit_if_bad_runner()
 
 upgrade()
 {
-  echo 'upgrading cyber-dojo app images'
   echo 'downloading latest docker-compose.yml file'
   download_latest_docker_compose_yml
+  echo 'upgrading cyber-dojo app images'
   CWD=`pwd`
   cd "${MY_DIR}" > /dev/null
   SERVICES=`docker-compose config --services 2> /dev/null`
