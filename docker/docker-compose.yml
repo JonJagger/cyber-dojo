@@ -1,16 +1,4 @@
 
-# docker-compose file used by the docker/cyber-dojo script.
-#
-# Variable-substition happens in docker-compose yml files
-# such as this one, but *not* in env_file:'s
-# Since I use variable-substitution in my ROOT environment
-# variables I don't use an env_file:
-#
-# I originally used a data-container for tmp/
-# However, in the avatar's test docker-run I could not find a way
-# to limit access only to its sub-folder of tmp/.
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 nginx:
   image: cyberdojofoundation/nginx
   links:
@@ -40,3 +28,19 @@ web:
     - /var/run/docker.sock:/var/run/docker.sock
     - ${CYBER_DOJO_KATAS_ROOT}:${CYBER_DOJO_KATAS_ROOT}:rw
     - /tmp:/tmp:rw
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# The cyber-dojo script uses this file to find out the
+# service names. It assumes the service name (eg web) is the
+# tag name for the associated docker image (eg cyberdojofoundation/web)
+#
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Variable-substition happens in docker-compose yml files
+# such as this one, but *not* in env_file:'s
+# Since I use variable-substitution in my environment
+# I don't use an env_file:
+#
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# I originally used a data-container for tmp/
+# However, in the avatar's test docker-run I could not find a way
+# to limit access only to its sub-folder of tmp/.
