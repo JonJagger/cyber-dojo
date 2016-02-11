@@ -14,7 +14,7 @@ RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 ME="./$( basename $0 )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
-IMAGES=(nginx web)
+IMAGES=(nginx web)    # TODO: get these from docker-compose config --services
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
