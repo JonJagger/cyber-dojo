@@ -29,7 +29,7 @@ show_use()
   echo '    pull=IMAGE        Pull cyber-dojo language IMAGE'
   echo '    rmi=IMAGE         Remove a pulled cyber-dojo language IMAGE'
   echo '    up [OPTIONS]      Bring up cyber-dojo server'
-  echo '    upgrade           Pull latest images to get bug fixes and improvements'
+  echo '    upgrade           Pull the latest app and language images'
   echo
   echo 'Options:'
   echo "    katas=/var/www/cyber-dojo/katas            default: katas=${KATAS}"
@@ -297,7 +297,8 @@ done
 
 if [ -n "${doInstall}" ]; then install_docker; exit; fi
 
-if ! type "docker" &> /dev/null; then
+hash docker 2> /dev/null
+if [ $? != 0  ]; then
   echo
   echo 'cyber-dojo requires docker'
   show_how_to_install_docker
@@ -309,7 +310,8 @@ fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if ! type "docker-machine" &> /dev/null; then
+hash docker-machine 2> /dev/null
+if [  $? != 0 ]; then
   echo
   echo 'cyber-dojo requires docker-machine'
   show_how_to_install_docker_machine
@@ -319,7 +321,8 @@ fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if ! type "docker-compose" &> /dev/null; then
+hash docker-compose 2> /dev/null
+if [  $? != 0 ]; then
   echo
   echo 'cyber-dojo requires docker-compose'
   show_how_to_install_docker_compose
