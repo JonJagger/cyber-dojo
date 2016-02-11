@@ -14,7 +14,8 @@ RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
-DOCKER_COMPOSE_FILE=docker-compose.yml
+DOCKER_COMPOSE_FILE=cyber-dojo-docker-compose.yml
+DOCKER_COMPOSE_CMD="docker-compose --file=./${DOCKER_COMPOSE_FILE}"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -123,7 +124,7 @@ install_docker()
 
 ls()
 {
-  # TODO: this gives the same as ls_repo when there are no langauges yet pulled
+  # TODO: this gives the same as ls_repo when there are no languages yet pulled
   LS_REPO=`ls_repo`
   PULLED=`pulled_language_images`
   echo "${LS_REPO}" | grep 'LANGUAGE'
@@ -191,9 +192,9 @@ up()
 
   CWD=`pwd`
   cd "${MY_DIR}" > /dev/null
-  docker-compose --file=./${DOCKER_COMPOSE_FILE} stop  2> /dev/null
-  docker-compose --file=./${DOCKER_COMPOSE_FILE} rm -f 2> /dev/null
-  docker-compose --file=./${DOCKER_COMPOSE_FILE} up -d
+  ${DOCKER_COMPOSE_CMD} stop  2> /dev/null
+  ${DOCKER_COMPOSE_CMD} rm -f 2> /dev/null
+  ${DOCKER_COMPOSE_CMD} up -d
   cd "${CWD}" > /dev/null
 }
 
@@ -232,12 +233,12 @@ exit_if_bad_runner()
 
 upgrade()
 {
-  echo 'downloading latest docker-compose.yml file'
+  echo "downloading latest ${DOCKER_COMPOSE_FILE} file"
   download_latest_docker_compose_yml
   echo 'upgrading cyber-dojo app images'
   CWD=`pwd`
   cd "${MY_DIR}" > /dev/null
-  SERVICES=`docker-compose config --services 2> /dev/null`
+  SERVICES=`${DOCKER_COMPOSE_CMD} config --services 2> /dev/null`
   cd "${CWD}" > /dev/null
   echo "${SERVICES}" | while read IMAGE ; do
     pull ${IMAGE}
@@ -261,149 +262,113 @@ download_latest_docker_compose_yml()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-process_command_line_args()
-{
-  for arg in "$@"
-  do
-    case ${arg} in
-      help)
-        show_use
-        exit
-        ;;
-      install_docker)
-        doInstall=true
-        ;;
-      ls)
-        doLs=true
-        ;;
-      ls_repo)
-        doLsRepo=true
-        ;;
-      pull=*)
-        IMAGE="${arg#*=}"
-        doPull=true
-        ;;
-      rmi=*)
-        IMAGE="${arg#*=}"
-        doRmi=true
-        ;;
-      up)
-        doUp=true
-        ;;
-      upgrade)
-        doUpgrade=true
-        ;;
-      katas=*)
-        KATAS="${arg#*=}"
-        ;;
-      runner=*)
-        RUNNER="${arg#*=}"
-        ;;
-      rails_env=*)
-        RAILS_ENV="${arg#*=}"
-        ;;
-      *)
-        echo "${ME}: ${arg} ?"
-        echo "See '${ME} help"
-        exit
-        ;;
-    esac
-  done
-}
+for arg in "$@"
+do
+  case ${arg} in
+    help)
+      show_use
+      exit
+      ;;
+    install_docker)
+      doInstall=true
+      ;;
+    ls)
+      doLs=true
+      ;;
+    ls_repo)
+      doLsRepo=true
+      ;;
+    pull=*)
+      IMAGE="${arg#*=}"
+      doPull=true
+      ;;
+    rmi=*)
+      IMAGE="${arg#*=}"
+      doRmi=true
+      ;;
+    up)
+      doUp=true
+      ;;
+    upgrade)
+      doUpgrade=true
+      ;;
+    katas=*)
+      KATAS="${arg#*=}"
+      ;;
+    runner=*)
+      RUNNER="${arg#*=}"
+      ;;
+    rails_env=*)
+      RAILS_ENV="${arg#*=}"
+      ;;
+    *)
+      echo "${ME}: ${arg} ?"
+      echo "See '${ME} help"
+      exit
+      ;;
+  esac
+done
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if_requested_then_install_docker_and_exit()
-{
-  if [ -n "${doInstall}" ]; then
-    install_docker
-    exit
-  fi
-}
+if [ -n "${doInstall}" ]; then
+  install_docker
+  exit
+fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if_no_docker_then_show_instructions_and_exit()
-{
-  hash docker 2> /dev/null
-  if [ $? != 0  ]; then
-    echo
-    echo 'cyber-dojo requires docker'
-    show_how_to_install_docker
-    show_how_to_install_docker_machine
-    show_how_to_install_docker_compose
-    echo
-    exit
-  fi
-}
+hash docker 2> /dev/null
+if [ $? != 0  ]; then
+  echo
+  echo 'cyber-dojo requires docker'
+  show_how_to_install_docker
+  show_how_to_install_docker_machine
+  show_how_to_install_docker_compose
+  echo
+  exit
+fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if_no_docker_machine_then_show_instructions_and_exit()
-{
-  hash docker-machine 2> /dev/null
-  if [  $? != 0 ]; then
-    echo
-    echo 'cyber-dojo requires docker-machine'
-    show_how_to_install_docker_machine
-    echo
-    exit
-  fi
-}
+hash docker-machine 2> /dev/null
+if [  $? != 0 ]; then
+  echo
+  echo 'cyber-dojo requires docker-machine'
+  show_how_to_install_docker_machine
+  echo
+  exit
+fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if_no_docker_compose_then_show_instructions_and_exit()
-{
-  hash docker-compose 2> /dev/null
-  if [  $? != 0 ]; then
-    echo
-    echo 'cyber-dojo requires docker-compose'
-    show_how_to_install_docker_compose
-    echo
-    exit
-  fi
-}
+hash docker-compose 2> /dev/null
+if [  $? != 0 ]; then
+  echo
+  echo 'cyber-dojo requires docker-compose'
+  show_how_to_install_docker_compose
+  echo
+  exit
+fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if_no_arguments_then_show_use_and_exit()
-{
-  if [ $# -eq 0 ]; then
-    show_use
-    exit
-  fi
-}
+if [ $# -eq 0 ]; then
+  show_use
+  exit
+fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if_no_docker_compose_file_then_download_it()
-{
-  if [ ! -e ${MY_DIR}/${DOCKER_COMPOSE_FILE} ]; then
-    download_latest_docker_compose_yml
-  fi
-}
+if [ ! -e ${MY_DIR}/${DOCKER_COMPOSE_FILE} ]; then
+  download_latest_docker_compose_yml
+fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-do_command()
-{
-  if [ -n "${doUpgrade}" ]; then upgrade; exit; fi
-  if [ -n "${doLs}"      ]; then      ls; exit; fi
-  if [ -n "${doLsRepo}"  ]; then ls_repo; exit; fi
-  if [ -n "${doPull}"    ]; then    pull; exit; fi
-  if [ -n "${doRmi}"     ]; then     rmi; exit; fi
-  if [ -n "${doUp}"      ]; then      up; exit; fi
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-process_command_line_args
-if_requested_then_install_docker_and_exit
-if_no_docker_then_show_instructions_and_exit
-if_no_docker_machine_then_show_instructions_and_exit
-if_no_docker_compose_then_show_instructions_and_exit
-if_no_arguments_then_show_use_and_exit
-if_no_docker_compose_file_then_download_it
-do_command
-
+if [ -n "${doUpgrade}" ]; then upgrade; exit; fi
+if [ -n "${doLs}"      ]; then      ls; exit; fi
+if [ -n "${doLsRepo}"  ]; then ls_repo; exit; fi
+if [ -n "${doPull}"    ]; then    pull; exit; fi
+if [ -n "${doRmi}"     ]; then     rmi; exit; fi
+if [ -n "${doUp}"      ]; then      up; exit; fi
