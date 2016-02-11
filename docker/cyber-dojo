@@ -187,6 +187,8 @@ up()
   export CYBER_DOJO_LOG_CLASS=HostLog
   export CYBER_DOJO_GIT_CLASS=HostGit
 
+  docker-compose stop 2> /dev/null
+  docker-compose rm -f 2> /dev/null
   CWD=`pwd`
   cd "${MY_DIR}" > /dev/null
   docker-compose --file=./docker-compose.yml up -d
