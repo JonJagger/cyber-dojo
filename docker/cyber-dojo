@@ -1,7 +1,7 @@
 #!/bin/sh
 
-HOME=/usr/app/cyber-dojo   # home folder *inside* the web-image
-REPO=cyberdojofoundation   # username on docker hub
+HOME=/usr/app/cyber-dojo         # home folder *inside* the web-image
+REPO=cyberdojofoundation         # username on docker hub
 
 KATAS_DEFAULT=/usr/app/cyber-dojo/katas
 RAILS_ENV_DEFAULT=production
@@ -11,7 +11,7 @@ KATAS=${KATAS_DEFAULT}           # where katas are stored on the *host*
 RAILS_ENV=${RAILS_ENV_DEFAULT}   # rails server -e ${RAILS_ENV}
 RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 
-ME="./$(basename ${0})"
+ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -63,7 +63,7 @@ show_how_to_install_docker_machine()
   echo 'which does'
   echo "$ ${INSTALL_DOCKER_MACHINE_CURL_CMD}"
   echo "$ ${INSTALL_DOCKER_MACHINE_CHMOD_CMD}"
-  echo "To check for new releases visit https://docs.docker.com/machine/install-machine/"
+  echo 'To check for new releases visit https://docs.docker.com/machine/install-machine/'
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -79,7 +79,7 @@ show_how_to_install_docker_compose()
   echo 'which does'
   echo "$ ${INSTALL_DOCKER_COMPOSE_CURL_CMD}"
   echo "$ ${INSTALL_DOCKER_COMPOSE_CHMOD_CMD}"
-  echo "To check for new releases visit https://github.com/docker/compose/releases"
+  echo 'To check for new releases visit https://github.com/docker/compose/releases'
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -313,10 +313,7 @@ fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if [ $# -eq 0 ]; then
-  show_use
-  exit
-fi
+if [ $# -eq 0 ]; then show_use; exit; fi
 
 if [ -n "${doLatest}" ]; then         latest; exit; fi
 if [ -n "${doLs}"     ]; then             ls; exit; fi

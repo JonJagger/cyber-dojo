@@ -1,7 +1,7 @@
 #!/bin/sh
 
-HOME=/usr/app/cyber-dojo   # home folder *inside* the web-image
-REPO=cyberdojofoundation   # username on docker hub
+HOME=/usr/app/cyber-dojo         # home folder *inside* the web-image
+REPO=cyberdojofoundation         # username on docker hub
 
 KATAS_DEFAULT=/usr/app/cyber-dojo/katas
 RAILS_ENV_DEFAULT=development
@@ -11,7 +11,7 @@ KATAS=${KATAS_DEFAULT}           # where katas are stored on the *host*
 RAILS_ENV=${RAILS_ENV_DEFAULT}   # rails server -e ${RAILS_ENV}
 RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 
-ME="./$(basename $0)"
+ME="./$( basename $0 )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
 IMAGES=(nginx web)
