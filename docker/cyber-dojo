@@ -1,7 +1,7 @@
 #!/bin/sh
 
-HOME=/usr/app/cyber-dojo   # home folder *inside* the web-image
-REPO=cyberdojofoundation   # username on docker hub
+HOME=/usr/app/cyber-dojo         # home folder *inside* the web-image
+REPO=cyberdojofoundation         # username on docker hub
 
 KATAS_DEFAULT=/usr/app/cyber-dojo/katas
 RAILS_ENV_DEFAULT=production
@@ -11,7 +11,7 @@ KATAS=${KATAS_DEFAULT}           # where katas are stored on the *host*
 RAILS_ENV=${RAILS_ENV_DEFAULT}   # rails server -e ${RAILS_ENV}
 RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 
-ME="./$(basename ${0})"
+ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -24,11 +24,12 @@ show_use()
   echo
   echo 'Commands:'
   echo '    install_docker    Installs docker, docker-machine, and docker-compose'
-  echo '    latest            Pull bug fixes and upgrades'
   echo '    ls                List pulled cyber-dojo language images'
   echo '    ls_repo           List all cyber-dojo language images'
   echo '    pull=IMAGE        Pull cyber-dojo language IMAGE'
+  echo '    rmi=IMAGE         Remove a pulled cyber-dojo language IMAGE'
   echo '    up [OPTIONS]      Bring up cyber-dojo server'
+  echo '    upgrade           Pull latest images to get bug fixes and improvements'
   echo
   echo 'Options:'
   echo "    katas=/var/www/cyber-dojo/katas            default: katas=${KATAS}"
@@ -63,7 +64,7 @@ show_how_to_install_docker_machine()
   echo 'which does'
   echo "$ ${INSTALL_DOCKER_MACHINE_CURL_CMD}"
   echo "$ ${INSTALL_DOCKER_MACHINE_CHMOD_CMD}"
-  echo "To check for new releases visit https://docs.docker.com/machine/install-machine/"
+  echo 'To check for new releases visit https://docs.docker.com/machine/install-machine/'
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -79,7 +80,7 @@ show_how_to_install_docker_compose()
   echo 'which does'
   echo "$ ${INSTALL_DOCKER_COMPOSE_CURL_CMD}"
   echo "$ ${INSTALL_DOCKER_COMPOSE_CHMOD_CMD}"
-  echo "To check for new releases visit https://github.com/docker/compose/releases"
+  echo 'To check for new releases visit https://github.com/docker/compose/releases'
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -118,21 +119,6 @@ install_docker()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-latest()
-{
-  LS_REPO=`ls_repo`
-  PULLED=`pulled_language_images`
-  echo "${PULLED}" | while read IMAGE ; do
-    pull ${IMAGE}
-  done
-  IMAGE=nginx
-  pull
-  IMAGE=web
-  pull
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 ls()
 {
   LS_REPO=`ls_repo`
@@ -152,7 +138,16 @@ ls_repo()
 
 pull()
 {
+  # TODO: WARN if ${IMAGE} is not in ls_repo
   docker pull ${REPO}/${IMAGE}:latest
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+rmi()
+{
+  # TODO: WARN if ${IMAGE} is not in ls_repo
+  docker rm ${REPO}/${IMAGE}
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -234,6 +229,21 @@ exit_if_bad_runner()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+upgrade()
+{
+  LS_REPO=`ls_repo`
+  PULLED=`pulled_language_images`
+  echo "${PULLED}" | while read IMAGE ; do
+    pull ${IMAGE}
+  done
+  SERVICES=`docker-compose config --services 2> /dev/null`
+  echo "${SERVICES}" | while read IMAGE ; do
+    pull ${IMAGE}
+  done
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 for arg in "$@"
 do
   case ${arg} in
@@ -243,9 +253,6 @@ do
       ;;
     install_docker)
       doInstall=true
-      ;;
-    latest)
-      doLatest=true
       ;;
     ls)
       doLs=true
@@ -257,8 +264,15 @@ do
       IMAGE="${arg#*=}"
       doPull=true
       ;;
+    rmi=*)
+      IMAGE="${arg#*=}"
+      doRmi=true
+      ;;
     up)
       doUp=true
+      ;;
+    upgrade)
+      doUpgrade=true
       ;;
     katas=*)
       KATAS="${arg#*=}"
@@ -313,14 +327,12 @@ fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if [ $# -eq 0 ]; then
-  show_use
-  exit
-fi
+if [ $# -eq 0 ]; then show_use; exit; fi
 
-if [ -n "${doLatest}" ]; then         latest; exit; fi
-if [ -n "${doLs}"     ]; then             ls; exit; fi
-if [ -n "${doLsRepo}" ]; then        ls_repo; exit; fi
-if [ -n "${doPull}"   ]; then           pull; exit; fi
-if [ -n "${doUp}"     ]; then             up; exit; fi
+if [ -n "${doUpgrade}" ]; then upgrade; exit; fi
+if [ -n "${doLs}"      ]; then      ls; exit; fi
+if [ -n "${doLsRepo}"  ]; then ls_repo; exit; fi
+if [ -n "${doPull}"    ]; then    pull; exit; fi
+if [ -n "${doRmi}"     ]; then     rmi; exit; fi
+if [ -n "${doUp}"      ]; then      up; exit; fi
 

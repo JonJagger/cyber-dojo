@@ -23,31 +23,54 @@ TODO:
 
    As root install the main cyber-dojo 'shell' script
    $ curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/cyber-dojo
-   $ chmod +x it
+   $ chmod +x cyber-dojo
 
    Type
    $ ./cyber-dojo
    If docker is not installed the script will list the installation commands
    taken from the Docker website. You can run these manually or, to get the
    cyber-dojo shell script to run them for you, type
-
    $ ./cyber-dojo install_docker
 
    Now you can bring up your cyber-dojo server.
    If this is a brand new cyber-dojo installation just type
-
    $ ./cyber-dojo up
+   EXAMPLE OUTPUT
+   Your cyber-dojo server will have several common languages and test
+   frameworks already setup. If you want to remove or add langages see below.
 
-   If there is already a cyber-dojo server on the host, type
-
+   If there is already a cyber-dojo server on the host,
+   and you want your existing practice sessions to be visible
+   in the new server, type
    $ ./cyber-dojo up katas=PATH
-
    replacing PATH with the location of your katas folder. For example
-
    $ ./cyber-dojo up katas=/var/www/cyber-dojo/katas
+   Your new cyber-dojo server will have the same set of languages as the old one.
+   If you want to remove or add languages see below.
 
-   HOW TO LIST LANGUAGE
-   HOW TO INSTALL A NEW LANGUAGE
+
+
+   To list the installed languages, type
+   $ ./cyber-dojo ls
+   EXAMPLE OUTPUT
+
+   To list available languages, type
+   $ ./cyber-dojo ls_repo
+   EXAMPLE OUTPUT
+
+   To add a new language, type
+   $ ./cyber-dojo pull IMAGE
+   EXAMPLE OUTPUT
+   and restart your server
+   $ ./cyber-dojo up           <<<<< TODO CHECK THIS WORKS NOW I'M USING -d option
+
+
+   To remove an existing language, type
+   $ ./cyber-dojo rm IMAGE
+   EXAMPLE OUTPUT
+   and restart your server
+   $ ./cyber-dojo up           <<<<< TODO CHECK THIS WORKS NOW I'M USING -d option
+
 
 
 2. Info on installing in Windows
