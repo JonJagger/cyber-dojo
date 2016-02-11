@@ -14,7 +14,7 @@ RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
-DOCKER_COMPOSE_FILE=docker-compose.yml
+DOCKER_COMPOSE_FILE=cyber-dojo-docker-compose.yml
 DOCKER_COMPOSE_CMD="docker-compose --file=./${DOCKER_COMPOSE_FILE}"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -124,7 +124,7 @@ install_docker()
 
 ls()
 {
-  # TODO: this gives the same as ls_repo when there are no langauges yet pulled
+  # TODO: this gives the same as ls_repo when there are no languages yet pulled
   LS_REPO=`ls_repo`
   PULLED=`pulled_language_images`
   echo "${LS_REPO}" | grep 'LANGUAGE'
@@ -233,7 +233,7 @@ exit_if_bad_runner()
 
 upgrade()
 {
-  echo 'downloading latest docker-compose.yml file'
+  echo "downloading latest ${DOCKER_COMPOSE_FILE} file"
   download_latest_docker_compose_yml
   echo 'upgrading cyber-dojo app images'
   CWD=`pwd`
