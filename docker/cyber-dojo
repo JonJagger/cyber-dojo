@@ -121,6 +121,7 @@ install_docker()
 
 ls()
 {
+  # TODO: this gives the same as ls_repo when there are no langauges yet pulled
   LS_REPO=`ls_repo`
   PULLED=`pulled_language_images`
   echo "${LS_REPO}" | grep 'LANGUAGE'
@@ -145,7 +146,7 @@ pull()
 
 rmi()
 {
-  docker rm ${REPO}/${IMAGE}
+  docker rmi ${REPO}/${IMAGE}
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -227,21 +228,31 @@ exit_if_bad_runner()
 
 upgrade()
 {
+  echo 'downloading latest docker-compose.yml file'
+  download_latest_docker_compose_yml
   echo 'upgrading cyber-dojo app images'
   CWD=`pwd`
   cd "${MY_DIR}" > /dev/null
-  curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/docker-compose.yml
   SERVICES=`docker-compose config --services 2> /dev/null`
   cd "${CWD}" > /dev/null
   echo "${SERVICES}" | while read IMAGE ; do
     pull ${IMAGE}
   done
+
   echo 'upgrading cyber-dojo pulled language images'
   LS_REPO=`ls_repo`
   PULLED=`pulled_language_images`
   echo "${PULLED}" | while read IMAGE ; do
     pull ${IMAGE}
   done
+}
+
+download_latest_docker_compose_yml()
+{
+  CWD=`pwd`
+  cd "${MY_DIR}" > /dev/null
+  curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/docker-compose.yml
+  cd "${CWD}" > /dev/null
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -333,6 +344,10 @@ fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 if [ $# -eq 0 ]; then show_use; exit; fi
+
+if [ ! -e ${MY_DIR}/docker-compose.yml ]; then
+  download_latest_docker_compose_yml;
+fi
 
 if [ -n "${doUpgrade}" ]; then upgrade; exit; fi
 if [ -n "${doLs}"      ]; then      ls; exit; fi
