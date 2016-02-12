@@ -1,6 +1,4 @@
 
-# test runner providing isolation/protection/security
-# via docker-machine run images https://www.docker.io/
 # Saves the incoming files off /tmp/ and then relies on
 # its associated .sh file to
 # o) issue a [docker-machine env $(node)]

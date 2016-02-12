@@ -1,12 +1,9 @@
 
-# test runner providing isolation/protection/security
-# via docker-run images https://www.docker.io/
-#
-# o) Each test saves *changed* files to the avatar's katas/... sub-folder.
+# o) Saves *changed* files to the katas/.. sub-folder inside the web container
 # o) State *is* retained across tests.
 # o) Untouched files retain the *same* date-time stamp.
 # o) cyber-dojo.sh *can* do incremental makes.
-# o) Horizontal scaling of this runner *is* tied to katas/....
+# o) Dependency on katas/.. making scaling hard (unlike DockerTmpRunner)
 
 class DockerKatasRunner
 

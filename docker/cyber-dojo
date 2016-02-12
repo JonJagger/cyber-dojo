@@ -135,7 +135,7 @@ ls()
 
 ls_repo()
 {
-  docker run --rm ${REPO}/web bash -c "./languages/list_all_images.rb"
+  docker run --rm ${REPO}/web sh -c "./languages/list_all_images.rb"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,5 +1,5 @@
 # Based on http://blog.kontena.io/building-minimal-docker-image-for-rails/
-FROM cyberdojofoundation/alpine_base
+FROM alpine:3.2
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -13,7 +13,10 @@ RUN    apk --update add curl \
     && chmod +x /usr/bin/docker \
     && apk del curl \
     && apk --update add \
-          ruby ruby-bigdecimal tzdata \
+          ruby \
+          ruby-irb \
+          ruby-bigdecimal \
+          tzdata \
           git
 
 ARG CYBER_DOJO_HOME
