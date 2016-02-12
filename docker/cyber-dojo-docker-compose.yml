@@ -38,8 +38,3 @@ web:
 # such as this one, but *not* in env_file:'s
 # Since I use variable-substitution in my environment
 # I don't use an env_file:
-#
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# I originally used a data-container for tmp/
-# However, in the avatar's test docker-run I could not find a way
-# to limit access only to its sub-folder of tmp/.
