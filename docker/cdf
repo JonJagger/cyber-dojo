@@ -18,6 +18,9 @@ IMAGES=(nginx web)    # TODO: get these from docker-compose config --services
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# TODO: add clean
+# docker images | grep "^<none>" | awk '{print $3}' | xargs docker rmi
+
 show_use()
 {
   echo
@@ -27,6 +30,7 @@ show_use()
   echo 'Commands:'
   echo '    bash                   Open a shell inside the cyber-dojo server container'
   echo '    build                  Build cyber-dojo server images'
+ #echo '    clean                  Removes untagged images'
  #echo '    exec COMMAND...        Exec a command in cyber-dojo server container'
   echo '    pull                   Pull cyber-dojo server images from repo'
   echo '    push                   Push cyber-dojo server images to repo'

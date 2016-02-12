@@ -14,7 +14,6 @@ RUN    apk --update add curl \
     && apk del curl \
     && apk --update add \
           ruby \
-          ruby-irb \
           ruby-bigdecimal \
           tzdata \
           git
