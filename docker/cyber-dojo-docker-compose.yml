@@ -27,7 +27,6 @@ web:
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - ${CYBER_DOJO_KATAS_ROOT}:${CYBER_DOJO_KATAS_ROOT}:rw
-    - /tmp:/tmp:rw
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # The cyber-dojo script uses this file to find out the
