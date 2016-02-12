@@ -27,12 +27,12 @@ show_use()
   echo
   echo 'Commands:'
   echo '    install_docker    Installs docker, docker-machine, and docker-compose'
-  echo '    ls                List pulled cyber-dojo language images'
-  echo '    ls_repo           List all cyber-dojo language images'
-  echo '    pull=IMAGE        Pull cyber-dojo language IMAGE'
-  echo '    rmi=IMAGE         Remove a pulled cyber-dojo language IMAGE'
-  echo '    up [OPTIONS]      Bring up cyber-dojo server'
-  echo '    upgrade           Pull the latest app and language images'
+  echo '    ls                Lists pulled cyber-dojo language images'
+  echo '    ls_repo           Lists all cyber-dojo language images'
+  echo '    pull=IMAGE        Pulls cyber-dojo language IMAGE'
+  echo '    rmi=IMAGE         Removes a pulled cyber-dojo language IMAGE'
+  echo '    up [OPTIONS]      Brings up cyber-dojo server'
+  echo '    upgrade           Pulls the latest app and language images'
   echo
   echo 'Options:'
   echo "    katas=/var/www/cyber-dojo/katas            default: katas=${KATAS}"
@@ -367,8 +367,8 @@ fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 if [ -n "${doUpgrade}" ]; then upgrade; exit; fi
-if [ -n "${doLs}"      ]; then      ls; exit; fi
+if [ -n "${doLs}"      ]; then ls     ; exit; fi
 if [ -n "${doLsRepo}"  ]; then ls_repo; exit; fi
-if [ -n "${doPull}"    ]; then    pull; exit; fi
-if [ -n "${doRmi}"     ]; then     rmi; exit; fi
-if [ -n "${doUp}"      ]; then      up; exit; fi
+if [ -n "${doPull}"    ]; then pull   ; exit; fi
+if [ -n "${doRmi}"     ]; then rmi    ; exit; fi
+if [ -n "${doUp}"      ]; then up     ; exit; fi

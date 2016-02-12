@@ -18,9 +18,6 @@ IMAGES=(nginx web)    # TODO: get these from docker-compose config --services
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# TODO: add clean
-# docker images | grep "^<none>" | awk '{print $3}' | xargs docker rmi
-
 show_use()
 {
   echo
@@ -28,16 +25,16 @@ show_use()
   echo "       ${ME} help"
   echo
   echo 'Commands:'
-  echo '    bash                   Open a shell inside the cyber-dojo server container'
-  echo '    build                  Build cyber-dojo server images'
- #echo '    clean                  Removes untagged images'
- #echo '    exec COMMAND...        Exec a command in cyber-dojo server container'
-  echo '    pull                   Pull cyber-dojo server images from repo'
-  echo '    push                   Push cyber-dojo server images to repo'
-  echo '    rm                     Remove local cyber-dojo server containers'
-  echo '    rmi                    Remove local cyber-dojo server images'
- #echo '    test [PATH] [ARG...]   Run PATH tests inside cyber-dojo container'
-  echo '    up [OPTIONS]           Bring up cyber-dojo server'
+  echo '    bash                   Opens a shell inside the cyber-dojo server container'
+  echo '    build                  Builds cyber-dojo server images'
+  echo '    clean                  Removes untagged images'
+ #echo '    exec COMMAND...        Execs a command in cyber-dojo server container'
+  echo '    pull                   Pulls cyber-dojo server images from repo'
+  echo '    push                   Pushs cyber-dojo server images to repo'
+  echo '    rm                     Removes local cyber-dojo server containers'
+  echo '    rmi                    Removes local cyber-dojo server images'
+ #echo '    test [PATH] [ARG...]   Runs PATH tests inside cyber-dojo container'
+  echo '    up [OPTIONS]           Brings up cyber-dojo server'
   echo
   echo 'Options:'
   echo "        katas=/var/www/cyber-dojo/katas            default:     katas=${KATAS_DEFAULT}"
@@ -69,6 +66,13 @@ build()
     fi
   done
   cd "${CWD}" > /dev/null
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+clean()
+{
+  docker images | grep "^<none>" | awk '{print $3}' | xargs docker rmi
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -202,6 +206,9 @@ do
     build)
       doBuild=true
       ;;
+    clean)
+      doClean=true
+      ;;
     #exec)
     #  doExec=true
     #  ;;
@@ -251,6 +258,7 @@ if [ -n "${doPush}" ]; then push; exit; fi
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Chained commands
 
+if [ -n "${doClean}"  ]; then clean; fi
 if [ -n "${doRm}"     ]; then rm   ; fi
 if [ -n "${doRmi}"    ]; then rmi  ; fi
 if [ -n "${doBuild}"  ]; then build; fi
