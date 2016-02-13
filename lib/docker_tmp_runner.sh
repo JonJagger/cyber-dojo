@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Called from lib/docker_tmp_runner.rb DockerTmpRunner.run()
 # See comments in lib/host_shell.rb
@@ -46,7 +46,7 @@ cat $TAR_PATH \
 # tar file has done its job so delete it
 rm $TAR_PATH
 
-# after a 10 second timeout, forcibly shut down the container
+# after 10 seconds, forcibly shut down the container
 (sleep $MAX_SECONDS && docker rm --force $CID &> /dev/null) &
 
 # run cyber-dojo.sh as user=nobody
@@ -57,7 +57,7 @@ EXIT_STATUS=$?
 # https://gist.github.com/ekristen/11254304
 # if the container is not still running then the timeout killed it
 RUNNING=$(docker inspect --format="{{ .State.Running }}" $CID)
-if [ "${RUNNING}" == "false" ]; then
+if [ "$RUNNING" != "true" ]; then
   EXIT_STATUS=137 # (128=timed-out) + (9=killed)
 fi
 

@@ -9,7 +9,7 @@ nginx:
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 web:
-  command: rails server --environment=${CYBER_DOJO_RAILS_ENV}
+  command: /sbin/my_init -- rails server --environment=${CYBER_DOJO_RAILS_ENV}
   environment:
     - CYBER_DOJO_LANGUAGES_ROOT=${CYBER_DOJO_LANGUAGES_ROOT}
     - CYBER_DOJO_EXERCISES_ROOT=${CYBER_DOJO_EXERCISES_ROOT}
