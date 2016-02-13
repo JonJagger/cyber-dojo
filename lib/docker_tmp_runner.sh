@@ -1,13 +1,14 @@
 #!/bin/sh
 
 # Called from lib/docker_tmp_runner.rb DockerTmpRunner.run()
+# See comments in lib/host_shell.rb
 
-FILES_PATH=$1     # where source files are saved to
+FILES_PATH=$1     # where source files have been saved to
 IMAGE=$2          # eg cyberdojofoundation/gcc_assert
 MAX_SECONDS=$3    # eg 10
 
-TAR_PATH=`mktemp`.tgz          # tar file of the source files in $FILES_PATH
-TMP_PATH=/tmp/cyber-dojo       # where source files are copied to inside test container
+TAR_PATH=`mktemp`.tgz          # source files from $FILES_PATH are tarred into this
+TMP_PATH=/tmp/cyber-dojo       # where source files are untarred to to inside test container
 USER=nobody                    # user who runs cyber-dojo.sh inside test container
 
 # create tar file from source files
@@ -28,7 +29,7 @@ CID=$(docker run \
 
 # get the source files into the running container
 # --user=root means root *inside* the container so it can chmod
-# tar [-] means get input from the cat tar-file
+# tar [-] means get input from the catted tar-file
 # tar -C PATH means eXtract the tar's files into PATH
 # sh because alpine doesn't have bash
 # alpine has mkdir, tar, chown
@@ -45,38 +46,19 @@ cat $TAR_PATH \
 # tar file has done its job so delete it
 rm $TAR_PATH
 
-# cyber-dojo.sh runs inside the container. It might complete within 10
-# seconds or it might not. Either way the (detached) running container
-# has to be shut down.
-shut_down_container()
-{
-  docker kill $CID &> /dev/null
-  docker rm --force $CID &> /dev/null
-}
-
-# setup a background process that forcibly shuts down the container
-# after 10 seconds and remembers the pid of the background proces
-(sleep $MAX_SECONDS && shut_down_container) &
-TIMEOUT_PID=$!
+# after a 10 second timeout, forcibly shut down the container
+(sleep $MAX_SECONDS && docker rm --force $CID &> /dev/null) &
 
 # run cyber-dojo.sh as user=nobody
 # the 2>&1 redirect captures compilation failure output
 docker exec --user=$USER $CID sh -c "cd $TMP_PATH && ./cyber-dojo.sh 2>&1"
 EXIT_STATUS=$?
 
-# is the time-out background process is still running?
 # https://gist.github.com/ekristen/11254304
+# if the container is not still running then the timeout killed it
 RUNNING=$(docker inspect --format="{{ .State.Running }}" $CID)
-if [ "${RUNNING}" == "true" ]; then
-  # yes it is; we didn't time-out so kill the background process
-  # and shut down the (detached) container
-  SIG_KILL=9
-  kill -$SIG_KILL $TIMEOUT_PID
-  shut_down_container
-else
-  # no it's not; it's already shut down the container and exited
+if [ "${RUNNING}" == "false" ]; then
   EXIT_STATUS=137 # (128=timed-out) + (9=killed)
 fi
 
-# See comments in lib/host_shell.rb
 exit $EXIT_STATUS
