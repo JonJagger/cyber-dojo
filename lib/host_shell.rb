@@ -20,7 +20,7 @@ class HostShell
   # modifiers
 
   def cd_exec(path, *commands)
-    #@docker_tmp_runner = commands[0].start_with?('./docker_tmp_runner.sh')
+    # @docker_tmp_runner = commands[0].start_with?('./docker_tmp_runner.sh')
     output, exit_status = exec(["cd #{path}"] + commands)
     return output, exit_status
   end
@@ -66,6 +66,10 @@ class HostShell
     # I've run this with backticks for all calls except docker_tmp_runner.sh
     # (using @docker_tmp_runner) and using system() for the docker_tmp_runner.sh
     # call and not done the capture_stdout and you still get the zombie/orphan.
+    #
+    # I've removed this line from docker_tmp_runner.sh
+    #     (sleep $MAX_SECONDS && docker rm --force $CID &> /dev/null) &
+    # and you don't get the zombie/orphan.
 
     output = capture_stdout { system(command) }
 
