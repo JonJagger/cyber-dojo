@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 HOME=/usr/app/cyber-dojo         # home folder *inside* the web-image
 REPO=cyberdojofoundation         # username on docker hub

@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 HOME=/usr/app/cyber-dojo         # home folder *inside* the web-image
 REPO=cyberdojofoundation         # username on docker hub
@@ -25,15 +26,16 @@ show_use()
   echo "       ${ME} help"
   echo
   echo 'Commands:'
-  echo '    bash                   Opens a shell inside the cyber-dojo server container'
   echo '    build                  Builds cyber-dojo server images'
   echo '    clean                  Removes untagged images'
  #echo '    exec COMMAND...        Execs a command in cyber-dojo server container'
+  echo '    logs                   Prints cyber-dojo server container logs'
   echo '    pull                   Pulls cyber-dojo server images from repo'
   echo '    push                   Pushs cyber-dojo server images to repo'
   echo '    rm                     Removes local cyber-dojo server containers'
   echo '    rmi                    Removes local cyber-dojo server images'
- #echo '    test [PATH] [ARG...]   Runs PATH tests inside cyber-dojo container'
+  echo '    sh                     Opens a shell inside the cyber-dojo server container'
+ #echo '    test [PATH] [ARG...]   Runs PATH tests inside cyber-dojo server container'
   echo '    up [OPTIONS]           Brings up cyber-dojo server'
   echo
   echo 'Options:'
@@ -41,13 +43,6 @@ show_use()
   echo "    rails_env=[development|production]             default: rails_env=${RAILS_ENV_DEFAULT}"
   echo "       runner=[DockerTmpRunner|DockerKatasRunner]  default:    runner=${RUNNER_DEFAULT}"
   echo
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-bash()
-{
-  docker run --rm --interactive --tty ${REPO}/web bash
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -73,6 +68,13 @@ build()
 clean()
 {
   docker images | grep "^<none>" | awk '{print $3}' | xargs docker rmi --force
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+logs()
+{
+  echo 'docker logs CONTAINER << TODO'
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -130,6 +132,14 @@ rmi()
   do
     docker rmi -f ${REPO}/${IMAGE} 2&> /dev/null
   done
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+sh()
+{
+  # TODO: sh into the CONTAINER
+  docker run --rm --interactive --tty ${REPO}/web sh
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -200,9 +210,6 @@ do
       show_use
       exit
       ;;
-    bash)
-      doBash=true
-      ;;
     build)
       doBuild=true
       ;;
@@ -212,6 +219,9 @@ do
     #exec)
     #  doExec=true
     #  ;;
+    logs)
+      doLogs=true
+      ;;
     pull)
       doPull=true
       ;;
@@ -223,6 +233,9 @@ do
       ;;
     rmi)
       doRmi=true
+      ;;
+    sh)
+      doSh=true
       ;;
     #test)
     #  doTest=true
@@ -250,8 +263,9 @@ done
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Single commands
 
-if [ -n "${doBash}" ]; then bash; exit; fi
+if [ -n "${doSh}"   ]; then   sh; exit; fi
 #if [ -n "${doExec}" ]; then exec; exit; fi
+if [ -n "${doLogs}" ]; then logs; exit; fi
 if [ -n "${doPull}" ]; then pull; exit; fi
 if [ -n "${doPush}" ]; then push; exit; fi
 
@@ -259,9 +273,9 @@ if [ -n "${doPush}" ]; then push; exit; fi
 # Chained commands
 
 if [ -n "${doClean}"  ]; then clean; fi
-if [ -n "${doRm}"     ]; then rm   ; fi
-if [ -n "${doRmi}"    ]; then rmi  ; fi
+if [ -n "${doRm}"     ]; then    rm; fi
+if [ -n "${doRmi}"    ]; then   rmi; fi
 if [ -n "${doBuild}"  ]; then build; fi
-if [ -n "${doUp}"     ]; then up   ; fi
-#if [ -n "${doTest}"   ]; then test ; fi
+if [ -n "${doUp}"     ]; then    up; fi
+#if [ -n "${doTest}"   ]; then  test; fi
 
