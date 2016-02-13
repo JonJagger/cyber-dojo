@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: needs to be converted to bin/sh
+
 # Called from lib/docker_machine_runner.rb DockerMachineRunner.run()
 
 # parameters

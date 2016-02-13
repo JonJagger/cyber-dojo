@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Called from lib/docker_tmp_runner.rb DockerTmpRunner.run()
 # Also See comments in lib/host_shell.rb
@@ -12,8 +12,7 @@ TMP_PATH=/tmp/cyber-dojo       # Where source files are untarred to to inside te
 USER=nobody                    # user who runs cyber-dojo.sh inside test container
 
 # The docker run/exec commands all use sh and not bash because
-# the language images may be Alpine based which doesn't have bash.
-# Alpine does have mkdir, tar, chown.
+# the web container is based off Alpine based which doesn't have bash.
 
 # Create tar file from source files
 cd $FILES_PATH
@@ -49,8 +48,6 @@ cat $TAR_PATH \
 rm $TAR_PATH
 
 # After max_seconds, forcibly shut down the container.
-# I tried basing the web image FROM Alpine but it left zombie processes
-# behind; now its Phusion based it doesn't.
 (sleep $MAX_SECONDS && docker rm --force $CID &> /dev/null) &
 
 # Run cyber-dojo.sh as user=nobody
@@ -59,7 +56,7 @@ docker exec --user=$USER $CID sh -c "cd $TMP_PATH && ./cyber-dojo.sh 2>&1"
 EXIT_STATUS=$?
 
 # https://gist.github.com/ekristen/11254304
-# If the container isn't running then the sleep process killed it
+# If the container isn't running, the sleep process killed it
 RUNNING=$(docker inspect --format="{{ .State.Running }}" $CID)
 if [ "$RUNNING" != "true" ]; then
   EXIT_STATUS=137 # (128=timed-out) + (9=killed)

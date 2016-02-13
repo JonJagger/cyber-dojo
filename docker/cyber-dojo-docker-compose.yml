@@ -9,7 +9,7 @@ nginx:
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 web:
-  command: /sbin/my_init -- rails server --environment=${CYBER_DOJO_RAILS_ENV}
+  command: rails server --environment=${CYBER_DOJO_RAILS_ENV}
   environment:
     - CYBER_DOJO_LANGUAGES_ROOT=${CYBER_DOJO_LANGUAGES_ROOT}
     - CYBER_DOJO_EXERCISES_ROOT=${CYBER_DOJO_EXERCISES_ROOT}
@@ -29,18 +29,18 @@ web:
     - ${CYBER_DOJO_KATAS_ROOT}:${CYBER_DOJO_KATAS_ROOT}:rw
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# The web: command: starts with /sbin/my_init which comes from its Phusion
-# base image. This is important. It acts as a sort of init for a container.
-# Without it each [test] runs lib/docker_tmp_runner.rb and creates a new
+# The web command is 'rails server...' but this is a suffix to
+#     ENTRYPOINT ["/usr/bin/tini", "-g", "--"]
+# from web's Dockerfile. See https://github.com/krallin/tini
+# This is important. It acts as a sort of init for a container.
+# tini reaps zombie processes which pid 1 is expected to do in an OS.
+# Without it each [test] runs lib/docker_tmp_runner.sh createing a new
 #     Z  [docker_tmp_runner] <defunct> zombie process.
-# Try
-#     $ docker exec docker_web_1 sh "ps -aux"
-# See
-#     https://github.com/phusion/baseimage-docker
 #
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# The cyber-dojo script uses this file to find out the
-# service names. It assumes the service name (eg web) is the
+# The cyber-dojo script uses this file to know the service names via
+#     $ docker config --services
+# It assumes the service name (eg web) is the
 # tag name for the associated docker image (eg cyberdojofoundation/web)
 #
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
