@@ -47,8 +47,10 @@ class HostShell
     # Using system() does not have this problem. But system does not return the output.
     # Hence the capture_stdout wrapper.
     #
-    # Whether you use backticks or system, a zombie/orphan processes is left behind
-    # for each call to lib/docker_tmp_runner.sh
+    # If the web container is based off Alpine, whether you use backticks or system,
+    # a zombie/orphan processes is left behind for each call to lib/docker_tmp_runner.sh
+    # https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/
+    #
     # What happens (ps inside the web container) is
     #
     # PID  USER  TIME   COMMAND
@@ -70,6 +72,9 @@ class HostShell
     # I've removed this line from docker_tmp_runner.sh
     #     (sleep $MAX_SECONDS && docker rm --force $CID &> /dev/null) &
     # and you don't get the zombie/orphan.
+    #
+    # So I come to the conlusion that I can't base the web image off Alpine.
+    # Trying debian:jessie
 
     output = capture_stdout { system(command) }
 
