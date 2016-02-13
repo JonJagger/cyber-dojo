@@ -3,7 +3,7 @@ FROM phusion/passenger-ruby22
 # I tried FROM Alpine. Super small but each call to lib/docker_tmp_runner.rb
 # left behind zombie/orphan processes.
 # See comments in lib/host_shell.rb
-# https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/
+# See https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/
 
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 

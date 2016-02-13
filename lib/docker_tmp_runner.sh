@@ -1,25 +1,29 @@
 #!/bin/bash
 
 # Called from lib/docker_tmp_runner.rb DockerTmpRunner.run()
-# See comments in lib/host_shell.rb
+# Also See comments in lib/host_shell.rb
 
-FILES_PATH=$1     # where source files have been saved to
+FILES_PATH=$1     # Where source files have been saved to
 IMAGE=$2          # eg cyberdojofoundation/gcc_assert
 MAX_SECONDS=$3    # eg 10
 
-TAR_PATH=`mktemp`.tgz          # source files from $FILES_PATH are tarred into this
-TMP_PATH=/tmp/cyber-dojo       # where source files are untarred to to inside test container
+TAR_PATH=`mktemp`.tgz          # Source files from $FILES_PATH are tarred into this
+TMP_PATH=/tmp/cyber-dojo       # Where source files are untarred to to inside test container
 USER=nobody                    # user who runs cyber-dojo.sh inside test container
 
-# create tar file from source files
+# The docker run/exec commands all use sh and not bash because
+# the language images may be Alpine based which doesn't have bash.
+# Alpine does have mkdir, tar, chown.
+
+# Create tar file from source files
 cd $FILES_PATH
 tar -zcf $TAR_PATH .
 
-# start container
+# Run the container
+# --detached so we can follow with exec's
 # --interactive because we pipe the tar file in
 # --net=none for security
 # --user=nobody for security
-# sh because alpine doesn't have bash
 CID=$(docker run \
   --detach \
   --interactive \
@@ -27,12 +31,10 @@ CID=$(docker run \
   --user=$USER \
     $IMAGE sh)
 
-# get the source files into the running container
+# Get the source files into the running container
 # --user=root means root *inside* the container so it can chmod
 # tar [-] means get input from the catted tar-file
 # tar -C PATH means eXtract the tar's files into PATH
-# sh because alpine doesn't have bash
-# alpine has mkdir, tar, chown
 cat $TAR_PATH \
   | docker exec \
       --interactive \
@@ -43,19 +45,21 @@ cat $TAR_PATH \
       && tar zxf - -C $TMP_PATH \
       && chown -R $USER $TMP_PATH"
 
-# tar file has done its job so delete it
+# Tar file has done its job so delete it
 rm $TAR_PATH
 
-# after 10 seconds, forcibly shut down the container
+# After max_seconds, forcibly shut down the container.
+# I tried basing the web image FROM Alpine but it left zombie processes
+# behind; now its Phusion based it doesn't.
 (sleep $MAX_SECONDS && docker rm --force $CID &> /dev/null) &
 
-# run cyber-dojo.sh as user=nobody
-# the 2>&1 redirect captures compilation failure output
+# Run cyber-dojo.sh as user=nobody
+# The 2>&1 redirect captures compilation failure output
 docker exec --user=$USER $CID sh -c "cd $TMP_PATH && ./cyber-dojo.sh 2>&1"
 EXIT_STATUS=$?
 
 # https://gist.github.com/ekristen/11254304
-# if the container is not still running then the timeout killed it
+# If the container isn't running then the sleep process killed it
 RUNNING=$(docker inspect --format="{{ .State.Running }}" $CID)
 if [ "$RUNNING" != "true" ]; then
   EXIT_STATUS=137 # (128=timed-out) + (9=killed)

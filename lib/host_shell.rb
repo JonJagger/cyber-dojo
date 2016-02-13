@@ -47,7 +47,7 @@ class HostShell
     #    output = `#{command}`
     #
     # With backticks, lib/docker_tmp_runner.sh (called from lib/docker_tmp_runner.rb)
-    # sleeps for its *FULL* timeout even if cyber-dojo.sh completes almost instantly.
+    # sleeps for its *FULL* timeout even if cyber-dojo.sh completes almost instantly?!
     # Using system() does not have this problem!
     # But system does not return the output.
     # Hence the capture_stdout wrapper.
