@@ -29,6 +29,13 @@ web:
     - ${CYBER_DOJO_KATAS_ROOT}:${CYBER_DOJO_KATAS_ROOT}:rw
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# The web: command: starts with /sbin/my_init. This is important.
+# It acts as a sort of init for a container. Without it each
+# [test] runs lib/docker_tmp_runner.rb and creates a new zombie
+# process. See
+#                https://github.com/phusion/baseimage-docker
+#
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # The cyber-dojo script uses this file to find out the
 # service names. It assumes the service name (eg web) is the
 # tag name for the associated docker image (eg cyberdojofoundation/web)
