@@ -15,7 +15,7 @@ MAX_SECONDS=$3    # eg 10
 USER=nobody               # user who runs cyber-dojo.sh inside test container
 TMP_PATH=/tmp/cyber-dojo  # Where source files are untarred to to inside test container
 
-# Run the container
+# 1. Run the container
 # --detached so we can follow with exec's
 # --interactive because we pipe the tar file in
 # --net=none for security
@@ -27,7 +27,7 @@ CID=$(sudo docker run \
   --user=$USER \
     $IMAGE sh)
 
-# Tar pipe the source files into the running container
+# 2. Tar pipe the source files into the container
 # http://blog.extracheese.org/2010/05/the-tar-pipe.html
 # --user=root means root *inside* the container so it can chown
 
@@ -41,16 +41,16 @@ CID=$(sudo docker run \
       && tar -xf - -C $TMP_PATH \
       && chown -R $USER $TMP_PATH"
 
-# After max_seconds, forcibly shut down the container.
+# 3. After max_seconds, forcibly shut down the container.
 (sleep $MAX_SECONDS && sudo docker rm --force $CID &> /dev/null) &
 
-# Run cyber-dojo.sh as user=nobody
+# 4. Run cyber-dojo.sh in the container as user=nobody
 # The 2>&1 redirect captures compilation failure output
 sudo docker exec --user=$USER $CID sh -c "cd $TMP_PATH && ./cyber-dojo.sh 2>&1"
 EXIT_STATUS=$?
 
+# 5. If the container isn't running, the sleep process killed it
 # https://gist.github.com/ekristen/11254304
-# If the container isn't running, the sleep process killed it
 RUNNING=$(docker inspect --format="{{ .State.Running }}" $CID)
 if [ "$RUNNING" != "true" ]; then
   EXIT_STATUS=137 # (128=timed-out) + (9=killed)
