@@ -9,6 +9,8 @@ class HostLog
 
   def <<(message)
     @messages << message
+    # for docker logs
+    puts message
   end
 
   def include?(find)

@@ -1,18 +1,16 @@
-# ==== Ignore everything
-# ==== including katas (volume-mounted)
-# ==== including public (nginx)
+#-----Ignore everything
+#-----including katas (volume-mounted)
+#-----including public (nginx)
 
 *
 
-# ==== !Except ===
-# ==== These files
+#-----!Except these files
 
 !Gemfile
 !script
 !config.ru
 
-# ==== !Except ===
-# ==== These folders
+#-----!Except these folders
 
 !app/assets
 !app/controllers

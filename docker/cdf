@@ -4,7 +4,7 @@ set -e
 HOME=/usr/src/cyber-dojo         # home folder *inside* the web-image
 REPO=cyberdojofoundation         # username on docker hub
 
-KATAS_DEFAULT=${HOME}/katas
+KATAS_DEFAULT=${HOME}/app/katas
 RAILS_ENV_DEFAULT=development
 RUNNER_DEFAULT=DockerTmpRunner
 
@@ -12,7 +12,7 @@ KATAS=${KATAS_DEFAULT}           # where katas are stored on the *host*
 RAILS_ENV=${RAILS_ENV_DEFAULT}   # rails server -e ${RAILS_ENV}
 RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 
-ME="./$( basename $0 )"
+ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
 IMAGES=(nginx web)    # TODO: get these from docker-compose config --services
@@ -138,8 +138,8 @@ rmi()
 
 sh()
 {
-  # TODO: sh into the CONTAINER
-  docker run --rm --interactive --tty ${REPO}/web sh
+  # TODO: get container name properly
+  docker exec --interactive --tty docker_web_1 sh
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

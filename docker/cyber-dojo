@@ -4,7 +4,7 @@ set -e
 HOME=/usr/src/cyber-dojo         # home folder *inside* the web-image
 REPO=cyberdojofoundation         # username on docker hub
 
-KATAS_DEFAULT=${HOME}/katas
+KATAS_DEFAULT=${HOME}/app/katas
 RAILS_ENV_DEFAULT=production
 RUNNER_DEFAULT=DockerTmpRunner
 

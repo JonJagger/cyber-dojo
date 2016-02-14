@@ -25,7 +25,7 @@ class Caches
 
 end
 
-# The caches object represents the caches dir.
+# The caches object represents the caches folder.
 # It holds cache files for the languages, exercises, and runner.
 # The primary reason for having caches is to speed up setup and test.
 # Without caches to determine which languages to display at setup

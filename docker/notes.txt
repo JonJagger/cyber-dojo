@@ -18,24 +18,24 @@ https://docs.docker.com/engine/userguide/containers/dockervolumes/ (look for z o
 TODO:
 
 katas
-1. Make cyber-dojo script probe for/var/www/cyber-dojo/katas
+1. Make cyber-dojo script auto-probe for/var/www/cyber-dojo/app/katas
    and if it finds it use that as katas home.
-2. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-   >>>>>>> /usr/src/cyber-dojo/katas <<<<<<
-   is being seen as a volume mount (/usr/src/cyber-dojo/katas on default)
-   but when I shell into the web container I can't see it.
-   Is this a permissions issue?
-   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-3. ????? Where to have katas default when /var/www/cyber-dojo/katas not detected
-   Needs to be dockerignored when building
+
+2. ????? Where to have katas default when /var/www/cyber-dojo/app/katas not detected
 
 
-0. build-docker-image.sh uses bash and BASH_SOURCE. Needs to be sh
-0. drop build-docker-image.sh especially from root folder?
-0. Move coverage/ out of root
-0. Move docker/ out of root
-0. Move zips/ out of root
-0. set hostname inside web container and set prompt to display it
+0. create name for web container so its easy to refer to in cdf/cyber-dojo scripts
+0. create names for ALL cdf containers so they can be filtered
+0. add ./cdf ps       command to list cdf containers
+0. add ./cdf images   command to list cdf images
+0. drop/move build-docker-image.sh especially from root folder?
+0. tidy up .gitignore - follow .dockerignore model, ignore everything, except....
+0. Move coverage/ out of root?
+0. Move docker/ out of root?
+0. Move zips/ out of root?
+0. investigate docker run --tmpfs for web container
+0. set hostname inside web container
+0. set prompt to display hostnme inside web container
 0. Put languages/ into ro:data-container?
 0. Put exercises/ into ro:data-container?
 0. Put test/ into data-container?

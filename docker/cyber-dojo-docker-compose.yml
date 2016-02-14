@@ -21,6 +21,7 @@ web:
     - CYBER_DOJO_DISK_CLASS=${CYBER_DOJO_DISK_CLASS}
     - CYBER_DOJO_LOG_CLASS=${CYBER_DOJO_LOG_CLASS}
     - CYBER_DOJO_GIT_CLASS=${CYBER_DOJO_GIT_CLASS}
+  hostname: cyber-dojo{web}
   image: cyberdojofoundation/web
   ports:
     - "3000:3000"
