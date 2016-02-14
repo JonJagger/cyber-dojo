@@ -73,11 +73,7 @@ RUN apk --update add --virtual build-dependencies \
 # copy cyber-dojo rails app
 
 COPY . ${CYBER_DOJO_HOME}
-RUN mkdir \
-    ${CYBER_DOJO_HOME}/app/caches \
-    ${CYBER_DOJO_HOME}/log \
-    ${CYBER_DOJO_HOME}/tmp
-
+RUN mkdir ${CYBER_DOJO_HOME}/app/caches
 WORKDIR ${CYBER_DOJO_HOME}
 
 ENTRYPOINT ["/usr/bin/tini", "-g", "--"]
