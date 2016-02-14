@@ -97,6 +97,25 @@ EXPOSE 3000
 
 RUN chown -R cyber-dojo ${CYBER_DOJO_HOME}
 
-#Cant use cyber-dojo until/unless all necessary commands in Ruby are sudo'd
-#USER cyber-dojo
-USER root
+# cyber-dojo works if
+# 1. katas is a folder on host and is volume-mounted (in docker-compose yml file)
+#    On the host (default on Docker-Quickstart-Terminal) the katas folder is
+#    owned by cyber-dojo user matching above
+#       $ docker-machine ssh default
+#       $ sudo adduser -D -H -u 19661 cyber-dojo
+#       $ sudo chown -R cyber-dojo /usr/src/cyber-dojo/app/katas
+#
+# 2. katas is a data-container owned by cyber-dojo user again matching
+#    cyber-dojo user above. This is easier to control of course.
+
+USER cyber-dojo
+
+
+
+
+
+
+
+
+
+

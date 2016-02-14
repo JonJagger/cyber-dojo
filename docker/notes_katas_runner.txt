@@ -38,6 +38,7 @@ cyber-dojo.sh run directly in katas/... inside container
         - <<GIT-COMMIT>>
         - 3rd output  -> B
 
+
 katas-data-container-runner (can't volume-mount)
 ---------------------------
 changed files are copied into katas sub-folder
@@ -78,4 +79,12 @@ output returned
         - 4th output    -> KATAS
           <<GIT_COMMIT>>
         - 5th output    -> B
+
+
+
+So I can preserve incremental makes and not have a user+uid
+dependency on the host. Not that its such a big dependency.
+And in its place I have to create a data container from the
+katas/ folder. That makes it tricker to get at the data.
+Might make it easier to accidentally delete the data container.
 

@@ -26,7 +26,7 @@ CID=$(sudo docker run -d -i --net=none --user=nobody $IMAGE sh)
 EXIT_STATUS=$?
 
 # 4. If the container isn't running, the sleep woke and killed it
-RUNNING=$(docker inspect --format="{{ .State.Running }}" $CID)
+RUNNING=$(sudo docker inspect --format="{{ .State.Running }}" $CID)
 if [ "$RUNNING" != "true" ]; then
   exit 137 # (128=timed-out) + (9=killed)
 else
