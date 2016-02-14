@@ -7,6 +7,7 @@ MAINTAINER Jon Jagger <jon@jaggersoft.com>
 # o) docker-client
 # o) ruby, ruby-bigdecimal, tzdata (for rails server)
 # o) git (for cyber-dojo)
+# o) bash (test scripts are written in bash)
 #
 # https://github.com/krallin/tini
 # https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/
@@ -49,7 +50,7 @@ RUN    apk add --update --repository http://dl-1.alpinelinux.org/alpine/edge/com
     && apk del curl \
     && apk --update add \
           ruby ruby-bigdecimal tzdata \
-          git
+          git bash
 
 # - - - - - - - - - - - - - - - - - - - - - -
 # bundle install from cyber-dojo's Gemfile
