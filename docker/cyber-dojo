@@ -164,8 +164,8 @@ pull_common_languages_if_none()
     echo 'Pulling a small starting collection of common language images'
     IMAGE=gcc_assert
     pull
-    IMAGE=ruby_mini_test
-    pull
+    #IMAGE=ruby_mini_test
+    #pull
   fi
 }
 

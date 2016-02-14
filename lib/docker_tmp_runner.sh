@@ -23,7 +23,7 @@ tar -zcf $TAR_PATH .
 # --interactive because we pipe the tar file in
 # --net=none for security
 # --user=nobody for security
-CID=$(docker run \
+CID=$(sudo docker run \
   --detach \
   --interactive \
   --net=none \
@@ -35,7 +35,7 @@ CID=$(docker run \
 # tar [-] means get input from the catted tar-file
 # tar -C PATH means eXtract the tar's files into PATH
 cat $TAR_PATH \
-  | docker exec \
+  | sudo docker exec \
       --interactive \
       --user=root \
       $CID \
@@ -48,11 +48,11 @@ cat $TAR_PATH \
 rm $TAR_PATH
 
 # After max_seconds, forcibly shut down the container.
-(sleep $MAX_SECONDS && docker rm --force $CID &> /dev/null) &
+(sleep $MAX_SECONDS && sudo docker rm --force $CID &> /dev/null) &
 
 # Run cyber-dojo.sh as user=nobody
 # The 2>&1 redirect captures compilation failure output
-docker exec --user=$USER $CID sh -c "cd $TMP_PATH && ./cyber-dojo.sh 2>&1"
+sudo docker exec --user=$USER $CID sh -c "cd $TMP_PATH && ./cyber-dojo.sh 2>&1"
 EXIT_STATUS=$?
 
 # https://gist.github.com/ekristen/11254304

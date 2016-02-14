@@ -17,12 +17,11 @@ module DockerRunner # mixin
   include Runner
 
   def make_cache
-    # If cyber-dojo is running inside a docker container (docker in docker)
-    # then [docker images] must be made by a user that has sufficient rights.
-    # The default user is root, but this can be altered in the Dockerfile.
-    output, _ = shell.exec('docker images')
-    # This will put all image names (eg alpine_base) into the runner cache,
-    # even base image names such as alpine_base. This is harmless.
+    # [docker images] must be made by a user that has sufficient rights.
+    # See web's Dockerfile
+    output, _ = shell.exec('sudo docker images')
+    # This will put all cyberdojofoundation image names into the runner cache,
+    # even nginx and web. This is harmless.
     lines = output.split("\n").select { |line| line.start_with?('cyberdojofoundation') }
     lines.collect { |line| line.split[0] }
   end

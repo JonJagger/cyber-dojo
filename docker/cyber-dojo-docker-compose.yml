@@ -25,9 +25,11 @@ web:
   image: cyberdojofoundation/web
   ports:
     - "3000:3000"
+  user: root
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - ${CYBER_DOJO_KATAS_ROOT}:${CYBER_DOJO_KATAS_ROOT}:rw
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # The web command is 'rails server...' but this is a suffix to

@@ -10,6 +10,10 @@ class HostDir
 
   attr_reader :path
 
+  def parent
+    @disk
+  end
+
   def each_dir
     return enum_for(:each_dir) unless block_given?
     Dir.entries(path).each do |entry|
@@ -33,7 +37,9 @@ class HostDir
 
   def make
     # -p creates intermediate dirs as required.
+    # NB: FAILS if Dockerfile [USER cyber-dojo]
     FileUtils.mkdir_p(path)
+    #shell.exec("sudo -u cyber-dojo mkdir -p #{path}") ????
   end
 
   def write_json(filename, object)
@@ -59,6 +65,7 @@ class HostDir
 
   private
 
+  include ExternalParentChainer
   include StringCleaner
 
   def dot?(name)

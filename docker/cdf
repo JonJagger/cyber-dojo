@@ -29,7 +29,8 @@ show_use()
   echo '    build                  Builds cyber-dojo server images'
   echo '    clean                  Removes untagged images'
  #echo '    exec COMMAND...        Execs a command in cyber-dojo server container'
-  echo '    logs                   Prints cyber-dojo server container logs'
+  echo '    logs_rails             Prints cyber-dojo server rails log'
+  echo '    logs_web               Prints cyber-dojo server container log'
   echo '    pull                   Pulls cyber-dojo server images from repo'
   echo '    push                   Pushs cyber-dojo server images to repo'
   echo '    rm                     Removes local cyber-dojo server containers'
@@ -72,9 +73,16 @@ clean()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-logs()
+logs_rails()
 {
-  echo 'docker logs CONTAINER << TODO'
+  # TODO: get container name properly
+  docker exec docker_web_1 sh -c "cd log && tail -100 development.log"
+}
+
+logs_web()
+{
+  # TODO: get container name properly
+  docker logs docker_web_1
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -219,8 +227,11 @@ do
     #exec)
     #  doExec=true
     #  ;;
-    logs)
-      doLogs=true
+    logs_rails)
+      doLogsRails=true
+      ;;
+    logs_web)
+      doLogsWeb=true
       ;;
     pull)
       doPull=true
@@ -264,7 +275,9 @@ done
 # Single commands
 
 #if [ -n "${doExec}" ]; then exec; exit; fi
-if [ -n "${doLogs}" ]; then logs; exit; fi
+if [ -n "${doLogsRails}" ]; then logs_rails; exit; fi
+if [ -n "${doLogsWeb}"   ]; then   logs_web; exit; fi
+
 if [ -n "${doPull}" ]; then pull; exit; fi
 if [ -n "${doPush}" ]; then push; exit; fi
 

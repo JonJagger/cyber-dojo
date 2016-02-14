@@ -39,19 +39,28 @@ katas
    RUN echo 'export PS1="[\u@docker] \W # "' >> /root/.profile
    But how to run it?
    Can't see a way to add it to web:command
-   Can't see a way to add it to docker exec
+   Can't see a way to add it to docker exec -it docker_web_1 sh
 0. Put languages/ into ro:data-container?
 0. Put exercises/ into ro:data-container?
 0. Put test/ into data-container?
 
 
+0. Create cyber-dojo user and give them permission to run docker inside web
+   Can I do this by adding the user inside the image?
+   Like in [Using Docker] book page 123
+   cyber-dojo user would need rights to katas/
+   Now it gets tricky because thats katas on the *host*
+   But [test] run on pre-existing kata might work
+   (as long as cyber-dojo has read rights to katas)
+
+1. Edit/drop? pull.sh
+2. Fix dashboard download
+3. Merge
+
 0. On old blog pages add links to new blog pages and say old pages are deprecated.
 1. Add new blog page on installing dind server.
 2. Info on installing in Windows
 3. Info on installing on OSX
-4. Edit/drop? pull.sh
-5. Fix dashboard download
-6. Merge
 7. Live
 8. Alpine base for common languages?
 
