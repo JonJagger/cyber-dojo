@@ -22,20 +22,23 @@ katas
    and if it finds it use that as katas home.
 2. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
    >>>>>>> /usr/src/cyber-dojo/katas <<<<<<
-   is not being seen as a volume mount
+   is being seen as a volume mount (/usr/src/cyber-dojo/katas on default)
+   but when I shell into the web container I can't see it.
+   Is this a permissions issue?
    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 3. ????? Where to have katas default when /var/www/cyber-dojo/katas not detected
    Needs to be dockerignored when building
 
 
-0. languages/list_all_images.rb  refactor away the cyber_dojo_home=.. to languages_home without..
-0. build-docker-image.sh uses bash and BASH_SOURCE
-0. Move caches into app, needs to be dockerignored
+0. build-docker-image.sh uses bash and BASH_SOURCE. Needs to be sh
+0. drop build-docker-image.sh especially from root folder?
 0. Move coverage/ out of root
 0. Move docker/ out of root
-0. Move notes/ out of root
 0. Move zips/ out of root
 0. set hostname inside web container and set prompt to display it
+0. Put languages/ into ro:data-container?
+0. Put exercises/ into ro:data-container?
+0. Put test/ into data-container?
 
 
 0. On old blog pages add links to new blog pages and say old pages are deprecated.

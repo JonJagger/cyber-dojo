@@ -74,7 +74,7 @@ RUN apk --update add --virtual build-dependencies \
 
 COPY . ${CYBER_DOJO_HOME}
 RUN mkdir \
-    ${CYBER_DOJO_HOME}/caches \
+    ${CYBER_DOJO_HOME}/app/caches \
     ${CYBER_DOJO_HOME}/log \
     ${CYBER_DOJO_HOME}/tmp
 

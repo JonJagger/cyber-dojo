@@ -18,3 +18,8 @@
 !config
 !lib
 !test
+
+# ==== but do ignore these
+app/caches
+app/languages_offline
+app/notes

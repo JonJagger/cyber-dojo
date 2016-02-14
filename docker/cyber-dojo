@@ -182,7 +182,7 @@ up()
   export CYBER_DOJO_RAILS_ENV=${RAILS_ENV}
   export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/app/languages
   export CYBER_DOJO_EXERCISES_ROOT=${HOME}/app/exercises
-  export CYBER_DOJO_CACHES_ROOT=${HOME}/caches
+  export CYBER_DOJO_CACHES_ROOT=${HOME}/app/caches
   export CYBER_DOJO_KATAS_ROOT=${KATAS}
   export CYBER_DOJO_RUNNER_CLASS=${RUNNER}
   export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
