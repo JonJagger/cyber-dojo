@@ -263,7 +263,6 @@ done
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Single commands
 
-if [ -n "${doSh}"   ]; then   sh; exit; fi
 #if [ -n "${doExec}" ]; then exec; exit; fi
 if [ -n "${doLogs}" ]; then logs; exit; fi
 if [ -n "${doPull}" ]; then pull; exit; fi
@@ -278,4 +277,4 @@ if [ -n "${doRmi}"    ]; then   rmi; fi
 if [ -n "${doBuild}"  ]; then build; fi
 if [ -n "${doUp}"     ]; then    up; fi
 #if [ -n "${doTest}"   ]; then  test; fi
-
+if [ -n "${doSh}"   ]; then   sh; exit; fi
