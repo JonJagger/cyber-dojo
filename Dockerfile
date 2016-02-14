@@ -71,7 +71,7 @@ RUN apk --update add --virtual build-dependencies \
     && apk del build-dependencies
 
 # - - - - - - - - - - - - - - - - - - - - - -
-# start looking at running as non root
+# See docker/notes_sudo.txt
 
 USER root
 # -D            no password
@@ -81,100 +81,22 @@ USER root
 RUN adduser -D -H -u 19661 cyber-dojo
 # there is no sudo command in Alpine
 RUN apk --update add sudo
-# cyber-dojo can [sudo docker ...] to
-# TODO: restrict this to just having sudo on docker command (and socket?)
+# TODO: restrict this to just having sudo on the docker command (and socket?)
 RUN echo "cyber-dojo ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/cyber-dojo
-# inside web container, running as cyber-dojo, this does not work
-#     sudo docker images
-# I think this is because cyber-dojo doesn't have rights to the socket on the *host*
-# The host needs a cyber-dojo user too.
-# I'm using Docker-Quickstart-Terminal
-# $ docker-machine ssh default
-# $ sudo adduser -D -H -u 19661 cyber-dojo
-# $ sudo visudo
-#   add following line to end of /etc/sudoers
-#   cyber-dojoALL=NOPASSWD: ALL
-# rebooted
-# Ok. Now it works. But
-# $ sudo cat /etc/sudoers
-# doesn't have an entry for cyber-dojo. Is it hidden somewhere?
-# Does rebooting default lose the cyber-dojo user? It seems so
-# $ sudo deluser cyber-dojo
-# deluser: unknown user cyber-dojo
-# Hmmm. I also edited the sudo line above...
-# Delete Docker-Toolbox and reinstall to get completely fresh default
-# $ docker-machine ssh default
-# $ id cyber-dojo
-# confirms no cyber-dojo user on default
-# Rebuilding web
-# Ah toss. I lost all my docker images
-# Now it helps they are smaller than they were.
-# Rebuilding nginx,alpine,web
-# Will need to rebuild gcc_assert too (from Alpine)
-# That's finished. Yes. [sudo docker images] works. Excellent.
-# Can progress past setup page displaying languages.
-# caches gets languages cache and runner cache both owned
-# by cyber-dojo. Creation of manifest after exercise is created fails.
-# Yes. Because that needs permission under katas/ on the *host*
-# lib/logs confirms it.
-# Errno::EACCES (Permission denied @ dir_s_mkdir - /usr/src/cyber-dojo/app/katas/F2):
-# lib/host_dir.rb:36:in `make'
-#     FileUtils.mkdir_p(path)
-# Trying same sudo trick. Replaced
-#           FileUtils.mkdir_p(path)
-#        with
-#           shell.exec("sudo mkdir -p #{path}")
-# worked.
-# Now fails at
-# Errno::EACCES (Permission denied @ rb_sysopen - /usr/src/cyber-dojo/app/katas/B8/0D65FA6C/manifest.json):
-# lib/host_dir.rb:52:in `initialize'
-#          File.open(pathed_filename, 'w') { |fd| fd.write(s) }
-#
-# How to do that with a sudo? Maybe something like...
-#
-#    https://gist.github.com/earlonrails/5505668
-#
-#    fd = IO.popen("sudo -u cyber-dojo 'cat > \"#{pathed_filename}\"'", "w+")
-#    fd.write("sudo sh -c 'cat > #{s}'")
-#    fd.close
-#
-# See also lib/host_disk_katas.rb line 85
-#      _, exit_status = shell.cd_exec(path_of(kata), "mkdir #{valid_name} > /dev/null #{stderr_2_stdout}")
-#
-#
-#
-#
-#
-# Hmmm. Now I see clearly another dependency. If katas was a data-container I
-# could resolve this easily. And it could be a data-container.
-# It only doesn't need to be a data-container for James' style of use
-# where files are re-used from katas folder and for security I need to
-# stop the cyber-dojo.sh file from doing cd ../../../; rm -rf *
-# Maybe have two yml files?
-# tmp: Probe for katas folder, temporarily copy katas-data-container Dockerfile
-# into katas, copy it, make sure its owned by cyber-dojo.
-# katas: volume-mount katas folder - still needs to be writable by cyber-dojo user
-#        as identified on the *host*.
-#
-# Duplication is suggesting a new shell.sudo_exec() function
-# Also, multiple logs... suggests
-#    cyber-dojo logs_rails
-#    cyber-dojo logs_web
-#    cyber-dojo logs_nginx
-#
-
-
 
 # - - - - - - - - - - - - - - - - - - - - - -
 # copy cyber-dojo rails app
 
 COPY . ${CYBER_DOJO_HOME}
 RUN mkdir ${CYBER_DOJO_HOME}/app/caches
-RUN chown -R cyber-dojo ${CYBER_DOJO_HOME}
 WORKDIR ${CYBER_DOJO_HOME}
 
 ENTRYPOINT ["/usr/bin/tini", "-g", "--"]
 
 EXPOSE 3000
 
-USER cyber-dojo
+RUN chown -R cyber-dojo ${CYBER_DOJO_HOME}
+
+#Cant use cyber-dojo until/unless all necessary commands in Ruby are sudo'd
+#USER cyber-dojo
+USER root

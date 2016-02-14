@@ -1,0 +1,87 @@
+
+inside web container, I'd like to run as
+user=cyber-dojo
+in sudoers
+NOT member of docker group
+
+this works
+    sudo docker images
+
+Confirmed by deleting default image and reinstalling fresh Docker-Toolbox
+$ docker-machine ssh default
+$ id cyber-dojo
+confirms no cyber-dojo user on default
+
+Can progress past setup page displaying languages.
+app/caches gets languages cache and runner cache both owned by cyber-dojo.
+But app/caches exists *inside* the container
+And app/katas  exists *outside* the container
+So writes to app/katas aren't going to work unless sudo'd
+
+And indeed, creation of manifest after exercise is created fails.
+lib/logs says...
+Errno::EACCES (Permission denied @ dir_s_mkdir - /usr/src/cyber-dojo/app/katas/F2):
+lib/host_dir.rb:36:in `make'
+    FileUtils.mkdir_p(path)
+Trying same sudo trick. Replaced
+          FileUtils.mkdir_p(path)
+       with
+          shell.exec("sudo mkdir -p #{path}")
+worked.
+Now fails at
+Errno::EACCES (Permission denied @ rb_sysopen - /usr/src/cyber-dojo/app/katas/B8/0D65FA6C/manifest.json):
+lib/host_dir.rb:52:in `initialize'
+         File.open(pathed_filename, 'w') { |fd| fd.write(s) }
+
+How to do that with a sudo?
+
+Googling. There is a sudo gem
+   https://rubygems.org/gems/sudo/versions/0.1.1
+   http://www.rubydoc.info/gems/sudo/0.1.1
+   Tried it. No joy. NameError Gem::Ext
+
+Maybe something like...
+
+   https://gist.github.com/earlonrails/5505668
+
+   fd = IO.popen("sudo -u cyber-dojo 'cat > \"#{pathed_filename}\"'", "w+")
+   fd.write("sudo -u cyber-dojo sh -c 'cat > #{s}'")
+   fd.close
+
+   cat? echo? printf?
+
+     sudo -u cyber-dojo (printf "%s" "sdfsdf\"sdf\sdf'\"sdf!sdf" > pathed_filename)
+
+   looks ok. double-quote inside has to be escaped
+             ' is ok
+             ! is ok
+             \ is ok
+
+  See also lib/host_disk_katas.rb line 85
+     _, exit_status = shell.cd_exec(path_of(kata), "mkdir #{valid_name} > /dev/null #{stderr_2_stdout}")
+  See also all the HostGit methods
+
+   I think this needs a proper library (maybe forwarding to shell.exec)
+   with a test suite.
+
+   What operations do I require?
+
+   1, mkdir -p
+   FileUtils.mkdir_p(path)
+      becomes
+   shell.exec("sudo -u cyber-dojo mkdir -p #{path}") ????
+
+   2. chmod
+   File.chmod(0755, pathed_filename)
+      becomes
+   shell.exec("sudo -u cyber-dojo chmod 0755 #{pathed_filename}")
+
+   3. fd.write()   (http://qntm.org/bash)
+   4. IO.read
+   5. Dir.entries
+   5. File.directory?
+   6. File.exists?
+
+Should I park this for now?
+
+Duplication is suggesting a new shell.sudo_exec() function

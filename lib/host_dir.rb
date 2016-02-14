@@ -37,9 +37,10 @@ class HostDir
 
   def make
     # -p creates intermediate dirs as required.
-    # NB: FAILS if Dockerfile [USER cyber-dojo]
     FileUtils.mkdir_p(path)
-    #shell.exec("sudo -u cyber-dojo mkdir -p #{path}") ????
+    # NB: if Dockerfile [USER cyber-dojo]
+    #     FAILS: FileUtils.mkdir_p(path)
+    #     WORKS: shell.exec("sudo -u cyber-dojo mkdir -p #{path}")
   end
 
   def write_json(filename, object)

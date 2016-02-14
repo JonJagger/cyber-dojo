@@ -21,7 +21,7 @@ katas
 1. Make cyber-dojo script auto-probe for/var/www/cyber-dojo/app/katas
    and if it finds it use that as katas home.
 
-2. ????? Where to have katas default when /var/www/cyber-dojo/app/katas not detected
+2. ????? Where to have katas default to when /var/www/cyber-dojo/app/katas not detected
 
 
 0. create name for web container so its easy to refer to in cdf/cyber-dojo scripts
@@ -65,4 +65,7 @@ katas
 8. Alpine base for common languages?
 
 
-
+Also, multiple logs... suggests
+    cyber-dojo logs_rails
+    cyber-dojo logs_web
+    cyber-dojo logs_nginx
