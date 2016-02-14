@@ -1,9 +1,18 @@
 #!/usr/bin/env ruby
 
-# List all language+test's docker image name.
-# Run it inside a docker container supporting ruby (eg web)
-# with the languages data container mounted - this is what
-# the associated list_all_images.sh does.
+# List docker image_name for all language+test's.
+# To run
+#
+#  $ docker run --rm cyberdojofoundation/web sh -c "./app/languages/list_all_images.rb"
+#
+# which is the same as
+#
+#  $ ./docker/cyber-dojo ls_repo
+#
+# or if you working directly on the git repo
+#
+#  $ ./app/languages/list_all_images.rb
+#
 
 require 'json'
 
