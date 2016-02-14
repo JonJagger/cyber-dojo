@@ -30,13 +30,14 @@ CID=$(sudo docker run \
 # 2. After max_seconds, forcibly shut down the container.
 (sleep $MAX_SECONDS && sudo docker rm --force $CID &> /dev/null) &
 
-# 3. Tar pipe files into the container and run cyber-dojo.sh as user=nobody
+# 3. Tar pipe files into the container and run cyber-dojo.sh
+#    --net=none from 1
+#    --user=nobody from 1
 # http://blog.extracheese.org/2010/05/the-tar-pipe.html
 # 2>&1 captures compilation failure output
 (cd $FILES_PATH && tar -cf - .) \
   | sudo docker exec \
       --interactive \
-      --user=$USER \
       $CID \
       sh -c \
         "mkdir $TMP_PATH \
