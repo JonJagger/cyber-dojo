@@ -21,12 +21,14 @@ Make cyber-dojo script probe for/var/www/cyber-dojo/katas
 and if it finds it use that as katas home.
 
 0. languages/list_all_images.rb  refactor away the cyber_dojo_home=.. to languages_home without..
-
-0. On old blog pages add links to new blog pages and say old pages are deprecated.
+0. inside web container there's an app/.DS_Store file
+0. build-docker-image.sh uses bash and BASH_SOURCE
 0. Move languages under app
 0. Move exercises under app
 0. Move caches under app
 0. Move katas under app
+
+0. On old blog pages add links to new blog pages and say old pages are deprecated.
 
 1. Add new blog page on installing dind server.
 2. Info on installing in Windows

@@ -7,7 +7,7 @@
 
 require 'json'
 
-cyber_dojo_home = File.expand_path('..', File.dirname(__FILE__))
+languages_home = File.expand_path('.', File.dirname(__FILE__))
 
 $longest_test=""
 $longest_language=""
@@ -17,7 +17,7 @@ def max_size(lhs, rhs)
 end
 
 images = {}
-Dir.glob("#{cyber_dojo_home}/languages/*/*/manifest.json") do |file|
+Dir.glob("#{languages_home}/*/*/manifest.json") do |file|
   manifest = JSON.parse(IO.read(file))
   language, test = manifest['display_name'].split(',').map { |s| s.strip }
   $longest_language = max_size($longest_language, language)

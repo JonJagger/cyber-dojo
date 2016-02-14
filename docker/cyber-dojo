@@ -136,7 +136,7 @@ ls()
 
 ls_repo()
 {
-  docker run --rm ${REPO}/web sh -c "./languages/list_all_images.rb"
+  docker run --rm ${REPO}/web sh -c "./app/languages/list_all_images.rb"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -180,8 +180,8 @@ up()
   pull_common_languages_if_none
 
   export CYBER_DOJO_RAILS_ENV=${RAILS_ENV}
-  export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/languages
-  export CYBER_DOJO_EXERCISES_ROOT=${HOME}/exercises
+  export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/app/languages
+  export CYBER_DOJO_EXERCISES_ROOT=${HOME}/app/exercises
   export CYBER_DOJO_CACHES_ROOT=${HOME}/caches
   export CYBER_DOJO_KATAS_ROOT=${KATAS}
   export CYBER_DOJO_RUNNER_CLASS=${RUNNER}
