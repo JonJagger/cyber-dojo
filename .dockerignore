@@ -20,7 +20,6 @@
 !app/helpers
 !app/languages
 !app/lib
-!app/mailers
 !app/models
 !app/views
 !config
