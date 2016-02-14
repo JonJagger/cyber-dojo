@@ -4,7 +4,7 @@ MAINTAINER Jon Jagger <jon@jaggersoft.com>
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # install
 # o) tini (for pid 1 zombie reaping)
-# o) docker-client (see docker/docker-from-docker-readme.txt)
+# o) docker-client
 # o) ruby, ruby-bigdecimal, tzdata (for rails server)
 # o) git (for cyber-dojo)
 #
@@ -12,7 +12,6 @@ MAINTAINER Jon Jagger <jon@jaggersoft.com>
 # https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/
 #
 # Launching a docker app (that itself uses docker) is different on different OS's...
-#
 # OSX Yosemite
 # ------------
 # The Docker-Quickstart-Terminal uses docker-machine to forward

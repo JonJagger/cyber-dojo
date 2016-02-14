@@ -1,10 +1,10 @@
 #!/bin/sh
 set -e
 
-HOME=/usr/app/cyber-dojo         # home folder *inside* the web-image
+HOME=/usr/src/cyber-dojo         # home folder *inside* the web-image
 REPO=cyberdojofoundation         # username on docker hub
 
-KATAS_DEFAULT=/usr/app/cyber-dojo/katas
+KATAS_DEFAULT=${HOME}/katas
 RAILS_ENV_DEFAULT=production
 RUNNER_DEFAULT=DockerTmpRunner
 
@@ -125,7 +125,7 @@ install_docker()
 
 ls()
 {
-  # TODO: this gives the same as ls_repo when there are no languages yet pulled
+  # TODO: this gives the same as ls_repo when there are no languages pulled yet
   LS_REPO=`ls_repo`
   PULLED=`pulled_language_images`
   echo "${LS_REPO}" | grep 'LANGUAGE'

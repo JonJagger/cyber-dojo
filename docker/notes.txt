@@ -1,14 +1,4 @@
 
-drop timeout from Alpine
-drop installing bash from Alpine
-in new runner use probe into language image to see
-  if its Ubuntu or Alpine and do command with timeout in if/else
-  put this into trunk. Yes. This means I could make this be
-  the runner for old style deployment (if you re-pull).
-  It would work for both images. Maybe I should leave pull.sh in place
-  but add a warning.
-
-
 Add file for OSX too (sw_vers is the command)
 On OSX Docker-Quickstart-Terminal you will need to...
 $ docker-machine ssh default
@@ -27,16 +17,25 @@ https://docs.docker.com/engine/userguide/containers/dockervolumes/ (look for z o
 
 TODO:
 
+Make cyber-dojo script probe for/var/www/cyber-dojo/katas
+and if it finds it use that as katas home.
+
+0. languages/list_all_images.rb  refactor away the cyber_dojo_home=.. to languages_home without..
+
 0. On old blog pages add links to new blog pages and say old pages are deprecated.
+0. Move languages under app
+0. Move exercises under app
+0. Move caches under app
+0. Move katas under app
 
 1. Add new blog page on installing dind server.
 2. Info on installing in Windows
 3. Info on installing on OSX
-4. Edit pull.sh
+4. Edit/drop? pull.sh
 5. Fix dashboard download
 6. Merge
 7. Live
-8. Alpine scripts for common languages?
+8. Alpine base for common languages?
 
 
 
