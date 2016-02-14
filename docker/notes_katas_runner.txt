@@ -1,0 +1,43 @@
+
+DockerTmpRunner - DockerKatasRunner
+------------------------------------
+Both need to write to katas/ but only to save results.
+Be that via a data-container or a volume-mount
+Be that via a microservice or not
+
+
+But KatasRunner also needs to *read* from katas/
+
+One issue is: what are the date-time stamps on the files inside the run-container?
+o) tmp-runner   == brand new
+o) katas-runner == as from last time if the file didn't change
+
+One issue is: what files are actually inside the run-container?
+o) tmp-runner   == only the visible files.
+o) katas-runner == everything, .o file, executables, etc.
+
+What are the trade offs?
+
+katas (volume-mounted)
+---------------------
+changed visible files are copied into katas sub-folder (volume mounted)
+runner's docker-run volume-mounts katas sub-folder
+executable files end up in katas sandboxes automatically
+probably fastest implementation
+coupling between the runner and the katas folder
+files don't have to be copied back from runner into sandboxes
+
+katas (data-container)
+----------------------
+changed visible files are copied into katas sub-folder (in data-container)
+runner's docker run does not volume-mount (can't)
+*all* files in data-container are tarred up into temp tar file
+temp tar file is cat-pipe-untarred into run-container
+docker-run runs in its container
+*all* files in run-container are tarred up
+tar file in run-container is copied *back*
+tar file in the web-container is untarred into the data-container.
+
+
+Assumption: untarring will preserve date-time stamps.
+Viz I don't use the m option.

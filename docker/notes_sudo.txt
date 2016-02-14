@@ -49,6 +49,7 @@ Maybe something like...
    fd.close
 
    cat? echo? printf?
+   https://bash.cyberciti.biz/guide/Echo_Command
 
      sudo -u cyber-dojo (printf "%s" "sdfsdf\"sdf\sdf'\"sdf!sdf" > pathed_filename)
 
@@ -84,4 +85,10 @@ Maybe something like...
 
 Should I park this for now?
 
-Duplication is suggesting a new shell.sudo_exec() function
+Or is it all a red-herring?
+Not convinced this won't impact UIDs of cyber-dojo on the host.
+Yup. To avoid that I need a katas-data-container.
+
+
+
+shell.sudo_exec() ???

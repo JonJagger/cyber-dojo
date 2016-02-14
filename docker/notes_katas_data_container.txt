@@ -1,0 +1,22 @@
+
+If katas is a (linked) data-container I can control its rights in its Dockerfile.
+I can't restrict access to katas/ sub-folder but I don't need to.
+I don't need to for katas-runner either (assuming I tar files both ways)
+
+What about the one-time *creation* of the data-container?
+That's ok too since I'm copying them. Just need read-access.
+
+The data-container can be made FROM the web container.
+This will ensure it has the same cyber-dojo user.
+Does it increase the data-container size? Read this just recently.
+Using Docker, p54
+Or use base image with cyber-dojo user?
+
+
+Maybe have two yml files?
+
+  tmp: Probe for katas folder, temporarily copy katas-data-container Dockerfile
+       into katas, copy it, make sure its owned by cyber-dojo.
+
+  katas: volume-mount katas folder - still needs to be writable by cyber-dojo user
+         as identified on the *host*.
