@@ -34,8 +34,12 @@ katas
 0. Move docker/ out of root?
 0. Move zips/ out of root?
 0. investigate docker run --tmpfs for web container
-0. set hostname inside web container
-0. set prompt to display hostnme inside web container
+0. set prompt to display hostname inside web container
+   This is tricky. Can create a .profile by adding this line to Dockerfile
+   RUN echo 'export PS1="[\u@docker] \W # "' >> /root/.profile
+   But how to run it?
+   Can't see a way to add it to web:command
+   Can't see a way to add it to docker exec
 0. Put languages/ into ro:data-container?
 0. Put exercises/ into ro:data-container?
 0. Put test/ into data-container?
