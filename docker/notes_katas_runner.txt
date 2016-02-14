@@ -18,26 +18,64 @@ o) katas-runner == everything, .o file, executables, etc.
 
 What are the trade offs?
 
-katas (volume-mounted)
----------------------
-changed visible files are copied into katas sub-folder (volume mounted)
-runner's docker-run volume-mounts katas sub-folder
-executable files end up in katas sandboxes automatically
-probably fastest implementation
-coupling between the runner and the katas folder
-files don't have to be copied back from runner into sandboxes
+B = Browser
+V = volume on host
+D = data-container
+L = local volume
+R = run-container
 
-katas (data-container)
-----------------------
-changed visible files are copied into katas sub-folder (in data-container)
-runner's docker run does not volume-mount (can't)
-*all* files in data-container are tarred up into temp tar file
-temp tar file is cat-pipe-untarred into run-container
-docker-run runs in its container
-*all* files in run-container are tarred up
-tar file in run-container is copied *back*
-tar file in the web-container is untarred into the data-container.
+katas-volume-runner
+-------------------
+changed files are copied into katas/...
+cyber-dojo.sh run directly in katas/... inside container
+   - uid dependency on host
+   - direct coupling between the runner and the katas/... folder (volume mount)
+        - katas/ holds src files and intermediates (eg .o files)
+   - file copying
+        - 1st B       -> V:katas/... (changed only, preserve date-time stamps) RUN+DIFF
+        - <<RUN>>
+        - 2nd output  -> V:katas/...
+        - <<GIT-COMMIT>>
+        - 3rd output  -> B
+
+katas-data-container-runner (can't volume-mount)
+---------------------------
+changed files are copied into katas sub-folder
+*all* files in katas/... are tar piped into tmp/... in container
+cyber-dojo.sh runs in tmp/... inside container
+*all* files in tmp/... in container are tar|piped *back* to katas/...
+    - no uid dependency on host
+    - indirect coupling between runner and katas/... (via path argument)
+        - katas holds src files and intermediates (eg .o files)
+    - file copying
+        - 1st B           -> D:katas/... (changed only, preserve date-time stamps)
+        - 2nd D:katas/... -> R:tmp/...   (all)
+        - <<RUN>>
+        - 3rd R:tmp/...   -> D:katas/... (all, preserve data-time stamps) <<<<<<<<<<<<<<<<<<<<<<<
+        - 4th output      -> D:katas
+        - <<GIT-COMMIT>>
+        - 5rd output      -> B
+    STEP 3 IS THE CRUCIAL ONE.
+    IT MEANS ITS POSSIBLE TO AVOID VOLUME MOUNT AND GET INCREMENTAL BUILDS
 
 
-Assumption: untarring will preserve date-time stamps.
-Viz I don't use the m option.
+tmp-runner
+----------
+all files are copied into tmp/...
+*all* files in tmp/... are tar piped into tmp/... in container
+cyber-dojo.sh runs in tmp/... inside container
+output returned
+    - elsewhere output and (changed) files saved to katas
+        - katas could be volume-mount on host
+        - katas could be data container
+    - no uid dependency on host
+    - no coupling between runner and katas/...
+    - file copying
+        - 1st B         -> L:tmp/... (all, date-time stamps are new)
+        - 2nd L:tmp/... -> C:tmp/... (all)
+          <<RUN>>
+        - 3rd B         -> KATAS
+        - 4th output    -> KATAS
+          <<GIT_COMMIT>>
+        - 5th output    -> B
+
