@@ -14,12 +14,15 @@
 # ==== !Except ===
 # ==== These folders
 
-!app
+!app/assets
+!app/controllers
+!app/exercises
+!app/helpers
+!app/languages
+!app/lib
+!app/mailers
+!app/models
+!app/views
 !config
 !lib
 !test
-
-# ==== but *do* ignore these
-app/caches
-app/languages_offline
-app/notes
