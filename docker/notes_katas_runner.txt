@@ -42,22 +42,31 @@ cyber-dojo.sh run directly in katas/... inside container
 katas-data-container-runner (can't volume-mount)
 ---------------------------
 changed files are copied into katas sub-folder
-*all* files in katas/... are tar piped into tmp/... in container
+*all* files in katas/... are tar piped into container in tmp/...
 cyber-dojo.sh runs in tmp/... inside container
-*all* files in tmp/... in container are tar|piped *back* to katas/...
+*all* files in container in tmp/... are tar|piped *back* to katas/...
     - no uid dependency on host
     - indirect coupling between runner and katas/... (via path argument)
-        - katas holds src files and intermediates (eg .o files)
+        - katas holds src files and extra files (eg .o files, executables)
     - file copying
         - 1st B           -> D:katas/... (changed only, preserve date-time stamps)
-        - 2nd D:katas/... -> R:tmp/...   (all)
+     TP - 2nd D:katas/... -> R:tmp/...   (all)
         - <<RUN>>
-        - 3rd R:tmp/...   -> D:katas/... (all, preserve data-time stamps) <<<<<<<<<<<<<<<<<<<<<<<
+     TP - 3rd R:tmp/...   -> D:katas/... (all, preserve data-time stamps) <<<<<< TO PROVE <<<<<<<<
         - 4th output      -> D:katas
         - <<GIT-COMMIT>>
         - 5rd output      -> B
     STEP 3 IS THE CRUCIAL ONE.
-    IT MEANS ITS POSSIBLE TO AVOID VOLUME MOUNT AND GET INCREMENTAL BUILDS
+    It means it's possible to avoid the volume-mount and still get
+    incremental builds. This is an important use case for James.
+    Not using a volume-mount means there is no dependency on hosts cyber-dojo uid
+    and ownership of katas volume. Price is extra copying.
+    Note that each git commit only commits visible files.
+    The extra files only live 'once' in the sandbox
+    Price is extra copying. Two tar pipes. Checked with James and typical
+    exercise he uses (with incremental builds) has tar file of  1.6MB.
+    Incremental build is less than one second  (23-42 ms)
+    Full build is about 3-4 seconds. (1904-2568-2873 ms)
 
 
 tmp-runner
@@ -87,4 +96,14 @@ dependency on the host. Not that its such a big dependency.
 And in its place I have to create a data container from the
 katas/ folder. That makes it tricker to get at the data.
 Might make it easier to accidentally delete the data container.
+
+
+But thinking a good option is to just support a katas-data-container
+and have no volume-mounting at all
+
+ DockerTmpRunner    - this is really a non-incremental-runner (better name?)
+ DockerKatasRunner  - this is an incremental-runner
+
+
+
 
