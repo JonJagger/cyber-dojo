@@ -236,9 +236,19 @@ up()
 
 exit_if_bad_rails_env()
 {
-  if [ "${RAILS_ENV}" != 'development' ] && [ "${RAILS_ENV}" != 'production' ]; then
+  if [ "${RAILS_ENV}" != 'development' ] &&
+     [ "${RAILS_ENV}" != 'production' ];
+  then
     echo "${ME}: rails_env=${RAILS_ENV} ?"
     echo "See ${ME} help"
+    exit
+  fi
+  if [ "${RAILS_ENV}" == 'production' ]; then
+    # <<<<<<< TODO >>>>>>>>
+    echo 'up rails_env=production'
+    echo '>>>> not supported yet'
+    echo '>>>> Dockerfile currently hard-wires development'
+    echo '>>>> up abandoned'
     exit
   fi
 }
@@ -258,7 +268,9 @@ exit_if_bad_katas()
 
 exit_if_bad_runner()
 {
-  if [ "${RUNNER}" != 'DockerTmpRunner' ] && [ "${RUNNER}" != 'DockerKatasRunner' ]; then
+  if [ "${RUNNER}" != 'DockerTmpRunner' ] &&
+     [ "${RUNNER}" != 'DockerKatasRunner' ];
+  then
     echo "${ME}: runner=${RUNNER} ?"
     echo "See ${ME} help"
     exit

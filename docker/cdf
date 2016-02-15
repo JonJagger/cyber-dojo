@@ -242,7 +242,7 @@ exit_if_bad_rails_env()
   fi
   if [ "${RAILS_ENV}" == 'production' ]; then
     # <<<<<<< TODO >>>>>>>>
-    echo 'rails_env=production'
+    echo 'up rails_env=production'
     echo '>>>> not supported yet'
     echo '>>>> Dockerfile currently hard-wires development'
     echo '>>>> up abandoned'
