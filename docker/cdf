@@ -19,6 +19,7 @@ MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 IMAGES=(user-base nginx web)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# TODO: detect if more than one command entered.
 # TODO: get IMAGES from docker-compose config --services
 # TODO: logs better names
 # TODO: rmi could be more efficient

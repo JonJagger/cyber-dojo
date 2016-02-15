@@ -20,6 +20,7 @@ DOCKER_COMPOSE_CMD="docker-compose --file=./${DOCKER_COMPOSE_FILE}"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# TODO: detect if more than one command entered
 # TODO: pull all language images == fetch? all?
 # TODO: repo -> ls?
 # TODO: bootstrap= install_docker + pull_all_languages + up
