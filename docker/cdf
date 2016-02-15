@@ -79,7 +79,7 @@ build()
 
 clean()
 {
-  docker images | grep "^<none>" | awk '{print $3}' | xargs docker rmi --force
+  docker images -q -f='dangling=true' | xargs docker rmi --force
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
