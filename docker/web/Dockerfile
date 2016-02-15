@@ -13,6 +13,7 @@ ENTRYPOINT ["/usr/bin/tini", "-g", "--"]
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # install docker-client
 # Launching a docker app (that itself uses docker) is different on different OS's...
+#
 # OSX Yosemite
 # ------------
 # The Docker-Quickstart-Terminal uses docker-machine to forward
@@ -39,7 +40,7 @@ ENTRYPOINT ["/usr/bin/tini", "-g", "--"]
 #    -v /usr/lib/x86_64-linux-gnu/libapparmor.so.1.2.0 ...
 #
 # I originally used docker-compose extension files specific to each OS.
-# I now install the docker client inside the docker.
+# I now install the docker client inside the image.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 USER root
