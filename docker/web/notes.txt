@@ -1,0 +1,16 @@
+
+I tried moving the creation of the docker binary inside the image
+and the sudo to give cyber-dojo user rights to run docker image
+into a dedicated 'runner' Dockerfile.
+I could not create an image/data-container
+VOLUME /usr/bin/docker
+failed with a message
+
+Step 5 : VOLUME /usr/bin/docker
+cannot mount volume over existing file, file exists /mnt/sda1/var/lib/docker/aufs/mnt/07b23cd124c7872f30d3e219aa665b1b89e7d4a019febd1a906b3294b0efdaa8/usr/bin/docker
+
+Same thing happened for
+VOLUME /etc/sudoers.d/cyber-dojo
+
+
+This is a shame since they are logically separate.

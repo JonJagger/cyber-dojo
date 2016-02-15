@@ -1,10 +1,4 @@
 
-Add file for OSX too (sw_vers is the command)
-On OSX Docker-Quickstart-Terminal you will need to...
-$ docker-machine ssh default
-run commands from there (which ones? what is default based on?)
-Answer=Tiny Core. Has sh not bash
-
 Does pull.sh still do an image update check?
 It still calls caches/refresh_all.sh *after* the git pull.
 So refresh_all could be updated to reinstate the image update.
@@ -26,9 +20,6 @@ katas
 
 0. create name for web container so its easy to refer to in cdf/cyber-dojo scripts
 0. create names for ALL cdf containers so they can be filtered
-0. add ./cdf ps       command to list cdf containers
-0. add ./cdf images   command to list cdf images
-0. drop/move build-docker-image.sh especially from root folder?
 0. tidy up .gitignore - follow .dockerignore model, ignore everything, except....
 0. Move coverage/ out of root?
 0. Move docker/ out of root?
@@ -44,14 +35,6 @@ katas
 0. Put exercises/ into ro:data-container?
 0. Put test/ into data-container?
 
-
-0. Create cyber-dojo user and give them permission to run docker inside web
-   Can I do this by adding the user inside the image?
-   Like in [Using Docker] book page 123
-   cyber-dojo user would need rights to katas/
-   Now it gets tricky because thats katas on the *host*
-   But [test] run on pre-existing kata might work
-   (as long as cyber-dojo has read rights to katas)
 
 1. Edit/drop? pull.sh
 2. Fix dashboard download

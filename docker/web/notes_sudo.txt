@@ -9,5 +9,3 @@ $ id cyber-dojo
 confirms no cyber-dojo user on default
 
 cyber-dojo being able to write to katas/... is a separate issue.
-
-TODO: limit sudo operation to docker executable
