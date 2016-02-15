@@ -1,17 +1,17 @@
-FROM alpine:3.2
+FROM cyberdojofoundation/user-base
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# install
-# o) tini (for pid 1 zombie reaping)
-# o) docker-client
-# o) ruby, ruby-bigdecimal, tzdata (for rails server)
-# o) git (for cyber-dojo)
-# o) bash (test scripts are written in bash)
-#
+# install tini (for pid 1 zombie reaping)
 # https://github.com/krallin/tini
 # https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/
-#
+
+USER root
+RUN apk add --update --repository http://dl-1.alpinelinux.org/alpine/edge/community/ tini
+ENTRYPOINT ["/usr/bin/tini", "-g", "--"]
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# install docker-client
 # Launching a docker app (that itself uses docker) is different on different OS's...
 # OSX Yosemite
 # ------------
@@ -41,22 +41,38 @@ MAINTAINER Jon Jagger <jon@jaggersoft.com>
 # I originally used docker-compose extension files specific to each OS.
 # I now install the docker client inside the docker.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# runner needs sudo to be able to run docker
+# there is no sudo command in Alpine
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RUN    apk add --update --repository http://dl-1.alpinelinux.org/alpine/edge/community/ tini \
-    && apk --update add curl \
+USER root
+RUN    apk --update add curl \
     && curl -O https://get.docker.com/builds/Linux/x86_64/docker-latest \
     && mv docker-latest /usr/bin/docker \
     && chmod +x /usr/bin/docker \
-    && apk del curl \
-    && apk --update add \
-          ruby ruby-bigdecimal tzdata \
-          git bash
+    && apk del curl
+
+USER root
+RUN apk --update add sudo
+# TODO: restrict this to just having sudo on the docker command (and socket?)
+# Try this...
+# RUN echo "cyber-dojo ALL=(ALL) NOPASSWD: /usr/bin/docker" > /etc/sudoers.d/cyber-dojo
+RUN echo "cyber-dojo ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/cyber-dojo
 
 # - - - - - - - - - - - - - - - - - - - - - -
 # bundle install from cyber-dojo's Gemfile
+# o) ruby, ruby-bigdecimal, tzdata (for rails server)
+# o) git (for cyber-dojo)
+# o) bash (test scripts are written in bash)
+
+USER root
+RUN apk --update add \
+          ruby ruby-bigdecimal tzdata \
+          git bash
 
 ARG CYBER_DOJO_HOME
 
+USER root
 RUN  mkdir -p     ${CYBER_DOJO_HOME}
 COPY Gemfile      ${CYBER_DOJO_HOME}
 RUN apk --update add --virtual build-dependencies \
@@ -70,52 +86,10 @@ RUN apk --update add --virtual build-dependencies \
     && cd ${CYBER_DOJO_HOME} ; bundle install --without development test \
     && apk del build-dependencies
 
-# - - - - - - - - - - - - - - - - - - - - - -
-# See docker/notes_sudo.txt
-
-USER root
-# -D            no password
-# -H            no home directory
-# -u 19961      user-id=19961
-# cyber-dojo    user-name=cyber-dojo
-RUN adduser -D -H -u 19661 cyber-dojo
-# there is no sudo command in Alpine
-RUN apk --update add sudo
-# TODO: restrict this to just having sudo on the docker command (and socket?)
-RUN echo "cyber-dojo ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/cyber-dojo
-
-# - - - - - - - - - - - - - - - - - - - - - -
-# copy cyber-dojo rails app
-
 COPY . ${CYBER_DOJO_HOME}
 RUN mkdir ${CYBER_DOJO_HOME}/app/caches
 WORKDIR ${CYBER_DOJO_HOME}
-
-ENTRYPOINT ["/usr/bin/tini", "-g", "--"]
-
-EXPOSE 3000
-
 RUN chown -R cyber-dojo ${CYBER_DOJO_HOME}
 
-# cyber-dojo works if
-# 1. katas is a folder on host and is volume-mounted (in docker-compose yml file)
-#    On the host (default on Docker-Quickstart-Terminal) the katas folder is
-#    owned by cyber-dojo user matching above
-#       $ docker-machine ssh default
-#       $ sudo adduser -D -H -u 19661 cyber-dojo
-#       $ sudo chown -R cyber-dojo /usr/src/cyber-dojo/app/katas
-#
-# 2. katas is a data-container owned by cyber-dojo user again matching
-#    cyber-dojo user above. This is easier to control of course.
-
+EXPOSE 3000
 USER cyber-dojo
-
-
-
-
-
-
-
-
-
-
