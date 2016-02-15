@@ -8,8 +8,8 @@ IMAGE=$2          # eg cyberdojofoundation/gcc_assert
 MAX_SECONDS=$3    # eg 10
 
 # 1. Start the container running
-# -d == detached; gets the CID for [sleep && docker rm] before [docker exec]
-# -i == interactive; we tar pipe it
+# -d == detached; get the CID for [sleep && docker rm] before [docker exec]
+# -i == interactive; we tar-pipe
 # --net=none for security
 # --user=nobody for security
 CID=$(sudo docker run -d -i --net=none --user=nobody $IMAGE sh)
