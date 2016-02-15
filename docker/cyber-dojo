@@ -5,7 +5,7 @@ HOME=/usr/src/cyber-dojo         # home folder *inside* the web-image
 REPO=cyberdojofoundation         # username on docker hub
 
 KATAS_DEFAULT=${HOME}/app/katas
-RAILS_ENV_DEFAULT=production
+RAILS_ENV_DEFAULT=development    # TODO: FAILS for production!
 RUNNER_DEFAULT=DockerTmpRunner
 
 KATAS=${KATAS_DEFAULT}           # where katas are stored on the *host*
@@ -36,10 +36,10 @@ show_use()
   echo '    images            Lists pulled cyber-dojo language images'
   echo '    pull=IMAGE        Pulls cyber-dojo language IMAGE'
   echo '    ps                Lists cyber-dojo containers'
+  echo '    pss               Lists processes inside cyber-dojo server'
   echo '    repo              Lists all cyber-dojo language images'
   echo '    rmi=IMAGE         Removes a pulled cyber-dojo language IMAGE'
   echo '    upgrade           Pulls the latest server and language images'
-  echo '    web_ps            Lists processes inside cyber-dojo server container'
   echo
   echo 'Options:'
   echo "    katas=/var/www/cyber-dojo/katas            default: katas=${KATAS}"
@@ -125,8 +125,8 @@ down()
 
 images()
 {
-  # TODO: this gives the same as ls_repo when there are no languages pulled yet
-  LS_REPO=`ls_repo`
+  # FIXME: this gives the same as ls_repo when there are no languages pulled
+  LS_REPO=`repo`
   PULLED=`pulled_language_images`
   echo "${LS_REPO}" | grep 'LANGUAGE'
   echo "${LS_REPO}" | grep "${PULLED}"
@@ -150,8 +150,15 @@ install_docker()
 
 ps()
 {
-  # TODO: filter on cyberdojofoundation
-  docker ps -a
+  docker ps -a | head -1
+  docker ps -a | grep cyberdojofoundation
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+pss()
+{
+  docker exec cyber-dojo-server ps
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -187,7 +194,7 @@ rmi()
 
 pull_common_languages_if_none()
 {
-  LS_REPO=`ls_repo`
+  LS_REPO=`repo`
   PULLED=`pulled_language_images`
   if [ -z "${PULLED}" ]; then
     echo 'No language images pulled'
@@ -223,7 +230,6 @@ up()
 
   CWD=`pwd`
   cd "${MY_DIR}" > /dev/null
-  down
   ${DOCKER_COMPOSE_CMD} up -d
   cd "${CWD}" > /dev/null
 }
@@ -271,16 +277,14 @@ upgrade()
   SERVICES=`${DOCKER_COMPOSE_CMD} config --services 2> /dev/null`
   cd "${CWD}" > /dev/null
   echo "${SERVICES}" | while read IMAGE ; do
-    # <<<<<<<<<<<<<< TODO: think I can simplify to pull
-    pull ${IMAGE}
+    pull
   done
 
   echo 'upgrading cyber-dojo pulled language images'
-  LS_REPO=`ls_repo`
+  LS_REPO=`repo`
   PULLED=`pulled_language_images`
   echo "${PULLED}" | while read IMAGE ; do
-    # <<<<<<<<<<<<<< TODO: think I can simplify to pull
-    pull ${IMAGE}
+    pull
   done
 }
 
@@ -290,14 +294,6 @@ download_latest_docker_compose_yml()
   cd "${MY_DIR}" > /dev/null
   curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/${DOCKER_COMPOSE_FILE}
   cd "${CWD}" > /dev/null
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-web_ps()
-{
-  # TODO: get container name properly
-  docker exec docker_web_1 ps
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -327,6 +323,9 @@ do
     ps)
       doPs=true
       ;;
+    pss)
+      doPss=true
+      ;;
     pull=*)
       IMAGE="${arg#*=}"
       doPull=true
@@ -340,9 +339,6 @@ do
       ;;
     upgrade)
       doUpgrade=true
-      ;;
-    web_ps)
-      doWebPs=true
       ;;
     katas=*)
       KATAS="${arg#*=}"
@@ -424,8 +420,8 @@ if [ -n "${doRestart}" ]; then restart; exit; fi
 
 if [ -n "${doImages}"  ]; then images ; exit; fi
 if [ -n "${doPs}"      ]; then ps     ; exit; fi
+if [ -n "${doPss}"     ]; then pss    ; exit; fi
 if [ -n "${doPull}"    ]; then pull   ; exit; fi
 if [ -n "${doRepo}"    ]; then repo   ; exit; fi
 if [ -n "${doRmi}"     ]; then rmi    ; exit; fi
 if [ -n "${doUpgrade}" ]; then upgrade; exit; fi
-if [ -n "${doWebPs}"   ]; then web_ps ; exit; fi

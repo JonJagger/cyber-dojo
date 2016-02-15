@@ -76,13 +76,13 @@ clean()
 logs_rails()
 {
   # TODO: get container name properly
-  docker exec docker_web_1 sh -c "cd log && tail -100 development.log"
+  docker exec cyber-dojo-server sh -c "cd log && tail -100 development.log"
 }
 
 logs_web()
 {
   # TODO: get container name properly
-  docker logs docker_web_1
+  docker logs cyber-dojo-server
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -147,7 +147,7 @@ rmi()
 sh()
 {
   # TODO: get container name properly
-  docker exec --interactive --tty docker_web_1 sh
+  docker exec --interactive --tty cyber-dojo-server sh
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

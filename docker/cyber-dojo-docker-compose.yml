@@ -1,6 +1,8 @@
 
+
 nginx:
   image: cyberdojofoundation/nginx
+  container_name: cyber-dojo-nginx
   links:
     - "web:cyberdojo_web"
   ports:
@@ -8,7 +10,10 @@ nginx:
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+
 web:
+  image: cyberdojofoundation/web
+  container_name: cyber-dojo-server
   command: rails server --environment=${CYBER_DOJO_RAILS_ENV}
   environment:
     - CYBER_DOJO_LANGUAGES_ROOT=${CYBER_DOJO_LANGUAGES_ROOT}
@@ -21,32 +26,19 @@ web:
     - CYBER_DOJO_DISK_CLASS=${CYBER_DOJO_DISK_CLASS}
     - CYBER_DOJO_LOG_CLASS=${CYBER_DOJO_LOG_CLASS}
     - CYBER_DOJO_GIT_CLASS=${CYBER_DOJO_GIT_CLASS}
-  hostname: cyber-dojo{web}
-  image: cyberdojofoundation/web
   ports:
     - "3000:3000"
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - ${CYBER_DOJO_KATAS_ROOT}:${CYBER_DOJO_KATAS_ROOT}:rw
 
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# The web command is 'rails server...' but this is a suffix to
-#     ENTRYPOINT ["/usr/bin/tini", "-g", "--"]
-# from web's Dockerfile. See https://github.com/krallin/tini
-# This is important. It acts as a sort of init for a container.
-# tini reaps zombie processes which pid 1 is expected to do in an OS.
-# Without it each [test] runs lib/docker_tmp_runner.sh createing a new
-#     Z  [docker_tmp_runner] <defunct> zombie process.
-#
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# The cyber-dojo script uses this file to know the service names via
-#     $ docker config --services
-# It assumes the service name (eg web) is the
+# The cyber-dojo script uses this file to find out the
+# service names. It assumes the service name (eg web) is the
 # tag name for the associated docker image (eg cyberdojofoundation/web)
-#
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Variable-substition happens in docker-compose yml files
 # such as this one, but *not* in env_file:'s
 # Since I use variable-substitution in my environment
 # I don't use an env_file:
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
