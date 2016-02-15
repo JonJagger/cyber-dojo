@@ -28,12 +28,18 @@ show_use()
   echo
   echo 'Commands:'
   echo '    install_docker    Installs docker, docker-machine, and docker-compose'
-  echo '    ls                Lists pulled cyber-dojo language images'
-  echo '    ls_repo           Lists all cyber-dojo language images'
-  echo '    pull=IMAGE        Pulls cyber-dojo language IMAGE'
-  echo '    rmi=IMAGE         Removes a pulled cyber-dojo language IMAGE'
+  echo
   echo '    up [OPTIONS]      Brings up cyber-dojo server'
-  echo '    upgrade           Pulls the latest app and language images'
+  echo '    down              Brings down cyber-dojo server'
+  echo '    restart           Restarts the cyber-dojo server'
+  echo
+  echo '    images            Lists pulled cyber-dojo language images'
+  echo '    pull=IMAGE        Pulls cyber-dojo language IMAGE'
+  echo '    ps                Lists cyber-dojo containers'
+  echo '    repo              Lists all cyber-dojo language images'
+  echo '    rmi=IMAGE         Removes a pulled cyber-dojo language IMAGE'
+  echo '    upgrade           Pulls the latest server and language images'
+  echo '    web_ps            Lists processes inside cyber-dojo server container'
   echo
   echo 'Options:'
   echo "    katas=/var/www/cyber-dojo/katas            default: katas=${KATAS}"
@@ -109,6 +115,25 @@ pulled_language_images()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+down()
+{
+  ${DOCKER_COMPOSE_CMD} stop  2> /dev/null
+  ${DOCKER_COMPOSE_CMD} rm -f 2> /dev/null
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+images()
+{
+  # TODO: this gives the same as ls_repo when there are no languages pulled yet
+  LS_REPO=`ls_repo`
+  PULLED=`pulled_language_images`
+  echo "${LS_REPO}" | grep 'LANGUAGE'
+  echo "${LS_REPO}" | grep "${PULLED}"
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 install_docker()
 {
   echo 'installing docker'
@@ -123,20 +148,10 @@ install_docker()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-ls()
+ps()
 {
-  # TODO: this gives the same as ls_repo when there are no languages pulled yet
-  LS_REPO=`ls_repo`
-  PULLED=`pulled_language_images`
-  echo "${LS_REPO}" | grep 'LANGUAGE'
-  echo "${LS_REPO}" | grep "${PULLED}"
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-ls_repo()
-{
-  docker run --rm ${REPO}/web sh -c "./app/languages/list_all_images.rb"
+  # TODO: filter on cyberdojofoundation
+  docker ps -a
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -144,6 +159,21 @@ ls_repo()
 pull()
 {
   docker pull ${REPO}/${IMAGE}:latest
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+repo()
+{
+  docker run --rm ${REPO}/web sh -c "./app/languages/list_all_images.rb"
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+restart()
+{
+  down
+  up
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -193,8 +223,7 @@ up()
 
   CWD=`pwd`
   cd "${MY_DIR}" > /dev/null
-  ${DOCKER_COMPOSE_CMD} stop  2> /dev/null
-  ${DOCKER_COMPOSE_CMD} rm -f 2> /dev/null
+  down
   ${DOCKER_COMPOSE_CMD} up -d
   cd "${CWD}" > /dev/null
 }
@@ -242,6 +271,7 @@ upgrade()
   SERVICES=`${DOCKER_COMPOSE_CMD} config --services 2> /dev/null`
   cd "${CWD}" > /dev/null
   echo "${SERVICES}" | while read IMAGE ; do
+    # <<<<<<<<<<<<<< TODO: think I can simplify to pull
     pull ${IMAGE}
   done
 
@@ -249,6 +279,7 @@ upgrade()
   LS_REPO=`ls_repo`
   PULLED=`pulled_language_images`
   echo "${PULLED}" | while read IMAGE ; do
+    # <<<<<<<<<<<<<< TODO: think I can simplify to pull
     pull ${IMAGE}
   done
 }
@@ -263,6 +294,14 @@ download_latest_docker_compose_yml()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+web_ps()
+{
+  # TODO: get container name properly
+  docker exec docker_web_1 ps
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 for arg in "$@"
 do
   case ${arg} in
@@ -270,28 +309,40 @@ do
       show_use
       exit
       ;;
+    up)
+      doUp=true
+      ;;
+    down)
+      doDown=true
+      ;;
+    restart)
+      doRestart=true
+      ;;
     install_docker)
       doInstall=true
       ;;
-    ls)
-      doLs=true
+    images)
+      doImages=true
       ;;
-    ls_repo)
-      doLsRepo=true
+    ps)
+      doPs=true
       ;;
     pull=*)
       IMAGE="${arg#*=}"
       doPull=true
       ;;
+    repo)
+      doRepo=true
+      ;;
     rmi=*)
       IMAGE="${arg#*=}"
       doRmi=true
       ;;
-    up)
-      doUp=true
-      ;;
     upgrade)
       doUpgrade=true
+      ;;
+    web_ps)
+      doWebPs=true
       ;;
     katas=*)
       KATAS="${arg#*=}"
@@ -367,9 +418,14 @@ fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if [ -n "${doUpgrade}" ]; then upgrade; exit; fi
-if [ -n "${doLs}"      ]; then ls     ; exit; fi
-if [ -n "${doLsRepo}"  ]; then ls_repo; exit; fi
-if [ -n "${doPull}"    ]; then pull   ; exit; fi
-if [ -n "${doRmi}"     ]; then rmi    ; exit; fi
+if [ -n "${doDown}"    ]; then down   ; exit; fi
 if [ -n "${doUp}"      ]; then up     ; exit; fi
+if [ -n "${doRestart}" ]; then restart; exit; fi
+
+if [ -n "${doImages}"  ]; then images ; exit; fi
+if [ -n "${doPs}"      ]; then ps     ; exit; fi
+if [ -n "${doPull}"    ]; then pull   ; exit; fi
+if [ -n "${doRepo}"    ]; then repo   ; exit; fi
+if [ -n "${doRmi}"     ]; then rmi    ; exit; fi
+if [ -n "${doUpgrade}" ]; then upgrade; exit; fi
+if [ -n "${doWebPs}"   ]; then web_ps ; exit; fi
