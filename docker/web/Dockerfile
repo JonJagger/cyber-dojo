@@ -41,9 +41,6 @@ ENTRYPOINT ["/usr/bin/tini", "-g", "--"]
 # I originally used docker-compose extension files specific to each OS.
 # I now install the docker client inside the docker.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# runner needs sudo to be able to run docker
-# there is no sudo command in Alpine
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 USER root
 RUN    apk --update add curl \
@@ -52,12 +49,13 @@ RUN    apk --update add curl \
     && chmod +x /usr/bin/docker \
     && apk del curl
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# runner needs sudo to be able to run /usr/bin/docker
+# there is no sudo command in Alpine
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 USER root
 RUN apk --update add sudo
-# TODO: restrict this to just having sudo on the docker command (and socket?)
-# Try this...
-# RUN echo "cyber-dojo ALL=(ALL) NOPASSWD: /usr/bin/docker" > /etc/sudoers.d/cyber-dojo
-RUN echo "cyber-dojo ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/cyber-dojo
+RUN echo "cyber-dojo ALL=(ALL) NOPASSWD: /usr/bin/docker" > /etc/sudoers.d/cyber-dojo
 
 # - - - - - - - - - - - - - - - - - - - - - -
 # bundle install from cyber-dojo's Gemfile
