@@ -151,7 +151,7 @@ install_docker()
 ps()
 {
   docker ps -a | head -1
-  docker ps -a | grep cyberdojofoundation
+  docker ps -a | grep $REPO
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

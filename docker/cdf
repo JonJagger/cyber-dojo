@@ -18,6 +18,9 @@ MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 IMAGES=(nginx web)    # TODO: get these from docker-compose config --services
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# TODO: make commands forward to cyber-dojo
+# TODO: logs better names
+# TODO: rmi could be more efficient
 
 show_use()
 {
@@ -26,13 +29,18 @@ show_use()
   echo "       ${ME} help"
   echo
   echo 'Commands:'
+  echo '    bu                     build + up'
   echo '    build                  Builds cyber-dojo server images'
   echo '    clean                  Removes untagged images'
+  echo '    down                   Brings down cyber-dojo server'
  #echo '    exec COMMAND...        Execs a command in cyber-dojo server container'
   echo '    logs_rails             Prints cyber-dojo server rails log'
   echo '    logs_web               Prints cyber-dojo server container log'
+  echo '    ps                     Lists cyber-dojo containers'
+  echo '    pss                    Lists processes inside cyber-dojo server'
   echo '    pull                   Pulls cyber-dojo server images from repo'
   echo '    push                   Pushs cyber-dojo server images to repo'
+  echo '    restart                Restarts the cyber-dojo server'
   echo '    rm                     Removes local cyber-dojo server containers'
   echo '    rmi                    Removes local cyber-dojo server images'
   echo '    sh                     Opens a shell inside the cyber-dojo server container'
@@ -73,6 +81,14 @@ clean()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+down()
+{
+  ${DOCKER_COMPOSE_CMD} stop  2> /dev/null
+  ${DOCKER_COMPOSE_CMD} rm -f 2> /dev/null
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 logs_rails()
 {
   # TODO: get container name properly
@@ -83,6 +99,21 @@ logs_web()
 {
   # TODO: get container name properly
   docker logs cyber-dojo-server
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+ps()
+{
+  docker ps -a | head -1
+  docker ps -a | grep $REPO
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+pss()
+{
+  docker exec cyber-dojo-server ps
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -117,6 +148,14 @@ push()
     echo "PUSHING: ${REPO}/${IMAGE}"
     docker push ${REPO}/${IMAGE}
   done
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+restart()
+{
+  down
+  up
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -173,6 +212,8 @@ up()
   cd "${CWD}" > /dev/null
 }
 
+# - - - - - - - - - - -
+
 exit_if_bad_katas()
 {
   # if KATAS==KATAS_DEFAULT assume this cyber-dojo server is *not*
@@ -186,6 +227,8 @@ exit_if_bad_katas()
   fi
 }
 
+# - - - - - - - - - - -
+
 exit_if_bad_rails_env()
 {
   if [ "${RAILS_ENV}" != 'development' ] && [ "${RAILS_ENV}" != 'production' ]; then
@@ -194,6 +237,8 @@ exit_if_bad_rails_env()
     exit
   fi
 }
+
+# - - - - - - - - - - -
 
 exit_if_bad_runner()
 {
@@ -221,8 +266,14 @@ do
     build)
       doBuild=true
       ;;
+    bu)
+      doBu=true
+      ;;
     clean)
       doClean=true
+      ;;
+    down)
+      doDown=true
       ;;
     #exec)
     #  doExec=true
@@ -233,11 +284,20 @@ do
     logs_web)
       doLogsWeb=true
       ;;
+    ps)
+      doPs=true
+      ;;
+    pss)
+      doPss=true
+      ;;
     pull)
       doPull=true
       ;;
     push)
       doPush=true
+      ;;
+    restart)
+      doRestart=true
       ;;
     rm)
       doRm=true
@@ -272,22 +332,24 @@ do
 done
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Single commands
 
-#if [ -n "${doExec}" ]; then exec; exit; fi
+#if [ -n "${doExec}"    ]; then exec   ; exit; fi
+#if [ -n "${doTest}"    ]; then test   ; exit; fi
+
 if [ -n "${doLogsRails}" ]; then logs_rails; exit; fi
 if [ -n "${doLogsWeb}"   ]; then   logs_web; exit; fi
 
-if [ -n "${doPull}" ]; then pull; exit; fi
-if [ -n "${doPush}" ]; then push; exit; fi
+if [ -n "${doBu} "     ]; then build && up; exit; fi
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Chained commands
-
-if [ -n "${doClean}"  ]; then clean; fi
-if [ -n "${doRm}"     ]; then    rm; fi
-if [ -n "${doRmi}"    ]; then   rmi; fi
-if [ -n "${doBuild}"  ]; then build; fi
-if [ -n "${doUp}"     ]; then    up; fi
-#if [ -n "${doTest}"   ]; then  test; fi
-if [ -n "${doSh}"   ]; then   sh; exit; fi
+if [ -n "${doBuild}"   ]; then build  ; exit; fi
+if [ -n "${doClean}"   ]; then clean  ; exit; fi
+if [ -n "${doDown}"    ]; then down   ; exit; fi
+if [ -n "${doPs}"      ]; then ps     ; exit; fi
+if [ -n "${doPss}"     ]; then pss    ; exit; fi
+if [ -n "${doPull}"    ]; then pull   ; exit; fi
+if [ -n "${doPush}"    ]; then push   ; exit; fi
+if [ -n "${doRestart}" ]; then restart; exit; fi
+if [ -n "${doRm}"      ]; then rm     ; exit; fi
+if [ -n "${doRmi}"     ]; then rmi    ; exit; fi
+if [ -n "${doSh}"      ]; then sh     ; exit; fi
+if [ -n "${doUp}"      ]; then up     ; exit; fi
