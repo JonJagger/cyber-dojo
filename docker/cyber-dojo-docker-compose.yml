@@ -32,6 +32,7 @@ web:
     - /var/run/docker.sock:/var/run/docker.sock
     - ${CYBER_DOJO_KATAS_ROOT}:${CYBER_DOJO_KATAS_ROOT}:rw
 
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # The cyber-dojo script uses this file to find out the
 # service names. It assumes the service name (eg web) is the

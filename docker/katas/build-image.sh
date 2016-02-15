@@ -1,27 +1,60 @@
 #!/bin/sh
 set -e
 
-KATAS_DIR=$1                  # where katas are copied from on host
-CYBER_DOJO_KATAS_ROOT=$2      # where they are copied to in image
-
-CONTEXT_DIR=${KATAS_DIR}
-
-# if KATAS_DIR != KATAS_DEFAULT check KATAS_DIR exists (like cyber-dojo script)
-# On OSX Docker-Quickstart-Terminal this script has to run on defult
-# docker-machine scp it?
+CYBER_DOJO_KATAS_ROOT=$1      # where they are copied to in image. Required.
+KATAS_DIR=$2                  # where katas are copied from on host. Optional
 
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
-pushd ${MY_DIR} > /dev/null
+# - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-cp ./Dockerfile ${CONTEXT_DIR}
+build_empty_katas_data_container()
+{
+  CONTEXT_DIR=.
+  pushd ${MY_DIR} > /dev/null
 
-docker build \
-  --build-arg=KATAS_DIR=${KATAS_DIR} \
-  --tag=cyberdojofoundation/${PWD##*/} \
-  --file=${CONTEXT_DIR}/Dockerfile \
-  ${CONTEXT_DIR}
+  docker build \
+    --build-arg=CYBER_DOJO_KATAS_ROOT=${CYBER_DOJO_KATAS_ROOT} \
+    --tag=cyberdojofoundation/${PWD##*/} \
+    --file=${CONTEXT_DIR}/Dockerfile \
+    ${CONTEXT_DIR}
 
-rm ${CONTEXT_DIR}/Dockerfile
+  docker create --name cyber-dojo-katas cyberdojofoundation/katas
+  docker run --rm -it --volumes-from=cyber-dojo-katas cyberdojofoundation/user-base sh
 
-popd > /dev/null
+  popd > /dev/null
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+build_full_katas_data_container()
+{
+  # check KATAS_DIR exists (like cyber-dojo script)
+  # On OSX Docker-Quickstart-Terminal this script has to run on defult
+  # docker-machine scp it?
+
+  CONTEXT_DIR=${KATAS_DIR}
+  pushd ${MY_DIR} > /dev/null
+  #cp ./Dockerfile ${CONTEXT_DIR}
+
+  echo 'pwd'
+  pwd
+  echo 'ls'
+  ls
+  echo 'docker build... FULL katas'
+
+  #rm ${CONTEXT_DIR}/Dockerfile
+  popd > /dev/null
+
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+if [ "${KATAS_DIR}" == "" ]; then
+  build_empty_katas_data_container
+else
+  build_full_katas_data_container
+fi
+
+
+

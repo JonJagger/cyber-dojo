@@ -39,7 +39,7 @@ RUN    apk --update add curl \
     && mv docker-latest /usr/bin/docker \
     && chmod +x /usr/bin/docker \
     && apk del curl
-VOLUME /usr/bin/docker
+VOLUME [ "/usr/bin/docker" ]
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # runner needs sudo to be able to run /usr/bin/docker
@@ -48,6 +48,6 @@ VOLUME /usr/bin/docker
 USER root
 RUN apk --update add sudo
 RUN echo "cyber-dojo ALL=(ALL) NOPASSWD: /usr/bin/docker" > /etc/sudoers.d/cyber-dojo
-VOLUME /etc/sudoers.d/cyber-dojo
+VOLUME [ "/etc/sudoers.d/cyber-dojo" ]
 
-ENTRYPOINT ["data-container"]
+CMD [ "data-container" ]
