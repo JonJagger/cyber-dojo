@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-HOME=/usr/src/cyber-dojo         # home folder *inside* the web-image
+HOME=/usr/src/cyber-dojo         # home folder *inside* the server image
 REPO=cyberdojofoundation         # username on docker hub
 
 KATAS_DEFAULT=${HOME}/app/katas
@@ -20,6 +20,12 @@ DOCKER_COMPOSE_CMD="docker-compose --file=./${DOCKER_COMPOSE_FILE}"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# TODO: pull all language images == fetch? all?
+# TODO: repo -> ls?
+# TODO: bootstrap= install_docker + pull_all_languages + up
+# TODO: bootstrap= install_docker + pull_few_languages + up
+#
+
 show_use()
 {
   echo
@@ -31,7 +37,7 @@ show_use()
   echo
   echo '    up [OPTIONS]      Brings up cyber-dojo server'
   echo '    down              Brings down cyber-dojo server'
-  echo '    restart           Restarts the cyber-dojo server'
+  echo '    restart           (down + up)'
   echo
   echo '    images            Lists pulled cyber-dojo language images'
   echo '    pull=IMAGE        Pulls cyber-dojo language IMAGE'
@@ -172,6 +178,7 @@ pull()
 
 repo()
 {
+  # will pull web image if necessary
   docker run --rm ${REPO}/web sh -c "./app/languages/list_all_images.rb"
 }
 
@@ -234,6 +241,8 @@ up()
   cd "${CWD}" > /dev/null
 }
 
+# - - - - - - - - - - - - - - - - - - - - - - - - -
+
 exit_if_bad_rails_env()
 {
   if [ "${RAILS_ENV}" != 'development' ] &&
@@ -253,18 +262,28 @@ exit_if_bad_rails_env()
   fi
 }
 
+# - - - - - - - - - - - - - - - - - - - - - - - - -
+
 exit_if_bad_katas()
 {
-  # if KATAS==KATAS_DEFAULT assume this cyber-dojo server is *not*
+  # if KATAS == KATAS_DEFAULT assume this cyber-dojo server is *not*
   # being hosted where a previous (non dockerized) server lived.
   # In this case the KATAS volume mount in docker-compose.yml will
-  # create the KATAS_DEFAULT directory on the host.
+  # *create* the KATAS_DEFAULT directory on the host.
+  #
+  # if KATAS != KATAS_DEFAULT assume this cyber-dojo server (*is*)
+  # being hosted where a previous (no dockerized) server lived.
+  # TODO: if volume-mounting: check user cyber-dojo,uid=19661 exists
+  # TODO: if volume-mounting: check katas folder owned by cyber-dojo user
+
   if [ "${KATAS}" != "${KATAS_DEFAULT}" ] && [ ! -d "${KATAS}" ]; then
     echo "${ME}: katas=${KATAS} ? ${KATAS} directory does not exist"
     echo "See ${ME} help"
     exit
   fi
 }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - -
 
 exit_if_bad_runner()
 {
@@ -283,7 +302,7 @@ upgrade()
 {
   echo "downloading latest ${DOCKER_COMPOSE_FILE} file"
   download_latest_docker_compose_yml
-  echo 'upgrading cyber-dojo app images'
+  echo 'upgrading cyber-dojo server images'
   CWD=`pwd`
   cd "${MY_DIR}" > /dev/null
   SERVICES=`${DOCKER_COMPOSE_CMD} config --services 2> /dev/null`

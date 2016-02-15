@@ -1,7 +1,8 @@
 #!/bin/sh
 set -e
 
-HOME=/usr/src/cyber-dojo         # home folder *inside* the web-image
+ARGS=${@}
+HOME=/usr/src/cyber-dojo         # home folder *inside* the server image
 REPO=cyberdojofoundation         # username on docker hub
 
 KATAS_DEFAULT=${HOME}/app/katas
@@ -15,10 +16,10 @@ RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
-IMAGES=(nginx web)    # TODO: get these from docker-compose config --services
+IMAGES=(nginx web)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# TODO: make commands forward to cyber-dojo
+# TODO: get IMAGES from docker-compose config --services
 # TODO: logs better names
 # TODO: rmi could be more efficient
 
@@ -29,20 +30,22 @@ show_use()
   echo "       ${ME} help"
   echo
   echo 'Commands:'
-  echo '    bu                     build + up'
+  echo '    dbu                    (down + build + up)'
   echo '    build                  Builds cyber-dojo server images'
   echo '    clean                  Removes untagged images'
   echo '    down                   Brings down cyber-dojo server'
  #echo '    exec COMMAND...        Execs a command in cyber-dojo server container'
+  echo '    images                 Lists pulled cyber-dojo language images'
   echo '    logs_rails             Prints cyber-dojo server rails log'
   echo '    logs_web               Prints cyber-dojo server container log'
   echo '    ps                     Lists cyber-dojo containers'
   echo '    pss                    Lists processes inside cyber-dojo server'
   echo '    pull                   Pulls cyber-dojo server images from repo'
-  echo '    push                   Pushs cyber-dojo server images to repo'
-  echo '    restart                Restarts the cyber-dojo server'
-  echo '    rm                     Removes local cyber-dojo server containers'
-  echo '    rmi                    Removes local cyber-dojo server images'
+  echo '    push                   Pushes cyber-dojo server images to repo'
+  echo '    restart                (down + up)'
+  echo '    repo                   Lists all cyber-dojo language images'
+  echo '    rm                     Removes cyber-dojo server containers'
+  echo '    rmi                    Removes cyber-dojo server images'
   echo '    sh                     Opens a shell inside the cyber-dojo server container'
  #echo '    test [PATH] [ARG...]   Runs PATH tests inside cyber-dojo server container'
   echo '    up [OPTIONS]           Brings up cyber-dojo server'
@@ -81,14 +84,6 @@ clean()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-down()
-{
-  ${DOCKER_COMPOSE_CMD} stop  2> /dev/null
-  ${DOCKER_COMPOSE_CMD} rm -f 2> /dev/null
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 logs_rails()
 {
   # TODO: get container name properly
@@ -99,21 +94,6 @@ logs_web()
 {
   # TODO: get container name properly
   docker logs cyber-dojo-server
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-ps()
-{
-  docker ps -a | head -1
-  docker ps -a | grep $REPO
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-pss()
-{
-  docker exec cyber-dojo-server ps
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -148,14 +128,6 @@ push()
     echo "PUSHING: ${REPO}/${IMAGE}"
     docker push ${REPO}/${IMAGE}
   done
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-restart()
-{
-  down
-  up
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -203,64 +175,22 @@ test()
 
 up()
 {
-  exit_if_bad_katas
-  exit_if_bad_rails_env
-  exit_if_bad_runner
+  ARGS=up
+  delegate
+}
+
+down()
+{
+  ARGS=down
+  delegate
+}
+
+delegate()
+{
   CWD=`pwd`
   cd "${MY_DIR}" > /dev/null
-  ./cyber-dojo up rails_env=${RAILS_ENV} katas=${KATAS} runner=${RUNNER}
+  ./cyber-dojo ${ARGS}
   cd "${CWD}" > /dev/null
-}
-
-# - - - - - - - - - - -
-
-exit_if_bad_katas()
-{
-  # if KATAS==KATAS_DEFAULT assume this cyber-dojo server is *not*
-  # being hosted where a previous (non dockerized) server lived.
-  # In this case the KATAS volume mount in docker-compose.yml will
-  # create the KATAS_DEFAULT directory on the host.
-  if [ "${KATAS}" != "${KATAS_DEFAULT}" ] &&
-     [ ! -d "${KATAS}" ];
-  then
-    echo "${ME}: katas=${KATAS} ? ${KATAS} directory does not exist"
-    echo "See ${ME} help"
-    exit
-  fi
-}
-
-# - - - - - - - - - - -
-
-exit_if_bad_rails_env()
-{
-  if [ "${RAILS_ENV}" != 'development' ] &&
-     [ "${RAILS_ENV}" != 'production' ];
-  then
-    echo "${ME} rails_env=${RAILS_ENV} ?"
-    echo "See ${ME} help"
-    exit
-  fi
-  if [ "${RAILS_ENV}" == 'production' ]; then
-    # <<<<<<< TODO >>>>>>>>
-    echo 'up rails_env=production'
-    echo '>>>> not supported yet'
-    echo '>>>> Dockerfile currently hard-wires development'
-    echo '>>>> up abandoned'
-    exit
-  fi
-}
-
-# - - - - - - - - - - -
-
-exit_if_bad_runner()
-{
-  if [ "${RUNNER}" != 'DockerTmpRunner' ] &&
-     [ "${RUNNER}" != 'DockerKatasRunner' ];
-  then
-    echo "${ME} runner=${RUNNER} ?"
-    echo "See ${ME} help"
-    exit
-  fi
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -277,14 +207,14 @@ do
       show_use
       exit
       ;;
-    bu)
-      doBu=true
-      ;;
     build)
       doBuild=true
       ;;
     clean)
       doClean=true
+      ;;
+    dbu)
+      doDBU=true
       ;;
     down)
       doDown=true
@@ -292,6 +222,9 @@ do
     #exec)
     #  doExec=true
     #  ;;
+    images)
+      doImages=true
+      ;;
     logs_rails)
       doLogsRails=true
       ;;
@@ -309,6 +242,9 @@ do
       ;;
     push)
       doPush=true
+      ;;
+    repo)
+      doRepo=true
       ;;
     restart)
       doRestart=true
@@ -353,19 +289,22 @@ done
 #if [ -n "${doTest}"    ]; then test   ; exit; fi
 
 if [ -n "${doLogsRails}" ]; then logs_rails; exit; fi
-if [ -n "${doLogsWeb}"   ]; then   logs_web; exit; fi
+if [ -n "${doLogsWeb}"   ]; then logs_web  ; exit; fi
 
-if [ -n "${doBu}"      ]; then build && up; exit; fi
+if [ -n "${doDBU}"      ]; then down && build && up; exit; fi
+
+if [ -n "${doDown}"    ]; then delegate; exit; fi
+if [ -n "${doImages}"  ]; then delegate; exit; fi
+if [ -n "${doPs}"      ]; then delegate; exit; fi
+if [ -n "${doPss}"     ]; then delegate; exit; fi
+if [ -n "${doRepo}"    ]; then delegate; exit; fi
+if [ -n "${doRestart}" ]; then delegate; exit; fi
+if [ -n "${doUp}"      ]; then delegate; exit; fi
 
 if [ -n "${doBuild}"   ]; then build  ; exit; fi
 if [ -n "${doClean}"   ]; then clean  ; exit; fi
-if [ -n "${doDown}"    ]; then down   ; exit; fi
-if [ -n "${doPs}"      ]; then ps     ; exit; fi
-if [ -n "${doPss}"     ]; then pss    ; exit; fi
 if [ -n "${doPull}"    ]; then pull   ; exit; fi
 if [ -n "${doPush}"    ]; then push   ; exit; fi
-if [ -n "${doRestart}" ]; then restart; exit; fi
 if [ -n "${doRm}"      ]; then rm     ; exit; fi
 if [ -n "${doRmi}"     ]; then rmi    ; exit; fi
 if [ -n "${doSh}"      ]; then sh     ; exit; fi
-if [ -n "${doUp}"      ]; then up     ; exit; fi
