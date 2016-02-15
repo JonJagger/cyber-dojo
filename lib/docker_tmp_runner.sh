@@ -17,24 +17,24 @@ MAX_SECS=$3    # How long they've got, eg 10
 CID=$(sudo docker run --detach \
                       --interactive \
                       --net=none \
-                      --user=nobody $IMAGE sh)
+                      --user=nobody ${IMAGE} sh)
 
 # - - - - - - - - - - - - - - - - - - - - - -
 # 2. After max_seconds, remove the container
 
-(sleep $MAX_SECS && sudo docker rm --force $CID) &
+(sleep ${MAX_SECS} && sudo docker rm --force ${CID}) &
 
 # - - - - - - - - - - - - - - - - - - - - - -
 # 3. Tar pipe files into the container and run cyber-dojo.sh
 
 TMP_DIR=/tmp/cyer-dojo
 
-(cd $SRC_DIR && tar -cf - .) \
+(cd ${SRC_DIR} && tar -cf - .) \
   | sudo docker exec --interactive \
                      --user=nobody \
-      $CID \
-      sh -c "mkdir $TMP_DIR \
-          && cd $TMP_DIR \
+      ${CID} \
+      sh -c "mkdir ${TMP_DIR} \
+          && cd ${TMP_DIR} \
           && tar -xf - -C . \
           && ./cyber-dojo.sh 2>&1"
 EXIT_STATUS=$?
@@ -42,9 +42,9 @@ EXIT_STATUS=$?
 # - - - - - - - - - - - - - - - - - - - - - -
 # 4. If the container isn't running, the sleep woke and removed it
 
-RUNNING=$(sudo docker inspect --format="{{ .State.Running }}" $CID)
-if [ "$RUNNING" != "true" ]; then
+RUNNING=$(sudo docker inspect --format="{{ .State.Running }}" ${CID})
+if [ "${RUNNING}" != "true" ]; then
   exit 137 # (128=timed-out) + (9=killed)
 else
-  exit $EXIT_STATUS
+  exit ${EXIT_STATUS}
 fi
