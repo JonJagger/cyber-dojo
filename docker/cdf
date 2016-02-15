@@ -67,11 +67,7 @@ build()
   for IMAGE in ${IMAGES[*]}
   do
     echo ${REPO}/${IMAGE}
-    ./${IMAGE}/build-docker-image.sh ${HOME}
-    if [ $? -ne 0 ]; then
-      echo "BUILDING ${REPO}/${IMAGE} FAILED"
-      exit
-    fi
+    ./${IMAGE}/build-image.sh $HOME
   done
   cd "${CWD}" > /dev/null
 }
@@ -201,9 +197,9 @@ if [ $# -eq 0 ]; then
   exit
 fi
 
-for arg in "$@"
+for ARG in "$@"
 do
-  case ${arg} in
+  case ${ARG} in
     help)
       show_use
       exit
@@ -266,16 +262,16 @@ do
       doUp=true
       ;;
     katas=*)
-      KATAS="${arg#*=}"
+      KATAS="${ARG#*=}"
       ;;
     rails_env=*)
-      RAILS_ENV="${arg#*=}"
+      RAILS_ENV="${ARG#*=}"
       ;;
     runner=*)
-      RUNNER="${arg#*=}"
+      RUNNER="${ARG#*=}"
       ;;
     *)
-      echo "${ME}: ${arg} ?"
+      echo "${ME}: ${ARG} ?"
       echo "See '${ME} help"
       exit
       ;;

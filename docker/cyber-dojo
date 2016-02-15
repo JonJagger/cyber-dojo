@@ -113,7 +113,7 @@ pulled_language_images()
   TMP_FILE_2=/tmp/cyber-dojo.comm2.txt
   echo "${ALL_LANGUAGE_IMAGES}" > ${TMP_FILE_1}
   echo       "${PULLED_IMAGES}" > ${TMP_FILE_2}
-  PULLED_LANGUAGE_IMAGES=`comm -12 /tmp/cyber-dojo.comm1.txt /tmp/cyber-dojo.comm2.txt`
+  PULLED_LANGUAGE_IMAGES=`comm -12 ${TMP_FILE_1} ${TMP_FILE_2}`
   rm ${TMP_FILE_1}
   rm ${TMP_FILE_2}
 
@@ -158,7 +158,7 @@ install_docker()
 ps()
 {
   docker ps -a | head -1
-  docker ps -a | grep $REPO
+  docker ps -a | grep ${REPO}
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -330,9 +330,9 @@ download_latest_docker_compose_yml()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-for arg in "$@"
+for ARG in "$@"
 do
-  case ${arg} in
+  case ${ARG} in
     help)
       show_use
       exit
@@ -359,30 +359,30 @@ do
       doPss=true
       ;;
     pull=*)
-      IMAGE="${arg#*=}"
+      IMAGE="${ARG#*=}"
       doPull=true
       ;;
     repo)
       doRepo=true
       ;;
     rmi=*)
-      IMAGE="${arg#*=}"
+      IMAGE="${ARG#*=}"
       doRmi=true
       ;;
     upgrade)
       doUpgrade=true
       ;;
     katas=*)
-      KATAS="${arg#*=}"
+      KATAS="${ARG#*=}"
       ;;
     runner=*)
-      RUNNER="${arg#*=}"
+      RUNNER="${ARG#*=}"
       ;;
     rails_env=*)
-      RAILS_ENV="${arg#*=}"
+      RAILS_ENV="${ARG#*=}"
       ;;
     *)
-      echo "${ME}: ${arg} ?"
+      echo "${ME}: ${ARG} ?"
       echo "See '${ME} help"
       exit
       ;;
