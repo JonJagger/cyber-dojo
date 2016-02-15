@@ -41,7 +41,7 @@ show_use()
   echo '    rmi=IMAGE         Removes a pulled cyber-dojo language IMAGE'
   echo '    upgrade           Pulls the latest server and language images'
   echo
-  echo 'Options:'
+  echo 'up [OPTIONS]:'
   echo "    katas=/var/www/cyber-dojo/katas            default: katas=${KATAS}"
   echo "    rails_env=[development|production]         default: rails_env=${RAILS_ENV_DEFAULT}"
   echo "    runner=[DockerTmpRunner|DockerKatasRunner] default: runner=${RUNNER_DEFAULT}"

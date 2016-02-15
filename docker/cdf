@@ -47,7 +47,7 @@ show_use()
  #echo '    test [PATH] [ARG...]   Runs PATH tests inside cyber-dojo server container'
   echo '    up [OPTIONS]           Brings up cyber-dojo server'
   echo
-  echo 'Options:'
+  echo 'up [OPTIONS]:'
   echo "        katas=/var/www/cyber-dojo/katas            default:     katas=${KATAS_DEFAULT}"
   echo "    rails_env=[development|production]             default: rails_env=${RAILS_ENV_DEFAULT}"
   echo "       runner=[DockerTmpRunner|DockerKatasRunner]  default:    runner=${RUNNER_DEFAULT}"
@@ -220,7 +220,9 @@ exit_if_bad_katas()
   # being hosted where a previous (non dockerized) server lived.
   # In this case the KATAS volume mount in docker-compose.yml will
   # create the KATAS_DEFAULT directory on the host.
-  if [ "${KATAS}" != "${KATAS_DEFAULT}" ] && [ ! -d "${KATAS}" ]; then
+  if [ "${KATAS}" != "${KATAS_DEFAULT}" ] &&
+     [ ! -d "${KATAS}" ];
+  then
     echo "${ME}: katas=${KATAS} ? ${KATAS} directory does not exist"
     echo "See ${ME} help"
     exit
@@ -231,7 +233,9 @@ exit_if_bad_katas()
 
 exit_if_bad_rails_env()
 {
-  if [ "${RAILS_ENV}" != 'development' ] && [ "${RAILS_ENV}" != 'production' ]; then
+  if [ "${RAILS_ENV}" != 'development' ] &&
+     [ "${RAILS_ENV}" != 'production' ];
+  then
     echo "${ME} rails_env=${RAILS_ENV} ?"
     echo "See ${ME} help"
     exit
@@ -242,7 +246,9 @@ exit_if_bad_rails_env()
 
 exit_if_bad_runner()
 {
-  if [ "${RUNNER}" != 'DockerTmpRunner' ] && [ "${RUNNER}" != 'DockerKatasRunner' ]; then
+  if [ "${RUNNER}" != 'DockerTmpRunner' ] &&
+     [ "${RUNNER}" != 'DockerKatasRunner' ];
+  then
     echo "${ME} runner=${RUNNER} ?"
     echo "See ${ME} help"
     exit
@@ -263,11 +269,11 @@ do
       show_use
       exit
       ;;
-    build)
-      doBuild=true
-      ;;
     bu)
       doBu=true
+      ;;
+    build)
+      doBuild=true
       ;;
     clean)
       doClean=true
@@ -332,6 +338,8 @@ do
 done
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# process all arguments before executing
+# commands to be sure nothing is unknown
 
 #if [ -n "${doExec}"    ]; then exec   ; exit; fi
 #if [ -n "${doTest}"    ]; then test   ; exit; fi
@@ -339,7 +347,7 @@ done
 if [ -n "${doLogsRails}" ]; then logs_rails; exit; fi
 if [ -n "${doLogsWeb}"   ]; then   logs_web; exit; fi
 
-if [ -n "${doBu} "     ]; then build && up; exit; fi
+if [ -n "${doBu}"      ]; then build && up; exit; fi
 
 if [ -n "${doBuild}"   ]; then build  ; exit; fi
 if [ -n "${doClean}"   ]; then clean  ; exit; fi
