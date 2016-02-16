@@ -140,12 +140,11 @@ rm()
 
 up()
 {
+  # TODO: test in main flow?
   exit_if_bad_katas
   exit_if_bad_runner
   exit_if_bad_rails_env
-
   pull_common_languages_if_none
-
   CWD=`pwd`
   cd "${MY_DIR}" > /dev/null
   ${DOCKER_COMPOSE_CMD} up -d
