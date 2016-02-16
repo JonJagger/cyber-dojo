@@ -30,7 +30,9 @@ web:
     - "3000:3000"
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
-    - ${CYBER_DOJO_KATAS_ROOT}:${CYBER_DOJO_KATAS_ROOT}:rw
+  # - ${CYBER_DOJO_KATAS_ROOT}:${CYBER_DOJO_KATAS_ROOT}:rw
+  volumes_from:
+    - cyber-dojo-katas
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

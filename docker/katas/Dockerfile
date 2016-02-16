@@ -8,5 +8,4 @@ RUN  mkdir -p     ${CYBER_DOJO_KATAS_ROOT}
 COPY . ${CYBER_DOJO_KATAS_ROOT}
 RUN chown -R cyber-dojo ${CYBER_DOJO_KATAS_ROOT}
 VOLUME [ "${CYBER_DOJO_KATAS_ROOT}" ]
-
-CMD [ "data-container" ]
+CMD [ "katas-data-container" ]

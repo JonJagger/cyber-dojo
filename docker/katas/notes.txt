@@ -1,0 +1,29 @@
+
+
+# docker-compose.yml entry looks like this...
+# I don't specify the katas service in the yml
+# If I do that the katas service goes down when I do
+# $ docker-compose rm
+#
+#web
+#  ...
+#  volumes_from:
+#    - cyber-dojo-katas
+#
+
+Should I change the cdf/cyber-dojo commands
+Currently
+  echo '    up [OPTIONS]      Brings up cyber-dojo server'
+  echo '    down              Brings down cyber-dojo server'
+
+Where up does
+  up = dc-create +  dc-start (same as dc)
+  down = dc-stop + dc-rm
+
+
+Perhaps [create] should be done by install and not offered as option.
+No rm offered either
+
+  echo '    start [OPTIONS]      Starts cyber-dojo server'
+  echo '    stop                 Stops cyber-dojo server'
+

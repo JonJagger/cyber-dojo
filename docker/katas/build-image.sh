@@ -17,14 +17,15 @@ build_empty_katas_data_container()
   CONTEXT_DIR=.
   pushd ${MY_DIR} > /dev/null
 
+  # create image
   docker build \
     --build-arg=CYBER_DOJO_KATAS_ROOT=${CYBER_DOJO_KATAS_ROOT} \
     --tag=cyberdojofoundation/${PWD##*/} \
     --file=${CONTEXT_DIR}/Dockerfile \
     ${CONTEXT_DIR}
 
-  docker create --name cyber-dojo-katas cyberdojofoundation/katas
-  docker run --rm -it --volumes-from=cyber-dojo-katas cyberdojofoundation/user-base sh
+  # create container
+  docker run --name cyber-dojo-katas cyberdojofoundation/katas echo 'katas-data-container'
 
   popd > /dev/null
 }
@@ -46,14 +47,15 @@ build_full_katas_data_container()
   cp ./Dockerfile    ${CONTEXT_DIR}
   cp ./.dockerignore ${CONTEXT_DIR}
 
+  # create image
   docker build \
     --build-arg=CYBER_DOJO_KATAS_ROOT=${CYBER_DOJO_KATAS_ROOT} \
     --tag=cyberdojofoundation/${PWD##*/} \
     --file=${CONTEXT_DIR}/Dockerfile \
     ${CONTEXT_DIR}
 
-  docker create --name cyber-dojo-katas cyberdojofoundation/katas
-  docker run --rm -it --volumes-from=cyber-dojo-katas cyberdojofoundation/user-base sh
+  # create container
+  docker run --name cyber-dojo-katas cyberdojofoundation/katas echo 'katas-data-container'
 
   rm ${CONTEXT_DIR}/Dockerfile
   rm ${CONTEXT_DIR}/.dockerignore
@@ -68,12 +70,4 @@ if [ "${KATAS_DIR}" == "" ]; then
 else
   build_full_katas_data_container
 fi
-
-# docker-compose.yml entry looks like this...
-#
-#katas:
-#  build: ./docker/katas_image       <<<<< where Dockerfile is
-#  entrypoint: /bin/sh
-
-
 
