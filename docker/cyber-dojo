@@ -36,14 +36,16 @@ show_use()
   echo 'Commands:'
   echo '    install_docker    Installs docker, docker-machine, and docker-compose'
   echo
-  echo '    ps                Lists cyber-dojo server containers'
-  echo '    stop              Stops the cyber-dojo server'
-  echo '    up [OPTIONS]      Brings up the cyber-dojo server'
+  echo '    ps                Lists server containers'
+  echo '    start             Starts the server containers'
+  echo '    stop              Stops the server containers'
+  echo '    rm                Removes the server containers'
+  echo '    up [OPTIONS]      Creates and starts the server containers'
   echo
-  echo '    images            Lists pulled cyber-dojo language images'
-  echo '    pull=IMAGE        Pulls cyber-dojo language IMAGE'
-  echo '    repo              Lists all cyber-dojo language images'
-  echo '    rmi=IMAGE         Removes a pulled cyber-dojo language IMAGE'
+  echo '    images            Lists pulled language images'
+  echo '    pull=IMAGE        Pulls language IMAGE'
+  echo '    repo              Lists all language images'
+  echo '    rmi=IMAGE         Removes a pulled language IMAGE'
   echo '    upgrade           Pulls the latest server and language images'
   echo
   echo 'up [OPTIONS]:'
@@ -53,6 +55,8 @@ show_use()
   echo
 }
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# INSTALL DOCKER
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 INSTALL_DOCKER_CURL_CMD="curl -sSL https://get.docker.com/ | sh"
@@ -98,52 +102,9 @@ show_how_to_install_docker_compose()
   echo 'To check for new releases visit https://github.com/docker/compose/releases'
 }
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-pulled_language_images()
-{
-  ALL_LANGUAGE_IMAGES=`echo "${LS_REPO}" | awk '{print $NF}' | sort`
-  PULLED_IMAGES=`docker images | grep ${REPO} | awk '{print $1}'`
-  SPLIT=$(echo "${PULLED_IMAGES}" | sed 's/\// /g')
-  PULLED_IMAGES=`echo "${SPLIT}" | awk '{print $NF}' | sort`
-
-  TMP_FILE_1=/tmp/cyber-dojo.comm1.txt
-  TMP_FILE_2=/tmp/cyber-dojo.comm2.txt
-  echo "${ALL_LANGUAGE_IMAGES}" > ${TMP_FILE_1}
-  echo       "${PULLED_IMAGES}" > ${TMP_FILE_2}
-  PULLED_LANGUAGE_IMAGES=`comm -12 ${TMP_FILE_1} ${TMP_FILE_2}`
-  rm ${TMP_FILE_1}
-  rm ${TMP_FILE_2}
-
-  echo "${PULLED_LANGUAGE_IMAGES}"
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-images()
-{
-  # FIXME: this gives the same as ls_repo when there are no languages pulled
-  LS_REPO=`repo`
-  PULLED=`pulled_language_images`
-  echo "${LS_REPO}" | grep 'LANGUAGE'
-  echo "${LS_REPO}" | grep "${PULLED}"
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-install_docker()
-{
-  echo 'installing docker'
-  eval ${INSTALL_DOCKER_CURL_CMD}
-  echo 'installing docker-machine'
-  eval ${INSTALL_DOCKER_MACHINE_CURL_CMD}
-  eval ${INSTALL_DOCKER_MACHINE_CHMOD_CMD}
-  echo 'installing docker-compose'
-  eval ${INSTALL_DOCKER_COMPOSE_CURL_CMD}
-  eval ${INSTALL_DOCKER_COMPOSE_CHMOD_CMD}
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#========================================================================================
+# CONTAINERS
+#========================================================================================
 
 ps()
 {
@@ -154,47 +115,25 @@ ps()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-pull()
+start()
 {
-  docker pull ${REPO}/${IMAGE}:latest
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-repo()
-{
-  # will pull web image if necessary
-  docker run --rm ${REPO}/web sh -c "./app/languages/list_all_images.rb"
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-rmi()
-{
-  docker rmi ${REPO}/${IMAGE}
+  setup_env_vars
+  ${DOCKER_COMPOSE_CMD} start
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 stop()
 {
-  ${DOCKER_COMPOSE_CMD} stop  2> /dev/null
+  setup_env_vars
+  ${DOCKER_COMPOSE_CMD} stop
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-pull_common_languages_if_none()
+rm()
 {
-  LS_REPO=`repo`
-  PULLED=`pulled_language_images`
-  if [ -z "${PULLED}" ]; then
-    echo 'No language images pulled'
-    echo 'Pulling a small starting collection of common language images'
-    IMAGE=gcc_assert
-    pull
-    #IMAGE=ruby_mini_test
-    #pull
-  fi
+  ${DOCKER_COMPOSE_CMD} stop
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -283,6 +222,98 @@ exit_if_bad_runner()
   fi
 }
 
+#========================================================================================
+# IMAGES
+#========================================================================================
+
+pulled_language_images()
+{
+  ALL_LANGUAGE_IMAGES=`echo "${LS_REPO}" | awk '{print $NF}' | sort`
+  PULLED_IMAGES=`docker images | grep ${REPO} | awk '{print $1}'`
+  SPLIT=$(echo "${PULLED_IMAGES}" | sed 's/\// /g')
+  PULLED_IMAGES=`echo "${SPLIT}" | awk '{print $NF}' | sort`
+
+  TMP_FILE_1=/tmp/cyber-dojo.comm1.txt
+  TMP_FILE_2=/tmp/cyber-dojo.comm2.txt
+  echo "${ALL_LANGUAGE_IMAGES}" > ${TMP_FILE_1}
+  echo       "${PULLED_IMAGES}" > ${TMP_FILE_2}
+  PULLED_LANGUAGE_IMAGES=`comm -12 ${TMP_FILE_1} ${TMP_FILE_2}`
+  rm ${TMP_FILE_1}
+  rm ${TMP_FILE_2}
+
+  echo "${PULLED_LANGUAGE_IMAGES}"
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+images()
+{
+  # FIXME: this gives the same as ls_repo when there are no languages pulled
+  LS_REPO=`repo`
+  PULLED=`pulled_language_images`
+  echo "${LS_REPO}" | grep 'LANGUAGE'
+  echo "${LS_REPO}" | grep "${PULLED}"
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+install_docker()
+{
+  echo 'installing docker'
+  eval ${INSTALL_DOCKER_CURL_CMD}
+  echo 'installing docker-machine'
+  eval ${INSTALL_DOCKER_MACHINE_CURL_CMD}
+  eval ${INSTALL_DOCKER_MACHINE_CHMOD_CMD}
+  echo 'installing docker-compose'
+  eval ${INSTALL_DOCKER_COMPOSE_CURL_CMD}
+  eval ${INSTALL_DOCKER_COMPOSE_CHMOD_CMD}
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+pull()
+{
+  docker pull ${REPO}/${IMAGE}:latest
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+repo()
+{
+  # will pull web image if necessary
+  docker run --rm ${REPO}/web sh -c "./app/languages/list_all_images.rb"
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# rm()
+# {
+#   ${DOCKER_COMPOSE_CMD} rm
+# }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+rmi()
+{
+  docker rmi ${REPO}/${IMAGE}
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+pull_common_languages_if_none()
+{
+  LS_REPO=`repo`
+  PULLED=`pulled_language_images`
+  if [ -z "${PULLED}" ]; then
+    echo 'No language images pulled'
+    echo 'Pulling a small starting collection of common language images'
+    IMAGE=gcc_assert
+    pull
+    #IMAGE=ruby_mini_test
+    #pull
+  fi
+}
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 upgrade()
@@ -314,7 +345,9 @@ download_latest_docker_compose_yml()
   cd "${CWD}" > /dev/null
 }
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#========================================================================================
+# COMMAND LINE ARGS
+#========================================================================================
 
 for ARG in "$@"
 do
@@ -323,20 +356,38 @@ do
       show_use
       exit
       ;;
-    up)
-      doUp=true
+    install_docker)
+      doInstall=true
+      ;;
+    # - - - - - - - CONTAINERS - - - - - - - -
+    ps)
+      doPs=true
+      ;;
+    start)
+      doStart=true
       ;;
     stop)
       doStop=true
       ;;
-    install_docker)
-      doInstall=true
+    rm)
+      doRm=true
       ;;
+    up)
+      doUp=true
+      ;;
+    # - - - - - - - OPTIONS - - - - - - - -
+    katas=*)
+      KATAS="${ARG#*=}"
+      ;;
+    runner=*)
+      RUNNER="${ARG#*=}"
+      ;;
+    rails_env=*)
+      RAILS_ENV="${ARG#*=}"
+      ;;
+    # - - - - - - - IMAGES - - - - - - - -
     images)
       doImages=true
-      ;;
-    ps)
-      doPs=true
       ;;
     pull=*)
       IMAGE="${ARG#*=}"
@@ -352,15 +403,7 @@ do
     upgrade)
       doUpgrade=true
       ;;
-    katas=*)
-      KATAS="${ARG#*=}"
-      ;;
-    runner=*)
-      RUNNER="${ARG#*=}"
-      ;;
-    rails_env=*)
-      RAILS_ENV="${ARG#*=}"
-      ;;
+    # - - - - - - - SOMETHING'S NOT RIGHT - - - - - - - -
     *)
       echo "${ME}: ${ARG} ?"
       echo "See '${ME} help"
@@ -426,11 +469,13 @@ fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+if [ -n "${doPs}"      ]; then ps     ; exit; fi
+if [ -n "${doStart}"   ]; then start  ; exit; fi
 if [ -n "${doStop}"    ]; then stop   ; exit; fi
+if [ -n "${doRm}"      ]; then rm     ; exit; fi
 if [ -n "${doUp}"      ]; then up     ; exit; fi
 
 if [ -n "${doImages}"  ]; then images ; exit; fi
-if [ -n "${doPs}"      ]; then ps     ; exit; fi
 if [ -n "${doPull}"    ]; then pull   ; exit; fi
 if [ -n "${doRepo}"    ]; then repo   ; exit; fi
 if [ -n "${doRmi}"     ]; then rmi    ; exit; fi
