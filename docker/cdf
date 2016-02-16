@@ -67,7 +67,6 @@ sh()
   docker exec --interactive --tty cyber-dojo-server sh
 }
 
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 build()

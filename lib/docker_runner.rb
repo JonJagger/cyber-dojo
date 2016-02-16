@@ -19,7 +19,7 @@ module DockerRunner # mixin
   def make_cache
     # [docker images] must be made by a user that has sufficient rights.
     # See web's Dockerfile
-    output, _ = shell.exec('sudo docker images')
+    output, _ = shell.exec('sudo -u docker-runner sudo docker images')
     # This will put all cyberdojofoundation image names into the runner cache,
     # even nginx and web. This is harmless.
     lines = output.split("\n").select { |line| line.start_with?('cyberdojofoundation') }

@@ -47,7 +47,8 @@ VOLUME [ "/usr/bin/docker" ]
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 USER root
 RUN apk --update add sudo
-RUN echo "cyber-dojo ALL=(ALL) NOPASSWD: /usr/bin/docker" > /etc/sudoers.d/cyber-dojo
-VOLUME [ "/etc/sudoers.d/cyber-dojo" ]
+RUN adduser -D -H docker-runner
+RUN echo "docker-runner ALL=(ALL) NOPASSWD: /usr/bin/docker" > /etc/sudoers.d/docker-runner
+VOLUME [ "/etc/sudoers.d/docker-runner" ]
 
 CMD [ "data-container" ]

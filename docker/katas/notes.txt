@@ -42,3 +42,36 @@ If I do [dc create] [dc start] I have to connect things myself
 I guess the real problem is down. It does [stop+rm]
 Not safe. [stop] now just does stop.
 ps now uses dc ps
+
+How to create the katas data container when using docker-machine (OSX Windows)
+
+A docker build command runs on default *after* it has been passed the context.
+That won't work.
+So I'm going to have to something like this:
+
+   $ docker-machine scp katas/Dockerfile    default:KATAS_PATH
+   $ docker-machine scp katas/.dockerignore default:KATAS_PATH
+   $ docker-machine ssh default \
+        sudo docker build \
+            --build-arg=CYBER_DOJO_KATAS_ROOT=${CYBER_DOJO_KATAS_ROOT} \
+            --tag=cyberdojofoundation/katas \
+            KATAS_PATH
+
+   $ docker-machine ssh default \
+        sudo docker run \
+            --name cyber-dojo-katas \
+            cyberdojofoundation/katas \
+            echo 'katas-data-container'
+
+This assumes the Dockerfile and .dockerignore are on the host...
+I want only the one sh file (+ yml)
+Maybe create in a tmp folder on host first
+
+   $
+
+
+
+
+
+
+

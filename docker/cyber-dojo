@@ -143,28 +143,13 @@ up()
   exit_if_bad_katas
   exit_if_bad_runner
   exit_if_bad_rails_env
+
   pull_common_languages_if_none
-  setup_env_vars
 
   CWD=`pwd`
   cd "${MY_DIR}" > /dev/null
   ${DOCKER_COMPOSE_CMD} up -d
   cd "${CWD}" > /dev/null
-}
-
-setup_env_vars()
-{
-  export CYBER_DOJO_RAILS_ENV=${RAILS_ENV}
-  export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/app/languages
-  export CYBER_DOJO_EXERCISES_ROOT=${HOME}/app/exercises
-  export CYBER_DOJO_CACHES_ROOT=${HOME}/app/caches
-  export CYBER_DOJO_KATAS_ROOT=${KATAS}
-  export CYBER_DOJO_RUNNER_CLASS=${RUNNER}
-  export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
-  export CYBER_DOJO_SHELL_CLASS=HostShell
-  export CYBER_DOJO_DISK_CLASS=HostDisk
-  export CYBER_DOJO_LOG_CLASS=HostLog
-  export CYBER_DOJO_GIT_CLASS=HostGit
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -346,7 +331,7 @@ download_latest_docker_compose_yml()
 }
 
 #========================================================================================
-# COMMAND LINE ARGS
+# PROCESS COMMAND LINE ARGS
 #========================================================================================
 
 for ARG in "$@"
@@ -412,7 +397,9 @@ do
   esac
 done
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#========================================================================================
+# INSTALL DOCKER OR SAY HOW TO
+#========================================================================================
 
 if [ -n "${doInstall}" ]; then
   install_docker
@@ -454,20 +441,42 @@ if [  $? != 0 ]; then
   exit
 fi
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#========================================================================================
+# NOTHING IS IMPLICIT
+#========================================================================================
 
 if [ $# -eq 0 ]; then
   show_use
   exit
 fi
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#========================================================================================
+# YOU MUST HAVE THE YML FILE
+#========================================================================================
 
 if [ ! -e ${MY_DIR}/${DOCKER_COMPOSE_FILE} ]; then
   download_latest_docker_compose_yml
 fi
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#========================================================================================
+# YML FILES RELIES ON THESE ENV-VARS
+#========================================================================================
+
+export CYBER_DOJO_RAILS_ENV=${RAILS_ENV}
+export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/app/languages
+export CYBER_DOJO_EXERCISES_ROOT=${HOME}/app/exercises
+export CYBER_DOJO_CACHES_ROOT=${HOME}/app/caches
+export CYBER_DOJO_KATAS_ROOT=${KATAS}
+export CYBER_DOJO_RUNNER_CLASS=${RUNNER}
+export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
+export CYBER_DOJO_SHELL_CLASS=HostShell
+export CYBER_DOJO_DISK_CLASS=HostDisk
+export CYBER_DOJO_LOG_CLASS=HostLog
+export CYBER_DOJO_GIT_CLASS=HostGit
+
+#========================================================================================
+# DO SOMETHING!
+#========================================================================================
 
 if [ -n "${doPs}"      ]; then ps     ; exit; fi
 if [ -n "${doStart}"   ]; then start  ; exit; fi

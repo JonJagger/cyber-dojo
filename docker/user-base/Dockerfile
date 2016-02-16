@@ -20,10 +20,9 @@ MAINTAINER Jon Jagger <jon@jaggersoft.com>
 #    This has no user dependencies on the host.
 
 USER root
-# -D            no password
-# -H            no home directory
-# -u 19961      user-id=19961
-# cyber-dojo    user-name=cyber-dojo
+# -D=no password, -H=no home directory
+# set specific uid for cyber-dojo user in case I ever want to volume-mount
+# katas/... folder in which case host will need to co-operate.
 RUN adduser -D -H -u 19661 cyber-dojo
 
 USER cyber-dojo

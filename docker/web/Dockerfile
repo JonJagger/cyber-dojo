@@ -2,7 +2,7 @@ FROM cyberdojofoundation/user-base
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# install tini (for pid 1 zombie reaping)
+# 1. install tini (for pid 1 zombie reaping)
 # https://github.com/krallin/tini
 # https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/
 
@@ -11,8 +11,9 @@ RUN apk add --update --repository http://dl-1.alpinelinux.org/alpine/edge/commun
 ENTRYPOINT ["/usr/bin/tini", "-g", "--"]
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# install docker-client
-# Launching a docker app (that itself uses docker) is different on different OS's...
+# 2. install docker-client
+# Launching a docker app (that itself uses docker) is
+# different on different host OS's...
 #
 # OSX Yosemite
 # ------------
@@ -41,6 +42,7 @@ ENTRYPOINT ["/usr/bin/tini", "-g", "--"]
 #
 # I originally used docker-compose extension files specific to each OS.
 # I now install the docker client inside the image.
+# This means there is no host<-container uid dependency.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 USER root
@@ -51,15 +53,20 @@ RUN    apk --update add curl \
     && apk del curl
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# runner needs sudo to be able to run /usr/bin/docker
+# 3. lib/runner sh files needs to run /usr/bin/docker
 # there is no sudo command in Alpine
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 USER root
+# -D=no password, -H=no home directory
+RUN adduser -D -H docker-runner
 RUN apk --update add sudo
-RUN echo "cyber-dojo ALL=(ALL) NOPASSWD: /usr/bin/docker" > /etc/sudoers.d/cyber-dojo
+# cyber-dojo, on all hosts, can sudo -u docker-runner, without a password
+RUN echo "cyber-dojo    ALL=(docker-runner) NOPASSWD: ALL" >  /etc/sudoers.d/docker-runner
+# docker-runner, on all hosts, without a password, can sudo /usr/bin/docker
+RUN echo "docker-runner ALL=NOPASSWD: /usr/bin/docker *"   >>  /etc/sudoers.d/docker-runner
 
 # - - - - - - - - - - - - - - - - - - - - - -
-# bundle install from cyber-dojo's Gemfile
+# 4. bundle install from cyber-dojo's Gemfile
 # o) ruby, ruby-bigdecimal, tzdata (for rails server)
 # o) git (for cyber-dojo)
 # o) bash (test scripts are written in bash)
