@@ -2,7 +2,7 @@
 
 nginx:
   image: cyberdojofoundation/nginx
-  container_name: cyber-dojo-nginx
+  #container_name: cyber-dojo-nginx
   links:
     - "web:cyberdojo_web"
   ports:
@@ -13,7 +13,7 @@ nginx:
 
 web:
   image: cyberdojofoundation/web
-  container_name: cyber-dojo-server
+  #container_name: cyber-dojo-server
   command: rails server --environment=${CYBER_DOJO_RAILS_ENV}
   environment:
     - CYBER_DOJO_LANGUAGES_ROOT=${CYBER_DOJO_LANGUAGES_ROOT}

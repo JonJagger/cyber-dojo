@@ -22,7 +22,7 @@ DOCKER_COMPOSE_CMD="docker-compose --file=./${DOCKER_COMPOSE_FILE}"
 
 # TODO: detect if more than one command entered
 # TODO: pull all language images == fetch? all?
-# TODO: repo -> ls?
+# TODO: repo -> ls? -> lsi ?
 # TODO: bootstrap= install_docker + pull_all_languages + up
 # TODO: bootstrap= install_docker + pull_few_languages + up
 #
@@ -36,14 +36,12 @@ show_use()
   echo 'Commands:'
   echo '    install_docker    Installs docker, docker-machine, and docker-compose'
   echo
-  echo '    up [OPTIONS]      Brings up cyber-dojo server'
-  echo '    down              Brings down cyber-dojo server'
-  echo '    restart           (down + up)'
+  echo '    ps                Lists cyber-dojo server containers'
+  echo '    stop              Stops the cyber-dojo server'
+  echo '    up [OPTIONS]      Brings up the cyber-dojo server'
   echo
   echo '    images            Lists pulled cyber-dojo language images'
   echo '    pull=IMAGE        Pulls cyber-dojo language IMAGE'
-  echo '    ps                Lists cyber-dojo containers'
-  echo '    pss               Lists processes inside cyber-dojo server'
   echo '    repo              Lists all cyber-dojo language images'
   echo '    rmi=IMAGE         Removes a pulled cyber-dojo language IMAGE'
   echo '    upgrade           Pulls the latest server and language images'
@@ -122,14 +120,6 @@ pulled_language_images()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-down()
-{
-  ${DOCKER_COMPOSE_CMD} stop  2> /dev/null
-  ${DOCKER_COMPOSE_CMD} rm -f 2> /dev/null
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 images()
 {
   # FIXME: this gives the same as ls_repo when there are no languages pulled
@@ -157,15 +147,9 @@ install_docker()
 
 ps()
 {
-  docker ps -a | head -1
-  docker ps -a | grep ${REPO}
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-pss()
-{
-  docker exec cyber-dojo-server ps
+  # why does it warn unless env-vars are set?
+  setup_env_vars
+  ${DOCKER_COMPOSE_CMD} ps
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -185,17 +169,16 @@ repo()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-restart()
+rmi()
 {
-  down
-  up
+  docker rmi ${REPO}/${IMAGE}
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-rmi()
+stop()
 {
-  docker rmi ${REPO}/${IMAGE}
+  ${DOCKER_COMPOSE_CMD} stop  2> /dev/null
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -221,9 +204,17 @@ up()
   exit_if_bad_katas
   exit_if_bad_runner
   exit_if_bad_rails_env
-
   pull_common_languages_if_none
+  setup_env_vars
 
+  CWD=`pwd`
+  cd "${MY_DIR}" > /dev/null
+  ${DOCKER_COMPOSE_CMD} up -d
+  cd "${CWD}" > /dev/null
+}
+
+setup_env_vars()
+{
   export CYBER_DOJO_RAILS_ENV=${RAILS_ENV}
   export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/app/languages
   export CYBER_DOJO_EXERCISES_ROOT=${HOME}/app/exercises
@@ -235,11 +226,6 @@ up()
   export CYBER_DOJO_DISK_CLASS=HostDisk
   export CYBER_DOJO_LOG_CLASS=HostLog
   export CYBER_DOJO_GIT_CLASS=HostGit
-
-  CWD=`pwd`
-  cd "${MY_DIR}" > /dev/null
-  ${DOCKER_COMPOSE_CMD} up -d
-  cd "${CWD}" > /dev/null
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -340,11 +326,8 @@ do
     up)
       doUp=true
       ;;
-    down)
-      doDown=true
-      ;;
-    restart)
-      doRestart=true
+    stop)
+      doStop=true
       ;;
     install_docker)
       doInstall=true
@@ -354,9 +337,6 @@ do
       ;;
     ps)
       doPs=true
-      ;;
-    pss)
-      doPss=true
       ;;
     pull=*)
       IMAGE="${ARG#*=}"
@@ -446,13 +426,11 @@ fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if [ -n "${doDown}"    ]; then down   ; exit; fi
+if [ -n "${doStop}"    ]; then stop   ; exit; fi
 if [ -n "${doUp}"      ]; then up     ; exit; fi
-if [ -n "${doRestart}" ]; then restart; exit; fi
 
 if [ -n "${doImages}"  ]; then images ; exit; fi
 if [ -n "${doPs}"      ]; then ps     ; exit; fi
-if [ -n "${doPss}"     ]; then pss    ; exit; fi
 if [ -n "${doPull}"    ]; then pull   ; exit; fi
 if [ -n "${doRepo}"    ]; then repo   ; exit; fi
 if [ -n "${doRmi}"     ]; then rmi    ; exit; fi
