@@ -1,0 +1,15 @@
+
+The existing C#-NUnit Dockerfile has (and requires) this
+
+RUN usermod -m -d /home/www-data www-data
+RUN mkdir /home/www-data
+RUN chgrp www-data /home/www-data
+RUN chown www-data /home/www-data
+ENV HOME /home/www-data
+
+When NUnit runs it picks up HOME from the current user.
+So this will not work when run by docker_tmp_runner.sh as nobody
+since by default, on Alpine, nobody's entry in /etc/passwd is
+   nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+To solve this docker_tmp_runner.rb give's nobody a home dir.
+
