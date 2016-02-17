@@ -29,7 +29,7 @@ CID=$(${SUDO} docker run --detach \
 (sleep ${MAX_SECS} && ${SUDO} docker rm --force ${CID}) &
 
 # - - - - - - - - - - - - - - - - - - - - - -
-# 3. Tar pipe files into the container and run cyber-dojo.sh
+# 3. Tar pipe the files into the container and run cyber-dojo.sh
 
 TMP_DIR=/tmp/cyer-dojo
 

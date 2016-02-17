@@ -45,25 +45,32 @@ ENTRYPOINT ["/usr/bin/tini", "-g", "--"]
 # This means there is no host<-container uid dependency.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+ARG  DOCKER_BINARY=/usr/bin/docker
 USER root
-RUN    apk --update add curl \
-    && curl -O https://get.docker.com/builds/Linux/x86_64/docker-latest \
-    && mv docker-latest /usr/bin/docker \
-    && chmod +x /usr/bin/docker \
-    && apk del curl
+RUN  apk --update add curl \
+  && curl -O https://get.docker.com/builds/Linux/x86_64/docker-latest \
+  && mv docker-latest ${DOCKER_BINARY} \
+  && chmod +x ${DOCKER_BINARY} \
+  && apk del curl
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 3. lib/runner sh files needs to run /usr/bin/docker
-# there is no sudo command in Alpine
+# after this sh file (running as cyber-dojo user) can do
+#     $ sudo -u docker-runner sudo docker run ...
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+ARG  NEEDS_DOCKER_SUDO=cyber-dojo
+ARG  GETS_DOCKER_SUDO=docker-runner
+ARG  SUDO_FILE=/etc/sudoers.d/${GETS_DOCKER_SUDO}
 USER root
 # -D=no password, -H=no home directory
-RUN adduser -D -H docker-runner
-RUN apk --update add sudo
+RUN  adduser -D -H ${GETS_DOCKER_SUDO}
+# there is no sudo command in Alpine
+RUN  apk --update add sudo
 # cyber-dojo, on all hosts, can sudo -u docker-runner, without a password
-RUN echo "cyber-dojo    ALL=(docker-runner) NOPASSWD: ALL" >  /etc/sudoers.d/docker-runner
+RUN  echo "${NEEDS_DOCKER_SUDO} ALL=(${GETS_DOCKER_SUDO}) NOPASSWD: ALL" >  ${SUDO_FILE}
 # docker-runner, on all hosts, without a password, can sudo /usr/bin/docker
-RUN echo "docker-runner ALL=NOPASSWD: /usr/bin/docker *"   >>  /etc/sudoers.d/docker-runner
+RUN  echo "${GETS_DOCKER_SUDO}  ALL=NOPASSWD: ${DOCKER_BINARY} *"       >>  ${SUDO_FILE}
 
 # - - - - - - - - - - - - - - - - - - - - - -
 # 4. bundle install from cyber-dojo's Gemfile
@@ -72,30 +79,31 @@ RUN echo "docker-runner ALL=NOPASSWD: /usr/bin/docker *"   >>  /etc/sudoers.d/do
 # o) bash (test scripts are written in bash)
 
 USER root
-RUN apk --update add \
-          ruby ruby-bigdecimal tzdata \
-          git bash
+RUN  apk --update add \
+           ruby ruby-bigdecimal tzdata \
+           git \
+           bash
 
-ARG CYBER_DOJO_HOME
-
+ARG  CYBER_DOJO_HOME
 USER root
 RUN  mkdir -p     ${CYBER_DOJO_HOME}
 COPY Gemfile      ${CYBER_DOJO_HOME}
-RUN apk --update add --virtual build-dependencies \
-      build-base \
-      ruby-dev \
-      openssl-dev \
-      postgresql-dev \
-      libc-dev \
-      linux-headers \
-    && gem install bundler --no-ri --no-rdoc \
-    && cd ${CYBER_DOJO_HOME} ; bundle install --without development test \
-    && apk del build-dependencies
+RUN  apk --update \
+        add --virtual build-dependencies \
+          build-base \
+          ruby-dev \
+          openssl-dev \
+          postgresql-dev \
+          libc-dev \
+          linux-headers \
+       && gem install bundler --no-ri --no-rdoc \
+       && cd ${CYBER_DOJO_HOME} ; bundle install --without development test \
+     && apk del build-dependencies
 
 COPY . ${CYBER_DOJO_HOME}
-RUN mkdir ${CYBER_DOJO_HOME}/app/caches
-WORKDIR ${CYBER_DOJO_HOME}
-RUN chown -R cyber-dojo ${CYBER_DOJO_HOME}
+RUN  mkdir ${CYBER_DOJO_HOME}/app/caches
+RUN  chown -R cyber-dojo ${CYBER_DOJO_HOME}
 
-EXPOSE 3000
-USER cyber-dojo
+WORKDIR ${CYBER_DOJO_HOME}
+USER    cyber-dojo
+EXPOSE  3000
