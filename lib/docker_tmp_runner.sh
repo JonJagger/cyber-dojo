@@ -43,8 +43,11 @@ CID=$(${SUDO} docker run --detach \
 # and nobody does not have a home dir.
 # I usermod to solve this.
 # Has to be interactive for the tar-pipe.
+#
+# The existing F#-NUnit cyber-dojo.sh names the /sandbox folder
+# So TMP_DIR has to be /sandbox for backward compatibility
 
-TMP_DIR=/tmp/cyber-dojo
+TMP_DIR=/sandbox
 
 (cd ${SRC_DIR} && tar -cf - .) \
   | ${SUDO} docker exec \

@@ -4,7 +4,7 @@ Checking languages work with new dind server
 Checked and OK (can create kata and tes to get red)
 --------------
 YES gcc_assert
-YES csharp_nunit  (with tweak, see docker_tmp_runner.txt)
+YES csharp_nunit  (with usermod tweak, see docker_tmp_runner.sh)
 YES java_junit
 YES nasm_assert
 YES php_phpunit
@@ -13,16 +13,7 @@ YES groovy_junit
 YES go_testing
 YES d_unittest
 YES visual-basic_nunit
-
-
-? fsharp_nunit  FAILS. Like C#-NUnit failure.
-Ah the problem is the contents of cyber-dojo.sh for F#-Nunit.
-It relies on everything being in /sandbox.
-if [ $? -eq 0 ]; then
-  mono /Packages/NUnit.Runners/tools/nunit-console.exe -nologo /sandbox/RunTests.dll
-fi
-Yes. It would be much better to replace /tmp/cyber-dojo /sandbox
-
+YES fsharp_nunit  (with TMP_DIR -> /sandbox tweak, see docker_tmp_runner.sh)
 
 
 ? ruby_cucumber
