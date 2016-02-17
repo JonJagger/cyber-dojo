@@ -1,25 +1,40 @@
 
 Checking languages work with new dind server
 
-Checked
--------
+Checked and OK (can create kata and tes to get red)
+--------------
 YES gcc_assert
 YES csharp_nunit  (with tweak, see docker_tmp_runner.txt)
 YES java_junit
 YES nasm_assert
 YES php_phpunit
 YES python_pytest
+YES groovy_junit
+YES go_testing
+YES d_unittest
 
+? visual_basic_nunit
+? javascript-node_jasmine
+? fsharp_nunit
+
+NO ruby_rspec     - Controller failure?!
 NO ruby_mini_test - Controller failure?!
-                    uninitialized constant KataController::StringCleaner ?
+NO ruby_test_unit - Controller failure?!
+uninitialized constant KataController::StringCleaner ?
+app/controllers/kata_controller.rb:47:in `<class:KataController>'
+app/controllers/kata_controller.rb:2:in `<top (required)>'
+
+Doesn't happen on other languages?!
+This is very odd indeed. The web container is failing at
+a basic rails level if I try to create a kata from
+some languages but not from others. I don't understand.
+Furthermore, ruby_mini_test was definitely not doing
+that a few days ago. Or was it ruby_test_unit
+That fails too.
+Get to "Your animal is a toucan".
+Click OK. You get the KataController::StringCleaner failure.
 
 
-visual_basic_nunit
-javascript-node_jasmine
-groovy-junit
-go_testing
-fsharp_nunit
-d_unittest
 
 
 
