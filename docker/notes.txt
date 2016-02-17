@@ -10,7 +10,10 @@ YES nasm_assert
 YES php_phpunit
 YES python_pytest
 
-ruby_mini_test
+NO ruby_mini_test - Controller failure?!
+                    uninitialized constant KataController::StringCleaner ?
+
+
 visual_basic_nunit
 javascript-node_jasmine
 groovy-junit
