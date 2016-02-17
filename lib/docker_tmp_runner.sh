@@ -41,7 +41,6 @@ TMP_DIR=/tmp/cyer-dojo
                 && cd ${TMP_DIR} \
                 && tar -xf - -C . \
                 && ./cyber-dojo.sh 2>&1"
-EXIT_STATUS=$?
 
 # - - - - - - - - - - - - - - - - - - - - - -
 # 4. If the container isn't running, the sleep woke and removed it
@@ -50,5 +49,5 @@ RUNNING=$(${SUDO} docker inspect --format="{{ .State.Running }}" ${CID})
 if [ "${RUNNING}" != "true" ]; then
   exit 137 # (128=timed-out) + (9=killed)
 else
-  exit ${EXIT_STATUS}
+  exit 0
 fi
