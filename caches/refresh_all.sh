@@ -10,4 +10,5 @@ cp $cyberDojoHome/config/runner_bootstrap_config.json $configFilename
 chmod 444 $configFilename
 
 $cyberDojoHome/lib/docker_runner_refresh.rb
-$cyberDojoHome/lib/docker_machine_runner_refresh.rb
+
+#$cyberDojoHome/lib/docker_machine_runner_refresh.rb
