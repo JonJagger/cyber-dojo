@@ -12,10 +12,21 @@ YES python_pytest
 YES groovy_junit
 YES go_testing
 YES d_unittest
+YES visual-basic_nunit
 
-? visual_basic_nunit
+
+? fsharp_nunit  FAILS. Like C#-NUnit failure.
+Ah the problem is the contents of cyber-dojo.sh for F#-Nunit.
+It relies on everything being in /sandbox.
+if [ $? -eq 0 ]; then
+  mono /Packages/NUnit.Runners/tools/nunit-console.exe -nologo /sandbox/RunTests.dll
+fi
+Yes. It would be much better to replace /tmp/cyber-dojo /sandbox
+
+
+
+? ruby_cucumber
 ? javascript-node_jasmine
-? fsharp_nunit
 
 NO ruby_rspec     - Controller failure?!
 NO ruby_mini_test - Controller failure?!
@@ -27,12 +38,26 @@ app/controllers/kata_controller.rb:2:in `<top (required)>'
 Doesn't happen on other languages?!
 This is very odd indeed. The web container is failing at
 a basic rails level if I try to create a kata from
-some languages but not from others. I don't understand.
+ruby languages but not from others. I don't understand.
 Furthermore, ruby_mini_test was definitely not doing
-that a few days ago. Or was it ruby_test_unit
-That fails too.
+that a few days ago. Or was it ruby_test_unit. It was one of them.
+I think it was before I moved some dirs under app/
+Eg caches, languages, exercises, caches, katas (not test)
+
 Get to "Your animal is a toucan".
 Click OK. You get the KataController::StringCleaner failure.
+Is the docker-machine setup on OSX Docker-Quickstart-Terminal
+doing some fuse-mounting of my local disk onto default
+and that is somehow getting volume-mounted inside the rails image?
+Seems very unlikely.
+$ docker-machine ssh default ruby --version
+Nope ruby is not on default.
+
+I think the simplest option may be to rewind to an earlier
+commit and find somewhere that ruby_test_unit/ruby_mini_test
+works and then move forward.
+
+
 
 
 
