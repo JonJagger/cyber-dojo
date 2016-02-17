@@ -24,26 +24,37 @@ CID=$(${SUDO} docker run --detach \
                          --user=nobody ${IMAGE} sh)
 
 # - - - - - - - - - - - - - - - - - - - - - -
-# 2. After max_seconds, remove the container
-
-(sleep ${MAX_SECS} && ${SUDO} docker rm --force ${CID}) &
-
-# - - - - - - - - - - - - - - - - - - - - - -
-# 3. Tar pipe the files into the container and run cyber-dojo.sh
+# 2. Tar pipe the files into the container
+#    usermod is required for C#-NUnit
 
 TMP_DIR=/tmp/cyber-dojo
 
 (cd ${SRC_DIR} && tar -cf - .) \
-  | ${SUDO} docker exec --interactive \
-                        --user=nobody \
-            ${CID} \
-            sh -c "mkdir ${TMP_DIR} \
-                && cd ${TMP_DIR} \
-                && tar -xf - -C . \
-                && ./cyber-dojo.sh 2>&1"
+  | ${SUDO} docker exec \
+                   --user=root \
+                   --interactive \
+                   ${CID} \
+                   sh -c "mkdir ${TMP_DIR} \
+                       && cd ${TMP_DIR} \
+                       && tar -xf - -C . \
+                       && chown -R nobody ${TMP_DIR} \
+                       && usermod --home ${TMP_DIR} nobody"
 
 # - - - - - - - - - - - - - - - - - - - - - -
-# 4. If the container isn't running, the sleep woke and removed it
+# 3. After max_seconds, remove the container
+
+(sleep ${MAX_SECS} && ${SUDO} docker rm --force ${CID}) &
+
+# - - - - - - - - - - - - - - - - - - - - - -
+# 4. Run cyber-dojo.sh
+
+${SUDO} docker exec \
+               --user=nobody \
+               ${CID} \
+               sh -c "cd ${TMP_DIR} && ./cyber-dojo.sh 2>&1"
+
+# - - - - - - - - - - - - - - - - - - - - - -
+# 5. If the container isn't running, the sleep woke and removed it
 
 RUNNING=$(${SUDO} docker inspect --format="{{ .State.Running }}" ${CID})
 if [ "${RUNNING}" != "true" ]; then

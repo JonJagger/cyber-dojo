@@ -1,4 +1,103 @@
 
+Need to check languages work with new dind server
+
+Checked and work
+----------------
+gcc_assert
+java_junit
+nasm_assert
+ruby_mini_test
+
+
+Checked and don't work
+----------------------
+csharp_nunit
+Dockerfile has this
+RUN usermod -m -d /home/www-data www-data
+RUN mkdir /home/www-data
+RUN chgrp www-data /home/www-data
+RUN chown www-data /home/www-data
+ENV HOME /home/www-data
+Problem here is the HOME.
+For a while I think I'm going to need extra 'adpater' instructions in the Aline base image
+to match these. That way the dind server will work with all existing images.
+Then I can think about updating the language images, eg C#-NUnit to get to the
+point where I can drop the adapter. Means if you are building a dind server on
+top of an old server you'll need to repull the language images as part of creating
+the new server. Fortunately there is a www-data(33) user in the alpine base
+image. But... How will this help?
+No. Red herring.
+The problem is that I'm running cyber-dojo.sh as user=nobody
+Inside Alpine base I have
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+Inside C#-NUnit I have...
+Hmmm. cyber-dojo.sh is not even producing output. Go in raw...
+$ docker run --rm -it --user=nobody cyberdojofoundation/csharp_nunit sh
+$ cd /tmp
+$ mkdir cyber-dojo
+mkdir: cannot create directory 'cyber-dojo': Permission denied
+Ok. So how about going back to the previous docker-tmp-runner.sh two step docker exec
+version that ensured /tmp/cyber-dojo was owned by nobody.
+Yes. That gets me a step further. Now the error is
+Unhandled Exception:
+-----
+System.Security.SecurityException: No access to the given key ---> System.UnauthorizedAccessException: Access to the path "/nonexistent" is denied.
+  at System.IO.Directory.CreateDirectoriesInternal (System.String path) [0x00000] in <filename unknown>:0
+etc etc etc
+-----
+cat /etc/passwd
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+So NUnit is trying to do stuff in the *users* home directory. It's not HOME by the look of it.
+And I *CAN* edit the setup inside the container. I can patch in docker-tmp-runner.sh
+What do I need to do?
+If it's C#-NUnit...
+1. I can run as www-data user.
+   This is nice in that I drop interactive from 2nd exec...
+
+(cd ${SRC_DIR} && tar -cf - .) \
+  | ${SUDO} docker exec --interactive \
+                        --user=root \
+            ${CID} \
+            sh -c "mkdir ${TMP_DIR} \
+                && cd ${TMP_DIR} \
+                && tar -xf - -C . \
+                && chown -R www-data ${TMP_DIR}"
+
+(cd ${SRC_DIR} && tar -cf - .) \
+  | ${SUDO} docker exec --interactive \
+                        --user=www-data \
+            ${CID} \
+            sh -c "cd ${TMP_DIR} \
+                && ./cyber-dojo.sh 2>&1"
+Yes. That works.
+
+2. I can give nobody (inside) a home-directory.
+TMP_DIR=/tmp/cyber-dojo
+
+${SUDO} docker exec --user=root \
+  ${CID} \
+  sh -c "mkdir ${TMP_DIR} && chown nobody ${TMP_DIR} && usermod --home ${TMP_DIR} nobody"
+
+(cd ${SRC_DIR} && tar -cf - .) \
+  | ${SUDO} docker exec --interactive \
+                        --user=nobody \
+            ${CID} \
+            sh -c "cd ${TMP_DIR} \
+                && tar -xf - -C . \
+                && ./cyber-dojo.sh 2>&1"
+
+This worked too.
+
+
+
+
+
+
+
+
+
+
+
 Does pull.sh still do an image update check?
 It still calls caches/refresh_all.sh *after* the git pull.
 So refresh_all could be updated to reinstate the image update.
