@@ -232,11 +232,19 @@ pulled_language_images()
 
 images()
 {
+  echo './cyber-dojo images OFFLINE-BUG-NEEDS-FIXING'
+  # FIXME: this stops two services
+  #   Stopping cyber-dojo-nginx ... done
+  #   Stopping cyber-dojo-server ... done
+  # It's the line
+  # PULLED=`pulled_language_images`
+  #
   # FIXME: this gives the same as ls_repo when there are no languages pulled
-  LS_REPO=`repo`
-  PULLED=`pulled_language_images`
-  echo "${LS_REPO}" | grep 'LANGUAGE'
-  echo "${LS_REPO}" | grep "${PULLED}"
+
+  #LS_REPO=`repo`
+  #PULLED=`pulled_language_images`
+  #echo "${LS_REPO}" | grep 'LANGUAGE'
+  #echo "${LS_REPO}" | grep "${PULLED}"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
