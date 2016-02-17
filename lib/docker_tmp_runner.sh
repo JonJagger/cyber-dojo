@@ -31,7 +31,7 @@ CID=$(${SUDO} docker run --detach \
 # - - - - - - - - - - - - - - - - - - - - - -
 # 3. Tar pipe the files into the container and run cyber-dojo.sh
 
-TMP_DIR=/tmp/cyer-dojo
+TMP_DIR=/tmp/cyber-dojo
 
 (cd ${SRC_DIR} && tar -cf - .) \
   | ${SUDO} docker exec --interactive \
