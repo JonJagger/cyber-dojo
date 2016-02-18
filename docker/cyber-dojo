@@ -108,8 +108,6 @@ show_how_to_install_docker_compose()
 
 ps()
 {
-  # why does it warn unless env-vars are set?
-  setup_env_vars
   ${DOCKER_COMPOSE_CMD} ps
 }
 
@@ -117,7 +115,6 @@ ps()
 
 start()
 {
-  setup_env_vars
   ${DOCKER_COMPOSE_CMD} start
 }
 
@@ -125,7 +122,6 @@ start()
 
 stop()
 {
-  setup_env_vars
   ${DOCKER_COMPOSE_CMD} stop
 }
 
@@ -133,7 +129,7 @@ stop()
 
 rm()
 {
-  ${DOCKER_COMPOSE_CMD} stop
+  ${DOCKER_COMPOSE_CMD} rm
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -145,7 +141,7 @@ up()
   exit_if_bad_runner
   exit_if_bad_rails_env
   pull_common_languages_if_none
-  CWD=`pwd`
+  CWD=$(pwd)
   cd "${MY_DIR}" > /dev/null
   ${DOCKER_COMPOSE_CMD} up -d
   cd "${CWD}" > /dev/null
@@ -212,39 +208,31 @@ exit_if_bad_runner()
 
 pulled_language_images()
 {
-  ALL_LANGUAGE_IMAGES=`echo "${LS_REPO}" | awk '{print $NF}' | sort`
-  PULLED_IMAGES=`docker images | grep ${REPO} | awk '{print $1}'`
+  ALL_LANGUAGE_IMAGES=$(echo "${LS_REPO}" | awk '{print $NF}' | sort)
+  PULLED_IMAGES=$(docker images | grep ${REPO} | awk '{print $1}')
   SPLIT=$(echo "${PULLED_IMAGES}" | sed 's/\// /g')
-  PULLED_IMAGES=`echo "${SPLIT}" | awk '{print $NF}' | sort`
+  PULLED_IMAGES=$(echo "${SPLIT}" | awk '{print $NF}' | sort)
 
   TMP_FILE_1=/tmp/cyber-dojo.comm1.txt
   TMP_FILE_2=/tmp/cyber-dojo.comm2.txt
   echo "${ALL_LANGUAGE_IMAGES}" > ${TMP_FILE_1}
   echo       "${PULLED_IMAGES}" > ${TMP_FILE_2}
-  PULLED_LANGUAGE_IMAGES=`comm -12 ${TMP_FILE_1} ${TMP_FILE_2}`
-  rm ${TMP_FILE_1}
-  rm ${TMP_FILE_2}
+  comm -12 ${TMP_FILE_1} ${TMP_FILE_2}
 
-  echo "${PULLED_LANGUAGE_IMAGES}"
+  # These two lines cause docker containers to stop and I have no idea why?!
+  #rm ${TMP_FILE_1}
+  #rm ${TMP_FILE_2}
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 images()
 {
-  echo './cyber-dojo images OFFLINE-BUG-NEEDS-FIXING'
-  # FIXME: this stops two services
-  #   Stopping cyber-dojo-nginx ... done
-  #   Stopping cyber-dojo-server ... done
-  # It's the line
-  # PULLED=`pulled_language_images`
-  #
   # FIXME: this gives the same as ls_repo when there are no languages pulled
-
-  #LS_REPO=`repo`
-  #PULLED=`pulled_language_images`
-  #echo "${LS_REPO}" | grep 'LANGUAGE'
-  #echo "${LS_REPO}" | grep "${PULLED}"
+  LS_REPO=$(repo)
+  PULLED=$(pulled_language_images)
+  echo "${LS_REPO}" | grep 'LANGUAGE'
+  echo "${LS_REPO}" | grep "${PULLED}"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -278,13 +266,6 @@ repo()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# rm()
-# {
-#   ${DOCKER_COMPOSE_CMD} rm
-# }
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 rmi()
 {
   docker rmi ${REPO}/${IMAGE}
@@ -294,8 +275,8 @@ rmi()
 
 pull_common_languages_if_none()
 {
-  LS_REPO=`repo`
-  PULLED=`pulled_language_images`
+  LS_REPO=$(repo)
+  PULLED=$(pulled_language_images)
   if [ -z "${PULLED}" ]; then
     echo 'No language images pulled'
     echo 'Pulling a small starting collection of common language images'
@@ -313,7 +294,7 @@ upgrade()
   echo "downloading latest ${DOCKER_COMPOSE_FILE} file"
   download_latest_docker_compose_yml
   echo 'upgrading cyber-dojo server images'
-  CWD=`pwd`
+  CWD=$(pwd)
   cd "${MY_DIR}" > /dev/null
   SERVICES=`${DOCKER_COMPOSE_CMD} config --services 2> /dev/null`
   cd "${CWD}" > /dev/null
@@ -322,8 +303,8 @@ upgrade()
   done
 
   echo 'upgrading cyber-dojo pulled language images'
-  LS_REPO=`repo`
-  PULLED=`pulled_language_images`
+  LS_REPO=$(repo)
+  PULLED=$(pulled_language_images)
   echo "${PULLED}" | while read IMAGE ; do
     pull
   done
@@ -331,7 +312,7 @@ upgrade()
 
 download_latest_docker_compose_yml()
 {
-  CWD=`pwd`
+  CWD=$(pwd)
   cd "${MY_DIR}" > /dev/null
   curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/${DOCKER_COMPOSE_FILE}
   cd "${CWD}" > /dev/null
