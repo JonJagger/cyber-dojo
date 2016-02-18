@@ -53,9 +53,9 @@ show_use()
   echo '    rmi                    Removes server images'
   echo
   echo 'up [OPTIONS]:'
-  echo "        katas=/var/www/cyber-dojo/katas            default:     katas=${KATAS_DEFAULT}"
-  echo "    rails_env=[development|production]             default: rails_env=${RAILS_ENV_DEFAULT}"
-  echo "       runner=[DockerTmpRunner|DockerKatasRunner]  default:    runner=${RUNNER_DEFAULT}"
+  echo "        katas=/var/www/cyber-dojo/katas                default:     katas=${KATAS_DEFAULT}"
+  echo "    rails_env=[development|production]                 default: rails_env=${RAILS_ENV_DEFAULT}"
+  echo "       runner=[DockerKatasRunner|DockerMachineRunner]  default:    runner=${RUNNER_DEFAULT}"
   echo
 }
 

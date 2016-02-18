@@ -49,9 +49,9 @@ show_use()
   echo '    upgrade           Pulls the latest server and language images'
   echo
   echo 'up [OPTIONS]:'
-  echo "    katas=/var/www/cyber-dojo/katas            default: katas=${KATAS}"
-  echo "    rails_env=[development|production]         default: rails_env=${RAILS_ENV_DEFAULT}"
-  echo "    runner=[DockerTmpRunner|DockerKatasRunner] default: runner=${RUNNER_DEFAULT}"
+  echo "    katas=/var/www/cyber-dojo/katas                default: katas=${KATAS}"
+  echo "    rails_env=[development|production]             default: rails_env=${RAILS_ENV_DEFAULT}"
+  echo "    runner=[DockerKatasRunner|DockerMachineRunner] default: runner=${RUNNER_DEFAULT}"
   echo
 }
 
@@ -193,8 +193,8 @@ exit_if_bad_katas()
 
 exit_if_bad_runner()
 {
-  if [ "${RUNNER}" != 'DockerTmpRunner' ] &&
-     [ "${RUNNER}" != 'DockerKatasRunner' ];
+  if [ "${RUNNER}" != 'DockerKatasRunner' ] &&
+     [ "${RUNNER}" != 'DockerMachineRunner' ];
   then
     echo "${ME}: runner=${RUNNER} ?"
     echo "See ${ME} help"
