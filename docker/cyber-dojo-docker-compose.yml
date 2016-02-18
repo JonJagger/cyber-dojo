@@ -9,18 +9,6 @@ nginx:
     - "80:80"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Get katas/... from cyber-dojo-katas data-container using
-# volumes_from: cyber-dojo-katas
-# Where cyber-dojo-katas is not a service in this yml file
-# its an external container.
-# That makes it too easy to rm it when rm'ing web.
-# The lifetimes are not the same.
-#
-# alternative is to get them from a volume-mount
-# web:
-#   volumes:
-#      - /var/run/docker.sock:/var/run/docker.sock
-#      - ${KATAS_DIR}:${CYBER_DOJO_KATAS_ROOT}:rw
 
 web:
   user: cyber-dojo
