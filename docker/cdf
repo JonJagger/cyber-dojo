@@ -5,7 +5,7 @@ ARGS=${@}
 HOME=/usr/src/cyber-dojo         # home folder *inside* the server image
 REPO=cyberdojofoundation         # username on docker hub
 
-KATAS_DEFAULT=${HOME}/app/katas
+KATAS_DEFAULT=${HOME}/katas
 RAILS_ENV_DEFAULT=development
 RUNNER_DEFAULT=DockerTmpRunner
 
