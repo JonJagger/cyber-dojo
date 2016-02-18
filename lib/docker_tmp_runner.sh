@@ -35,6 +35,9 @@ CID=$(${SUDO} docker run --detach \
 # and nobody does not have a home dir.
 # I usermod to solve this.
 # Has to be interactive for the tar-pipe.
+# The tar-pipe cannot be this
+#   tar -zcf - ${SRC_DIR)} | ${SUDO} docker exec ...
+# because that would retain the path of each file.
 #
 # Note that on Alpine-linux usermod is not installed by default.
 # It's in the shadow package. See docker/language-base for

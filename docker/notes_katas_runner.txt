@@ -128,3 +128,17 @@ cyber-dojo the rails app is running as.
 Note that a consequence of this is that katas-data-container will fill up
 quicker because it will contains executable, .o, .a, .lib etc files.
 Files created *during* the test.
+
+Hmmm. Do I really mean --interactive
+Can I limit then opened streams to just
+o) stdout for the tar-pipe IN
+o) stdin  for the tar-pipe OUT
+
+${SUDO} docker exec \
+               --user=root \
+               --interactive \
+               ${CID} \
+               sh -c "tar -cxf - -C ${SANDBOX}" \
+  | (cd {SRC_DIR} && tar -zcf - .)
+
+
