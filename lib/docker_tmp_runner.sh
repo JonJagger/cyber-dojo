@@ -3,7 +3,7 @@
 # Called from lib/docker_tmp_runner.rb DockerTmpRunner.run()
 # See stdout-compature comments in lib/host_shell.rb
 # http://blog.extracheese.org/2010/05/the-tar-pipe.html
-# See sudo comments in web Dockerfile
+# See sudo comments in docker/web/Dockerfile
 
 SRC_DIR=$1     # Where source files are
 IMAGE=$2       # What they'll run in, eg cyberdojofoundation/gcc_assert
@@ -11,9 +11,9 @@ MAX_SECS=$3    # How long they've got, eg 10
 
 SUDO='sudo -u docker-runner sudo'
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 1. Start the container running
-#
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # --detach       ; get the CID for [sleep && docker rm] before [docker exec]
 # --interactive  ; we tar-pipe later
 # --net=none     ; for security
@@ -25,9 +25,9 @@ CID=$(${SUDO} docker run --detach \
                          --net=none \
                          --user=nobody ${IMAGE} sh)
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 2. Tar pipe the files into the container's sandbox
-#
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # The existing C#-NUnit image picks up HOME from the *current* user.
 # So this will not work when run by docker_tmp_runner.sh as nobody,
 # since by default, nobody's entry in /etc/passwd is
@@ -52,37 +52,42 @@ SANDBOX=/sandbox
                    --interactive \
                    ${CID} \
                    sh -c "mkdir ${SANDBOX} \
-                       && cd ${SANDBOX} \
-                       && tar -zxf - -C . \
+                       && tar -zxf - -C ${SANDBOX} \
                        && chown -R nobody ${SANDBOX} \
                        && usermod --home ${SANDBOX} nobody"
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 3. After max_seconds, remove the container
-#
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # The zombie process this backgrounded task creates is reaped by tini.
-# See rails server's Dockerfile
+# See docker/web/Dockerfile
 
 (sleep ${MAX_SECS} && ${SUDO} docker rm --force ${CID}) &
 
-# - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 4. Run cyber-dojo.sh
-#
-# I do not retrieve the exit-status of cyber-dojo. Using that to determine
-# red/amber/green status is not reliable, partly because cyber-dojo.sh is
-# editable (suppose it ended [exit 137])
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ${SUDO} docker exec \
                --user=nobody \
                ${CID} \
                sh -c "cd ${SANDBOX} && ./cyber-dojo.sh 2>&1"
 
-# - - - - - - - - - - - - - - - - - - - - - -
-# 5. If the container isn't running, the sleep woke and removed it
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# 5. Don't retrieve or use the exit-status of cyber-dojo.sh
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Using it to determine red/amber/green status is unreliable
+#   o) not all test frameworks set their exit-status
+#   o) cyber-dojo.sh is editable (suppose it ended [exit 137])
+# Instead use step 3 to determine if cyber-dojo.sh ran out of time
+# and let the rails app use regex pattern matching on the output
+# if it didn't.
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RUNNING=$(${SUDO} docker inspect --format="{{ .State.Running }}" ${CID})
 if [ "${RUNNING}" != "true" ]; then
   exit 137 # (128=timed-out) + (9=killed)
 else
+  # TODO: execute another docker exec to tar pipe the files *BACK* to ${SRC_DIR}
   exit 0
 fi

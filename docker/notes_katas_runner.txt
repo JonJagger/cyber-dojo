@@ -23,6 +23,7 @@ V = volume on host
 D = data-container
 L = local volume
 R = run-container
+P = tar-pipe
 
 katas-volume-runner
 -------------------
@@ -50,9 +51,9 @@ cyber-dojo.sh runs in tmp/... inside container
         - katas holds src files and extra files (eg .o files, executables)
     - file copying
         - 1st B           -> D:katas/... (changed only, preserve date-time stamps)
-     TP - 2nd D:katas/... -> R:tmp/...   (all)
+      P - 2nd D:katas/... -> R:tmp/...   (all)
         - <<RUN>>
-     TP - 3rd R:tmp/...   -> D:katas/... (all, preserve data-time stamps) <<<<<< TO PROVE <<<<<<<<
+      P - 3rd R:tmp/...   -> D:katas/... (all, preserve data-time stamps) <<<<<< TO PROVE <<<<<<<<
         - 4th output      -> D:katas
         - <<GIT-COMMIT>>
         - 5rd output      -> B
@@ -64,9 +65,11 @@ cyber-dojo.sh runs in tmp/... inside container
     Note that each git commit only commits visible files.
     The extra files only live 'once' in the sandbox
     Price is extra copying. Two tar pipes. Checked with James and typical
-    exercise he uses (with incremental builds) has tar file of  1.6MB.
+    exercise he uses (with incremental builds) has tar file of 1.6MB.
+    Zipped its 400K
     Incremental build is less than one second  (23-42 ms)
     Full build is about 3-4 seconds. (1904-2568-2873 ms)
+    This looks promising.
 
 
 tmp-runner
@@ -97,13 +100,31 @@ And in its place I have to create a data container from the
 katas/ folder. That makes it tricker to get at the data.
 Might make it easier to accidentally delete the data container.
 
-
 But thinking a good option is to just support a katas-data-container
 and have no volume-mounting at all
 
- DockerTmpRunner    - this is really a non-incremental-runner (better name?)
- DockerKatasRunner  - this is an incremental-runner
 
+katas-data-container runner
+---------------------------
+Looks promising. Might become the default!
+Could then be only two runners, both using katas, one from data-container,
+one from volume-mount. Former has to tar-pipe in both directions (for
+security if no other reason because you can't get sub-folder restriction)
+Later does not tar-pipe in either direction. volume-mount can give sub-folder
+restriction.
 
+Only if the test completes in 10 seconds are the files are tar piped
+directly back to their katas sub-folder. No tar file ever actually exists.
+The test run becomes atomic!
+If the test does not complete in 10 seconds then it as if the attempt was never made.
+The only visible change is the date-time stamp (and contents) of the visible-files
+copied into katas/... before the test run.
+What about rights/ownership of files?
+The files inside the test-container will be owned by nobody. That should
+be fine, incremental makes rely on time-stamps not owner.
+The files outside the test-container (katas data container) will be owned by
+cyber-dojo the rails app is running as.
 
-
+Note that a consequence of this is that katas-data-container will fill up
+quicker because it will contains executable, .o, .a, .lib etc files.
+Files created *during* the test.

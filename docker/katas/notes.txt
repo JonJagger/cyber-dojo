@@ -1,5 +1,6 @@
 
 Backing up katas data-container
+-------------------------------
 its name = cyber-dojo-katas
 its volume = /usr/src/cyber-dojo/katas
 
@@ -15,7 +16,17 @@ Which could be default if you're using OSX Docker-Quickstart-Terminal
 $ docker-machine ssh default ls -al /home/docker
 -rw-r--r--    1 root     staff        15755 Feb 18 14:40 katas.tar.tgz
 
-# - - - - - - - - - -  -- - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Interesting idea is that there could be *lots* of data-containers.
+If I can't volume-mount a sub-folder of katas/... I can achieve
+the same effect by breaking the sub-folder into its own data-container.
+Someone wanting to practice has their *own* katas-data-container.
+Or collection of them.
+When you login, that identifies your specific katas-data-container
+and it becomes katas-root for that particular run.
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # docker-compose.yml entry looks like this...
 # I don't specify the katas service in the yml
@@ -83,8 +94,6 @@ So I'm going to have to something like this:
 This assumes the Dockerfile and .dockerignore are on the host...
 I want only the one sh file (+ yml)
 Maybe create in a tmp folder on host first
-
-   $
 
 
 
