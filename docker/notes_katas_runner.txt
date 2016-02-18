@@ -135,10 +135,47 @@ o) stdout for the tar-pipe IN
 o) stdin  for the tar-pipe OUT
 
 ${SUDO} docker exec \
-               --user=root \
+               --user=nobody \
                --interactive \
                ${CID} \
-               sh -c "tar -cxf - -C ${SANDBOX}" \
-  | (cd {SRC_DIR} && tar -zcf - .)
+               sh -c "cd ${SANDBOX} && tar -zcf - ." \
+  | (cd {SRC_DIR} && tar -zxf - .)
+
+
+Was there an executable file?
+Did this get the executable?
+
+docker exec -it cyber-dojo-server sh
+
+SRC_DIR=/usr/src/cyber-dojo/katas/4A/6C1FBFE1/spider/sandbox/
+IMAGE=cyberdojofoundation/gcc_assert
+SANDBOX=/sandbox
+
+SUDO='sudo -u docker-runner sudo'
+
+CID=$(${SUDO} docker run -i -d --net=none --user=nobody ${IMAGE} sh)
+
+(cd ${SRC_DIR} && tar -zcf - .) | ${SUDO} docker exec \
+                   --user=root \
+                   --interactive \
+                   ${CID} \
+                   sh -c "mkdir ${SANDBOX} \
+                       && tar -zxf - -C ${SANDBOX} \
+                       && chown -R nobody ${SANDBOX}"
+
+${SUDO} docker exec --user=nobody ${CID} sh -c "cd ${SANDBOX} && ./cyber-dojo.sh 2>&1"
+
+# THIS WORKED
+${SUDO} docker exec --user=root --interactive ${CID} sh -c "cd ${SANDBOX} && tar -zcf - ." | (cd tmp && tar -zxf - .)
+
+# THIS WORKED
+${SUDO} docker exec --user=root --interactive ${CID} sh -c "cd ${SANDBOX} && tar -zcf - ." | (cd ${SRC_DIR} && tar -zxf - .)
+
+# THIS WORKED
+${SUDO} docker exec --user=nobody --interactive ${CID} sh -c "cd ${SANDBOX} && tar -zcf - ." | (cd ${SRC_DIR} && tar -zxf - .)
+
+
+
+
 
 

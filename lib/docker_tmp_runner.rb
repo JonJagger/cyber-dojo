@@ -9,7 +9,7 @@ class DockerTmpRunner
 
   def initialize(dojo)
     @dojo = dojo
-    @tmp_path = unique_tmp_path
+    #@tmp_path = unique_tmp_path
     caches.write_json_once(cache_filename) { make_cache }
   end
 
@@ -23,11 +23,15 @@ class DockerTmpRunner
 
   # modifiers
 
-  def run(_id, _name, _delta, files, image_name, max_seconds)
-    write_files(tmp_path, files)
-    args = [ tmp_path, image_name, max_seconds ].join(space = ' ')
+  def run(id, name, delta, files, image_name, max_seconds)
+    sandbox = katas[id].avatars[name].sandbox
+    katas.sandbox_save(sandbox, delta, files)
+    katas_sandbox_path = katas.path_of(sandbox)
+    args = [ katas_sandbox_path, image_name, max_seconds ].join(space = ' ')
+    #write_files(tmp_path, files)
+    #args = [ tmp_path, image_name, max_seconds ].join(space = ' ')
     output, exit_status = shell.cd_exec(path, "./docker_tmp_runner.sh #{args}")
-    shell.exec("rm -rf #{tmp_path}")
+    #shell.exec("rm -rf #{tmp_path}")
     output_or_timed_out(output, exit_status, max_seconds)
   end
 

@@ -26,20 +26,22 @@ CID=$(${SUDO} docker run --detach \
                          --user=nobody ${IMAGE} sh)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# 2. Tar pipe the files into the container's sandbox
+# 2. Tar-pipe the src-files into the container's sandbox
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # The existing C#-NUnit image picks up HOME from the *current* user.
-# So this will not work when run by docker_tmp_runner.sh as nobody,
-# since by default, nobody's entry in /etc/passwd is
+# By default, nobody's entry in /etc/passwd is
 #     nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
 # and nobody does not have a home dir.
 # I usermod to solve this.
+#
 # Has to be interactive for the tar-pipe.
-# The tar-pipe cannot be this
-#   tar -zcf - ${SRC_DIR)} | ${SUDO} docker exec ...
+# The tar-pipe has to be this...
+#   (cd ${SRC_DIR} && tar -zcf - .)         | ${SUDO} docker exec ...
+# it cannot be this...
+#                     tar -zcf - ${SRC_DIR} | ${SUDO} docker exec ...
 # because that would retain the path of each file.
 #
-# Note that on Alpine-linux usermod is not installed by default.
+# On Alpine-linux usermod is not installed by default.
 # It's in the shadow package. See docker/language-base for
 # ongoing work to get the usermode call to work in new Alpine
 # based language-images too.
@@ -91,6 +93,16 @@ RUNNING=$(${SUDO} docker inspect --format="{{ .State.Running }}" ${CID})
 if [ "${RUNNING}" != "true" ]; then
   exit 137 # (128=timed-out) + (9=killed)
 else
-  # TODO: execute another docker exec to tar pipe the files *BACK* to ${SRC_DIR}
+  # Tar-pipe the *everything* out of the container's sandbox
+  #
+  # There is a danger the container will be killed by step 3
+  #
+  ${SUDO} docker exec \
+                 --user=root \
+                 --interactive \
+                 ${CID} \
+                 sh -c "cd ${SANDBOX} && tar -zcf - ." \
+    | (cd ${SRC_DIR} && tar -zxf - .)
+
   exit 0
 fi
