@@ -62,12 +62,12 @@ SANDBOX=/sandbox
                        && usermod --home ${SANDBOX} nobody"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# 3. After max_seconds, remove the container
+# 3. After max_seconds, stop the container
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # The zombie process this backgrounded task creates is reaped by tini.
 # See docker/web/Dockerfile
 
-(sleep ${MAX_SECS} && ${SUDO} docker rm --force ${CID}) &
+(sleep ${MAX_SECS} && ${SUDO} docker stop ${CID}) &
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 4. Run cyber-dojo.sh
@@ -84,19 +84,17 @@ ${SUDO} docker exec \
 # Using it to determine red/amber/green status is unreliable
 #   o) not all test frameworks set their exit-status
 #   o) cyber-dojo.sh is editable (suppose it ended [exit 137])
-# Instead use step 3 to determine if cyber-dojo.sh ran out of time
-# and let the rails app use regex pattern matching on the output
-# if it didn't.
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# 6. If the container isn't running, the sleep woke and stopped it
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RUNNING=$(${SUDO} docker inspect --format="{{ .State.Running }}" ${CID})
 if [ "${RUNNING}" != "true" ]; then
+  ${SUDO} docker rm --force ${CID}
   exit 137 # (128=timed-out) + (9=killed)
 else
   # Tar-pipe the *everything* out of the container's sandbox
-  #
-  # There is a danger the container will be killed by step 3
-  #
   ${SUDO} docker exec \
                  --user=root \
                  --interactive \
@@ -104,5 +102,6 @@ else
                  sh -c "cd ${SANDBOX} && tar -zcf - ." \
     | (cd ${SRC_DIR} && tar -zxf - .)
 
+  ${SUDO} docker rm --force ${CID} > /dev/null
   exit 0
 fi
