@@ -132,13 +132,6 @@ class HostDiskKatas
   end
 
   def avatar_ran_tests(avatar, delta, files, now, output, colour)
-
-    #if runner.class.name != 'DockerKatasRunner'
-    #  # save the files
-    #  sandbox_save(avatar.sandbox, delta, files)
-    #end
-    # update the manifest
-
     dir(avatar.sandbox).write('output', output)
     files['output'] = output
     write_avatar_manifest(avatar, files)

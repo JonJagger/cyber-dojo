@@ -1,86 +1,107 @@
 #!/bin/sh
 
-# Called from lib/docker_katas_runner.rb DockerKatasRunner.run()
+# Called from lib/docker_tmp_runner.rb DockerTmpRunner.run()
+# See stdout-compature comments in lib/host_shell.rb
+# http://blog.extracheese.org/2010/05/the-tar-pipe.html
+# See sudo comments in docker/web/Dockerfile
 
-FILES_PATH=$1
-IMAGE_NAME=$2
-MAX_SECONDS=$3
+SRC_DIR=$1     # Where source files are
+IMAGE=$2       # What they'll run in, eg cyberdojofoundation/gcc_assert
+MAX_SECS=$3    # How long they've got, eg 10
 
-USER=$4  # THIS SH FILE NEEDS RESURRECTING IN THE NEW DIND ARCHITECTURE
+SUDO='sudo -u docker-runner sudo'
 
-CIDFILE=`mktemp`
-KILL=9
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# 1. Start the container running
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# --detach       ; get the CID for [sleep && docker rm] before [docker exec]
+# --interactive  ; we tar-pipe later
+# --net=none     ; for security
+# --user=nobody  ; for security
+# Note that the --net=none setting in inherited by [docker exec]
+
+CID=$(${SUDO} docker run --detach \
+                         --interactive \
+                         --net=none \
+                         --user=nobody ${IMAGE} sh)
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# 2. Tar-pipe the src-files into the container's sandbox
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# The existing C#-NUnit image picks up HOME from the *current* user.
+# By default, nobody's entry in /etc/passwd is
+#     nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+# and nobody does not have a home dir.
+# I usermod to solve this.
+#
+# Has to be interactive for the tar-pipe.
+# The tar-pipe has to be this...
+#   (cd ${SRC_DIR} && tar -zcf - .)         | ${SUDO} docker exec ...
+# it cannot be this...
+#                     tar -zcf - ${SRC_DIR} | ${SUDO} docker exec ...
+# because that would retain the path of each file.
+#
+# On Alpine-linux usermod is not installed by default.
+# It's in the shadow package. See docker/language-base for
+# ongoing work to get the usermode call to work in new Alpine
+# based language-images too.
+#
+# The existing F#-NUnit cyber-dojo.sh names the /sandbox folder
+# So TMP_DIR has to be /sandbox for backward compatibility
+
 SANDBOX=/sandbox
 
-rm -f ${CIDFILE}
+(cd ${SRC_DIR} && tar -zcf - .) \
+  | ${SUDO} docker exec \
+                   --user=root \
+                   --interactive \
+                   ${CID} \
+                   sh -c "mkdir ${SANDBOX} \
+                       && tar -zxf - -C ${SANDBOX} \
+                       && chown -R nobody ${SANDBOX} \
+                       && usermod --home ${SANDBOX} nobody"
 
-timeout --signal=${KILL} $((MAX_SECONDS+5))s \
-  docker run \
-    --cidfile="${CIDFILE}" \
-    --user=${USER} \
-    --net=none \
-    --volume=${FILES_PATH}:${SANDBOX}:rw \
-    --workdir=${SANDBOX} \
-    ${IMAGE_NAME} \
-    /bin/bash -c "timeout --signal=${KILL} $((MAX_SECONDS))s ./cyber-dojo.sh 2>&1" 2>/dev/null
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# 3. After max_seconds, stop the container
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# The zombie process this backgrounded task creates is reaped by tini.
+# See docker/web/Dockerfile
 
-EXIT_STATUS=$?
+(sleep ${MAX_SECS} && ${SUDO} docker stop ${CID}) &
 
-if [ -f ${CIDFILE} ]; then
-  docker stop       `cat ${CIDFILE}` &>/dev/null
-  docker rm --force `cat ${CIDFILE}` &>/dev/null
-  rm -f ${CIDFILE}
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# 4. Run cyber-dojo.sh
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+${SUDO} docker exec \
+               --user=nobody \
+               ${CID} \
+               sh -c "cd ${SANDBOX} && ./cyber-dojo.sh 2>&1"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# 5. Don't retrieve or use the exit-status of cyber-dojo.sh
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Using it to determine red/amber/green status is unreliable
+#   o) not all test frameworks set their exit-status
+#   o) cyber-dojo.sh is editable (suppose it ended [exit 137])
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# 6. If the container isn't running, the sleep woke and stopped it
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RUNNING=$(${SUDO} docker inspect --format="{{ .State.Running }}" ${CID})
+if [ "${RUNNING}" != "true" ]; then
+  ${SUDO} docker rm --force ${CID}
+  exit 137 # (128=timed-out) + (9=killed)
+else
+  # Tar-pipe the *everything* out of the container's sandbox
+  ${SUDO} docker exec \
+                 --user=root \
+                 --interactive \
+                 ${CID} \
+                 sh -c "cd ${SANDBOX} && tar -zcf - ." \
+    | (cd ${SRC_DIR} && tar -zxf - .)
+
+  ${SUDO} docker rm --force ${CID} > /dev/null
+  exit 0
 fi
-
-exit ${EXIT_STATUS}
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-# --user=www-data
-#
-#   The user which runs the cyber-dojo.sh command *inside* the languages' container.
-#   See also comments in languages/C#/NUnit/Dockerfile
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-# --cidfile="${CIDFILE}"
-#
-#   The cidfile must *not* exist before the docker command is run.
-#   Thus I rm the cidfile *before* the docker run.
-#   After the docker run I retrieve the docker container's pid
-#   from the cidfile and stop and remove the container.
-#   Explicitly specifying the cidfile like this (and not using the
-#   docker --rm option) ensures the docker container is always killed,
-#   even if the timeout occurs.
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-# --volume=${FILES_PATH}:/sandbox:rw
-#
-#   On the new docker-in-docker server I initially tried a katas-data-container
-#   (with a /katas volume) like this...
-#
-#       --volumes-from=katas_data_container
-#       --workdir=/katas/9A/D3F65020/whale/sandbox:/sandbox
-#
-#   This worked but was flawed since inside the docker run you had access
-#   not just to /katas/9A/D3F65020/whale/sandbox but to *all* of /katas
-#   Thus you could have done a [rm -rf /katas/*] in your cyber-dojo.sh
-#   file and wiped all the practice sessions.
-#
-#   The web-container *cannot* do a regular volume-mount of /katas
-#   where /katas is a folder existing only *inside* the web-container.
-#        --volume=/katas/9A/D3F65020/whale/sandbox:/sandbox:rw  FAILS
-#
-#   Why not? In docker-in-docker, the lifetime of the launching docker-container
-#   is *not* bound to the lifetime of its launched docker-container.
-#   They are all really just processes on the host.
-
-#   The web-container *can* do a regular volume-mount of /katas
-#   where /tmp is a folder volume-mounted into it from the *host*.
-#        --volume=/katas/9A/D3F65020/whale/sandbox:/sandbox:rw  OK
-#
-#   So the katas/ folder must exist on the *host* and be volume mounted into
-#   the 'outer' container.
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

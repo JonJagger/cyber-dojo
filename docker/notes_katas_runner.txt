@@ -113,7 +113,7 @@ security if no other reason because you can't get sub-folder restriction)
 Later does not tar-pipe in either direction. volume-mount can give sub-folder
 restriction.
 
-Only if the test completes in 10 seconds are the files are tar piped
+Only if the test completes in 10 seconds are the files tar piped
 directly back to their katas sub-folder. No tar file ever actually exists.
 The test run becomes atomic!
 If the test does not complete in 10 seconds then it as if the attempt was never made.
@@ -128,54 +128,3 @@ cyber-dojo the rails app is running as.
 Note that a consequence of this is that katas-data-container will fill up
 quicker because it will contains executable, .o, .a, .lib etc files.
 Files created *during* the test.
-
-Hmmm. Do I really mean --interactive
-Can I limit then opened streams to just
-o) stdout for the tar-pipe IN
-o) stdin  for the tar-pipe OUT
-
-${SUDO} docker exec \
-               --user=nobody \
-               --interactive \
-               ${CID} \
-               sh -c "cd ${SANDBOX} && tar -zcf - ." \
-  | (cd {SRC_DIR} && tar -zxf - .)
-
-
-Was there an executable file?
-Did this get the executable?
-
-docker exec -it cyber-dojo-server sh
-
-SRC_DIR=/usr/src/cyber-dojo/katas/4A/6C1FBFE1/spider/sandbox/
-IMAGE=cyberdojofoundation/gcc_assert
-SANDBOX=/sandbox
-
-SUDO='sudo -u docker-runner sudo'
-
-CID=$(${SUDO} docker run -i -d --net=none --user=nobody ${IMAGE} sh)
-
-(cd ${SRC_DIR} && tar -zcf - .) | ${SUDO} docker exec \
-                   --user=root \
-                   --interactive \
-                   ${CID} \
-                   sh -c "mkdir ${SANDBOX} \
-                       && tar -zxf - -C ${SANDBOX} \
-                       && chown -R nobody ${SANDBOX}"
-
-${SUDO} docker exec --user=nobody ${CID} sh -c "cd ${SANDBOX} && ./cyber-dojo.sh 2>&1"
-
-# THIS WORKED
-${SUDO} docker exec --user=root --interactive ${CID} sh -c "cd ${SANDBOX} && tar -zcf - ." | (cd tmp && tar -zxf - .)
-
-# THIS WORKED
-${SUDO} docker exec --user=root --interactive ${CID} sh -c "cd ${SANDBOX} && tar -zcf - ." | (cd ${SRC_DIR} && tar -zxf - .)
-
-# THIS WORKED
-${SUDO} docker exec --user=nobody --interactive ${CID} sh -c "cd ${SANDBOX} && tar -zcf - ." | (cd ${SRC_DIR} && tar -zxf - .)
-
-
-
-
-
-

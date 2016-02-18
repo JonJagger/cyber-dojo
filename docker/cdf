@@ -7,7 +7,7 @@ REPO=cyberdojofoundation         # username on docker hub
 
 KATAS_DEFAULT=${HOME}/katas
 RAILS_ENV_DEFAULT=development
-RUNNER_DEFAULT=DockerTmpRunner
+RUNNER_DEFAULT=DockerKatasRunner
 
 KATAS=${KATAS_DEFAULT}           # where katas are stored on the *host*
 RAILS_ENV=${RAILS_ENV_DEFAULT}   # rails server -e ${RAILS_ENV}

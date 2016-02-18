@@ -19,20 +19,10 @@ module Runner # mix-in
   end
 
   def write_files(tmp_path, files)
+    # Still used by docker_machine_runner.rb
     dir = disk[tmp_path]
     dir.make
     files.each { |filename, content| dir.write(filename, content) }
-  end
-
-  def unique_tmp_path
-    # Relies on the web-container volume-mounting /tmp
-    # See docker/docker-compose.yml
-    uuid = Array.new(10) { hex_chars.sample }.shuffle.join
-    '/tmp/cyber-dojo-' + uuid + '/'
-  end
-
-  def hex_chars
-    "0123456789ABCDEF".split(//)
   end
 
   include StringCleaner
