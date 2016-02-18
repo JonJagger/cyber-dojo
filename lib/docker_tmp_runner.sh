@@ -46,14 +46,14 @@ CID=$(${SUDO} docker run --detach \
 
 SANDBOX=/sandbox
 
-(cd ${SRC_DIR} && tar -cf - .) \
+(cd ${SRC_DIR} && tar -zcf - .) \
   | ${SUDO} docker exec \
                    --user=root \
                    --interactive \
                    ${CID} \
                    sh -c "mkdir ${SANDBOX} \
                        && cd ${SANDBOX} \
-                       && tar -xf - -C . \
+                       && tar -zxf - -C . \
                        && chown -R nobody ${SANDBOX} \
                        && usermod --home ${SANDBOX} nobody"
 
