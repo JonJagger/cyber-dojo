@@ -26,39 +26,36 @@ CID=$(${SUDO} docker run --detach \
                          --user=nobody ${IMAGE} sh)
 
 # - - - - - - - - - - - - - - - - - - - - - -
-# 2. Tar pipe the files into the container
+# 2. Tar pipe the files into the container's sandbox
 #
-# The existing C#-NUnit Dockerfile has (and requires) this
-#
-# RUN usermod -m -d /home/www-data www-data
-# RUN mkdir /home/www-data
-# RUN chgrp www-data /home/www-data
-# RUN chown www-data /home/www-data
-# ENV HOME /home/www-data
-#
-# When NUnit runs it picks up HOME from the *current* user.
-# So this will not work when run by docker_tmp_runner.sh as nobody
-# since by default, on Alpine, nobody's entry in /etc/passwd is
+# The existing C#-NUnit image picks up HOME from the *current* user.
+# So this will not work when run by docker_tmp_runner.sh as nobody,
+# since by default, nobody's entry in /etc/passwd is
 #     nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
 # and nobody does not have a home dir.
 # I usermod to solve this.
 # Has to be interactive for the tar-pipe.
 #
+# Note that on Alpine-linux usermod is not installed by default.
+# It's in the shadow package. See docker/language-base for
+# ongoing work to get the usermode call to work in new Alpine
+# based language-images too.
+#
 # The existing F#-NUnit cyber-dojo.sh names the /sandbox folder
 # So TMP_DIR has to be /sandbox for backward compatibility
 
-TMP_DIR=/sandbox
+SANDBOX=/sandbox
 
 (cd ${SRC_DIR} && tar -cf - .) \
   | ${SUDO} docker exec \
                    --user=root \
                    --interactive \
                    ${CID} \
-                   sh -c "mkdir ${TMP_DIR} \
-                       && cd ${TMP_DIR} \
+                   sh -c "mkdir ${SANDBOX} \
+                       && cd ${SANDBOX} \
                        && tar -xf - -C . \
-                       && chown -R nobody ${TMP_DIR} \
-                       && usermod --home ${TMP_DIR} nobody"
+                       && chown -R nobody ${SANDBOX} \
+                       && usermod --home ${SANDBOX} nobody"
 
 # - - - - - - - - - - - - - - - - - - - - - -
 # 3. After max_seconds, remove the container
@@ -72,13 +69,13 @@ TMP_DIR=/sandbox
 # 4. Run cyber-dojo.sh
 #
 # I do not retrieve the exit-status of cyber-dojo. Using that to determine
-# red/amber/green status is not feasible, partly because cyber-dojo.sh is
+# red/amber/green status is not reliable, partly because cyber-dojo.sh is
 # editable (suppose it ended [exit 137])
 
 ${SUDO} docker exec \
                --user=nobody \
                ${CID} \
-               sh -c "cd ${TMP_DIR} && ./cyber-dojo.sh 2>&1"
+               sh -c "cd ${SANDBOX} && ./cyber-dojo.sh 2>&1"
 
 # - - - - - - - - - - - - - - - - - - - - - -
 # 5. If the container isn't running, the sleep woke and removed it

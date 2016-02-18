@@ -23,6 +23,7 @@ nginx:
 #      - ${KATAS_DIR}:${CYBER_DOJO_KATAS_ROOT}:rw
 
 web:
+  user: cyber-dojo
   image: cyberdojofoundation/web
   container_name: cyber-dojo-server
   command: rails server --environment=${CYBER_DOJO_RAILS_ENV}

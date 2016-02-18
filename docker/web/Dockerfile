@@ -55,7 +55,7 @@ RUN  apk --update add curl \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 3. lib/runner sh files needs to run /usr/bin/docker
-# after this sh file (running as cyber-dojo user) can do
+# after this, the sh file (running as cyber-dojo user) can do
 #     $ sudo -u docker-runner sudo docker run ...
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
