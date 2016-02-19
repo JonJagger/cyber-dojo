@@ -3,8 +3,6 @@
 nginx:
   image: cyberdojofoundation/nginx
   container_name: cyber-dojo-nginx
-  links:
-    - "web:cyberdojo_web"
   ports:
     - "80:80"
 
@@ -20,7 +18,6 @@ web:
     - CYBER_DOJO_EXERCISES_ROOT=${CYBER_DOJO_EXERCISES_ROOT}
     - CYBER_DOJO_CACHES_ROOT=${CYBER_DOJO_CACHES_ROOT}
     - CYBER_DOJO_KATAS_ROOT=${CYBER_DOJO_KATAS_ROOT}
-    - CYBER_DOJO_RUNNER_CLASS=${CYBER_DOJO_RUNNER_CLASS}
     - CYBER_DOJO_KATAS_CLASS=${CYBER_DOJO_KATAS_CLASS}
     - CYBER_DOJO_SHELL_CLASS=${CYBER_DOJO_SHELL_CLASS}
     - CYBER_DOJO_DISK_CLASS=${CYBER_DOJO_DISK_CLASS}
@@ -30,8 +27,6 @@ web:
     - "3000:3000"
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
-  volumes_from:
-    - cyber-dojo-katas
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

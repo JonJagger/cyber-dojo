@@ -15,7 +15,8 @@ RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
-DOCKER_COMPOSE_FILE=cyber-dojo-docker-compose.yml
+# TODO: compose file now extends another. Two curls needed to get latest...
+DOCKER_COMPOSE_FILE=docker-compose-katas-data-container.yml
 DOCKER_COMPOSE_CMD="docker-compose --file=./${DOCKER_COMPOSE_FILE}"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -455,7 +456,7 @@ export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/app/languages
 export CYBER_DOJO_EXERCISES_ROOT=${HOME}/app/exercises
 export CYBER_DOJO_CACHES_ROOT=${HOME}/app/caches
 export CYBER_DOJO_KATAS_ROOT=${KATAS}
-export CYBER_DOJO_RUNNER_CLASS=${RUNNER}
+#export CYBER_DOJO_RUNNER_CLASS=${RUNNER}
 export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
 export CYBER_DOJO_SHELL_CLASS=HostShell
 export CYBER_DOJO_DISK_CLASS=HostDisk
