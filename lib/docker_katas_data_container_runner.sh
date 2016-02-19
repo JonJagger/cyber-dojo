@@ -49,7 +49,7 @@ CID=$(${SUDO} docker run --detach \
 # based language-images too.
 #
 # The existing F#-NUnit cyber-dojo.sh names the /sandbox folder
-# So TMP_DIR has to be /sandbox for backward compatibility
+# So SANDBOX has to be /sandbox for backward compatibility
 
 SANDBOX=/sandbox
 
@@ -68,11 +68,11 @@ SANDBOX=/sandbox
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Doing [docker stop ${CID}] is not enough to stop a container
 # that is printing in an infinite loop.
-#
-# The zombie process this backgrounded task creates is reaped by tini.
+# Any zombie processes this backgrounded task creates are reaped by tini.
 # See docker/web/Dockerfile
 
 (sleep ${MAX_SECS} && ${SUDO} docker rm --force ${CID} &> /dev/null) &
+SLEEP_DOCKER_RM_PPID=$!
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 4. Run cyber-dojo.sh
@@ -84,19 +84,26 @@ OUTPUT=$(${SUDO} docker exec \
                ${CID} \
                sh -c "cd ${SANDBOX} && ./cyber-dojo.sh 2>&1")
 
-
-# TODO: We got to here
-# TODO: try to kill the sleep task
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 5. Don't retrieve or use the exit-status of cyber-dojo.sh
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Using it to determine red/amber/green status is unreliable
-#   o) not all test frameworks set their exit-status
+#   o) not all test frameworks set their exit-status properly
 #   o) cyber-dojo.sh is editable (suppose it ended [exit 137])
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# 6. If the container isn't running, the sleep woke and removed it
+# 6. If the background sleep-docker-rm process is still alive race to kill it
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+pkill -P ${SLEEP_DOCKER_RM_PPID}
+if [ "$?" != "0" ]; then
+  # Failed to kill the sleep-docker-rm task, so assume it happened
+  ${SUDO} docker rm --force ${CID} &> /dev/null # belt and braces
+  exit 137 # (128=timed-out) + (9=killed)
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# 7. Check that CID container is still running (belt and braces)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RUNNING=$(${SUDO} docker inspect --format="{{ .State.Running }}" ${CID})
@@ -105,27 +112,15 @@ if [ "${RUNNING}" != "true" ]; then
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# 7. If the container is running it completed.
+# 8. The container completed and is still running
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # limiting output to 10K means a Denial-of-Service style attack
 # where cyber-dojo.sh prints to stdout in an infinite loop is
 # seen as a 10 second timeout not a 'network timeout' message.
+# Tar-pipe *everything* out of the container's sandbox and
+# the remove the container.
 
-echo "XX:${OUTPUT}" | head -c 10k
-
-# TODO: use the PID of the background task and try to kill it
-# TODO: if we fail to kill it assume it completed and did the rm
-# TODO:   exit 137
-# TODO: we killed it!
-# TODO: try the RUNNING check again
-# TODO: if RUNNING != true
-# TODO:   summat's not right
-# TODO: if RUNNING == true
-# TODO:   tar back to SRC_DIR will be safe (so do it)
-# TODO:   docker rm --force
-# TODO:   exit 0
-
-# Tar-pipe *everything* out of the container's sandbox
+echo "${OUTPUT}" | head -c 10k
 
 ${SUDO} docker exec \
                --user=root \
@@ -133,5 +128,7 @@ ${SUDO} docker exec \
                ${CID} \
                sh -c "cd ${SANDBOX} && tar -zcf - ." \
     | (cd ${SRC_DIR} && tar -zxf - .)
+
+${SUDO} docker rm --force ${CID} &> /dev/null
 
 exit 0
