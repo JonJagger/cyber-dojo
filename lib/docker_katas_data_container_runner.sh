@@ -19,12 +19,19 @@ SUDO='sudo -u docker-runner sudo'
 # --net=none     ; for security
 # --user=nobody  ; for security
 # Note that the --net=none setting in inherited by [docker exec]
+#
+# I tried setting --cpu-shares=256 --ulimit fsize=1024 here but
+# inside the container doing a
+# $ ulimit -a
+# shows that the settings are being ignored.
+# That's because changing ulimits in a container would affect the host too
+# which is regarded as security risk so they can't. They have to be set
+# on the host.
 
 CID=$(${SUDO} docker run --detach \
                          --interactive \
                          --net=none \
                          --user=nobody \
-                         --cpu-shares=256 \
                          ${IMAGE} sh)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
