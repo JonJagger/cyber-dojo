@@ -1,6 +1,4 @@
 
-# used by docker_tmp_runner.rb and docker_katas_runner.rb
-
 module DockerRunner # mixin
 
   def path

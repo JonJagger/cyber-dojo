@@ -1,15 +1,10 @@
 #!/bin/sh
 
-# Called from lib/docker_katas_data_container_runner.rb run()
-# See stdout-capture comments in lib/host_shell.rb
-# http://blog.extracheese.org/2010/05/the-tar-pipe.html
-# See sudo comments in docker/web/Dockerfile
-
 SRC_DIR=$1     # Where the source files are
 IMAGE=$2       # What they'll run in, eg cyberdojofoundation/gcc_assert
 MAX_SECS=$3    # How long they've got, eg 10
 
-SUDO='sudo -u docker-runner sudo'
+SUDO='sudo -u docker-runner sudo' # See sudo comments in docker/web/Dockerfile
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 1. Start the container running
@@ -29,6 +24,8 @@ CID=$(${SUDO} docker run --detach \
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 2. Tar-pipe the src-files into the container's sandbox
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# http://blog.extracheese.org/2010/05/the-tar-pipe.html
+#
 # The existing C#-NUnit image picks up HOME from the *current* user.
 # By default, nobody's entry in /etc/passwd is
 #     nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
@@ -44,7 +41,7 @@ CID=$(${SUDO} docker run --detach \
 #
 # On Alpine-linux usermod is not installed by default.
 # It's in the shadow package. See docker/language-base for
-# ongoing work to get the usermode call to work in new Alpine
+# ongoing work to get the usermod call to work in new Alpine
 # based language-images too.
 #
 # The existing F#-NUnit cyber-dojo.sh names the /sandbox folder
@@ -84,7 +81,7 @@ OUTPUT=$(${SUDO} docker exec \
                sh -c "cd ${SANDBOX} && ./cyber-dojo.sh 2>&1")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# 5. Don't retrieve or use the exit-status of cyber-dojo.sh
+# 5. Don't use the exit-status of cyber-dojo.sh
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Using it to determine red/amber/green status is unreliable
 #   o) not all test frameworks set their exit-status properly
