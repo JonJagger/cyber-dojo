@@ -1,0 +1,18 @@
+
+Backing up katas data-container
+-------------------------------
+its name = cyber-dojo-katas
+its volume = /usr/src/cyber-dojo/katas
+
+docker run
+     --rm \
+     --volumes-from cyber-dojo-katas \
+     -v /home/docker:/backup:rw \
+     alpine:3.2 \
+     tar -zcf /backup/katas.tar.tgz usr/src/cyber-dojo/katas
+
+After this katas.tar.tgz is in /home/docker on the host running docker daemon
+Which could be default if you're using OSX Docker-Quickstart-Terminal
+$ docker-machine ssh default ls -al /home/docker
+-rw-r--r--    1 root     staff        15755 Feb 18 14:40 katas.tar.tgz
+
