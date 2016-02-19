@@ -1,25 +1,30 @@
 #!/bin/sh
 set -e
 
-HOME=/usr/src/cyber-dojo         # home folder *inside* the server image
-REPO=cyberdojofoundation         # username on docker hub
-
-KATAS_DEFAULT=${HOME}/katas
-ENV_DEFAULT=development          # TODO: FAILS for production!
-RUNNER_DEFAULT=DockerKatasDataContainerRunner
-
-KATAS=${KATAS_DEFAULT}           # where katas are stored on the *host*
-ENV=${ENV_DEFAULT}               # rails server -e ${ENV}
-RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
-
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
-# TODO: compose file now extends another. Two curls needed to get latest...
+HOME=/usr/src/cyber-dojo         # home folder *inside* the server image
+REPO=cyberdojofoundation         # username on docker hub
+
+ENV_DEFAULT=development          # TODO: FAILS for production!
+ENV=${ENV_DEFAULT}               # rails server -e ${ENV}
+
+RUNNER_DEFAULT=DockerKatasDataContainerRunner
+RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
+
 DOCKER_COMPOSE_FILE=docker-compose.yml
 DOCKER_COMPOSE_CMD="docker-compose --file=./${DOCKER_COMPOSE_FILE}"
 
+# TOOD: USE THIS ONLY FOR 1st TIME CREATION OF KATAS-DATA-CONTAINER
+HOST_KATAS_DEFAULT=/var/www/cyber-dojo/katas
+HOST_KATAS=${HOST_KATAS_DEFAULT} # where katas are stored on the *host*
+                                 # and get copied into the katas-data-container
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# TODO: add command to backup katas-data-container to tar.tgz file
+# TODO: add command to delete runner cache inside web container
 
 # TODO: detect if more than one command entered
 # TODO: pull all language images == fetch? all?
@@ -44,6 +49,9 @@ show_use()
   echo '    rm                Removes the server containers'
   echo '    up [OPTIONS]      Creates and starts the server containers'
   echo
+
+  # options to build/backup the katas-data-container
+
   echo '    images            Lists pulled language images'
   echo '    pull=IMAGE        Pulls language IMAGE'
   echo '    repo              Lists all language images'
@@ -52,7 +60,7 @@ show_use()
   echo
   echo 'up [OPTIONS]:'
   echo
-  echo "     katas=/var/www/cyber-dojo/katas     default=${KATAS}"
+  echo "     katas=/var/www/cyber-dojo/katas     default=${HOST_KATAS_DEFAULT}"
   echo "       env=[development|production]      default=${ENV_DEFAULT}"
   echo "    runner=[CLASS_NAME]                  default=${RUNNER_DEFAULT}"
   echo
@@ -175,25 +183,30 @@ exit_if_bad_env()
 
 exit_if_bad_katas()
 {
-  # if KATAS == KATAS_DEFAULT assume this cyber-dojo server is *not*
-  # being hosted where a previous (non dockerized) server lived.
-  #
-  # if KATAS != KATAS_DEFAULT assume this cyber-dojo server (*is*)
-  # being hosted where a previous (non dockerized) server lived.
-
-  # TODO: ONE-TIME-ONLY create a katas-data-container
-
-  if [ "${KATAS}" != "${KATAS_DEFAULT}" ] && [ ! -d "${KATAS}" ]; then
-    echo "${ME}: katas=${KATAS} ? ${KATAS} directory does not exist"
+  # overriding the default, dir must exist
+  if [ "${HOST_KATAS}" != "${HOST_KATAS_DEFAULT}" ] && [ ! -d "${HOST_KATAS}" ]; then
+    echo "${ME}: katas=${HOST_KATAS} ? ${HOST_KATAS} directory does not exist"
     echo "See ${ME} help"
     exit
   fi
+
+  # TODO: if there is ALREADY a katas-data-container then return from this function
+
+  # TODO:
+  # if HOST_KATAS does not exist assume this server is new
+  #   and create an empty katas-data-container
+  #
+  # TODO:
+  # if HOST_KATAS does exist assume this server is replacing an existing one
+  #   and create a full katas-data-container
+  # being hosted where a previous (non dockerized) server lived.
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - -
 
 exit_if_bad_runner()
 {
+  # TODO: StubRunner for running tests inside the container?
   if [ "${RUNNER}" != 'DockerKatasDataContainerRunner' ] &&
      [ "${RUNNER}" != 'DockerMachineRunner' ];
   then
@@ -455,7 +468,7 @@ export CYBER_DOJO_ENV=${ENV}
 export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/app/languages
 export CYBER_DOJO_EXERCISES_ROOT=${HOME}/app/exercises
 export CYBER_DOJO_CACHES_ROOT=${HOME}/app/caches
-export CYBER_DOJO_KATAS_ROOT=${KATAS}
+export CYBER_DOJO_KATAS_ROOT=${HOME}/katas
 export CYBER_DOJO_RUNNER_CLASS=${RUNNER}
 export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
 export CYBER_DOJO_SHELL_CLASS=HostShell

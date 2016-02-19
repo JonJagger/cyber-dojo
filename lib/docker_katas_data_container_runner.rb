@@ -1,6 +1,6 @@
 
 # A runner whose access to the avatar's source files is via a data-container
-# containing files for *all* katas/ sub folders.
+# containing files for *all* katas/... sub folders.
 #
 # o) A test-run saves the *changed* visible-files to the avatar's katas/id/ sub-folder.
 # o) The shell file then

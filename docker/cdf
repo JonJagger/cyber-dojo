@@ -1,20 +1,21 @@
 #!/bin/sh
 set -e
 
-ARGS=${@}
-HOME=/usr/src/cyber-dojo         # home folder *inside* the server image
-REPO=cyberdojofoundation         # username on docker hub
-
-KATAS_DEFAULT=${HOME}/katas
-ENV_DEFAULT=development
-RUNNER_DEFAULT=DockerKatasDataContainerRunner
-
-KATAS=${KATAS_DEFAULT}           # where katas are stored on the *host*
-ENV=${ENV_DEFAULT}               # rails server -e ${ENV}
-RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
-
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
+ARGS=${@}
+
+HOME=/usr/src/cyber-dojo         # home folder *inside* the images/containers
+REPO=cyberdojofoundation         # username on docker hub
+
+ENV_DEFAULT=development
+ENV=${ENV_DEFAULT}               # rails server -e ${ENV}
+
+RUNNER_DEFAULT=DockerKatasDataContainerRunner
+RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
+
+HOST_KATAS_DEFAULT=/var/www/cyber-dojo/katas
+HOST_KATAS=${HOST_KATAS_DEFAULT} # where old (non data-container) katas may be stored on the *host*
 
 IMAGES=(user-base nginx web)     # important this does NOT include katas
 
@@ -55,7 +56,7 @@ show_use()
   echo
   echo 'up [OPTIONS]:'
   echo
-  echo "     katas=/var/www/cyber-dojo/katas     default=${KATAS_DEFAULT}"
+  echo "     katas=/var/www/cyber-dojo/katas     default=${HOST_KATAS_DEFAULT}"
   echo "       env=[development|production]      default=${ENV_DEFAULT}"
   echo "    runner=[CLASS_NAME]                  default=${RUNNER_DEFAULT}"
   echo
@@ -78,7 +79,7 @@ build()
   for IMAGE in ${IMAGES[*]}
   do
     echo ${REPO}/${IMAGE}
-    ./${IMAGE}/build-image.sh $HOME
+    ./${IMAGE}/build-image.sh ${HOME}
   done
   cd "${CWD}" > /dev/null
 }
@@ -207,7 +208,7 @@ do
     up)
       doUp=true
       ;;
-    # - - - - - - - OPTIONS - - - - - - - -
+    # - - - - - - - OPTIONS - - - - - - - - TODO: USED? OR ONLY FORWARDED?
     katas=*)
       KATAS="${ARG#*=}"
       ;;
