@@ -92,7 +92,7 @@ OUTPUT=$(${SUDO} docker exec \
 #   o) cyber-dojo.sh is editable (suppose it ended [exit 137])
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# 6. If the background sleep-docker-rm process is still alive race to kill it
+# 6. If the sleep-docker-rm process is still alive race to kill it
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 pkill -P ${SLEEP_DOCKER_RM_PPID}
@@ -114,13 +114,11 @@ fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 8. The container completed and is still running
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# limiting output to 10K means a Denial-of-Service style attack
-# where cyber-dojo.sh prints to stdout in an infinite loop is
-# seen as a 10 second timeout not a 'network timeout' message.
-# Tar-pipe *everything* out of the container's sandbox and
-# the remove the container.
+# Echo the output so it can be red/amber/green regex'd (see 5)
+# Tar-pipe *everything* out of the run-container's sandbox back to SRC_DIR
+# Remove the container.
 
-echo "${OUTPUT}" | head -c 10k
+echo "${OUTPUT}" # | head -c 10k
 
 ${SUDO} docker exec \
                --user=root \
