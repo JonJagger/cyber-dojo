@@ -64,12 +64,15 @@ SANDBOX=/sandbox
                        && usermod --home ${SANDBOX} nobody"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# 3. After max_seconds, stop the container
+# 3. After max_seconds, remove the container
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Doing [docker stop ${CID}] is not enough to stop a container
+# that is printing in an infinite loop.
+#
 # The zombie process this backgrounded task creates is reaped by tini.
 # See docker/web/Dockerfile
 
-(sleep ${MAX_SECS} && ${SUDO} docker rm --force ${CID} 2>&1 /dev/null) &
+(sleep ${MAX_SECS} && ${SUDO} docker rm --force ${CID} &> /dev/null) &
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 4. Run cyber-dojo.sh
@@ -80,6 +83,10 @@ OUTPUT=$(${SUDO} docker exec \
                --interactive \
                ${CID} \
                sh -c "cd ${SANDBOX} && ./cyber-dojo.sh 2>&1")
+
+
+# TODO: We got to here
+# TODO: try to kill the sleep task
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 5. Don't retrieve or use the exit-status of cyber-dojo.sh
@@ -95,15 +102,36 @@ OUTPUT=$(${SUDO} docker exec \
 RUNNING=$(${SUDO} docker inspect --format="{{ .State.Running }}" ${CID})
 if [ "${RUNNING}" != "true" ]; then
   exit 137 # (128=timed-out) + (9=killed)
-else
-  echo "${OUTPUT}" | head -c 10k
-  # Tar-pipe *everything* out of the container's sandbox
-  ${SUDO} docker exec \
-                 --user=root \
-                 --interactive \
-                 ${CID} \
-                 sh -c "cd ${SANDBOX} && tar -zcf - ." \
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# 7. If the container is running it completed.
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# limiting output to 10K means a Denial-of-Service style attack
+# where cyber-dojo.sh prints to stdout in an infinite loop is
+# seen as a 10 second timeout not a 'network timeout' message.
+
+echo "XX:${OUTPUT}" | head -c 10k
+
+# TODO: use the PID of the background task and try to kill it
+# TODO: if we fail to kill it assume it completed and did the rm
+# TODO:   exit 137
+# TODO: we killed it!
+# TODO: try the RUNNING check again
+# TODO: if RUNNING != true
+# TODO:   summat's not right
+# TODO: if RUNNING == true
+# TODO:   tar back to SRC_DIR will be safe (so do it)
+# TODO:   docker rm --force
+# TODO:   exit 0
+
+# Tar-pipe *everything* out of the container's sandbox
+
+${SUDO} docker exec \
+               --user=root \
+               --interactive \
+               ${CID} \
+               sh -c "cd ${SANDBOX} && tar -zcf - ." \
     | (cd ${SRC_DIR} && tar -zxf - .)
 
-  exit 0
-fi
+exit 0
