@@ -23,7 +23,9 @@ SUDO='sudo -u docker-runner sudo'
 CID=$(${SUDO} docker run --detach \
                          --interactive \
                          --net=none \
-                         --user=nobody ${IMAGE} sh)
+                         --user=nobody \
+                         --cpu-shares=256 \
+                         ${IMAGE} sh)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 2. Tar-pipe the src-files into the container's sandbox
@@ -67,16 +69,17 @@ SANDBOX=/sandbox
 # The zombie process this backgrounded task creates is reaped by tini.
 # See docker/web/Dockerfile
 
-(sleep ${MAX_SECS} && ${SUDO} docker stop ${CID}) &
+(sleep ${MAX_SECS} && ${SUDO} docker rm --force ${CID} 2>&1 /dev/null) &
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 4. Run cyber-dojo.sh
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-${SUDO} docker exec \
+OUTPUT=$(${SUDO} docker exec \
                --user=nobody \
+               --interactive \
                ${CID} \
-               sh -c "cd ${SANDBOX} && ./cyber-dojo.sh 2>&1"
+               sh -c "cd ${SANDBOX} && ./cyber-dojo.sh 2>&1")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 5. Don't retrieve or use the exit-status of cyber-dojo.sh
@@ -86,15 +89,15 @@ ${SUDO} docker exec \
 #   o) cyber-dojo.sh is editable (suppose it ended [exit 137])
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# 6. If the container isn't running, the sleep woke and stopped it
+# 6. If the container isn't running, the sleep woke and removed it
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 RUNNING=$(${SUDO} docker inspect --format="{{ .State.Running }}" ${CID})
 if [ "${RUNNING}" != "true" ]; then
-  ${SUDO} docker rm --force ${CID}
   exit 137 # (128=timed-out) + (9=killed)
 else
-  # Tar-pipe the *everything* out of the container's sandbox
+  echo "${OUTPUT}" | head -c 10k
+  # Tar-pipe *everything* out of the container's sandbox
   ${SUDO} docker exec \
                  --user=root \
                  --interactive \
@@ -102,6 +105,5 @@ else
                  sh -c "cd ${SANDBOX} && tar -zcf - ." \
     | (cd ${SRC_DIR} && tar -zxf - .)
 
-  ${SUDO} docker rm --force ${CID} > /dev/null
   exit 0
 fi

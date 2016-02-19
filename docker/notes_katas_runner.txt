@@ -151,6 +151,8 @@ inside the cyber-dojo-katas data-container. N
 It's not an issue when using a host-volume-mount because that *can* be isolated
 and so there is no need for any tar-piping.
 
+
+
 Granularity
 -----------
 If a data-container was created, on the fly, for a kata, then it would be
