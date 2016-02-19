@@ -1,0 +1,20 @@
+
+I tried setting --cpu-shares=256 --ulimit fsize=1024 in
+lib/docker_katas_data_container_runner.sh
+
+CID=$(${SUDO} docker run --detach \
+                         --interactive \
+                         --net=none \
+                         --user=nobody \
+                         --cpu-shares=256 \
+                         --ulimit fsize=1024 \
+                         ${IMAGE} sh)
+
+inside the container doing a
+$ ulimit -a
+shows that the settings are being ignored.
+
+I think that's because changing ulimits in a container would affect the host too
+which is regarded as security risk so they can't.
+They have to be set on the host.
+That's not so good...
