@@ -51,9 +51,9 @@ show_use()
   echo
   echo 'up [OPTIONS]:'
   echo
-  echo "     katas=/var/www/cyber-dojo/katas     default:  katas=${KATAS}"
-  echo "       env=[development|production]      default:    env=${ENV_DEFAULT}"
-  echo "    runner=[CLASS_NAME]                  default: runner=${RUNNER_DEFAULT}"
+  echo "     katas=/var/www/cyber-dojo/katas     default=${KATAS}"
+  echo "       env=[development|production]      default=${ENV_DEFAULT}"
+  echo "    runner=[CLASS_NAME]                  default=${RUNNER_DEFAULT}"
   echo
 }
 
