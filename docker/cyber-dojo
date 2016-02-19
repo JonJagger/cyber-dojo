@@ -5,11 +5,11 @@ HOME=/usr/src/cyber-dojo         # home folder *inside* the server image
 REPO=cyberdojofoundation         # username on docker hub
 
 KATAS_DEFAULT=${HOME}/katas
-RAILS_ENV_DEFAULT=development    # TODO: FAILS for production!
-RUNNER_DEFAULT=DockerKatasRunner
+ENV_DEFAULT=development          # TODO: FAILS for production!
+RUNNER_DEFAULT=DockerKatasDataContainerRunner
 
 KATAS=${KATAS_DEFAULT}           # where katas are stored on the *host*
-RAILS_ENV=${RAILS_ENV_DEFAULT}   # rails server -e ${RAILS_ENV}
+ENV=${ENV_DEFAULT}               # rails server -e ${ENV}
 RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 
 ME="./$( basename ${0} )"
@@ -34,6 +34,7 @@ show_use()
   echo "       ${ME} help"
   echo
   echo 'Commands:'
+  echo
   echo '    install_docker    Installs docker, docker-machine, and docker-compose'
   echo
   echo '    ps                Lists server containers'
@@ -49,9 +50,10 @@ show_use()
   echo '    upgrade           Pulls the latest server and language images'
   echo
   echo 'up [OPTIONS]:'
-  echo "    katas=/var/www/cyber-dojo/katas                default: katas=${KATAS}"
-  echo "    rails_env=[development|production]             default: rails_env=${RAILS_ENV_DEFAULT}"
-  echo "    runner=[DockerKatasRunner|DockerMachineRunner] default: runner=${RUNNER_DEFAULT}"
+  echo
+  echo "     katas=/var/www/cyber-dojo/katas     default:  katas=${KATAS}"
+  echo "       env=[development|production]      default:    env=${ENV_DEFAULT}"
+  echo "    runner=[CLASS_NAME]                  default: runner=${RUNNER_DEFAULT}"
   echo
 }
 
@@ -139,7 +141,7 @@ up()
   # TODO: test in main flow?
   exit_if_bad_katas
   exit_if_bad_runner
-  exit_if_bad_rails_env
+  exit_if_bad_env
   pull_common_languages_if_none
   CWD=$(pwd)
   cd "${MY_DIR}" > /dev/null
@@ -149,18 +151,18 @@ up()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - -
 
-exit_if_bad_rails_env()
+exit_if_bad_env()
 {
-  if [ "${RAILS_ENV}" != 'development' ] &&
-     [ "${RAILS_ENV}" != 'production' ];
+  if [ "${ENV}" != 'development' ] &&
+     [ "${ENV}" != 'production' ];
   then
-    echo "${ME}: rails_env=${RAILS_ENV} ?"
+    echo "${ME}: env=${ENV} ?"
     echo "See ${ME} help"
     exit
   fi
-  if [ "${RAILS_ENV}" == 'production' ]; then
+  if [ "${ENV}" == 'production' ]; then
     # <<<<<<< TODO >>>>>>>>
-    echo 'up rails_env=production'
+    echo 'up env=production'
     echo '>>>> not supported yet'
     echo '>>>> Dockerfile currently hard-wires development'
     echo '>>>> up abandoned'
@@ -174,13 +176,11 @@ exit_if_bad_katas()
 {
   # if KATAS == KATAS_DEFAULT assume this cyber-dojo server is *not*
   # being hosted where a previous (non dockerized) server lived.
-  # In this case the KATAS volume mount in docker-compose.yml will
-  # *create* the KATAS_DEFAULT directory on the host.
   #
   # if KATAS != KATAS_DEFAULT assume this cyber-dojo server (*is*)
-  # being hosted where a previous (no dockerized) server lived.
-  # TODO: if volume-mounting: check user cyber-dojo,uid=19661 exists
-  # TODO: if volume-mounting: check katas folder owned by cyber-dojo user
+  # being hosted where a previous (non dockerized) server lived.
+
+  # TODO: create a katas-data-container
 
   if [ "${KATAS}" != "${KATAS_DEFAULT}" ] && [ ! -d "${KATAS}" ]; then
     echo "${ME}: katas=${KATAS} ? ${KATAS} directory does not exist"
@@ -193,7 +193,7 @@ exit_if_bad_katas()
 
 exit_if_bad_runner()
 {
-  if [ "${RUNNER}" != 'DockerKatasRunner' ] &&
+  if [ "${RUNNER}" != 'DockerKatasDataContainerRunner' ] &&
      [ "${RUNNER}" != 'DockerMachineRunner' ];
   then
     echo "${ME}: runner=${RUNNER} ?"
@@ -355,8 +355,8 @@ do
     runner=*)
       RUNNER="${ARG#*=}"
       ;;
-    rails_env=*)
-      RAILS_ENV="${ARG#*=}"
+    env=*)
+      ENV="${ARG#*=}"
       ;;
     # - - - - - - - IMAGES - - - - - - - -
     images)
@@ -450,7 +450,7 @@ fi
 # YML FILES RELIES ON THESE ENV-VARS
 #========================================================================================
 
-export CYBER_DOJO_RAILS_ENV=${RAILS_ENV}
+export CYBER_DOJO_ENV=${ENV}
 export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/app/languages
 export CYBER_DOJO_EXERCISES_ROOT=${HOME}/app/exercises
 export CYBER_DOJO_CACHES_ROOT=${HOME}/app/caches

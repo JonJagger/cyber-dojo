@@ -17,7 +17,7 @@
   runner
   stub_runner
   docker_runner
-  docker_katas_runner
+  docker_katas_data_container_runner
   docker_machine_runner
 
   create_kata_manifest

@@ -14,7 +14,7 @@ web:
   user: cyber-dojo
   image: cyberdojofoundation/web
   container_name: cyber-dojo-server
-  command: rails server --environment=${CYBER_DOJO_RAILS_ENV}
+  command: rails server --environment=${CYBER_DOJO_ENV}
   environment:
     - CYBER_DOJO_LANGUAGES_ROOT=${CYBER_DOJO_LANGUAGES_ROOT}
     - CYBER_DOJO_EXERCISES_ROOT=${CYBER_DOJO_EXERCISES_ROOT}

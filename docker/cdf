@@ -7,7 +7,7 @@ REPO=cyberdojofoundation         # username on docker hub
 
 KATAS_DEFAULT=${HOME}/katas
 RAILS_ENV_DEFAULT=development
-RUNNER_DEFAULT=DockerKatasRunner
+RUNNER_DEFAULT=DockerKatasDataContainerRunner
 
 KATAS=${KATAS_DEFAULT}           # where katas are stored on the *host*
 RAILS_ENV=${RAILS_ENV_DEFAULT}   # rails server -e ${RAILS_ENV}
@@ -33,6 +33,7 @@ show_use()
   echo "       ${ME} help"
   echo
   echo 'Commands:'
+  echo
 #echo '    dbu                    (down + build + up)'
   echo '    build                  Builds cyber-dojo server images'
   echo '    clean                  Removes untagged images'
@@ -53,9 +54,10 @@ show_use()
   echo '    rmi                    Removes server images'
   echo
   echo 'up [OPTIONS]:'
-  echo "        katas=/var/www/cyber-dojo/katas                default:     katas=${KATAS_DEFAULT}"
-  echo "    rails_env=[development|production]                 default: rails_env=${RAILS_ENV_DEFAULT}"
-  echo "       runner=[DockerKatasRunner|DockerMachineRunner]  default:    runner=${RUNNER_DEFAULT}"
+  echo
+  echo "     katas=/var/www/cyber-dojo/katas     default:     katas=${KATAS_DEFAULT}"
+  echo "       env=[development|production]      default: rails_env=${ENV_DEFAULT}"
+  echo "    runner=[CLASS_NAME]                  default:    runner=${RUNNER_DEFAULT}"
   echo
 }
 

@@ -1,11 +1,11 @@
 #!/bin/sh
 
-# Called from lib/docker_tmp_runner.rb DockerTmpRunner.run()
-# See stdout-compature comments in lib/host_shell.rb
+# Called from lib/docker_katas_data_container_runner.rb run()
+# See stdout-capture comments in lib/host_shell.rb
 # http://blog.extracheese.org/2010/05/the-tar-pipe.html
 # See sudo comments in docker/web/Dockerfile
 
-SRC_DIR=$1     # Where source files are
+SRC_DIR=$1     # Where the source files are
 IMAGE=$2       # What they'll run in, eg cyberdojofoundation/gcc_assert
 MAX_SECS=$3    # How long they've got, eg 10
 
