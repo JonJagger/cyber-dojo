@@ -27,6 +27,15 @@ class DojoTests < AppModelsTestBase
     assert_raises(StandardError) { git.class }
     ENV.delete(dojo.env_class('log'))
     assert_raises(StandardError) { log.class }
+
+    ENV.delete(dojo.env_root('exercises'))
+    assert_raises(StandardError) { exercises.class }
+    ENV.delete(dojo.env_root('languages'))
+    assert_raises(StandardError) { languages.class }
+    ENV.delete(dojo.env_root('caches'))
+    assert_raises(StandardError) { caches.class }
+    ENV.delete(dojo.env_root('katas'))
+    assert_raises(StandardError) { katas.class }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
