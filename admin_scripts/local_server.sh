@@ -3,9 +3,13 @@
 # TODO: Get working.
 # This is because runner rb's make_cache does this
 #     output, _ = shell.exec('sudo -u docker-runner sudo docker images')
+# and the
+#  [sudo -u docker-runner sudo]
+# won't work on a local-host
+# Make that a server VAR?
 
 HOME="$( cd "$( dirname "${0}" )" && pwd )"
-RUNNER=StubRunner
+RUNNER=DockerKatasDataContainerRunner
 
 export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/app/languages
 export CYBER_DOJO_EXERCISES_ROOT=${HOME}/app/exercises
