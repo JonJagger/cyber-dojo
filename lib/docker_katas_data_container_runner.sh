@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# A runner whose access to the avatar's source files is via a data-container
+# containing files for *all* katas/... sub folders.
+# The tar-piping is to isolate the avatar's sub-dir in the katas-data-container.
+
 SRC_DIR=$1     # Where the source files are
 IMAGE=$2       # What they'll run in, eg cyberdojofoundation/gcc_assert
 MAX_SECS=$3    # How long they've got, eg 10
@@ -13,7 +17,7 @@ SUDO='sudo -u docker-runner sudo' # See sudo comments in docker/web/Dockerfile
 # --interactive  ; we tar-pipe later
 # --net=none     ; for security
 # --user=nobody  ; for security
-# Note that the --net=none setting in inherited by [docker exec]
+# Note that the --net=none setting is inherited by [docker exec]
 
 CID=$(${SUDO} docker run --detach \
                          --interactive \
@@ -64,7 +68,7 @@ SANDBOX=/sandbox
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Doing [docker stop ${CID}] is not enough to stop a container
 # that is printing in an infinite loop.
-# Any zombie processes this backgrounded task creates are reaped by tini.
+# Any zombie processes this backgrounded process creates are reaped by tini.
 # See docker/web/Dockerfile
 
 (sleep ${MAX_SECS} && ${SUDO} docker rm --force ${CID} &> /dev/null) &
@@ -84,16 +88,18 @@ OUTPUT=$(${SUDO} docker exec \
 # 5. Don't use the exit-status of cyber-dojo.sh
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Using it to determine red/amber/green status is unreliable
-#   o) not all test frameworks set their exit-status properly
-#   o) cyber-dojo.sh is editable (suppose it ended [exit 137])
+# o) not all test frameworks set their exit-status properly
+# o) cyber-dojo.sh is editable (suppose it ended [exit 137])
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 6. If the sleep-docker-rm process is still alive race to kill it
+#    before it does [docker rm ${CID}]
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 pkill -P ${SLEEP_DOCKER_RM_PPID}
 if [ "$?" != "0" ]; then
-  # Failed to kill the sleep-docker-rm task, so assume it happened
+  # Failed to kill the sleep-docker-rm process
+  # Assuming [docker rm ${CID}] happened
   ${SUDO} docker rm --force ${CID} &> /dev/null # belt and braces
   exit 137 # (128=timed-out) + (9=killed)
 fi
@@ -110,9 +116,9 @@ fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 8. The container completed and is still running
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Echo the output so it can be red/amber/green regex'd (see 5)
-# Tar-pipe *everything* out of the run-container's sandbox back to SRC_DIR
-# Remove the container.
+# o) Echo the output so it can be red/amber/green regex'd (see 5)
+# o) Tar-pipe *everything* out of the run-container's sandbox back to SRC_DIR
+# o) Remove the container.
 
 echo "${OUTPUT}" # | head -c 10k
 

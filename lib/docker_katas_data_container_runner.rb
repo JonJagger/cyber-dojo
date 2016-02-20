@@ -12,7 +12,7 @@
 # o) Untouched files retain the same date-time stamp.
 # o) cyber-dojo.sh can do incremental makes.
 #
-# The job of the tar-piping is to isolate the avatar's sub-dir in the katas-data-container.
+# The tar-piping is to isolate the avatar's sub-dir in the katas-data-container.
 
 class DockerKatasDataContainerRunner
 
