@@ -1,8 +1,8 @@
 {
   "root": {
-    "languages": "/var/www/cyber-dojo/languages/",
-    "exercises": "/var/www/cyber-dojo/exercises/",
-       "caches": "/var/www/cyber-dojo/caches/",
+    "languages": "/var/www/cyber-dojo/app/languages/",
+    "exercises": "/var/www/cyber-dojo/app/exercises/",
+       "caches": "/var/www/cyber-dojo/app/caches/",
         "katas": "/var/www/cyber-dojo/katas/"
   },
   "class": {

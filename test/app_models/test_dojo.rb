@@ -22,10 +22,10 @@ class DojoTests < AppModelsTestBase
     assert_equal 'HostGit',         class_of['git']
     assert_equal 'HostLog',         class_of['log']
     root_of = dojo.config['root']
-    assert_equal '/var/www/cyber-dojo/languages/', root_of['languages']
-    assert_equal '/var/www/cyber-dojo/exercises/', root_of['exercises']
-    assert_equal '/var/www/cyber-dojo/caches/',    root_of['caches']
-    assert_equal '/var/www/cyber-dojo/katas/',     root_of['katas']
+    assert_equal '/var/www/cyber-dojo/app/languages/', root_of['languages']
+    assert_equal '/var/www/cyber-dojo/app/exercises/', root_of['exercises']
+    assert_equal '/var/www/cyber-dojo/app/caches/',    root_of['caches']
+    assert_equal '/var/www/cyber-dojo/katas/',         root_of['katas']
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
