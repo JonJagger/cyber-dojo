@@ -2,9 +2,9 @@
 
 class Dojo
 
-  def languages; @languages ||= Languages.new(self, get_root('languages')); end
-  def exercises; @exercises ||= Exercises.new(self, get_root('exercises')); end
-  def    caches; @caches    ||=    Caches.new(self, get_root('caches'   )); end
+  def languages; @languages ||= Languages.new(self, env_root('languages')); end
+  def exercises; @exercises ||= Exercises.new(self, env_root('exercises')); end
+  def    caches; @caches    ||=    Caches.new(self, env_root('caches'   )); end
 
   def    runner;    @runner ||= external_object; end
   def     katas;     @katas ||= external_object; end
@@ -13,11 +13,11 @@ class Dojo
   def       log;       @log ||= external_object; end
   def       git;       @git ||= external_object; end
 
-  def get_root(name); ENV[env_root(name)] || fail_not_set(name, 'root'); end
-  def env_root(name); env(name, 'root'); end
+  def env_root(key); ENV[env_root_name(key)] || fail_no_ENV(key, 'root'); end
+  def env_class(key); ENV[env_class_name(key)] || fail_no_ENV(key, 'class'); end
 
-  def get_class(name); ENV[env_class(name)] || fail_not_set(name, 'class'); end
-  def env_class(name); env(name, 'class'); end
+  def env_root_name(key); env_name(key, 'root'); end
+  def env_class_name(key); env_name(key, 'class'); end
 
   private
 
@@ -25,14 +25,14 @@ class Dojo
 
   def external_object
     key = name_of(caller)
-    var = get_class(key)
+    var = env_class(key)
     Object.const_get(var).new(self)
   end
 
-  def env(name, suffix); 'CYBER_DOJO_' + name.upcase + '_' + suffix.upcase; end
+  def env_name(key, suffix); 'CYBER_DOJO_' + key.upcase + '_' + suffix.upcase; end
 
-  def fail_not_set(type, name)
-    fail "ENV[#{env(type, name)}] not set"
+  def fail_no_ENV(key, suffix)
+    fail "ENV[#{env_name(key, suffix)}] not set"
   end
 
 end

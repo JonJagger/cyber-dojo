@@ -66,12 +66,15 @@ wrapper_test_log='coverage/WRAPPER.log.tmp'
 
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
-export CYBER_DOJO_CACHES_ROOT=${MY_DIR}/app/caches
-mkdir -p ${CYBER_DOJO_CACHES_ROOT}
-
-
 # TODO: check for environment-variables being set here?
 # TODO: if not set provide defaults (and say so)
+export CYBER_DOJO_DISK_CLASS=HostDisk
+export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
+export CYBER_DOJO_CACHES_ROOT=${MY_DIR}/app/caches
+mkdir -p ${CYBER_DOJO_CACHES_ROOT}
+#...
+#...
+#...
 
 ruby $wrapped_filename -- ${args[*]} 2>&1 | tee $wrapper_test_log
 
