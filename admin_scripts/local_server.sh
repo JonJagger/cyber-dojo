@@ -8,8 +8,16 @@
 # won't work on a local-host
 # Make that a server VAR?
 
-HOME="$( cd "$( dirname "${0}" )" && pwd )"
-RUNNER=DockerKatasDataContainerRunner
+MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
+RUNNER=${1:-DockerKatasDataContainerRunner}
+
+echo "RUNNER=${RUNNER}"
+exit
+
+CWD=$(pwd)
+cd "${MY_DIR}" > /dev/null
+cd ..
+HOME=$(pwd)
 
 export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/app/languages
 export CYBER_DOJO_EXERCISES_ROOT=${HOME}/app/exercises
@@ -21,5 +29,7 @@ export CYBER_DOJO_SHELL_CLASS=HostShell
 export CYBER_DOJO_DISK_CLASS=HostDisk
 export CYBER_DOJO_LOG_CLASS=HostLog
 export CYBER_DOJO_GIT_CLASS=HostGit
+
+cd "${CWD}" > /dev/null
 
 rails s $*
