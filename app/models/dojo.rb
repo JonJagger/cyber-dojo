@@ -2,9 +2,9 @@
 
 class Dojo
 
-  def languages; @languages ||= Languages.new(self, env_root('languages')); end
-  def exercises; @exercises ||= Exercises.new(self, env_root('exercises')); end
-  def    caches; @caches    ||=    Caches.new(self, env_root('caches'   )); end
+  def languages; @languages ||= Languages.new(self); end
+  def exercises; @exercises ||= Exercises.new(self); end
+  def    caches; @caches    ||=    Caches.new(self); end
 
   def    runner;    @runner ||= external_object; end
   def     katas;     @katas ||= external_object; end

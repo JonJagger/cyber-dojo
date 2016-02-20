@@ -13,9 +13,7 @@ end
 
 # Provides transparent access to the external objects held in the root dojo object:
 #
-#  one_self - currently used on globe showing latitude+logtitude red dots.
-#  starter  - ensures starting an animal in a cyber-dojo has appropriate locking.
-#  runner   - performs the actual test run, usually using docker in some way.
+#  runner   - performs the actual test run, using docker in some way.
 #  shell    - executes shell commands, eg mkdir,ls,git
 #  disk     - access to the file-system, directories, file read/write
 #  log      - memory based logging (useful for testing)
