@@ -82,17 +82,17 @@ class DojoTests < AppModelsTestBase
 
     #exercises.ctor (for example) creates its cache which depends on ...disk...
 
+    set_caches_root(   path = tmp_root + '/caches')    && assert_equal(path + '/', caches.path)
     set_exercises_root(path = tmp_root + '/exercises') && assert_equal(path + '/', exercises.path)
     set_languages_root(path = tmp_root + '/languages') && assert_equal(path + '/', languages.path)
     set_katas_root(    path = tmp_root + '/katas')     && assert_equal(path + '/', katas.path)
-    set_caches_root(   path = tmp_root + '/caches')    && assert_equal(path + '/', caches.path)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'CBFF2D',
   'katas.path is automatically overriden by test setup because tests write to katas' do
-    test_set_path = dojo.get_root('katas')
+    test_set_path = dojo.env_root('katas')
     refute_equal test_set_path + '/', katas.path
     refute_equal test_set_path,       katas.path
   end

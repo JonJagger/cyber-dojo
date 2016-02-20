@@ -13,8 +13,8 @@ class Dojo
   def       log;       @log ||= external_object; end
   def       git;       @git ||= external_object; end
 
-  def env_root(key); ENV[env_root_name(key)] || fail_no_ENV(key, 'root'); end
-  def env_class(key); ENV[env_class_name(key)] || fail_no_ENV(key, 'class'); end
+  def env_root(key); env_or_fail(env_root_name(key)); end
+  def env_class(key); env_or_fail(env_class_name(key)); end
 
   def env_root_name(key); env_name(key, 'root'); end
   def env_class_name(key); env_name(key, 'class'); end
@@ -29,10 +29,12 @@ class Dojo
     Object.const_get(var).new(self)
   end
 
-  def env_name(key, suffix); 'CYBER_DOJO_' + key.upcase + '_' + suffix.upcase; end
+  def env_name(key, suffix)
+    'CYBER_DOJO_' + key.upcase + '_' + suffix.upcase
+  end
 
-  def fail_no_ENV(key, suffix)
-    fail "ENV[#{env_name(key, suffix)}] not set"
+  def env_or_fail(var)
+    ENV[var] || fail("ENV[#{var}] not set")
   end
 
 end
@@ -41,7 +43,7 @@ end
 # External root-paths and class-names have defaults as set in config/cyber-dojo.json.
 # Root-path and class-name defaults can be overridden by setting environment variables.
 #   eg  export CYBER_DOJO_KATAS_ROOT=/var/www/cyber-dojo/katas
-#   eg  export CYBER_DOJO_RUNNER_CLASS=DockerTmpRunner
+#   eg  export CYBER_DOJO_RUNNER_CLASS=DockerKatasDataContainerRunner
 #
 # This is for testability. It's a way of doing Parameterize From Above
 # in a way that can tunnel through a *deep* stack. For example,
