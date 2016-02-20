@@ -53,9 +53,6 @@ fi
 wrapped_filename="$filename.WRAPPED"
 (echo ''; (cat ${testFiles[*]}) | tail -n +2) > $wrapped_filename
 
-#echo "EARLY EXIT"
-#exit
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # check if tests alter the current git user!
 # I don't want any confusion between the git repo created
@@ -66,6 +63,15 @@ gitUserNameBefore=`git config user.name`
 rm -rf ../../coverage/.resultset.json
 mkdir -p coverage
 wrapper_test_log='coverage/WRAPPER.log.tmp'
+
+MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
+
+export CYBER_DOJO_CACHES_ROOT=${MY_DIR}/app/caches
+mkdir -p ${CYBER_DOJO_CACHES_ROOT}
+
+
+# TODO: check for environment-variables being set here?
+# TODO: if not set provide defaults (and say so)
 
 ruby $wrapped_filename -- ${args[*]} 2>&1 | tee $wrapper_test_log
 

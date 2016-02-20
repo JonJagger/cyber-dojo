@@ -13,13 +13,11 @@ class Dojo
   def       log;       @log ||= external_object; end
   def       git;       @git ||= external_object; end
 
-  def get_root(name); ENV[env_root(name)] || config['root'][name]; end
-  def env_root(name); env(name, 'ROOT'); end
+  def get_root(name); ENV[env_root(name)] || fail_not_set(name, 'root'); end
+  def env_root(name); env(name, 'root'); end
 
-  def get_class(name); ENV[env_class(name)] || config['class'][name]; end
-  def env_class(name); env(name, 'CLASS'); end
-
-  def config; JSON.parse(IO.read(config_filename)); end
+  def get_class(name); ENV[env_class(name)] || fail_not_set(name, 'class'); end
+  def env_class(name); env(name, 'class'); end
 
   private
 
@@ -31,11 +29,11 @@ class Dojo
     Object.const_get(var).new(self)
   end
 
-  def env(name, suffix); 'CYBER_DOJO_' + name.upcase + '_' + suffix; end
+  def env(name, suffix); 'CYBER_DOJO_' + name.upcase + '_' + suffix.upcase; end
 
-  def config_filename; root_dir + '/config/cyber-dojo.json'; end
-
-  def root_dir; File.expand_path('../..', File.dirname(__FILE__)); end
+  def fail_not_set(type, name)
+    fail "ENV[#{env(type, name)}] not set"
+  end
 
 end
 

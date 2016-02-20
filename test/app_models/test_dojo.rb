@@ -10,22 +10,23 @@ end
 class DojoTests < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
-  # config defaults
+  # no defaults
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'AACE2A',
-  'config/cyber-dojo.json defaults' do
-    class_of = dojo.config['class']
-    assert_equal 'DockerTmpRunner', class_of['runner']
-    assert_equal 'HostShell',       class_of['shell']
-    assert_equal 'HostDisk',        class_of['disk']
-    assert_equal 'HostGit',         class_of['git']
-    assert_equal 'HostLog',         class_of['log']
-    root_of = dojo.config['root']
-    assert_equal '/var/www/cyber-dojo/app/languages/', root_of['languages']
-    assert_equal '/var/www/cyber-dojo/app/exercises/', root_of['exercises']
-    assert_equal '/var/www/cyber-dojo/app/caches/',    root_of['caches']
-    assert_equal '/var/www/cyber-dojo/katas/',         root_of['katas']
+  'ENV-VARS have no default' do
+    ENV.delete(dojo.env_class('runner'))
+    assert_raises(StandardError) { runner.class }
+    ENV.delete(dojo.env_class('katas'))
+    assert_raises(StandardError) { katas.class }
+    ENV.delete(dojo.env_class('shell'))
+    assert_raises(StandardError) { shell.class }
+    ENV.delete(dojo.env_class('disk'))
+    assert_raises(StandardError) { disk.class }
+    ENV.delete(dojo.env_class('git'))
+    assert_raises(StandardError) { git.class }
+    ENV.delete(dojo.env_class('log'))
+    assert_raises(StandardError) { log.class }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
@@ -118,10 +119,26 @@ class DojoTests < AppModelsTestBase
   # config roots
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'AD6E03',
+  'fails when EXERCISES_ROOT env-var not set' do
+    var = dojo.env_root('exercises')
+    ENV.delete(var)
+    assert_raises(StandardError) { exercises.class }
+  end
+
   test '209EA1',
   'exercises.path can be set to an alternative' do
     set_exercises_root(path = tmp_root + 'fake_exercises_path/')
     assert_equal path, exercises.path
+  end
+
+  # - - - - - -
+
+  test 'C3EED2',
+  'fails when LANGUAGES_ROOT env-var not set' do
+    var = dojo.env_root('languages')
+    ENV.delete(var)
+    assert_raises(StandardError) { languages.class }
   end
 
   test '27A597',
@@ -130,20 +147,44 @@ class DojoTests < AppModelsTestBase
     assert_equal path, languages.path
   end
 
+  # - - - - - -
+
+  test 'E6F020',
+  'fails when CACHES_ROOT env-var not set' do
+    var = dojo.env_root('caches')
+    ENV.delete(var)
+    assert_raises(StandardError) { caches.class }
+  end
+
   test '5C25B8',
   'caches.path can be set to an alternative' do
     set_caches_root(path = tmp_root + 'fake_caches_path/')
     assert_equal path, caches.path
   end
 
-  test 'B6CC06',
-  'katas.path can be set to an alternative' do
-    set_katas_root(path = tmp_root + 'fake_katas_path/')
-    assert_equal path, katas.path
+  # - - - - - -
+
+  test '963186',
+  'fails when KATAS_ROOT env-var not set' do
+    var = dojo.env_root('katas')
+    ENV.delete(var)
+    assert_raises(StandardError) { katas.class }
   end
+
+  #test 'B6CC06',
+  #'katas.path can be set to an alternative' do
+  #  set_katas_class('ExternalDouble')
+  #  set_katas_root(path = tmp_root + 'fake_katas_path/')
+  #  assert_equal path, katas.path
+  #end
+
+  # - - - - - -
 
   test '01CD52',
   'paths always have trailing slash even when config value does not' do
+
+    #exercises.ctor (for example) creates its cache which depends on ...disk...
+
     set_exercises_root(exercises_path = tmp_root + '/exercises')
     set_languages_root(languages_path = tmp_root + '/languages')
     set_katas_root(        katas_path = tmp_root + '/fake_katas_path')

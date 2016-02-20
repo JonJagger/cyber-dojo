@@ -11,9 +11,6 @@
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 RUNNER=${1:-DockerKatasDataContainerRunner}
 
-echo "RUNNER=${RUNNER}"
-exit
-
 CWD=$(pwd)
 cd "${MY_DIR}" > /dev/null
 cd ..
@@ -31,5 +28,7 @@ export CYBER_DOJO_LOG_CLASS=HostLog
 export CYBER_DOJO_GIT_CLASS=HostGit
 
 cd "${CWD}" > /dev/null
+
+rm ${CYBER_DOJO_CACHES_ROOT}/*.json
 
 rails s $*
