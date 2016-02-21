@@ -1,0 +1,94 @@
+
+Interesting idea is that there could be *lots* of data-containers.
+If I can't volume-mount a sub-folder of katas/... I can achieve
+the same effect by breaking the sub-folder into its own data-container.
+Someone wanting to practice has their *own* kata-data-container (SINGULAR)
+
+A katas dir on the host could be very large. It certainly
+is on cyber-dojo.org  Converting that to a data-container is
+probably infeasible due to lack of disk space.
+One possibility is to keep the existing katas dir on the host but
+in a read-only fashion. If someone enters an ID on the host then
+that katas/id subfolder is converted into a data-container for that
+id only. And then the data-container is used. If someone enters a
+new katas ID it creates a data-container from the start.
+
+An issue with one data-container per kata-id is backup. How do
+I create a single tar file for all data-containers? And will
+that create the same disk-space issue for cyber-dojo.org.
+Perhaps only have creation of single tar from single data-container
+for single katas-id. If you want to create a single backup and there
+isn't enough space you can clone the entire server.
+
+On the other hand, a tool could covert one kata-id at a time.
+Make the data-container for the katas-id, then delete it
+from katas/ sub folder on host. This could be done as an externally
+callable tool. Maybe create an image for it?!
+
+What would cyber-dojo.org need?
+1) mounting existing /var/www/cyber-dojo/katas as read-only
+2) use of id has to check if id lives on host
+   if so convert it to a data-container and delete from host
+3) what about id-completion through data-containers?
+   is this a possible issue? If there are 50,000 data-containers
+   how fast is it searching through all of them to do id-completion?!
+   Get their location in var/lib/docker/volumes/ and then use standard
+   file globbing there?
+
+   $ docker info cyber-dojo-katas
+     creates a big output but in it is listed
+     "Source": "/mnt/sda1/var/lib/docker/volumes/3e5d372abffbf6123fd9890c7a081846f5918b55e6bfbe6354dcf58fafeb374e/_data",
+     And [sudo ls] in this directory (on the host) gives
+     total 52
+     drwxr-xr-x   13 19661    root          4096 Feb 20 17:36 .
+     drwxr-xr-x    3 root     root          4096 Feb 18 11:11 ..
+     drwxr-xr-x    3 19661    19661         4096 Feb 18 21:11 29
+     drwxr-xr-x    3 19661    19661         4096 Feb 18 21:10 3B
+     drwxr-xr-x    3 19661    19661         4096 Feb 19 12:15 43
+     drwxr-xr-x    3 19661    19661         4096 Feb 19 18:48 49
+     drwxr-xr-x    4 19661    19661         4096 Feb 20 17:29 4A
+     drwxr-xr-x    3 19661    19661         4096 Feb 19 18:49 91
+     drwxr-xr-x    3 19661    19661         4096 Feb 20 17:36 98
+     drwxr-xr-x    3 19661    19661         4096 Feb 18 13:52 A8
+     drwxr-xr-x    3 19661    19661         4096 Feb 18 21:26 AB
+     drwxr-xr-x    3 19661    19661         4096 Feb 19 18:47 CA
+     drwxr-xr-x    3 19661    19661         4096 Feb 19 18:48 EF
+
+
+     Info section containing the Source is...
+     "Mounts": [
+            {
+                "Name": "3e5d372abffbf6123fd9890c7a081846f5918b55e6bfbe6354dcf58fafeb374e",
+                "Source": "/mnt/sda1/var/lib/docker/volumes/3e5d372abffbf6123fd9890c7a081846f5918b55e6bfbe6354dcf58fafeb374e/_data",
+                "Destination": "/usr/src/cyber-dojo/katas",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+
+     To get just that line, need a format
+
+     $ SOURCE=$(docker inspect --format '{{ (index .Mounts 0).Source }}' cyber-dojo-katas)
+     $ echo $SOURCE
+     /mnt/sda1/var/lib/docker/volumes/3e5d372abffbf6123fd9890c7a081846f5918b55e6bfbe6354dcf58fafeb374e/_data
+
+     This is for cyber-dojo-katas which is a single data-container for all of katas
+     It maps to "Destination" == /usr/src/cyber-dojo/katas
+     I don't need permission to ls $SOURCE
+     I need permission to ls "Destination", vis [ls /usr/src/cyber-dojo/katas]
+
+     To make this work I need a data-container for
+     493A06504A to map to
+     /usr/src/cyber-dojo/katas/49/3A06504A
+
+     Then I can glob in /usr/src/cyber-dojo/katas/
+
+     Summary
+     Try to find KATA_ID as data-container by looking in /usr/src/cyber-dojo/katas/
+     If found, use it
+     If not found try to find KATA_ID on host volume by looking in /var/www/cyber-dojo/katas (ro)?
+     If found, create a data-container from it and use it
+     Else bad KATA_ID
+

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# TODO: needs to be converted to bin/sh
+# TODO: needs to be checked in bin/sh
 
 # Called from lib/docker_machine_runner.rb DockerMachineRunner.run()
 
@@ -66,7 +66,7 @@ exit_status=$?
 # Note this script is being run as cyber-dojo user (not www-data)
 
 # - - - - - - - - - - - - - -
-# 4. remove avatar's files from the node
+# 4. remove avatar's files from the node. Note background task. Beware zombie processes.
 
 docker-machine ssh ${node_name} -- sudo rm -rf /tmp/cyber-dojo/${tmp_name} &
 
