@@ -16,6 +16,18 @@ new katas ID it creates a data-container from the start.
 I like this.
 
 -----------------------------------------
+all avatars share the same kata
+-----------------------------------------
+Currently the root folder for the kata stores
+  manifest.json  - read-only
+  started_avatars.json - read-write
+  f.lock - used for atomic-locking on POSIX file-system
+I think I will need a data-container for the root kata-folder
+and then one data-container for each avatar.
+Will locking still work?
+
+
+-----------------------------------------
 backups
 -----------------------------------------
 An issue with one data-container per kata-id is backup. How do
