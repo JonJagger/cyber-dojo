@@ -478,6 +478,7 @@ export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
 
 export CYBER_DOJO_RUNNER_CLASS=${RUNNER}
 export CYBER_DOJO_RUNNER_SUDO='sudo -u docker-runner sudo'
+export CYBER_DOJO_RUNNER_TIMEOUT=10
 
 #========================================================================================
 # DO SOMETHING!

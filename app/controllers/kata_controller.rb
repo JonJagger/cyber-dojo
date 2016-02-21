@@ -20,7 +20,7 @@ class KataController < ApplicationController
     delta = FileDeltaMaker.make_delta(incoming, outgoing)
 
     files = received_files
-    @output = @avatar.test(delta, files, max_seconds = 10)
+    @output = @avatar.test(delta, files)
     @test_colour = kata.language.colour(@output)
 
     katas.avatar_ran_tests(@avatar, delta, files, time_now, @output, @test_colour)

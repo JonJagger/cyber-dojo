@@ -14,7 +14,6 @@ module TestExternalHelpers # mix-in
     # wipe caches, but not via caches.path because that will *set* dojo.caches!
     `rm -rf #{get_caches_root}/exercises_cache.json`
     `rm -rf #{get_caches_root}/languages_cache.json`
-    `rm -rf #{get_caches_root}/runner_cache.json`
   end
 
   def teardown

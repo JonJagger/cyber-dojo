@@ -23,6 +23,7 @@ export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
 # TODO: runner can be plain volume-mounting runner. No need for tar-pipes.
 export CYBER_DOJO_RUNNER_CLASS=${RUNNER}
 export CYBER_DOJO_RUNNER_SUDO=''
+export CYBER_DOJO_RUNNER_TIMEOUT=10
 
 cd "${CWD}" > /dev/null
 
