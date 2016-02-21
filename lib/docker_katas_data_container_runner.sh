@@ -7,8 +7,7 @@
 SRC_DIR=$1     # Where the source files are
 IMAGE=$2       # What they'll run in, eg cyberdojofoundation/gcc_assert
 MAX_SECS=$3    # How long they've got, eg 10
-
-SUDO='sudo -u docker-runner sudo' # See sudo comments in docker/web/Dockerfile
+SUDO=$4        # sudo incantation for docker commands
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 1. Start the container running
