@@ -35,14 +35,14 @@ class Dojo
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# External root-paths and class-names have defaults as set in config/cyber-dojo.json.
-# Root-path and class-name defaults can be overridden by setting environment variables.
+# External root-dirs and class-names do *not* have defaults.
+# Root-dirs and class-name are set using environment variables.
 #   eg  export CYBER_DOJO_KATAS_ROOT=/var/www/cyber-dojo/katas
 #   eg  export CYBER_DOJO_RUNNER_CLASS=DockerKatasDataContainerRunner
 #
-# This is for testability. It's a way of doing Parameterize From Above
-# in a way that can tunnel through a *deep* stack. For example,
-# I can set an environment variable and then run a controller test,
+# This gives a way to do Parameterize From Above in a way that can
+# tunnel through a *deep* stack. For example, I can set an environment
+# variable and then run a controller test,
 # which issues GETs/POSTs, which work their way through the rails stack,
 # eventually reaching app/models.dojo.rb (possibly in a different thread)
 # where the specific Double/Mock/Stub class or fake-root-path takes effect.
