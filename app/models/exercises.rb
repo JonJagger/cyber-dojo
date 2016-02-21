@@ -4,7 +4,7 @@ class Exercises
 
   def initialize(dojo)
     @parent = dojo
-    @path = slashed(dojo.env_root('exercises'))
+    @path = slashed(dojo.fenv('exercises', 'root'))
     caches.write_json_once(cache_filename) { make_cache }
   end
 

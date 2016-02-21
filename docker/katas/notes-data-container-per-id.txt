@@ -108,13 +108,13 @@ TODO
 Having one data-container per kata-id and using volumes-from:
 Is it possible to map the folder /usr/src/cyber-dojo/katas/49/3A06504A/whale/sandbox
 to /sandbox
-This is important for some language-images, eg F# which does this...
+No
+This is important for some language-images, eg F# which does this in their cyber-dojo.sh file
   mono /Packages/NUnit.Runners/tools/nunit-console.exe -nologo /sandbox/RunTests.dll
 
 1. Are there any other languages that name /sandbox?
 find . -type f -iname cyber-dojo.sh -print0 | xargs -0 grep "sandbox"
-Only F#
-
+No. Good. Only F#
 
 2. Can I change cyber-dojo.sh for F# to not name the current folder.
 Yes

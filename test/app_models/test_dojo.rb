@@ -92,7 +92,7 @@ class DojoTests < AppModelsTestBase
 
   test 'CBFF2D',
   'katas.path is automatically overriden by test setup because tests write to katas' do
-    test_set_path = dojo.env_root('katas')
+    test_set_path = dojo.fenv('katas', 'root')
     refute_equal test_set_path + '/', katas.path
     refute_equal test_set_path,       katas.path
   end

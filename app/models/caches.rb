@@ -3,7 +3,7 @@ class Caches
 
   def initialize(dojo)
     @parent = dojo
-    @path = slashed(dojo.env_root('exercises'))
+    @path = slashed(dojo.fenv('caches', 'root'))
   end
 
   attr_reader :path, :parent

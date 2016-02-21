@@ -13,11 +13,14 @@ class Dojo
   def       log;       @log ||= external_object; end
   def       git;       @git ||= external_object; end
 
-  def env_root(key); env_or_fail(env_root_name(key)); end
-  def env_class(key); env_or_fail(env_class_name(key)); end
+  def env_name(key, suffix) #
+    'CYBER_DOJO_' + key.upcase + '_' + suffix.upcase
+  end
 
-  def env_root_name(key); env_name(key, 'root'); end
-  def env_class_name(key); env_name(key, 'class'); end
+  def fenv(key, suffix)
+    name = env_name(key, suffix)
+    ENV[name] || fail("ENV[#{name}] not set")
+  end
 
   private
 
@@ -25,12 +28,8 @@ class Dojo
 
   def external_object
     key = name_of(caller)
-    var = env_class(key)
+    var = fenv(key, 'class')
     Object.const_get(var).new(self)
-  end
-
-  def env_name(key, suffix)
-    'CYBER_DOJO_' + key.upcase + '_' + suffix.upcase
   end
 
   def env_or_fail(var)

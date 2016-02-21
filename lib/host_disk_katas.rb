@@ -6,7 +6,7 @@ class HostDiskKatas
 
   def initialize(dojo)
     @parent = dojo
-    @path = slashed(dojo.env_root('katas'))
+    @path = slashed(dojo.fenv('katas', 'root'))
   end
 
   attr_reader :path, :parent
