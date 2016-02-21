@@ -92,3 +92,57 @@ What would cyber-dojo.org need?
      If found, create a data-container from it and use it
      Else bad KATA_ID
 
+
+TODO
+1. How to create data-container on the fly
+   Maybe copy Dockerfile and .dockerignore into the folder then do it
+
+2. Check that doing two like this means they both show up mounted folder
+   /usr/src/cyber-dojo/katas
+   And can be globbed for using existing code.
+
+
+-----------------------------------------
+/sandbox mapping
+
+Having one data-container per kata-id and using volumes-from:
+Is it possible to map the folder /usr/src/cyber-dojo/katas/49/3A06504A/whale/sandbox
+to /sandbox
+This is important for some language-images, eg F# which does this...
+  mono /Packages/NUnit.Runners/tools/nunit-console.exe -nologo /sandbox/RunTests.dll
+
+1. Are there any other languages that name /sandbox?
+find . -type f -iname cyber-dojo.sh -print0 | xargs -0 grep "sandbox"
+Only F#
+
+
+2. Can I change cyber-dojo.sh for F# to not name the current folder.
+Yes
+  mono /Packages/NUnit.Runners/tools/nunit-console.exe -nologo /sandbox/RunTests.dll
+becomes
+  mono /Packages/NUnit.Runners/tools/nunit-console.exe -nologo ./RunTests.dll
+
+
+-----------------------------------------
+runner cache
+I think having a runner cache on disk is overkill.
+Have it inside the object only.
+It is only really used to determine which languages to show
+on kata-setup. Inside the object is fast enough and it means
+when you pull a new language there is nothing to do to see it.
+
+-----------------------------------------
+exercises/languages caches
+Perhaps these should live in their respective folders and not in app/caches
+Things that change together should live together.
+Make image-container for languages and store the cache inside the image.
+Same for exercises.
+Then they can be readonly. Can you make a readonly data-container? Yes.
+volumes_from:
+ - container_name:ro
+ - container:container_name:ro
+
+
+
+
+

@@ -49,7 +49,11 @@ CID=$(${SUDO} docker run --detach \
 # based language-images too.
 #
 # The existing F#-NUnit cyber-dojo.sh names the /sandbox folder
-# So SANDBOX has to be /sandbox for backward compatibility
+# So SANDBOX has to be /sandbox for backward compatibility.
+# F#-NUnit is the only cyber-dojo.sh that names /sandbox.
+# Being limited to a specific folder will not
+# work if a data-container is for a *single* kata-id because
+# there is no way to map a volumes-from dir to a different dir.
 
 SANDBOX=/sandbox
 
