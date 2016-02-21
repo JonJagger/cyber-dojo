@@ -32,8 +32,10 @@ id-completion
 -----------------------------------------
 Try to find KATA_ID as data-container by looking in /usr/src/cyber-dojo/katas/ (volume-mount)
 If found, use it
-If not found try to find KATA_ID on host volume by looking in /var/www/cyber-dojo/katas (ro)?
-If found, create a data-container from it and use it (delete from host :rw)
+If not found try to find KATA_ID on host volume by looking in /var/www/cyber-dojo/katas (ro)
+If found, create a data-container from it and use it
+  Don't delete from host. Prevents :ro mount and not that common.
+  Have separate tool maybe - to find duplicates and remove from host.
 Else bad KATA_ID
 
 I want one data-container per kata-id.
@@ -48,7 +50,7 @@ then I'm finding
 Ah this is because I need all to get past the default that only running containers are shown
     $ docker ps --all --filter 'name=cyber-dojo-ka'
 And also
-    $ docker ps --all --filter 'exited=0' --filter 'name=cyber-dojo'
+    $ docker ps --all --filter 'exited=0' --filter 'name=cyber-dojo-kata-4F356E'
 
 
 -----------------------------------------
@@ -56,10 +58,9 @@ TODO
 -----------------------------------------
 1. How to create data-container on the fly
    Maybe copy Dockerfile and .dockerignore into the folder then do it
+   No that won't work if host volume is mounted read-only.
+   Use explicit Dockerfile and explicit context-dir.
 
-2. Check that doing two like this means they both show up mounted folder
-   /usr/src/cyber-dojo/katas
-   And can be globbed for using existing code.
 
 
 
@@ -76,13 +77,14 @@ This is important for some language-images, eg F# which does this in their cyber
 
 1. Are there any other languages that name /sandbox?
 find . -type f -iname cyber-dojo.sh -print0 | xargs -0 grep "sandbox"
-No. Good. Only F#
+No. Only F#
 
 2. Can I change cyber-dojo.sh for F# to not name the current folder.
 Yes
   mono /Packages/NUnit.Runners/tools/nunit-console.exe -nologo /sandbox/RunTests.dll
 becomes
   mono /Packages/NUnit.Runners/tools/nunit-console.exe -nologo ./RunTests.dll
+Done
 
 
 -----------------------------------------
@@ -91,8 +93,7 @@ diffs
 to see the diff for a kata-id the git repo needs to be available.
 If there is a single data-container per kata-id
 then this will need to be mounted on the fly in a docker run command.
-I think this means katas will need to be a service in its own right.
-Or the web container will need to do a [docker run] on its own image
+Could the web container do a [docker run] on its own image
 but with a volumes-from for the data-container!
 
 
