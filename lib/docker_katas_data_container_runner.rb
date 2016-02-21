@@ -18,7 +18,6 @@ class DockerKatasDataContainerRunner
 
   def initialize(dojo)
     @dojo = dojo
-    caches.write_json_once(cache_filename) { make_cache }
   end
 
   # queries

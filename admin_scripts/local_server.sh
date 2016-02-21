@@ -24,6 +24,7 @@ export CYBER_DOJO_DISK_CLASS=HostDisk
 export CYBER_DOJO_LOG_CLASS=HostLog
 export CYBER_DOJO_GIT_CLASS=HostGit
 
+# TODO: where should katas_root point to for a local server?
 export CYBER_DOJO_KATAS_ROOT=${HOME}/katas
 export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
 
