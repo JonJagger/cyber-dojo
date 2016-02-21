@@ -7,7 +7,7 @@ module TestExternalHelpers # mix-in
     raise "setup already called" unless @setup_called.nil?
     @setup_called = true
     @config = {}
-    ENV.each { |key,value| @config[key] = value }
+    ENV.each { |key, value| @config[key] = value }
     setup_tmp_root
     # we never want tests to write to the real katas root
     set_katas_root(tmp_root + 'katas')
@@ -96,11 +96,11 @@ module TestExternalHelpers # mix-in
   # - - - - - - - - - - - - - - - - - - -
 
   def get_root(name)
-    dojo.fenv(name, 'root')
+    dojo.env(name, 'root')
   end
 
   def get_class(name)
-    dojo.fenv(name, 'class')
+    dojo.env(name, 'class')
   end
 
   # - - - - - - - - - - - - - - - - - - -

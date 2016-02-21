@@ -125,6 +125,7 @@ becomes
 
 -----------------------------------------
 runner cache
+-----------------------------------------
 I think having a runner cache on disk is overkill.
 Have it inside the object only.
 It is only really used to determine which languages to show
@@ -133,6 +134,7 @@ when you pull a new language there is nothing to do to see it.
 
 -----------------------------------------
 exercises/languages caches
+-----------------------------------------
 Perhaps these should live in their respective folders and not in app/caches
 Things that change together should live together.
 Make image-container for languages and store the cache inside the image.
@@ -142,6 +144,15 @@ volumes_from:
  - container_name:ro
  - container:container_name:ro
 
+
+-----------------------------------------
+testing
+-----------------------------------------
+test_external_helpers.rb does this
+    # we never want tests to write to the real katas root
+    set_katas_root(tmp_root + 'katas')
+Need to think about how this will work when each kata-id
+has its own data-container.
 
 
 

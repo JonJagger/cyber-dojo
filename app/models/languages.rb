@@ -4,7 +4,7 @@ class Languages
 
   def initialize(dojo)
     @parent = dojo
-    @path = slashed(dojo.fenv('languages', 'root'))
+    @path = slashed(dojo.env('languages', 'root'))
     caches.write_json_once(cache_filename) { make_cache }
   end
 

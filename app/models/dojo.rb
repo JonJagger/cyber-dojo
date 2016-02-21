@@ -17,7 +17,7 @@ class Dojo
     'CYBER_DOJO_' + key.upcase + '_' + suffix.upcase
   end
 
-  def fenv(key, suffix)
+  def env(key, suffix)
     name = env_name(key, suffix)
     ENV[name] || fail("ENV[#{name}] not set")
   end
@@ -28,12 +28,8 @@ class Dojo
 
   def external_object
     key = name_of(caller)
-    var = fenv(key, 'class')
+    var = env(key, 'class')
     Object.const_get(var).new(self)
-  end
-
-  def env_or_fail(var)
-    ENV[var] || fail("ENV[#{var}] not set")
   end
 
 end
