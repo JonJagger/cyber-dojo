@@ -7,11 +7,6 @@
 
 *
 
-#-----!Except these files
-
-!script
-!config.ru
-
 #-----!Except these folders
 
 !app/assets
@@ -20,5 +15,6 @@
 !app/lib
 !app/models
 !app/views
+!script
 !config
 !lib

@@ -35,22 +35,10 @@ web:
     - cyber-dojo-katas:rw
     - languages:ro
     - exercises:ro
-    - rails-app:rw
+    - rails-app:ro
     - rails-log:rw
     - rails-tmp:rw
     - test:ro
-
-
-# Cannot specify
-#    - rails-app:ro
-# Get error
-# ERROR: Cannot start container 84297ba318348d68108d5bd45aa13c2f96111603eb0db930a34779756a887c73:
-# [9] System error: mkdir
-#    /mnt/sda1/var/lib/docker/aufs/mnt/
-#    4d28577fb5acdb3c80ce1868e3baeb84571445cd892c46db2f78781dc640a2a4/usr/src/cyber-dojo/katas:
-#    read-only file system
-# I'm guessing this is because rails-app includes files at the /usr/src/cyber-dojo/ level
-# namely config.ru
 
 languages:
   image: cyberdojofoundation/languages

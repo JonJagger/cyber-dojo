@@ -2,6 +2,9 @@
 
 *
 
-#-----!Except the Gemfile
+#-----!Except these two files
+#-----Gemfile so Dockerfile can bundle-install
+#-----config.ru because I can't put it in rails-app with :ro
 
 !Gemfile
+!config.ru

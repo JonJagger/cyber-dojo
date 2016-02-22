@@ -100,6 +100,8 @@ RUN  apk --update \
        && cd ${CYBER_DOJO_HOME} ; bundle install --without development test \
      && apk del build-dependencies
 
+COPY config.ru ${CYBER_DOJO_HOME}
+
 WORKDIR ${CYBER_DOJO_HOME}
 USER    cyber-dojo
 EXPOSE  3000
