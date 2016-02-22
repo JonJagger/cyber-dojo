@@ -38,6 +38,22 @@ web:
     - rails-app:rw
     - rails-log:rw
     - rails-tmp:rw
+    - test:ro
+
+
+# Cannot specify
+#    - rails-app:ro
+# Get error
+# ERROR: Cannot start container 84297ba318348d68108d5bd45aa13c2f96111603eb0db930a34779756a887c73:
+# [9] System error: mkdir
+#    /mnt/sda1/var/lib/docker/aufs/mnt/
+#    4d28577fb5acdb3c80ce1868e3baeb84571445cd892c46db2f78781dc640a2a4/usr/src/cyber-dojo/katas:
+#    read-only file system
+# I think this is because rails-app's Dockerfile does this
+# VOLUME [ "${CYBER_DOJO_HOME}" ]
+# and I need it to not specify the home directory directly.
+# Needs to specify each part individually.
+
 
 
 languages:
