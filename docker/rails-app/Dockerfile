@@ -10,8 +10,9 @@ RUN  chown -R cyber-dojo ${CYBER_DOJO_HOME}
 
 # In the docker-compose.yml file the rails-app is volumes-from:
 # mounted as :ro (read-only). It's important therefore not to
-# create a VOLUME for ${CYBER_DOJO_HOME} as that will prevent
+# create a VOLUME for the root ${CYBER_DOJO_HOME} as that will prevent
 # sub-folders of ${CYBER_DOJO_HOME} from being mounted volumes-from: rw
+# That's why config.ru is in the docker/web image and not docker/rails-app
 
 VOLUME [ "${CYBER_DOJO_HOME}/app/assets" ]
 VOLUME [ "${CYBER_DOJO_HOME}/app/controllers" ]

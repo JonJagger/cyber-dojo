@@ -100,6 +100,11 @@ RUN  apk --update \
        && cd ${CYBER_DOJO_HOME} ; bundle install --without development test \
      && apk del build-dependencies
 
+# - - - - - - - - - - - - - - - - - - - - - -
+# 5. config.ru is the only other file in the rails root. It's not in the rails-app
+# docker image because I don't want a VOLUME of the rails root. That would
+# prevent docker-compose.yml from volumes-from: mounting rails-app as :ro
+
 COPY config.ru ${CYBER_DOJO_HOME}
 
 WORKDIR ${CYBER_DOJO_HOME}
