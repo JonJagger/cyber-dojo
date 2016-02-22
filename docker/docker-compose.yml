@@ -49,12 +49,8 @@ web:
 #    /mnt/sda1/var/lib/docker/aufs/mnt/
 #    4d28577fb5acdb3c80ce1868e3baeb84571445cd892c46db2f78781dc640a2a4/usr/src/cyber-dojo/katas:
 #    read-only file system
-# I think this is because rails-app's Dockerfile does this
-# VOLUME [ "${CYBER_DOJO_HOME}" ]
-# and I need it to not specify the home directory directly.
-# Needs to specify each part individually.
-
-
+# I'm guessing this is because rails-app includes files at the /usr/src/cyber-dojo/ level
+# namely config.ru
 
 languages:
   image: cyberdojofoundation/languages
