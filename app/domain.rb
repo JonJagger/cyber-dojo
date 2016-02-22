@@ -1,8 +1,8 @@
 
 require 'json'
 require_relative '../lib/all'
-require_relative '../app/lib/all'
-require_relative '../app/models/all'
+require_relative 'lib/all'
+require_relative 'models/all'
 
 def dojo
   Dojo.new
@@ -41,7 +41,7 @@ private
     n = 32 - @prompt.length
     dots = '.' * (@count % n)
     spaces = ' ' * (n - @count % n)
-    dots + spaces + number(@count,5)    
+    dots + spaces + number(@count,5)
   end
 end
 

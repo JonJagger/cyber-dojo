@@ -19,6 +19,22 @@ class Languages
     languages[commad(name)] || languages[renamed(name)]
   end
 
+  def write_cache
+    cache = {}
+    disk[path].each_dir do |dir_name|
+      disk[path + dir_name].each_dir do |test_dir_name|
+        next if test_dir_name == '_docker_context'
+        language = make_language(dir_name, test_dir_name)
+        cache[language.display_name] = {
+               dir_name: dir_name,
+          test_dir_name: test_dir_name,
+             image_name: language.image_name
+        }
+      end
+    end
+    disk[path].write_json(cache_filename, cache)
+  end
+
   # modifiers
 
   private
@@ -38,22 +54,6 @@ class Languages
       test_dir_name = language['test_dir_name']
          image_name = language['image_name']
       cache[display_name] = make_language(dir_name, test_dir_name, display_name, image_name)
-    end
-    cache
-  end
-
-  def make_cache # TODO: make public
-    cache = {}
-    disk[path].each_dir do |dir_name|
-      disk[path + dir_name].each_dir do |test_dir_name|
-        next if test_dir_name == '_docker_context'
-        language = make_language(dir_name, test_dir_name)
-        cache[language.display_name] = {
-               dir_name: dir_name,
-          test_dir_name: test_dir_name,
-             image_name: language.image_name
-        }
-      end
     end
     cache
   end

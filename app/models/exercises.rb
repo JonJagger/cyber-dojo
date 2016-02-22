@@ -19,6 +19,15 @@ class Exercises
     exercises[name]
   end
 
+  def write_cache
+    cache = {}
+    disk[path].each_dir do |sub_dir|
+      exercise = make_exercise(sub_dir)
+      cache[exercise.name] = { instructions: exercise.instructions }
+    end
+    disk[path].write_json(cache_filename, cache)
+  end
+
   private
 
   include ExternalParentChainer
@@ -32,15 +41,6 @@ class Exercises
     cache = {}
     disk[path].read_json(cache_filename).each do |name, exercise|
       cache[name] = make_exercise(name, exercise['instructions'])
-    end
-    cache
-  end
-
-  def make_cache # TODO: make public
-    cache = {}
-    disk[path].each_dir do |sub_dir|
-      exercise = make_exercise(sub_dir)
-      cache[exercise.name] = { instructions: exercise.instructions }
     end
     cache
   end
