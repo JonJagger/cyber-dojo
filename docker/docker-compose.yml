@@ -32,13 +32,13 @@ web:
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
   volumes_from:
+    - cyber-dojo-katas:rw
+    - cyber-dojo-languages:ro
+    - cyber-dojo-exercises:ro
     - cyber-dojo-rails-app:ro
     - cyber-dojo-rails-log:rw
     - cyber-dojo-rails-tmp:rw
-    - cyber-dojo-languages:ro
-    - cyber-dojo-exercises:ro
     - cyber-dojo-test:ro
-    - cyber-dojo-katas:rw
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
