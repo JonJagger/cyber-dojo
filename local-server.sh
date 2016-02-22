@@ -12,7 +12,6 @@ popd > /dev/null
 
 export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/app/languages
 export CYBER_DOJO_EXERCISES_ROOT=${HOME}/app/exercises
-export CYBER_DOJO_CACHES_ROOT=${HOME}/app/caches
 export CYBER_DOJO_SHELL_CLASS=HostShell
 export CYBER_DOJO_DISK_CLASS=HostDisk
 export CYBER_DOJO_LOG_CLASS=HostLog

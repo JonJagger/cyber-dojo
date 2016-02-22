@@ -27,7 +27,6 @@ class DojoTests < AppModelsTestBase
   'external root directories have no default' do
     unset_exercises_root && assert_raises(StandardError) { exercises.class }
     unset_languages_root && assert_raises(StandardError) { languages.class }
-    unset_caches_root    && assert_raises(StandardError) {    caches.class }
     unset_katas_root     && assert_raises(StandardError) {     katas.class }
   end
 
@@ -61,8 +60,6 @@ class DojoTests < AppModelsTestBase
 
   test '209EA1',
   'external roots can be set' do
-    # have do set_caches_root first because exercises.ctor will create its cache
-    set_caches_root(   path = tmp_root + 'caches/'   ) && assert_equal(path, caches.path)
     set_exercises_root(path = tmp_root + 'exercises/') && assert_equal(path, exercises.path)
     set_languages_root(path = tmp_root + 'languages/') && assert_equal(path, languages.path)
     set_katas_root(    path = tmp_root + 'katas/'    ) && assert_equal(path, katas.path)
@@ -79,10 +76,6 @@ class DojoTests < AppModelsTestBase
 
   test '01CD52',
   'external roots always have trailing slash even when set value does not' do
-
-    #exercises.ctor (for example) creates its cache which depends on ...disk...
-
-    set_caches_root(   path = tmp_root + '/caches')    && assert_equal(path + '/', caches.path)
     set_exercises_root(path = tmp_root + '/exercises') && assert_equal(path + '/', exercises.path)
     set_languages_root(path = tmp_root + '/languages') && assert_equal(path + '/', languages.path)
     set_katas_root(    path = tmp_root + '/katas')     && assert_equal(path + '/', katas.path)
@@ -92,7 +85,7 @@ class DojoTests < AppModelsTestBase
 
   test 'CBFF2D',
   'katas.path is automatically overriden by test setup because tests write to katas' do
-    test_set_path = dojo.fenv('katas', 'root')
+    test_set_path = dojo.env('katas', 'root')
     refute_equal test_set_path + '/', katas.path
     refute_equal test_set_path,       katas.path
   end

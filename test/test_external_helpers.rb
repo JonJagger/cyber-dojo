@@ -11,9 +11,6 @@ module TestExternalHelpers # mix-in
     setup_tmp_root
     # we never want tests to write to the real katas root
     set_katas_root(tmp_root + 'katas')
-    # wipe caches, but not via caches.path because that will *set* dojo.caches!
-    `rm -rf #{get_caches_root}/exercises_cache.json`
-    `rm -rf #{get_caches_root}/languages_cache.json`
   end
 
   def teardown
@@ -29,7 +26,6 @@ module TestExternalHelpers # mix-in
 
   def unset_languages_root; unset_root('languages'); end
   def unset_exercises_root; unset_root('exercises'); end
-  def    unset_caches_root; unset_root(   'caches'); end
   def     unset_katas_root; unset_root(    'katas'); end
 
   def unset_runner_class; unset_class('runner'); end
@@ -43,7 +39,6 @@ module TestExternalHelpers # mix-in
 
   def set_languages_root(value); set_root('languages', value); end
   def set_exercises_root(value); set_root('exercises', value); end
-  def    set_caches_root(value); set_root(   'caches', value); end
   def     set_katas_root(value); set_root(    'katas', value); end
 
   def   set_runner_class(value); set_class('runner', value); end
@@ -57,7 +52,6 @@ module TestExternalHelpers # mix-in
 
   def get_languages_root; get_root('languages'); end
   def get_exercises_root; get_root('exercises'); end
-  def    get_caches_root; get_root(   'caches'); end
   def     get_katas_root; get_root(    'katas'); end
 
   def   get_runner_class; get_class('runner'); end
