@@ -34,6 +34,7 @@ web:
   volumes_from:
     - cyber-dojo-languages:ro
     - cyber-dojo-exercises:ro
+    - cyber-dojo-test:ro
     - cyber-dojo-katas:rw
 
 

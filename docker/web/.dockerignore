@@ -1,8 +1,9 @@
 #-----Ignore everything
 #-----including katas (data-container / volume-mounted)
-#-----including public (nginx)
-#-----including app/languages (data-container)
-#-----including app/exercises (data-container)
+#-----including public (nginx image)
+#-----including test (ro data-container)
+#-----including app/languages (ro data-container)
+#-----including app/exercises (ro data-container)
 
 *
 
@@ -22,7 +23,3 @@
 !app/views
 !config
 !lib
-!test
-
-# maybe test could go in it's own own data-container?
-# it could [apk add bash]?

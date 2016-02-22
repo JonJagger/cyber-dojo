@@ -8,4 +8,4 @@ RUN  mkdir -p ${CYBER_DOJO_EXERCISES_ROOT}
 COPY . ${CYBER_DOJO_EXERCISES_ROOT}
 RUN  chown -R cyber-dojo ${CYBER_DOJO_EXERCISES_ROOT}
 VOLUME [ "${CYBER_DOJO_EXERCISES_ROOT}" ]
-CMD [ "katas-data-container" ]
+CMD [ "exercises-data-container" ]
