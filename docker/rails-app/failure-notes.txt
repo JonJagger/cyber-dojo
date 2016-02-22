@@ -50,3 +50,17 @@ Javascript console says its
 and $ is Uncaught ReferenceError: jQuery is not defined
 I think $ needs to be replaced with jQuery
 
+Also need to load jQuery before rest of cyber-dojo js files.
+require is idempotent so Changed app/assets/application.js to
+
+//= require ./jquery.min
+//= require ./jquery_ujs
+//= require ./jquery-ui.min
+//= require_tree .
+
+Now works.
+Need to give write access to logs/tmp
+and then I should be able to make rails-app a read-only mount.
+
+
+
