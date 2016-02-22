@@ -1,0 +1,10 @@
+
+Trying to put rails-app code into its own data-container.
+Should be able to make it a ro volumes-from in docker-compose.yml
+Also, means separate dev based way to run server is with rails-app code volume-mounted.
+
+Fails though. Server comes up
+couldn't find file 'jquery'
+  (in /usr/src/cyber-dojo/app/assets/javascripts/application.js:16)
+
+I think jquery needs to be a locally installed js file.
