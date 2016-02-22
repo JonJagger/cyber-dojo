@@ -9,8 +9,16 @@ Get tests working from inside and outside container
 
 0. Get tests all working
 
-0. Add test to languages that looks for sandbox as explicit path
-   in cyber-dojo.sh files.
+0. Add test to languages that looks for sandbox as explicit path in cyber-dojo.sh files.
+
+
+0. When bringing up the server
+     ./cdf up
+   If you just kill the web container then sometimes the rails-tmp container
+   still thinks a web-server is running. Need to shut down the web app
+   properly.
+
+
 
 =======================================================================
 Major

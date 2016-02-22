@@ -275,7 +275,9 @@ pull()
 repo()
 {
   # will pull web image if necessary
-  docker run --rm --volumes-from=cyber-dojo-languages ${REPO}/web sh -c "./app/languages/list_all_images.rb"
+  docker run --name cdf-languages cyberdojofoundation/languages echo 'languages-data-container'
+  docker run --rm --volumes-from=cdf-languages ${REPO}/web sh -c "./app/languages/list_all_images.rb"
+  docker rm --force cdf-languages
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
