@@ -1,4 +1,49 @@
 
+Get cdf commands working
+0. sh with arguments
+0. test with arguments
+
+Get tests working from inside and outside container
+0. test_wrapper needs to set ENV-VAR's
+   but only if they are not set.
+
+0. Get tests all working
+
+0. Add test to languages that looks for sandbox as explicit path
+   in cyber-dojo.sh files.
+
+=======================================================================
+Major
+
+0. Put languages/exercises caches in their respective folders
+0. Create and use ro images for languages/exercises    tests?
+0. Auto-create data-container for languages/exercises in yml file
+0. Create cyber-dojo-katas data-container (one-time) in cyber-dojo script.
+0. Edit/drop? pull.sh
+0. Fix dashboard download
+0. Merge
+0. Live
+0. Alpine base for common languages?
+
+Blog
+0. On old pages add links to new blog pages and say old pages are deprecated.
+0. Add new page on installing dind server.
+0. Add info on installing in Windows
+0. Add info on installing on OSX
+
+Dev
+0. Add dev info to main github readme
+0. running local-server
+0. running dind server with app volume-mounted (fast feedback) ?????
+   This implies web and app are split into two. Mostly.
+   The Gemfile and its bundle are inside the image.
+   But all the app files are either in another ro image or they
+   are volume-mounted.
+0. running 'proper' dind server
+
+=======================================================================
+Minor
+
 Does pull.sh still do an image update check?
 It still calls caches/refresh_all.sh *after* the git pull.
 So refresh_all could be updated to reinstate the image update.
@@ -9,14 +54,10 @@ https://docs.docker.com/engine/userguide/containers/dockervolumes/ (look for :z)
 volume mount has ro,rw and also other options, eg z for sharing.
 https://docs.docker.com/engine/userguide/containers/dockervolumes/ (look for z option)
 
-TODO:
-
-katas
-1. Make cyber-dojo script auto-probe for/var/www/cyber-dojo/app/katas
+0. Make cyber-dojo script auto-probe for/var/www/cyber-dojo/katas
    and if it finds it use that as katas home.
 
-2. ????? Where to have katas default to when /var/www/cyber-dojo/app/katas not detected
-
+0. ????? Where to have katas default to when /var/www/cyber-dojo/katas not detected
 
 0. create name for web container so its easy to refer to in cdf/cyber-dojo scripts
 0. create names for ALL cdf containers so they can be filtered
@@ -24,31 +65,19 @@ katas
 0. Move coverage/ out of root?
 0. Move docker/ out of root?
 0. Move zips/ out of root?
-0. investigate docker run --tmpfs for web container
 0. set prompt to display hostname inside web container
    This is tricky. Can create a .profile by adding this line to Dockerfile
    RUN echo 'export PS1="[\u@docker] \W # "' >> /root/.profile
    But how to run it?
    Can't see a way to add it to web:command
    Can't see a way to add it to docker exec -it docker_web_1 sh
-0. Put languages/ into ro:data-container?
-0. Put exercises/ into ro:data-container?
 0. Put test/ into data-container?
 
+0. http://www.jrslv.com/docker-1-10/ Says
+Resource constraints can be applied on disk I/O. Investigate
 
-1. Edit/drop? pull.sh
-2. Fix dashboard download
-3. Merge
-
-0. On old blog pages add links to new blog pages and say old pages are deprecated.
-1. Add new blog page on installing dind server.
-2. Info on installing in Windows
-3. Info on installing on OSX
-7. Live
-8. Alpine base for common languages?
-
-
-Also, multiple logs... suggests
+Also, multiple logs
     cyber-dojo logs_rails
     cyber-dojo logs_web
     cyber-dojo logs_nginx
+Or just do single logs command and grep afterwards if you want.
