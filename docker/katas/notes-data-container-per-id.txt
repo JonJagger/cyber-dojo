@@ -42,10 +42,10 @@ the katas then clone the entire server.
 -----------------------------------------
 id-completion
 -----------------------------------------
-Try to find KATA_ID as data-container by looking in /usr/src/cyber-dojo/katas/ (volume-mount)
+Try to find KATA_ID as data-container by doing [docker ps] with --filter
 If found, use it
 If not found try to find KATA_ID on host volume by looking in /var/www/cyber-dojo/katas (ro)
-If found, create a data-container from it and use it
+If found, create a data-container from it and use the data-container
   Don't delete from host. Prevents :ro mount and not that common.
   Have separate tool maybe - to find duplicates and remove from host.
 Else bad KATA_ID

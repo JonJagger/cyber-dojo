@@ -5,7 +5,6 @@ class Languages
   def initialize(dojo)
     @parent = dojo
     @path = slashed(dojo.env('languages', 'root'))
-    caches.write_json_once(cache_filename) { make_cache }
   end
 
   # queries
@@ -34,7 +33,7 @@ class Languages
 
   def read_cache
     cache = {}
-    caches.read_json(cache_filename).each do |display_name, language|
+    disk[path].read_json(cache_filename).each do |display_name, language|
            dir_name = language['dir_name']
       test_dir_name = language['test_dir_name']
          image_name = language['image_name']
@@ -43,7 +42,7 @@ class Languages
     cache
   end
 
-  def make_cache
+  def make_cache # TODO: make public
     cache = {}
     disk[path].each_dir do |dir_name|
       disk[path + dir_name].each_dir do |test_dir_name|
@@ -60,7 +59,7 @@ class Languages
   end
 
   def cache_filename
-    'languages_cache.json'
+    'cache.json'
   end
 
   def make_language(dir_name, test_dir_name, display_name = nil, image_name = nil)

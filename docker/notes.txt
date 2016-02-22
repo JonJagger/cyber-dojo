@@ -18,6 +18,8 @@ Major
 0. Put languages/exercises caches in their respective folders
 0. Create and use ro images for languages/exercises    tests?
 0. Auto-create data-container for languages/exercises in yml file
+0. Drop caches from web image (Dockerfile)
+
 0. Create cyber-dojo-katas data-container (one-time) in cyber-dojo script.
 0. Edit/drop? pull.sh
 0. Fix dashboard download

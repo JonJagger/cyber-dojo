@@ -101,7 +101,6 @@ RUN  apk --update \
      && apk del build-dependencies
 
 COPY . ${CYBER_DOJO_HOME}
-RUN  mkdir ${CYBER_DOJO_HOME}/app/caches
 RUN  chown -R cyber-dojo ${CYBER_DOJO_HOME}
 
 WORKDIR ${CYBER_DOJO_HOME}

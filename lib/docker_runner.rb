@@ -34,3 +34,8 @@ module DockerRunner # mixin
   end
 
 end
+
+# The docker runners each have a cache related to which docker-images have been pulled
+# and are *already* present and usable on the server (and possibly on which node they reside)
+# It is NOT the case that the create languages+test page lists *all* the languages+tests
+# and when you press test the language+tests's docker image is pulled on demand.

@@ -5,7 +5,6 @@ class Exercises
   def initialize(dojo)
     @parent = dojo
     @path = slashed(dojo.env('exercises', 'root'))
-    caches.write_json_once(cache_filename) { make_cache }
   end
 
   # queries
@@ -23,7 +22,6 @@ class Exercises
   private
 
   include ExternalParentChainer
-  include ExternalDir
   include Slashed
 
   def exercises
@@ -32,15 +30,15 @@ class Exercises
 
   def read_cache
     cache = {}
-    caches.read_json(cache_filename).each do |name, exercise|
+    disk[path].read_json(cache_filename).each do |name, exercise|
       cache[name] = make_exercise(name, exercise['instructions'])
     end
     cache
   end
 
-  def make_cache
+  def make_cache # TODO: make public
     cache = {}
-    dir.each_dir do |sub_dir|
+    disk[path].each_dir do |sub_dir|
       exercise = make_exercise(sub_dir)
       cache[exercise.name] = { instructions: exercise.instructions }
     end
@@ -48,7 +46,7 @@ class Exercises
   end
 
   def cache_filename
-    'exercises_cache.json'
+    'cache.json'
   end
 
   def make_exercise(name, instructions = nil)

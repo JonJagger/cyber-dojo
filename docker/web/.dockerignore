@@ -1,6 +1,8 @@
 #-----Ignore everything
 #-----including katas (data-container / volume-mounted)
 #-----including public (nginx)
+#-----including app/languages (data-container)
+#-----including app/exercises (data-container)
 
 *
 
@@ -14,9 +16,7 @@
 
 !app/assets
 !app/controllers
-!app/exercises
 !app/helpers
-!app/languages
 !app/lib
 !app/models
 !app/views
