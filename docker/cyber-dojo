@@ -275,7 +275,7 @@ pull()
 repo()
 {
   # will pull web image if necessary
-  docker run --rm ${REPO}/web sh -c "./app/languages/list_all_images.rb"
+  docker run --rm --volumes-from=cyber-dojo-languages ${REPO}/web sh -c "./app/languages/list_all_images.rb"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -35,16 +35,7 @@ web:
   volumes_from:
     - cyber-dojo-languages:ro
     - cyber-dojo-exercises:ro
-    - cyber-dojo-katas
-
-languages:
-  image: cyberdojofoundation/languages
-  container_name: cyber-dojo-languages
-
-exercises:
-  image: cyberdojofoundation/exercises
-  container_name: cyber-dojo-exercises
-
+    - cyber-dojo-katas:rw
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
