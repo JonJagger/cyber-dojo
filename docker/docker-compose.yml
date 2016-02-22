@@ -33,12 +33,36 @@ web:
     - /var/run/docker.sock:/var/run/docker.sock
   volumes_from:
     - cyber-dojo-katas:rw
-    - cyber-dojo-languages:ro
-    - cyber-dojo-exercises:ro
-    - cyber-dojo-rails-app:ro
-    - cyber-dojo-rails-log:rw
-    - cyber-dojo-rails-tmp:rw
-    - cyber-dojo-test:ro
+    - languages:ro
+    - exercises:ro
+    - rails-app:rw
+    - rails-log:rw
+    - rails-tmp:rw
+
+
+languages:
+  image: cyberdojofoundation/languages
+  command: echo "DC:cdf/languages"
+
+exercises:
+  image: cyberdojofoundation/exercises
+  command: echo "DC:cdf/exercises"
+
+rails-app:
+  image: cyberdojofoundation/rails-app
+  command: echo "DC:cdf/rails-app"
+
+rails-log:
+  image: cyberdojofoundation/rails-log
+  command: echo "DC:cdf/rails-log"
+
+rails-tmp:
+  image: cyberdojofoundation/rails-tmp
+  command: echo "DC:cdf/rails-tmp"
+
+test:
+  image: cyberdojofoundation/test
+  command: echo "DC:cdf/test"
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
