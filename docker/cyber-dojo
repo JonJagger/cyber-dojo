@@ -7,9 +7,6 @@ MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 HOME=/usr/src/cyber-dojo         # home folder *inside* the server image
 REPO=cyberdojofoundation         # username on docker hub
 
-ENV_DEFAULT=development          # TODO: FAILS for production!
-ENV=${ENV_DEFAULT}               # rails server -e ${ENV}
-
 RUNNER_DEFAULT=DockerKatasDataContainerRunner
 RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 
@@ -54,7 +51,6 @@ show_use()
   echo 'up [OPTIONS]:'
   echo
   echo "     katas=/var/www/cyber-dojo/katas     default=${HOST_KATAS_DEFAULT}"
-  echo "       env=[development|production]      default=${ENV_DEFAULT}"
   echo "    runner=[CLASS_NAME]                  default=${RUNNER_DEFAULT}"
   echo
 }
@@ -96,33 +92,11 @@ up()
   # TODO: test in main flow?
   exit_if_bad_katas
   exit_if_bad_runner
-  exit_if_bad_env
   pull_common_languages_if_none
   CWD=$(pwd)
   cd "${MY_DIR}" > /dev/null
   ${DOCKER_COMPOSE_CMD} up -d
   cd "${CWD}" > /dev/null
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - -
-
-exit_if_bad_env()
-{
-  if [ "${ENV}" != 'development' ] &&
-     [ "${ENV}" != 'production' ];
-  then
-    echo "${ME}: env=${ENV} ?"
-    echo "See ${ME} help"
-    exit
-  fi
-  if [ "${ENV}" == 'production' ]; then
-    # <<<<<<< TODO >>>>>>>>
-    echo 'up env=production'
-    echo '>>>> not supported yet'
-    echo '>>>> Dockerfile currently hard-wires development'
-    echo '>>>> up abandoned'
-    exit
-  fi
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -300,9 +274,6 @@ do
     runner=*)
       RUNNER="${ARG#*=}"
       ;;
-    env=*)
-      ENV="${ARG#*=}"
-      ;;
     # - - - - - - - images - - - - - - - -
     images)
       doImages=true
@@ -387,7 +358,6 @@ fi
 #========================================================================================
 
 export CYBER_DOJO_HOME=${HOME}
-export CYBER_DOJO_ENV=${ENV}
 export CYBER_DOJO_KATAS_ROOT=${HOME}/katas
 export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
 export CYBER_DOJO_RUNNER_CLASS=${RUNNER}

@@ -8,9 +8,6 @@ ARGS=${@}
 HOME=/usr/src/cyber-dojo         # home folder *inside* the images/containers
 REPO=cyberdojofoundation         # username on docker hub
 
-ENV_DEFAULT=development
-ENV=${ENV_DEFAULT}               # rails server -e ${ENV}
-
 RUNNER_DEFAULT=DockerKatasDataContainerRunner
 RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 
@@ -57,7 +54,6 @@ show_use()
   echo 'up [OPTIONS]:'
   echo
   echo "     katas=/var/www/cyber-dojo/katas     default=${HOST_KATAS_DEFAULT}"
-  echo "       env=[development|production]      default=${ENV_DEFAULT}"
   echo "    runner=[CLASS_NAME]                  default=${RUNNER_DEFAULT}"
   echo
 }
@@ -211,9 +207,6 @@ do
     # - - - - - - - OPTIONS - - - - - - - - TODO: USED? OR ONLY FORWARDED?
     katas=*)
       KATAS="${ARG#*=}"
-      ;;
-    rails_env=*)
-      RAILS_ENV="${ARG#*=}"
       ;;
     runner=*)
       RUNNER="${ARG#*=}"
