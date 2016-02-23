@@ -38,6 +38,7 @@ show_use()
   echo '    stop              Stops the server containers'
   echo '    rm                Removes the server containers'
   echo '    up [OPTIONS]      Creates and starts the server containers'
+  echo '    down              Stops and removes server containers'
   echo
 
   # options to build/backup the katas-data-container
@@ -58,6 +59,13 @@ show_use()
 #========================================================================================
 # containers
 #========================================================================================
+
+down()
+{
+  ${DOCKER_COMPOSE_CMD} down
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ps()
 {
@@ -252,6 +260,9 @@ do
       exit
       ;;
     # - - - - - - - containers - - - - - - - -
+    down)
+      doDown=true
+      ;;
     ps)
       doPs=true
       ;;
@@ -373,6 +384,7 @@ if [ -n "${doStart}"   ]; then start  ; exit; fi
 if [ -n "${doStop}"    ]; then stop   ; exit; fi
 if [ -n "${doRm}"      ]; then rm     ; exit; fi
 if [ -n "${doUp}"      ]; then up     ; exit; fi
+if [ -n "${doDown}"    ]; then down   ; exit; fi
 
 if [ -n "${doImages}"  ]; then images ; exit; fi
 if [ -n "${doPull}"    ]; then pull   ; exit; fi

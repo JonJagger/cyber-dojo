@@ -43,6 +43,7 @@ show_use()
   echo '    stop                   Stop server containers'
   echo '    rm                     Removes server containers'
   echo '    up [OPTIONS]           Creates and starts server containers'
+  echo '    down                   Stops and removed server containers'
   echo
   echo '    images                 Lists pulled language images'
   echo "    logs_rails             Prints server's' rails log"
@@ -186,7 +187,10 @@ do
     clean)
       doClean=true
       ;;
-    # - - - - - - - CONTAINERS - - - - - - - -
+    # - - - - - - - containers - - - - - - - -
+    down)
+      doDown=true
+      ;;
     ps)
       doPs=true
       ;;
@@ -205,14 +209,14 @@ do
     up)
       doUp=true
       ;;
-    # - - - - - - - OPTIONS - - - - - - - - TODO: USED? OR ONLY FORWARDED?
+    # - - - - - - - options - - - - - - - - TODO: USED? OR ONLY FORWARDED?
     katas=*)
       KATAS="${ARG#*=}"
       ;;
     runner=*)
       RUNNER="${ARG#*=}"
       ;;
-    # - - - - - - - IMAGES - - - - - - - -
+    # - - - - - - - images - - - - - - - -
     images)
       doImages=true
       ;;
@@ -234,7 +238,7 @@ do
     rmi)
       doRmi=true
       ;;
-    # - - - - - - - SOMETHING'S NOT RIGHT - - - - - - - -
+    # - - - - - - - something's not right - - - - - - - -
     *)
       echo "${ME}: ${ARG} ?"
       echo "See '${ME} help"
@@ -259,6 +263,7 @@ if [ -n "${doSh}"      ]; then sh     ; exit; fi
 if [ -n "${doStop}"    ]; then delegate; exit; fi
 if [ -n "${doRm}"      ]; then delegate; exit; fi
 if [ -n "${doUp}"      ]; then delegate; exit; fi
+if [ -n "${doDown}"    ]; then delegate; exit; fi
 
 
 if [ -n "${doImages}"  ]; then delegate; exit; fi
