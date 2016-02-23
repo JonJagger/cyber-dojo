@@ -16,7 +16,7 @@ RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 DOCKER_COMPOSE_FILE=docker-compose.yml
 DOCKER_COMPOSE_CMD="docker-compose --file=./${DOCKER_COMPOSE_FILE}"
 
-# TOOD: USE THIS ONLY FOR 1st TIME CREATION OF KATAS-DATA-CONTAINER
+# TODO: USE THIS ONLY FOR 1st TIME CREATION OF KATAS-DATA-CONTAINER
 HOST_KATAS_DEFAULT=/var/www/cyber-dojo/katas
 HOST_KATAS=${HOST_KATAS_DEFAULT} # where katas are stored on the *host*
                                  # and get copied into the katas-data-container
@@ -466,17 +466,10 @@ fi
 # YML FILES RELIES ON THESE ENV-VARS
 #========================================================================================
 
+export CYBER_DOJO_HOME=${HOME}
 export CYBER_DOJO_ENV=${ENV}
-export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/app/languages
-export CYBER_DOJO_EXERCISES_ROOT=${HOME}/app/exercises
-export CYBER_DOJO_SHELL_CLASS=HostShell
-export CYBER_DOJO_DISK_CLASS=HostDisk
-export CYBER_DOJO_LOG_CLASS=HostLog
-export CYBER_DOJO_GIT_CLASS=HostGit
-
 export CYBER_DOJO_KATAS_ROOT=${HOME}/katas
 export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
-
 export CYBER_DOJO_RUNNER_CLASS=${RUNNER}
 export CYBER_DOJO_RUNNER_SUDO='sudo -u docker-runner sudo'
 export CYBER_DOJO_RUNNER_TIMEOUT=10

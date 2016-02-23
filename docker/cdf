@@ -67,7 +67,7 @@ show_use()
 sh()
 {
   # TODO: get container name properly
-  docker exec --interactive --tty cyber-dojo-server sh
+  docker exec --interactive --tty cdf-web sh
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -96,13 +96,13 @@ clean()
 logs_rails()
 {
   # TODO: get container name properly
-  docker exec cyber-dojo-server sh -c "cd log && tail -100 development.log"
+  docker exec cdf-web sh -c "cd log && tail -100 development.log"
 }
 
 logs_web()
 {
   # TODO: get container name properly
-  docker logs cyber-dojo-server
+  docker logs cdf-web
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

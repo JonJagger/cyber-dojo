@@ -1,7 +1,10 @@
 #!/bin/bash
 
 # Run's a local rails-server.
-# Assumes docker is installed and some language-images have been pulled.
+# Assumes
+# o) bundle install has run
+# o) docker is installed
+# o) some language-images have been pulled.
 
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 RUNNER=${1:-DockerKatasDataContainerRunner}

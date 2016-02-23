@@ -40,31 +40,26 @@ Blog
 
 =======================================================================
 Development
-0. Create 2nd yml file for development that volume-mounts the rails-app (rw)
-   so that changes to code are live in the dind server.
-   Use COMPOSE env-var?
 0. Add dev-info to main github readme
-   - running local-server
-   - running dind server with app volumes:rw mounted (fast feedback)
+   - running local-server (fast feedback)
    - running dind server with app volumes-from:ro
 
 =======================================================================
-Minor
+Misc
+0. Does pull.sh still do an image update check?
+   It still calls caches/refresh_all.sh *after* the git pull.
+   So refresh_all could be updated to reinstate the image update.
 
-Does pull.sh still do an image update check?
-It still calls caches/refresh_all.sh *after* the git pull.
-So refresh_all could be updated to reinstate the image update.
+0. There is a --tmpfs option on docker run. Look into that.
+   https://docs.docker.com/engine/userguide/containers/dockervolumes/ (look for :z)
 
-There is a --tmpfs option on docker run. Look into that.
-https://docs.docker.com/engine/userguide/containers/dockervolumes/ (look for :z)
-
-volume mount has ro,rw and also other options, eg z for sharing.
-https://docs.docker.com/engine/userguide/containers/dockervolumes/ (look for z option)
+0. volume mount has ro,rw and also other options, eg z for sharing.
+   https://docs.docker.com/engine/userguide/containers/dockervolumes/ (look for z option)
 
 0. Make cyber-dojo script auto-probe for/var/www/cyber-dojo/katas
    and if it finds it use that as katas home.
 
-0. ????? Where to have katas default to when /var/www/cyber-dojo/katas not detected
+0. Where to have katas default to when /var/www/cyber-dojo/katas not detected?
 
 0. create name for web container so its easy to refer to in cdf/cyber-dojo scripts
 0. tidy up .gitignore - follow .dockerignore model, ignore everything, except....
