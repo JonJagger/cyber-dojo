@@ -1,5 +1,35 @@
 
 =======================================================================
+Blog
+0. On old pages add links to new blog pages and say old pages are deprecated.
+0. Add new page on installing dind server.
+
+=======================================================================
+Development
+0. Add dev-info to main github readme
+   - running local-server (fast feedback)
+   - running dind server with app volumes-from:ro
+
+=======================================================================
+Scripts
+0. Create cyber-dojo-katas data-container (one-time) in cyber-dojo script.
+0. Edit/drop? pull.sh
+
+=======================================================================
+Major
+0. Fix dashboard download
+0. Merge
+0. Live
+
+
+=======================================================================
+Later
+0. Add export=ID command to save a practice session
+0. Alpine base for few more common languages?
+
+
+=======================================================================
+Later
 Scripts
 0. Get cdf commands working: sh with arguments
 0. Get cdf commands working: test with arguments
@@ -21,28 +51,6 @@ Testing
 0. Get tests all working
 0. Add test to languages that looks for sandbox as explicit path in cyber-dojo.sh files.
 
-=======================================================================
-Major
-
-0. Create cyber-dojo-katas data-container (one-time) in cyber-dojo script.
-0. Edit/drop? pull.sh
-0. Fix dashboard download
-0. Merge
-0. Live
-0. Alpine base for common languages?
-
-=======================================================================
-Blog
-0. On old pages add links to new blog pages and say old pages are deprecated.
-0. Add new page on installing dind server.
-0. Add info on installing in Windows
-0. Add info on installing on OSX
-
-=======================================================================
-Development
-0. Add dev-info to main github readme
-   - running local-server (fast feedback)
-   - running dind server with app volumes-from:ro
 
 =======================================================================
 Misc

@@ -60,7 +60,7 @@ show_use()
 }
 
 #========================================================================================
-# CONTAINERS
+# containers
 #========================================================================================
 
 ps()
@@ -163,7 +163,7 @@ exit_if_bad_runner()
 }
 
 #========================================================================================
-# IMAGES
+# images
 #========================================================================================
 
 pulled_language_images()
@@ -267,7 +267,7 @@ download_latest_docker_compose_yml()
 }
 
 #========================================================================================
-# PROCESS COMMAND LINE ARGS
+# process command-line args
 #========================================================================================
 
 for ARG in "$@"
@@ -277,10 +277,7 @@ do
       show_use
       exit
       ;;
-    install_docker)
-      doInstall=true
-      ;;
-    # - - - - - - - CONTAINERS - - - - - - - -
+    # - - - - - - - containers - - - - - - - -
     ps)
       doPs=true
       ;;
@@ -296,7 +293,7 @@ do
     up)
       doUp=true
       ;;
-    # - - - - - - - OPTIONS - - - - - - - -
+    # - - - - - - - options - - - - - - - -
     katas=*)
       KATAS="${ARG#*=}"
       ;;
@@ -306,7 +303,7 @@ do
     env=*)
       ENV="${ARG#*=}"
       ;;
-    # - - - - - - - IMAGES - - - - - - - -
+    # - - - - - - - images - - - - - - - -
     images)
       doImages=true
       ;;
@@ -324,7 +321,7 @@ do
     upgrade)
       doUpgrade=true
       ;;
-    # - - - - - - - SOMETHING'S NOT RIGHT - - - - - - - -
+    # - - - - - - - something's not right - - - - - - - -
     *)
       echo "${ME}: ${ARG} ?"
       echo "See '${ME} help"
@@ -334,7 +331,7 @@ do
 done
 
 #========================================================================================
-# NOTHING IS IMPLICIT
+# nothing is implicit
 #========================================================================================
 
 if [ $# -eq 0 ]; then
@@ -343,13 +340,13 @@ if [ $# -eq 0 ]; then
 fi
 
 #========================================================================================
-# INSTALL DOCKER IF NECESSARY
+# install docker if necessary
 #========================================================================================
 
 hash docker 2> /dev/null
 if [ $? != 0  ]; then
   echo
-  echo 'cyber-dojo requires docker'
+  echo 'cyber-dojo is installing docker'
   curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/install-docker.sh
   chmod +x install-docker.sh
   ./install-docker.sh
@@ -360,7 +357,7 @@ fi
 hash docker-machine 2> /dev/null
 if [ $? != 0 ]; then
   echo
-  echo 'cyber-dojo requires docker-machine'
+  echo 'cyber-dojo is installing docker-machine'
   curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/install-docker-machine.sh
   chmod +x install-docker-machine.sh
   ./install-docker-machine.sh
@@ -371,14 +368,14 @@ fi
 hash docker-compose 2> /dev/null
 if [ $? != 0 ]; then
   echo
-  echo 'cyber-dojo requires docker-compose'
+  echo 'cyber-dojo is installing docker-compose'
   curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/install-docker-compose.sh
   chmod +x install-docker-compose.sh
   ./install-docker-compose.sh
 fi
 
 #========================================================================================
-# YOU MUST HAVE THE YML FILE
+# you must have the docker-compose.yml file
 #========================================================================================
 
 if [ ! -e ${MY_DIR}/${DOCKER_COMPOSE_FILE} ]; then
@@ -386,7 +383,7 @@ if [ ! -e ${MY_DIR}/${DOCKER_COMPOSE_FILE} ]; then
 fi
 
 #========================================================================================
-# YML FILES RELIES ON THESE ENV-VARS
+# docker-compose.yml relies on these env-vars
 #========================================================================================
 
 export CYBER_DOJO_HOME=${HOME}
@@ -398,7 +395,7 @@ export CYBER_DOJO_RUNNER_SUDO='sudo -u docker-runner sudo'
 export CYBER_DOJO_RUNNER_TIMEOUT=10
 
 #========================================================================================
-# DO SOMETHING!
+# do something!
 #========================================================================================
 
 if [ -n "${doPs}"      ]; then ps     ; exit; fi
