@@ -28,31 +28,22 @@ HOST_KATAS=${HOST_KATAS_DEFAULT} # where katas are stored on the *host*
 show_use()
 {
   echo
-  echo "Usage: ${ME} COMMAND"
-  echo "       ${ME} help"
+  echo "Use: ${ME} COMMAND"
+  echo "     ${ME} help"
   echo
-  echo 'Commands:'
+  echo 'COMMAND(containers):'
+  # TODO: backup a katas-ID data-container
+  echo '     down                     Stops and removes server containers'
+  echo '     up [OPTIONS]             Creates and starts the server containers'
+  echo "         katas=DIR            default:  katas=${HOST_KATAS_DEFAULT}"
+  echo "         runner=CLASS_NAME    default: runner=${RUNNER_DEFAULT}"
   echo
-  echo '    ps                Lists server containers'
-  echo '    start             Starts the server containers'
-  echo '    stop              Stops the server containers'
-  echo '    rm                Removes the server containers'
-  echo '    up [OPTIONS]      Creates and starts the server containers'
-  echo '    down              Stops and removes server containers'
-  echo
-
-  # options to build/backup the katas-data-container
-
-  echo '    images            Lists pulled language images'
-  echo '    pull=IMAGE        Pulls language IMAGE'
-  echo '    repo              Lists all language images'
-  echo '    rmi=IMAGE         Removes a pulled language IMAGE'
-  echo '    upgrade           Pulls the latest server and language images'
-  echo
-  echo 'up [OPTIONS]:'
-  echo
-  echo "     katas=/var/www/cyber-dojo/katas     default=${HOST_KATAS_DEFAULT}"
-  echo "    runner=[CLASS_NAME]                  default=${RUNNER_DEFAULT}"
+  echo 'COMMAND(images):'
+  echo '     images                   Lists pulled language images'
+  echo '     pull=IMAGE               Pulls language IMAGE'
+  echo '     repo                     Lists all language images'
+  echo '     rmi=IMAGE                Removes a pulled language IMAGE'
+  echo '     upgrade                  Pulls the latest server and language images'
   echo
 }
 
@@ -63,34 +54,6 @@ show_use()
 down()
 {
   ${DOCKER_COMPOSE_CMD} down
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-ps()
-{
-  ${DOCKER_COMPOSE_CMD} ps
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-start()
-{
-  ${DOCKER_COMPOSE_CMD} start
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-stop()
-{
-  ${DOCKER_COMPOSE_CMD} stop
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-rm()
-{
-  ${DOCKER_COMPOSE_CMD} rm
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

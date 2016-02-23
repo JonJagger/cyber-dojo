@@ -28,38 +28,31 @@ IMAGES=(user-base exercises languages rails-app rails-log rails-tmp test nginx w
 show_use()
 {
   echo
-  echo "Usage: ${ME} COMMAND..."
-  echo "       ${ME} help"
+  echo "Use: ${ME} COMMAND..."
+  echo "     ${ME} help"
   echo
-  echo 'Commands:'
+  echo 'COMMAND(containers):'
+  echo '     down                     Stops and removes server containers'
+  echo '     sh                       Shells into the main server container'
+  echo '     up [OPTIONS]             Creates and starts server containers'
+  echo "         katas=DIR            default:  katas=${HOST_KATAS_DEFAULT}"
+  echo "         runner=CLASS_NAME    default: runner=${RUNNER_DEFAULT}"
   echo
-#echo '    dbu                    (down + build + up)'
-  echo '    build                  Builds cyber-dojo server images'
-  echo '    clean                  Removes untagged images'
-  echo
-  echo '    ps                     Lists server containers'
-  echo '    start                  Starts server containers'
-  echo '    sh                     Shells into the main server container'
-  echo '    stop                   Stop server containers'
-  echo '    rm                     Removes server containers'
-  echo '    up [OPTIONS]           Creates and starts server containers'
-  echo '    down                   Stops and removed server containers'
-  echo
-  echo '    images                 Lists pulled language images'
-  echo "    logs_rails             Prints server's' rails log"
-  echo "    logs_web               Prints server's' container log"
-  echo '    pull                   Pulls server images from repo'
-  echo '    push                   Pushes server images to repo'
-  echo '    repo                   Lists all language images'
-  echo '    rmi                    Removes server images'
-  echo
-  echo 'up [OPTIONS]:'
-  echo
-  echo "     katas=/var/www/cyber-dojo/katas     default=${HOST_KATAS_DEFAULT}"
-  echo "    runner=[CLASS_NAME]                  default=${RUNNER_DEFAULT}"
+  echo 'COMMAND(images):'
+  echo '     build                    Builds cyber-dojo server images'
+  echo '     clean                    Removes untagged images'
+  echo '     images                   Lists pulled language images'
+  echo "     logs_rails               Prints server's' rails log"
+  echo "     logs_web                 Prints server's' container log"
+  echo '     pull                     Pulls server images from repo'
+  echo '     push                     Pushes server images to repo'
+  echo '     repo                     Lists all language images'
+  echo '     rmi                      Removes server images'
   echo
 }
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# containers
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 sh()
@@ -257,21 +250,16 @@ done
 if [ -n "${doLogsRails}" ]; then logs_rails; exit; fi
 if [ -n "${doLogsWeb}"   ]; then logs_web  ; exit; fi
 
-if [ -n "${doPs}"      ]; then delegate; exit; fi
-if [ -n "${doStart}"   ]; then delegate; exit; fi
-if [ -n "${doSh}"      ]; then sh     ; exit; fi
-if [ -n "${doStop}"    ]; then delegate; exit; fi
-if [ -n "${doRm}"      ]; then delegate; exit; fi
+if [ -n "${doPs}"      ]; then ps   ; exit; fi
+if [ -n "${doSh}"      ]; then sh   ; exit; fi
+
 if [ -n "${doUp}"      ]; then delegate; exit; fi
 if [ -n "${doDown}"    ]; then delegate; exit; fi
-
-
 if [ -n "${doImages}"  ]; then delegate; exit; fi
-if [ -n "${doPss}"     ]; then delegate; exit; fi
 if [ -n "${doRepo}"    ]; then delegate; exit; fi
 
-if [ -n "${doBuild}"   ]; then build  ; exit; fi
-if [ -n "${doClean}"   ]; then clean  ; exit; fi
-if [ -n "${doPull}"    ]; then pull   ; exit; fi
-if [ -n "${doPush}"    ]; then push   ; exit; fi
-if [ -n "${doRmi}"     ]; then rmi    ; exit; fi
+if [ -n "${doBuild}"   ]; then build; exit; fi
+if [ -n "${doClean}"   ]; then clean; exit; fi
+if [ -n "${doPull}"    ]; then pull ; exit; fi
+if [ -n "${doPush}"    ]; then push ; exit; fi
+if [ -n "${doRmi}"     ]; then rmi  ; exit; fi
