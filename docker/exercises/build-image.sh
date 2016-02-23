@@ -8,11 +8,7 @@ MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
 pushd ${MY_DIR} > /dev/null
 
-# TODO: make cache.json file and copy it to ../../app/exercises
-#pushd ../../app/exercises > /dev/null
-#HOST_EXERCISES_ROOT=${PWD}
-#./write_cache.rb ${HOST_EXERCISES_ROOT}
-#popd > /dev/null
+../../app/exercises/write_cache.rb > /dev/null
 
 CONTEXT_DIR=../../app/exercises
 

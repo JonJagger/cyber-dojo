@@ -14,7 +14,8 @@ RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 HOST_KATAS_DEFAULT=/var/www/cyber-dojo/katas
 HOST_KATAS=${HOST_KATAS_DEFAULT} # where old (non data-container) katas may be stored on the *host*
 
-IMAGES=(user-base nginx web)     # important this does NOT include katas
+# important this does NOT include katas
+IMAGES=(user-base exercises languages rails-app rails-log rails-tmp test nginx web)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # TODO: detect if more than one command entered.
