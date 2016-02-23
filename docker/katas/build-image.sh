@@ -25,7 +25,7 @@ build_empty_katas_data_container()
     ${CONTEXT_DIR}
 
   # create container
-  docker run --name cyber-dojo-katas cyberdojofoundation/katas echo 'katas-data-container'
+  docker run --name cdf-katas-DATA-CONTAINER cyberdojofoundation/katas echo 'cdfKatasDC'
 
   popd > /dev/null
 }

@@ -1,29 +1,28 @@
 
-Get cdf commands working
-0. sh with arguments
-0. test with arguments
-
-Get tests working from inside and outside container
-0. test_wrapper needs to set ENV-VAR's
-   but only if they are not set.
-
-0. Get tests all working
-
-0. Add test to languages that looks for sandbox as explicit path in cyber-dojo.sh files.
-
-
+=======================================================================
+Scripts
+0. Get cdf commands working: sh with arguments
+0. Get cdf commands working: test with arguments
 0. When bringing up the server
      ./cdf up
    If you just kill the web container then sometimes the rails-tmp container
    still thinks a web-server is running. Need to shut down the web app
    properly.
+0. Logs. Multiple logs?
+     cyber-dojo logs_rails
+     cyber-dojo logs_web
+     cyber-dojo logs_nginx
+   Or just do single logs command and grep afterwards if you want.
 
-
+=======================================================================
+Testing
+0. Get tests working from inside and outside container
+0. test_wrapper needs to set ENV-VAR's but only if they are not set.
+0. Get tests all working
+0. Add test to languages that looks for sandbox as explicit path in cyber-dojo.sh files.
 
 =======================================================================
 Major
-
-0. Auto-create data-container for languages/exercises in yml file
 
 0. Create cyber-dojo-katas data-container (one-time) in cyber-dojo script.
 0. Edit/drop? pull.sh
@@ -32,21 +31,22 @@ Major
 0. Live
 0. Alpine base for common languages?
 
+=======================================================================
 Blog
 0. On old pages add links to new blog pages and say old pages are deprecated.
 0. Add new page on installing dind server.
 0. Add info on installing in Windows
 0. Add info on installing on OSX
 
-Dev
-0. Add dev info to main github readme
-0. running local-server
-0. running dind server with app volume-mounted (fast feedback) ?????
-   This implies web and app are split into two. Mostly.
-   The Gemfile and its bundle are inside the image.
-   But all the app files are either in another ro image or they
-   are volume-mounted.
-0. running 'proper' dind server
+=======================================================================
+Development
+0. Create 2nd yml file for development that volume-mounts the rails-app (rw)
+   so that changes to code are live in the dind server.
+   Use COMPOSE env-var?
+0. Add dev-info to main github readme
+   - running local-server
+   - running dind server with app volumes:rw mounted (fast feedback)
+   - running dind server with app volumes-from:ro
 
 =======================================================================
 Minor
@@ -67,7 +67,6 @@ https://docs.docker.com/engine/userguide/containers/dockervolumes/ (look for z o
 0. ????? Where to have katas default to when /var/www/cyber-dojo/katas not detected
 
 0. create name for web container so its easy to refer to in cdf/cyber-dojo scripts
-0. create names for ALL cdf containers so they can be filtered
 0. tidy up .gitignore - follow .dockerignore model, ignore everything, except....
 0. Move coverage/ out of root?
 0. Move docker/ out of root?
@@ -78,13 +77,7 @@ https://docs.docker.com/engine/userguide/containers/dockervolumes/ (look for z o
    But how to run it?
    Can't see a way to add it to web:command
    Can't see a way to add it to docker exec -it docker_web_1 sh
-0. Put test/ into data-container?
 
 0. http://www.jrslv.com/docker-1-10/ Says
 Resource constraints can be applied on disk I/O. Investigate
 
-Also, multiple logs
-    cyber-dojo logs_rails
-    cyber-dojo logs_web
-    cyber-dojo logs_nginx
-Or just do single logs command and grep afterwards if you want.

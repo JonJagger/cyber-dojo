@@ -2,7 +2,7 @@
 
 nginx:
   image: cyberdojofoundation/nginx
-  container_name: cyber-dojo-nginx
+  container_name: cdf-nginx
   links:
     - "web:cyberdojo_web"
   ports:
@@ -13,7 +13,7 @@ nginx:
 web:
   user: cyber-dojo
   image: cyberdojofoundation/web
-  container_name: cyber-dojo-server
+  container_name: cdf-web
   command: rails server --environment=${CYBER_DOJO_ENV}
   environment:
     - CYBER_DOJO_LANGUAGES_ROOT
@@ -32,7 +32,7 @@ web:
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
   volumes_from:
-    - cyber-dojo-katas:rw
+    - cdf-katas-DATA-CONTAINER:rw
     - languages:ro
     - exercises:ro
     - rails-app:ro
@@ -42,27 +42,33 @@ web:
 
 languages:
   image: cyberdojofoundation/languages
-  command: echo "DC:cdf/languages"
+  command: echo "cdfLanguagesDC"
+  container_name: cdf-languages-DATA-CONTAINER
 
 exercises:
   image: cyberdojofoundation/exercises
-  command: echo "DC:cdf/exercises"
+  command: echo "cdfExercisesDC"
+  container_name: cdf-exercises-DATA-CONTAINER
 
 rails-app:
   image: cyberdojofoundation/rails-app
-  command: echo "DC:cdf/rails-app"
+  command: echo "cdfRailsAppDC"
+  container_name: cdf-rails-app-DATA-CONTAINER
 
 rails-log:
   image: cyberdojofoundation/rails-log
-  command: echo "DC:cdf/rails-log"
+  command: echo "cdfRailsLogDC"
+  container_name: cdf-rails-log-DATA-CONTAINER
 
 rails-tmp:
   image: cyberdojofoundation/rails-tmp
-  command: echo "DC:cdf/rails-tmp"
+  command: echo "cdfRailsTmpDC"
+  container_name: cdf-rails-tmp-DATA-CONTAINER
 
 test:
   image: cyberdojofoundation/test
-  command: echo "DC:cdf/test"
+  command: echo "cdfTestDC"
+  container_name: cdf-test-DATA-CONTAINER
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
