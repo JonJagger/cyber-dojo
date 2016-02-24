@@ -25,15 +25,24 @@ class ExercisesTests < AppModelsTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '789739',
-  'cache is automatically created on demand' do
-    set_caches_root(tmp_root + 'caches')
-    cache_filename = 'exercises_cache.json'
+  'cache file exists' do
+    assert disk[exercises.path].exists? exercises.cache_filename
+  end
 
-    refute caches.exists?(cache_filename)
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '71D327',
+  'exercises[name] is nil if name is not an existing exercise' do
+    assert_nil exercises['wibble_XXX']
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'FC5958',
+  'simple smoke test' do
     exercises_names = exercises.map(&:name).sort
-    assert caches.exists?(cache_filename)
-
     doors = '100_doors'
+    assert exercises_names.size > 20
     assert exercises_names.include?(doors)
     assert exercises['100_doors'].instructions.start_with?('100 doors in a row')
   end

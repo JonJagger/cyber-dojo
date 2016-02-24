@@ -28,6 +28,10 @@ class Exercises
     disk[path].write_json(cache_filename, cache)
   end
 
+  def cache_filename
+    'cache.json'
+  end
+
   private
 
   include ExternalParentChainer
@@ -43,10 +47,6 @@ class Exercises
       cache[name] = make_exercise(name, exercise['instructions'])
     end
     cache
-  end
-
-  def cache_filename
-    'cache.json'
   end
 
   def make_exercise(name, instructions = nil)

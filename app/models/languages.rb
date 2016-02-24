@@ -35,6 +35,10 @@ class Languages
     disk[path].write_json(cache_filename, cache)
   end
 
+  def cache_filename
+    'cache.json'
+  end
+
   # modifiers
 
   private
@@ -56,10 +60,6 @@ class Languages
       cache[display_name] = make_language(dir_name, test_dir_name, display_name, image_name)
     end
     cache
-  end
-
-  def cache_filename
-    'cache.json'
   end
 
   def make_language(dir_name, test_dir_name, display_name = nil, image_name = nil)

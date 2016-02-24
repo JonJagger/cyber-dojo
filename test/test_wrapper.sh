@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 if [ "$#" -eq 0 ]; then
   echo
@@ -64,14 +65,20 @@ rm -rf ../../coverage/.resultset.json
 mkdir -p coverage
 wrapper_test_log='coverage/WRAPPER.log.tmp'
 
-MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
+HOME_DIR="$( cd "$( dirname "${0}" )/.." && pwd )"
 
 # TODO: check for environment-variables being set here?
 # TODO: if not set provide defaults (and say so)
-export CYBER_DOJO_DISK_CLASS=HostDisk
+export CYBER_DOJO_LANGUAGES_ROOT=${HOME_DIR}/app/languages
+export CYBER_DOJO_EXERCISES_ROOT=${HOME_DIR}/app/exercises
+
 export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
-export CYBER_DOJO_CACHES_ROOT=${MY_DIR}/app/caches
-mkdir -p ${CYBER_DOJO_CACHES_ROOT}
+export CYBER_DOJO_SHELL_CLASS=HostShell
+export CYBER_DOJO_DISK_CLASS=HostDisk
+export CYBER_DOJO_GIT_CLASS=HostGit
+export CYBER_DOJO_LOG_CLASS=HostLog
+
+export CYBER_DOJO_RUNNER_TIMEOUT=10
 #...
 #...
 #...

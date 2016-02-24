@@ -4,13 +4,6 @@ require_relative './app_models_test_base'
 
 class LanguagesTests < AppModelsTestBase
 
-  test '71C327',
-  'languages[name] is nil if name is not an existing language' do
-    assert_nil languages['wibble_XXX']
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - -
-
   test '743810',
   'languages path has correct format when set with trailing slash' do
     path = tmp_root + 'slashed/'
@@ -31,42 +24,9 @@ class LanguagesTests < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test '8D0EBB',
-  'refresh_cache ignores nested _docker_context folder because',
-  'it is not the name of a test-framework, it is the docker-context',
-  'for the language itself' do
-    set_caches_root_tmp
-    n = 0
-    languages.each do |language|
-      n += 1
-      refute language.path.include? '_docker_context'
-    end
-    assert n > 45
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - -
-
-  test '7D53C5',
-  'use of cached info does *not* reaccess manifest.json' do
-    set_caches_root_tmp
-    display_name = 'Not, There'
-    image_name = 'cyberdojofoundation/not_there'
-    cache = {
-       display_name => {
-             dir_name: 'Not',
-        test_dir_name: 'There',
-           image_name: image_name
-      },
-    }
-    caches.write_json(cache_filename, cache)
-
-    not_there = languages['Not-There']
-    refute_nil not_there
-    dir = disk[not_there.path]
-    refute dir.exists?
-
-    assert_equal display_name, not_there.display_name
-    assert_equal image_name, not_there.image_name
+  test '71C327',
+  'languages[name] is nil if name is not an existing language' do
+    assert_nil languages['wibble_XXX']
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
@@ -76,6 +36,20 @@ class LanguagesTests < AppModelsTestBase
     ['C (clang)-assert', 'C#-NUnit'].each do |name|
       assert_equal name, languages[name].name
     end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - -
+
+  test '8D0EBB',
+  'languages ignores nested _docker_context folder because',
+  'it is not the name of a test-framework, it is the docker-context',
+  'for the language itself' do
+    n = 0
+    languages.each do |language|
+      n += 1
+      refute language.path.include? '_docker_context'
+    end
+    assert n > 45
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
