@@ -68,7 +68,7 @@ class DojoTests < AppModelsTestBase
   # - - - - - -
 
   test '01CD52',
-  "external roots always don't have trailing slash even when set value does" do
+  'external roots never have trailing slash even when set value does' do
     path = tmp_root + '/exercises'
     set_exercises_root(path + '/') && assert_equal(path, exercises.path)
     path = tmp_root + '/languages'
