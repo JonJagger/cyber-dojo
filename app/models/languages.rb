@@ -22,7 +22,7 @@ class Languages
   def write_cache
     cache = {}
     disk[path].each_dir do |dir_name|
-      disk[path + dir_name].each_dir do |test_dir_name|
+      disk[path + '/' + dir_name].each_dir do |test_dir_name|
         next if test_dir_name == '_docker_context'
         language = make_language(dir_name, test_dir_name)
         cache[language.display_name] = {
