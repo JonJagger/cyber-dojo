@@ -51,8 +51,7 @@ class StubRunner
   end
 
   def save_stub(avatar, json)
-    # not good to rely on katas.path here. Would be better if
-    # I could get test's hex-id and combine that with avater.name
+    # Better - combine test's hex-id with avater.name
     katas.dir(avatar).write_json(stub_run_filename, json)
   end
 
@@ -61,7 +60,7 @@ class StubRunner
     if dir.exists?(stub_run_filename)
       json = dir.read_json(stub_run_filename)
       output = json['output']
-      return output if !output.nil?
+      return output unless output.nil?
       rag = json['colour']
       raise "no 'output' or 'colour' in #{json}" if rag.nil?
       return sample(avatar, rag)
@@ -71,7 +70,7 @@ class StubRunner
 
   def sample(avatar, rag)
     # ?better in test/languages/outputs
-    raise "#{rag} must be red/amber/green" if !red_amber_green.include?(rag)
+    raise "#{rag} must be red/amber/green" unless red_amber_green.include?(rag)
     root = File.expand_path(File.dirname(__FILE__) + '/../test') + '/app_lib/test_output'
     path = "#{root}/#{avatar.kata.language.unit_test_framework}/#{rag}"
     all_output_samples = disk[path].each_file.collect { |filename| filename }

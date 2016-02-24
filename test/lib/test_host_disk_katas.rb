@@ -12,8 +12,8 @@ class HostDiskKatasTests < LibTestBase
 
   test 'B55710',
   'katas-path has correct format when set with trailing slash' do
-    path = '/tmp/slashed/'
-    set_katas_root(path)
+    path = '/tmp/folder'
+    set_katas_root(path + '/')
     assert_equal path, katas.path
     assert correct_path_format?(katas)
   end
@@ -22,9 +22,9 @@ class HostDiskKatasTests < LibTestBase
 
   test 'B2F787',
   'katas-path has correct format when set without trailing slash' do
-    path = '/tmp/unslashed'
+    path = '/tmp/folder'
     set_katas_root(path)
-    assert_equal path + '/', katas.path
+    assert_equal path, katas.path
     assert correct_path_format?(katas)
   end
 
@@ -90,15 +90,15 @@ class HostDiskKatasTests < LibTestBase
     kata = make_kata
     @avatar = kata.start_avatar
     new_filename = 'ab.c'
-
-    git_evidence = "git add '#{new_filename}'"
-    refute_log_include?(pathed(git_evidence))
-
     maker = DeltaMaker.new(@avatar)
     maker.new_file(new_filename, new_content = 'content for new file')
-    _, @visible_files, _ = maker.run_test
 
+    git_evidence = "git add '#{new_filename}'"
+
+    refute_log_include?(pathed(git_evidence))
+    _, @visible_files, _ = maker.run_test
     assert_log_include?(pathed(git_evidence))
+
     assert_file new_filename, new_content
   end
 
@@ -180,7 +180,7 @@ class HostDiskKatasTests < LibTestBase
   def correct_path_format?(object)
     ends_in_slash = path_of(object).end_with?('/')
     has_doubled_separator = path_of(object).scan('/' * 2).length != 0
-    ends_in_slash && !has_doubled_separator
+    !ends_in_slash && !has_doubled_separator
   end
 
   def assert_file(filename, expected)
