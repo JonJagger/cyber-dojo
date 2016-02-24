@@ -119,6 +119,13 @@ fi
 # o) Echo the output so it can be red/amber/green regex'd (see 5)
 # o) Tar-pipe *everything* out of the run-container's sandbox back to SRC_DIR
 # o) Remove the container.
+#
+# When this runs it outputs the following diagnostic to stdout
+#    tar: .: Not found in archive
+#    tar: Error exit delayed from previous errors.
+# As best I can tell this is because of the . in one of the tar-commands
+# and refers the dot as in the current directory. It seems to be harmless.
+# The files are tarred back, saved, git commited, and git diff works.
 
 echo "${OUTPUT}" # | head -c 10k
 
