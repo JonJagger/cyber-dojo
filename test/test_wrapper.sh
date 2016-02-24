@@ -79,18 +79,16 @@ export CYBER_DOJO_GIT_CLASS=HostGit
 export CYBER_DOJO_LOG_CLASS=MemoryLog
 
 export CYBER_DOJO_RUNNER_TIMEOUT=10
-#...
-#...
-#...
+export CYBER_DOJO_RUNNER_SUDO=''
 
 ruby $wrapped_filename -- ${args[*]} 2>&1 | tee $wrapper_test_log
 
 rm $wrapped_filename
 cp -R ../../coverage .
-#pwd                       # eg  /var/www/cyber-dojo/test/app_lib
+#pwd                       # eg  .../cyber-dojo/test/app_lib
 cwd=${PWD##*/}             # eg  app_lib
 module=${cwd/_//}          # eg  app/lib
-ruby ../print_coverage_percent.rb index.html $module | tee -a $wrapper_test_log
+#ruby ../print_coverage_percent.rb index.html $module | tee -a $wrapper_test_log
 
 gitUserNameAfter=`git config user.name`
 
