@@ -65,13 +65,6 @@ class DojoTests < AppModelsTestBase
     set_katas_root(    path = tmp_root + 'katas/'    ) && assert_equal(path, katas.path)
   end
 
-  #test 'B6CC06',
-  #'katas.path can be set to an alternative' do
-  #  set_katas_class('ExternalDouble')
-  #  set_katas_root(path = tmp_root + 'fake_katas_path/')
-  #  assert_equal path, katas.path
-  #end
-
   # - - - - - -
 
   test '01CD52',
@@ -84,10 +77,10 @@ class DojoTests < AppModelsTestBase
   # - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'CBFF2D',
-  'katas.path is automatically overriden by test setup because tests write to katas' do
+  'katas.path is set off /tmp by test setup because tests write to katas' do
     test_set_path = dojo.env('katas', 'root')
-    refute_equal test_set_path + '/', katas.path
-    refute_equal test_set_path,       katas.path
+    assert test_set_path.include?('/tmp')
+    assert katas.path.include?('/tmp')
   end
 
   private

@@ -1,5 +1,13 @@
 
 =======================================================================
+Testing
+0. Get tests working from outside container. no caches anymore.
+0. Refactor so path's do *not* have trailing slash.
+0. Get tests working from inside container
+0. test_wrapper needs to set ENV-VAR's but only if they are not set?
+0. Add test to languages that looks for sandbox as explicit path in cyber-dojo.sh files.
+
+=======================================================================
 Blog
 0. On old pages add links to new blog pages and say old pages are deprecated.
 0. Add new page on installing dind server.
@@ -43,13 +51,6 @@ Scripts
      cyber-dojo logs_web
      cyber-dojo logs_nginx
    Or just do single logs command and grep afterwards if you want.
-
-=======================================================================
-Testing
-0. Get tests working from inside and outside container
-0. test_wrapper needs to set ENV-VAR's but only if they are not set.
-0. Get tests all working
-0. Add test to languages that looks for sandbox as explicit path in cyber-dojo.sh files.
 
 
 =======================================================================
