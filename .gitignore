@@ -18,10 +18,6 @@ cyberDojo.db
 
 admin_scripts/stats/exceptions.log
 
-# where caches used to live
-exercises/*cache.json
-languages/*cache.json
-
 test/*/coverage/
 coverage
 
