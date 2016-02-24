@@ -34,6 +34,31 @@ while (( "$#" )); do
 done
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# check if tests alter the current git user!
+# I don't want any confusion between the git repo created
+# in a test (for an animal) and the main git repo of cyber-dojo!
+
+gitUserNameBefore=`git config user.name`
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+HOME_DIR="$( cd "$( dirname "${0}" )/.." && pwd )"
+
+# TODO: check for environment-variables being set here?
+# TODO: if not set provide defaults (and say so)
+export CYBER_DOJO_LANGUAGES_ROOT=${HOME_DIR}/app/languages
+export CYBER_DOJO_EXERCISES_ROOT=${HOME_DIR}/app/exercises
+
+export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
+export CYBER_DOJO_SHELL_CLASS=HostShell
+export CYBER_DOJO_DISK_CLASS=HostDisk
+export CYBER_DOJO_GIT_CLASS=HostGit
+export CYBER_DOJO_LOG_CLASS=MemoryLog
+
+export CYBER_DOJO_RUNNER_TIMEOUT=10
+export CYBER_DOJO_RUNNER_SUDO=''
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # It seems Ruby does *not* ignore the first shebang line
 # in test/*.rb files when running a .rb file explicitly ala
 #    $ ruby test_parity.rb
@@ -52,44 +77,27 @@ else
   filename='all_tests'
 fi
 wrapped_filename="$filename.WRAPPED"
+
+#rm -rf ../../coverage/.resultset.json
+#mkdir -p coverage
+#wrapper_test_log='coverage/WRAPPER.log.tmp'
+
 (echo ''; (cat ${testFiles[*]}) | tail -n +2) > $wrapped_filename
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# check if tests alter the current git user!
-# I don't want any confusion between the git repo created
-# in a test (for an animal) and the main git repo of cyber-dojo!
-
-gitUserNameBefore=`git config user.name`
-
-rm -rf ../../coverage/.resultset.json
-mkdir -p coverage
-wrapper_test_log='coverage/WRAPPER.log.tmp'
-
-HOME_DIR="$( cd "$( dirname "${0}" )/.." && pwd )"
-
-# TODO: check for environment-variables being set here?
-# TODO: if not set provide defaults (and say so)
-export CYBER_DOJO_LANGUAGES_ROOT=${HOME_DIR}/app/languages
-export CYBER_DOJO_EXERCISES_ROOT=${HOME_DIR}/app/exercises
-
-export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
-export CYBER_DOJO_SHELL_CLASS=HostShell
-export CYBER_DOJO_DISK_CLASS=HostDisk
-export CYBER_DOJO_GIT_CLASS=HostGit
-export CYBER_DOJO_LOG_CLASS=MemoryLog
-
-export CYBER_DOJO_RUNNER_TIMEOUT=10
-export CYBER_DOJO_RUNNER_SUDO=''
-
-ruby $wrapped_filename -- ${args[*]} 2>&1 | tee $wrapper_test_log
+ruby $wrapped_filename -- ${args[*]} 2>&1 # | tee $wrapper_test_log
 
 rm $wrapped_filename
-cp -R ../../coverage .
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#cp -R ../../coverage .
+
 #pwd                       # eg  .../cyber-dojo/test/app_lib
 cwd=${PWD##*/}             # eg  app_lib
 module=${cwd/_//}          # eg  app/lib
 #ruby ../print_coverage_percent.rb index.html $module | tee -a $wrapper_test_log
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 gitUserNameAfter=`git config user.name`
 
 if [ "$gitUserNameBefore" != "$gitUserNameAfter" ]; then
