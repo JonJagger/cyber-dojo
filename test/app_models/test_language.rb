@@ -7,7 +7,7 @@ class LanguageTests < AppModelsTestBase
 
   def setup
     super
-    set_languages_root(tmp_root + 'languages/')
+    set_languages_root(tmp_root + '/languages')
     disk[languages.path].make
   end
 

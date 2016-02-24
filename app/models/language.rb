@@ -18,7 +18,7 @@ class Language
   end
 
   def path
-    parent.path + @dir_name + '/' + @test_dir_name + '/'
+    parent.path + '/' + @dir_name + '/' + @test_dir_name
   end
 
   # required manifest properties

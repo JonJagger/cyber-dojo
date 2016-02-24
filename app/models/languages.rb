@@ -4,7 +4,7 @@ class Languages
 
   def initialize(dojo)
     @parent = dojo
-    @path = slashed(dojo.env('languages', 'root'))
+    @path = unslashed(dojo.env('languages', 'root'))
   end
 
   # queries
@@ -45,7 +45,7 @@ class Languages
 
   include ExternalParentChainer
   include LanguagesRename
-  include Slashed
+  include Unslashed
 
   def languages
     @languages ||= read_cache

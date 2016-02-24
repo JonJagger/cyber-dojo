@@ -41,27 +41,36 @@ done
 gitUserNameBefore=`git config user.name`
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# set env-vars if not set
+
 HOME_DIR="$( cd "$( dirname "${0}" )/.." && pwd )"
 
-# TODO: check for environment-variables being set here?
-# TODO: if not set provide defaults (and say so)
-
-export CYBER_DOJO_LANGUAGES_ROOT=${HOME_DIR}/app/languages
-export CYBER_DOJO_EXERCISES_ROOT=${HOME_DIR}/app/exercises
-
-export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
-export CYBER_DOJO_SHELL_CLASS=HostShell
-export CYBER_DOJO_DISK_CLASS=HostDisk
-export CYBER_DOJO_GIT_CLASS=HostGit
 export CYBER_DOJO_LOG_CLASS=MemoryLog
 
-export CYBER_DOJO_RUNNER_TIMEOUT=10
-export CYBER_DOJO_RUNNER_SUDO=''
+VAR=${CYBER_DOJO_LANGUAGES_ROOT:-${HOME_DIR}/app/languages}
+export CYBER_DOJO_LANGUAGES_ROOT=${VAR}
+VAR=${CYBER_DOJO_EXERCISES_ROOT:-${HOME_DIR}/app/exercises}
+export CYBER_DOJO_EXERCISES_ROOT=${VAR}
+VAR=${CYBER_DOJO_KATAS_CLASS:-HostDiskKatas}
+export CYBER_DOJO_KATAS_CLASS=${VAR}
+VAR=${CYBER_DOJO_SHELL_CLASS:-HostShell}
+export CYBER_DOJO_SHELL_CLASS=${VAR}
+VAR=${CYBER_DOJO_DISK_CLASS:-HostDisk}
+export CYBER_DOJO_DISK_CLASS=${VAR}
+VAR=${CYBER_DOJO_GIT_CLASS:-HostGit}
+export CYBER_DOJO_GIT_CLASS=${VAR}
+VAR=${CYBER_DOJO_RUNNER_TIMEOUT:=10}
+export CYBER_DOJO_RUNNER_TIMEOUT=${VAR}
+VAR=${CYBER_DOJO_RUNNER_SUDO:-''}
+export CYBER_DOJO_RUNNER_SUDO=${VAR}
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# coverage is off
+# run-the-tests!
 
-ruby -e "%w( ${testFiles[*]} ).map{|file| './'+file}.each { |file| require file}" -- ${args[*]}
+ruby -e "%w( ${testFiles[*]} ).map{ |file| './'+file }.each { |file| require file }" -- ${args[*]}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# FIX-ME:coverage is broken
 
 #rm -rf ../../coverage/.resultset.json
 #mkdir -p coverage

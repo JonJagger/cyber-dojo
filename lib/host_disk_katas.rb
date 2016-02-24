@@ -6,7 +6,7 @@ class HostDiskKatas
 
   def initialize(dojo)
     @parent = dojo
-    @path = slashed(dojo.env('katas', 'root'))
+    @path = unslashed(dojo.env('katas', 'root'))
   end
 
   attr_reader :path, :parent
@@ -37,7 +37,7 @@ class HostDiskKatas
     # and potentially interfere with a live session.
     if !id.nil? && id.length >= 6
       # outer-dir has 2-characters
-      outer_dir = disk[path + outer(id)]
+      outer_dir = disk[path + '/' + outer(id)]
       if outer_dir.exists?
         # inner-dir has 8-characters
         dirs = outer_dir.each_dir.select { |inner_dir| inner_dir.start_with?(inner(id)) }
@@ -50,7 +50,7 @@ class HostDiskKatas
   def each
     return enum_for(:each) unless block_given?
     disk[path].each_dir do |outer_dir|
-      disk[path + outer_dir].each_dir do |inner_dir|
+      disk[path + '/' + outer_dir].each_dir do |inner_dir|
         yield  Kata.new(self, outer_dir + inner_dir)
       end
     end
@@ -186,9 +186,9 @@ class HostDiskKatas
 
   def path_of(obj)
     case obj.class.name
-    when 'Sandbox' then path_of(obj.parent) + 'sandbox' + '/'
-    when 'Avatar'  then path_of(obj.parent) + obj.name + '/'
-    when 'Kata'    then path_of(obj.parent) + outer(obj.id) + '/' + inner(obj.id) + '/'
+    when 'Sandbox' then path_of(obj.parent) + '/' + 'sandbox'
+    when 'Avatar'  then path_of(obj.parent) + '/' + obj.name
+    when 'Kata'    then path_of(obj.parent) + '/' + outer(obj.id) + '/' + inner(obj.id)
     when self.class.name then path
     end
   end
@@ -198,10 +198,10 @@ class HostDiskKatas
   include CreateKataManifest
   include ExternalParentChainer
   include IdSplitter
-  include Slashed
   include StderrRedirect
   include TimeNow
   include UniqueId
+  include Unslashed
 
   def exists?(obj)
     dir(obj).exists?

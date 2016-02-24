@@ -10,8 +10,8 @@
   id_splitter
   string_cleaner
   string_truncater
-  slashed
   stderr_redirect
+  unslashed
   languages_display_names_splitter
 
   runner

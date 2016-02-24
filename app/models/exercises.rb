@@ -4,7 +4,7 @@ class Exercises
 
   def initialize(dojo)
     @parent = dojo
-    @path = slashed(dojo.env('exercises', 'root'))
+    @path = unslashed(dojo.env('exercises', 'root'))
   end
 
   # queries
@@ -35,7 +35,7 @@ class Exercises
   private
 
   include ExternalParentChainer
-  include Slashed
+  include Unslashed
 
   def exercises
     @exercises ||= read_cache

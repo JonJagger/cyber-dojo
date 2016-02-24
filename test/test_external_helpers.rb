@@ -10,7 +10,7 @@ module TestExternalHelpers # mix-in
     ENV.each { |key, value| @config[key] = value }
     setup_tmp_root
     # we never want tests to write to the real katas root
-    set_katas_root(tmp_root + 'katas')
+    set_katas_root(tmp_root + '/katas')
   end
 
   def teardown
@@ -99,7 +99,7 @@ module TestExternalHelpers # mix-in
   # - - - - - - - - - - - - - - - - - - -
 
   def tmp_root
-    '/tmp/cyber-dojo/'
+    '/tmp/cyber-dojo'
   end
 
   def setup_tmp_root

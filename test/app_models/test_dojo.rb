@@ -60,18 +60,21 @@ class DojoTests < AppModelsTestBase
 
   test '209EA1',
   'external roots can be set' do
-    set_exercises_root(path = tmp_root + 'exercises/') && assert_equal(path, exercises.path)
-    set_languages_root(path = tmp_root + 'languages/') && assert_equal(path, languages.path)
-    set_katas_root(    path = tmp_root + 'katas/'    ) && assert_equal(path, katas.path)
+    set_exercises_root(path = tmp_root + '/exercises') && assert_equal(path, exercises.path)
+    set_languages_root(path = tmp_root + '/languages') && assert_equal(path, languages.path)
+    set_katas_root(    path = tmp_root + '/katas'    ) && assert_equal(path, katas.path)
   end
 
   # - - - - - -
 
   test '01CD52',
-  'external roots always have trailing slash even when set value does not' do
-    set_exercises_root(path = tmp_root + '/exercises') && assert_equal(path + '/', exercises.path)
-    set_languages_root(path = tmp_root + '/languages') && assert_equal(path + '/', languages.path)
-    set_katas_root(    path = tmp_root + '/katas')     && assert_equal(path + '/', katas.path)
+  "external roots always don't have trailing slash even when set value does" do
+    path = tmp_root + '/exercises'
+    set_exercises_root(path + '/') && assert_equal(path, exercises.path)
+    path = tmp_root + '/languages'
+    set_languages_root(path + '/') && assert_equal(path, languages.path)
+    path = tmp_root + '/katas'
+    set_katas_root(path + '/')     && assert_equal(path, katas.path)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - -

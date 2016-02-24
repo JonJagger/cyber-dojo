@@ -6,8 +6,8 @@ class ExercisesTests < AppModelsTestBase
 
   test '14AD4C',
   'exercises path has correct basic format when set with trailing slash' do
-    path = tmp_root + 'slashed/'
-    set_exercises_root(path)
+    path = tmp_root + '/' + 'folder'
+    set_exercises_root(path + '/')
     assert_equal path, exercises.path
     assert correct_path_format?(exercises)
   end
@@ -16,9 +16,9 @@ class ExercisesTests < AppModelsTestBase
 
   test 'B09C99',
   'exercises path has correct basic format when set without trailing slash' do
-    path = tmp_root + 'unslashed'
+    path = tmp_root + '/' + 'folder'
     set_exercises_root(path)
-    assert_equal path + '/', exercises.path
+    assert_equal path, exercises.path
     assert correct_path_format?(exercises)
   end
 

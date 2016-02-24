@@ -6,8 +6,8 @@ class LanguagesTests < AppModelsTestBase
 
   test '743810',
   'languages path has correct format when set with trailing slash' do
-    path = tmp_root + 'slashed/'
-    set_languages_root(path)
+    path = tmp_root + '/' + 'folder'
+    set_languages_root(path + '/')
     assert_equal path, languages.path
     assert correct_path_format?(languages)
   end
@@ -16,9 +16,9 @@ class LanguagesTests < AppModelsTestBase
 
   test '8D3BB5',
   'languages path has correct format when set without trailing slash' do
-    path = tmp_root + 'unslashed'
+    path = tmp_root + '/' + 'folder'
     set_languages_root(path)
-    assert_equal path + '/', languages.path
+    assert_equal path, languages.path
     assert correct_path_format?(languages)
   end
 

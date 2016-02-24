@@ -16,7 +16,7 @@ class Exercise
   end
 
   def path
-    parent.path + name + '/'
+    parent.path + '/' + name
   end
 
   def instructions
