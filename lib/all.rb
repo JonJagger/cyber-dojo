@@ -27,5 +27,6 @@
   host_disk
   host_dir
   host_git
-  host_log
+  memory_log
+  stdout_log
 }.each { |sourcefile| require_relative './' + sourcefile }

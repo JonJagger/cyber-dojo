@@ -18,7 +18,7 @@ web:
   environment:
     - CYBER_DOJO_SHELL_CLASS=HostShell
     - CYBER_DOJO_DISK_CLASS=HostDisk
-    - CYBER_DOJO_LOG_CLASS=HostLog
+    - CYBER_DOJO_LOG_CLASS=StdoutLog
     - CYBER_DOJO_GIT_CLASS=HostGit
     - CYBER_DOJO_LANGUAGES_ROOT=${CYBER_DOJO_HOME}/app/languages
     - CYBER_DOJO_EXERCISES_ROOT=${CYBER_DOJO_HOME}/app/exercises

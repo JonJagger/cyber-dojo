@@ -76,7 +76,7 @@ export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
 export CYBER_DOJO_SHELL_CLASS=HostShell
 export CYBER_DOJO_DISK_CLASS=HostDisk
 export CYBER_DOJO_GIT_CLASS=HostGit
-export CYBER_DOJO_LOG_CLASS=HostLog
+export CYBER_DOJO_LOG_CLASS=MemoryLog
 
 export CYBER_DOJO_RUNNER_TIMEOUT=10
 #...
