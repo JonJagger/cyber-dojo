@@ -23,7 +23,7 @@ export CYBER_DOJO_GIT_CLASS=HostGit
 # TODO: where should katas_root point to for a local server?
 #       HOME/katas saves to host disk
 #       /usr/src/cyber-dojo/katas  saves to data-container
-export CYBER_DOJO_KATAS_ROOT=${HOME}/katas
+export CYBER_DOJO_KATAS_ROOT=${HOME}/tmp/katas
 export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
 
 # TODO: On a local-server runner can be plain volume-mounting runner. No need for tar-pipes.
