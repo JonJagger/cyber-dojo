@@ -1,12 +1,8 @@
 
 =======================================================================
 Testing
-0. Get tests working from outside container. no caches anymore.
-0. Refactor so path's do *not* have trailing slash.
-0. Get tests working from inside container?
-   Will be fair amount of work.
-0. test_wrapper needs to set ENV-VAR's but only if they are not set?
-0. Add test to languages that looks for sandbox as explicit path in cyber-dojo.sh files.
+0. Get all tests passing from outside container. (no caches anymore).
+0. Add languages test that looks for sandbox as explicit path in cyber-dojo.sh files.
 
 =======================================================================
 Blog
