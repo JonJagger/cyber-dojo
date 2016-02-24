@@ -1,7 +1,6 @@
 
 =======================================================================
 Testing
-0. Add silent HostLog class that does not do puts
 0. Get tests working from outside container. no caches anymore.
 0. Refactor so path's do *not* have trailing slash.
 0. Get tests working from inside container

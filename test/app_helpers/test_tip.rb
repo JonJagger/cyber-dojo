@@ -14,19 +14,16 @@ class TipTests < AppHelpersTestBase
 
   test 'BDAD52',
   'traffic light tip' do
-    kata = make_kata
+    set_runner_class('DockerKatasDataContainerRunner')
+    kata = make_kata( { language: 'C (gcc)-assert'} )
     lion = kata.start_avatar(['lion'])
     maker = DeltaMaker.new(lion)
-
-    maker.stub_colour(:red)
     maker.run_test
-
     filename = 'hiker.c'
     assert maker.file?(filename)
     content = maker.content(filename)
     refute_nil content
     maker.change_file(filename, content.sub('9', '7'))
-    maker.stub_colour(:green)
     maker.run_test
 
     was_tag = 1
