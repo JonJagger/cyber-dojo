@@ -1,141 +1,143 @@
 #!/bin/sh
-
-HOME=/usr/app/cyber-dojo         # home folder *inside* the web-image
-REPO=cyberdojofoundation         # username on docker hub
-
-KATAS_DEFAULT=/usr/app/cyber-dojo/katas
-RAILS_ENV_DEFAULT=production
-RUNNER_DEFAULT=DockerTmpRunner
-
-KATAS=${KATAS_DEFAULT}           # where katas are stored on the *host*
-RAILS_ENV=${RAILS_ENV_DEFAULT}   # rails server -e ${RAILS_ENV}
-RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
+set -e
 
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
-DOCKER_COMPOSE_FILE=cyber-dojo-docker-compose.yml
+HOME=/usr/src/cyber-dojo         # home folder *inside* the server image
+REPO=cyberdojofoundation         # username on docker hub
+
+RUNNER_DEFAULT=DockerKatasDataContainerRunner
+RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
+
+DOCKER_COMPOSE_FILE=docker-compose.yml
 DOCKER_COMPOSE_CMD="docker-compose --file=./${DOCKER_COMPOSE_FILE}"
 
+# TODO: USE THIS ONLY FOR 1st TIME CREATION OF KATAS-DATA-CONTAINER
+HOST_KATAS_DEFAULT=/var/www/cyber-dojo/katas
+HOST_KATAS=${HOST_KATAS_DEFAULT} # where katas are stored on the *host*
+                                 # and get copied into the katas-data-container
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# TODO: add command to backup katas-data-container to tar.tgz file
+# TODO: detect if more than one command entered
+# TODO: pull all language images == fetch? all?
+#
 
 show_use()
 {
   echo
-  echo "Usage: ${ME} COMMAND"
-  echo "       ${ME} help"
+  echo "Use: ${ME} COMMAND"
+  echo "     ${ME} help"
   echo
-  echo 'Commands:'
-  echo '    install_docker    Installs docker, docker-machine, and docker-compose'
-  echo '    ls                List pulled cyber-dojo language images'
-  echo '    ls_repo           List all cyber-dojo language images'
-  echo '    pull=IMAGE        Pull cyber-dojo language IMAGE'
-  echo '    rmi=IMAGE         Remove a pulled cyber-dojo language IMAGE'
-  echo '    up [OPTIONS]      Bring up cyber-dojo server'
-  echo '    upgrade           Pull the latest app and language images'
+  echo 'COMMAND(containers):'
+  # TODO: backup a katas-ID data-container
+  echo '     down                     Stops and removes server containers'
+  echo '     up [OPTIONS]             Creates and starts the server containers'
+  echo "         katas=DIR            default:  katas=${HOST_KATAS_DEFAULT}"
+  echo "         runner=CLASS_NAME    default: runner=${RUNNER_DEFAULT}"
   echo
-  echo 'Options:'
-  echo "    katas=/var/www/cyber-dojo/katas            default: katas=${KATAS}"
-  echo "    rails_env=[development|production]         default: rails_env=${RAILS_ENV_DEFAULT}"
-  echo "    runner=[DockerTmpRunner|DockerKatasRunner] default: runner=${RUNNER_DEFAULT}"
+  echo 'COMMAND(images):'
+  echo '     images                   Lists pulled language images'
+  echo '     pull=IMAGE               Pulls language IMAGE'
+  echo '     repo                     Lists all language images'
+  echo '     rmi=IMAGE                Removes a pulled language IMAGE'
+  echo '     upgrade                  Pulls the latest server and language images'
   echo
 }
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#========================================================================================
+# containers
+#========================================================================================
 
-INSTALL_DOCKER_CURL_CMD="curl -sSL https://get.docker.com/ | sh"
-
-show_how_to_install_docker()
+down()
 {
-  echo
-  echo 'To install docker:'
-  echo "$ ${ME} install_docker"
-  echo 'which does'
-  echo "$ ${INSTALL_DOCKER_CURL_CMD}"
+  ${DOCKER_COMPOSE_CMD} down
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-INSTALL_DOCKER_MACHINE_CURL_CMD="curl -L https://github.com/docker/machine/releases/download/v0.6.0/docker-machine-`uname -s`-`uname -m` > /usr/local/bin/docker-machine"
-INSTALL_DOCKER_MACHINE_CHMOD_CMD="chmod +x /usr/local/bin/docker-machine"
-
-show_how_to_install_docker_machine()
+up()
 {
-  echo
-  echo 'To install docker-machine:'
-  echo "$ ${ME} install_docker"
-  echo 'which does'
-  echo "$ ${INSTALL_DOCKER_MACHINE_CURL_CMD}"
-  echo "$ ${INSTALL_DOCKER_MACHINE_CHMOD_CMD}"
-  echo 'To check for new releases visit https://docs.docker.com/machine/install-machine/'
+  # TODO: test in main flow?
+  exit_if_bad_katas
+  exit_if_bad_runner
+  pull_common_languages_if_none
+  CWD=$(pwd)
+  cd "${MY_DIR}" > /dev/null
+  ${DOCKER_COMPOSE_CMD} up -d
+  cd "${CWD}" > /dev/null
 }
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - -
 
-INSTALL_DOCKER_COMPOSE_CURL_CMD="curl -L https://github.com/docker/compose/releases/download/1.6.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
-INSTALL_DOCKER_COMPOSE_CHMOD_CMD="chmod +x /usr/local/bin/docker-compose"
-
-show_how_to_install_docker_compose()
+exit_if_bad_katas()
 {
-  echo
-  echo 'To install docker-compose:'
-  echo "$ ${ME} install_docker"
-  echo 'which does'
-  echo "$ ${INSTALL_DOCKER_COMPOSE_CURL_CMD}"
-  echo "$ ${INSTALL_DOCKER_COMPOSE_CHMOD_CMD}"
-  echo 'To check for new releases visit https://github.com/docker/compose/releases'
+  # overriding the default, dir must exist
+  if [ "${HOST_KATAS}" != "${HOST_KATAS_DEFAULT}" ] && [ ! -d "${HOST_KATAS}" ]; then
+    echo "${ME}: katas=${HOST_KATAS} ? ${HOST_KATAS} directory does not exist"
+    echo "See ${ME} help"
+    exit
+  fi
+
+  # TODO: if there is ALREADY a katas-data-container then return from this function
+
+  # TODO:
+  # if HOST_KATAS does not exist assume this server is new
+  #   and create an empty katas-data-container
+  #
+  # TODO:
+  # if HOST_KATAS does exist assume this server is replacing an existing one
+  #   and create a full katas-data-container
+  # being hosted where a previous (non dockerized) server lived.
 }
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - -
+
+exit_if_bad_runner()
+{
+  # TODO: StubRunner for running tests inside the container?
+  if [ "${RUNNER}" != 'DockerKatasDataContainerRunner' ] &&
+     [ "${RUNNER}" != 'DockerMachineRunner' ];
+  then
+    echo "${ME}: runner=${RUNNER} ?"
+    echo "See ${ME} help"
+    exit
+  fi
+}
+
+#========================================================================================
+# images
+#========================================================================================
 
 pulled_language_images()
 {
-  ALL_LANGUAGE_IMAGES=`echo "${LS_REPO}" | awk '{print $NF}' | sort`
-  PULLED_IMAGES=`docker images | grep ${REPO} | awk '{print $1}'`
+  ALL_LANGUAGE_IMAGES=$(echo "${LS_REPO}" | awk '{print $NF}' | sort)
+  PULLED_IMAGES=$(docker images | grep ${REPO} | awk '{print $1}')
   SPLIT=$(echo "${PULLED_IMAGES}" | sed 's/\// /g')
-  PULLED_IMAGES=`echo "${SPLIT}" | awk '{print $NF}' | sort`
+  PULLED_IMAGES=$(echo "${SPLIT}" | awk '{print $NF}' | sort)
 
   TMP_FILE_1=/tmp/cyber-dojo.comm1.txt
   TMP_FILE_2=/tmp/cyber-dojo.comm2.txt
   echo "${ALL_LANGUAGE_IMAGES}" > ${TMP_FILE_1}
   echo       "${PULLED_IMAGES}" > ${TMP_FILE_2}
-  PULLED_LANGUAGE_IMAGES=`comm -12 /tmp/cyber-dojo.comm1.txt /tmp/cyber-dojo.comm2.txt`
-  rm ${TMP_FILE_1}
-  rm ${TMP_FILE_2}
+  comm -12 ${TMP_FILE_1} ${TMP_FILE_2}
 
-  echo "${PULLED_LANGUAGE_IMAGES}"
+  # These two lines cause docker containers to stop and I have no idea why?!
+  #rm ${TMP_FILE_1}
+  #rm ${TMP_FILE_2}
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-install_docker()
+images()
 {
-  echo 'installing docker'
-  eval ${INSTALL_DOCKER_CURL_CMD}
-  echo 'installing docker-machine'
-  eval ${INSTALL_DOCKER_MACHINE_CURL_CMD}
-  eval ${INSTALL_DOCKER_MACHINE_CHMOD_CMD}
-  echo 'installing docker-compose'
-  eval ${INSTALL_DOCKER_COMPOSE_CURL_CMD}
-  eval ${INSTALL_DOCKER_COMPOSE_CHMOD_CMD}
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-ls()
-{
-  # TODO: this gives the same as ls_repo when there are no languages yet pulled
-  LS_REPO=`ls_repo`
-  PULLED=`pulled_language_images`
+  # FIXME: this gives the same as repo when there are no languages pulled
+  LS_REPO=$(repo)
+  PULLED=$(pulled_language_images)
   echo "${LS_REPO}" | grep 'LANGUAGE'
   echo "${LS_REPO}" | grep "${PULLED}"
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-ls_repo()
-{
-  docker run --rm ${REPO}/web bash -c "./languages/list_all_images.rb"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -143,6 +145,16 @@ ls_repo()
 pull()
 {
   docker pull ${REPO}/${IMAGE}:latest
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+repo()
+{
+  # will pull web image if necessary
+  docker run --name cdf-languages cyberdojofoundation/languages echo 'languages-data-container'
+  docker run --rm --volumes-from=cdf-languages ${REPO}/web sh -c "./app/languages/list_all_images.rb"
+  docker rm --force cdf-languages
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -156,76 +168,15 @@ rmi()
 
 pull_common_languages_if_none()
 {
-  LS_REPO=`ls_repo`
-  PULLED=`pulled_language_images`
+  LS_REPO=$(repo)
+  PULLED=$(pulled_language_images)
   if [ -z "${PULLED}" ]; then
     echo 'No language images pulled'
     echo 'Pulling a small starting collection of common language images'
     IMAGE=gcc_assert
     pull
-    IMAGE=ruby_mini_test
-    pull
-  fi
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-up()
-{
-  exit_if_bad_katas
-  exit_if_bad_runner
-  exit_if_bad_rails_env
-
-  pull_common_languages_if_none
-
-  export CYBER_DOJO_RAILS_ENV=${RAILS_ENV}
-  export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/languages
-  export CYBER_DOJO_EXERCISES_ROOT=${HOME}/exercises
-  export CYBER_DOJO_CACHES_ROOT=${HOME}/caches
-  export CYBER_DOJO_KATAS_ROOT=${KATAS}
-  export CYBER_DOJO_RUNNER_CLASS=${RUNNER}
-  export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
-  export CYBER_DOJO_SHELL_CLASS=HostShell
-  export CYBER_DOJO_DISK_CLASS=HostDisk
-  export CYBER_DOJO_LOG_CLASS=HostLog
-  export CYBER_DOJO_GIT_CLASS=HostGit
-
-  CWD=`pwd`
-  cd "${MY_DIR}" > /dev/null
-  ${DOCKER_COMPOSE_CMD} stop  2> /dev/null
-  ${DOCKER_COMPOSE_CMD} rm -f 2> /dev/null
-  ${DOCKER_COMPOSE_CMD} up -d
-  cd "${CWD}" > /dev/null
-}
-
-exit_if_bad_rails_env()
-{
-  if [ "${RAILS_ENV}" != 'development' ] && [ "${RAILS_ENV}" != 'production' ]; then
-    echo "${ME}: rails_env=${RAILS_ENV} ?"
-    echo "See ${ME} help"
-    exit
-  fi
-}
-
-exit_if_bad_katas()
-{
-  # if KATAS==KATAS_DEFAULT assume this cyber-dojo server is *not*
-  # being hosted where a previous (non dockerized) server lived.
-  # In this case the KATAS volume mount in docker-compose.yml will
-  # create the KATAS_DEFAULT directory on the host.
-  if [ "${KATAS}" != "${KATAS_DEFAULT}" ] && [ ! -d "${KATAS}" ]; then
-    echo "${ME}: katas=${KATAS} ? ${KATAS} directory does not exist"
-    echo "See ${ME} help"
-    exit
-  fi
-}
-
-exit_if_bad_runner()
-{
-  if [ "${RUNNER}" != 'DockerTmpRunner' ] && [ "${RUNNER}" != 'DockerKatasRunner' ]; then
-    echo "${ME}: runner=${RUNNER} ?"
-    echo "See ${ME} help"
-    exit
+    #IMAGE=ruby_mini_test
+    #pull
   fi
 }
 
@@ -235,140 +186,171 @@ upgrade()
 {
   echo "downloading latest ${DOCKER_COMPOSE_FILE} file"
   download_latest_docker_compose_yml
-  echo 'upgrading cyber-dojo app images'
-  CWD=`pwd`
+  echo 'upgrading cyber-dojo server images'
+  CWD=$(pwd)
   cd "${MY_DIR}" > /dev/null
   SERVICES=`${DOCKER_COMPOSE_CMD} config --services 2> /dev/null`
   cd "${CWD}" > /dev/null
   echo "${SERVICES}" | while read IMAGE ; do
-    pull ${IMAGE}
+    pull
   done
 
   echo 'upgrading cyber-dojo pulled language images'
-  LS_REPO=`ls_repo`
-  PULLED=`pulled_language_images`
+  LS_REPO=$(repo)
+  PULLED=$(pulled_language_images)
   echo "${PULLED}" | while read IMAGE ; do
-    pull ${IMAGE}
+    pull
   done
 }
 
 download_latest_docker_compose_yml()
 {
-  CWD=`pwd`
+  CWD=$(pwd)
   cd "${MY_DIR}" > /dev/null
   curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/${DOCKER_COMPOSE_FILE}
   cd "${CWD}" > /dev/null
 }
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#========================================================================================
+# process command-line args
+#========================================================================================
 
-for arg in "$@"
+for ARG in "$@"
 do
-  case ${arg} in
+  case ${ARG} in
     help)
       show_use
       exit
       ;;
-    install_docker)
-      doInstall=true
+    # - - - - - - - containers - - - - - - - -
+    down)
+      doDown=true
       ;;
-    ls)
-      doLs=true
+    ps)
+      doPs=true
       ;;
-    ls_repo)
-      doLsRepo=true
+    start)
+      doStart=true
       ;;
-    pull=*)
-      IMAGE="${arg#*=}"
-      doPull=true
+    stop)
+      doStop=true
       ;;
-    rmi=*)
-      IMAGE="${arg#*=}"
-      doRmi=true
+    rm)
+      doRm=true
       ;;
     up)
       doUp=true
       ;;
+    # - - - - - - - options - - - - - - - -
+    katas=*)
+      KATAS="${ARG#*=}"
+      ;;
+    runner=*)
+      RUNNER="${ARG#*=}"
+      ;;
+    # - - - - - - - images - - - - - - - -
+    images)
+      doImages=true
+      ;;
+    pull=*)
+      IMAGE="${ARG#*=}"
+      doPull=true
+      ;;
+    repo)
+      doRepo=true
+      ;;
+    rmi=*)
+      IMAGE="${ARG#*=}"
+      doRmi=true
+      ;;
     upgrade)
       doUpgrade=true
       ;;
-    katas=*)
-      KATAS="${arg#*=}"
-      ;;
-    runner=*)
-      RUNNER="${arg#*=}"
-      ;;
-    rails_env=*)
-      RAILS_ENV="${arg#*=}"
-      ;;
+    # - - - - - - - something's not right - - - - - - - -
     *)
-      echo "${ME}: ${arg} ?"
+      echo "${ME}: ${ARG} ?"
       echo "See '${ME} help"
       exit
       ;;
   esac
 done
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-if [ -n "${doInstall}" ]; then
-  install_docker
-  exit
-fi
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-hash docker 2> /dev/null
-if [ $? != 0  ]; then
-  echo
-  echo 'cyber-dojo requires docker'
-  show_how_to_install_docker
-  show_how_to_install_docker_machine
-  show_how_to_install_docker_compose
-  echo
-  exit
-fi
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-hash docker-machine 2> /dev/null
-if [  $? != 0 ]; then
-  echo
-  echo 'cyber-dojo requires docker-machine'
-  show_how_to_install_docker_machine
-  echo
-  exit
-fi
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-hash docker-compose 2> /dev/null
-if [  $? != 0 ]; then
-  echo
-  echo 'cyber-dojo requires docker-compose'
-  show_how_to_install_docker_compose
-  echo
-  exit
-fi
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#========================================================================================
+# nothing is implicit
+#========================================================================================
 
 if [ $# -eq 0 ]; then
   show_use
   exit
 fi
 
+#========================================================================================
+# install docker if necessary
+#========================================================================================
+
+hash docker 2> /dev/null
+if [ $? != 0  ]; then
+  echo
+  echo 'cyber-dojo is installing docker'
+  curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/install-docker.sh
+  chmod +x install-docker.sh
+  ./install-docker.sh
+fi
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+hash docker-machine 2> /dev/null
+if [ $? != 0 ]; then
+  echo
+  echo 'cyber-dojo is installing docker-machine'
+  curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/install-docker-machine.sh
+  chmod +x install-docker-machine.sh
+  ./install-docker-machine.sh
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+hash docker-compose 2> /dev/null
+if [ $? != 0 ]; then
+  echo
+  echo 'cyber-dojo is installing docker-compose'
+  curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/install-docker-compose.sh
+  chmod +x install-docker-compose.sh
+  ./install-docker-compose.sh
+fi
+
+#========================================================================================
+# you must have the docker-compose.yml file
+#========================================================================================
 
 if [ ! -e ${MY_DIR}/${DOCKER_COMPOSE_FILE} ]; then
   download_latest_docker_compose_yml
 fi
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#========================================================================================
+# docker-compose.yml relies on these env-vars
+#========================================================================================
 
+export CYBER_DOJO_HOME=${HOME}
+export CYBER_DOJO_KATAS_ROOT=${HOME}/katas
+export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
+export CYBER_DOJO_RUNNER_CLASS=${RUNNER}
+export CYBER_DOJO_RUNNER_SUDO='sudo -u docker-runner sudo'
+export CYBER_DOJO_RUNNER_TIMEOUT=10
+
+#========================================================================================
+# do something!
+#========================================================================================
+
+if [ -n "${doPs}"      ]; then ps     ; exit; fi
+if [ -n "${doStart}"   ]; then start  ; exit; fi
+if [ -n "${doStop}"    ]; then stop   ; exit; fi
+if [ -n "${doRm}"      ]; then rm     ; exit; fi
+if [ -n "${doUp}"      ]; then up     ; exit; fi
+if [ -n "${doDown}"    ]; then down   ; exit; fi
+
+if [ -n "${doImages}"  ]; then images ; exit; fi
+if [ -n "${doPull}"    ]; then pull   ; exit; fi
+if [ -n "${doRepo}"    ]; then repo   ; exit; fi
+if [ -n "${doRmi}"     ]; then rmi    ; exit; fi
 if [ -n "${doUpgrade}" ]; then upgrade; exit; fi
-if [ -n "${doLs}"      ]; then      ls; exit; fi
-if [ -n "${doLsRepo}"  ]; then ls_repo; exit; fi
-if [ -n "${doPull}"    ]; then    pull; exit; fi
-if [ -n "${doRmi}"     ]; then     rmi; exit; fi
-if [ -n "${doUp}"      ]; then      up; exit; fi
