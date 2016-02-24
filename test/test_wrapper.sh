@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+#set -e
 
 if [ "$#" -eq 0 ]; then
   echo
@@ -40,12 +40,12 @@ done
 
 gitUserNameBefore=`git config user.name`
 
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME_DIR="$( cd "$( dirname "${0}" )/.." && pwd )"
 
 # TODO: check for environment-variables being set here?
 # TODO: if not set provide defaults (and say so)
+
 export CYBER_DOJO_LANGUAGES_ROOT=${HOME_DIR}/app/languages
 export CYBER_DOJO_EXERCISES_ROOT=${HOME_DIR}/app/exercises
 
@@ -59,36 +59,17 @@ export CYBER_DOJO_RUNNER_TIMEOUT=10
 export CYBER_DOJO_RUNNER_SUDO=''
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# It seems Ruby does *not* ignore the first shebang line
-# in test/*.rb files when running a .rb file explicitly ala
-#    $ ruby test_parity.rb
-# So I create a temp file with the first line stripped off.
-# Yeuch!
-# This makes the line-number in any diagnostic off by one.
-# I fix that by putting an extra line at the top of the temp file.
-# Yeuch!
-# It also makes the (temp) filename wrong in any diagnostics.
-# If a single test file is being run I base the temp filename on
-# its filename which helps.
+# coverage is off
 
-if [ ${#testFiles[@]} -eq 1 ]; then
-  filename=${testFiles[0]}
-else
-  filename='all_tests'
-fi
-wrapped_filename="$filename.WRAPPED"
+ruby -e "%w( ${testFiles[*]} ).map{|file| './'+file}.each { |file| require file}" -- ${args[*]}
 
 #rm -rf ../../coverage/.resultset.json
 #mkdir -p coverage
 #wrapper_test_log='coverage/WRAPPER.log.tmp'
-
-(echo ''; (cat ${testFiles[*]}) | tail -n +2) > $wrapped_filename
-ruby $wrapped_filename -- ${args[*]} 2>&1 # | tee $wrapper_test_log
-
-rm $wrapped_filename
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#ruby $wrapped_filename -- ${args[*]} 2>&1 # | tee $wrapper_test_log
+#rm $wrapped_filename
 #cp -R ../../coverage .
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 #pwd                       # eg  .../cyber-dojo/test/app_lib
 cwd=${PWD##*/}             # eg  app_lib
