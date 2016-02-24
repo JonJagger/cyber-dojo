@@ -9,7 +9,6 @@ class DockerMachineRunnerTests < LibTestBase
     super
     set_shell_class    'MockHostShell'
     set_runner_class   'DockerMachineRunner'
-    set_caches_root tmp_root + 'caches'
     setup_shell_mock_execs_used_to_create_runner_cache
   end
 
@@ -24,10 +23,10 @@ class DockerMachineRunnerTests < LibTestBase
   'first use of runner automatically creates cache by executing',
   '[docker-machine ls -q] and then',
   '[sudo -u cyber-dojo docker-machine ssh NODE -- sudo docker images] for each node' do
-    cache_filename = 'runner_cache.json'
-    refute disk[caches.path].exists?(cache_filename)
-    runner
-    assert disk[caches.path].exists?(cache_filename)
+    #cache_filename = 'runner_cache.json'
+    #refute disk[caches.path].exists?(cache_filename)
+    #runner
+    #assert disk[caches.path].exists?(cache_filename)
 
     expected = ['Python, py.test', 'Ruby, Test::Unit']
     actual = runner.runnable_languages.map { |language| language.display_name }.sort
@@ -86,7 +85,7 @@ class DockerMachineRunnerTests < LibTestBase
 
   def mock_run(node, mock_output, mock_exit_status)
     kata = mock_run_setup(node, mock_output, mock_exit_status)
-    runner.run(nil, nil, nil, files={}, kata.language.image_name, max_seconds)
+    runner.run(nil, nil, nil, files={}, kata.language.image_name)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

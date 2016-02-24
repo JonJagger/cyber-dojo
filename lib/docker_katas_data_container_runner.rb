@@ -28,8 +28,8 @@ class DockerKatasDataContainerRunner
 
   # modifiers
 
-  def run(id, name, delta, files, image_name)
-    sandbox = katas[id].avatars[name].sandbox
+  def run(avatar, delta, files, image_name)
+    sandbox = avatar.sandbox
     katas.sandbox_save(sandbox, delta, files)
     katas_sandbox_path = katas.path_of(sandbox)
     # See sudo comments in docker/web/Dockerfile

@@ -3,14 +3,12 @@
 require_relative './lib_test_base'
 require_relative './docker_test_helpers'
 
-class DockerTmpRunnerTests < LibTestBase
+class DockerKatasDataContainerRunnerTests < LibTestBase
 
   def setup
     super
     set_shell_class 'MockHostShell'
-    set_runner_class 'DockerTmpRunner'
-    set_caches_root tmp_root + 'caches'
-    setup_shell_mock_execs_used_to_create_runner_cache
+    set_runner_class 'DockerKatasDataContainerRunner'
   end
 
   def teardown
@@ -20,22 +18,10 @@ class DockerTmpRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '8092EF',
-  'config/cyber-dojo.json exists and names DockerTmpRunner as the default runner' do
-    runner # because of mock_exec
-    assert_equal 'DockerTmpRunner', dojo.config['class']['runner']
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '75909D',
-  'first use of runner automatically creates cache by executing [docker images]',
-  'which determines runnability' do
-    cache_filename = 'runner_cache.json'
-    refute disk[caches.path].exists?(cache_filename)
-    runner
-    assert disk[caches.path].exists?(cache_filename)
-
+  'mock_execs used to create runner cache' do
+    p "TODO: ADD SUDO"
+    shell.mock_exec(['docker images'], docker_images_python_pytest, success)
     expected = ['Python, py.test']
     actual = runner.runnable_languages.map { |language| language.display_name }.sort
     assert_equal expected, actual
@@ -73,23 +59,14 @@ class DockerTmpRunnerTests < LibTestBase
   'when run() times out',
   'then output is replaced by unable-to-complete message' do
     output = mock_run('ach-so-it-timed-out', times_out)
-    assert output.start_with?("Unable to complete the tests in #{max_seconds} seconds.")
+    max_seconds = dojo.env('runner', 'timeout')
+    expected = "Unable to complete the tests in #{max_seconds} seconds."
+    assert output.start_with?(expected), output
   end
 
   private
 
   include DockerTestHelpers
-
-  def setup_shell_mock_execs_used_to_create_runner_cache
-    shell.mock_exec(['docker images'], docker_images_python_pytest, success)
-  end
-
-  # - - - - - - - - - - - - - - -
-
-  def mock_run(mock_output, mock_exit_status)
-    kata = mock_run_setup(mock_output, mock_exit_status)
-    runner.run(nil, nil, nil, files={}, kata.language.image_name, max_seconds)
-  end
 
   # - - - - - - - - - - - - - - -
 
@@ -100,23 +77,37 @@ class DockerTmpRunnerTests < LibTestBase
 
   # - - - - - - - - - - - - - - -
 
+  def mock_run(mock_output, mock_exit_status)
+    lion = mock_run_setup(mock_output, mock_exit_status)
+    delta = { deleted: {}, new: {}, changed: {} }
+    runner.run(lion, delta, files={}, lion.kata.language.image_name)
+  end
+
+  # - - - - - - - - - - - - - - -
+
   def mock_run_setup(mock_output, mock_exit_status)
     kata = make_kata
-
+    lion = kata.start_avatar(['lion'])
     args = [
-      runner.tmp_path,
+      katas.path_of(lion.sandbox),
       kata.language.image_name,
-      max_seconds
+      dojo.env('runner', 'timeout'),
+      quoted(dojo.env('runner','sudo'))
     ].join(space = ' ')
 
     shell.mock_cd_exec(
       runner.path,
-      ["./docker_tmp_runner.sh #{args}"],
+      ["./docker_katas_data_container_runner.sh #{args}"],
       mock_output,
       mock_exit_status
    )
+   lion
+  end
 
-   kata
+  # - - - - - - - - - - - - - - -
+
+  def quoted(s)
+    "'" + s + "'"
   end
 
 end
