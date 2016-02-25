@@ -70,9 +70,11 @@ SANDBOX=/sandbox
 # that is printing in an infinite loop.
 # Any zombie processes this backgrounded process creates are reaped by tini.
 # See docker/web/Dockerfile
+# The parentheses put the commands into a child process.
+# The & backgrounds it
 
 (sleep ${MAX_SECS} && ${SUDO} docker rm --force ${CID} &> /dev/null) &
-SLEEP_DOCKER_RM_PPID=$!
+SLEEP_DOCKER_RM_PID=$!
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 4. Run cyber-dojo.sh
@@ -94,12 +96,13 @@ OUTPUT=$(${SUDO} docker exec \
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 6. If the sleep-docker-rm process is still alive race to kill it
 #    before it does [docker rm ${CID}]
+#    pkill == kill processes, -P PID == whose parent pid is PID
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-pkill -P ${SLEEP_DOCKER_RM_PPID}
+pkill -P ${SLEEP_DOCKER_RM_PID}
 if [ "$?" != "0" ]; then
   # Failed to kill the sleep-docker-rm process
-  # Assuming [docker rm ${CID}] happened
+  # Assume [docker rm ${CID}] happened
   ${SUDO} docker rm --force ${CID} &> /dev/null # belt and braces
   exit 137 # (128=timed-out) + (9=killed)
 fi
@@ -120,14 +123,14 @@ fi
 # o) Tar-pipe *everything* out of the run-container's sandbox back to SRC_DIR
 # o) Remove the container.
 #
-# When this runs it outputs the following diagnostic to stdout
+# When this runs it outputs the following diagnostic to stdout/stderr
 #    tar: .: Not found in archive
 #    tar: Error exit delayed from previous errors.
 # As best I can tell this is because of the . in one of the tar-commands
 # and refers the dot as in the current directory. It seems to be harmless.
-# The files are tarred back, saved, git commited, and git diff works.
+# The files are tarred back, are saved, are git commited, and git diff works.
 
-echo "${OUTPUT}" # | head -c 10k
+echo "${OUTPUT}"
 
 ${SUDO} docker exec \
                --user=root \

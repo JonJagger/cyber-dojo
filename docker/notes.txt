@@ -15,7 +15,7 @@ Blog
 =======================================================================
 Development
 0. Add dev-info to main github readme
-   - running local-server (fast feedback)
+   - running dev-server (fast feedback, ruby,bundle-install,docker pull a few langs)
    - running dind server with app volumes-from:ro
 
 =======================================================================
@@ -33,6 +33,15 @@ Major
 =======================================================================
 Later
 0. Alpine base for few more common languages?
+
+=======================================================================
+Kata-id validity
+0. enter a practice session
+   if kata-id is valid but language it's for is not installed then
+   the start/continue buttons should be disabled
+0. fork (from review-diff)
+   if the language is not installed then fork should be disabled.
+
 
 =======================================================================
 Later
