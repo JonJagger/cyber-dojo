@@ -21,7 +21,7 @@ HOST_KATAS=${HOST_KATAS_DEFAULT} # where katas are stored on the *host*
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # TODO: add command to backup katas-data-container to tar.tgz file
-# TODO: detect if more than one command entered
+# TODO: detect if more than one command entered?
 # TODO: pull all language images == fetch? all?
 #
 
