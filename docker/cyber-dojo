@@ -69,34 +69,57 @@ up()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - -
 
+create_empty_katas_data_container()
+{
+  # HOW?
+  true
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - -
+
+create_full_katas_data_container()
+{
+  # echo 'FROM cyberdojofoundation/user-base'                  > ${KATAS}/Dockerfile
+  # echo 'MAINTAINER Jon Jagger <jon@jaggersoft.com>'         >> ${KATAS}/Dockerfile
+  # echo 'ARG CYBER_DOJO_KATAS_ROOT'                          >> ${KATAS}/Dockerfile
+  # echo 'USER root'                                          >> ${KATAS}/Dockerfile
+  # echo 'RUN  mkdir -p ${CYBER_DOJO_KATAS_ROOT}'             >> ${KATAS}/Dockerfile
+  # echo 'COPY . ${CYBER_DOJO_KATAS_ROOT}'                    >> ${KATAS}/Dockerfile
+  # echo 'RUN  chown -R cyber-dojo ${CYBER_DOJO_KATAS_ROOT}'  >> ${KATAS}/Dockerfile
+  # echo 'VOLUME [ "${CYBER_DOJO_KATAS_ROOT}" ]'              >> ${KATAS}/Dockerfile
+  # echo 'CMD [ "katas-data-container" ]'                     >> ${KATAS}/Dockerfile
+  #
+  # docker build \
+  #     --build-arg=CYBER_DOJO_KATAS_ROOT=${HOME}/katas \
+  #     --tag=cyberdojofoundation/katas \
+  #     --file=${KATAS}/Dockerfile \
+  #     ${KATAS}
+  #
+  # docker run \
+  #     --name katas-DATA-CONTAINER \
+  #     cyberdojofoundation/katas \
+  #     echo 'cdfKatasDC'
+
+  true
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - -
+
 one_time_create_katas_data_container()
 {
-  # if [ "${KATAS}" == "${KATAS_DEFAULT}" ] && [ ! -d "${KATAS}" ]; then
-  #    # katas not specified, no dir at default location. Assume new server
-  #    docker ps -a | grep katas-DATA-CONTAINER > /dev/null
-  #    if [ $? != 0 ]; then
-  #      # no katas-data-container yet - make it
-  #      ...CREATE EMPTY DATA-CONTAINER
-  #    fi
-  # fi
-
   if [ "${KATAS}" != "${KATAS_DEFAULT}" ] && [ ! -d "${KATAS}" ]; then
     echo "${ME}: katas=${KATAS} ? ${KATAS} directory does not exist"
     echo "See ${ME} help"
     exit
   fi
 
-  # if [ "${KATAS}" != "${KATAS_DEFAULT}" ] && [ -d "${KATAS}" ]; then
-  #    # katas specified, dir at specified location.
-  #    docker ps -a | grep katas-DATA-CONTAINER > /dev/null
-  #    if [ $? == 0 ]; then
-  #      # katas-data-container already exists
-  #      # echo WARNING
-  #      exit
-  #    else
-  #      ...CREATE FULL KATAS-DATA-CONTAINER
-  #    fi
-  # fi
+  if [ "${KATAS}" == "${KATAS_DEFAULT}" ] && [ ! -d "${KATAS}" ]; then
+     # katas not specified, no dir at default location. Assume new server
+     create_empty_katas_data_container
+  else
+     # katas specified, dir at specified location, copy in
+     create_full_katas_data_container
+  fi
 }
 
 #========================================================================================
@@ -271,6 +294,11 @@ done
 
 if [ -n "${doHelp}" ]; then show_use; exit; fi
 if [ $# -eq 0       ]; then show_use; exit; fi
+
+docker ps -a | grep katas-DATA-CONTAINER > /dev/null
+if [ $? != 0 ]; then
+  one_time_create_katas_data_container
+fi
 
 #========================================================================================
 # install docker if necessary
