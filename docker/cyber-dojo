@@ -59,7 +59,6 @@ down()
 
 up()
 {
-  exit_if_bad_katas_dir
   one_time_create_katas_data_container
   pull_common_languages_if_none
   CWD=$(pwd)
@@ -72,28 +71,32 @@ up()
 
 one_time_create_katas_data_container()
 {
-  # if there is ALREADY a katas-data-container then return from this function
-
-  # if [ "${HOST_KATAS}" == "${HOST_KATAS_DEFAULT}" ] && [ ! -d "${HOST_KATAS}" ]; then
-  #    CREATE EMPTY DATA-CONTAINER
+  # if [ "${KATAS}" == "${KATAS_DEFAULT}" ] && [ ! -d "${KATAS}" ]; then
+  #    # katas not specified, no dir at default location. Assume new server
+  #    docker ps -a | grep katas-DATA-CONTAINER > /dev/null
+  #    if [ $? != 0 ]; then
+  #      # no katas-data-container yet - make it
+  #      ...CREATE EMPTY DATA-CONTAINER
+  #    fi
   # fi
 
-  # if [ "${HOST_KATAS}" != "${HOST_KATAS_DEFAULT}" ]
-  #    CREATE FULL KATAS-DATA-CONTAINER
-  # fi
-  true
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - -
-
-exit_if_bad_katas_dir()
-{
-  # overriding the default, dir must exist
   if [ "${KATAS}" != "${KATAS_DEFAULT}" ] && [ ! -d "${KATAS}" ]; then
     echo "${ME}: katas=${KATAS} ? ${KATAS} directory does not exist"
     echo "See ${ME} help"
     exit
   fi
+
+  # if [ "${KATAS}" != "${KATAS_DEFAULT}" ] && [ -d "${KATAS}" ]; then
+  #    # katas specified, dir at specified location.
+  #    docker ps -a | grep katas-DATA-CONTAINER > /dev/null
+  #    if [ $? == 0 ]; then
+  #      # katas-data-container already exists
+  #      # echo WARNING
+  #      exit
+  #    else
+  #      ...CREATE FULL KATAS-DATA-CONTAINER
+  #    fi
+  # fi
 }
 
 #========================================================================================
@@ -274,7 +277,7 @@ if [ $# -eq 0       ]; then show_use; exit; fi
 #========================================================================================
 
 hash docker 2> /dev/null
-if [ $? != 0  ]; then
+if [ $? != 0 ]; then
   echo
   echo 'cyber-dojo is installing docker'
   curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/install-docker.sh
