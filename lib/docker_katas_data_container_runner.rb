@@ -32,8 +32,8 @@ class DockerKatasDataContainerRunner
     sandbox = avatar.sandbox
     katas.sandbox_save(sandbox, delta, files)
     katas_sandbox_path = katas.path_of(sandbox)
-    # See sudo comments in docker/web/Dockerfile
     max_seconds = parent.env('runner', 'timeout')
+    # See sudo comments in docker/web/Dockerfile
     sudo = parent.env('runner', 'sudo')
     args = [ katas_sandbox_path, image_name, max_seconds, quoted(sudo) ].join(space = ' ')
     output, exit_status = shell.cd_exec(path, "./docker_katas_data_container_runner.sh #{args}")

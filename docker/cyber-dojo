@@ -31,24 +31,24 @@ show_use()
   echo "Use: ${ME} COMMAND"
   echo "     ${ME} help"
   echo
-  echo 'COMMAND(containers):'
+  echo 'COMMAND(server):'
   # TODO: backup a katas-ID data-container
-  echo '     down                     Stops and removes server containers'
-  echo '     up [OPTIONS]             Creates and starts the server containers'
-  echo "         katas=DIR            default:  katas=${HOST_KATAS_DEFAULT}"
-  echo "         runner=CLASS_NAME    default: runner=${RUNNER_DEFAULT}"
+  echo '     down                 Stops and removes server'
+  echo '     up [OPTIONS]         Creates and starts the server'
+  echo "         katas=DIR        default:  katas=${HOST_KATAS_DEFAULT}"
+  echo "         runner=CLASS     default: runner=${RUNNER_DEFAULT}"
   echo
-  echo 'COMMAND(images):'
-  echo '     images                   Lists pulled language images'
-  echo '     pull=IMAGE               Pulls language IMAGE'
-  echo '     repo                     Lists all language images'
-  echo '     rmi=IMAGE                Removes a pulled language IMAGE'
-  echo '     upgrade                  Pulls the latest server and language images'
+  echo 'COMMAND(languages):'
+  echo '     images               Lists pulled languages'
+  echo '     pull=IMAGE           Pulls language IMAGE'
+  echo '     repo                 Lists all languages'
+  echo '     rmi=IMAGE            Removes a pulled language IMAGE'
+  echo '     upgrade              Pulls the latest server and languages'
   echo
 }
 
 #========================================================================================
-# containers
+# server
 #========================================================================================
 
 down()
@@ -82,6 +82,7 @@ exit_if_bad_katas()
   fi
 
   # TODO: if there is ALREADY a katas-data-container then return from this function
+  #       is that the best option? alternative is to remake it
 
   # TODO:
   # if HOST_KATAS does not exist assume this server is new
@@ -108,7 +109,7 @@ exit_if_bad_runner()
 }
 
 #========================================================================================
-# images
+# languages
 #========================================================================================
 
 pulled_language_images()
@@ -152,7 +153,7 @@ pull()
 repo()
 {
   # will pull web image if necessary
-  docker run --name cdf-languages cyberdojofoundation/languages echo 'languages-data-container'
+  docker run --name cdf-languages ${REPO}/languages echo 'languages-data-container'
   docker run --rm --volumes-from=cdf-languages ${REPO}/web sh -c "./app/languages/list_all_images.rb"
   docker rm --force cdf-languages
 }
@@ -218,16 +219,9 @@ download_latest_docker_compose_yml()
 for ARG in "$@"
 do
   case ${ARG} in
-    help)
-      show_use
-      exit
-      ;;
-    # - - - - - - - containers - - - - - - - -
+    # - - - - - - - server - - - - - - - -
     down)
       doDown=true
-      ;;
-    ps)
-      doPs=true
       ;;
     start)
       doStart=true
@@ -241,14 +235,14 @@ do
     up)
       doUp=true
       ;;
-    # - - - - - - - options - - - - - - - -
+    # - - - - - - - up options - - - - - - - -
     katas=*)
       KATAS="${ARG#*=}"
       ;;
     runner=*)
       RUNNER="${ARG#*=}"
       ;;
-    # - - - - - - - images - - - - - - - -
+    # - - - - - - - languages - - - - - - - -
     images)
       doImages=true
       ;;
@@ -266,6 +260,10 @@ do
     upgrade)
       doUpgrade=true
       ;;
+    # - - - - - - - - - - - - - - -
+    help)
+      doHelp=true
+      ;;
     # - - - - - - - something's not right - - - - - - - -
     *)
       echo "${ME}: ${ARG} ?"
@@ -279,10 +277,8 @@ done
 # nothing is implicit
 #========================================================================================
 
-if [ $# -eq 0 ]; then
-  show_use
-  exit
-fi
+if [ -n "${doHelp}" ]; then show_use; exit; fi
+if [ $# -eq 0       ]; then show_use; exit; fi
 
 #========================================================================================
 # install docker if necessary
@@ -342,12 +338,8 @@ export CYBER_DOJO_RUNNER_TIMEOUT=10
 # do something!
 #========================================================================================
 
-if [ -n "${doPs}"      ]; then ps     ; exit; fi
-if [ -n "${doStart}"   ]; then start  ; exit; fi
-if [ -n "${doStop}"    ]; then stop   ; exit; fi
-if [ -n "${doRm}"      ]; then rm     ; exit; fi
-if [ -n "${doUp}"      ]; then up     ; exit; fi
 if [ -n "${doDown}"    ]; then down   ; exit; fi
+if [ -n "${doUp}"      ]; then up     ; exit; fi
 
 if [ -n "${doImages}"  ]; then images ; exit; fi
 if [ -n "${doPull}"    ]; then pull   ; exit; fi
