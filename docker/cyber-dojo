@@ -304,13 +304,15 @@ fi
 # install docker if necessary
 #========================================================================================
 
+GITHUB_URL=https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker
 hash docker 2> /dev/null
 if [ $? != 0 ]; then
   echo
   echo 'cyber-dojo is installing docker'
-  curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/install-docker.sh
-  chmod +x install-docker.sh
-  ./install-docker.sh
+  SCRIPT=install-docker.sh
+  curl -O ${GITHUB_URL}/${SCRIPT}
+  chmod +x ${SCRIPT}
+  ./${SCRIPT}
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -319,9 +321,10 @@ hash docker-machine 2> /dev/null
 if [ $? != 0 ]; then
   echo
   echo 'cyber-dojo is installing docker-machine'
-  curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/install-docker-machine.sh
-  chmod +x install-docker-machine.sh
-  ./install-docker-machine.sh
+  SCRIPT=install-docker-machine.sh
+  curl -O ${GITHUB_URL}/${SCRIPT}
+  chmod +x ${SCRIPT}
+  ./${SCRIPT}
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -330,9 +333,10 @@ hash docker-compose 2> /dev/null
 if [ $? != 0 ]; then
   echo
   echo 'cyber-dojo is installing docker-compose'
-  curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/install-docker-compose.sh
-  chmod +x install-docker-compose.sh
-  ./install-docker-compose.sh
+  SCRIPT=install-docker-compose.sh
+  curl -O ${GITHUB_URL}/${SCRIPT}
+  chmod +x ${SCRIPT}
+  ./${SCRIPT}
 fi
 
 #========================================================================================
