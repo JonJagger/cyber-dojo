@@ -41,7 +41,7 @@ show_use()
   echo 'COMMAND(languages):'
   echo '     images               Lists pulled languages'
   echo '     pull=IMAGE           Pulls language IMAGE'
-  echo '     repo                 Lists all languages'
+  echo '     catalog              Lists all languages'
   echo '     rmi=IMAGE            Removes a pulled language IMAGE'
   echo '     upgrade              Pulls the latest server and languages'
   echo
@@ -150,10 +150,10 @@ pull()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-repo()
+catalog()
 {
   # will pull web image if necessary
-  docker run --name cdf-languages ${REPO}/languages echo 'languages-data-container'
+  docker run --name cdf-languages ${REPO}/languages echo 'languages-data-container' > /dev/null
   docker run --rm --volumes-from=cdf-languages ${REPO}/web sh -c "./app/languages/list_all_images.rb"
   docker rm --force cdf-languages
 }
@@ -250,8 +250,8 @@ do
       IMAGE="${ARG#*=}"
       doPull=true
       ;;
-    repo)
-      doRepo=true
+    catalog)
+      doCatalog=true
       ;;
     rmi=*)
       IMAGE="${ARG#*=}"
@@ -343,6 +343,6 @@ if [ -n "${doUp}"      ]; then up     ; exit; fi
 
 if [ -n "${doImages}"  ]; then images ; exit; fi
 if [ -n "${doPull}"    ]; then pull   ; exit; fi
-if [ -n "${doRepo}"    ]; then repo   ; exit; fi
+if [ -n "${doCatalog}" ]; then catalog; exit; fi
 if [ -n "${doRmi}"     ]; then rmi    ; exit; fi
 if [ -n "${doUpgrade}" ]; then upgrade; exit; fi

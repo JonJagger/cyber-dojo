@@ -50,7 +50,7 @@ show_use()
   echo 'COMMAND(language images):'
   echo '     clean                Removes untagged images'
   echo '     images               Lists pulled languages'
-  echo '     repo                 Lists all languages'
+  echo '     catalog              Lists all languages'
   echo
 }
 
@@ -213,8 +213,8 @@ do
     images)
       doImages=true
       ;;
-    repo)
-      doRepo=true
+    catalog)
+      doCatalog=true
       ;;
     # - - - - - - - misc - - - - - - - -
     help)
@@ -247,7 +247,7 @@ if [ -n "${doSh}"        ]; then sh   ; exit; fi
 if [ -n "${doUp}"        ]; then delegate; exit; fi
 if [ -n "${doDown}"      ]; then delegate; exit; fi
 if [ -n "${doImages}"    ]; then delegate; exit; fi
-if [ -n "${doRepo}"      ]; then delegate; exit; fi
+if [ -n "${doCatalog}"   ]; then delegate; exit; fi
 
 if [ -n "${doBuild}"     ]; then build; exit; fi
 if [ -n "${doPull}"      ]; then pull ; exit; fi
