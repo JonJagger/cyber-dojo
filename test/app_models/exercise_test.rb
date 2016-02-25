@@ -7,7 +7,7 @@ class ExerciseTest < AppModelsTestBase
   prefix = '2DD'
 
   test prefix+'3A7',
-  'exercises[name] is nil if name is not an existing exercise' do
+  'exercises[name] is nil when name is not an existing exercise' do
     assert_nil exercises['wibble_XXX']
   end
 
