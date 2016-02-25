@@ -2,7 +2,7 @@
 
 require_relative './app_models_test_base'
 
-class ExercisesTests < AppModelsTestBase
+class ExercisesTest < AppModelsTestBase
 
   test '14AD4C',
   'exercises path has correct basic format when set with trailing slash' do

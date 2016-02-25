@@ -3,7 +3,7 @@
 require_relative './app_models_test_base'
 require_relative './delta_maker'
 
-class DeltaMakerTests < AppModelsTestBase
+class DeltaMakerTest < AppModelsTestBase
 
   def setup
     super

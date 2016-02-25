@@ -2,7 +2,7 @@
 
 require_relative './app_models_test_base'
 
-class ExerciseTests < AppModelsTestBase
+class ExerciseTest < AppModelsTestBase
 
   prefix = '2DD'
 

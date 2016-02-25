@@ -2,7 +2,7 @@
 
 require_relative './app_models_test_base'
 
-class LanguagesTests < AppModelsTestBase
+class LanguagesTest < AppModelsTestBase
 
   test '743810',
   'languages path has correct format when set with trailing slash' do

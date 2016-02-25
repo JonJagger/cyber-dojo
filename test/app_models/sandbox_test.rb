@@ -2,7 +2,7 @@
 
 require_relative './app_models_test_base'
 
-class SandboxTests < AppModelsTestBase
+class SandboxTest < AppModelsTestBase
 
   test '721FF6',
   "avatar's sandbox == sandbox's avatar" do

@@ -2,7 +2,7 @@
 
 require_relative './app_models_test_base'
 
-class LightsTests < AppModelsTestBase
+class LightsTest < AppModelsTestBase
 
   test '881D3F',
   'lights initially empty' do

@@ -3,7 +3,7 @@
 require_relative './app_models_test_base'
 require_relative './delta_maker'
 
-class LightTests < AppModelsTestBase
+class LightTest < AppModelsTestBase
 
   test 'AC96D0',
   'colour is converted to a symbol' do

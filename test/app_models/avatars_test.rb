@@ -2,7 +2,7 @@
 
 require_relative './app_models_test_base'
 
-class AvatarsTests < AppModelsTestBase
+class AvatarsTest < AppModelsTestBase
 
   test '631149',
   'there are 64 avatar names' do

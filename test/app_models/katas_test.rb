@@ -2,7 +2,7 @@
 
 require_relative './app_models_test_base'
 
-class KatasTests < AppModelsTestBase
+class KatasTest < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # katas.create_kata()

@@ -7,10 +7,10 @@ class ExternalDouble
   end
 end
 
-class DojoTests < AppModelsTestBase
+class DojoTest < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
-  # no defaults
+  # external classes and roots have no defaults
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'AACE2A',
@@ -31,7 +31,7 @@ class DojoTests < AppModelsTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
-  # external classes
+  # external classes can be set via environment variables
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'D51880',
@@ -55,7 +55,7 @@ class DojoTests < AppModelsTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
-  # external roots
+  # external roots can be set via environment variables
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '209EA1',

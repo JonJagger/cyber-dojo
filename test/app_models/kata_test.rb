@@ -2,7 +2,7 @@
 
 require_relative './app_models_test_base'
 
-class KataTests < AppModelsTestBase
+class KataTest < AppModelsTestBase
 
   test 'F3B8B1',
   'attempting to access a Kata with an invalid is nil' do
