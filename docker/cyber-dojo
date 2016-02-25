@@ -13,9 +13,8 @@ RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 DOCKER_COMPOSE_FILE=docker-compose.yml
 DOCKER_COMPOSE_CMD="docker-compose --file=./${DOCKER_COMPOSE_FILE}"
 
-# TODO: USE THIS ONLY FOR 1st TIME CREATION OF KATAS-DATA-CONTAINER
-HOST_KATAS_DEFAULT=/var/www/cyber-dojo/katas
-HOST_KATAS=${HOST_KATAS_DEFAULT} # where katas are stored on the *host*
+KATAS_DEFAULT=/var/www/cyber-dojo/katas
+KATAS=${KATAS_DEFAULT} # where katas are stored on the *host*
                                  # and get copied into the katas-data-container
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -60,9 +59,8 @@ down()
 
 up()
 {
-  # TODO: test in main flow?
-  exit_if_bad_katas
-  exit_if_bad_runner
+  exit_if_bad_katas_dir
+  one_time_create_katas_data_container
   pull_common_languages_if_none
   CWD=$(pwd)
   cd "${MY_DIR}" > /dev/null
@@ -72,37 +70,27 @@ up()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - -
 
-exit_if_bad_katas()
+one_time_create_katas_data_container()
 {
-  # overriding the default, dir must exist
-  if [ "${HOST_KATAS}" != "${HOST_KATAS_DEFAULT}" ] && [ ! -d "${HOST_KATAS}" ]; then
-    echo "${ME}: katas=${HOST_KATAS} ? ${HOST_KATAS} directory does not exist"
-    echo "See ${ME} help"
-    exit
-  fi
+  # if there is ALREADY a katas-data-container then return from this function
 
-  # TODO: if there is ALREADY a katas-data-container then return from this function
-  #       is that the best option? alternative is to remake it
+  # if [ "${HOST_KATAS}" == "${HOST_KATAS_DEFAULT}" ] && [ ! -d "${HOST_KATAS}" ]; then
+  #    CREATE EMPTY DATA-CONTAINER
+  # fi
 
-  # TODO:
-  # if HOST_KATAS does not exist assume this server is new
-  #   and create an empty katas-data-container
-  #
-  # TODO:
-  # if HOST_KATAS does exist assume this server is replacing an existing one
-  #   and create a full katas-data-container
-  # being hosted where a previous (non dockerized) server lived.
+  # if [ "${HOST_KATAS}" != "${HOST_KATAS_DEFAULT}" ]
+  #    CREATE FULL KATAS-DATA-CONTAINER
+  # fi
+  true
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - -
 
-exit_if_bad_runner()
+exit_if_bad_katas_dir()
 {
-  # TODO: StubRunner for running tests inside the container?
-  if [ "${RUNNER}" != 'DockerKatasDataContainerRunner' ] &&
-     [ "${RUNNER}" != 'DockerMachineRunner' ];
-  then
-    echo "${ME}: runner=${RUNNER} ?"
+  # overriding the default, dir must exist
+  if [ "${KATAS}" != "${KATAS_DEFAULT}" ] && [ ! -d "${KATAS}" ]; then
+    echo "${ME}: katas=${KATAS} ? ${KATAS} directory does not exist"
     echo "See ${ME} help"
     exit
   fi
@@ -134,7 +122,7 @@ pulled_language_images()
 
 images()
 {
-  # FIXME: this gives the same as repo when there are no languages pulled
+  # FIXME: this gives the same as catalog when there are no languages pulled
   CATALOG=$(catalog)
   PULLED=$(pulled_language_images)
   echo "${CATALOG}" | grep 'LANGUAGE'

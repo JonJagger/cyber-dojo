@@ -11,8 +11,8 @@ HUB_USER=cyberdojofoundation     # username on docker hub
 RUNNER_DEFAULT=DockerKatasDataContainerRunner
 RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 
-HOST_KATAS_DEFAULT=/var/www/cyber-dojo/katas
-HOST_KATAS=${HOST_KATAS_DEFAULT} # where old (non data-container) katas may be on the *host*
+KATAS_DEFAULT=/var/www/cyber-dojo/katas
+KATAS=${KATAS_DEFAULT}           # where old (non data-container) katas may be on the *host*
 
 # important this does NOT include katas
 IMAGES=(user-base language-base exercises languages rails-app rails-log rails-tmp test nginx web)
