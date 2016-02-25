@@ -5,7 +5,7 @@ ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
 HOME=/usr/src/cyber-dojo         # home folder *inside* the server image
-REPO=cyberdojofoundation         # username on docker hub
+HUB_USER=cyberdojofoundation     # username on docker hub
 
 RUNNER_DEFAULT=DockerKatasDataContainerRunner
 RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
@@ -114,8 +114,8 @@ exit_if_bad_runner()
 
 pulled_language_images()
 {
-  ALL_LANGUAGE_IMAGES=$(echo "${LS_REPO}" | awk '{print $NF}' | sort)
-  PULLED_IMAGES=$(docker images | grep ${REPO} | awk '{print $1}')
+  ALL_LANGUAGE_IMAGES=$(echo "${CATALOG}" | awk '{print $NF}' | sort)
+  PULLED_IMAGES=$(docker images | grep ${HUB_USER} | awk '{print $1}')
   SPLIT=$(echo "${PULLED_IMAGES}" | sed 's/\// /g')
   PULLED_IMAGES=$(echo "${SPLIT}" | awk '{print $NF}' | sort)
 
@@ -135,17 +135,17 @@ pulled_language_images()
 images()
 {
   # FIXME: this gives the same as repo when there are no languages pulled
-  LS_REPO=$(repo)
+  CATALOG=$(catalog)
   PULLED=$(pulled_language_images)
-  echo "${LS_REPO}" | grep 'LANGUAGE'
-  echo "${LS_REPO}" | grep "${PULLED}"
+  echo "${CATALOG}" | grep 'LANGUAGE'
+  echo "${CATALOG}" | grep "${PULLED}"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 pull()
 {
-  docker pull ${REPO}/${IMAGE}:latest
+  docker pull ${HUB_USER}/${IMAGE}:latest
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -153,23 +153,24 @@ pull()
 catalog()
 {
   # will pull web image if necessary
-  docker run --name cdf-languages ${REPO}/languages echo 'languages-data-container' > /dev/null
-  docker run --rm --volumes-from=cdf-languages ${REPO}/web sh -c "./app/languages/list_all_images.rb"
-  docker rm --force cdf-languages
+  LANG_CONTAINER=cdf-languages
+  docker run --name ${LANG_CONTAINER} ${HUB_USER}/languages echo 'languages-data-container' > /dev/null
+  docker run --rm --volumes-from=${LANG_CONTAINER} ${HUB_USER}/web sh -c "./app/languages/list_all_images.rb"
+  docker rm --force ${LANG_CONTAINER} > /dev/null
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 rmi()
 {
-  docker rmi ${REPO}/${IMAGE}
+  docker rmi ${HUB_USER}/${IMAGE}
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 pull_common_languages_if_none()
 {
-  LS_REPO=$(repo)
+  CATALOG=$(catalog)
   PULLED=$(pulled_language_images)
   if [ -z "${PULLED}" ]; then
     echo 'No language images pulled'
@@ -197,7 +198,7 @@ upgrade()
   done
 
   echo 'upgrading cyber-dojo pulled language images'
-  LS_REPO=$(repo)
+  CATALOG=$(catalog)
   PULLED=$(pulled_language_images)
   echo "${PULLED}" | while read IMAGE ; do
     pull

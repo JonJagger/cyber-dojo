@@ -6,7 +6,7 @@ MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 ARGS=${@}
 
 HOME=/usr/src/cyber-dojo         # home folder *inside* the images/containers
-REPO=cyberdojofoundation         # username on docker hub
+HUB_USER=cyberdojofoundation     # username on docker hub
 
 RUNNER_DEFAULT=DockerKatasDataContainerRunner
 RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
@@ -72,7 +72,7 @@ build()
   cd "${MY_DIR}" > /dev/null
   for IMAGE in ${IMAGES[*]}
   do
-    echo ${REPO}/${IMAGE}
+    echo ${HUB_USER}/${IMAGE}
     ./${IMAGE}/build-image.sh ${HOME}
   done
   cd "${CWD}" > /dev/null
@@ -105,8 +105,8 @@ pull()
 {
   for IMAGE in ${IMAGES[*]}
   do
-    echo "PULLING: ${REPO}/${IMAGE}"
-    docker pull ${REPO}/${IMAGE}
+    echo "PULLING: ${HUB_USER}/${IMAGE}"
+    docker pull ${HUB_USER}/${IMAGE}
   done
 }
 
@@ -128,8 +128,8 @@ push()
 
   for IMAGE in ${IMAGES[*]}
   do
-    echo "PUSHING: ${REPO}/${IMAGE}"
-    docker push ${REPO}/${IMAGE}
+    echo "PUSHING: ${HUB_USER}/${IMAGE}"
+    docker push ${HUB_USER}/${IMAGE}
   done
 }
 
@@ -139,7 +139,7 @@ rmi()
 {
   for IMAGE in ${IMAGES[*]}
   do
-    docker rmi -f ${REPO}/${IMAGE} 2&> /dev/null
+    docker rmi -f ${HUB_USER}/${IMAGE} 2&> /dev/null
   done
 }
 
