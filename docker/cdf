@@ -15,7 +15,7 @@ HOST_KATAS_DEFAULT=/var/www/cyber-dojo/katas
 HOST_KATAS=${HOST_KATAS_DEFAULT} # where old (non data-container) katas may be stored on the *host*
 
 # important this does NOT include katas
-IMAGES=(user-base exercises languages rails-app rails-log rails-tmp test nginx web)
+IMAGES=(user-base language-base exercises languages rails-app rails-log rails-tmp test nginx web)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # TODO: add test command.
