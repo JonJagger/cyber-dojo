@@ -3,6 +3,9 @@
 Testing
 0. Get all tests passing from outside container. (no caches anymore).
 0. Add languages test that looks for sandbox as explicit path in cyber-dojo.sh files.
+0. Add test for creating cache. Reinstate FakeDisk? Would be nice if I could
+   use real Disk to certain point and then switch in the Fake. Can that be done?
+   Use an approach similar to MockHostShell
 0. Test failing (outside container)
    $ test/lib/test_host_dsk_katas.rb 1a3
    Why am I getting so much output?
