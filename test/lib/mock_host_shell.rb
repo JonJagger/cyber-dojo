@@ -31,16 +31,6 @@ class MockHostShell
 
   # - - - - - - - - - - - - - - - - -
 
-  def mock_exec(commands, output, exit_status)
-    @exec_mock << {
-         commands: commands,
-           output: output,
-      exit_status: exit_status
-    }
-  end
-
-  # - - - - - - - - - - - - - - - - -
-
   def cd_exec(path, *commands)
     return @target.cd_exec(path, *commands) if @cd_exec_mock == []
     mock = @cd_exec_mock.shift
@@ -48,6 +38,16 @@ class MockHostShell
       complain('cd_exec', "#{mock[:path]}, #{mock[:commands]}", "#{path}, #{commands}")
     end
     return mock[:output], mock[:exit_status]
+  end
+
+  # - - - - - - - - - - - - - - - - -
+
+  def mock_exec(commands, output, exit_status)
+    @exec_mock << {
+         commands: commands,
+           output: output,
+      exit_status: exit_status
+    }
   end
 
   # - - - - - - - - - - - - - - - - -

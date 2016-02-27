@@ -11,6 +11,9 @@ Testing
    The general case is to have a ProxyMock which has two methods
    - one to setup a stub expectation.
    - one to setup a spy exceptation.
+   Will need to have the same ctor signature. That means
+   the proxied object will have to be set in a setter.
+
 0. Test failing (outside container)
    $ test/lib/test_host_dsk_katas.rb 1a3
    Why am I getting so much output?
