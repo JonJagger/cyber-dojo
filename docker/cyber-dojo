@@ -20,7 +20,6 @@ KATAS=${KATAS_DEFAULT} # where katas are stored on the *host*
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # TODO: add command to backup katas-data-container to tar.tgz file
-# TODO: detect if more than one command entered?
 # TODO: pull all language images == fetch? all?
 #
 
@@ -231,24 +230,30 @@ download_latest_docker_compose_yml()
 # process command-line args
 #========================================================================================
 
+COUNT=0
 for ARG in "$@"
 do
   case ${ARG} in
     # - - - - - - - server - - - - - - - -
     down)
       doDown=true
+      COUNT=$((COUNT + 1))
       ;;
     start)
       doStart=true
+      COUNT=$((COUNT + 1))
       ;;
     stop)
       doStop=true
+      COUNT=$((COUNT + 1))
       ;;
     rm)
       doRm=true
+      COUNT=$((COUNT + 1))
       ;;
     up)
       doUp=true
+      COUNT=$((COUNT + 1))
       ;;
     # - - - - - - - up options - - - - - - - -
     katas=*)
@@ -260,20 +265,25 @@ do
     # - - - - - - - languages - - - - - - - -
     images)
       doImages=true
+      COUNT=$((COUNT + 1))
       ;;
     pull=*)
       IMAGE="${ARG#*=}"
       doPull=true
+      COUNT=$((COUNT + 1))
       ;;
     catalog)
       doCatalog=true
+      COUNT=$((COUNT + 1))
       ;;
     rmi=*)
       IMAGE="${ARG#*=}"
       doRmi=true
+      COUNT=$((COUNT + 1))
       ;;
     upgrade)
       doUpgrade=true
+      COUNT=$((COUNT + 1))
       ;;
     # - - - - - - - - - - - - - - -
     help)
@@ -292,8 +302,20 @@ done
 # nothing is implicit
 #========================================================================================
 
-if [ -n "${doHelp}" ]; then show_use; exit; fi
-if [ $# -eq 0       ]; then show_use; exit; fi
+if ((${COUNT} > 0)); then
+  echo 'one command only please'
+  echo "See '${ME} help'"
+  exit
+fi
+if [ -n "${doHelp}" ]; then
+  show_use;
+  exit;
+fi
+if [ $# -eq 0 ]; then
+  echo 'no command entered'
+  echo "See '${ME} help'"
+  exit
+fi
 
 docker ps -a | grep katas-DATA-CONTAINER > /dev/null
 if [ $? != 0 ]; then

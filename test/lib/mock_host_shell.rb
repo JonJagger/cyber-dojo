@@ -1,4 +1,8 @@
 
+# This is partly a mock, but mostly a proxy.
+# Rename it to HostShellProxyMock
+# Rename it to ProxyMockHostShell
+
 class MockHostShell
 
   def initialize(dojo)
