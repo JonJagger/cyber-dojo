@@ -24,15 +24,6 @@ class HostShell
     return output, exit_status
   end
 
-  def daemon_exec(*commands)
-    command = commands.join(' && ')
-    log << command
-    fork do
-      Process.daemon
-      Process.exec(command)
-    end
-  end
-
   def exec(*commands)
     command = commands.join(' && ')
     log << "shell.exec:#{'-'*40}"

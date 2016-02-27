@@ -1,7 +1,6 @@
 
 # This is partly a mock, but mostly a proxy.
 # Rename it to HostShellProxyMock
-# Rename it to ProxyMockHostShell
 
 class MockHostShell
 
@@ -9,7 +8,6 @@ class MockHostShell
     @target = HostShell.new(dojo)
     @cd_exec_mock     = []
     @exec_mock        = []
-    @daemon_exec_mock = []
   end
 
   # - - - - - - - - - - - - - - - - -
@@ -43,14 +41,6 @@ class MockHostShell
 
   # - - - - - - - - - - - - - - - - -
 
-  def mock_daemon_exec(command)
-    @daemon_exec_mock << {
-      command: command
-    }
-  end
-
-  # - - - - - - - - - - - - - - - - -
-
   def cd_exec(path, *commands)
     return @target.cd_exec(path, *commands) if @cd_exec_mock == []
     mock = @cd_exec_mock.shift
@@ -69,16 +59,6 @@ class MockHostShell
       complain('exec', "#{mock[:commands]}", "#{commands}")
     end
     return mock[:output], mock[:exit_status]
-  end
-
-  # - - - - - - - - - - - - - - - - -
-
-  def daemon_exec(command)
-    return @target.daemon_exec(command) if @daemon_exec_mock == []
-    mock = @daemon_exec_mock.shift
-    if command != mock[:command]
-      complain('daemon_exec', "#{mock[:command]}", "#{command}")
-    end
   end
 
   # - - - - - - - - - - - - - - - - -
