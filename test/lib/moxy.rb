@@ -7,7 +7,10 @@ class Moxy
 
   def initialize(_dojo)
     @mocks = []
-    #ObjectSpace.define_finalizer(self, proc { assert_no_mocks })
+  end
+
+  def teardown
+    fail "unused mocks for #{@mocks}" unless @mocks.empty?
   end
 
   def proxy(target)
@@ -21,7 +24,9 @@ class Moxy
       return @target.send(command, *args)
     else
       mock = @mocks.shift
-      fail RuntimeError.new("expecting: #{mock[0]}\n  actual: #{command}") unless mock[0] == command
+      fail RuntimeError.new(
+        "expecting: #{mock[0]}\n" +
+        "   actual: #{command}") unless mock[0] == command
       return mock[1].call(*args)
     end
   end
@@ -29,16 +34,7 @@ class Moxy
   def mock(command, &block)
     fail RuntimeError.new("@target.nil?") if @target.nil?
     fail RuntimeError.new("!@target.respond_to?(#{command})") if !@target.respond_to?(command)
-    #assert_no_mocks(command)
-    @mocks << [command,block]
-  end
-
-  private
-
-  def assert_no_mocks(command)
-    if !@mocks[command].nil?
-      raise RuntimeError.new [ self.class.name, "unused mocks: #{@mocks.keys}" ].join("\n")
-    end
+    @mocks << [command, block]
   end
 
 end

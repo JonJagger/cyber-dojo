@@ -134,5 +134,13 @@ class MoxyTests < LibTestBase
     assert block_called
   end
 
+  # - - - - - - - - - - - - - - - - - -
+
+  test '554696',
+  'on teardown uncalled mocks raises' do
+    @moxy.proxy(Wibble.new)
+    @moxy.mock(:answer)
+    assert_raises(RuntimeError) { @moxy.teardown }
+  end
 
 end
