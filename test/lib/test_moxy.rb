@@ -39,16 +39,16 @@ class MoxyTests < LibTestBase
 
   # - - - - - - - - - - - - - - - - - -
 
-  test '067DAA',
-  'setting proxy twice raises' do
+  test 'F5F87C',
+  'setting the proxy to non-nil succeeds' do
     @moxy.proxy(Wibble.new)
-    assert_raises(RuntimeError) { @moxy.proxy(Wibble.new) }
   end
 
   # - - - - - - - - - - - - - - - - - -
 
-  test 'F5F87C',
-  'setting the proxy to non-nil succeeds' do
+  test '067DAA',
+  'setting proxy twice is ok' do
+    @moxy.proxy(Wibble.new)
     @moxy.proxy(Wibble.new)
   end
 
@@ -71,27 +71,43 @@ class MoxyTests < LibTestBase
   # - - - - - - - - - - - - - - - - - -
 
   test 'D59190',
-  'setting up a mock for a command already mocked (and unrequited) raises' do
+  'setting up a mock for a command and next method called is different raises' do
     @moxy.proxy(Wibble.new)
     @moxy.mock(:answer) {}
-    assert_raises(RuntimeError) { @moxy.mock(:answer) }
+    assert_raises(RuntimeError) { @moxy.question }
   end
 
   # - - - - - - - - - - - - - - - - - -
 
-  test '7C0D68',
-  'when a mock for a method is setup, calls to a different method forward to the proxy target' do
+  test '4F264F',
+  'calls happening in different order to mock setup raises' do
     @moxy.proxy(Wibble.new)
-    block_called = false
-    @moxy.mock(:question) { block_called = true }
-    assert_equal 42, @moxy.answer
-    refute block_called
+    @moxy.mock(:answer)
+    @moxy.mock(:question)
+    assert_raises(RuntimeError) { @moxy.question }
+  end
+
+  # - - - - - - - - - - - - - - - - - -
+
+  test '417609',
+  'calls happening in the order of mock setup' do
+    @moxy.proxy(Wibble.new)
+    block_1_called = false
+    @moxy.mock(:answer) { block_1_called = true }
+    block_2_called = false
+    @moxy.mock(:answer) { block_2_called = true }
+    @moxy.answer
+    assert block_1_called
+    refute block_2_called
+    @moxy.answer
+    assert block_1_called
+    assert block_2_called
   end
 
   # - - - - - - - - - - - - - - - - - -
 
   test '386A5D',
-  'when a mock for a method is setup, the next call to that method goes to the supplied block' do
+  'when a mock is called arguments pass to the supplied block' do
     @moxy.proxy(Wibble.new)
     block_called = false
     @moxy.mock(:answer) { |a,b|
@@ -103,5 +119,20 @@ class MoxyTests < LibTestBase
     assert_equal 5, @moxy.answer(2,3)
     assert block_called
   end
+
+  # - - - - - - - - - - - - - - - - - -
+
+  test 'FDEC4D',
+  'when fewer arguments are passed, extra ones are nil' do
+    @moxy.proxy(Wibble.new)
+    block_called = false
+    @moxy.mock(:answer) { |_,_,c|
+      assert_nil c
+      block_called = true
+    }
+    @moxy.answer(2,3)
+    assert block_called
+  end
+
 
 end
