@@ -2,7 +2,7 @@
 
 require_relative './lib_test_base'
 
-class HostGitTests < LibTestBase
+class HostGitTest < LibTestBase
 
   def setup
     super

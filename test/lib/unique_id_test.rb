@@ -2,7 +2,7 @@
 
 require_relative './lib_test_base'
 
-class UniqueIdTests < LibTestBase
+class UniqueIdTest < LibTestBase
 
   test 'ED2021',
   'its a string' do

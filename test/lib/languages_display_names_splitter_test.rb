@@ -2,7 +2,7 @@
 
 require_relative './lib_test_base'
 
-class LanguagesDisplayNamesSplitterTests < LibTestBase
+class LanguagesDisplayNamesSplitterTest < LibTestBase
 
   test '0B2D3E',
   'display_names is split on comma into [languages_names,tests_names]' do

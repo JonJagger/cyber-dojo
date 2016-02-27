@@ -68,7 +68,7 @@ end
 
 # - - - - - - - - - - - - - - - -
 
-class ExternalParentChainerTests < LibTestBase
+class ExternalParentChainerTest < LibTestBase
 
   def setup
     super

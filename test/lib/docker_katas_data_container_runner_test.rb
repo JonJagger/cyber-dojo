@@ -3,7 +3,7 @@
 require_relative './lib_test_base'
 require_relative './docker_test_helpers'
 
-class DockerKatasDataContainerRunnerTests < LibTestBase
+class DockerKatasDataContainerRunnerTest < LibTestBase
 
   def setup
     super

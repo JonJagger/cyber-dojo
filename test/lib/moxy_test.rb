@@ -11,7 +11,7 @@ class Wibble
   end
 end
 
-class MoxyTests < LibTestBase
+class MoxyTest < LibTestBase
 
   def setup
     super

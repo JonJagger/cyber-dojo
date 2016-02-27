@@ -3,7 +3,7 @@
 require_relative './lib_test_base'
 require_relative '../app_models/delta_maker'
 
-class HostDiskKatasTests < LibTestBase
+class HostDiskKatasTest < LibTestBase
 
   def setup
     super

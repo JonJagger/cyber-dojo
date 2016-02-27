@@ -2,7 +2,7 @@
 
 require_relative './lib_test_base'
 
-class TimeNowTests < LibTestBase
+class TimeNowTest < LibTestBase
 
   class FakeTime
     def year; 1966; end

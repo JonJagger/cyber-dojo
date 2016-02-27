@@ -2,7 +2,7 @@
 
 require_relative './lib_test_base'
 
-class MemoryLogTests < LibTestBase
+class MemoryLogTest < LibTestBase
 
   test '3F6D7F',
   'log is initially empty' do

@@ -2,7 +2,7 @@
 
 require_relative './lib_test_base'
 
-class UnslashedTests < LibTestBase
+class UnslashedTest < LibTestBase
 
   test '9C253E',
   'unslashed does not end in a slash' do

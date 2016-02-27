@@ -2,7 +2,7 @@
 
 require_relative './lib_test_base'
 
-class HostDiskDirTests < LibTestBase
+class HostDiskDirTest < LibTestBase
 
   def setup
     super

@@ -2,7 +2,7 @@
 
 require_relative './lib_test_base'
 
-class HostShellTests < LibTestBase
+class HostShellTest < LibTestBase
 
   test 'C89DBB',
   'when the exec command succeeds output is captured and exit-status is zero' do
