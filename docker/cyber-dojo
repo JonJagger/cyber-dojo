@@ -6,20 +6,24 @@ MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
 HOME=/usr/src/cyber-dojo         # home folder *inside* the server image
 HUB_USER=cyberdojofoundation     # username on docker hub
-
-RUNNER_DEFAULT=DockerKatasDataContainerRunner
-RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
+GITHUB_URL=https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker
 
 DOCKER_COMPOSE_FILE=docker-compose.yml
 DOCKER_COMPOSE_CMD="docker-compose --file=./${DOCKER_COMPOSE_FILE}"
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+RUNNER_DEFAULT=DockerKatasDataContainerRunner
+RUNNER=${RUNNER_DEFAULT}         # see app/models/dojo.rb
+
 KATAS_DEFAULT=/var/www/cyber-dojo/katas
-KATAS=${KATAS_DEFAULT} # where katas are stored on the *host*
-                                 # and get copied into the katas-data-container
+KATAS=${KATAS_DEFAULT}           # where katas are stored on the *host*
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # TODO: add command to backup katas-data-container to tar.tgz file
+# TODO: check this script works if called from any drectory
+# TODO: create katas-DATA-CONTAINER only if RUNNER=DockerKatasDataContainerRunner
 # TODO: pull all language images == fetch? all?
 #
 
@@ -70,7 +74,27 @@ up()
 
 create_empty_katas_data_container()
 {
-  # HOW?
+  # echo 'FROM cyberdojofoundation/user-base'                  > ${MY_DIR}./Dockerfile
+  # echo 'ARG CYBER_DOJO_KATAS_ROOT'                          >> ${MY_DIR}/Dockerfile
+  # echo 'USER root'                                          >> ${MY_DIR}/Dockerfile
+  # echo 'RUN  mkdir -p ${CYBER_DOJO_KATAS_ROOT}'             >> ${MY_DIR}/Dockerfile
+  # echo 'RUN  chown -R cyber-dojo ${CYBER_DOJO_KATAS_ROOT}'  >> ${MY_DIR}/Dockerfile
+  # echo 'VOLUME [ "${CYBER_DOJO_KATAS_ROOT}" ]'              >> ${MY_DIR}/Dockerfile
+  # echo 'CMD [ "katas-data-container" ]'                     >> ${MY_DIR}/Dockerfile
+  #
+  # docker build \
+  #     --build-arg=CYBER_DOJO_KATAS_ROOT=${HOME}/katas \
+  #     --tag=${HUB_USER}/katas \
+  #     --file=${KATAS}/Dockerfile \
+  #     ${KATAS}
+  #
+  # rm ${KATAS}/Dockerfile
+  #
+  # docker run \
+  #     --name katas-DATA-CONTAINER \
+  #     ${HUB_USER}/katas \
+  #     echo 'cdfKatasDC'
+
   true
 }
 
@@ -90,13 +114,15 @@ create_full_katas_data_container()
   #
   # docker build \
   #     --build-arg=CYBER_DOJO_KATAS_ROOT=${HOME}/katas \
-  #     --tag=cyberdojofoundation/katas \
+  #     --tag=${HUB_USER}/katas \
   #     --file=${KATAS}/Dockerfile \
   #     ${KATAS}
   #
+  # rm ${KATAS}/Dockerfile
+  #
   # docker run \
   #     --name katas-DATA-CONTAINER \
-  #     cyberdojofoundation/katas \
+  #     ${HUB_USER}/katas \
   #     echo 'cdfKatasDC'
 
   true
@@ -222,7 +248,7 @@ download_latest_docker_compose_yml()
 {
   CWD=$(pwd)
   cd "${MY_DIR}" > /dev/null
-  curl -O https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker/${DOCKER_COMPOSE_FILE}
+  curl -O ${GITHUB_URL}/${DOCKER_COMPOSE_FILE}
   cd "${CWD}" > /dev/null
 }
 
@@ -326,7 +352,6 @@ fi
 # install docker if necessary
 #========================================================================================
 
-GITHUB_URL=https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker
 hash docker 2> /dev/null
 if [ $? != 0 ]; then
   echo
