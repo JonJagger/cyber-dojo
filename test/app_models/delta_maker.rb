@@ -56,7 +56,15 @@ class DeltaMaker
   end
 
   def test_args
-    [make_delta(@was, @now), now]
+    [delta, visible_files]
+  end
+
+  def delta
+    make_delta(@was, @now)
+  end
+
+  def visible_files
+    now
   end
 
   private

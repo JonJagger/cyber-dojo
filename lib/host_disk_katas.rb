@@ -150,7 +150,6 @@ class HostDiskKatas
 
   def sandbox_save(sandbox, delta, files)
     # Unchanged files are *not* re-saved.
-    # lib/docker_katas_runner.rb relies on this.
     delta[:deleted].each do |filename|
       git.rm(path_of(sandbox), filename)
     end

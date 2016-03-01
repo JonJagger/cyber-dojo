@@ -86,7 +86,7 @@ class HostDiskKatasTest < LibTestBase
   #- - - - - - - - - - - - - - - -
 
   test '8EF1A3',
-  "test():delta[:new] files are git add'ed" do
+  "sandbox_save(... delta[:new] ...) files are git add'ed" do
     kata = make_kata
     @avatar = kata.start_avatar
     new_filename = 'ab.c'
@@ -94,26 +94,30 @@ class HostDiskKatasTest < LibTestBase
     maker.new_file(new_filename, new_content = 'content for new file')
 
     git_evidence = "git add '#{new_filename}'"
-
     refute_log_include?(pathed(git_evidence))
-    _, @visible_files, _ = maker.run_test
-    assert_log_include?(pathed(git_evidence))
 
+    kata.katas.sandbox_save(@avatar.sandbox, maker.delta, maker.visible_files)
+
+    assert_log_include?(pathed(git_evidence))
     assert_file new_filename, new_content
   end
 
   #- - - - - - - - - - - - - - - -
 
   test 'A66E09',
-  "test():delta[:deleted] files are git rm'ed" do
+  "sandbox_save(... delta[:deleted] ...) files are git rm'ed" do
     kata = make_kata
     @avatar = kata.start_avatar
     maker = DeltaMaker.new(@avatar)
     maker.delete_file('makefile')
-    _, @visible_files, _ = maker.run_test
+
     git_evidence = "git rm 'makefile'"
+    refute_log_include?(pathed(git_evidence))
+
+    kata.katas.sandbox_save(@avatar.sandbox, maker.delta, maker.visible_files)
+
     assert_log_include?(pathed(git_evidence))
-    refute @visible_files.keys.include? 'makefile'
+    refute maker.visible_files.keys.include? 'makefile'
   end
 
   #- - - - - - - - - - - - - - - -
