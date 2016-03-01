@@ -8,7 +8,7 @@ ARGS=${@}
 HOME=/usr/src/cyber-dojo         # home folder *inside* the images/containers
 HUB_USER=cyberdojofoundation     # username on docker hub
 
-RUNNER_DEFAULT=DockerKatasDataContainerRunner
+RUNNER_DEFAULT=DockerTarPipeRunner
 RUNNER=${RUNNER_DEFAULT}         # See app/models/dojo.rb
 
 KATAS_DEFAULT=/var/www/cyber-dojo/katas

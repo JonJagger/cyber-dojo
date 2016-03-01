@@ -7,7 +7,7 @@
 # o) some language-images have been pulled.
 
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
-RUNNER=${1:-DockerKatasDataContainerRunner}
+RUNNER=${1:-DockerTarPipeRunner}
 
 pushd ${MY_DIR} > /dev/null
 HOME=${PWD}

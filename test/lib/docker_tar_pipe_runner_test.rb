@@ -3,12 +3,12 @@
 require_relative './lib_test_base'
 require_relative './docker_test_helpers'
 
-class DockerKatasDataContainerRunnerTest < LibTestBase
+class DockerTarPipeRunnerTest < LibTestBase
 
   def setup
     super
     set_shell_class 'MockHostShell'
-    set_runner_class 'DockerKatasDataContainerRunner'
+    set_runner_class 'DockerTarPipeRunner'
   end
 
   def teardown
@@ -20,8 +20,9 @@ class DockerKatasDataContainerRunnerTest < LibTestBase
 
   test '75909D',
   'mock_execs used to create runner cache' do
-    p "TODO: ADD SUDO"
-    shell.mock_exec(['docker images'], docker_images_python_pytest, success)
+    sudo = dojo.env('runner', 'sudo')
+    command = [sudo,'docker images'].join(' ').strip
+    shell.mock_exec([command], docker_images_python_pytest, success)
     expected = ['Python, py.test']
     actual = runner.runnable_languages.map { |language| language.display_name }.sort
     assert_equal expected, actual
@@ -97,7 +98,7 @@ class DockerKatasDataContainerRunnerTest < LibTestBase
 
     shell.mock_cd_exec(
       runner.path,
-      ["./docker_katas_data_container_runner.sh #{args}"],
+      ["./docker_tar_pipe_runner.sh #{args}"],
       mock_output,
       mock_exit_status
    )

@@ -14,7 +14,7 @@
 #
 # The tar-piping is to isolate the avatar's sub-dir in the katas-data-container.
 
-class DockerKatasDataContainerRunner
+class DockerTarPipeRunner
 
   def initialize(dojo)
     @dojo = dojo
@@ -36,7 +36,7 @@ class DockerKatasDataContainerRunner
     # See sudo comments in docker/web/Dockerfile
     sudo = parent.env('runner', 'sudo')
     args = [ katas_sandbox_path, image_name, max_seconds, quoted(sudo) ].join(space = ' ')
-    output, exit_status = shell.cd_exec(path, "./docker_katas_data_container_runner.sh #{args}")
+    output, exit_status = shell.cd_exec(path, "./docker_tar_pipe_runner.sh #{args}")
     output_or_timed_out(output, exit_status, max_seconds)
   end
 

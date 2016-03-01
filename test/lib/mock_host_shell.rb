@@ -15,7 +15,6 @@ class MockHostShell
   def teardown
     raise "#{self.class.name} unused #{@cd_exec_mock}"     unless @cd_exec_mock     == []
     raise "#{self.class.name} unused #{@exec_mock}"        unless @exec_mock        == []
-    raise "#{self.class.name} unused #{@daemon_exec_mock}" unless @daemon_exec_mock == []
   end
 
   # - - - - - - - - - - - - - - - - -

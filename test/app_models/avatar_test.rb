@@ -145,7 +145,7 @@ class AvatarTest < AppModelsTestBase
 
   test prefix+'DEC',
   'diff(was_tag, now_tag) returns sandbox/git-diff output' do
-    set_runner_class('DockerKatasDataContainerRunner')
+    set_runner_class('DockerTarPipeRunner')
     kata = make_kata( { language: 'C (gcc)-assert' })
     @avatar = kata.start_avatar # tag 0
     maker = DeltaMaker.new(@avatar)

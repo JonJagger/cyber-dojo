@@ -13,7 +13,7 @@ DOCKER_COMPOSE_CMD="docker-compose --file=./${DOCKER_COMPOSE_FILE}"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-RUNNER_DEFAULT=DockerKatasDataContainerRunner
+RUNNER_DEFAULT=DockerTarPipeRunner
 RUNNER=${RUNNER_DEFAULT}         # see app/models/dojo.rb
 
 KATAS_DEFAULT=/var/www/cyber-dojo/katas
