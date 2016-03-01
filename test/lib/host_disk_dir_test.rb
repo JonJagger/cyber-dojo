@@ -15,7 +15,7 @@ class HostDiskDirTest < LibTestBase
   end
 
   def path
-    tmp_root + 'host_disk_dir_tests/'
+    tmp_root + '/' + 'host_disk_dir_tests'
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -130,14 +130,14 @@ class HostDiskDirTest < LibTestBase
 
   test '25EACA',
   'disk.dir?(.) is true' do
-    assert disk.dir?(path + '.')
+    assert disk.dir?(path + '/' + '.')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '75CA3F',
   'disk.dir?(..) is true' do
-    assert disk.dir?(path + '..')
+    assert disk.dir?(path + '/' + '..')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -168,8 +168,8 @@ class HostDiskDirTest < LibTestBase
   test '91E408',
   'disk[path].each_dir does not give filenames' do
     disk[path].write('beta.txt', 'content')
-    disk[path + 'alpha'].make
-    disk[path + 'alpha'].write('a.txt', 'a')
+    disk[path + '/' + 'alpha'].make
+    disk[path + '/' + 'alpha'].write('a.txt', 'a')
     assert_equal ['alpha'], disk[path].each_dir.entries
   end
 
@@ -177,10 +177,10 @@ class HostDiskDirTest < LibTestBase
 
   test '89211C',
   'disk[path].each_dir.select' do
-    disk[path + 'alpha'].make
-    disk[path + 'beta' ].make
-    disk[path + 'alpha'].write('a.txt', 'a')
-    disk[path + 'beta' ].write('b.txt', 'b')
+    disk[path + '/' + 'alpha'].make
+    disk[path + '/' + 'beta' ].make
+    disk[path + '/' + 'alpha'].write('a.txt', 'a')
+    disk[path + '/' + 'beta' ].write('b.txt', 'b')
     matches = disk[path].each_dir.select { |dir| dir.start_with?('a') }
     assert_equal ['alpha'], matches.sort
   end
@@ -224,7 +224,7 @@ class HostDiskDirTest < LibTestBase
 
   def check_save_file(filename, content, expected_content, executable = false)
     dir.write(filename, content)
-    pathed_filename = path + filename
+    pathed_filename = path + '/' + filename
     assert File.exists?(pathed_filename),
           "File.exists?(#{pathed_filename})"
     assert_equal expected_content, IO.read(pathed_filename)
