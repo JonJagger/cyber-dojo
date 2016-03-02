@@ -66,24 +66,16 @@ export CYBER_DOJO_RUNNER_SUDO=${VAR}
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # run-the-tests!
 
+rm -rf ../../coverage/.resultset.json
+mkdir -p coverage
+
 ruby -e "%w( ${testFiles[*]} ).map{ |file| './'+file }.each { |file| require file }" -- ${args[*]}
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# FIX-ME:coverage is broken
-
-#rm -rf ../../coverage/.resultset.json
-#mkdir -p coverage
-#wrapper_test_log='coverage/WRAPPER.log.tmp'
-#ruby $wrapped_filename -- ${args[*]} 2>&1 # | tee $wrapper_test_log
-#rm $wrapped_filename
-#cp -R ../../coverage .
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+cp -R ../../coverage .
 #pwd                       # eg  .../cyber-dojo/test/app_lib
 cwd=${PWD##*/}             # eg  app_lib
 module=${cwd/_//}          # eg  app/lib
-#ruby ../print_coverage_percent.rb index.html $module | tee -a $wrapper_test_log
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ruby ../print_coverage_percent.rb index.html $module
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

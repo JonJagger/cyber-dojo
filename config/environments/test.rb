@@ -1,7 +1,7 @@
 CyberDojo::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  config.eager_load = false
+  config.eager_load = true
 
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that

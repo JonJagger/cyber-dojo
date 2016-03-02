@@ -2,7 +2,7 @@
 =======================================================================
 Testing
 0. No caches could be an issue for DockerMachineRunner.....
-0. Get all tests passing from outside container. (no caches anymore).
+X. Get all tests passing from outside container. (no caches anymore).
 0. Add languages test that looks for sandbox as explicit path in cyber-dojo.sh files.
 0. Capture stderr from host_shell.
    http://blog.honeybadger.io/capturing-stdout-stderr-from-shell-commands-via-ruby/
@@ -12,8 +12,8 @@ Testing
 
 =======================================================================
 Blog
-0. On old pages add links to new blog pages and say old pages are deprecated.
-0. Add new page on installing dind server.
+X. On old pages add links to new blog pages and say old pages are deprecated.
+X. Add new page on installing dind server.
 
 =======================================================================
 Development
@@ -23,14 +23,14 @@ Development
 
 =======================================================================
 Scripts
-0. cyber-dojo: Create cyber-dojo-katas data-container (one-time)
-0. cyber-dojo: Add export=ID command to save a practice session
-0. Edit/drop? pull.sh
+X. cyber-dojo: Create cyber-dojo-katas data-container (one-time)
+X. cyber-dojo: Add export=ID command to save a practice session
+X. Edit/drop? pull.sh
 
 =======================================================================
 Major
-0. Fix dashboard download
-0. Merge
+X. Fix dashboard download
+X. Merge
 0. Live
 
 =======================================================================
