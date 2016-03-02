@@ -26,6 +26,23 @@ class LanguagesTest < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
+  test prefix+'64A',
+  'cache is created on demand' do
+    # be very careful here... naming languages will create languages!
+    path = dojo.env('languages', 'root')
+    cache_filename = 'cache.json'
+    assert disk[path].exists? cache_filename
+    old_cache = disk[path].read(cache_filename)
+    `rm #{path}/#{cache_filename}`
+    refute disk[path].exists? cache_filename
+    languages.path
+    assert disk[path].exists? cache_filename
+    new_cache = disk[path].read(cache_filename)
+    assert_equal old_cache, new_cache
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - -
+
   test prefix+'327',
   'languages[name] is nil if name is not an existing language' do
     assert_nil languages['wibble_XXX']
