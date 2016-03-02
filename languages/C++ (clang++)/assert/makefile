@@ -1,4 +1,4 @@
-CXXFLAGS += -I. -std=c++11 -Wall -Wextra -Werror
+CXXFLAGS += -I. -std=c++14 -Wall -Wextra -Werror
 CXXFLAGS += -fsanitize=undefined -fno-sanitize-recover=undefined
 CXXFLAGS += -fsanitize=address -fno-omit-frame-pointer
 
@@ -8,7 +8,7 @@ CPP_FILES = $(wildcard *.cpp)
 
 .PHONY: test.output
 test.output: test makefile
-	@./$< 
+	@./$<
 
 test: makefile $(CPP_FILES) $(COMPILED_HPP_FILES)
 	@$(CXX) $(CXXFLAGS) -O $(CPP_FILES) -o $@
