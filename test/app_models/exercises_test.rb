@@ -4,7 +4,9 @@ require_relative './app_models_test_base'
 
 class ExercisesTest < AppModelsTestBase
 
-  test '14AD4C',
+  prefix = '2DD'
+
+  test prefix+'D4C',
   'exercises path has correct basic format when set with trailing slash' do
     path = tmp_root + '/' + 'folder'
     set_exercises_root(path + '/')
@@ -14,7 +16,7 @@ class ExercisesTest < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'B09C99',
+  test prefix+'C99',
   'exercises path has correct basic format when set without trailing slash' do
     path = tmp_root + '/' + 'folder'
     set_exercises_root(path)
@@ -24,14 +26,47 @@ class ExercisesTest < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '71D327',
+  test prefix+'327',
   'exercises[name] is nil if name is not an existing exercise' do
     assert_nil exercises['wibble_XXX']
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'FC5958',
+  test prefix+'D85',
+  'exercise path has correct basic format' do
+    exercise = exercises['Fizz_Buzz']
+    assert exercise.path.match(exercise.name)
+    assert correct_path_format?(exercise)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
+
+  test prefix+'EF3',
+  'name is as set in ctor' do
+    exercise = exercises[name = 'Fizz_Buzz']
+    assert_equal name, exercise.name
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
+
+  test prefix+'65F',
+  'instructions are loaded from file of same name via the cache' do
+    exercise = exercises['Fizz_Buzz']
+    assert exercise.instructions.start_with? 'Write a program that prints'
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
+
+  test prefix+'280',
+  'instructions are loaded from file of same name directly' do
+    exercise = Exercise.new(dojo.exercises, 'Fizz_Buzz')
+    assert exercise.instructions.start_with? 'Write a program that prints'
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
+
+  test prefix+'958',
   'simple smoke test' do
     exercises_names = exercises.map(&:name).sort
     doors = '100_doors'

@@ -4,7 +4,9 @@ require_relative './app_models_test_base'
 
 class LanguagesTest < AppModelsTestBase
 
-  test '743810',
+  prefix = '743'
+
+  test prefix+'810',
   'languages path has correct format when set with trailing slash' do
     path = tmp_root + '/' + 'folder'
     set_languages_root(path + '/')
@@ -14,7 +16,7 @@ class LanguagesTest < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test '8D3BB5',
+  test prefix+'BB5',
   'languages path has correct format when set without trailing slash' do
     path = tmp_root + '/' + 'folder'
     set_languages_root(path)
@@ -24,14 +26,14 @@ class LanguagesTest < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test '71C327',
+  test prefix+'327',
   'languages[name] is nil if name is not an existing language' do
     assert_nil languages['wibble_XXX']
   end
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test '69110F',
+  test prefix+'10F',
   'languages[X] is language named X' do
     ['C (clang)-assert', 'C#-NUnit'].each do |name|
       assert_equal name, languages[name].name
@@ -40,7 +42,7 @@ class LanguagesTest < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test '8D0EBB',
+  test prefix+'EBB',
   'languages ignores nested _docker_context folder because',
   'it is not the name of a test-framework, it is the docker-context',
   'for the language itself' do
@@ -54,7 +56,7 @@ class LanguagesTest < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test 'C61BBE',
+  test prefix+'BBE',
   'name is translated when katas manifest.json language entry has been renamed' do
     historical_language_names do |old_name|
       refute_nil languages[old_name], old_name unless old_name.include? 'Approval'
@@ -63,7 +65,7 @@ class LanguagesTest < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test '083518',
+  test prefix+'518',
   '[name] when lang-test where lang,_test is valid display_name' do
     simple_case = 'C++ (g++)-assert'
     simple_display_name = 'C++ (g++), assert'
@@ -74,7 +76,7 @@ class LanguagesTest < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test '9E1B38',
+  test prefix+'B38',
   '[name] when name has no hyphen and was renamed' do
     [
        # from way back when test name was not part of language name
@@ -85,7 +87,7 @@ class LanguagesTest < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test '931D03',
+  test prefix+'D03',
   '[name] when name has hyphen and was renamed' do
     [
       # renamed
@@ -127,14 +129,14 @@ class LanguagesTest < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  test 'F64017',
+  test prefix+'017',
   '[name] on historical_language_names' do
     historical_language_names do |name|
       refute_nil languages[name], name unless name.include? 'Approval'
     end
   end
 
-  #- - - - - - - - - - - - - - - - - - - - -
+  private
 
   def historical_language_names
     # these names harvested from cyber-dojo.org using
