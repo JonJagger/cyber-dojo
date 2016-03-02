@@ -1,7 +1,5 @@
 #!/bin/bash
 
-apt-get install --yes wget
-
 wget http://llvm.org/releases/3.7.1/clang+llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04.tar.xz
 tar -xvf clang+llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04.tar.xz
 cp -r clang+llvm-3.7.1-x86_64-linux-gnu-ubuntu-14.04/* /usr/
