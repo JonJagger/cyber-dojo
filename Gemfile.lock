@@ -175,5 +175,5 @@ DEPENDENCIES
   sass-rails (~> 4.0.3)
   selenium-webdriver (>= 2.43.0)
   shoulda-matchers
-  simplecov
+  simplecov (>= 0.9.0)
   uuidtools (>= 2.1.5)

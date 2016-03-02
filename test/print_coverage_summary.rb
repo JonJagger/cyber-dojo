@@ -6,7 +6,7 @@ end
 
 def wrapper_test_log
   # duplicated in test/test_wrapper.sh
-  'coverage/WRAPPER.log.tmp'
+  'coverage/test.log'
 end
 
 #- - - - - - - - - - - - - - - - - - - - -
@@ -84,7 +84,7 @@ def gather_stats
 
     log = `cat #{module_name}/#{wrapper_test_log}`
     `rm #{module_name}/#{wrapper_test_log}`
-    h = stats[module_name] = { }
+    h = stats[module_name] = {}
 
     finished_pattern = "Finished in #{number}s, #{number} runs/s, #{number} assertions/s"
     m = log.match(Regexp.new(finished_pattern))

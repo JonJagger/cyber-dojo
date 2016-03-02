@@ -14,7 +14,7 @@ class TipTests < AppHelpersTestBase
 
   test 'BDAD52',
   'traffic light tip' do
-    set_runner_class('DockerKatasDataContainerRunner')
+    set_runner_class('DockerTarPipeRunner')
     kata = make_kata( { language: 'C (gcc)-assert'} )
     lion = kata.start_avatar(['lion'])
     maker = DeltaMaker.new(lion)

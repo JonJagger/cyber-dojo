@@ -6,7 +6,7 @@ modules=(
   app_helpers
   app_lib
   app_models
-  languages
+  #languages
   lib
   app_controllers
 )

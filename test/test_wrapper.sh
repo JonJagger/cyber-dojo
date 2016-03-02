@@ -68,15 +68,14 @@ export CYBER_DOJO_RUNNER_SUDO=${VAR}
 
 rm -rf ../../coverage/.resultset.json
 mkdir -p coverage
-
-ruby -e "%w( ${testFiles[*]} ).map{ |file| './'+file }.each { |file| require file }" -- ${args[*]}
+test_log='coverage/test.log'
+ruby -e "%w( ${testFiles[*]} ).map{ |file| './'+file }.each { |file| require file }" -- ${args[*]} 2>&1 | tee ${test_log}
 
 cp -R ../../coverage .
 #pwd                       # eg  .../cyber-dojo/test/app_lib
 cwd=${PWD##*/}             # eg  app_lib
 module=${cwd/_//}          # eg  app/lib
-ruby ../print_coverage_percent.rb index.html $module
-
+ruby ../print_coverage_percent.rb index.html $module | tee -a ${test_log}
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 gitUserNameAfter=`git config user.name`

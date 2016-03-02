@@ -10,11 +10,9 @@ SimpleCov.start do
 
   #add_group 'integration',     'integration'
   #add_group 'languages',       'languages'
-  #add_group 'lib'             do |src_file|
-  #  src_file.filename.include?('lib') &&
-  #  !src_file.filename.include?('app/lib') &&
-  #  !src_file.filename.include?('test/lib')
-  #end
+  add_group 'lib'             do |src|
+    src.filename.include?('cyber-dojo/lib')
+  end
 end
 
 cov_root = File.expand_path('..', File.dirname(__FILE__))
