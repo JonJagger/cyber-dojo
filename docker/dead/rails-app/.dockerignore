@@ -1,9 +1,6 @@
 #-----Ignore everything
 #-----including katas (data-container / volume-mounted)
 #-----including public (nginx image)
-#-----including test (ro data-container)
-#-----including app/languages (ro data-container)
-#-----including app/exercises (ro data-container)
 
 *
 
@@ -11,10 +8,17 @@
 
 !app/assets
 !app/controllers
+!app/exercises
 !app/helpers
+!app/languages
 !app/lib
 !app/models
 !app/views
 !script
 !config
 !lib
+!test
+
+#-----!Except this file
+
+!config.ru

@@ -33,51 +33,11 @@ web:
     - /var/run/docker.sock:/var/run/docker.sock
   volumes_from:
     - cdf-katas-DATA-CONTAINER:rw
-    - languages:ro
-    - exercises:ro
-    - rails-app:ro
-    - rails-log:rw
-    - rails-tmp:rw
-    - test:ro
 
-languages:
-  image: cyberdojofoundation/languages
-  command: echo "cdfLanguagesDC"
-  container_name: cdf-languages-DATA-CONTAINER
-
-exercises:
-  image: cyberdojofoundation/exercises
-  command: echo "cdfExercisesDC"
-  container_name: cdf-exercises-DATA-CONTAINER
-
-rails-app:
-  image: cyberdojofoundation/rails-app
-  command: echo "cdfRailsAppDC"
-  container_name: cdf-rails-app-DATA-CONTAINER
-
-rails-log:
-  image: cyberdojofoundation/rails-log
-  command: echo "cdfRailsLogDC"
-  container_name: cdf-rails-log-DATA-CONTAINER
-
-rails-tmp:
-  image: cyberdojofoundation/rails-tmp
-  command: echo "cdfRailsTmpDC"
-  container_name: cdf-rails-tmp-DATA-CONTAINER
-
-test:
-  image: cyberdojofoundation/test
-  command: echo "cdfTestDC"
-  container_name: cdf-test-DATA-CONTAINER
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # The cyber-dojo script uses this file to find out the
 # service names. It assumes the service name (eg web) is the
 # tag name for the associated docker image (eg cyberdojofoundation/web)
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Variable-substition happens in docker-compose yml files
-# such as this one, but *not* in env_file:'s
-# Since I use variable-substitution in my environment
-# I don't use an env_file:
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

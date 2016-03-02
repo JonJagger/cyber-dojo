@@ -15,7 +15,7 @@ KATAS_DEFAULT=/var/www/cyber-dojo/katas
 KATAS=${KATAS_DEFAULT}           # where old (non data-container) katas may be on the *host*
 
 # important this does NOT include katas
-IMAGES=(user-base language-base exercises languages rails-app rails-log rails-tmp test nginx web)
+IMAGES=(user-base language-base nginx web)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # TODO: add test command.
@@ -38,7 +38,7 @@ show_use()
   echo "     logs-web             Prints server log"
   echo '     sh                   Shells in'
   echo '     up [OPTIONS]         Create and start'
-  echo "         katas=DIR        default:  katas=${HOST_KATAS_DEFAULT}"
+  echo "         katas=DIR        default: katas=${KATAS_DEFAULT}"
   echo "         runner=CLASS     default: runner=${RUNNER_DEFAULT}"
   echo
   echo 'COMMAND(server images):'

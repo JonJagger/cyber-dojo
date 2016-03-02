@@ -328,7 +328,7 @@ done
 # nothing is implicit
 #========================================================================================
 
-if ((${COUNT} > 0)); then
+if ((${COUNT} > 1)); then
   echo 'one command only please'
   echo "See '${ME} help'"
   exit

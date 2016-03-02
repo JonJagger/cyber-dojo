@@ -2,15 +2,13 @@
 =======================================================================
 Testing
 0. Get all tests passing from outside container. (no caches anymore).
+0. No caches could be an issue for DockerMachineRunner.....
 0. Add languages test that looks for sandbox as explicit path in cyber-dojo.sh files.
 0. Capture stderr from host_shell.
    http://blog.honeybadger.io/capturing-stdout-stderr-from-shell-commands-via-ruby/
    http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instead-of-stdout
 0. Replace MockHostShell with Moxy
 0. Add test for creating languages/exercises caches. Use Moxy
-0. Test failing (outside container)
-   $ test/lib/test_host_dsk_katas.rb 1a3
-   Why am I getting so much output?
 
 =======================================================================
 Blog

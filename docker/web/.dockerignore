@@ -1,10 +1,25 @@
 #-----Ignore everything
+#-----including katas (data-container / volume-mounted)
+#-----including public (nginx image)
 
 *
 
-#-----!Except these two files
-#-----Gemfile so Dockerfile can bundle-install
-#-----config.ru because I can't put it in rails-app with :ro
+#-----!Except these folders
+
+!app/assets
+!app/controllers
+!app/exercises
+!app/helpers
+!app/languages
+!app/lib
+!app/models
+!app/views
+!script
+!config
+!lib
+!test
+
+#-----!Except this file
 
 !Gemfile
 !config.ru

@@ -74,13 +74,13 @@ RUN  echo "${GETS_DOCKER_SUDO}  ALL=NOPASSWD: ${DOCKER_BINARY} *"       >>  ${SU
 
 # - - - - - - - - - - - - - - - - - - - - - -
 # 4. bundle install from cyber-dojo's Gemfile
-# o) ruby, ruby-bigdecimal, tzdata (for rails server)
+# o) ruby, ruby-io-console ruby-bigdecimal, tzdata (for rails server)
 # o) git (for cyber-dojo)
 # o) bash (test scripts are written in bash)
 
 USER root
 RUN  apk --update add \
-           ruby ruby-bigdecimal tzdata \
+           ruby ruby-io-console ruby-bigdecimal tzdata \
            git \
            bash
 
@@ -101,12 +101,14 @@ RUN  apk --update \
      && apk del build-dependencies
 
 # - - - - - - - - - - - - - - - - - - - - - -
-# 5. config.ru is the only other file in the rails root. It's not in the rails-app
-# docker image because I don't want a VOLUME of the rails root. That would
-# prevent docker-compose.yml from volumes-from: mounting rails-app as :ro
+# 5. Copy the app source
 
-COPY config.ru ${CYBER_DOJO_HOME}
+USER root
+RUN  mkdir -p ${CYBER_DOJO_HOME}
+COPY . ${CYBER_DOJO_HOME}
+RUN  chown -R cyber-dojo ${CYBER_DOJO_HOME}
 
+# - - - - - - - - - - - - - - - - - - - - - -
 WORKDIR ${CYBER_DOJO_HOME}
 USER    cyber-dojo
 EXPOSE  3000
