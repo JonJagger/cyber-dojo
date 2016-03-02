@@ -2,7 +2,6 @@
 =======================================================================
 Testing
 0. No caches could be an issue for DockerMachineRunner.....
-   Need to restore ability to create cache.
 0. Get all tests passing from outside container. (no caches anymore).
 0. Add languages test that looks for sandbox as explicit path in cyber-dojo.sh files.
 0. Capture stderr from host_shell.

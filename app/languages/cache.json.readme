@@ -33,5 +33,6 @@ The app/languages/cache.json file maps from the display-name to
 2. the test dir
 3. the image name
 app/languages/cache.json, app/models/languages.rb, and app/models/language.rb
-are designed so that the create choose-language+test page gets all the information it
-needs to display the languages and tests list via a *single* disk access.
+are designed so that the create-pages' choose-language+test page gets all the
+information it needs to display the languages and tests list via a *single*
+disk access of the cache.json file.

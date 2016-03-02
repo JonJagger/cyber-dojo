@@ -5,6 +5,7 @@ class Languages
   def initialize(dojo)
     @parent = dojo
     @path = unslashed(dojo.env('languages', 'root'))
+    disk[path].write_json_once(cache_filename) { make_cache }
   end
 
   # queries
@@ -17,26 +18,6 @@ class Languages
 
   def [](name)
     languages[commad(name)] || languages[renamed(name)]
-  end
-
-  def write_cache
-    cache = {}
-    disk[path].each_dir do |dir_name|
-      disk[path + '/' + dir_name].each_dir do |test_dir_name|
-        next if test_dir_name == '_docker_context'
-        language = make_language(dir_name, test_dir_name)
-        cache[language.display_name] = {
-               dir_name: dir_name,
-          test_dir_name: test_dir_name,
-             image_name: language.image_name
-        }
-      end
-    end
-    disk[path].write_json(cache_filename, cache)
-  end
-
-  def cache_filename
-    'cache.json'
   end
 
   # modifiers
@@ -60,6 +41,26 @@ class Languages
       cache[display_name] = make_language(dir_name, test_dir_name, display_name, image_name)
     end
     cache
+  end
+
+  def make_cache
+    cache = {}
+    disk[path].each_dir do |dir_name|
+      disk[path + '/' + dir_name].each_dir do |test_dir_name|
+        next if test_dir_name == '_docker_context'
+        language = make_language(dir_name, test_dir_name)
+        cache[language.display_name] = {
+               dir_name: dir_name,
+          test_dir_name: test_dir_name,
+             image_name: language.image_name
+        }
+      end
+    end
+    cache
+  end
+
+  def cache_filename
+    'cache.json'
   end
 
   def make_language(dir_name, test_dir_name, display_name = nil, image_name = nil)
