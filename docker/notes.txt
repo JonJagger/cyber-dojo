@@ -1,8 +1,13 @@
 
 =======================================================================
+Scripts
+X. cyber-dojo: Create cyber-dojo-katas data-container (one-time)
+X. cyber-dojo: Add export=ID command to save a practice session
+X. Edit/drop? pull.sh
+
+=======================================================================
 Testing
-0. No caches could be an issue for DockerMachineRunner.....
-X. Get all tests passing from outside container. (no caches anymore).
+0. Reinstate (modified) cache for DockerMachineRunner.....
 0. Add languages test that looks for sandbox as explicit path in cyber-dojo.sh files.
 0. Capture stderr from host_shell.
    http://blog.honeybadger.io/capturing-stdout-stderr-from-shell-commands-via-ruby/
@@ -22,14 +27,10 @@ Development
    - running dind server with app volumes-from:ro
 
 =======================================================================
-Scripts
-X. cyber-dojo: Create cyber-dojo-katas data-container (one-time)
-X. cyber-dojo: Add export=ID command to save a practice session
-X. Edit/drop? pull.sh
-
-=======================================================================
 Major
-X. Fix dashboard download
+X. Fix dashboard download.
+   Need to ensure there is empty app/zips folder in image
+   Better is app/downloads
 X. Merge
 0. Live
 
