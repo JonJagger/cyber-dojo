@@ -1,13 +1,8 @@
 
 ENV['RAILS_ENV'] = 'test'
 
-gem 'minitest'
-require 'minitest/autorun'
-
-root = './../..'
-
-require_relative root + '/test/all'
-require_relative root + '/config/environment'
+require_relative root + './../../test/all'
+require_relative root + './../../config/environment'
 require_relative './params_maker'
 
 class AppControllerTestBase < ActionDispatch::IntegrationTest
