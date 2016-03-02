@@ -6,7 +6,7 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   test 'F6B9D6',
   'no known flaws in Dockerfiles of each base language/' do
-    Dir.glob("#{languages.path}*/").sort.each do |dir|
+    Dir.glob("#{languages.path}/*/").sort.each do |dir|
       check_Dockerfile(dir)
     end
   end
@@ -61,8 +61,8 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   def check_Dockerfile(dir)
     @language = dir
-    assert Dockerfile_exists_and_is_well_formed?(dir)
-    assert build_docker_image_exists_and_is_well_formed?(dir)
+    assert Dockerfile_exists_and_is_well_formed?(dir), dir
+    assert build_docker_image_exists_and_is_well_formed?(dir), dir
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -83,9 +83,8 @@ class LanguagesManifestsTests < LanguagesTestBase
     assert cyberdojo_sh_exists?
     assert cyberdojo_sh_has_execute_permission?
     assert colour_method_for_unit_test_framework_output_exists?
-    # Not applicable when running *inside* a container (as root)
-    #refute any_files_owner_is_root?
-    #refute any_files_group_is_root?
+    refute any_files_owner_is_root?
+    refute any_files_group_is_root?
     refute any_file_is_unreadable?
     assert created_kata_manifests_language_entry_round_trips?
   end
