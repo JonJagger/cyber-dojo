@@ -18,11 +18,10 @@ class KataController < ApplicationController
     incoming = params[:file_hashes_incoming]
     outgoing = params[:file_hashes_outgoing]
     delta = FileDeltaMaker.make_delta(incoming, outgoing)
-
     files = received_files
     @output = @avatar.test(delta, files)
     @test_colour = kata.language.colour(@output)
-
+    katas.sandbox_save(@avatar.sandbox, delta, files)
     katas.avatar_ran_tests(@avatar, delta, files, time_now, @output, @test_colour)
 
     respond_to do |format|
@@ -49,7 +48,7 @@ class KataController < ApplicationController
 
   def received_files
     seen = {}
-    (params[:file_content] || {}).each do |filename,content|
+    (params[:file_content] || {}).each do |filename, content|
       content = cleaned(content)
       # Cater for windows line endings from windows browser
       content = content.gsub(/\r\n/, "\n")
