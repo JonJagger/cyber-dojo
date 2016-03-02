@@ -24,13 +24,6 @@ class ExercisesTest < AppModelsTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '789739',
-  'cache file exists' do
-    assert disk[exercises.path].exists? exercises.cache_filename
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test '71D327',
   'exercises[name] is nil if name is not an existing exercise' do
     assert_nil exercises['wibble_XXX']

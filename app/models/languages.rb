@@ -32,6 +32,10 @@ class Languages
     @languages ||= read_cache
   end
 
+  def cache_filename
+    'cache.json'
+  end
+
   def read_cache
     cache = {}
     disk[path].read_json(cache_filename).each do |display_name, language|
@@ -57,10 +61,6 @@ class Languages
       end
     end
     cache
-  end
-
-  def cache_filename
-    'cache.json'
   end
 
   def make_language(dir_name, test_dir_name, display_name = nil, image_name = nil)

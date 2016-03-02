@@ -29,6 +29,10 @@ class Exercises
     @exercises ||= read_cache
   end
 
+  def cache_filename
+    'cache.json'
+  end
+
   def read_cache
     cache = {}
     disk[path].read_json(cache_filename).each do |name, exercise|
@@ -44,10 +48,6 @@ class Exercises
       cache[exercise.name] = { instructions: exercise.instructions }
     end
     cache
-  end
-
-  def cache_filename
-    'cache.json'
   end
 
   def make_exercise(name, instructions = nil)
