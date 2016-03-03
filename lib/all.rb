@@ -3,7 +3,6 @@
 
 %w{
   external_parent_chainer
-  external_dir
 
   time_now
   unique_id

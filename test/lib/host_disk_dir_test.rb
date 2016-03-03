@@ -20,6 +20,13 @@ class HostDiskDirTest < LibTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test '76AEEB',
+  'parent is set correctly' do
+    assert_equal disk, disk['ABC'].parent
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test '437EB1',
   'disk[...].path always ends in /' do
     assert_equal 'ABC/', disk['ABC'].path
@@ -88,6 +95,23 @@ class HostDiskDirTest < LibTestBase
     dir.write_json(filename = 'object.json', { :a => 1, :b => 2 })
     json = dir.read(filename)
     object = JSON.parse(json)
+    assert_equal 1, object['a']
+    assert_equal 2, object['b']
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '891336',
+  'write_json_once succeeds once then its a no-op' do
+    filename = 'once.json'
+    refute dir.exists? filename
+    dir.write_json_once(filename) { {:a=>1, :b=>2 } }
+    assert dir.exists? filename
+    object = dir.read_json(filename)
+    assert_equal 1, object['a']
+    assert_equal 2, object['b']
+    dir.write_json_once(filename) { {:a=>3, :b=>4 } }
+    object = dir.read_json(filename)
     assert_equal 1, object['a']
     assert_equal 2, object['b']
   end
