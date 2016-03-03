@@ -28,8 +28,7 @@ Development
 
 =======================================================================
 Major
-X. Fix dashboard download.
-   Need to ensure there is empty app/zips folder in image
+X  Need to ensure there is empty app/zips folder in image
    Better is app/downloads
 X. Merge
 0. Live
