@@ -3,7 +3,7 @@
 require_relative './app_lib_test_base'
 require_relative '../app_models/delta_maker'
 
-class GitDiffTests < AppLibTestBase
+class GitDiffTest < AppLibTestBase
 
   include GitDiff
 

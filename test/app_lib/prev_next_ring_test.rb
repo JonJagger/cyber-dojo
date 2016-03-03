@@ -2,7 +2,7 @@
 
 require_relative './app_lib_test_base'
 
-class PrevNextRingTests < AppLibTestBase
+class PrevNextRingTest < AppLibTestBase
 
   include PrevNextRing
 

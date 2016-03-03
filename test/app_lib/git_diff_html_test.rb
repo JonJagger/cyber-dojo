@@ -2,7 +2,7 @@
 
 require_relative './app_lib_test_base'
 
-class GitDiffHtmlTests <  AppLibTestBase
+class GitDiffHtmlTest <  AppLibTestBase
 
   include GitDiff
 

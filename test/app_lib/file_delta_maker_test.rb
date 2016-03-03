@@ -2,7 +2,7 @@
 
 require_relative './app_lib_test_base'
 
-class FileDeltaMakerTests < AppLibTestBase
+class FileDeltaMakerTest < AppLibTestBase
 
   test '01827F',
   'unchanged files seen as :unchanged' do

@@ -2,7 +2,7 @@
 
 require_relative './app_lib_test_base'
 
-class OutputColourTests < AppLibTestBase
+class OutputColourTest < AppLibTestBase
 
   test '24C561',
   'terminated by the server after n seconds gives timed_out colour' do

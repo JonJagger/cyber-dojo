@@ -2,7 +2,7 @@
 
 require_relative './app_lib_test_base'
 
-class GitDiffBuilderTests < AppLibTestBase
+class GitDiffBuilderTest < AppLibTestBase
 
   test 'A332D7',
   'chunk with a space in its filename' do
