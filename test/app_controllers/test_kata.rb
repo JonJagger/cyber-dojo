@@ -4,7 +4,9 @@ require_relative './app_controller_test_base'
 
 class KataControllerTest  < AppControllerTestBase
 
-  test 'E1F76E',
+  prefix = 'BE8'
+
+  test prefix+'76E',
   'run_tests with bad kata id raises' do
     params = { :format => :js, :id => 'bad' }
     assert_raises(StandardError) { post 'kata/run_tests', params }
@@ -12,7 +14,7 @@ class KataControllerTest  < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '80C3FD',
+  test prefix+'3FD',
   'run_tests with good kata id but bad avatar name raises' do
     kata_id = create_kata('C (gcc), assert')
     params = { :format => :js, :id => kata_id, :avatar => 'bad' }
@@ -21,7 +23,19 @@ class KataControllerTest  < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '9390F6',
+  test prefix+'B75',
+  'show-json (for Atom editor)' do
+    create_kata('C (gcc), assert')
+    @avatar = start
+    kata_edit
+    run_tests
+    params = { :format => :json, :id => @id, :avatar => @avatar.name }
+    get 'kata/show_json', params
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test prefix+'0F6',
   'edit and then run-tests' do
     create_kata('C (gcc), assert')
     @avatar = start
@@ -33,7 +47,7 @@ class KataControllerTest  < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'D0E7FD',
+  test prefix+'7FD',
   'run_tests() saves changed makefile with leading spaces converted to tabs',
   'and these changes are made to the visible_files parameter too',
   'so they also occur in the manifest file' do
@@ -48,7 +62,7 @@ class KataControllerTest  < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'B547AF',
+  test prefix+'7AF',
   'run_tests() saves *new* makefile with leading spaces converted to tabs',
   'and these changes are made to the visible_files parameter too',
   'so they also occur in the manifest file' do
@@ -59,8 +73,6 @@ class KataControllerTest  < AppControllerTestBase
     run_tests
     new_file(makefile, makefile_with_leading_spaces)
     run_tests
-    # now katas/runner are separated this state is not visible
-    # need to get files seen by stub-runner
     assert_file makefile, makefile_with_leading_tab
   end
 
