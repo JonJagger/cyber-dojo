@@ -6,6 +6,26 @@ X. cyber-dojo: Add export=ID command to save a practice session
 X. Edit/drop? pull.sh
 
 =======================================================================
+Blog
+X. On old pages add links to new blog pages and say old pages are deprecated.
+X. Add new page on installing dind server.
+
+=======================================================================
+Languages
+X. Alpine base for few more common languages?
+
+=======================================================================
+Development
+X. Add dev-info to main github readme
+   - running dev-server (fast feedback, ruby,bundle-install,docker pull a few langs)
+   - running dind server with app volumes-from:ro
+
+=======================================================================
+Major
+X. Merge
+X. Live
+
+=======================================================================
 Testing
 0. Reinstate (modified) cache for DockerMachineRunner.....
 0. Add languages test that looks for sandbox as explicit path in cyber-dojo.sh files.
@@ -16,35 +36,12 @@ Testing
 0. Add test for creating languages/exercises caches. Use Moxy
 
 =======================================================================
-Blog
-X. On old pages add links to new blog pages and say old pages are deprecated.
-X. Add new page on installing dind server.
-
-=======================================================================
-Development
-0. Add dev-info to main github readme
-   - running dev-server (fast feedback, ruby,bundle-install,docker pull a few langs)
-   - running dind server with app volumes-from:ro
-
-=======================================================================
-Major
-X  Need to ensure there is empty app/zips folder in image
-   Better is app/downloads
-X. Merge
-0. Live
-
-=======================================================================
-Later
-0. Alpine base for few more common languages?
-
-=======================================================================
 Kata-id validity
 0. enter a practice session
    if kata-id is valid but language it's for is not installed then
    the start/continue buttons should be disabled
 0. fork (from review-diff)
    if the language is not installed then fork should be disabled.
-
 
 =======================================================================
 Later

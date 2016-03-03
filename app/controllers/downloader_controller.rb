@@ -13,8 +13,6 @@ class DownloaderController < ApplicationController
     # would like to delete this tar file
     # but download tests untar them to verify
     # it is identical to original
-    # rm_cmd = "rm #{zip_filename}"
-    # `rm_cmd`
   end
 
   private

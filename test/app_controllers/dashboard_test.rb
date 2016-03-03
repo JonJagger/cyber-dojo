@@ -11,7 +11,9 @@ class DashboardControllerTest < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  test '62A971',
+  prefix = '62A'
+
+  test prefix+'971',
   'dashboard when no avatars' do
     dashboard
     options = [ false, true, 'xxx' ]
@@ -25,7 +27,7 @@ class DashboardControllerTest < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  test 'B4329E',
+  test prefix+'29E',
   'dashboard when avatars with no traffic-lights' do
     4.times { start }
     dashboard
@@ -33,7 +35,7 @@ class DashboardControllerTest < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  test '20AE43',
+  test prefix+'E43',
   'dashboard when avatars with some traffic lights' do
     3.times { start; 2.times { run_tests } }
     dashboard
@@ -41,14 +43,14 @@ class DashboardControllerTest < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  test '7906CB',
+  test prefix+'6CB',
   'heartbeat when no avatars' do
     heartbeat
   end
 
   #- - - - - - - - - - - - - - - -
 
-  test '1AB1FB',
+  test prefix+'1FB',
   'heartbeat when avatars with no traffic-lights' do
     start
     heartbeat
@@ -56,7 +58,7 @@ class DashboardControllerTest < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  test '674785',
+  test prefix+'785',
   'heartbeat when some traffic-lights' do
     3.times { start; 2.times { run_tests } }
     heartbeat
@@ -64,14 +66,14 @@ class DashboardControllerTest < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  test '904330',
+  test prefix+'330',
   'progress when no avatars' do
     progress
   end
 
   #- - - - - - - - - - - - - - - -
 
-  test '220619',
+  test prefix+'619',
   'progress when avatars with no traffic-lights' do
     start # 0
     progress
@@ -79,7 +81,7 @@ class DashboardControllerTest < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - -
 
-  test '3B04FE',
+  test prefix+'4FE',
   'progress when avatar has only amber traffic-lights' do
     start # 0
     runner.stub_run_colour(@avatar, :amber)
