@@ -7,7 +7,7 @@ MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
 pushd ${MY_DIR} > /dev/null
 
-CONTEXT_DIR=../..
+CONTEXT_DIR=../../..
 
 cp ./Dockerfile    ${CONTEXT_DIR}
 cp ./.dockerignore ${CONTEXT_DIR}
