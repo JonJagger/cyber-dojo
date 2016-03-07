@@ -36,9 +36,7 @@ show_use()
   echo 'COMMAND(server):'
   # TODO: backup a katas-ID data-container
   echo '     down                 Stops and removes server'
-  echo '     up [OPTIONS]         Creates and starts the server'
-  echo "         katas=DIR        default:  katas=${HOST_KATAS_DEFAULT}"
-  echo "         runner=CLASS     default: runner=${RUNNER_DEFAULT}"
+  echo '     up                   Creates and starts the server'
   echo
   echo 'COMMAND(languages):'
   echo '     images               Lists pulled languages'

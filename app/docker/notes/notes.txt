@@ -1,8 +1,10 @@
 
+Dev.
+X. New paypal donate information.
+
 =======================================================================
 Scripts
-X. Do everything needed for clean install with no existing katas/ folder.
-   Have blank katas-container docker image that can be used to create
+X. Have blank katas-container docker image that can be used to create
    empty katas-container.
 X. cyber-dojo: Create cyber-dojo-katas data-container (one-time)
 X. cyber-dojo: Add export=ID command to save a practice session
