@@ -1,14 +1,9 @@
-FROM       cyberdojofoundation/build-essential
+FROM       cyberdojofoundation/gpp-5.3
 MAINTAINER Byran Wills-Heath <byran@adgico.co.uk>
 
 ENV CXX=clang++ CC=clang
 
-ADD scripts/* ./
+ADD install.sh .
 
-RUN ./install-tools.sh && \
-    ./install-gcc.sh && \
-    ./install-clang.sh && \
-    ./install-boost.sh && \
-    ./install-gsl.sh   && \
-    ./remove-tools.sh  && \
-    rm /*.sh
+RUN ./install.sh && \
+    rm /install.sh
