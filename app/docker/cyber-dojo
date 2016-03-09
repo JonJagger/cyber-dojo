@@ -9,6 +9,12 @@ set -e
 # TODO: create katas-DATA-CONTAINER only if RUNNER=DockerKatasDataContainerRunner?
 # TODO: pull all language images == fetch? all?
 
+#set +o errexit
+#X=$(docker ps -a | grep cdf-katas-DATA-CONTAINER)
+#STATUS=$?
+#set -o errexit
+
+
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 

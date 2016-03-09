@@ -5,16 +5,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
@@ -61,15 +51,6 @@ end
 KATAS_DATA_CONTAINER=cdf-katas-DATA-CONTAINER
 
 def create_empty_katas_data_container
-  # TODO: this can be named-Dockerfile in app/docker folder (inside image)
-  #
-  # echo 'FROM cyberdojofoundation/user-base'                  > ${MY_DIR}./Dockerfile
-  # echo 'ARG CYBER_DOJO_KATAS_ROOT'                          >> ${MY_DIR}/Dockerfile
-  # echo 'USER root'                                          >> ${MY_DIR}/Dockerfile
-  # echo 'RUN  mkdir -p ${CYBER_DOJO_KATAS_ROOT}'             >> ${MY_DIR}/Dockerfile
-  # echo 'RUN  chown -R cyber-dojo ${CYBER_DOJO_KATAS_ROOT}'  >> ${MY_DIR}/Dockerfile
-  # echo 'VOLUME [ "${CYBER_DOJO_KATAS_ROOT}" ]'              >> ${MY_DIR}/Dockerfile
-  # echo 'CMD [ "katas-data-container" ]'                     >> ${MY_DIR}/Dockerfile
   #
   # docker build \
   #     --build-arg=CYBER_DOJO_KATAS_ROOT=${HOME}/katas \
@@ -88,17 +69,6 @@ end
 # - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def create_full_katas_data_container
-  # TODO: this can be named-Dockerfile in app/docker folder (inside image)
-  #
-  # echo 'FROM cyberdojofoundation/user-base'                  > ${KATAS}/Dockerfile
-  # echo 'MAINTAINER Jon Jagger <jon@jaggersoft.com>'         >> ${KATAS}/Dockerfile
-  # echo 'ARG CYBER_DOJO_KATAS_ROOT'                          >> ${KATAS}/Dockerfile
-  # echo 'USER root'                                          >> ${KATAS}/Dockerfile
-  # echo 'RUN  mkdir -p ${CYBER_DOJO_KATAS_ROOT}'             >> ${KATAS}/Dockerfile
-  # echo 'COPY . ${CYBER_DOJO_KATAS_ROOT}'                    >> ${KATAS}/Dockerfile
-  # echo 'RUN  chown -R cyber-dojo ${CYBER_DOJO_KATAS_ROOT}'  >> ${KATAS}/Dockerfile
-  # echo 'VOLUME [ "${CYBER_DOJO_KATAS_ROOT}" ]'              >> ${KATAS}/Dockerfile
-  # echo 'CMD [ "katas-data-container" ]'                     >> ${KATAS}/Dockerfile
   #
   # docker build \
   #     --build-arg=CYBER_DOJO_KATAS_ROOT=${HOME}/katas \
