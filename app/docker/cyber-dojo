@@ -1,6 +1,11 @@
 #!/bin/sh
 set -e
 
+# TODO: KATAS=arg   has to be processed and volume-mounted for docker-run
+#                   so ruby file's docker commands can access the host's katas folder.
+#
+#
+#
 # TODO: add command to backup katas-data-container to tar.tgz file
 #       See end of https://docs.docker.com/engine/userguide/containers/dockervolumes/#manage-data-in-containers
 #       Should be able to use this technique to create the initial
@@ -14,105 +19,10 @@ set -e
 #STATUS=$?
 #set -o errexit
 
-
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
 GITHUB_URL=https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-show_use()
-{
-  echo
-  echo "Use: ${ME} COMMAND"
-  echo "     ${ME} help"
-  echo
-  echo 'COMMAND(server):'
-  # TODO: backup a katas-ID data-container
-  echo '     down                 Stops and removes server'
-  echo '     up                   Creates and starts the server'
-  echo
-  echo 'COMMAND(languages):'
-  echo '     images               Lists pulled languages'
-  echo '     pull=IMAGE           Pulls language IMAGE'
-  echo '     catalog              Lists all languages'
-  echo '     rmi=IMAGE            Removes a pulled language IMAGE'
-  echo '     upgrade              Pulls the latest server and languages'
-  echo
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# process command-line args
-
-COUNT=0
-for ARG in "$@"
-do
-  case ${ARG} in
-    # - - - - - - - server - - - - - - - -
-    down)
-      doDown=true
-      COUNT=$((COUNT + 1))
-      ;;
-    up)
-      doUp=true
-      COUNT=$((COUNT + 1))
-      ;;
-    # - - - - - - - up options - - - - - - - -
-    katas=*)
-      KATAS="${ARG#*=}"
-      ;;
-    runner=*)
-      RUNNER="${ARG#*=}"
-      ;;
-    # - - - - - - - languages - - - - - - - -
-    images)
-      COUNT=$((COUNT + 1))
-      ;;
-    pull=*)
-      COUNT=$((COUNT + 1))
-      ;;
-    catalog)
-      COUNT=$((COUNT + 1))
-      ;;
-    rmi=*)
-      COUNT=$((COUNT + 1))
-      ;;
-    upgrade)
-      COUNT=$((COUNT + 1))
-      ;;
-    # - - - - - - - - - - - - - - -
-    help)
-      doHelp=true
-      ;;
-    # - - - - - - - something's not right - - - - - - - -
-    *)
-      echo "${ME}: ${ARG} ?"
-      echo "See '${ME} help"
-      exit
-      ;;
-  esac
-done
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# nothing is implicit
-
-if ((${COUNT} > 1)); then
-  echo 'one command only please'
-  echo "See '${ME} help'"
-  exit
-fi
-
-if [ -n "${doHelp}" ]; then
-  show_use;
-  exit;
-fi
-
-if [ $# -eq 0 ]; then
-  echo 'no command entered'
-  echo "See '${ME} help'"
-  exit
-fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # install docker if necessary
@@ -191,14 +101,14 @@ docker run \
   sh -c "./app/docker/cyber-dojo.rb $@"
 
 
-if [ -n "${doDown}" ]; then
+if [ "$*" == "down" ]; then
   CWD=$(pwd)
   cd "${MY_DIR}" > /dev/null
   ${DOCKER_COMPOSE_CMD} down
   cd "${CWD}" > /dev/null
 fi
 
-if [ -n "${doUp}" ]; then
+if [ "$*" == "up" ]; then
   CWD=$(pwd)
   cd "${MY_DIR}" > /dev/null
   ${DOCKER_COMPOSE_CMD} up -d

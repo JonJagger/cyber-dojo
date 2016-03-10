@@ -1,34 +1,132 @@
-#!/bin/ruby
 
 # TODO: convert this to Ruby
-#       assume command-line args already processed by sh file
-
-
-
-ME="./$( basename ${0} )"
-MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
-
-HOME=/usr/src/cyber-dojo         # home folder *inside* the server image
-GITHUB_URL=https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker
-
-DOCKER_COMPOSE_FILE=docker-compose.yml
-DOCKER_COMPOSE_CMD="docker-compose --file=./${DOCKER_COMPOSE_FILE}"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-RUNNER_DEFAULT=DockerTarPipeRunner
-RUNNER=${RUNNER_DEFAULT}         # see app/models/dojo.rb
-
-KATAS_DEFAULT=/var/www/cyber-dojo/katas
-KATAS=${KATAS_DEFAULT}           # where katas are stored on the *host*
-
-
+# TODO: do command-line args processing
+#       (then updates will be automatically pulled by upgrades)
+# TODO: docker-compose.yml file could be downloaded to tmp/
 # TODO: check with works from any dir (downloads docker-compose.yml)
 # TODO: add command to backup katas-data-container to .tgz file
 # TODO: create katas-DATA-CONTAINER only if RUNNER=DockerTarPipeRunner?
 # TODO: pull ALL language images == fetch? all? pull=all?
 
 
+#ME="./$( basename ${0} )"
+ME='cyber-dojo'
+#MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
+
+#HOME=/usr/src/cyber-dojo         # home folder *inside* the server image
+#GITHUB_URL=https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker
+
+#DOCKER_HUB_USERNAME=cyberdojofoundation
+
+#DOCKER_COMPOSE_FILE=docker-compose.yml
+#DOCKER_COMPOSE_CMD="docker-compose --file=./${DOCKER_COMPOSE_FILE}"
+
+#RUNNER_DEFAULT=DockerTarPipeRunner
+#RUNNER=${RUNNER_DEFAULT}         # see app/models/dojo.rb
+
+#KATAS_DEFAULT=/var/www/cyber-dojo/katas
+#KATAS=${KATAS_DEFAULT}           # where katas are stored on the *host*
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+def show_use
+  lines = [
+    '',
+    "Use: #{ME} COMMAND",
+    "     #{ME} help",
+    '',
+    'COMMAND(server):',
+    # TODO: backup a katas-ID data-container
+    '     down                 Stops and removes server',
+    '     up                   Creates and starts the server',
+    '',
+    'COMMAND(languages):',
+    '     images               Lists pulled languages',
+    '     pull=IMAGE           Pulls language IMAGE',
+    '     catalog              Lists all languages',
+    '     rmi=IMAGE            Removes a pulled language IMAGE',
+    '     upgrade              Pulls the latest server and languages',
+    ''
+  ]
+  lines.each { |line| puts line }
+end
+
+show_use
+
+
+=begin
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# process command-line args
+
+COUNT=0
+for ARG in "$@"
+do
+  case ${ARG} in
+    # - - - - - - - server - - - - - - - -
+    down)
+      doDown=true
+      COUNT=$((COUNT + 1))
+      ;;
+    up)
+      doUp=true
+      COUNT=$((COUNT + 1))
+      ;;
+    # - - - - - - - up options - - - - - - - -
+    katas=*)
+      KATAS="${ARG#*=}"
+      ;;
+    runner=*)
+      RUNNER="${ARG#*=}"
+      ;;
+    # - - - - - - - languages - - - - - - - -
+    images)
+      COUNT=$((COUNT + 1))
+      ;;
+    pull=*)
+      COUNT=$((COUNT + 1))
+      ;;
+    catalog)
+      COUNT=$((COUNT + 1))
+      ;;
+    rmi=*)
+      COUNT=$((COUNT + 1))
+      ;;
+    upgrade)
+      COUNT=$((COUNT + 1))
+      ;;
+    # - - - - - - - - - - - - - - -
+    help)
+      doHelp=true
+      ;;
+    # - - - - - - - something's not right - - - - - - - -
+    *)
+      echo "${ME}: ${ARG} ?"
+      echo "See '${ME} help"
+      exit
+      ;;
+  esac
+done
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# nothing is implicit
+
+if ((${COUNT} > 1)); then
+  echo 'one command only please'
+  echo "See '${ME} help'"
+  exit
+fi
+
+if [ -n "${doHelp}" ]; then
+  show_use;
+  exit;
+fi
+
+if [ $# -eq 0 ]; then
+  echo 'no command entered'
+  echo "See '${ME} help'"
+  exit
+fi
 
 #========================================================================================
 # server
@@ -54,15 +152,15 @@ def create_empty_katas_data_container
   #
   # docker build \
   #     --build-arg=CYBER_DOJO_KATAS_ROOT=${HOME}/katas \
-  #     --tag=${HUB_USER}/katas \
-  #     --file=${KATAS}/Dockerfile \
+  #     --tag=${DOCKER_HUB_USERNAME}/katas \
+  #     --file=./app/docker/Dockerfile.katas-data-container.empty \
   #     ${KATAS}
   #
   # rm ${KATAS}/Dockerfile
   #
   # docker run \
   #     --name ${KATAS_DATA_CONTAINER} \
-  #     ${HUB_USER}/katas \
+  #     ${DOCKER_HUB_USERNAME}/katas \
   #     echo 'cdfKatasDC'
 end
 
@@ -72,15 +170,15 @@ def create_full_katas_data_container
   #
   # docker build \
   #     --build-arg=CYBER_DOJO_KATAS_ROOT=${HOME}/katas \
-  #     --tag=${HUB_USER}/katas \
-  #     --file=${KATAS}/Dockerfile \
+  #     --tag=${DOCKER_HUB_USERNAME}/katas \
+  #     --file=./app/docker/Dockerfile.katas-data-container.copied \
   #     ${KATAS}
   #
   # rm ${KATAS}/Dockerfile
   #
   # docker run \
   #     --name ${KATAS_DATA_CONTAINER} \
-  #     ${HUB_USER}/katas \
+  #     ${DOCKER_HUB_USERNAME}/katas \
   #     echo 'cdfKatasDC'
 end
 
@@ -106,7 +204,7 @@ end
 
 def pulled_language_images
   ALL_LANGUAGE_IMAGES=$(echo "${CATALOG}" | awk '{print $NF}' | sort)
-  PULLED_IMAGES=$(docker images | grep ${HUB_USER} | awk '{print $1}')
+  PULLED_IMAGES=$(docker images | grep ${DOCKER_HUB_USERNAME} | awk '{print $1}')
   SPLIT=$(echo "${PULLED_IMAGES}" | sed 's/\// /g')
   PULLED_IMAGES=$(echo "${SPLIT}" | awk '{print $NF}' | sort)
 
@@ -133,21 +231,20 @@ end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-def pull
-  docker pull ${HUB_USER}/${IMAGE}:latest
+def pull(image)
+  `docker pull #{DOCKER_HUB_USERNAME}/#{image}:latest`
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def catalog
-  # will pull web image if necessary
-  docker run --rm ${HUB_USER}/web sh -c "./app/languages/list_all_images.rb"
+  `./app/languages/list_all_images.rb`
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-def rmi
-  docker rmi ${HUB_USER}/${IMAGE}
+def rmi(image)
+  `docker rmi #{DOCKER_HUB_USERNAME}/#{image}`
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -234,3 +331,5 @@ if [ -n "${doPull}"    ]; then pull   ; exit; fi
 if [ -n "${doCatalog}" ]; then catalog; exit; fi
 if [ -n "${doRmi}"     ]; then rmi    ; exit; fi
 if [ -n "${doUpgrade}" ]; then upgrade; exit; fi
+
+=end
