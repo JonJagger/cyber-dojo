@@ -1,11 +1,6 @@
 #!/bin/sh
 set -e
 
-# TODO: KATAS=arg   has to be processed and volume-mounted for docker-run
-#                   so ruby file's docker commands can access the host's katas folder.
-#
-#
-#
 # TODO: add command to backup katas-data-container to tar.tgz file
 #       See end of https://docs.docker.com/engine/userguide/containers/dockervolumes/#manage-data-in-containers
 #       Should be able to use this technique to create the initial
@@ -21,20 +16,21 @@ set -e
 
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
-
 GITHUB_URL=https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # install docker if necessary
-
 hash docker 2> /dev/null
 if [ $? != 0 ]; then
   echo
   echo 'cyber-dojo is installing docker'
   SCRIPT=install-docker.sh
+  CWD=$(pwd)
+  cd "${MY_DIR}" > /dev/null
   curl -O ${GITHUB_URL}/${SCRIPT}
-  chmod +x ${SCRIPT}
-  ./${SCRIPT}
+  cd "${CWD}" > /dev/null
+  chmod +x ${MY_DIR}/${SCRIPT}
+  ${MY_DIR}/${SCRIPT}
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -45,9 +41,12 @@ if [ $? != 0 ]; then
   echo
   echo 'cyber-dojo is installing docker-machine'
   SCRIPT=install-docker-machine.sh
+  CWD=$(pwd)
+  cd "${MY_DIR}" > /dev/null
   curl -O ${GITHUB_URL}/${SCRIPT}
-  chmod +x ${SCRIPT}
-  ./${SCRIPT}
+  cd "${CWD}" > /dev/null
+  chmod +x ${MY_DIR}/${SCRIPT}
+  ${MY_DIR}/${SCRIPT}
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -58,30 +57,30 @@ if [ $? != 0 ]; then
   echo
   echo 'cyber-dojo is installing docker-compose'
   SCRIPT=install-docker-compose.sh
+  CWD=$(pwd)
+  cd "${MY_DIR}" > /dev/null
   curl -O ${GITHUB_URL}/${SCRIPT}
-  chmod +x ${SCRIPT}
-  ./${SCRIPT}
+  cd "${CWD}" > /dev/null
+  chmod +x ${MY_DIR}/${SCRIPT}
+  ${MY_DIR}/${SCRIPT}
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# you must have the docker-compose.yml file
+# get the web image and extract docker-compose.yml file from it
 
+HOME=/usr/src/cyber-dojo         # *inside* the server image
+DOCKER_HUB_USERNAME=cyberdojofoundation
 DOCKER_COMPOSE_FILE=docker-compose.yml
-DOCKER_COMPOSE_CMD="docker-compose --file=./${DOCKER_COMPOSE_FILE}"
 
-if [ ! -e ${MY_DIR}/${DOCKER_COMPOSE_FILE} ]; then
-  CWD=$(pwd)
-  cd "${MY_DIR}" > /dev/null
-  curl -O ${GITHUB_URL}/${DOCKER_COMPOSE_FILE}
-  cd "${CWD}" > /dev/null
-fi
+CID=$(docker create ${DOCKER_HUB_USERNAME}/web)
+docker cp ${CID}:${HOME}/app/docker/${DOCKER_COMPOSE_FILE} ${MY_DIR}/${DOCKER_COMPOSE_FILE}
+docker rm -v ${CID} > /dev/null
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # docker-compose.yml relies on several exported env-vars
 
 RUNNER_DEFAULT=DockerTarPipeRunner
 RUNNER=${RUNNER_DEFAULT}         # see app/models/dojo.rb
-HOME=/usr/src/cyber-dojo         # home folder *inside* the server image
 
 export CYBER_DOJO_HOME=${HOME}
 export CYBER_DOJO_KATAS_ROOT=${HOME}/katas
@@ -90,28 +89,30 @@ export CYBER_DOJO_RUNNER_CLASS=${RUNNER}
 export CYBER_DOJO_RUNNER_SUDO='sudo -u docker-runner sudo'
 export CYBER_DOJO_RUNNER_TIMEOUT=10
 
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # delegate to ruby script inside web image
 
-docker run \
-  --rm \
-  --user=cyber-dojo \
-  cyberdojofoundation/web \
-  sh -c "./app/docker/cyber-dojo.rb $@"
+# TODO: KATAS=arg   has to be processed and volume-mounted for docker-run
+#                   so ruby file's docker commands can access the host's katas folder.
 
+
+echo "delegate into cyber-dojo.rb inside web container"
+#docker run \
+#  --rm \
+#  --user=cyber-dojo \
+#  ${DOCKER_HUB_USERNAME}/web \
+#  sh -c "ruby ${HOME}/app/docker/cyber-dojo.rb $@"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# up/down have to run on host!
+
+DOCKER_COMPOSE_CMD="docker-compose --file=${MY_DIR}/${DOCKER_COMPOSE_FILE}"
 
 if [ "$*" == "down" ]; then
-  CWD=$(pwd)
-  cd "${MY_DIR}" > /dev/null
   ${DOCKER_COMPOSE_CMD} down
-  cd "${CWD}" > /dev/null
 fi
 
 if [ "$*" == "up" ]; then
-  CWD=$(pwd)
-  cd "${MY_DIR}" > /dev/null
   ${DOCKER_COMPOSE_CMD} up -d
-  cd "${CWD}" > /dev/null
 fi
 

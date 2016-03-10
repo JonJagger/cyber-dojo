@@ -8,6 +8,7 @@
 
 !app/assets
 !app/controllers
+!app/docker
 !app/downloads
 !app/exercises
 !app/helpers
