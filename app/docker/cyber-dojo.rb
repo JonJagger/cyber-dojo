@@ -8,15 +8,13 @@
 # TODO: create katas-DATA-CONTAINER only if RUNNER=DockerTarPipeRunner?
 # TODO: pull ALL language images == fetch? all? pull=all?
 
-
-#ME="./$( basename ${0} )"
-ME='cyber-dojo'
-#MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
+$me='cyber-dojo.rb'
+$my_dir=File.expand_path(File.dirname(__FILE__))
 
 #HOME=/usr/src/cyber-dojo         # home folder *inside* the server image
 #GITHUB_URL=https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker
 
-#DOCKER_HUB_USERNAME=cyberdojofoundation
+$docker_hub_username='cyberdojofoundation'
 
 #DOCKER_COMPOSE_FILE=docker-compose.yml
 #DOCKER_COMPOSE_CMD="docker-compose --file=./${DOCKER_COMPOSE_FILE}"
@@ -29,11 +27,11 @@ ME='cyber-dojo'
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-def show_use
-  lines = [
+def help
+  [
     '',
-    "Use: #{ME} COMMAND",
-    "     #{ME} help",
+    "Use: #{$me} COMMAND",
+    "     #{$me} help",
     '',
     'COMMAND(server):',
     # TODO: backup a katas-ID data-container
@@ -42,36 +40,152 @@ def show_use
     '',
     'COMMAND(languages):',
     '     images               Lists pulled languages',
-    '     pull=IMAGE           Pulls language IMAGE',
+    '     pull IMAGE           Pulls language IMAGE',
     '     catalog              Lists all languages',
-    '     rmi=IMAGE            Removes a pulled language IMAGE',
+    '     rmi IMAGE            Removes a pulled language IMAGE',
     '     upgrade              Pulls the latest server and languages',
     ''
-  ]
-  lines.each { |line| puts line }
+  ].each { |line| puts line }
 end
 
-show_use
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+def catalog
+  `#{$my_dir}/../languages/list_all_images.rb`
+
+  # LANGUAGE          TESTS                IMAGE
+  # Asm               assert               nasm_assert
+  # BCPL              all_tests_passed     bcpl-all_tests_passed
+  # Bash              shunit2              bash_shunit2
+  # C (clang)         assert               clang_assert
+  # C (gcc)           CppUTest             gcc_cpputest
+  # ...
+end
+
+def in_catalog?(image)
+  catalog.split("\n").drop(0).map{ |line| line.split[2] }.include?(image)
+end
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+def pulled_images
+  di = `docker images | grep #{$docker_hub_username}`
+  # cyberdojofoundation/visual-basic_nunit   latest  eb5f54114fe6 4 months ago 497.4 MB
+  # cyberdojofoundation/ruby_mini_test       latest  c7d7733d5f54 4 months ago 793.4 MB
+  # cyberdojofoundation/ruby_rspec           latest  ce9425d1690d 4 months ago 411.2 MB
+  # ...
+  di.split("\n").map{ |line| line.split[0].split('/')[1] }
+  # visual-basic_nunit
+  # ruby_mini_test
+  # ruby_rspec
+end
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+def images
+  pulled = pulled_images
+  all = catalog.split("\n")
+  puts all.shift
+  all.each do |line|
+    image = line.split[2]
+    puts line if pulled.include? image
+  end
+end
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+=begin
+def upgrade
+
+  #echo "downloading latest ${DOCKER_COMPOSE_FILE} file"
+  #download_latest_docker_compose_yml
+  #GET FROM inside container
+
+  echo 'upgrading cyber-dojo server images'
+  CWD=$(pwd)
+  cd "${MY_DIR}" > /dev/null
+  SERVICES=`${DOCKER_COMPOSE_CMD} config --services 2> /dev/null`
+  cd "${CWD}" > /dev/null
+  echo "${SERVICES}" | while read IMAGE ; do
+    pull
+  done
+
+  echo 'upgrading cyber-dojo pulled language images'
+  CATALOG=$(catalog)
+  PULLED=$(pulled_language_images)
+  echo "${PULLED}" | while read IMAGE ; do
+    pull
+  done
+end
+=end
+
+def upgrade
+  puts 'TODO: upgrade'
+end
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+def bad_image(image)
+  if image.nil?
+    puts 'missing IMAGE'
+  else
+    puts "unknown IMAGE #{image}"
+  end
+  puts "Try '#{$me} help'"
+end
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+def pull(image)
+  if in_catalog?(image)
+    `docker pull #{$docker_hub_username}/#{image}:latest`
+  else
+    bad_image(image)
+  end
+end
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+def rmi(image)
+  if in_catalog?(image)
+    `docker rmi #{$docker_hub_username}/#{image}`
+  else
+    bad_image(image)
+  end
+end
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+if ARGV.length == 0
+  puts 'no command entered'
+  puts "Try '#{$me} help'"
+  exit
+end
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+options = {}
+
+case ARGV[0].to_sym
+when :help, :down, :up, :images, :catalog, :upgrade, :pull, :rmi
+  options[ARGV[0].to_sym] = true
+else
+  puts "#{$me}: #{ARGV[1]} ?"
+  puts "Try '#{$me} help"
+  exit
+end
+
+help if options[:help]
+puts catalog if options[:catalog]
+images if options[:images]
+upgrade if options[:upgrade]
+pull(ARGV[1]) if options[:pull]
+rmi(ARGV[1]) if options[:rmi]
+
 
 
 =begin
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# process command-line args
-
-COUNT=0
-for ARG in "$@"
-do
-  case ${ARG} in
-    # - - - - - - - server - - - - - - - -
-    down)
-      doDown=true
-      COUNT=$((COUNT + 1))
-      ;;
-    up)
-      doUp=true
-      COUNT=$((COUNT + 1))
-      ;;
     # - - - - - - - up options - - - - - - - -
     katas=*)
       KATAS="${ARG#*=}"
@@ -79,58 +193,8 @@ do
     runner=*)
       RUNNER="${ARG#*=}"
       ;;
-    # - - - - - - - languages - - - - - - - -
-    images)
-      COUNT=$((COUNT + 1))
-      ;;
-    pull=*)
-      COUNT=$((COUNT + 1))
-      ;;
-    catalog)
-      COUNT=$((COUNT + 1))
-      ;;
-    rmi=*)
-      COUNT=$((COUNT + 1))
-      ;;
-    upgrade)
-      COUNT=$((COUNT + 1))
-      ;;
-    # - - - - - - - - - - - - - - -
-    help)
-      doHelp=true
-      ;;
-    # - - - - - - - something's not right - - - - - - - -
-    *)
-      echo "${ME}: ${ARG} ?"
-      echo "See '${ME} help"
-      exit
-      ;;
-  esac
-done
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# nothing is implicit
-
-if ((${COUNT} > 1)); then
-  echo 'one command only please'
-  echo "See '${ME} help'"
-  exit
-fi
-
-if [ -n "${doHelp}" ]; then
-  show_use;
-  exit;
-fi
-
-if [ $# -eq 0 ]; then
-  echo 'no command entered'
-  echo "See '${ME} help'"
-  exit
-fi
-
-#========================================================================================
-# server
-#========================================================================================
 
 def down
   #nothing to do
@@ -144,7 +208,12 @@ def up
   pull_common_languages_if_none
 end
 
-# - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+#========================================================================================
+# katas data-container is decoupled from cyber-dojo script
+#========================================================================================
 
 KATAS_DATA_CONTAINER=cdf-katas-DATA-CONTAINER
 
@@ -198,56 +267,16 @@ def one_time_create_katas_data_container
   fi
 end
 
+docker ps -a | grep ${katas_DATA_CONTAINER} > /dev/null
+if [ $? != 0 ]; then
+  one_time_create_katas_data_container
+fi
+
+
+
 #========================================================================================
 # languages
 #========================================================================================
-
-def pulled_language_images
-  ALL_LANGUAGE_IMAGES=$(echo "${CATALOG}" | awk '{print $NF}' | sort)
-  PULLED_IMAGES=$(docker images | grep ${DOCKER_HUB_USERNAME} | awk '{print $1}')
-  SPLIT=$(echo "${PULLED_IMAGES}" | sed 's/\// /g')
-  PULLED_IMAGES=$(echo "${SPLIT}" | awk '{print $NF}' | sort)
-
-  TMP_FILE_1=/tmp/cyber-dojo.comm1.txt
-  TMP_FILE_2=/tmp/cyber-dojo.comm2.txt
-  echo "${ALL_LANGUAGE_IMAGES}" > ${TMP_FILE_1}
-  echo       "${PULLED_IMAGES}" > ${TMP_FILE_2}
-  comm -12 ${TMP_FILE_1} ${TMP_FILE_2}
-
-  # These two lines cause docker containers to stop and I have no idea why?!
-  #rm ${TMP_FILE_1}
-  #rm ${TMP_FILE_2}
-end
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-def images
-  # FIXME: this gives the same as catalog when there are no languages pulled
-  CATALOG=$(catalog)
-  PULLED=$(pulled_language_images)
-  echo "${CATALOG}" | grep 'LANGUAGE'
-  echo "${CATALOG}" | grep "${PULLED}"
-end
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-def pull(image)
-  `docker pull #{DOCKER_HUB_USERNAME}/#{image}:latest`
-end
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-def catalog
-  `./app/languages/list_all_images.rb`
-end
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-def rmi(image)
-  `docker rmi #{DOCKER_HUB_USERNAME}/#{image}`
-end
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def pull_common_languages_if_none
   CATALOG=$(catalog)
@@ -264,32 +293,6 @@ end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-def upgrade
-  echo "downloading latest ${DOCKER_COMPOSE_FILE} file"
-  download_latest_docker_compose_yml
-  echo 'upgrading cyber-dojo server images'
-  CWD=$(pwd)
-  cd "${MY_DIR}" > /dev/null
-  SERVICES=`${DOCKER_COMPOSE_CMD} config --services 2> /dev/null`
-  cd "${CWD}" > /dev/null
-  echo "${SERVICES}" | while read IMAGE ; do
-    pull
-  done
-
-  echo 'upgrading cyber-dojo pulled language images'
-  CATALOG=$(catalog)
-  PULLED=$(pulled_language_images)
-  echo "${PULLED}" | while read IMAGE ; do
-    pull
-  done
-end
-
-def download_latest_docker_compose_yml
-  CWD=$(pwd)
-  cd "${MY_DIR}" > /dev/null
-  curl -O ${GITHUB_URL}/${DOCKER_COMPOSE_FILE}
-  cd "${CWD}" > /dev/null
-end
 
 #========================================================================================
 # you must have the docker-compose.yml file
@@ -297,15 +300,6 @@ end
 
 if [ ! -e ${MY_DIR}/${DOCKER_COMPOSE_FILE} ]; then
   download_latest_docker_compose_yml
-fi
-
-#========================================================================================
-# katas data-container is decoupled from cyber-dojo script
-#========================================================================================
-
-docker ps -a | grep ${katas_DATA_CONTAINER} > /dev/null
-if [ $? != 0 ]; then
-  one_time_create_katas_data_container
 fi
 
 #========================================================================================
@@ -318,18 +312,5 @@ export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
 export CYBER_DOJO_RUNNER_CLASS=${RUNNER}
 export CYBER_DOJO_RUNNER_SUDO='sudo -u docker-runner sudo'
 export CYBER_DOJO_RUNNER_TIMEOUT=10
-
-#========================================================================================
-# do something!
-#========================================================================================
-
-if [ -n "${doDown}"    ]; then down   ; exit; fi
-if [ -n "${doUp}"      ]; then up     ; exit; fi
-
-if [ -n "${doImages}"  ]; then images ; exit; fi
-if [ -n "${doPull}"    ]; then pull   ; exit; fi
-if [ -n "${doCatalog}" ]; then catalog; exit; fi
-if [ -n "${doRmi}"     ]; then rmi    ; exit; fi
-if [ -n "${doUpgrade}" ]; then upgrade; exit; fi
 
 =end

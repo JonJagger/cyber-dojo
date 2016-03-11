@@ -1,10 +1,8 @@
 #!/bin/sh
 set -e
 
-# TODO: add command to backup katas-data-container to tar.tgz file
+# TODO: add command to backup katas-data-container to .tgz file
 #       See end of https://docs.docker.com/engine/userguide/containers/dockervolumes/#manage-data-in-containers
-#       Should be able to use this technique to create the initial
-#       full data-container (new server on top of old one)
 # TODO: check this script works if called from any drectory
 # TODO: create katas-DATA-CONTAINER only if RUNNER=DockerKatasDataContainerRunner?
 # TODO: pull all language images == fetch? all?
@@ -16,53 +14,27 @@ set -e
 
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
-GITHUB_URL=https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# install docker if necessary
 hash docker 2> /dev/null
 if [ $? != 0 ]; then
   echo
-  echo 'cyber-dojo is installing docker'
-  SCRIPT=install-docker.sh
-  CWD=$(pwd)
-  cd "${MY_DIR}" > /dev/null
-  curl -O ${GITHUB_URL}/${SCRIPT}
-  cd "${CWD}" > /dev/null
-  chmod +x ${MY_DIR}/${SCRIPT}
-  ${MY_DIR}/${SCRIPT}
+  echo 'docker is not installed'
+  exit
 fi
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# install docker-machine if necessary
 
 hash docker-machine 2> /dev/null
 if [ $? != 0 ]; then
   echo
-  echo 'cyber-dojo is installing docker-machine'
-  SCRIPT=install-docker-machine.sh
-  CWD=$(pwd)
-  cd "${MY_DIR}" > /dev/null
-  curl -O ${GITHUB_URL}/${SCRIPT}
-  cd "${CWD}" > /dev/null
-  chmod +x ${MY_DIR}/${SCRIPT}
-  ${MY_DIR}/${SCRIPT}
+  echo 'docker-machine is not installed'
+  exit
 fi
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# install docker-compose if necessary
 
 hash docker-compose 2> /dev/null
 if [ $? != 0 ]; then
   echo
-  echo 'cyber-dojo is installing docker-compose'
-  SCRIPT=install-docker-compose.sh
-  CWD=$(pwd)
-  cd "${MY_DIR}" > /dev/null
-  curl -O ${GITHUB_URL}/${SCRIPT}
-  cd "${CWD}" > /dev/null
-  chmod +x ${MY_DIR}/${SCRIPT}
-  ${MY_DIR}/${SCRIPT}
+  echo 'docker-compose is not installed'
+  exit
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -97,14 +69,17 @@ export CYBER_DOJO_RUNNER_TIMEOUT=10
 
 
 echo "delegate into cyber-dojo.rb inside web container"
+# fake it for now
+ruby ${MY_DIR}/cyber-dojo.rb $@
+
 #docker run \
 #  --rm \
 #  --user=cyber-dojo \
 #  ${DOCKER_HUB_USERNAME}/web \
-#  sh -c "ruby ${HOME}/app/docker/cyber-dojo.rb $@"
+#  sh -c "${HOME}/app/docker/cyber-dojo.rb $@"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# up/down have to run on host!
+# Do up/down have to run on host?
 
 DOCKER_COMPOSE_CMD="docker-compose --file=${MY_DIR}/${DOCKER_COMPOSE_FILE}"
 
