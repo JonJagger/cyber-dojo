@@ -94,3 +94,11 @@ Misc
 0. http://www.jrslv.com/docker-1-10/ Says
 Resource constraints can be applied on disk I/O. Investigate
 
+
+
+
+#set +o errexit
+#X=$(docker ps -a | grep cdf-katas-DATA-CONTAINER)
+#STATUS=$?
+#set -o errexit
+

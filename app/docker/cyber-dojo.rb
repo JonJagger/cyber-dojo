@@ -1,23 +1,16 @@
 
-# TODO: convert this to Ruby
-# TODO: do command-line args processing
-#       (then updates will be automatically pulled by upgrades)
-# TODO: docker-compose.yml file could be downloaded to tmp/
+# TODO: convert this all to Ruby
 # TODO: check with works from any dir (downloads docker-compose.yml)
 # TODO: add command to backup katas-data-container to .tgz file
 # TODO: create katas-DATA-CONTAINER only if RUNNER=DockerTarPipeRunner?
 # TODO: pull ALL language images == fetch? all? pull=all?
 
-$me='cyber-dojo.rb'
-$my_dir=File.expand_path(File.dirname(__FILE__))
-
-#HOME=/usr/src/cyber-dojo         # home folder *inside* the server image
-#GITHUB_URL=https://raw.githubusercontent.com/JonJagger/cyber-dojo/master/docker
+$me = 'cyber-dojo.rb'
+$my_dir = File.expand_path(File.dirname(__FILE__))
 
 $docker_hub_username='cyberdojofoundation'
 
-#DOCKER_COMPOSE_FILE=docker-compose.yml
-#DOCKER_COMPOSE_CMD="docker-compose --file=./${DOCKER_COMPOSE_FILE}"
+#$home = '/usr/src/cyber-dojo'  # home folder *inside* the server image
 
 #RUNNER_DEFAULT=DockerTarPipeRunner
 #RUNNER=${RUNNER_DEFAULT}         # see app/models/dojo.rb
@@ -50,9 +43,15 @@ end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+def up
+  puts 'TODO:one_time_create_katas_data_container'
+  puts 'TODO:pull_common_languages_if_none'
+end
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 def catalog
   `#{$my_dir}/../languages/list_all_images.rb`
-
   # LANGUAGE          TESTS                IMAGE
   # Asm               assert               nasm_assert
   # BCPL              all_tests_passed     bcpl-all_tests_passed
@@ -78,6 +77,7 @@ def pulled_images
   # visual-basic_nunit
   # ruby_mini_test
   # ruby_rspec
+  # ...
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -85,7 +85,7 @@ end
 def images
   pulled = pulled_images
   all = catalog.split("\n")
-  puts all.shift
+  puts all.shift # heading
   all.each do |line|
     image = line.split[2]
     puts line if pulled.include? image
@@ -94,33 +94,22 @@ end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-=begin
-def upgrade
+$docker_compose_file = 'docker-compose.yml'
+$docker_compose_cmd = "docker-compose --file=#{$my_dir}/#{$docker_compose_file}"
 
-  #echo "downloading latest ${DOCKER_COMPOSE_FILE} file"
-  #download_latest_docker_compose_yml
-  #GET FROM inside container
-
-  echo 'upgrading cyber-dojo server images'
-  CWD=$(pwd)
-  cd "${MY_DIR}" > /dev/null
-  SERVICES=`${DOCKER_COMPOSE_CMD} config --services 2> /dev/null`
-  cd "${CWD}" > /dev/null
-  echo "${SERVICES}" | while read IMAGE ; do
-    pull
-  done
-
-  echo 'upgrading cyber-dojo pulled language images'
-  CATALOG=$(catalog)
-  PULLED=$(pulled_language_images)
-  echo "${PULLED}" | while read IMAGE ; do
-    pull
-  done
+def services
+  `#{$docker_compose_cmd} config --services 2> /dev/null`.split
 end
-=end
 
 def upgrade
-  puts 'TODO: upgrade'
+  services.each do |image|
+    cmd = "docker pull #{$docker_hub_username}/#{image}"
+    `#{cmd}`
+  end
+  pulled_images.each do |image|
+    cmd = "docker pull #{$docker_hub_username}/#{image}"
+    `#{cmd}`
+  end
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -165,17 +154,18 @@ end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 options = {}
-
-case ARGV[0].to_sym
+arg = ARGV[0].to_sym
+case arg
 when :help, :down, :up, :images, :catalog, :upgrade, :pull, :rmi
-  options[ARGV[0].to_sym] = true
+  options[arg] = true
 else
-  puts "#{$me}: #{ARGV[1]} ?"
+  puts "#{$me}: #{arg} ?"
   puts "Try '#{$me} help"
   exit
 end
 
 help if options[:help]
+up if options[:up]
 puts catalog if options[:catalog]
 images if options[:images]
 upgrade if options[:upgrade]
@@ -193,23 +183,6 @@ rmi(ARGV[1]) if options[:rmi]
     runner=*)
       RUNNER="${ARG#*=}"
       ;;
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-def down
-  #nothing to do
-  #${DOCKER_COMPOSE_CMD} down
-end
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-def up
-  one_time_create_katas_data_container
-  pull_common_languages_if_none
-end
-
-
-
 
 #========================================================================================
 # katas data-container is decoupled from cyber-dojo script
@@ -272,8 +245,6 @@ if [ $? != 0 ]; then
   one_time_create_katas_data_container
 fi
 
-
-
 #========================================================================================
 # languages
 #========================================================================================
@@ -290,27 +261,5 @@ def pull_common_languages_if_none
     #pull
   fi
 end
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-#========================================================================================
-# you must have the docker-compose.yml file
-#========================================================================================
-
-if [ ! -e ${MY_DIR}/${DOCKER_COMPOSE_FILE} ]; then
-  download_latest_docker_compose_yml
-fi
-
-#========================================================================================
-# docker-compose.yml relies on these env-vars
-#========================================================================================
-
-export CYBER_DOJO_HOME=${HOME}
-export CYBER_DOJO_KATAS_ROOT=${HOME}/katas
-export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
-export CYBER_DOJO_RUNNER_CLASS=${RUNNER}
-export CYBER_DOJO_RUNNER_SUDO='sudo -u docker-runner sudo'
-export CYBER_DOJO_RUNNER_TIMEOUT=10
 
 =end
