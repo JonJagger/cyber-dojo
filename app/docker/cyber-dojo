@@ -10,6 +10,14 @@ set -e
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
+HOME=/usr/src/cyber-dojo         # *inside* the server image
+
+DOCKER_HUB_USERNAME=cyberdojofoundation
+DOCKER_COMPOSE_FILE=docker-compose.yml
+
+KATAS_ROOT=/var/www/cyber-dojo/katas
+KATAS_DATA_CONTAINER=cdf-katas-DATA-CONTAINER_XX
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # ensure docker-engine/machine/compose are installed
 
@@ -35,11 +43,58 @@ if [ $? != 0 ]; then
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# get the web image and extract docker-compose.yml file from it
+# ensure katas-data-container exists.
+# if it doesn't and /var/www/cyber-dojo/katas exists on the host
+# then assume it holds practice sessions and copy them into the new katas-data-container.
+# if it doesn't and /var/www/cyber-dojo/katas does not exist on the host
+# then create new empty katas-data-container
 
-HOME=/usr/src/cyber-dojo         # *inside* the server image
-DOCKER_HUB_USERNAME=cyberdojofoundation
-DOCKER_COMPOSE_FILE=docker-compose.yml
+set +o errexit
+docker ps -a | grep ${KATAS_DATA_CONTAINER} > /dev/null
+STATUS=$?
+set -o errexit
+if [ ${STATUS} != 0 ]; then
+  # 1. extract Dockerfile (to create katas-data-container) from web image
+  if [ -d "${KATAS_ROOT}" ]; then
+    echo "copying ${KATAS_ROOT} into new ${KATAS_DATA_CONTAINER}"
+    SUFFIX=copied
+    CONTEXT_DIR=${KATAS_ROOT}
+  else
+    echo "creating new empty ${KATAS_DATA_CONTAINER}"
+    SUFFIX=empty
+    CONTEXT_DIR=.
+  fi
+
+  # 2. extract appropriate Dockerfile from web image
+  KATAS_DOCKERFILE=${MY_DIR}/Dockerfile.katas-data-container
+  CID=$(docker create ${DOCKER_HUB_USERNAME}/web)
+  docker cp ${CID}:${HOME}/app/docker/Dockerfile.katas-data-container.${SUFFIX} \
+            ${KATAS_DOCKERFILE}
+  docker rm -v ${CID} > /dev/null
+
+  # 3. use Dockerfile to build image
+  TAG=${DOCKER_HUB_USERNAME}/katasxx
+  BUILD="docker build \
+           --build-arg=CYBER_DOJO_KATAS_ROOT=${HOME}/katas \
+           --tag=${TAG} \
+           --file=${KATAS_DOCKERFILE} \
+           ${CONTEXT_DIR}"
+  ${BUILD}
+
+  # 4. use the image to create the data-container
+  # ...
+  # MAKE THIS A CREATE?
+  # docker run \
+  #     --name ${KATAS_DATA_CONTAINER} \
+  #     ${TAG} \
+  #     echo 'cdfKatasDC'
+
+
+fi
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# extract docker-compose.yml file from web image
 
 CID=$(docker create ${DOCKER_HUB_USERNAME}/web)
 docker cp ${CID}:${HOME}/app/docker/${DOCKER_COMPOSE_FILE} ${MY_DIR}/${DOCKER_COMPOSE_FILE}
@@ -61,13 +116,9 @@ export CYBER_DOJO_RUNNER_TIMEOUT=10
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # delegate to ruby script inside web image
 
-# TODO: KATAS=arg   has to be processed and volume-mounted for docker-run
-#                   so ruby file's docker commands can access the host's katas folder.
-
-
-echo "delegate into cyber-dojo.rb inside web container"
+# echo "delegate into cyber-dojo.rb inside web container"
 # fake it for now
-ruby ${MY_DIR}/cyber-dojo.rb $@
+# ruby ${MY_DIR}/cyber-dojo.rb $@
 
 #docker run \
 #  --rm \
@@ -76,15 +127,17 @@ ruby ${MY_DIR}/cyber-dojo.rb $@
 #  sh -c "${HOME}/app/docker/cyber-dojo.rb $@"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Do up/down have to run on host?
+# Do up/down have to run on host?!
 
 DOCKER_COMPOSE_CMD="docker-compose --file=${MY_DIR}/${DOCKER_COMPOSE_FILE}"
 
 if [ "$*" == "down" ]; then
-  ${DOCKER_COMPOSE_CMD} down
+  #${DOCKER_COMPOSE_CMD} down
+  true
 fi
 
 if [ "$*" == "up" ]; then
-  ${DOCKER_COMPOSE_CMD} up -d
+  #${DOCKER_COMPOSE_CMD} up -d
+  true
 fi
 
