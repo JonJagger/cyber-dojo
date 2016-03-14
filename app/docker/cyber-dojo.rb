@@ -1,26 +1,15 @@
 
-# TODO: convert this all to Ruby
 # TODO: When docker commands are run from inside a container I think they will need a sudo
-# TODO: I need to split the upgrade command
-#       upgrade server
-#       upgrade languages
-#       so you can keep a custom server.
-#       Or maybe upgrade just does languages?
-# TODO: check with works from any dir (downloads docker-compose.yml)
 # TODO: add command to backup katas-data-container to .tgz file
-# TODO: create katas-DATA-CONTAINER only if RUNNER=DockerTarPipeRunner?
 # TODO: pull ALL language images == fetch? all? pull=all?
 
 $me = 'cyber-dojo.rb'
 $my_dir = File.expand_path(File.dirname(__FILE__))
 
-$docker_hub_username='cyberdojofoundation'
+$docker_hub_username = 'cyberdojofoundation'
 $docker_compose_file = 'docker-compose.yml'
 $docker_compose_cmd = "docker-compose --file=#{$my_dir}/#{$docker_compose_file}"
 $home = '/usr/src/cyber-dojo'  # home folder *inside* the server image
-
-#RUNNER_DEFAULT=DockerTarPipeRunner
-#RUNNER=${RUNNER_DEFAULT}         # see app/models/dojo.rb
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -31,16 +20,16 @@ def help
     "     #{$me} help",
     '',
     'COMMAND(server):',
-    '     backup ID            Create tgz file of practice session ID',
+    '     backup               Create tgz file of all practice sessions',
     '     down                 Stops and removes server',
     '     up                   Creates and starts the server',
     '',
     'COMMAND(languages):',
-    '     catalog              Lists all languages',
-    '     images               Lists pulled languages',
+    '     catalog              Lists all language images',
+    '     images               Lists pulled language images',
     '     pull IMAGE           Pulls language IMAGE',
     '     remove IMAGE         Removes a pulled language IMAGE',
-    '     upgrade              Pulls the latest server and languages',
+    '     upgrade              Pulls the latest server and language images',
     ''
   ].each { |line| puts line }
 end
@@ -53,14 +42,13 @@ end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-def backup(id)
+def backup
   puts 'TODO: backup'
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def up
-  puts ">>>>>>>REVERSED LOGIC IN PLACE<<<<<<"
   return if pulled_images == []
   puts 'No language images pulled'
   puts 'Pulling a small starting collection of common language images'
@@ -169,6 +157,8 @@ if ARGV.length == 0
   exit
 end
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 options = {}
 arg = ARGV[0].to_sym
 if [:help, :backup, :down, :up, :images, :catalog, :upgrade, :pull, :remove].include? arg
@@ -179,11 +169,13 @@ else
   exit
 end
 
-help if options[:help]
-backup(ARGV[1]) if options[:backup]
-up if options[:up]
-puts catalog if options[:catalog]
-images if options[:images]
-upgrade if options[:upgrade]
-pull(ARGV[1]) if options[:pull]
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+help            if options[:help]
+backup          if options[:backup]
+up              if options[:up]
+puts catalog    if options[:catalog]
+images          if options[:images]
+upgrade         if options[:upgrade]
+pull(ARGV[1])   if options[:pull]
 remove(ARGV[1]) if options[:remove]
