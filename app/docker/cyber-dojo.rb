@@ -31,8 +31,7 @@ def help
     "     #{$me} help",
     '',
     'COMMAND(server):',
-    '     backup               Backup all practice sessions',
-    '     backup ID            Backup one practice session',
+    '     backup ID            Create tgz file of practice session ID',
     '     down                 Stops and removes server',
     '     up                   Creates and starts the server',
     '',
@@ -85,6 +84,7 @@ end
 def in_catalog?(image)
   all = catalog.split("\n").drop(1)
   lines = all.map{ |line| line.split[-1] }
+  # [ bcpl-all_tests_passed, bash_shunit2, clang_assert, gcc_cpputest, ...]
   lines.include?(image)
 end
 
@@ -110,7 +110,7 @@ def images
   all = catalog.split("\n")
   puts all.shift # heading
   all.each do |line|
-    image = line.split[2]
+    image = line.split[-1]
     puts line if pulled.include? image
   end
 end

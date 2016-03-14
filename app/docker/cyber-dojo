@@ -4,7 +4,6 @@ set -e
 # TODO: add command to backup katas-data-container to .tgz file
 #       See end of https://docs.docker.com/engine/userguide/containers/dockervolumes/#manage-data-in-containers
 # TODO: check this script works if called from any drectory
-# TODO: create katas-DATA-CONTAINER only if RUNNER=DockerKatasDataContainerRunner?
 # TODO: pull all language images == fetch? all?
 
 ME="./$( basename ${0} )"
@@ -16,7 +15,10 @@ DOCKER_HUB_USERNAME=cyberdojofoundation
 DOCKER_COMPOSE_FILE=docker-compose.yml
 
 KATAS_ROOT=/var/www/cyber-dojo/katas
-KATAS_DATA_CONTAINER=cdf-katas-DATA-CONTAINER_XX
+KATAS_DATA_CONTAINER=cdf-katas-DATA-CONTAINER
+
+RUNNER_DEFAULT=DockerTarPipeRunner
+RUNNER=${RUNNER_DEFAULT}         # see app/models/dojo.rb
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # ensure docker-engine/machine/compose are installed
@@ -50,9 +52,10 @@ fi
 # then create new empty katas-data-container
 
 set +o errexit
-docker ps -a | grep ${KATAS_DATA_CONTAINER} > /dev/null
+docker ps -a | grep -q ${KATAS_DATA_CONTAINER}
 STATUS=$?
 set -o errexit
+
 if [ ${STATUS} != 0 ]; then
   # 1. extract Dockerfile (to create katas-data-container) from web image
   if [ -d "${KATAS_ROOT}" ]; then
@@ -73,7 +76,7 @@ if [ ${STATUS} != 0 ]; then
   docker rm -v ${CID} > /dev/null
 
   # 3. use Dockerfile to build image
-  TAG=${DOCKER_HUB_USERNAME}/katasxx
+  TAG=${DOCKER_HUB_USERNAME}/katas
   BUILD="docker build \
            --build-arg=CYBER_DOJO_KATAS_ROOT=${HOME}/katas \
            --tag=${TAG} \
@@ -81,17 +84,13 @@ if [ ${STATUS} != 0 ]; then
            ${CONTEXT_DIR}"
   ${BUILD}
 
-  # 4. use the image to create the data-container
-  # ...
-  # MAKE THIS A CREATE?
-  # docker run \
-  #     --name ${KATAS_DATA_CONTAINER} \
-  #     ${TAG} \
-  #     echo 'cdfKatasDC'
-
-
+  # 4. use image to create data-container
+  RUN="docker create \
+         --name ${KATAS_DATA_CONTAINER} \
+         ${TAG} \
+         echo 'cdfKatasDC"
+  ${RUN}
 fi
-
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # extract docker-compose.yml file from web image
@@ -102,9 +101,6 @@ docker rm -v ${CID} > /dev/null
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # docker-compose.yml relies on several exported env-vars
-
-RUNNER_DEFAULT=DockerTarPipeRunner
-RUNNER=${RUNNER_DEFAULT}         # see app/models/dojo.rb
 
 export CYBER_DOJO_HOME=${HOME}
 export CYBER_DOJO_KATAS_ROOT=${HOME}/katas
@@ -118,7 +114,7 @@ export CYBER_DOJO_RUNNER_TIMEOUT=10
 
 # echo "delegate into cyber-dojo.rb inside web container"
 # fake it for now
-# ruby ${MY_DIR}/cyber-dojo.rb $@
+#ruby ${MY_DIR}/cyber-dojo.rb $@
 
 #docker run \
 #  --rm \
@@ -132,12 +128,10 @@ export CYBER_DOJO_RUNNER_TIMEOUT=10
 DOCKER_COMPOSE_CMD="docker-compose --file=${MY_DIR}/${DOCKER_COMPOSE_FILE}"
 
 if [ "$*" == "down" ]; then
-  #${DOCKER_COMPOSE_CMD} down
-  true
+  ${DOCKER_COMPOSE_CMD} down
 fi
 
 if [ "$*" == "up" ]; then
-  #${DOCKER_COMPOSE_CMD} up -d
-  true
+  ${DOCKER_COMPOSE_CMD} up -d
 fi
 
