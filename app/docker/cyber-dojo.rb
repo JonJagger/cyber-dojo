@@ -56,7 +56,7 @@ end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def up
-  return if pulled_images == []
+  return if pulled_images != []
   puts 'No language images pulled'
   puts 'Pulling a small starting collection of common language images'
   pull('gcc_assert')
