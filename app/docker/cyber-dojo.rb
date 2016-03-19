@@ -1,6 +1,5 @@
 #!/usr/bin/ruby
 
-# TODO: add command to backup katas-data-container to .tgz file
 # TODO: pull ALL language images == fetch? all? pull=all?
 
 $me = 'cyber-dojo.rb'
@@ -44,7 +43,14 @@ end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def backup
-  puts 'TODO: backup'
+  cmd = 'docker run' +
+    ' --user=root' +
+    ' --rm' +
+    ' --volumes-from=cdf-katas-DATA-CONTAINER' +
+    " --volume=/backup:/backup" +
+    " #{$docker_hub_username}/web" +
+    " tar -cvz -f /backup/cyber-dojo_katas_backup.tgz -C #{$home} katas"
+  `#{cmd}`
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

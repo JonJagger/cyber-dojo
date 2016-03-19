@@ -16,8 +16,6 @@ KATAS_DATA_CONTAINER=cdf-katas-DATA-CONTAINER
 RUNNER_DEFAULT=DockerTarPipeRunner
 RUNNER=${RUNNER_DEFAULT}         # see app/models/dojo.rb
 
-# TODO: only export CYBER_DOJO_XXX env-vars if they are not already set
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # ensure docker-engine/machine/compose are installed
 
@@ -98,19 +96,15 @@ docker rm -v ${CID} > /dev/null
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # docker-compose.yml relies on several exported env-vars
 
-export CYBER_DOJO_HOME=${HOME}
-export CYBER_DOJO_KATAS_ROOT=${HOME}/katas
-export CYBER_DOJO_KATAS_CLASS=HostDiskKatas
-export CYBER_DOJO_RUNNER_CLASS=${RUNNER}
-export CYBER_DOJO_RUNNER_SUDO='sudo -u docker-runner sudo'
-export CYBER_DOJO_RUNNER_TIMEOUT=10
+export CYBER_DOJO_HOME=${CYBER_DOJO_HOME:=${HOME}}
+export CYBER_DOJO_KATAS_ROOT=${CYBER_DOJO_KATAS_ROOT:=${HOME}/katas}
+export CYBER_DOJO_KATAS_CLASS=${CYBER_DOJO_KATAS_CLASS:=HostDiskKatas}
+export CYBER_DOJO_RUNNER_CLASS=${CYBER_DOJO_RUNNER_CLASS:=${RUNNER}}
+export CYBER_DOJO_RUNNER_SUDO=${CYBER_DOJO_RUNNER_SUDO:='sudo -u docker-runner sudo'}
+export CYBER_DOJO_RUNNER_TIMEOUT=${CYBER_DOJO_RUNNER_TIMEOUT:=10}
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # delegate to ruby script inside web image
-
-# echo "delegate into cyber-dojo.rb inside web container"
-# fake it for now
-# ruby ${MY_DIR}/cyber-dojo.rb $@
 
 docker run \
   --volume=${DOCKER_CERT_PATH}:${DOCKER_CERT_PATH}:ro \
