@@ -18,8 +18,8 @@ require 'json'
 
 languages_home = File.expand_path('.', File.dirname(__FILE__))
 
-$longest_test=""
-$longest_language=""
+$longest_test = ''
+$longest_language = ''
 
 def max_size(lhs, rhs)
   lhs.size > rhs.size ? lhs : rhs

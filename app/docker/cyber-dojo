@@ -110,13 +110,18 @@ export CYBER_DOJO_RUNNER_TIMEOUT=10
 
 # echo "delegate into cyber-dojo.rb inside web container"
 # fake it for now
-ruby ${MY_DIR}/cyber-dojo.rb $@
+# ruby ${MY_DIR}/cyber-dojo.rb $@
 
-#docker run \
-#  --rm \
-#  --user=cyber-dojo \
-#  ${DOCKER_HUB_USERNAME}/web \
-#  sh -c "${HOME}/app/docker/cyber-dojo.rb $@"
+docker run \
+  --volume=${DOCKER_CERT_PATH}:${DOCKER_CERT_PATH}:ro \
+  --env=DOCKER_CERT_PATH=${DOCKER_CERT_PATH} \
+  --env=DOCKER_HOST=${DOCKER_HOST} \
+  --env=DOCKER_MACHINE_NAME=${DOCKER_MACHINE_NAME} \
+  --env=DOCKER_TLS_VERIFY=${DOCKER_TLS_VERIFY} \
+  --rm \
+  --user=root \
+  ${DOCKER_HUB_USERNAME}/web \
+  sh -c "${HOME}/app/docker/cyber-dojo.rb $@"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

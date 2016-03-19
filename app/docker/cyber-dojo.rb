@@ -1,5 +1,5 @@
+#!/usr/bin/ruby
 
-# TODO: When docker commands are run from inside a container I think they will need a sudo
 # TODO: add command to backup katas-data-container to .tgz file
 # TODO: pull ALL language images == fetch? all? pull=all?
 
@@ -38,6 +38,7 @@ end
 
 def run(command)
   puts command
+  `#{command}`
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
