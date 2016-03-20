@@ -1,5 +1,4 @@
 #!/bin/sh
-set -e
 
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
@@ -47,12 +46,8 @@ fi
 # if it doesn't and /var/www/cyber-dojo/katas does not exist on the host
 # then create new empty katas-data-container
 
-set +o errexit
 docker ps -a | grep -q ${KATAS_DATA_CONTAINER}
-STATUS=$?
-set -o errexit
-
-if [ ${STATUS} != 0 ]; then
+if [ $? != 0 ]; then
   # 1. extract Dockerfile (to create katas-data-container) from web image
   if [ -d "${KATAS_ROOT}" ]; then
     echo "copying ${KATAS_ROOT} into new ${KATAS_DATA_CONTAINER}"
