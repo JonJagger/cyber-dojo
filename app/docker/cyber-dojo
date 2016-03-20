@@ -112,7 +112,7 @@ docker run \
   sh -c "${HOME}/app/docker/cyber-dojo.rb $@"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# docker-compose.yml relies on several exported env-vars
+# docker-compose.yml relies on exported env-vars
 
 export CYBER_DOJO_HOME=${CYBER_DOJO_HOME:=${HOME}}
 export CYBER_DOJO_KATAS_ROOT=${CYBER_DOJO_KATAS_ROOT:=${HOME}/katas}
@@ -121,11 +121,11 @@ export CYBER_DOJO_RUNNER_CLASS=${CYBER_DOJO_RUNNER_CLASS:=${RUNNER}}
 export CYBER_DOJO_RUNNER_SUDO=${CYBER_DOJO_RUNNER_SUDO:='sudo -u docker-runner sudo'}
 export CYBER_DOJO_RUNNER_TIMEOUT=${CYBER_DOJO_RUNNER_TIMEOUT:=10}
 
-if [ "$*" == "down" ]; then
+if [ "$*" = "down" ]; then
   ${DOCKER_COMPOSE_CMD} down
 fi
 
-if [ "$*" == "up" ]; then
+if [ "$*" = "up" ]; then
   ${DOCKER_COMPOSE_CMD} up -d
 fi
 
