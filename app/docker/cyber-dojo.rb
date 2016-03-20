@@ -1,5 +1,6 @@
 #!/usr/bin/ruby
 
+# TODO: sudo prefix needed on all docker commands?
 # TODO: pull ALL language images == fetch? all? pull=all?
 
 $me = 'cyber-dojo.rb'
