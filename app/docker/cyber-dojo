@@ -75,13 +75,6 @@ if [ $? != 0 ]; then
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# extract docker-compose.yml file from web image
-
-CID=$(docker create ${DOCKER_HUB_USERNAME}/web)
-docker cp ${CID}:${HOME}/app/docker/${DOCKER_COMPOSE_FILE} ${MY_DIR}/${DOCKER_COMPOSE_FILE}
-docker rm -v ${CID} > /dev/null
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # delegate most commands to ruby script inside web image
 
 docker run \
@@ -92,8 +85,22 @@ docker run \
   sh -c "${HOME}/app/docker/cyber-dojo.rb $@"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# extract docker-compose.yml file from web image and use it
 
 DOCKER_COMPOSE_FILE=docker-compose.yml
+
+CID=$(docker create ${DOCKER_HUB_USERNAME}/web)
+docker cp ${CID}:${HOME}/app/docker/${DOCKER_COMPOSE_FILE} ${MY_DIR}/${DOCKER_COMPOSE_FILE}
+docker rm -v ${CID} > /dev/null
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# set environment variable required by docker-compose.yml
+
+export CYBER_DOJO_HOME='/usr/src/cyber-dojo'
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# up/down!
+
 DOCKER_COMPOSE_CMD="docker-compose --file=${MY_DIR}/${DOCKER_COMPOSE_FILE}"
 
 if [ "$*" = "down" ]; then

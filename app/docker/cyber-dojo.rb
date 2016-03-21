@@ -168,7 +168,7 @@ end
 
 options = {}
 arg = ARGV[0].to_sym
-if [:help, :backup, :down, :up, :images, :catalog, :upgrade, :pull, :remove].include? arg
+if [:help, :up, :down, :catalog, :images, :upgrade, :pull, :remove, :backup].include? arg
   options[arg] = true
 else
   puts "#{$me}: #{arg} ?"
@@ -179,10 +179,10 @@ end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 help            if options[:help]
-backup          if options[:backup]
 up              if options[:up]
 puts catalog    if options[:catalog]
 images          if options[:images]
 upgrade         if options[:upgrade]
 pull(ARGV[1])   if options[:pull]
 remove(ARGV[1]) if options[:remove]
+backup          if options[:backup]
