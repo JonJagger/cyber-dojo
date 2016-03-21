@@ -116,3 +116,8 @@ if [ "$*" = "up" ]; then
   ${DOCKER_COMPOSE_CMD} up -d
 fi
 
+if [ "$*" = "upgrade" ]; then
+  #${DOCKER_COMPOSE_CMD} up -d
+  true
+fi
+
