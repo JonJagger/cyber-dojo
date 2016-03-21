@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 CYBER_DOJO_KATAS_ROOT=$1      # where files are copied to in image. Required.
