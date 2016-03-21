@@ -117,7 +117,7 @@ end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def upgrade
-  languages.each { |image| run "docker pull #{$docker_hub_username}/#{image}" }
+  languages.each { |image| run "docker pull #{$docker_hub_username}/#{image}:latest" }
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
