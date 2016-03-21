@@ -7,7 +7,11 @@ MAINTAINER Jon Jagger <jon@jaggersoft.com>
 # https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/
 
 USER root
-RUN apk add --update --repository http://dl-1.alpinelinux.org/alpine/edge/community/ tini
+ENV TINI_VERSION v0.9.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
+RUN chmod +x /usr/bin/tini
+#edge appears to be down
+#RUN apk add --update --repository http://dl-1.alpinelinux.org/alpine/edge/community/ tini
 ENTRYPOINT ["/usr/bin/tini", "-g", "--"]
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
