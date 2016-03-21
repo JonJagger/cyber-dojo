@@ -56,7 +56,14 @@ end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def up
-  return if pulled_images != []
+  pulled = pulled_images
+  all = catalog.split("\n")
+  all.shift # remove heading
+  images = all.select do |line|
+    image = line.split[-1]
+    pulled.include? image
+  end
+  return unless images == []
   puts 'No language images pulled'
   puts 'Pulling a small starting collection of common language images'
   pull('gcc_assert')

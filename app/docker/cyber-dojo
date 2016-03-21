@@ -100,7 +100,7 @@ export CYBER_DOJO_HOME='/usr/src/cyber-dojo'
 export CYBER_DOJO_KATAS_CLASS=${CYBER_DOJO_KATAS_CLASS:=HostDiskKatas}
 export CYBER_DOJO_KATAS_ROOT=${CYBER_DOJO_KATAS_ROOT:=${CYBER_DOJO_HOME}/katas}
 export CYBER_DOJO_RUNNER_CLASS=${CYBER_DOJO_RUNNER_CLASS:=DockerTarPipeRunner}
-export CYBER_DOJO_RUNNER_SUDO=${CYBER_DOJO_RUNNER_SUDO:='sudo -u docker-runner sudo'}
+export CYBER_DOJO_RUNNER_SUDO='sudo -u docker-runner sudo'
 export CYBER_DOJO_RUNNER_TIMEOUT=${CYBER_DOJO_RUNNER_TIMEOUT:=10}
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
