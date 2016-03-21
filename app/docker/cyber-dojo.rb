@@ -30,7 +30,7 @@ def help
     '     remove IMAGE         Removes a pulled language IMAGE',
     '     upgrade              Pulls the latest server and language images',
     ''
-  ].each { |line| puts line }
+  ].join("\n")
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -57,14 +57,7 @@ end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def up
-  pulled = pulled_images
-  all = catalog.split("\n")
-  all.shift # remove heading
-  images = all.select do |line|
-    image = line.split[-1]
-    pulled.include? image
-  end
-  return unless images == []
+  return unless languages == []
   puts 'No language images pulled'
   puts 'Pulling a small starting collection of common language images'
   pull('gcc_assert')
@@ -93,7 +86,7 @@ end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-def pulled_images
+def all_cdf_images
   di = `docker images | grep #{$docker_hub_username}`
   # cyberdojofoundation/visual-basic_nunit   latest  eb5f54114fe6 4 months ago 497.4 MB
   # cyberdojofoundation/ruby_mini_test       latest  c7d7733d5f54 4 months ago 793.4 MB
@@ -109,13 +102,18 @@ end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def images
-  pulled = pulled_images
+  pulled = all_cdf_images
   all = catalog.split("\n")
-  puts all.shift # heading
-  all.each do |line|
+  heading = [ all.shift ]
+  languages = all.select do |line|
     image = line.split[-1]
-    puts line if pulled.include? image
+    pulled.include? image
   end
+  (heading + languages).join("\n")
+end
+
+def languages
+  images.split("\n")[1..-1].map { |line| line.split[-1] }
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -125,12 +123,8 @@ def services
 end
 
 def upgrade
-  services.each do |image|
-    run "docker pull #{$docker_hub_username}/#{image}"
-  end
-  pulled_images.each do |image|
-    run "docker pull #{$docker_hub_username}/#{image}"
-  end
+  services.each  { |image| run "docker pull #{$docker_hub_username}/#{image}" }
+  languages.each { |image| run "docker pull #{$docker_hub_username}/#{image}" }
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -186,10 +180,10 @@ end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-help            if options[:help]
+puts help       if options[:help]
 up              if options[:up]
 puts catalog    if options[:catalog]
-images          if options[:images]
+puts images     if options[:images]
 upgrade         if options[:upgrade]
 pull(ARGV[1])   if options[:pull]
 remove(ARGV[1]) if options[:remove]
