@@ -2,16 +2,18 @@ CXXFLAGS += -I. -std=c++14 -Wall -Wextra -Werror
 CXXFLAGS += -fsanitize=undefined -fno-sanitize-recover=undefined
 CXXFLAGS += -fsanitize=address -fno-omit-frame-pointer
 
+GTEST_LIBS = -lgtest -lgmock -lgmock_main -pthread
+
 HPP_FILES = $(wildcard *.hpp)
 COMPILED_HPP_FILES = $(patsubst %.hpp,%.compiled_hpp,$(HPP_FILES))
 CPP_FILES = $(wildcard *.cpp)
 
 .PHONY: test.output
 test.output: test makefile
-	@./$<
+	@./$< --gtest_shuffle
 
 test: makefile $(CPP_FILES) $(COMPILED_HPP_FILES)
-	@$(CXX) $(CXXFLAGS) -O $(CPP_FILES) -o $@
+	@$(CXX) $(CXXFLAGS) -O $(CPP_FILES) $(GTEST_LIBS) -o $@
 
 # This rule ensures header files build in their own right.
 # The quality of header files is important because header files
