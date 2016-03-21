@@ -53,7 +53,7 @@ if [ $? != 0 ]; then
   fi
 
   # 2. extract appropriate Dockerfile from web image
-  KATAS_DOCKERFILE=${MY_DIR}/Dockerfile.katas-data-container
+  KATAS_DOCKERFILE=${CONTEXT_DIR}/Dockerfile.katas-data-container
   CID=$(docker create ${DOCKER_HUB_USERNAME}/web)
   docker cp ${CID}:${HOME}/app/docker/Dockerfile.katas-data-container.${SUFFIX} \
             ${KATAS_DOCKERFILE}

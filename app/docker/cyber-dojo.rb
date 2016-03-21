@@ -51,6 +51,7 @@ def backup
     " #{$docker_hub_username}/web" +
     " tar -cvz -f /backup/cyber-dojo_katas_backup.tgz -C #{$home} katas"
   `#{cmd}`
+  puts 'Created /backup/cyber-dojo_katas_backup.tgz'
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
