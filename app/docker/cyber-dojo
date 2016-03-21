@@ -1,28 +1,7 @@
 #!/bin/sh
 
-# TODO: the docker run command needs to work in a native Linux shell
-#       and also in a Docker-Quickstart-Terminal (Windows/OSX)
-#       If I use this script to build a server on AWS it mostly works
-#       but the [docker run .... cyber-dojo.rb $@] command fails saying
-#       "Cannot connect to the Docker daemon. Is the docker daemon running on this host?"
-#       And executing [docker run -it --user=cyber-dojo... sh]
-#       and then trying docker commands inside the resulting container also fail
-#       even if used with the [sudo -u docker-runner sudo] prefix
-
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
-
-HOME=/usr/src/cyber-dojo         # *inside* the server image
-
-DOCKER_HUB_USERNAME=cyberdojofoundation
-DOCKER_COMPOSE_FILE=docker-compose.yml
-DOCKER_COMPOSE_CMD="docker-compose --file=${MY_DIR}/${DOCKER_COMPOSE_FILE}"
-
-KATAS_ROOT=/var/www/cyber-dojo/katas
-KATAS_DATA_CONTAINER=cdf-katas-DATA-CONTAINER
-
-RUNNER_DEFAULT=DockerTarPipeRunner
-RUNNER=${RUNNER_DEFAULT}         # see app/models/dojo.rb
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # ensure docker-engine/machine/compose are installed
@@ -54,6 +33,11 @@ fi
 # then assume it holds practice sessions and copy them into the new katas-data-container.
 # if it doesn't and /var/www/cyber-dojo/katas does not exist on the host
 # then create new empty katas-data-container
+
+DOCKER_HUB_USERNAME=cyberdojofoundation
+HOME=/usr/src/cyber-dojo           # *inside* the server image
+KATAS_ROOT=/var/www/cyber-dojo/katas
+KATAS_DATA_CONTAINER=cdf-katas-DATA-CONTAINER
 
 docker ps -a | grep -q ${KATAS_DATA_CONTAINER}
 if [ $? != 0 ]; then
@@ -98,28 +82,19 @@ docker cp ${CID}:${HOME}/app/docker/${DOCKER_COMPOSE_FILE} ${MY_DIR}/${DOCKER_CO
 docker rm -v ${CID} > /dev/null
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# delegate to ruby script inside web image
+# delegate most commands to ruby script inside web image
 
 docker run \
-  --volume=${DOCKER_CERT_PATH}:${DOCKER_CERT_PATH}:ro \
-  --env=DOCKER_CERT_PATH=${DOCKER_CERT_PATH} \
-  --env=DOCKER_HOST=${DOCKER_HOST} \
-  --env=DOCKER_MACHINE_NAME=${DOCKER_MACHINE_NAME} \
-  --env=DOCKER_TLS_VERIFY=${DOCKER_TLS_VERIFY} \
   --rm \
   --user=root \
+  --volume=/var/run/docker.sock:/var/run/docker.sock \
   ${DOCKER_HUB_USERNAME}/web \
   sh -c "${HOME}/app/docker/cyber-dojo.rb $@"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# docker-compose.yml relies on exported env-vars
 
-export CYBER_DOJO_HOME=${CYBER_DOJO_HOME:=${HOME}}
-export CYBER_DOJO_KATAS_ROOT=${CYBER_DOJO_KATAS_ROOT:=${HOME}/katas}
-export CYBER_DOJO_KATAS_CLASS=${CYBER_DOJO_KATAS_CLASS:=HostDiskKatas}
-export CYBER_DOJO_RUNNER_CLASS=${CYBER_DOJO_RUNNER_CLASS:=${RUNNER}}
-export CYBER_DOJO_RUNNER_SUDO=${CYBER_DOJO_RUNNER_SUDO:='sudo -u docker-runner sudo'}
-export CYBER_DOJO_RUNNER_TIMEOUT=${CYBER_DOJO_RUNNER_TIMEOUT:=10}
+DOCKER_COMPOSE_FILE=docker-compose.yml
+DOCKER_COMPOSE_CMD="docker-compose --file=${MY_DIR}/${DOCKER_COMPOSE_FILE}"
 
 if [ "$*" = "down" ]; then
   ${DOCKER_COMPOSE_CMD} down

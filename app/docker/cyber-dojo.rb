@@ -1,7 +1,6 @@
 #!/usr/bin/ruby
 
-# TODO: sudo prefix needed on all docker commands?
-# TODO: pull ALL language images == fetch? all? pull=all?
+# TODO: pull all
 
 $me = 'cyber-dojo.rb'
 $my_dir = File.expand_path(File.dirname(__FILE__))
@@ -27,7 +26,7 @@ def help
     'COMMAND(languages):',
     '     catalog              Lists all language images',
     '     images               Lists pulled language images',
-    '     pull IMAGE           Pulls language IMAGE',
+    '     pull [IMAGE|all]     Pulls one language IMAGE or all images',
     '     remove IMAGE         Removes a pulled language IMAGE',
     '     upgrade              Pulls the latest server and language images',
     ''
