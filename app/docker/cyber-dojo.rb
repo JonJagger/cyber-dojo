@@ -115,18 +115,8 @@ def languages
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# These do not work inside the web container because
-# docker is inside web but not docker-machine
-
-$docker_compose_file = 'docker-compose.yml'
-$docker_compose_cmd = "docker-compose --file=#{$my_dir}/#{$docker_compose_file}"
-
-def services
-  `#{$docker_compose_cmd} config --services 2> /dev/null`.split
-end
 
 def upgrade
-  services.each  { |image| run "docker pull #{$docker_hub_username}/#{image}" }
   languages.each { |image| run "docker pull #{$docker_hub_username}/#{image}" }
 end
 
