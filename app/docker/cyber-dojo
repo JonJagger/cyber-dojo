@@ -77,12 +77,12 @@ fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # delegate most commands to ruby script inside web image
 
-#docker run \
-#  --rm \
-#  --user=root \
-#  --volume=/var/run/docker.sock:/var/run/docker.sock \
-#  ${DOCKER_HUB_USERNAME}/web \
-#  sh -c "${HOME}/app/docker/cyber-dojo.rb $@"
+docker run \
+  --rm \
+  --user=root \
+  --volume=/var/run/docker.sock:/var/run/docker.sock \
+  ${DOCKER_HUB_USERNAME}/web \
+  sh -c "${HOME}/app/docker/cyber-dojo.rb $@"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # extract docker-compose.yml file from web image and use it
