@@ -7,7 +7,7 @@ apt-get install -y wget unzip software-properties-common
 add-apt-repository ppa:ubuntu-toolchain-r/test
 
 apt-get update
-apt-get install --yes g++-5
+apt-get install --yes g++-5 libbz2-dev libz-dev
 
 update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 20
 update-alternatives --config g++
