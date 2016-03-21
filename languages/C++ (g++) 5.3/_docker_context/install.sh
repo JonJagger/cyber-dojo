@@ -35,3 +35,7 @@ cp -r GSL-master/include /usr/local
 
 rm -rf GSL-master
 rm -f master.zip
+
+# Install Fake Function Framework
+cd /usr/local/include
+wget https://raw.githubusercontent.com/meekrosoft/fff/master/fff.h
