@@ -1,7 +1,5 @@
 #!/usr/bin/ruby
 
-# TODO: pull all
-
 $me = 'cyber-dojo.rb'
 $my_dir = File.expand_path(File.dirname(__FILE__))
 
@@ -58,8 +56,8 @@ def up
   return unless languages == []
   puts 'No language images pulled'
   puts 'Pulling a small starting collection of common language images'
-  pull('gcc_assert')
-  pull('ruby_mini_test')
+  starting = %w( gcc_assert gpp_assert csharp_nunit java_junit python_pytest ruby_mini_test )
+  starting.each { |image| pull(image) }
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -75,11 +73,13 @@ def catalog
   # ...
 end
 
-def in_catalog?(image)
-  all = catalog.split("\n").drop(1)
-  lines = all.map{ |line| line.split[-1] }
+def all_languages
+  catalog.split("\n").drop(1).map{ |line| line.split[-1] }
   # [ bcpl-all_tests_passed, bash_shunit2, clang_assert, gcc_cpputest, ...]
-  lines.include?(image)
+end
+
+def in_catalog?(image)
+  all_languages.include?(image)
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -111,7 +111,7 @@ def images
 end
 
 def languages
-  images.split("\n")[1..-1].map { |line| line.split[-1] }
+  images.split("\n").drop(1).map { |line| line.split[-1] }
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -134,8 +134,13 @@ end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def pull(image)
-  if in_catalog?(image)
-    run "docker pull #{$docker_hub_username}/#{image}:latest"
+  docker_pull = lambda { |tag| run "docker pull #{$docker_hub_username}/#{tag}:latest" }
+  if image == 'all'
+    all_languages.each do |language|
+      docker_pull.call(language)
+    end
+  elsif in_catalog?(image)
+    docker_pull.call(image)
   else
     bad_image(image)
   end
