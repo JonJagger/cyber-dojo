@@ -108,12 +108,12 @@ export CYBER_DOJO_RUNNER_TIMEOUT=${CYBER_DOJO_RUNNER_TIMEOUT:=10}
 
 DOCKER_COMPOSE_CMD="docker-compose --file=${MY_DIR}/${DOCKER_COMPOSE_FILE}"
 
-if [ "$*" = "down" ]; then
-  ${DOCKER_COMPOSE_CMD} down
-fi
-
 if [ "$*" = "up" ]; then
   ${DOCKER_COMPOSE_CMD} up -d
+fi
+
+if [ "$*" = "down" ]; then
+  ${DOCKER_COMPOSE_CMD} down
 fi
 
 if [ "$*" = "upgrade" ]; then
