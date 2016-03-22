@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 $me = 'cyber-dojo'
 $my_dir = File.expand_path(File.dirname(__FILE__))
