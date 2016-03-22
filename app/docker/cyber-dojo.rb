@@ -17,7 +17,7 @@ def help
     '     up                   Creates and starts the server containers',
     '     down                 Stops and removes server containers',
     '',
-    '     backup               Create tgz file of all practice sessions',
+    '     backup               Creates a tgz file of all practice sessions',
     '     catalog              Lists all language images',
     '     images               Lists pulled language images',
     '     pull [IMAGE|all]     Pulls one language IMAGE or all images',
