@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 
-$me = 'cyber-dojo.rb'
+$me = 'cyber-dojo'
 $my_dir = File.expand_path(File.dirname(__FILE__))
 
 $docker_hub_username = 'cyberdojofoundation'
@@ -147,8 +147,11 @@ end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def remove(image)
-  if in_catalog?(image)
+  if languages.include?(image)
     run "docker rmi #{$docker_hub_username}/#{image}"
+  elsif all_languages.include?(image)
+    puts "IMAGE #{image} is not installed"
+    puts "Try '#{$me} help'"
   else
     bad_image(image)
   end
