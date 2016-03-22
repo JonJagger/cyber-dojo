@@ -24,7 +24,7 @@ def help
     '     remove IMAGE         Removes a pulled language IMAGE',
     '     upgrade              Pulls the latest server and language images',
     ''
-  ].join("\n")
+  ].join("\n") + "\n"
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
