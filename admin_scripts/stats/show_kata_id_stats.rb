@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib_domain'
+require_relative '../../app/domain'
 
 def explain_output
   lines = [

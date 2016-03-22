@@ -5,15 +5,11 @@ class HostDiskKatas
   include Enumerable
 
   def initialize(dojo)
-    @dojo = dojo
-    @path = slashed(config['root']['katas'])
+    @parent = dojo
+    @path = unslashed(dojo.env('katas', 'root'))
   end
 
-  attr_reader :path
-
-  def parent
-    @dojo
-  end
+  attr_reader :path, :parent
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
   # Katas
@@ -41,7 +37,7 @@ class HostDiskKatas
     # and potentially interfere with a live session.
     if !id.nil? && id.length >= 6
       # outer-dir has 2-characters
-      outer_dir = disk[path + outer(id)]
+      outer_dir = disk[path + '/' + outer(id)]
       if outer_dir.exists?
         # inner-dir has 8-characters
         dirs = outer_dir.each_dir.select { |inner_dir| inner_dir.start_with?(inner(id)) }
@@ -54,7 +50,7 @@ class HostDiskKatas
   def each
     return enum_for(:each) unless block_given?
     disk[path].each_dir do |outer_dir|
-      disk[path + outer_dir].each_dir do |inner_dir|
+      disk[path + '/' + outer_dir].each_dir do |inner_dir|
         yield  Kata.new(self, outer_dir + inner_dir)
       end
     end
@@ -136,11 +132,6 @@ class HostDiskKatas
   end
 
   def avatar_ran_tests(avatar, delta, files, now, output, colour)
-    if runner.class.name != 'DockerKatasRunner'
-      # save the files
-      sandbox_save(avatar.sandbox, delta, files)
-    end
-    # update the manifest
     dir(avatar.sandbox).write('output', output)
     files['output'] = output
     write_avatar_manifest(avatar, files)
@@ -158,6 +149,7 @@ class HostDiskKatas
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
   def sandbox_save(sandbox, delta, files)
+    # Unchanged files are *not* re-saved.
     delta[:deleted].each do |filename|
       git.rm(path_of(sandbox), filename)
     end
@@ -193,9 +185,9 @@ class HostDiskKatas
 
   def path_of(obj)
     case obj.class.name
-    when 'Sandbox' then path_of(obj.parent) + 'sandbox' + '/'
-    when 'Avatar'  then path_of(obj.parent) + obj.name + '/'
-    when 'Kata'    then path_of(obj.parent) + outer(obj.id) + '/' + inner(obj.id) + '/'
+    when 'Sandbox' then path_of(obj.parent) + '/' + 'sandbox'
+    when 'Avatar'  then path_of(obj.parent) + '/' + obj.name
+    when 'Kata'    then path_of(obj.parent) + '/' + outer(obj.id) + '/' + inner(obj.id)
     when self.class.name then path
     end
   end
@@ -205,11 +197,10 @@ class HostDiskKatas
   include CreateKataManifest
   include ExternalParentChainer
   include IdSplitter
-  include Slashed
   include StderrRedirect
   include TimeNow
   include UniqueId
-
+  include Unslashed
 
   def exists?(obj)
     dir(obj).exists?
@@ -293,9 +284,14 @@ end
 # - - - - - - - - - - - - - - - - - - - - - - - -
 # An alternative implementation could save the manifest containing
 # the visible files for each test to a database. Then, to get a
-# git diff it could create a temporary git repository, save the
-# files from was_tag to it, tag and commit, save the files from
-# now_tag to it, tag and commit, then do a diff.
+# git diff it could
+#    o) create a temporary git repository
+#    o) save the files from was_tag to it
+#    o) git tag and git commit
+#    o) save the files from now_tag to it
+#    o) git tag and git commit
+#    o) do a git diff
+#    o) delete the temporary git repository
 # There is probably a library to do this in ram bypassing
 # the need for a file-system completely.
 # This would make creation of the tar file for

@@ -1,0 +1,127 @@
+#!/bin/sh
+
+ME="./$( basename ${0} )"
+MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# ensure docker-engine/machine/compose are installed
+
+hash docker 2> /dev/null
+if [ $? != 0 ]; then
+  echo
+  echo 'docker is not installed'
+  exit
+fi
+
+hash docker-machine 2> /dev/null
+if [ $? != 0 ]; then
+  echo
+  echo 'docker-machine is not installed'
+  exit
+fi
+
+hash docker-compose 2> /dev/null
+if [ $? != 0 ]; then
+  echo
+  echo 'docker-compose is not installed'
+  exit
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# ensure katas-data-container exists.
+# if it doesn't and /var/www/cyber-dojo/katas exists on the host
+# then assume it holds practice sessions and copy them into the new katas-data-container.
+# if it doesn't and /var/www/cyber-dojo/katas does not exist on the host
+# then create new empty katas-data-container
+
+DOCKER_HUB_USERNAME=cyberdojofoundation
+HOME=/usr/src/cyber-dojo           # *inside* the server image
+KATAS_ROOT=/var/www/cyber-dojo/katas
+KATAS_DATA_CONTAINER=cdf-katas-DATA-CONTAINER
+
+docker ps -a | grep -q ${KATAS_DATA_CONTAINER}
+if [ $? != 0 ]; then
+  # 1. extract Dockerfile (to create katas-data-container) from web image
+  if [ -d "${KATAS_ROOT}" ]; then
+    echo "copying ${KATAS_ROOT} into new ${KATAS_DATA_CONTAINER}"
+    SUFFIX=copied
+    CONTEXT_DIR=${KATAS_ROOT}
+  else
+    echo "creating new empty ${KATAS_DATA_CONTAINER}"
+    SUFFIX=empty
+    CONTEXT_DIR=.
+  fi
+
+  # 2. extract appropriate Dockerfile from web image
+  KATAS_DOCKERFILE=${CONTEXT_DIR}/Dockerfile.katas-data-container
+  CID=$(docker create ${DOCKER_HUB_USERNAME}/web)
+  docker cp ${CID}:${HOME}/app/docker/Dockerfile.katas-data-container.${SUFFIX} \
+            ${KATAS_DOCKERFILE}
+  docker rm -v ${CID} > /dev/null
+
+  # 3. use Dockerfile to build image
+  TAG=${DOCKER_HUB_USERNAME}/katas
+  docker build \
+           --build-arg=CYBER_DOJO_KATAS_ROOT=${HOME}/katas \
+           --tag=${TAG} \
+           --file=${KATAS_DOCKERFILE} \
+           ${CONTEXT_DIR}
+
+  # 4. use image to create data-container
+  docker create \
+         --name ${KATAS_DATA_CONTAINER} \
+         ${TAG} \
+         echo 'cdfKatasDC'
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# delegate most commands to ruby script inside web image
+
+docker run \
+  --rm \
+  --user=root \
+  --volume=/var/run/docker.sock:/var/run/docker.sock \
+  ${DOCKER_HUB_USERNAME}/web \
+  ${HOME}/app/docker/cyber-dojo.rb $@
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# extract docker-compose.yml file from web image and use it
+
+DOCKER_COMPOSE_FILE=docker-compose.yml
+
+CID=$(docker create ${DOCKER_HUB_USERNAME}/web)
+docker cp ${CID}:${HOME}/app/docker/${DOCKER_COMPOSE_FILE} ${MY_DIR}/${DOCKER_COMPOSE_FILE}
+docker rm -v ${CID} > /dev/null
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# set environment variable required by docker-compose.yml
+
+export CYBER_DOJO_HOME='/usr/src/cyber-dojo'
+export CYBER_DOJO_KATAS_CLASS=${CYBER_DOJO_KATAS_CLASS:=HostDiskKatas}
+export CYBER_DOJO_KATAS_ROOT=${CYBER_DOJO_KATAS_ROOT:=${CYBER_DOJO_HOME}/katas}
+export CYBER_DOJO_RUNNER_CLASS=${CYBER_DOJO_RUNNER_CLASS:=DockerTarPipeRunner}
+export CYBER_DOJO_RUNNER_SUDO='sudo -u docker-runner sudo'
+export CYBER_DOJO_RUNNER_TIMEOUT=${CYBER_DOJO_RUNNER_TIMEOUT:=10}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# up/down!
+
+DOCKER_COMPOSE_CMD="docker-compose --file=${MY_DIR}/${DOCKER_COMPOSE_FILE}"
+
+if [ "$*" = "up" ]; then
+  ${DOCKER_COMPOSE_CMD} up -d
+fi
+
+if [ "$*" = "down" ]; then
+  ${DOCKER_COMPOSE_CMD} down
+fi
+
+if [ "$*" = "upgrade" ]; then
+  SERVICES=$(${DOCKER_COMPOSE_CMD} config --services 2> /dev/null)
+  for SERVICE in ${SERVICES}; do
+    COMMAND="docker pull ${DOCKER_HUB_USERNAME}/${SERVICE}:latest"
+    echo ${COMMAND}
+    ${COMMAND}
+  done
+fi
+

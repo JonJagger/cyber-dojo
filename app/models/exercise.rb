@@ -16,17 +16,16 @@ class Exercise
   end
 
   def path
-    parent.path + name + '/'
+    parent.path + '/' + name
   end
 
   def instructions
-    @instructions || dir.read(instructions_filename)
+    @instructions || disk[path].read(instructions_filename)
   end
 
   private
 
   include ExternalParentChainer
-  include ExternalDir
 
   def instructions_filename
     'instructions'

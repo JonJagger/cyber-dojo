@@ -1,18 +1,8 @@
 
 ENV['RAILS_ENV'] = 'test'
 
-gem 'minitest'
-require 'minitest/autorun'
-
-root = './../..'
-
-require_relative root + '/test/test_coverage'
-require_relative root + '/test/all'
-require_relative root + '/config/environment'
-require_relative root + '/test/test_domain_helpers'
-require_relative root + '/test/test_external_helpers'
-require_relative root + '/test/test_hex_id_helpers'
-require_relative root + '/test/test_tmp_root_helpers'
+require_relative './../../test/all'
+require_relative './../../config/environment'
 require_relative './params_maker'
 
 class AppControllerTestBase < ActionDispatch::IntegrationTest
@@ -20,7 +10,6 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
   include TestDomainHelpers
   include TestExternalHelpers
   include TestHexIdHelpers
-  include TestTmpRootHelpers
 
   def setup
     super

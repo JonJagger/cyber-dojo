@@ -1,8 +1,5 @@
 
-require_relative '../test_coverage'
 require_relative '../all'
-require_relative '../test_base'
-require_relative '../app_models/delta_maker'
 
 class AppModelsTestBase < TestBase
 
@@ -19,7 +16,7 @@ class AppModelsTestBase < TestBase
     path = object.path
     ends_in_slash = path.end_with?('/')
     has_doubled_separator = path.scan('/' * 2).length != 0
-    ends_in_slash && !has_doubled_separator
+    !ends_in_slash && !has_doubled_separator
   end
 
 end

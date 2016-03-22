@@ -2,21 +2,8 @@
 
 class Dojo
 
-  def root_dir
-    File.expand_path('../..', File.dirname(__FILE__))  # /var/www/cyber-dojo
-  end
-
-  def config_filename
-    root_dir + '/config/cyber-dojo.json'
-  end
-
-  def config
-    @config ||= JSON.parse(IO.read(config_filename))
-  end
-
   def languages; @languages ||= Languages.new(self); end
   def exercises; @exercises ||= Exercises.new(self); end
-  def    caches; @caches    ||=    Caches.new(self); end
 
   def    runner;    @runner ||= external_object; end
   def     katas;     @katas ||= external_object; end
@@ -25,28 +12,39 @@ class Dojo
   def       log;       @log ||= external_object; end
   def       git;       @git ||= external_object; end
 
+  def env_name(key, suffix) #
+    'CYBER_DOJO_' + key.upcase + '_' + suffix.upcase
+  end
+
+  def env(key, suffix)
+    name = env_name(key, suffix)
+    ENV[name] || fail("ENV[#{name}] not set")
+  end
+
   private
 
   include NameOfCaller
 
   def external_object
     key = name_of(caller)
-    var = config['class'][key]
+    var = env(key, 'class')
     Object.const_get(var).new(self)
   end
 
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# External paths can be set via the config file.
-# External objects can be set via the config file.
+# External root-dirs and class-names do *not* have defaults.
+# Root-dirs and class-name are set using environment variables.
+#   eg  export CYBER_DOJO_KATAS_ROOT=/var/www/cyber-dojo/katas
+#   eg  export CYBER_DOJO_RUNNER_CLASS=DockerKatasDataContainerRunner
 #
-# The main reason for this arrangement is testability.
-# For example, I can run controller tests by setting the
-# config, then run the test which issue a GET/POST,
-# let the call work its way through the rails stack,
-# eventually reaching dojo.rb where it creates
-# Disk/Runner/Git/Shell/etc objects as named in the config.
+# This gives a way to do Parameterize From Above in a way that can
+# tunnel through a *deep* stack. For example, I can set an environment
+# variable and then run a controller test,
+# which issues GETs/POSTs, which work their way through the rails stack,
+# eventually reaching app/models.dojo.rb (possibly in a different thread)
+# where the specific Double/Mock/Stub class or fake-root-path takes effect.
 #
 # The external objects are held using
 #    @name ||= ...

@@ -1,7 +1,5 @@
-require 'digest/md5'
 
-# Adds hex-id to each test so the id can be
-# used to selectively run specific tests.
+# Uses hex-id on each test to selectively run specific tests.
 
 module TestHexIdHelpers # mix-in
 
@@ -11,47 +9,38 @@ module TestHexIdHelpers # mix-in
 
   module ClassMethods
 
-    @@args = (ARGV.sort.uniq - ['--']).map(&:upcase)  # eg  2DD6F3 or 2dd
-    @@seen = []
+    @@args = (ARGV.sort.uniq - ['--']).map(&:upcase)  # eg  2DD6F3 eg 2dd
+    @@seen_ids = []
 
-    def test(id = nil, name, &block)
-      line = 'X' * 35
-      id ||= Digest::MD5.hexdigest(name).upcase[0..5]
-      if id == ''
-        puts
-        puts line
-        puts "test '', is missing it's uuid"
-        puts "#{name}"
-        puts line
-        puts
-        raise "test '',..."
-      end
-      if @@args == [] || @@args.any?{ |arg| id.include?(arg) }
-        if @@seen.include?(id)
-          puts
-          puts line
-          puts "test with id #{id} has already been seen"
-          puts "#{name}"
-          puts line
-          puts
-        else
-          @@seen << id
-          define_method("test_ '#{id}',\n #{name}\n".to_sym, &block)
-        end
+    def test(id, *lines, &block)
+      diagnostic = "'#{id}',#{lines.join}"
+      hex_chars = '0123456789ABCDEF'
+      is_hex_id = id.chars.all? { |ch| hex_chars.include? ch }
+      has_empty_line = lines.any? { |line| line.strip == '' }
+      has_space_line = lines.any? { |line| line.strip != line }
+      raise  "no hex-ID: #{diagnostic}" if id == ''
+      raise "bad hex-ID: #{diagnostic}" unless is_hex_id
+      raise "empty line: #{diagnostic}" if has_empty_line
+      raise "space line: #{diagnostic}" if has_space_line
+      no_args = @@args == []
+      any_arg_is_part_of_id = @@args.any?{ |arg| id.include?(arg) }
+      if no_args || any_arg_is_part_of_id
+        raise "duplicate hex_ID: #{diagnostic}" if @@seen_ids.include?(id)
+        @@seen_ids << id
+        name = lines.join(' ')
+        define_method("test_'#{id}',\n #{name}\n".to_sym, &block)
       end
     end
 
     ObjectSpace.define_finalizer(self, proc {
-      seen_args = @@args.find_all { |arg| @@seen.any? { |id| id.include?(arg) } }
-      unseen_args = @@args - seen_args
+      unseen_arg = lambda { |arg| @@seen_ids.none? { |id| id.include?(arg) } }
+      unseen_args = @@args.find_all { |arg| unseen_arg.call(arg) }
       if unseen_args != []
-        line = 'X' * 35
-        puts
-        puts line
-        puts 'the following test id arguments were *not* found'
-        puts "#{unseen_args}"
-        puts line
-        puts
+        # can't raise in a finalizer
+        message = 'the following test id arguments were *not* found'
+        bar = 'X' * message.length
+        lines = [ '', bar, message, "#{unseen_args}", bar, '' ]
+        lines.each { |line| puts line }
       end
     })
 

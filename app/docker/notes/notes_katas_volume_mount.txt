@@ -1,0 +1,19 @@
+
+Check that the www-data user has the same uid on the
+web container and on all the language containers. Eg
+
+$ docker run --rm cyberdojofoundation/web bash -c "id www-data"
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+$ docker run --rm cyberdojofoundation/gcc_assert bash -c "id www-data"
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+
+If doing this from *inside* the web container...
+
+$ id www-data
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+$ docker run --rm cyberdojofoundation/gcc_assert bash -c "id www-data"
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+

@@ -3,20 +3,14 @@ class Languages
   include Enumerable
 
   def initialize(dojo)
-    @dojo = dojo
-    @path = config['root']['languages']
-    caches.write_json_once(cache_filename) { make_cache }
+    @parent = dojo
+    @path = unslashed(dojo.env('languages', 'root'))
+    disk[path].write_json_once(cache_filename) { make_cache }
   end
 
   # queries
 
-  def path
-    slashed(@path)
-  end
-
-  def parent
-    @dojo
-  end
+  attr_reader :path, :parent
 
   def each(&block)
     languages.values.each(&block)
@@ -32,15 +26,19 @@ class Languages
 
   include ExternalParentChainer
   include LanguagesRename
-  include Slashed
+  include Unslashed
 
   def languages
     @languages ||= read_cache
   end
 
+  def cache_filename
+    'cache.json'
+  end
+
   def read_cache
     cache = {}
-    caches.read_json(cache_filename).each do |display_name, language|
+    disk[path].read_json(cache_filename).each do |display_name, language|
            dir_name = language['dir_name']
       test_dir_name = language['test_dir_name']
          image_name = language['image_name']
@@ -52,7 +50,7 @@ class Languages
   def make_cache
     cache = {}
     disk[path].each_dir do |dir_name|
-      disk[path + dir_name].each_dir do |test_dir_name|
+      disk[path + '/' + dir_name].each_dir do |test_dir_name|
         next if test_dir_name == '_docker_context'
         language = make_language(dir_name, test_dir_name)
         cache[language.display_name] = {
@@ -63,10 +61,6 @@ class Languages
       end
     end
     cache
-  end
-
-  def cache_filename
-    'languages_cache.json'
   end
 
   def make_language(dir_name, test_dir_name, display_name = nil, image_name = nil)

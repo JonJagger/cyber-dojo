@@ -1,4 +1,4 @@
-/*global $,cyberDojo*/
+/*global jQuery,cyberDojo*/
 
 var cyberDojo = (function(cd, $) {
   "use strict";
@@ -71,4 +71,4 @@ var cyberDojo = (function(cd, $) {
 
   return cd;
 
-})(cyberDojo || {}, $);
+})(cyberDojo || {}, jQuery);

@@ -6,16 +6,13 @@ class DownloaderController < ApplicationController
     raise "sorry can't do that" if katas[id].nil?
 
     cd_cmd = "cd #{katas.path}"
-    tar_cmd = "tar -zcf ../zips/#{id}.tar.gz #{outer(id)}/#{inner(id)}"
-    cmd = cd_cmd + ' && ' + tar_cmd
-    system(cmd)
-    zip_filename = "#{katas.path}/../zips/#{id}.tar.gz"
-    send_file zip_filename
-    # would like to delete this zip file
-    # but download tests unzip them to verify
-    # unzipped zip is identical to original
-    # rm_cmd = "rm #{zip_filename}"
-    # `rm_cmd`
+    tar_cmd = "tar -zcf ../app/downloads/#{id}.tgz #{outer(id)}/#{inner(id)}"
+    system(cd_cmd + ' && ' + tar_cmd)
+    tar_filename = "#{katas.path}/../app/downloads/#{id}.tgz"
+    send_file tar_filename
+    # would like to delete this tar file
+    # but download tests untar them to verify
+    # it is identical to original
   end
 
   private

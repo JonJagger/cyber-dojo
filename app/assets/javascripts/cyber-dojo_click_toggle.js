@@ -4,7 +4,7 @@
 // Used in app/assets/javascripts/cyber-dojo_dialog_history.js
 // to toggle added/removed lines
 
-$.fn.clickToggle = function(func1, func2) {
+jQuery.fn.clickToggle = function(func1, func2) {
   // usedin cyber-dojo_dialog_history.js
   var funcs = [func1, func2];
   this.data('toggle_clicked', 0);

@@ -18,7 +18,7 @@ class Language
   end
 
   def path
-    parent.path + @dir_name + '/' + @test_dir_name + '/'
+    parent.path + '/' + @dir_name + '/' + @test_dir_name
   end
 
   # required manifest properties
@@ -42,7 +42,7 @@ class Language
   end
 
   def visible_files
-    Hash[visible_filenames.collect { |filename| [filename, read(filename)] }]
+    Hash[visible_filenames.collect { |filename| [filename, disk[path].read(filename)] }]
   end
 
   # optional manifest properties
@@ -89,13 +89,12 @@ class Language
   private
 
   include ExternalParentChainer
-  include ExternalDir
   include ManifestProperty
 
   def manifest
-    @manifest ||= dir.read_json(manifest_filename)
+    @manifest ||= disk[path].read_json(manifest_filename)
   rescue StandardError => e
-    message = "dir.read_json(#{manifest_filename}) exception" + "\n" +
+    message = "disk[path].read_json(#{manifest_filename}) exception" + "\n" +
       'language: ' + path + "\n" +
       ' message: ' + e.message
     fail message

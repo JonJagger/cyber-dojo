@@ -3,20 +3,14 @@ class Exercises
   include Enumerable
 
   def initialize(dojo)
-    @dojo = dojo
-    @path = config['root']['exercises']
-    caches.write_json_once(cache_filename) { make_cache }
+    @parent = dojo
+    @path = unslashed(dojo.env('exercises', 'root'))
+    disk[path].write_json_once(cache_filename) { make_cache }
   end
 
   # queries
 
-  def path
-    slashed(@path)
-  end
-
-  def parent
-    @dojo
-  end
+  attr_reader :path, :parent
 
   def each(&block)
     exercises.values.each(&block)
@@ -29,16 +23,19 @@ class Exercises
   private
 
   include ExternalParentChainer
-  include ExternalDir
-  include Slashed
+  include Unslashed
 
   def exercises
     @exercises ||= read_cache
   end
 
+  def cache_filename
+    'cache.json'
+  end
+
   def read_cache
     cache = {}
-    caches.read_json(cache_filename).each do |name, exercise|
+    disk[path].read_json(cache_filename).each do |name, exercise|
       cache[name] = make_exercise(name, exercise['instructions'])
     end
     cache
@@ -46,15 +43,11 @@ class Exercises
 
   def make_cache
     cache = {}
-    dir.each_dir do |sub_dir|
+    disk[path].each_dir do |sub_dir|
       exercise = make_exercise(sub_dir)
       cache[exercise.name] = { instructions: exercise.instructions }
     end
     cache
-  end
-
-  def cache_filename
-    'exercises_cache.json'
   end
 
   def make_exercise(name, instructions = nil)

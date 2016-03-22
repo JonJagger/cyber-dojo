@@ -10,6 +10,10 @@ class HostDir
 
   attr_reader :path
 
+  def parent
+    @disk
+  end
+
   def each_dir
     return enum_for(:each_dir) unless block_given?
     Dir.entries(path).each do |entry|
@@ -34,6 +38,18 @@ class HostDir
   def make
     # -p creates intermediate dirs as required.
     FileUtils.mkdir_p(path)
+    # NB: if Dockerfile [USER cyber-dojo]
+    #     FAILS: FileUtils.mkdir_p(path)
+    #     WORKS: shell.exec("sudo -u cyber-dojo mkdir -p #{path}")
+  end
+
+  def write_json_once(filename)
+    # The json cache object is not a regular 2nd parameter, it is yielded.
+    # This is so it is only created if it is needed.
+    File.open(path + filename, File::WRONLY|File::CREAT|File::EXCL, 0644) do |fd|
+      fd.write(JSON.unparse(yield)) # yield must return a json object
+    end
+  rescue Errno::EEXIST
   end
 
   def write_json(filename, object)
@@ -59,6 +75,7 @@ class HostDir
 
   private
 
+  include ExternalParentChainer
   include StringCleaner
 
   def dot?(name)

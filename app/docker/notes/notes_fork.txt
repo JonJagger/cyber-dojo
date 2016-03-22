@@ -1,0 +1,7 @@
+
+Random thought.
+Suppose someone deleted the katas sub-folder.
+People would still have src in their browser.
+Does/Could the fork work even if the katas/id was deleted.
+And check, [cd ../.. && rm -rf *] from cyber-dojo.sh will delete files inside data-container?
+The data-container is not part of the Union File System right?

@@ -13,8 +13,12 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require jquery
-//= require jquery_ujs
-//= require jquery-ui
+// cyber-dojo has the jquery js files in this dir directly.
+// It doesn't do a [gem jquery] in the Gemfile.
+// This allows rails-app to be volumes-from: mounted read-only in the docker-compose.yml file.
+//
+//= require ./jquery.min
+//= require ./jquery_ujs
+//= require ./jquery-ui.min
 //= require_tree .
 

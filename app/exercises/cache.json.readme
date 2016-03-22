@@ -1,0 +1,10 @@
+
+exercises/cache.json
+--------------------
+This is a simple cache of each exercise's
+1. folder-name
+2. instructions file content
+This allows the create-page's choose-exercise to get all the information it needs
+to display the exercises list and their instructions via a *single* disk access
+of the cache.json file.
+

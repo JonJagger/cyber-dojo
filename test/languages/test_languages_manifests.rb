@@ -6,7 +6,7 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   test 'F6B9D6',
   'no known flaws in Dockerfiles of each base language/' do
-    Dir.glob("#{languages.path}*/").sort.each do |dir|
+    Dir.glob("#{languages.path}/*/").sort.each do |dir|
       check_Dockerfile(dir)
     end
   end
@@ -61,8 +61,8 @@ class LanguagesManifestsTests < LanguagesTestBase
 
   def check_Dockerfile(dir)
     @language = dir
-    assert Dockerfile_exists_and_is_well_formed?(dir)
-    assert build_docker_image_exists_and_is_well_formed?(dir)
+    assert Dockerfile_exists_and_is_well_formed?(dir), dir
+    assert build_docker_image_exists_and_is_well_formed?(dir), dir
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

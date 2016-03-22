@@ -3,48 +3,55 @@ module TestExternalHelpers # mix-in
 
   module_function
 
-  # The config has to actually be written to the file system
-  # because controller tests go through the rails stack and
-  # thus create a new dojo object in a new thread.
-  #
-  # Calling setup twice in a row without an intervening teardown
-  # is bad because an intervening set_katas_root() call (say)
-  # means the second setup will read the overwritten config
-  # so the final teardown will restore the overwritten config! Oops.
-
   def setup
-    raise "setup already called" if !@original_config.nil?
-    @original_config = read_config
+    raise "setup already called" unless @setup_called.nil?
+    @setup_called = true
+    @config = {}
+    ENV.each { |key, value| @config[key] = value }
     setup_tmp_root
     # we never want tests to write to the real katas root
-    set_katas_root(tmp_root + 'katas')
+    set_katas_root(tmp_root + '/katas')
   end
 
   def teardown
     fail_if_setup_not_called('teardown')
-    IO.write(config_filename, @original_config)
-    @original_config = nil
+    # set and no previous value -> unset
+    (ENV.keys - @config.keys).each { |key| unset(key) }
+    # set but has previous value -> restore
+    (ENV.keys + @config.keys).each { |key| ENV[key] = @config[key] }
+    @setup_called = nil
   end
+
+  # - - - - - - - - - - - - - - - - - - -
+
+  def unset_languages_root; unset_root('languages'); end
+  def unset_exercises_root; unset_root('exercises'); end
+  def     unset_katas_root; unset_root(    'katas'); end
+
+  def unset_runner_class; unset_class('runner'); end
+  def  unset_katas_class; unset_class( 'katas'); end
+  def  unset_shell_class; unset_class( 'shell'); end
+  def   unset_disk_class; unset_class(  'disk'); end
+  def    unset_git_class; unset_class(   'git'); end
+  def    unset_log_class; unset_class(   'log'); end
 
   # - - - - - - - - - - - - - - - - - - -
 
   def set_languages_root(value); set_root('languages', value); end
   def set_exercises_root(value); set_root('exercises', value); end
-  def    set_caches_root(value); set_root(   'caches', value); end
   def     set_katas_root(value); set_root(    'katas', value); end
 
-  def   set_runner_class(value); set_class(   'runner', value); end
-  def    set_katas_class(value); set_class(    'katas', value); end
-  def    set_shell_class(value); set_class(    'shell', value); end
-  def     set_disk_class(value); set_class(     'disk', value); end
-  def      set_git_class(value); set_class(      'git', value); end
-  def      set_log_class(value); set_class(      'log', value); end
+  def   set_runner_class(value); set_class('runner', value); end
+  def    set_katas_class(value); set_class( 'katas', value); end
+  def    set_shell_class(value); set_class( 'shell', value); end
+  def     set_disk_class(value); set_class(  'disk', value); end
+  def      set_git_class(value); set_class(   'git', value); end
+  def      set_log_class(value); set_class(   'log', value); end
 
   # - - - - - - - - - - - - - - - - - - -
 
   def get_languages_root; get_root('languages'); end
   def get_exercises_root; get_root('exercises'); end
-  def    get_caches_root; get_root(   'caches'); end
   def     get_katas_root; get_root(    'katas'); end
 
   def   get_runner_class; get_class('runner'); end
@@ -56,46 +63,66 @@ module TestExternalHelpers # mix-in
 
   # - - - - - - - - - - - - - - - - - - -
 
-  def set_root(name, value)
-    fail_if_setup_not_called("set_root(#{name}, #{value})")
-    config = read_json_config
-    config['root'][name] = value
-    IO.write(config_filename, JSON.unparse(config))
-    `mkdir -p #{value}` if name == 'katas'
-    `mkdir -p #{value}` if name == 'caches'
+  def unset(var); ENV.delete(var); end
+
+  def unset_root(name)
+    unset(dojo.env_name(name, 'root'))
   end
 
-  def set_class(name, value)
-    fail_if_setup_not_called("set_class(#{name}, #{value})")
-    config = read_json_config
-    config['class'][name] = value
-    IO.write(config_filename, JSON.unparse(config))
-  end
-
-  def get_root(name)
-    read_json_config['root'][name]
-  end
-
-  def get_class(name)
-    read_json_config['class'][name]
+  def unset_class(name)
+    unset(dojo.env_name(name, 'class'))
   end
 
   # - - - - - - - - - - - - - - - - - - -
 
-  def read_json_config
-    JSON.parse(read_config)
+  def set_root(key, value)
+    fail_if_setup_not_called("set_root(#{key}, #{value})")
+    ENV[dojo.env_name(key, 'root')] = value
+    `mkdir -p #{value}`
   end
 
-  def read_config
-    IO.read(config_filename)
+  def set_class(key, value)
+    fail_if_setup_not_called("set_class(#{key}, #{value})")
+    ENV[dojo.env_name(key, 'class')] = value
   end
 
-  def config_filename
-    dojo.config_filename
+  # - - - - - - - - - - - - - - - - - - -
+
+  def get_root(name)
+    dojo.env(name, 'root')
   end
 
-  def fail_if_setup_not_called(at)
-    fail "#{at} NOT executed because store_config() not yet called" if @original_config.nil?
+  def get_class(name)
+    dojo.env(name, 'class')
+  end
+
+  # - - - - - - - - - - - - - - - - - - -
+
+  def tmp_root
+    '/tmp/cyber-dojo'
+  end
+
+  def setup_tmp_root
+    # the Teardown-Before-Setup pattern gives good diagnostic info if
+    # a test fails but these backtick command mean the tests cannot be
+    # run in parallel...
+    success = 0
+
+    command = "rm -rf #{tmp_root}"
+    output = `#{command}`
+    exit_status = $?.exitstatus
+    puts "#{command}\n\t->#{output}\n\t->#{exit_status}" unless exit_status == success
+
+    command = "mkdir -p #{tmp_root}"
+    output = `#{command}`
+    exit_status = $?.exitstatus
+    puts "#{command}\n\t->#{output}\n\t->#{exit_status}" unless exit_status == success
+  end
+
+  # - - - - - - - - - - - - - - - - - - -
+
+  def fail_if_setup_not_called(cmd)
+    fail "#{cmd} NOT executed because setup() not yet called" if @setup_called.nil?
   end
 
 end

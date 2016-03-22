@@ -6,7 +6,7 @@ end
 
 def wrapper_test_log
   # duplicated in test/test_wrapper.sh
-  'coverage/WRAPPER.log.tmp'
+  'coverage/test.log'
 end
 
 #- - - - - - - - - - - - - - - - - - - - -
@@ -49,7 +49,7 @@ def column_names
     :assertion_count,
     :failure_count,
     :error_count,
-    #:skip_count,
+    :skip_count,
     :time,
     :tests_per_sec,
     :assertions_per_sec,
@@ -67,7 +67,7 @@ def columns
     names[n += 1] => [  7, 'a',      'number of assertions'  ],
     names[n += 1] => [  3, 'f',      'number of failures'    ],
     names[n += 1] => [  3, 'e',      'number of errors'      ],
-    #names[n += 1] => [  3, 's',      'number of skips'       ],
+    names[n += 1] => [  3, 's',      'number of skips'       ],
     names[n += 1] => [  7, 'secs',   'time in seconds'       ],
     names[n += 1] => [  7, 't/sec',  'tests per second'      ],
     names[n += 1] => [  7, 'a/sec',  'assertions per second' ],
@@ -84,7 +84,7 @@ def gather_stats
 
     log = `cat #{module_name}/#{wrapper_test_log}`
     `rm #{module_name}/#{wrapper_test_log}`
-    h = stats[module_name] = { }
+    h = stats[module_name] = {}
 
     finished_pattern = "Finished in #{number}s, #{number} runs/s, #{number} assertions/s"
     m = log.match(Regexp.new(finished_pattern))
@@ -98,7 +98,7 @@ def gather_stats
     h[:assertion_count] = m[2].to_i
     h[:failure_count]   = m[3].to_i
     h[:error_count]     = m[4].to_i
-    #h[:skip_count]      = m[5].to_i
+    h[:skip_count]      = m[5].to_i
 
     coverage_pattern = "Coverage of ([^\=]*) = #{number}%"
     m = log.match(Regexp.new(coverage_pattern))
@@ -144,7 +144,7 @@ def print_totals(stats)
   pr.call(name=:assertion_count, a = stat.call(name))
   pr.call(name=:failure_count, stat.call(name))
   pr.call(name=:error_count, stat.call(name))
-  #pr.call(name=:skip_count, stat.call(name))
+  pr.call(name=:skip_count, stat.call(name))
   pr.call(name=:time, t = f2(stats.map { |_,h| h[name].to_f }.reduce(:+)))
   pr.call(:tests_per_sec,        (c / t.to_f).to_i)
   pr.call(:assertions_per_sec,   (a / t.to_f).to_i)

@@ -1,5 +1,5 @@
 
-A single 'kata' is created by selected a single language
+A single 'kata' is created by selecting a single language
 and a single exercise and has a 10 character hex id.
 The animals (avatars) inside a kata thus share the same
 language and exercise. It is a deliberate part of the
@@ -17,14 +17,9 @@ does not use a database.
 You create a dojo object like this...
 
 <code>
-load 'config/initializers/cyber_dojo.rb'
+load 'domain.rb'
 dojo = Dojo.new
 </code>
-
-The live :katas_path is
-  /var/www/cyber-dojo/katas/
-and the test :katas_path is
-  /var/www/cyber-dojo/test/cyber-dojo/katas/
 
 You can
 o) list all its languages or use [ ] to select a specific language.

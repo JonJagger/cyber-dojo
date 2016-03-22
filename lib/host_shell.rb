@@ -1,4 +1,6 @@
 
+require 'tempfile'
+
 class HostShell
 
   def initialize(dojo)
@@ -18,26 +20,19 @@ class HostShell
   # modifiers
 
   def cd_exec(path, *commands)
-    output,exit_status = exec(["cd #{path}"] + commands)
+    output, exit_status = exec(["cd #{path}"] + commands)
     return output, exit_status
-  end
-
-  def daemon_exec(*commands)
-    command = commands.join(' && ')
-    log << command
-    fork do
-      Process.daemon
-      Process.exec(command)
-    end
   end
 
   def exec(*commands)
     command = commands.join(' && ')
-    log << command
+    log << "shell.exec:#{'-'*40}"
+    log << "shell.exec:COMMAND: #{command}"
     output = `#{command}`
     exit_status = $?.exitstatus
-    log << output if output != ''
-    log << "$?.exitstatus=#{exit_status}" if exit_status != success
+    log << "shell.exec:NO-OUTPUT:" if output == ''
+    log << "shell.exec:OUTPUT:#{output}" if output != ''
+    log << "shell.exec:EXITED:#{exit_status}"
     return cleaned(output), exit_status
   end
 

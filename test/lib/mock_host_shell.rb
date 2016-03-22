@@ -1,11 +1,13 @@
 
+# This is partly a mock, but mostly a proxy.
+# Rename it to HostShellProxyMock
+
 class MockHostShell
 
   def initialize(dojo)
     @target = HostShell.new(dojo)
     @cd_exec_mock     = []
     @exec_mock        = []
-    @daemon_exec_mock = []
   end
 
   # - - - - - - - - - - - - - - - - -
@@ -13,7 +15,6 @@ class MockHostShell
   def teardown
     raise "#{self.class.name} unused #{@cd_exec_mock}"     unless @cd_exec_mock     == []
     raise "#{self.class.name} unused #{@exec_mock}"        unless @exec_mock        == []
-    raise "#{self.class.name} unused #{@daemon_exec_mock}" unless @daemon_exec_mock == []
   end
 
   # - - - - - - - - - - - - - - - - -
@@ -24,24 +25,6 @@ class MockHostShell
          commands: commands,
            output: output,
       exit_status: exit_status
-    }
-  end
-
-  # - - - - - - - - - - - - - - - - -
-
-  def mock_exec(commands, output, exit_status)
-    @exec_mock << {
-         commands: commands,
-           output: output,
-      exit_status: exit_status
-    }
-  end
-
-  # - - - - - - - - - - - - - - - - -
-
-  def mock_daemon_exec(command)
-    @daemon_exec_mock << {
-      command: command
     }
   end
 
@@ -58,6 +41,16 @@ class MockHostShell
 
   # - - - - - - - - - - - - - - - - -
 
+  def mock_exec(commands, output, exit_status)
+    @exec_mock << {
+         commands: commands,
+           output: output,
+      exit_status: exit_status
+    }
+  end
+
+  # - - - - - - - - - - - - - - - - -
+
   def exec(*commands)
     return @target.exec(*commands) if @exec_mock == []
     mock = @exec_mock.shift
@@ -65,16 +58,6 @@ class MockHostShell
       complain('exec', "#{mock[:commands]}", "#{commands}")
     end
     return mock[:output], mock[:exit_status]
-  end
-
-  # - - - - - - - - - - - - - - - - -
-
-  def daemon_exec(command)
-    return @target.daemon_exec(command) if @daemon_exec_mock == []
-    mock = @daemon_exec_mock.shift
-    if command != mock[:command]
-      complain('daemon_exec', "#{mock[:command]}", "#{command}")
-    end
   end
 
   # - - - - - - - - - - - - - - - - -

@@ -1,0 +1,27 @@
+#-----Ignore everything
+#-----including katas (data-container / volume-mounted)
+#-----including public (nginx image)
+
+*
+
+#-----!Except these folders
+
+!app/assets
+!app/controllers
+!app/docker
+!app/downloads
+!app/exercises
+!app/helpers
+!app/languages
+!app/lib
+!app/models
+!app/views
+!script
+!config
+!lib
+!test
+
+#-----!Except this file
+
+!Gemfile
+!config.ru
