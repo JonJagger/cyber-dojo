@@ -1,12 +1,6 @@
-FROM       cyberdojofoundation/clangpp-3.6.0
+FROM       cyberdojofoundation/clangpp-3.7.1
 MAINTAINER Byran Wills-Heath <byran@adgico.co.uk>
 
-RUN apt-get update && apt-get install -y \
-  libgtest-dev \
-  cmake
-
-WORKDIR /usr/src/gtest
-RUN cmake .
-RUN make
-RUN mv libg* /usr/lib
-
+ADD install.sh /
+RUN /install.sh && \
+    rm -f /install.sh
