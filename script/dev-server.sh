@@ -10,6 +10,7 @@ MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 RUNNER=${1:-DockerTarPipeRunner}
 
 pushd ${MY_DIR} > /dev/null
+cd ..
 HOME=${PWD}
 popd > /dev/null
 
