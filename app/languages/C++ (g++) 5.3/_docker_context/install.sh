@@ -39,3 +39,6 @@ rm -f master.zip
 # Install Fake Function Framework
 cd /usr/local/include
 wget https://raw.githubusercontent.com/meekrosoft/fff/master/fff.h
+
+# Update the Dynamic Linker Run Time Bindings
+ldconfig
