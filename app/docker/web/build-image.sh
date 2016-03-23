@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-CYBER_DOJO_HOME=$1
+CYBER_DOJO_HOME=${1:-/usr/src/cyber-dojo}
 
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 

@@ -21,7 +21,7 @@
 !lib
 !test
 
-#-----!Except this file
+#-----!Except these files
 
 !Gemfile
 !config.ru
