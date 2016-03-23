@@ -4,9 +4,6 @@
 # state is preserved from the setup to the call it has
 # to be saved to disk and then retrieved.
 
-# TODO: CURRENTLY SAVED TO katas/...
-#       NEEDS CHANGING SINCE THAT WILL FILL THE data-container
-
 class StubRunner
 
   def initialize(dojo)
