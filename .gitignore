@@ -21,3 +21,5 @@ admin_scripts/stats/exceptions.log
 test/*/coverage/
 coverage
 
+app/languages/cache.json
+app/exercises/cache.json
