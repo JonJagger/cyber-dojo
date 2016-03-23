@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+# scratch script for dev commands
+
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 ARGS=${@}
@@ -15,7 +17,7 @@ KATAS_DEFAULT=/var/www/cyber-dojo/katas
 KATAS=${KATAS_DEFAULT}           # where old (non data-container) katas may be on the *host*
 
 # important this does NOT include katas
-IMAGES=(user-base language-base nginx web)
+IMAGES=(user-base nginx web)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # TODO: add test command.

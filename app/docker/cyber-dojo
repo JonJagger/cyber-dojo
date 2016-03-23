@@ -3,6 +3,10 @@
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 
+# The main cyber-dojo shell script.
+# Works in combination with the cyber-dojo.rb ruby script.
+# It [docker run]s cyber-dojo.rb from inside cyberdojofoundation/web which has ruby.
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # ensure docker-engine/machine/compose are installed
 
@@ -29,10 +33,10 @@ fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # ensure katas-data-container exists.
-# if it doesn't and /var/www/cyber-dojo/katas exists on the host
-# then assume it holds practice sessions and copy them into the new katas-data-container.
-# if it doesn't and /var/www/cyber-dojo/katas does not exist on the host
-# then create new empty katas-data-container
+# o) if it doesn't and /var/www/cyber-dojo/katas exists on the host
+#    then assume it holds practice sessions and copy them into the new katas-data-container.
+# o) if it doesn't and /var/www/cyber-dojo/katas does not exist on the host
+#    then create new empty katas-data-container
 
 DOCKER_HUB_USERNAME=cyberdojofoundation
 HOME=/usr/src/cyber-dojo           # *inside* the server image
@@ -75,7 +79,7 @@ if [ $? != 0 ]; then
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# delegate most commands to ruby script inside web image
+# delegate to ruby script inside web image
 
 docker run \
   --rm \
@@ -85,7 +89,7 @@ docker run \
   ${HOME}/app/docker/cyber-dojo.rb $@
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# extract docker-compose.yml file from web image and use it
+# extract docker-compose.yml file from web image
 
 DOCKER_COMPOSE_FILE=docker-compose.yml
 
@@ -104,7 +108,7 @@ export CYBER_DOJO_RUNNER_SUDO='sudo -u docker-runner sudo'
 export CYBER_DOJO_RUNNER_TIMEOUT=${CYBER_DOJO_RUNNER_TIMEOUT:=10}
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# up/down!
+# up/down/upgrade!
 
 DOCKER_COMPOSE_CMD="docker-compose --file=${MY_DIR}/${DOCKER_COMPOSE_FILE}"
 
