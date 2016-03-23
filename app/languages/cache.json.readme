@@ -1,6 +1,8 @@
 
 app/languages/cache.json
 --------------------
+Is automatically created by the app/models/languages.rb constructor.
+
 There are three crucial pieces of information per language+test.
 1. It's display-name,
    eg "Ruby, RSpec"

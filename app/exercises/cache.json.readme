@@ -1,6 +1,8 @@
 
 exercises/cache.json
 --------------------
+Is automatically created by the app/models/exercises.rb constructor.
+
 This is a simple cache of each exercise's
 1. folder-name
 2. instructions file content
