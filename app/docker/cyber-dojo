@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh
 
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
