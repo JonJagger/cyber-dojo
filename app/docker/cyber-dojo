@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 
 ME="./$( basename ${0} )"
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
@@ -57,13 +57,20 @@ if [ $? != 0 ]; then
   fi
 
   # 2. extract appropriate Dockerfile from web image
-  KATAS_DOCKERFILE=${CONTEXT_DIR}/Dockerfile.katas-data-container
+  KATAS_DOCKERFILE=${CONTEXT_DIR}/Dockerfile
   CID=$(docker create ${DOCKER_HUB_USERNAME}/web)
-  docker cp ${CID}:${HOME}/app/docker/Dockerfile.katas-data-container.${SUFFIX} \
+  docker cp ${CID}:${HOME}/app/docker/katas/Dockerfile.${SUFFIX} \
             ${KATAS_DOCKERFILE}
   docker rm -v ${CID} > /dev/null
 
-  # 3. use Dockerfile to build image
+  # 3. extract appropriate .dockerignore from web image
+  KATAS_DOCKERIGNORE=${CONTEXT_DIR}/.dockerignore
+  CID=$(docker create ${DOCKER_HUB_USERNAME}/web)
+  docker cp ${CID}:${HOME}/app/docker/katas/Dockerignore.${SUFFIX} \
+            ${KATAS_DOCKERIGNORE}
+  docker rm -v ${CID} > /dev/null
+
+  # 4. use Dockerfile to build image
   TAG=${DOCKER_HUB_USERNAME}/katas
   docker build \
            --build-arg=CYBER_DOJO_KATAS_ROOT=${HOME}/katas \
@@ -71,7 +78,7 @@ if [ $? != 0 ]; then
            --file=${KATAS_DOCKERFILE} \
            ${CONTEXT_DIR}
 
-  # 4. use image to create data-container
+  # 5. use image to create data-container
   docker create \
          --name ${KATAS_DATA_CONTAINER} \
          ${TAG} \
