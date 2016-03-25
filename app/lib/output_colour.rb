@@ -109,7 +109,8 @@ module OutputColour # mix-in
   end
 
   def self.parse_boost_test(output)
-    return :red   if /\*\*\* (\d+) failures? detected/.match(output)
+    return :red   if /\*\*\* (\d+) failure is detected/.match(output)
+    return :red   if /\*\*\* (\d+) failures are detected/.match(output)
     return :green if /\*\*\* No errors detected/.match(output)
     return :amber
   end
