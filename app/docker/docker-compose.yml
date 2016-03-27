@@ -1,4 +1,5 @@
 
+
 nginx:
   image: cyberdojofoundation/nginx
   container_name: cdf-nginx
@@ -33,3 +34,10 @@ web:
   volumes_from:
     - cdf-katas-DATA-CONTAINER:rw
 
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# The cyber-dojo script uses this file to find out the
+# service names. It assumes the service name (eg web) is the
+# tag name for the associated docker image (eg cyberdojofoundation/web)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
