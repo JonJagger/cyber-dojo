@@ -445,6 +445,7 @@ $(function() {
         refreshTagControls();
         refreshFiles();
         refreshRevertButton();
+        refreshForkButton();
         var light = $('img[src$="_bar.png"]');
         var options = { direction: 'horizontal', duration: 'slow' };
         light.scrollIntoView(options);
@@ -544,16 +545,22 @@ $(function() {
       .text(name)
       .unbind('click')
       .bind('click', handler);
-    refreshRevertButton();
-    refreshForkButton();
+    if (name == 'fork') {
+      refreshForkButton();
+    }
+    if (name == 'revert') {
+      refreshRevertButton();
+    }
   };
 
   if (inDialog()) {
     setupButton('close',  function() { $('#review-dialog').dialog('close'); });
+    //TODO:fork from dialog will need to open home page in new tab
+    //setupButton('fork', function() { doFork(); });
     setupButton('revert', function() { doRevert(); });
   } else {
-    setupButton('fork',   function() { doFork(); });
     reviewRefresh();
+    setupButton('fork',   function() { doFork(); });
   }
 
 });
@@ -565,7 +572,7 @@ $(function() {
     <td style="width:300px" align="right">
       <%= render(:partial => 'review/diff_checkbox') %>
     </td>
-    <td>
+    <td colspan="2">
       <div id="review-traffic-lights"></div>
     </td>
   </tr>
@@ -574,7 +581,7 @@ $(function() {
       <%= render(:partial => 'review/navigate_control') %>
       <div id="diff-filenames"></div>
     </td>
-    <td>
+    <td colspan="2">
       <div id="diff-content"></div>
     </td>
   </tr>
@@ -584,6 +591,8 @@ $(function() {
     </td>
     <td>
       <div id="fork-button-container"></div>
+    </td>
+    <td>
       <div id="revert-button-container"></div>
     </td>
   </tr>
