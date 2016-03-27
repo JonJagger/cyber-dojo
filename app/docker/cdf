@@ -39,9 +39,7 @@ show_use()
   echo "     logs-rails           Prints rails log"
   echo "     logs-web             Prints server log"
   echo '     sh                   Shells in'
-  echo '     up [OPTIONS]         Create and start'
-  echo "         katas=DIR        default: katas=${KATAS_DEFAULT}"
-  echo "         runner=CLASS     default: runner=${RUNNER_DEFAULT}"
+  echo '     up                   Create and start'
   echo
   echo 'COMMAND(server images):'
   echo '     build                Builds cyber-dojo server'
@@ -190,13 +188,6 @@ do
       ;;
     up)
       doUp=true
-      ;;
-    # - - - - - - - up options - - - - - - - -
-    katas=*)
-      KATAS="${ARG#*=}"
-      ;;
-    runner=*)
-      RUNNER="${ARG#*=}"
       ;;
     # - - - - - - - server images - - - - - - - -
     build)

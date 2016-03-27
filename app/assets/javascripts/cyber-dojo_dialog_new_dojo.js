@@ -4,8 +4,9 @@ var cyberDojo = (function(cd, $) {
   "use strict";
 
   cd.newDojoDialog = function(id) {
-    var goToEnterPage = function() {
-      var url = '/enter/show/' + id;
+
+    var goToHomePage = function() {
+      var url = '/dojo/index/' + id;
       window.location = url;
     };
 
@@ -31,12 +32,12 @@ var cyberDojo = (function(cd, $) {
         width: 435,
         closeOnEscape: true,
         close: function() {
-          goToEnterPage();
+          goToHomePage();
           $(this).remove();
         },
         buttons: {
           ok: function() {
-            goToEnterPage(id);
+            goToHomePage(id);
             $(this).remove();
           }
         }
