@@ -1,4 +1,4 @@
-FROM       cyberdojofoundation/gpp-4.9
+FROM       cyberdojofoundation/gpp-5.3
 MAINTAINER Michel Estermann <estermann.michel@gmail.com>
 
 WORKDIR /usr/src
