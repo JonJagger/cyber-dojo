@@ -1,4 +1,4 @@
-FROM       cyberdojofoundation/clangpp-3.7.1
+FROM       cyberdojofoundation/clangpp-3.8.0
 MAINTAINER Byran Wills-Heath <byran@adgico.co.uk>
 
 ADD install.sh /
