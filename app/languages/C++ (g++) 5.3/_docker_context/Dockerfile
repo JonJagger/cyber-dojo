@@ -1,7 +1,5 @@
-FROM       cyberdojofoundation/gpp-5.3
+FROM       cyberdojofoundation/build-essential
 MAINTAINER Byran Wills-Heath <byran@adgico.co.uk>
-
-ENV CXX=clang++ CC=clang
 
 ADD install.sh /
 RUN /install.sh && \

@@ -1,6 +1,4 @@
 CXXFLAGS += -I. -std=c++14 -Wall -Wextra -Werror
-CXXFLAGS += -fsanitize=undefined -fno-sanitize-recover=undefined
-CXXFLAGS += -fsanitize=address -fno-omit-frame-pointer
 
 HPP_FILES = $(wildcard *.hpp)
 COMPILED_HPP_FILES = $(patsubst %.hpp,%.compiled_hpp,$(HPP_FILES))
@@ -12,6 +10,10 @@ test.output: test makefile
 
 test: makefile $(CPP_FILES) $(COMPILED_HPP_FILES)
 	@$(CXX) $(CXXFLAGS) -O $(CPP_FILES) -o $@
+
+# don't compile catch.hpp header
+catch.compiled_hpp: catch.hpp
+	@true
 
 # This rule ensures header files build in their own right.
 # The quality of header files is important because header files

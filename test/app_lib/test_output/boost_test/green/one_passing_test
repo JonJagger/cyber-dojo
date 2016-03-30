@@ -1,5 +1,3 @@
-g++ -I. -std=c++11 -Wall -Wextra -Werror -DBOOST_TEST_DYN_LINK -O hiker.cpp hiker.tests.cpp -lboost_unit_test_framework -o test
-./test
-Running 1 test case...
+Running 3 test cases...
 
 *** No errors detected

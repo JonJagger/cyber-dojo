@@ -1,6 +1,4 @@
 CXXFLAGS += -I. -std=c++14 -Wall -Wextra -Werror
-CXXFLAGS += -fsanitize=undefined -fno-sanitize-recover=undefined
-CXXFLAGS += -fsanitize=address -fno-omit-frame-pointer
 
 HPP_FILES = $(wildcard *.hpp)
 COMPILED_HPP_FILES = $(patsubst %.hpp,%.compiled_hpp,$(HPP_FILES))
