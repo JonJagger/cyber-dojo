@@ -22,7 +22,7 @@ def help
     '     images               Lists pulled language images',
     '     pull [IMAGE|all]     Pulls one language IMAGE or all images',
     '     remove IMAGE         Removes a pulled language IMAGE',
-    '     upgrade              Pulls the latest server and language images',
+    '     upgrade              Pulls the latest language images',
     ''
   ].join("\n") + "\n"
 end

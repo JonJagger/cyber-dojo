@@ -17,12 +17,6 @@ if [ $? != 0 ]; then
   exit
 fi
 
-# docker --version    Docker version 1.10.3, build 20f81dd
-# awk '{print $3}'  1.10.3,
-# head -c -2        1.10.3
-DOCKER_VERSION=$(docker --version | awk '{print $3}' | head -c -2)
-SERVER_NAME=web:${DOCKER_VERSION}
-
 hash docker-machine 2> /dev/null
 if [ $? != 0 ]; then
   echo
@@ -38,11 +32,22 @@ if [ $? != 0 ]; then
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# cyber-dojo web server image is docker version sensitive.
+# See app/docker/web/Dockerfile ~ line 49
+#
+# docker --version  -->  Docker version 1.10.3, build 20f81dd
+# awk '{print $3}'  -->  1.10.3,
+# head -c -2        -->  1.10.3
+
+DOCKER_VERSION=$(docker --version | awk '{print $3}' | head -c -2)
+SERVER_NAME=web:${DOCKER_VERSION}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # ensure katas-data-container exists.
 # o) if it doesn't and /var/www/cyber-dojo/katas exists on the host
-#    then assume it holds practice sessions and copy them into the new katas-data-container.
+#    then assume it holds practice sessions and _copy_ them into the new katas-data-container.
 # o) if it doesn't and /var/www/cyber-dojo/katas does not exist on the host
-#    then create new empty katas-data-container
+#    then create new _empty_ katas-data-container
 
 DOCKER_HUB_USERNAME=cyberdojofoundation
 HOME=/usr/src/cyber-dojo           # *inside* the server image
@@ -133,13 +138,3 @@ fi
 if [ "$*" = "down" ]; then
   ${DOCKER_COMPOSE_CMD} down
 fi
-
-if [ "$*" = "upgrade" ]; then
-  SERVICES=$(${DOCKER_COMPOSE_CMD} config --services 2> /dev/null)
-  for SERVICE in ${SERVICES}; do
-    COMMAND="docker pull ${DOCKER_HUB_USERNAME}/${SERVICE}:latest"
-    echo ${COMMAND}
-    ${COMMAND}
-  done
-fi
-
