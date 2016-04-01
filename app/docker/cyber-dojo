@@ -17,6 +17,12 @@ if [ $? != 0 ]; then
   exit
 fi
 
+# docker --version    Docker version 1.10.3, build 20f81dd
+# awk '{print $3}'  1.10.3,
+# head -c -2        1.10.3
+DOCKER_VERSION=$(docker --version | awk '{print $3}' | head -c -2)
+SERVER_NAME=web:${DOCKER_VERSION}
+
 hash docker-machine 2> /dev/null
 if [ $? != 0 ]; then
   echo
@@ -58,14 +64,14 @@ if [ $? != 0 ]; then
 
   # 2. extract appropriate Dockerfile from web image
   KATAS_DOCKERFILE=${CONTEXT_DIR}/Dockerfile
-  CID=$(docker create ${DOCKER_HUB_USERNAME}/web)
+  CID=$(docker create ${DOCKER_HUB_USERNAME}/${SERVER_NAME})
   docker cp ${CID}:${HOME}/app/docker/katas/Dockerfile.${SUFFIX} \
             ${KATAS_DOCKERFILE}
   docker rm -v ${CID} > /dev/null
 
   # 3. extract appropriate .dockerignore from web image
   KATAS_DOCKERIGNORE=${CONTEXT_DIR}/.dockerignore
-  CID=$(docker create ${DOCKER_HUB_USERNAME}/web)
+  CID=$(docker create ${DOCKER_HUB_USERNAME}/${SERVER_NAME})
   docker cp ${CID}:${HOME}/app/docker/katas/Dockerignore.${SUFFIX} \
             ${KATAS_DOCKERIGNORE}
   docker rm -v ${CID} > /dev/null
@@ -92,7 +98,7 @@ docker run \
   --rm \
   --user=root \
   --volume=/var/run/docker.sock:/var/run/docker.sock \
-  ${DOCKER_HUB_USERNAME}/web \
+  ${DOCKER_HUB_USERNAME}/${SERVER_NAME} \
   ${HOME}/app/docker/cyber-dojo.rb $@
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -100,7 +106,7 @@ docker run \
 
 DOCKER_COMPOSE_FILE=docker-compose.yml
 
-CID=$(docker create ${DOCKER_HUB_USERNAME}/web)
+CID=$(docker create ${DOCKER_HUB_USERNAME}/${SERVER_NAME})
 docker cp ${CID}:${HOME}/app/docker/${DOCKER_COMPOSE_FILE} ${MY_DIR}/${DOCKER_COMPOSE_FILE}
 docker rm -v ${CID} > /dev/null
 
@@ -113,6 +119,7 @@ export CYBER_DOJO_KATAS_ROOT=${CYBER_DOJO_KATAS_ROOT:=${CYBER_DOJO_HOME}/katas}
 export CYBER_DOJO_RUNNER_CLASS=${CYBER_DOJO_RUNNER_CLASS:=DockerTarPipeRunner}
 export CYBER_DOJO_RUNNER_SUDO='sudo -u docker-runner sudo'
 export CYBER_DOJO_RUNNER_TIMEOUT=${CYBER_DOJO_RUNNER_TIMEOUT:=10}
+export DOCKER_VERSION=${DOCKER_VERSION}
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # up/down/upgrade!

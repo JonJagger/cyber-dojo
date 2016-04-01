@@ -12,7 +12,7 @@ nginx:
 
 web:
   user: cyber-dojo
-  image: cyberdojofoundation/web
+  image: cyberdojofoundation/web:${DOCKER_VERSION}
   container_name: cdf-web
   command: rails server --environment=development
   environment:

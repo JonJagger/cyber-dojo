@@ -41,15 +41,17 @@ ENTRYPOINT ["/usr/bin/tini", "--"]
 #    -v /usr/lib/x86_64-linux-gnu/libapparmor.so.1.2.0 ...
 #
 # I originally used docker-compose extension files specific to each OS.
-# I now install the docker client inside the image.
+# I now install the docker client _inside_ the image.
 # This means there is no host<-container uid dependency.
+# But there is a host<-container docker version dependency.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+ARG  DOCKER_VERSION
 ARG  DOCKER_BINARY=/usr/bin/docker
 USER root
 RUN  apk --update add curl \
-  && curl -O https://get.docker.com/builds/Linux/x86_64/docker-latest \
-  && mv docker-latest ${DOCKER_BINARY} \
+  && curl -O https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION} \
+  && mv docker-${DOCKER_VERSION} ${DOCKER_BINARY} \
   && chmod +x ${DOCKER_BINARY} \
   && apk del curl
 
