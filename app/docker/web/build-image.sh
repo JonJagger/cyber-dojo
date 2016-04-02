@@ -1,7 +1,15 @@
 #!/bin/bash
 set -e
 
+# A docker-client binary is installed *inside* the web image
+# This creates a dependency on the docker-version installed
+# on the host. Thus, the web Dockerfile accepts the docker-version
+# to install as a parameter, and the built web image is tagged with
+# this version number.
 DOCKER_VERSION=${1:-1.10.3}
+
+# the 'home' directory inside the web image. I don't expect
+# this to change, it's parameterized to avoid duplication.
 CYBER_DOJO_HOME=${2:-/usr/src/cyber-dojo}
 
 MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
