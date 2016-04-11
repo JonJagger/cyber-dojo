@@ -36,10 +36,10 @@ fi
 # See app/docker/web/Dockerfile ~ line 49
 #
 # docker --version  -->  Docker version 1.10.3, build 20f81dd
-# awk '{print $3}'  -->  1.10.3,
-# head -c -2        -->  1.10.3
+# awk '{print $3}'  -->  1.10.3,           (third field)
+# sed '$s/.$//'     -->  1.10.3            (lose last character)
 
-DOCKER_VERSION=$(docker --version | awk '{print $3}' | head -c -2)
+DOCKER_VERSION=$(docker --version | awk '{print $3}' | sed '$s/.$//')
 SERVER_NAME=web:${DOCKER_VERSION}
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
