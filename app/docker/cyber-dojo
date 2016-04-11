@@ -37,9 +37,9 @@ fi
 #
 # docker --version  -->  Docker version 1.10.3, build 20f81dd
 # awk '{print $3}'  -->  1.10.3,
-# head -c -2        -->  1.10.3
+# head -c -2        -->  1.10.3		# head on Darwin does not allow -2, use awk
 
-DOCKER_VERSION=$(docker --version | awk '{print $3}' | head -c -2)
+DOCKER_VERSION=$(docker --version | awk '{print $3}' | awk 'BEGIN{FS="."}{printf("%d.%d.%d", $1, $2, $3)}')
 SERVER_NAME=web:${DOCKER_VERSION}
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -96,6 +96,13 @@ module OutputColour # mix-in
    return :green
   end
 
+  def self.parse_cgreen(output)
+    return :red   if / Failure: /.match(output)
+    return :red   if / Exception: /.match(output)
+    return :green if /0 failures, 0 exceptions/.match(output)
+    return :amber
+  end
+
   def self.parse_cassert(output)
     return :red   if /(.*)Assertion(.*)failed./.match(output)
     return :green if /(All|\d*) tests passed/.match(output)
