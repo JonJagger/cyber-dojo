@@ -55,6 +55,11 @@ RUN  apk --update add curl \
   && chmod +x ${DOCKER_BINARY} \
   && apk del curl
 
+# UPDATE: docker 1.11.0 now relies on four binaries
+# See https://github.com/docker/docker/wiki/Engine-1.11.0
+# So this Dockerfile doesn't yet work for 1.11.0
+
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 3. lib/runner sh files needs to run /usr/bin/docker
 # after this, the sh file (running as cyber-dojo user) can do
