@@ -47,6 +47,7 @@ ENTRYPOINT ["/usr/bin/tini", "--"]
 #
 # docker 1.11.0 now relies on four binaries
 # See https://github.com/docker/docker/wiki/Engine-1.11.0
+# See https://docs.docker.com/engine/installation/binaries/
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ARG  DOCKER_VERSION
