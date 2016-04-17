@@ -13,7 +13,7 @@ ENTRYPOINT ["/usr/bin/tini", "--"]
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 2. install docker-client
 # Launching a docker app (that itself uses docker) is
-# different on different host OS's...
+# different on different host OS's... eg
 #
 # OSX Yosemite
 # ------------
@@ -44,21 +44,18 @@ ENTRYPOINT ["/usr/bin/tini", "--"]
 # I now install the docker client _inside_ the image.
 # This means there is no host<-container uid dependency.
 # But there is a host<-container docker version dependency.
+#
+# docker 1.11.0 now relies on four binaries
+# See https://github.com/docker/docker/wiki/Engine-1.11.0
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ARG  DOCKER_VERSION
-ARG  DOCKER_BINARY=/usr/bin/docker
 USER root
-RUN  apk --update add curl \
-  && curl -O https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION} \
-  && mv docker-${DOCKER_VERSION} ${DOCKER_BINARY} \
-  && chmod +x ${DOCKER_BINARY} \
+RUN apk --update add curl \
+  && curl -OL https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}.tgz \
+  && tar -xvzf docker-${DOCKER_VERSION}.tgz \
+  && mv docker/* /usr/bin/ \
   && apk del curl
-
-# UPDATE: docker 1.11.0 now relies on four binaries
-# See https://github.com/docker/docker/wiki/Engine-1.11.0
-# So this Dockerfile doesn't yet work for 1.11.0
-
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 3. lib/runner sh files needs to run /usr/bin/docker
