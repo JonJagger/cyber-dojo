@@ -64,6 +64,7 @@ RUN apk --update add curl \
 #     $ sudo -u docker-runner sudo docker run ...
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+ARG  DOCKER_BINARY=/usr/bin/docker
 ARG  NEEDS_DOCKER_SUDO=cyber-dojo
 ARG  GETS_DOCKER_SUDO=docker-runner
 ARG  SUDO_FILE=/etc/sudoers.d/${GETS_DOCKER_SUDO}
