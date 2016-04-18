@@ -1,0 +1,18 @@
+{
+    "image_name": "cyberdojofoundation/clangpp_cgreen",
+    "display_name": "C++ (clang++), Cgreen",
+    "unit_test_framework": "cgreen",
+    "filename_extension": ".cpp",
+    "tab_size": 4,
+    "visible_filenames": [
+        "Hiker.cpp",
+        "Hiker.hpp",
+        "HikerTests.cpp",
+        "Makefile",
+        "cyber-dojo.sh"
+    ],
+    "progress_regexs" : [
+        "((\\d)+ tests)",
+        "(\\d)+ failures[s]?, (\\d)+ exception[s]?"
+    ]
+}
