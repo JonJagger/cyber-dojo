@@ -15,28 +15,25 @@ ENTRYPOINT ["/usr/bin/tini", "--"]
 # Launching a docker app (that itself uses docker) is
 # different on different host OS's... eg
 #
-# OSX Yosemite
-# ------------
+# OSX 10.10 (Yosemite)
+# --------------------
 # The Docker-Quickstart-Terminal uses docker-machine to forward
 # docker commands to a boot2docker VM called default.
 # In this VM the docker binary lives at /usr/local/bin/
 #
-#    -v /var/run/docker.dock:/var/run/docker.sock
 #    -v /usr/local/bin/docker:/usr/local/bin/docker
 #
-# Ubuntu Trusty
-# -------------
+# Ubuntu 14.04 (Trusty)
+# ---------------------
 # The docker binary lives at /usr/bin and has a dependency on apparmor 1.1
 #
-#    -v /var/run/docker.dock:/var/run/docker.sock
 #    -v /usr/bin/docker:/usr/bin/docker
 #    -v /usr/lib/x86_64-linux-gnu/libapparmor.so.1.1.0 ...
 #
-# Debian Jessie
-# -------------
+# Debian 8 (Jessie)
+# -----------------
 # The docker binary lives at /usr/bin and has a dependency to apparmor 1.2
 #
-#    -v /var/run/docker.dock:/var/run/docker.sock
 #    -v /usr/bin/docker:/usr/bin/docker
 #    -v /usr/lib/x86_64-linux-gnu/libapparmor.so.1.2.0 ...
 #
