@@ -1,18 +1,20 @@
 #!/usr/bin/env ruby
 
-$me = 'cyber-dojo'
-$my_dir = File.expand_path(File.dirname(__FILE__))
+def me; 'cyber-dojo'; end
 
-$docker_hub_username = 'cyberdojofoundation'
-$home = '/usr/src/cyber-dojo'  # home folder *inside* the server image
+def my_dir; File.expand_path(File.dirname(__FILE__)); end
+
+def docker_hub_username; 'cyberdojofoundation'; end
+
+def home; '/usr/src/cyber-dojo'; end  # home folder *inside* the server image
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def help
   [
     '',
-    "Use: #{$me} COMMAND",
-    "     #{$me} help",
+    "Use: #{me} COMMAND",
+    "     #{me} help",
     '',
     '     up                   Creates and starts the server containers',
     '     down                 Stops and removes server containers',
@@ -42,8 +44,8 @@ def backup
     ' --rm' +
     ' --volumes-from=cdf-katas-DATA-CONTAINER' +
     " --volume=/backup:/backup" +
-    " #{$docker_hub_username}/web" +
-    " tar -cvz -f /backup/cyber-dojo_katas_backup.tgz -C #{$home} katas"
+    " #{docker_hub_username}/web" +
+    " tar -cvz -f /backup/cyber-dojo_katas_backup.tgz -C #{home} katas"
   `#{cmd}`
   puts 'Created /backup/cyber-dojo_katas_backup.tgz'
 end
@@ -61,7 +63,7 @@ end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def catalog
-  `#{$my_dir}/../languages/list_all_images.rb`
+  `#{my_dir}/../languages/list_all_images.rb`
   # LANGUAGE          TESTS                IMAGE
   # Asm               assert               nasm_assert
   # BCPL              all_tests_passed     bcpl-all_tests_passed
@@ -83,7 +85,7 @@ end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def all_cdf_images
-  di = `docker images | grep #{$docker_hub_username}`
+  di = `docker images | grep #{docker_hub_username}`
   # cyberdojofoundation/visual-basic_nunit   latest  eb5f54114fe6 4 months ago 497.4 MB
   # cyberdojofoundation/ruby_mini_test       latest  c7d7733d5f54 4 months ago 793.4 MB
   # cyberdojofoundation/ruby_rspec           latest  ce9425d1690d 4 months ago 411.2 MB
@@ -114,14 +116,18 @@ end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+def docker_pull(image, tag)
+  run "docker pull #{docker_hub_username}/#{image}:#{tag}"
+end
+
 def upgrade
-  languages.each { |image| run "docker pull #{$docker_hub_username}/#{image}:latest" }
+  languages.each { |image| docker_pull(image, 'latest') }
   # these service names must match those used in the cyber-dojo script
   # there is a [docker-compose config --services] command to retrieve these
   # but that would require docker-compose being installed inside the web image 
   version = ENV['DOCKER_VERSION']
-  run "docker pull #{$docker_hub_username}/web:#{version}"
-  run "docker pull #{$docker_hub_username}/nginx:latest"
+  docker_pull('web', version)
+  docker_pull('nginx', 'latest')
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -132,19 +138,18 @@ def bad_image(image)
   else
     puts "unknown IMAGE #{image}"
   end
-  puts "Try '#{$me} help'"
+  puts "Try '#{me} help'"
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 def pull(image)
-  docker_pull = lambda { |tag| run "docker pull #{$docker_hub_username}/#{tag}:latest" }
   if image == 'all'
     all_languages.each do |language|
-      docker_pull.call(language)
+      docker_pull(language, 'latest')
     end
   elsif in_catalog?(image)
-    docker_pull.call(image)
+    docker_pull(image, 'latest')
   else
     bad_image(image)
   end
@@ -154,10 +159,10 @@ end
 
 def remove(image)
   if languages.include?(image)
-    run "docker rmi #{$docker_hub_username}/#{image}"
+    run "docker rmi #{docker_hub_username}/#{image}"
   elsif all_languages.include?(image)
     puts "IMAGE #{image} is not installed"
-    puts "Try '#{$me} help'"
+    puts "Try '#{me} help'"
   else
     bad_image(image)
   end
@@ -167,7 +172,7 @@ end
 
 if ARGV.length == 0
   puts 'no command entered'
-  puts "Try '#{$me} help'"
+  puts "Try '#{me} help'"
   exit
 end
 
@@ -178,8 +183,8 @@ arg = ARGV[0].to_sym
 if [:help, :up, :down, :catalog, :images, :upgrade, :pull, :remove, :backup].include? arg
   options[arg] = true
 else
-  puts "#{$me}: #{arg} ?"
-  puts "Try '#{$me} help"
+  puts "#{me}: #{arg} ?"
+  puts "Try '#{me} help"
   exit
 end
 
