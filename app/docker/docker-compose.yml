@@ -1,3 +1,8 @@
+# the image names comprising the server are
+#   cyberdojofoundation/nginx:latest
+#   cyberdojofoundation/web:${DOCKER_VERSION}
+# if these change the upgrade command in
+# cyber-dojo.rb will also need to be changed.
 
 
 nginx:
@@ -27,17 +32,10 @@ web:
     - CYBER_DOJO_RUNNER_CLASS
     - CYBER_DOJO_RUNNER_SUDO
     - CYBER_DOJO_RUNNER_TIMEOUT
+    - DOCKER_VERSION
   ports:
     - "3000:3000"
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
   volumes_from:
     - cdf-katas-DATA-CONTAINER:rw
-
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# The cyber-dojo script uses this file to find out the
-# service names. It assumes the service name (eg web) is the
-# tag name for the associated docker image (eg cyberdojofoundation/web)
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

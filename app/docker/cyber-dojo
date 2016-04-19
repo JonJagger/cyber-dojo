@@ -116,7 +116,7 @@ docker cp ${CID}:${HOME}/app/docker/${DOCKER_COMPOSE_FILE} ${MY_DIR}/${DOCKER_CO
 docker rm -v ${CID} > /dev/null
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# set environment variable required by docker-compose.yml
+# set environment variables required by docker-compose.yml
 
 export CYBER_DOJO_HOME='/usr/src/cyber-dojo'
 export CYBER_DOJO_KATAS_CLASS=${CYBER_DOJO_KATAS_CLASS:=HostDiskKatas}
