@@ -102,6 +102,7 @@ fi
 docker run \
   --rm \
   --user=root \
+  --env=DOCKER_VERSION=${DOCKER_VERSION} \
   --volume=/var/run/docker.sock:/var/run/docker.sock \
   ${DOCKER_HUB_USERNAME}/${SERVER_NAME} \
   ${HOME}/app/docker/cyber-dojo.rb $@

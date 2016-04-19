@@ -119,9 +119,9 @@ def upgrade
   # these service names must match those used in the cyber-dojo script
   # there is a [docker-compose config --services] command to retrieve these
   # but that would require docker-compose being installed inside the web image 
-  #version = ENV['DOCKER_VERSION']
-  #run "docker pull #{$docker_hub_username}/web:#{version}"
-  #run "docker pull #{$docker_hub_username}/nginx"
+  version = ENV['DOCKER_VERSION']
+  run "docker pull #{$docker_hub_username}/web:#{version}"
+  run "docker pull #{$docker_hub_username}/nginx:latest"
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
