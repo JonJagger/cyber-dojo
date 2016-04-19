@@ -14,7 +14,7 @@ def help
   [
     '',
     "Use: #{me} COMMAND",
-    "     #{me} help",
+    "     #{me} [help]",
     '',
     '     up                   Creates and starts the server containers',
     '     down                 Stops and removes server containers',
@@ -24,7 +24,7 @@ def help
     '     images               Lists pulled language images',
     '     pull [IMAGE|all]     Pulls one language IMAGE or all images',
     '     remove IMAGE         Removes a pulled language IMAGE',
-    '     upgrade              Pulls the latest language images',
+    '     upgrade              Pulls the latest server and language images',
     ''
   ].join("\n") + "\n"
 end
@@ -171,8 +171,7 @@ end
 #= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 if ARGV.length == 0
-  puts 'no command entered'
-  puts "Try '#{me} help'"
+  puts help
   exit
 end
 
