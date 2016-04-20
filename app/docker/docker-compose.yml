@@ -1,8 +1,8 @@
 # the image names comprising the server are
 #   cyberdojofoundation/nginx:latest
 #   cyberdojofoundation/web:${DOCKER_VERSION}
-# if these change the upgrade command in
-# cyber-dojo.rb will also need to be changed.
+# if these change then the upgrade command in
+# cyber-dojo.rb will also need changing.
 
 nginx:
   image: cyberdojofoundation/nginx
