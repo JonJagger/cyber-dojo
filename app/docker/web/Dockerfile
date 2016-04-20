@@ -83,7 +83,7 @@ RUN  echo "${GETS_DOCKER_SUDO}  ALL=NOPASSWD: ${DOCKER_BINARY} *"       >>  ${SU
 
 USER root
 RUN  apk --update add \
-           ruby ruby-io-console ruby-bigdecimal tzdata \
+           ruby ruby-irb ruby-io-console ruby-bigdecimal tzdata \
            git \
            bash
 
