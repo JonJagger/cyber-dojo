@@ -1,27 +1,27 @@
 
-A single 'kata' is created by selecting a single language
-and a single exercise and has a 10 character hex id.
+A single 'kata' is created by selecting a language+test framework
+and an exercise and has a 10 character hex id.
 The animals (avatars) inside a kata thus share the same
-language and exercise. It is a deliberate part of the
+language, test-framework and exercise. It is a deliberate part of the
 design of cyber-dojo that different animals in the
-same kata cannot choose a different language or a different
+same kata *cannot* choose a different language or a different
 exercise.
 
 A key cyber-dojo feature is the ability to review the [test]
 events, diff by diff. Each [test] event causes a 'git commit'
 plus a 'git tag' to execute in the animals git repo.
 The [test] <-> [test] diffs are obtained via a 'git diff' command.
-Thus cyber-dojo implements persistence using plain disk files and
+cyber-dojo implements persistence using plain disk files and
 does not use a database.
 
-You create a dojo object like this...
+In a ruby script you create a dojo object like this...
 
 <code>
-load 'domain.rb'
+load 'app/models/domain.rb'
 dojo = Dojo.new
 </code>
 
-You can
+You can then
 o) list all its languages or use [ ] to select a specific language.
 o) list all its exercises or use [ ] to select a specific exercise.
 o) list all the katas (practice sessions) or use [ ] to select a specific kata.

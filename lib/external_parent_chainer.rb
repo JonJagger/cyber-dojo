@@ -11,27 +11,31 @@ module ExternalParentChainer # mix-in
 
 end
 
-# Provides transparent access to the external objects held in the root dojo object:
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Provides transparent access to...
+# 1. The external objects held in the root dojo object:
+# See app/models/dojo.rb
 #
 #  runner   - performs the actual test run, using docker in some way.
+#  katas    - access to cyber-dojo's sessions, by ID
 #  shell    - executes shell commands, eg mkdir,ls,git
 #  disk     - access to the file-system, directories, file read/write
 #  log      - memory/stdout based logging.
 #  git      - all required git commands. Forwards to shell.
 #
-# The root dojo object also holds objects representing the main cyber-dojo folders:
+# 2. The objects representing the main cyber-dojo folders:
 #
-# languages - as per setup page. read-only
-# exercises - as per setup page. read-only
-# katas     - where cyber-dojo's sessions live. read-write
+# languages - as per setup page.
+# exercises - as per setup page.
 #
-# Allows the lib/ classes representing external objects to easily access
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Also allows the lib/ classes representing external objects to easily access
 # each other by chaining back to the root dojo object. For example:
 #
 #     HostGit   -> shell -> dojo.shell -> HostShell
 #     HostShell -> log   -> dojo.log   -> HostLog
 #
-# Works by assuming the object which included this module has a parent
+# Works by assuming the object (which included this module) has a parent
 # property and repeatedly chains back parent to parent to parent
 # till it gets to an object without a parent property which it assumes
 # is the root dojo object, which it delegates to.
