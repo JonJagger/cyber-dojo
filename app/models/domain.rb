@@ -1,8 +1,8 @@
 
 require 'json'
+require_relative '../../lib/all'
 require_relative '../lib/all'
-require_relative 'lib/all'
-require_relative 'models/all'
+require_relative '../models/all'
 
 def dojo
   Dojo.new
