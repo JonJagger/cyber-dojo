@@ -5,6 +5,7 @@ gem 'sass-rails', "~> 4.0.3"
 gem 'json', '>= 1.8.3'
 gem 'minitest', '5.8.1'
 gem 'uuidtools', '>= 2.1.5'
+gem 'simplecov', '>= 0.9.0'
 
 group :test do
   gem 'rspec'
@@ -16,7 +17,6 @@ group :test do
   gem 'autotest-growl'
   gem 'approvals', '>= 0.0.7'
   gem 'cucumber'
-  gem 'simplecov', '>= 0.9.0'
 end
 
 # rspec-rails needs to be in the development group so that Rails generators work.
