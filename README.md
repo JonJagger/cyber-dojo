@@ -1,6 +1,7 @@
 
 <img src="https://raw.githubusercontent.com/JonJagger/cyberdojo/master/public/images/home_page_logo.png" alt="cyber-dojo yin/yang logo" width="50px" height="50px"/>
 
+  * Hi. I'm [Jon Jagger](http://jonjagger.blogspot.co.uk/). Welcome to cyber-dojo :-)
   * [cyber-dojo foundation](http://blog.cyber-dojo.org/2015/08/cyber-dojo-foundation.html) is a registered Scottish Charitable Incorporated Organisation
   * a [dojo](http://en.wikipedia.org/wiki/Dojo) is a place where martial artists meet to practice their martial art
   * a cyber-dojo is where programmers meet to [practice](http://jonjagger.blogspot.co.uk/2013/10/practice.html) their programming!
