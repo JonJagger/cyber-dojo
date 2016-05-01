@@ -6,7 +6,7 @@ set -e
 # on the host. Thus, the web Dockerfile accepts the docker-version
 # to install as a parameter, and the built web image is tagged with
 # this version number.
-DOCKER_VERSION=${1:-1.11.0}
+DOCKER_VERSION=${1:-1.11.1}
 
 # the 'home' directory inside the web image. I don't expect
 # this to change, it's parameterized to avoid duplication.
