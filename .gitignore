@@ -16,7 +16,7 @@ zipped_dojos.zip
 cyberDojo.db
 *.tmp
 
-admin_scripts/stats/exceptions.log
+script/stats/exceptions.log
 
 test/*/coverage/
 coverage
