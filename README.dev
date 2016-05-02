@@ -1,0 +1,36 @@
+
+For info on how to run your own cyber-dojo server see
+http://blog.cyber-dojo.org/2016/03/running-your-own-cyber-dojo-server.html
+
+Extra information if you want to do some development.
+
+The cyber-dojo server now lives inside a docker image called cyberdojofoundation/web
+The script to build this image is
+cyber-dojo/app/docker/web/build-image.sh
+
+If you're running this image and you make a change to local source files the
+changes will not be seen inside the server of course. You'll need to recreate
+the web image, then bring down the old server and bring up the new one.
+$ cd cyber-dojo/app/docker/web
+$ ./build-image.sh
+$ cd cyber-dojo/app/docker
+$ ./cyber-dojo down
+$ ./cyber-dojo up
+
+You can run the tests from inside the running web server. First shell in
+$ docker exec --interactive --tty cdf-web sh
+Then run the tests
+$ pwd
+/usr/src/cyber-dojo
+$ cd test
+$ ./run.sh
+
+This is a slow cycle. There is a faster one. Instead of running the cyber-dojo
+rails app from inside the docker web image you can simply run it locally "raw".
+$ cd cyber-dojo/script
+$ ./dev-server.sh
+
+You can also run the tests locally too. Note that the work to get the server running
+inside a docker container *and* locally has left a few diagnostics that need attention.
+$ cd cyber-dojo/test
+$ ./run.sh
