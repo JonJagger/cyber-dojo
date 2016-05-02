@@ -50,6 +50,18 @@ CID=$(${SUDO} docker run --detach \
 # The existing F#-NUnit cyber-dojo.sh names the /sandbox folder
 # So SANDBOX has to be /sandbox for backward compatibility.
 # F#-NUnit is the only cyber-dojo.sh that names /sandbox.
+#
+# The LHS end of the pipe...
+#    [tar -zcf] means create a compressed tar file
+#    [-] means don't write to a named file but to STDOUT
+#    [.] means tar the current directory
+#    which is why there's a preceding cd
+#
+# The RHS end of the pipe...
+#    [tar -zxf] means extract files from the compressed tar file
+#    [-] means don't read from a named file but from STDIN
+#    [-C ${SANDBOX}] means save the extracted files to the ${SANDBOX} directory
+#    which is why there's a preceding mkdir
 
 SANDBOX=/sandbox
 
@@ -137,7 +149,7 @@ ${SUDO} docker exec \
                --interactive \
                ${CID} \
                sh -c "cd ${SANDBOX} && tar -zcf - ." \
-    | (cd ${SRC_DIR} && tar -zxf - .)
+               | (cd ${SRC_DIR} && tar -zxf - .)
 
 ${SUDO} docker rm --force ${CID} &> /dev/null
 
