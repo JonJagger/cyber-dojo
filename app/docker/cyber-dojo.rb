@@ -182,7 +182,7 @@ end
 options = {}
 arg = ARGV[0].to_sym
 container_commands = [:down, :restart, :sh, :up]
-image_command = [:backup, :catalog, :images, :pull, :remove, :upgrade]
+image_commands = [:backup, :catalog, :images, :pull, :remove, :upgrade]
 all_commands = [:help] + container_commands + image_commands
 if all_commands.include? arg
   options[arg] = true
