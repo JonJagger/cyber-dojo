@@ -35,9 +35,9 @@ fi
 # cyber-dojo web server image is docker version sensitive.
 # See app/docker/web/Dockerfile ~ line 49
 #
-# docker --version  -->  Docker version 1.10.3, build 20f81dd
-# awk '{print $3}'  -->  1.10.3,           (third field)
-# sed '$s/.$//'     -->  1.10.3            (lose last character)
+# docker --version  -->  Docker version 1.11.1, build 5604cbe
+# awk '{print $3}'  -->  1.11.1,           (third field)
+# sed '$s/.$//'     -->  1.11.1            (lose last comma)
 
 DOCKER_VERSION=$(docker --version | awk '{print $3}' | sed '$s/.$//')
 SERVER_NAME=web:${DOCKER_VERSION}
@@ -138,4 +138,13 @@ fi
 
 if [ "$*" = "down" ]; then
   ${DOCKER_COMPOSE_CMD} down
+fi
+
+if [ "$*" = "restart" ]; then
+  ${DOCKER_COMPOSE_CMD} down
+  ${DOCKER_COMPOSE_CMD} up -d
+fi
+
+if [ "$*" = "sh" ]; then
+  docker exec --interactive --tty cdf-web sh
 fi

@@ -16,8 +16,10 @@ def help
     "Use: #{me} COMMAND",
     "     #{me} [help]",
     '',
-    '     up                   Creates and starts the server containers',
     '     down                 Stops and removes server containers',
+    '     restart              down followed by up',
+    '     sh                   Shell into the server container',
+    '     up                   Creates and starts the server containers',
     '',
     '     backup               Creates a tgz file of all practice sessions',
     '     catalog              Lists all language images',
@@ -124,7 +126,7 @@ def upgrade
   languages.each { |image| docker_pull(image, 'latest') }
   # these service names must match those used in the cyber-dojo script
   # there is a [docker-compose config --services] command to retrieve these
-  # but that would require docker-compose being installed inside the web image 
+  # but that would require docker-compose being installed inside the web image
   version = ENV['DOCKER_VERSION']
   docker_pull('web', version)
   docker_pull('nginx', 'latest')
@@ -179,7 +181,10 @@ end
 
 options = {}
 arg = ARGV[0].to_sym
-if [:help, :up, :down, :catalog, :images, :upgrade, :pull, :remove, :backup].include? arg
+container_commands = [:down, :restart, :sh, :up]
+image_command = [:backup, :catalog, :images, :pull, :remove, :upgrade]
+all_commands = [:help] + container_commands + image_commands
+if all_commands.include? arg
   options[arg] = true
 else
   puts "#{me}: #{arg} ?"
@@ -191,9 +196,10 @@ end
 
 puts help       if options[:help]
 up              if options[:up]
+
+backup          if options[:backup]
 puts catalog    if options[:catalog]
 puts images     if options[:images]
-upgrade         if options[:upgrade]
 pull(ARGV[1])   if options[:pull]
 remove(ARGV[1]) if options[:remove]
-backup          if options[:backup]
+upgrade         if options[:upgrade]
