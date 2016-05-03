@@ -18,5 +18,3 @@ RUN n 4.2.1
 
 RUN chmod -R a+w /usr/local
 
-RUN apt-get update && apt-get install --yes \
-  build-essential
