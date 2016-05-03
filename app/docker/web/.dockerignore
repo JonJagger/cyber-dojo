@@ -10,11 +10,10 @@
 !app/controllers
 !app/docker
 !app/downloads
-!app/exercises
 !app/helpers
-!app/languages
 !app/lib
 !app/models
+!app/start_points
 !app/views
 !script
 !config

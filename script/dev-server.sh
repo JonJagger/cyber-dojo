@@ -14,8 +14,8 @@ cd ..
 HOME=${PWD}
 popd > /dev/null
 
-export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/app/languages
-export CYBER_DOJO_EXERCISES_ROOT=${HOME}/app/exercises
+export CYBER_DOJO_LANGUAGES_ROOT=${HOME}/app/start_points/languages
+export CYBER_DOJO_EXERCISES_ROOT=${HOME}/app/start_points/exercises
 export CYBER_DOJO_SHELL_CLASS=HostShell
 export CYBER_DOJO_DISK_CLASS=HostDisk
 export CYBER_DOJO_LOG_CLASS=StdoutLog
