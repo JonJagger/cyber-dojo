@@ -1,0 +1,6 @@
+clang  -fPIC -c -o hiker_tests.o hiker_tests.c
+clang -shared -o hiker_tests.so hiker_tests.o hiker.o -lcgreen
+cgreen-runner hiker_tests.so
+Running "hiker_tests" (2 tests)...
+Completed "hiker": 2 passes, 0 failures, 0 exceptions in 0ms.
+Completed "hiker_tests": 2 passes, 0 failures, 0 exceptions in 0ms.

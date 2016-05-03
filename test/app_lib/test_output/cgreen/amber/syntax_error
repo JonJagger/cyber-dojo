@@ -1,0 +1,6 @@
+clang  -fPIC -c -o hiker.o hiker.c
+hiker.c:4:15: error: invalid suffix 'sdsd' on integer constant
+    return 6*9sdsd;
+              ^
+1 error generated.
+make: *** [hiker.o] Error 1

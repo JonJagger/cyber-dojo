@@ -1,0 +1,18 @@
+clang  -fPIC -c -o hiker_tests.o hiker_tests.c
+clang  -fPIC -c -o hiker.o hiker.c
+clang -shared -o hiker_tests.so hiker_tests.o hiker.o -lcgreen
+cgreen-runner hiker_tests.so
+Running "hiker_tests" (2 tests)...
+hiker_tests.c:11: Failure: hiker -> answers_42
+	Expected [answer()] to [equal] [42]
+		actual value:			[54]
+		expected value:			[42]
+
+hiker_tests.c:15: Failure: hiker -> answers_42_repeat
+	Expected [answer()] to [equal] [42]
+		actual value:			[54]
+		expected value:			[42]
+
+Completed "hiker": 0 passes, 2 failures, 0 exceptions in 0ms.
+Completed "hiker_tests": 0 passes, 2 failures, 0 exceptions in 0ms.
+make: *** [all] Error 1
