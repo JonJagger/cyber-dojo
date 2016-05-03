@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojofoundation/javascript-node-2.1  .
+docker build -t cyberdojofoundation/javascript-node-4.2.1  .
