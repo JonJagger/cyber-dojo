@@ -26,5 +26,5 @@
 !config.ru
 
 #-----Except do ignore the caches
-app/languages/cache.json
-app/exercises/cache.json
+app/start_points/languages/cache.json
+app/start_points/exercises/cache.json
