@@ -17,6 +17,3 @@ RUN n 4.1.1 # keep old version for backward compatibility with old Katas
 RUN n 4.2.1
 
 RUN chmod -R a+w /usr/local
-
-RUN apt-get update && apt-get install --yes \
-  build-essential
