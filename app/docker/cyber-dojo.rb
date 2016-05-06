@@ -17,12 +17,13 @@ def help
     "     #{me} [help]",
     '',
     '     down                 Stops and removes server containers',
-    '     restart              down followed by up',
+    '     restart              Runs down followed by up',
     '     sh                   Shell into the server container',
     '     up                   Creates and starts the server containers',
     '',
     '     backup               Creates a tgz file of all practice sessions',
     '     catalog              Lists all language images',
+    '     clean                Deletes dead images',
     '     images               Lists pulled language images',
     '     pull [IMAGE|all]     Pulls one language IMAGE or all images',
     '     remove IMAGE         Removes a pulled language IMAGE',
@@ -50,6 +51,12 @@ def backup
     " tar -cvz -f /backup/cyber-dojo_katas_backup.tgz -C #{home} katas"
   `#{cmd}`
   puts 'Created /backup/cyber-dojo_katas_backup.tgz'
+end
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+def clean
+  run "docker images -q -f='dangling=true' | xargs docker rmi --force"
 end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -182,7 +189,7 @@ end
 options = {}
 arg = ARGV[0].to_sym
 container_commands = [:down, :restart, :sh, :up]
-image_commands = [:backup, :catalog, :images, :pull, :remove, :upgrade]
+image_commands = [:backup, :clean, :catalog, :images, :pull, :remove, :upgrade]
 all_commands = [:help] + container_commands + image_commands
 if all_commands.include? arg
   options[arg] = true
@@ -199,6 +206,7 @@ up              if options[:up]
 
 backup          if options[:backup]
 puts catalog    if options[:catalog]
+clean           if options[:clean]
 puts images     if options[:images]
 pull(ARGV[1])   if options[:pull]
 remove(ARGV[1]) if options[:remove]
