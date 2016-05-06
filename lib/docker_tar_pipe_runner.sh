@@ -134,15 +134,15 @@ fi
 # o) Echo the output so it can be red/amber/green regex'd (see 5)
 # o) Tar-pipe *everything* out of the run-container's sandbox back to SRC_DIR
 # o) Remove the container.
-#
+
+echo "${OUTPUT}"
+
 # When this runs it outputs the following diagnostic to stdout/stderr
 #    tar: .: Not found in archive
 #    tar: Error exit delayed from previous errors.
 # As best I can tell this is because of the . in one of the tar-commands
 # and refers the dot as in the current directory. It seems to be harmless.
 # The files are tarred back, are saved, are git commited, and git diff works.
-
-echo "${OUTPUT}"
 
 ${SUDO} docker exec \
                --user=root \

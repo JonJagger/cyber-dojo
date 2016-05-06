@@ -37,7 +37,7 @@ end
 # External root-dirs and class-names do *not* have defaults.
 # Root-dirs and class-name are set using environment variables.
 #   eg  export CYBER_DOJO_KATAS_ROOT=/var/www/cyber-dojo/katas
-#   eg  export CYBER_DOJO_RUNNER_CLASS=DockerKatasDataContainerRunner
+#   eg  export CYBER_DOJO_RUNNER_CLASS=DockerTarPipeRunner
 #
 # This gives a way to do Parameterize From Above in a way that can
 # tunnel through a *deep* stack. For example, I can set an environment

@@ -58,6 +58,10 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  def content(filename)
+    @params_maker.content(filename)
+  end
+
   def change_file(filename, content)
     @params_maker.change_file(filename, content)
   end

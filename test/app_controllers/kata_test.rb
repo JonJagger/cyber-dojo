@@ -4,9 +4,7 @@ require_relative './app_controller_test_base'
 
 class KataControllerTest  < AppControllerTestBase
 
-  prefix = 'BE8'
-
-  test prefix+'76E',
+  test 'BE876E',
   'run_tests with bad kata id raises' do
     params = { :format => :js, :id => 'bad' }
     assert_raises(StandardError) { post 'kata/run_tests', params }
@@ -14,7 +12,7 @@ class KataControllerTest  < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test prefix+'3FD',
+  test 'BE83FD',
   'run_tests with good kata id but bad avatar name raises' do
     kata_id = create_kata('C (gcc), assert')
     params = { :format => :js, :id => kata_id, :avatar => 'bad' }
@@ -23,7 +21,7 @@ class KataControllerTest  < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test prefix+'B75',
+  test 'BE8B75',
   'show-json (for Atom editor)' do
     create_kata('C (gcc), assert')
     @avatar = start
@@ -35,7 +33,7 @@ class KataControllerTest  < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test prefix+'0F6',
+  test 'BE80F6',
   'edit and then run-tests' do
     create_kata('C (gcc), assert')
     @avatar = start
@@ -47,7 +45,7 @@ class KataControllerTest  < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test prefix+'7FD',
+  test 'BE87FD',
   'run_tests() saves changed makefile with leading spaces converted to tabs',
   'and these changes are made to the visible_files parameter too',
   'so they also occur in the manifest file' do
@@ -62,13 +60,10 @@ class KataControllerTest  < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test prefix+'7AF',
+  test 'BE87AF',
   'run_tests() saves *new* makefile with leading spaces converted to tabs',
   'and these changes are made to the visible_files parameter too',
   'so they also occur in the manifest file' do
-
-    skip # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
     create_kata('C (gcc), assert')
     @avatar = start
     delete_file(makefile)
@@ -80,24 +75,40 @@ class KataControllerTest  < AppControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test prefix+'9DC',
-  'when cyber-dojo.sh removes a file then on the next test it stays removed' do
-
+  test 'BE89DC',
+  'when cyber-dojo.sh removes a file then it stays removed.' +
+    '(viz, tar pipe is not affected by previous state)' do
+    set_runner_class('DockerTarPipeRunner')
     create_kata('C (gcc), assert')
     @avatar = start
-    hit_test
     before = content('cyber-dojo.sh')
     filename = 'wibble.txt'
     create_file =
-      "touch #{filename} \n" +
-      "ls -al \n" +
+      "touch #{filename} && " +
+      "ls -al && " +
       before
     change_file('cyber-dojo.sh', create_file)
     hit_test
     output = @avatar.visible_files['output']
-    p output
-  end
+    assert output.include?(filename), output
 
+    remove_file =
+      "rm -f #{filename} &&" +
+      "ls -al && " +
+      before
+    change_file('cyber-dojo.sh', remove_file)
+    hit_test
+    output = @avatar.visible_files['output']
+    refute output.include?(filename), output
+
+    ls_file =
+      "ls -al && " +
+      before
+    change_file('cyber-dojo.sh', ls_file)
+    hit_test
+    output = @avatar.visible_files['output']
+    refute output.include?(filename), output
+  end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
