@@ -7,8 +7,8 @@ MAINTAINER Jon Jagger <jon@jaggersoft.com>
 # https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/
 
 USER root
-RUN apk add --update --repository http://dl-1.alpinelinux.org/alpine/edge/community/ tini
-ENTRYPOINT ["/usr/bin/tini", "--"]
+RUN apk add --update --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ tini
+ENTRYPOINT ["/sbin/tini", "--"]
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 2. install docker-client
