@@ -12,6 +12,11 @@ class ParamsMaker
     end
   end
 
+  def content(filename)
+    assert_file(filename, 'content')
+    @live[filename]
+  end
+
   def new_file(filename, content)
     refute_file(filename, 'new_file')
     @live[filename] = content

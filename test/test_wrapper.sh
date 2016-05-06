@@ -46,9 +46,9 @@ HOME_DIR="$( cd "$( dirname "${0}" )/.." && pwd )"
 
 export CYBER_DOJO_LOG_CLASS=MemoryLog
 
-VAR=${CYBER_DOJO_LANGUAGES_ROOT:-${HOME_DIR}/app/languages}
+VAR=${CYBER_DOJO_LANGUAGES_ROOT:-${HOME_DIR}/app/start_points/languages}
 export CYBER_DOJO_LANGUAGES_ROOT=${VAR}
-VAR=${CYBER_DOJO_EXERCISES_ROOT:-${HOME_DIR}/app/exercises}
+VAR=${CYBER_DOJO_EXERCISES_ROOT:-${HOME_DIR}/app/start_points/exercises}
 export CYBER_DOJO_EXERCISES_ROOT=${VAR}
 VAR=${CYBER_DOJO_KATAS_CLASS:-HostDiskKatas}
 export CYBER_DOJO_KATAS_CLASS=${VAR}
