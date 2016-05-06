@@ -23,3 +23,6 @@ coverage
 
 app/start_points/languages/cache.json
 app/start_points/exercises/cache.json
+
+.dockerignore
+Dockerfile
