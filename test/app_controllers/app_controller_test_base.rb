@@ -77,6 +77,10 @@ class AppControllerTestBase < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  def hit_test
+    run_tests
+  end
+
   def json
     ActiveSupport::JSON.decode html
   end

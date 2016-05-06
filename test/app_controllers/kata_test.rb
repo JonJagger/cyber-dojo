@@ -66,7 +66,9 @@ class KataControllerTest  < AppControllerTestBase
   'run_tests() saves *new* makefile with leading spaces converted to tabs',
   'and these changes are made to the visible_files parameter too',
   'so they also occur in the manifest file' do
-    skip
+
+    skip # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
     create_kata('C (gcc), assert')
     @avatar = start
     delete_file(makefile)
@@ -75,6 +77,27 @@ class KataControllerTest  < AppControllerTestBase
     run_tests
     assert_file makefile, makefile_with_leading_tab
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test prefix+'9DC',
+  'when cyber-dojo.sh removes a file then on the next test it stays removed' do
+
+    create_kata('C (gcc), assert')
+    @avatar = start
+    hit_test
+    before = content('cyber-dojo.sh')
+    filename = 'wibble.txt'
+    create_file =
+      "touch #{filename} \n" +
+      "ls -al \n" +
+      before
+    change_file('cyber-dojo.sh', create_file)
+    hit_test
+    output = @avatar.visible_files['output']
+    p output
+  end
+
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
