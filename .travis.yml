@@ -1,0 +1,13 @@
+sudo: required
+
+services:
+  - docker
+
+language: ruby
+
+before_install:
+  - cd app/docker/web
+  - ./build-image.sh
+
+script:
+  - docker images
