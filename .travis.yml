@@ -5,9 +5,31 @@ services:
 
 language: ruby
 
-before_install:
-  - cd app/docker/web
-  - ./build-image.sh
-
 script:
   - docker images
+
+env:
+    global:
+        - DOCKER_VERSION=1.10.1-0~trusty
+        - DOCKER_COMPOSE_VERSION=1.6.0
+
+before_install:
+    # list docker-engine versions
+    - apt-cache madison docker-engine
+
+    # upgrade docker-engine to specific version
+    - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=${DOCKER_VERSION}
+
+    # reinstall docker-compose at specific version
+    - sudo rm /usr/local/bin/docker-compose
+    - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+    - chmod +x docker-compose
+    - sudo mv docker-compose /usr/local/bin
+    - cd app/docker/web
+    # later
+    #- ./build-image.sh
+
+script:
+    - docker version
+    - docker-compose version
+    - docker images
