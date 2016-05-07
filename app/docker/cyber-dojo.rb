@@ -6,6 +6,8 @@ def my_dir; File.expand_path(File.dirname(__FILE__)); end
 
 def docker_hub_username; 'cyberdojofoundation'; end
 
+def docker_version; ENV['DOCKER_VERSION']; end
+
 def home; '/usr/src/cyber-dojo'; end  # home folder *inside* the server image
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -47,7 +49,7 @@ def backup
     ' --rm' +
     ' --volumes-from=cdf-katas-DATA-CONTAINER' +
     " --volume=/backup:/backup" +
-    " #{docker_hub_username}/web" +
+    " #{docker_hub_username}/web:#{docker_version}" +
     " tar -cvz -f /backup/cyber-dojo_katas_backup.tgz -C #{home} katas"
   `#{cmd}`
   puts 'Created /backup/cyber-dojo_katas_backup.tgz'
@@ -134,8 +136,7 @@ def upgrade
   # these service names must match those used in the cyber-dojo script
   # there is a [docker-compose config --services] command to retrieve these
   # but that would require docker-compose being installed inside the web image
-  version = ENV['DOCKER_VERSION']
-  docker_pull('web', version)
+  docker_pull('web', docker_version)
   docker_pull('nginx', 'latest')
 end
 
