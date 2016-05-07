@@ -26,8 +26,8 @@ before_install:
     - chmod +x docker-compose
     - sudo mv docker-compose /usr/local/bin
     - cd app/docker/web
-    # later
-    #- ./build-image.sh
+    # Build the cyber-dojo images
+    - ./build-image.sh
 
 script:
     - docker version
