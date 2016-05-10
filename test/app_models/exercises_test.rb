@@ -69,15 +69,16 @@ class ExercisesTest < AppModelsTestBase
   test prefix+'64B',
   'cache is created on demand' do
     # be very careful here... naming exercises will create exercises!
-    path = dojo.env('exercises', 'root')
-    cache_filename = 'cache.json'
-    assert disk[path].exists? cache_filename
-    old_cache = disk[path].read(cache_filename)
-    `rm #{path}/#{cache_filename}`
-    refute disk[path].exists? cache_filename
-    exercises
-    assert disk[path].exists? cache_filename
-    new_cache = disk[path].read(cache_filename)
+    path = exercises.cache_path
+    filename = exercises.cache_filename
+    assert disk[path].exists? filename
+    old_cache = disk[path].read(filename)
+    `rm #{path}/#{filename}`
+    refute disk[path].exists? filename
+    @dojo = nil  # force dojo.exercises to be new Exercises object
+    exercises    # dojo.exercises ||= Exercises.new(...)
+    assert disk[path].exists? filename
+    new_cache = disk[path].read(filename)
     assert_equal old_cache, new_cache
   end
 

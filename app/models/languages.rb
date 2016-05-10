@@ -5,10 +5,8 @@ class Languages
   def initialize(dojo)
     @parent = dojo
     @path = unslashed(dojo.env('languages', 'root'))
-    disk[path].write_json_once(cache_filename) { make_cache }
+    disk[cache_path].write_json_once(cache_filename) { make_cache }
   end
-
-  # queries
 
   attr_reader :path, :parent
 
@@ -20,7 +18,13 @@ class Languages
     languages[commad(name)] || languages[renamed(name)]
   end
 
-  # modifiers
+  def cache_path
+    File.expand_path('..', File.dirname(__FILE__)) + '/caches'
+  end
+
+  def cache_filename
+    'languages_cache.json'
+  end
 
   private
 
@@ -32,13 +36,9 @@ class Languages
     @languages ||= read_cache
   end
 
-  def cache_filename
-    'cache.json'
-  end
-
   def read_cache
     cache = {}
-    disk[path].read_json(cache_filename).each do |display_name, language|
+    disk[cache_path].read_json(cache_filename).each do |display_name, language|
            dir_name = language['dir_name']
       test_dir_name = language['test_dir_name']
          image_name = language['image_name']

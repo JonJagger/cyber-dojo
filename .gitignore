@@ -21,8 +21,8 @@ script/stats/exceptions.log
 test/*/coverage/
 coverage
 
-app/start_points/languages/cache.json
-app/start_points/exercises/cache.json
+app/caches/languages_cache.json
+app/caches/exercises_cache.json
 
 .dockerignore
 Dockerfile
