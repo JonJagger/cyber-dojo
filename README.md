@@ -1,4 +1,6 @@
 
+[![Build Status](https://travis-ci.org/JonJagger/cyber-dojo.svg?branch=master)](https://travis-ci.org/JonJagger/cyber-dojo)
+
 <img src="https://raw.githubusercontent.com/JonJagger/cyberdojo/master/public/images/home_page_logo.png" alt="cyber-dojo yin/yang logo" width="50px" height="50px"/>
 
   * Hi. I'm [Jon Jagger](http://jonjagger.blogspot.co.uk/). Welcome to cyber-dojo :-)
