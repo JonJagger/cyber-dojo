@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/meekrosoft/cyberdojo.svg?branch=master)](https://travis-ci.org/meekrosoft/cyberdojo)
 
 <img src="https://raw.githubusercontent.com/JonJagger/cyberdojo/master/public/images/home_page_logo.png" alt="cyber-dojo yin/yang logo" width="50px" height="50px"/>
 
