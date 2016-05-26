@@ -288,4 +288,9 @@ module OutputColour # mix-in
     end
   end
 
+  def self.parse_midje(output)
+    return :red if /^FAILURE: .* failed./.match(output)
+    return :green if /^All checks .* succeeded./.match(output)
+    return :amber
+  end
 end
