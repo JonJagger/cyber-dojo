@@ -1,0 +1,6 @@
+
+FAIL "The Answer to the Ultimate Question of Life, the Universe, and Everything is 42" at (hiker_test.clj:6)
+    Expected: 42
+      Actual: 54
+FAILURE: 1 check failed. 
+Subprocess failed
