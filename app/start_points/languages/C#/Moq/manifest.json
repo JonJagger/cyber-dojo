@@ -1,0 +1,12 @@
+
+{
+  "visible_filenames": [
+    "HikerTest.cs",
+    "IHiker.cs",
+    "cyber-dojo.sh"
+  ],
+  "filename_extension" : ".cs",
+  "display_name": "C#, Moq",
+  "unit_test_framework": "nunit",
+  "image_name": "cyberdojofoundation/csharp_moq"
+}
