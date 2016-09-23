@@ -1,3 +1,0 @@
-*** RUN ABORTED ***
-  java.lang.ClassNotFoundException: UntitledSuite
-  at java.net.URLClassLoader$1.run(URLClassLoader.java:202)

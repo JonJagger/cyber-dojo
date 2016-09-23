@@ -1,9 +1,0 @@
-
-user-identification
-===================
-  don't store the user's id. Store a hash of it.
-  Allow a session to be tagged with a users hashed-id.
-  No need to store any sensitive data.
-  With this I can create a user-dashboard showing a history
-  of previous dojos. This allows a comparison of dojo to dojo.
-  This could be powerful in showing improvement.

@@ -1,3 +1,0 @@
-hiker_testbench.vhdl:19:8:@0ms:(assertion failure): Meaning of life value incorrect
-./hiker_testbench:error: assertion failed
-./hiker_testbench:error: simulation failed

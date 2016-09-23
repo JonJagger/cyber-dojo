@@ -1,4 +1,0 @@
-g++ -Wall -Werror -O *.cpp -o run.tests
-./run.tests
-..
-4 tests passed

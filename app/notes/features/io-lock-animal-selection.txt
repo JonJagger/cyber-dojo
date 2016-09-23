@@ -1,9 +1,0 @@
-
-Do I need to do io_locks? Suppose there is a conflict. Could this
-simply mean the git commit fails with a merge conflict? I think
-not, since at the moment the avatar/sandbox folder is deleted
-before each commit. But if a merge conflict could be created it
-would open up the possibility of having multiple players all
-playing as the same avatar. There could also be conflicts in the
-sandbox where the tests are run. Perhaps that is the place to
-check for conflicts?

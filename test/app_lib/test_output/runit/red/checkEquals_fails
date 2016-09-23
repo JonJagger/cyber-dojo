@@ -1,3 +1,0 @@
-Loading required package: methods
-Error in checkEquals(42, answer()) : Mean relative difference: 0.2857143
-Execution halted

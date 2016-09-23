@@ -1,4 +1,0 @@
-UntitledTest.java:8: ';' expected
-        int expected = 6 * 7s;
-                            ^
-1 error

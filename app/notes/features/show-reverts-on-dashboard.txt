@@ -1,3 +1,0 @@
-
-This could be done with file content hashes if they
-are stored in the manifest.

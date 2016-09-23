@@ -1,8 +1,0 @@
-
-to replace current one which is ancient
-
-Could do on version for each algorithm...
-
-o) repeat of current digit by digit
-o) thousands,hundreds,tens,units
-o) "I"*n and then gsub("IIIII","V).gsub("VV","X").etc

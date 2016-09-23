@@ -1,2 +1,0 @@
-gcc -Wall -Werror -O -std=c99 *.c -o run.tests
-untitled.tests.c:5:2: error: invalid preprocessing directive #lone

@@ -1,1 +1,0 @@
-runhaskell *test*.hs

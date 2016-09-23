@@ -1,4 +1,0 @@
-
-currently goes to the output file.
-Should it go to a popup dialog?
-output content is normally part of diff, but not that this time.

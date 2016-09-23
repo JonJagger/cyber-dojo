@@ -1,8 +1,0 @@
-
-to replace current one which is ancient
-
-o) setting up the dojo and entering
-o) edit code and tests and press [test] button
-o) reverting to a previous traffic-light
-o) forking a new dojo with a custom set of starting files
-o) dashboard review with diff-dialog

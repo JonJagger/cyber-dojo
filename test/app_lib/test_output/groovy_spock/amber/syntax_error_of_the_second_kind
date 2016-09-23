@@ -1,6 +1,0 @@
-org.codehaus.groovy.control.MultipleCompilationErrorsException: startup failed:
-UntitledSpec.groovy: 7: unexpected token: ; @ line 7, column 16.
-           expect:;
-                  ^
-
-1 error

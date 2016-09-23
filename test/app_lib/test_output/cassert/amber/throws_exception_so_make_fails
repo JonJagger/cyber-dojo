@@ -1,5 +1,0 @@
-g++ -Wall -Werror -O *.cpp -o run.tests
-./run.tests
-terminate called after throwing an instance of 'std::out_of_range'
-  what():  vector::_M_range_check
-make: *** [run.tests.output] Aborted

@@ -1,5 +1,0 @@
-untitled.cpp: In function 'int hhg()':
-untitled.cpp:5:12: error: unable to find numeric literal operator 'operator"" typo2'
-untitled.cpp:6:1: error: control reaches end of non-void function [-Werror=return-type]
-cc1plus: all warnings being treated as errors
-make: *** [run.tests] Error 1

@@ -1,9 +1,0 @@
-Cases: 2  Tried: 0  Errors: 0  Failures: 0
-Cases: 2  Tried: 1  Errors: 0  Failures: 0
-
-### Failure in: 1
-Testing answer
-expected: 54
- but got: 42
-Cases: 2  Tried: 2  Errors: 0  Failures: 1
-Counts {cases = 2, tried = 2, errors = 0, failures = 1}

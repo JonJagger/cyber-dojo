@@ -1,9 +1,0 @@
-
-dojos can be linked together.
-When you create a new dojo, you have the option of
-specifying the previous dojos ID. It tells you what the
-browser thinks the previous dojos ID was, together with its
-language and exercise.
-This allows review at a larger scale.
-How to store the connection?
-New setting inside dojo's manifest file?

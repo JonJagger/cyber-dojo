@@ -1,9 +1,0 @@
-ruby ~/Unity-master/auto/generate_test_runner.rb hiker.tests.c TestMain.c
-gcc -Wall -Wextra -Werror -O -std=c99 -isystem ~/Unity-master/src/ *.c ~/Unity-master/src/unity.c -o run.tests
-./run.tests
-
-hiker.tests.c:15:test_life_the_universe_and_everything:FAIL: Expected 42 Was 54
------------------------
-1 Tests 1 Failures 0 Ignored
-FAIL
-make: *** [run.tests.output] Error 1

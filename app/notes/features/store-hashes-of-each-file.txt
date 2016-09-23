@@ -1,5 +1,0 @@
-
-In the manifest.
-Idea is to make it easy and quick for wiki-style
-readonly-server to show tree of fork points.
-

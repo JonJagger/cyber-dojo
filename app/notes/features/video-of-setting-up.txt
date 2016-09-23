@@ -1,9 +1,0 @@
-
-click create
-select language
-select exercise
-click create
-
-everyone now types the ID into their browser
-everyone's enter button is now enabled
-everyone now click's enter

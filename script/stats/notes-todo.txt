@@ -1,7 +1,0 @@
-
-TODO:
-../lib_domain.rb is now ../../app/domain.rb
-
-These need to be part of the rails-app image.
-Then they can be executed inside the docker web container
-which will automatically give them all the ENV-vars needed.

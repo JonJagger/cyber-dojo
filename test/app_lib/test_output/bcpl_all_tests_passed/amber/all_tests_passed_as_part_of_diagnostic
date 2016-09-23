@@ -1,9 +1,0 @@
-Error near hiker.test.b[27]:  '}' or '$)' expected
-
-...se.and.everything()
-
-  writes("All tests passed")
-
-}
-
-bcpl failed returncode 20 reason -1

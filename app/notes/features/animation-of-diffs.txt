@@ -1,9 +1,0 @@
-
-ANIMATION
-=========
-  keeping on the same file and showing its content in a rapid
-  sequence of updates would be a nice feature?
-  Do on dialog not showing diffs.
-  Reduce font a lot so you can see outline. Auto? Slider-control?
-  Stay on same file.
-  Would be even better if it could detect a rename.

@@ -1,6 +1,0 @@
-org.codehaus.groovy.control.MultipleCompilationErrorsException: startup failed:
-UntitledTest.groovy: 5: unexpected token: @ @ line 5, column 5.
-       @Test
-       ^
-
-1 error

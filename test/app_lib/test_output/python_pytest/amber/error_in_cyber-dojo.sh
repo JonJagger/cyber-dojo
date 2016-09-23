@@ -1,1 +1,0 @@
-./cyber-dojo.sh: 1: ./cyber-dojo.sh: sdpython: not found

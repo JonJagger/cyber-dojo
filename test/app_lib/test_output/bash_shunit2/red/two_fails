@@ -1,8 +1,0 @@
-test_life_the_universe_and_everything
-ASSERT:expected:<45> but was:<42>
-test_life_the_universe_and_everything2
-ASSERT:expected:<54> but was:<42>
-
-Ran 2 tests.
-
-FAILED (failures=2)

@@ -1,1 +1,0 @@
-rustc --test -o run.tests *test.rs && ./run.tests

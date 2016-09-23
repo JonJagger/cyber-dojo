@@ -1,1 +1,0 @@
-./cyber-dojo.sh: 1: xjava: not found

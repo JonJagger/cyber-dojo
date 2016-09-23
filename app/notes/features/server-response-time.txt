@@ -1,5 +1,0 @@
-
-Home page could show graph of current server response
-times. Time passing on x axis. Time [test] takes on
-y axis. Y axis could have red-zone at 15 second line
-(beyond which you always get amber traffic-light).

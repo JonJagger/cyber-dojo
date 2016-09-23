@@ -1,6 +1,0 @@
-Running 2 test cases...
-hiker.tests.cpp(7): fatal error: in "Life_the_universe_and_everything": critical check 42 == answer() has failed [42 != 54]
-hiker.tests.cpp(12): fatal error: in "Life_the_universe_and_everything2": critical check 42 == answer() has failed [42 != 54]
- 
-*** 2 failures are detected in the test module "HikerTest"
-make: *** [test.output] Error 201

@@ -1,6 +1,0 @@
-ruby ~/Unity-master/auto/generate_test_runner.rb hiker.tests.c TestMain.c
-gcc -Wall -Wextra -Werror -O -std=c99 -I ~/Unity-master/src/ *.c ~/Unity-master/src/unity.c -o run.tests
-hiker.c:2:2: error: invalid preprocessing directive #lone
- #lone
-  ^
-make: *** [run.tests] Error 1

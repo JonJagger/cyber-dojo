@@ -1,8 +1,0 @@
-
-explain << < > >>
-explain tag difference is maintained
-explain green line == added
-explain red line == deleted
-explain click red number to turn on/off
-explain click green number to turn on/off
-explain edit the tag numbers directly

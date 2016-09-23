@@ -1,3 +1,0 @@
-g++ -I. -g -std=c++11 -Wall -Wextra -Werror -pthread -O *.cpp -lgtest -o run.tests
-./run.tests
-Test run complete. 2 tests run, 2 succeeded, 0 failed.
